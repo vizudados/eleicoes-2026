@@ -46,6 +46,9 @@ def corpo() -> str:
         ".cp .pe-esq{left:140px}.cp .pe-dir{right:140px;text-align:right}"
         ".cp .pe-esq .num,.cp .pe-dir .num{font-size:28px;font-weight:700}"
         ".cp .vir{position:relative;display:inline-block;padding:0 6px}"
+        f".cp .sumario{{position:absolute;left:150px;top:60px;font-size:14px;font-weight:600;letter-spacing:.16em;"
+        f"text-transform:uppercase;color:{C['areia']}}}"
+        ".cp .sumario span{font-size:18px;margin-right:6px}"
         ".cp .comecar{position:absolute;left:1690px;top:585px;font-family:var(--mao);font-size:26px;"
         f"color:{C['areia']};transform:rotate(-6deg)}}"
     )
@@ -62,6 +65,7 @@ def corpo() -> str:
         "<div class='tg sobe d2'>O que os números dizem.</div>"
         "<div class='q sobe d4'>Afinal, qual Brasil foi às urnas no 1º turno?</div></div>"
         "<div class='comecar entra d14'>começar</div>"
+        "<div class='sumario entra d14'><span>☰</span> sumário</div>"
         "{{content}}"
         # o laço à mão em volta do número de municípios que viraram (posição do span .vir no bloco do pé)
         f"<style>.cp .vir .laco{{position:absolute;left:-14px;top:-10px;width:96px;height:54px}}</style>"
@@ -85,6 +89,9 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T00_Capa_Html", 0, 0, lib.LARGURA, lib.ALTURA, "T00 · Capa · HTML",
                                   folha_de_estilo=CSS, modelo_corpo=corpo(), alt=lib.medida("T00 · Capa · ALT"),
                                   z=lib.CAMADAS["conteudo"], tab=100)),
+        Visual(P, lib.visual_botao("T00_Capa_Sumario", 136, 44, 180, 52, lib.acao_bookmark("TIX_CHEGADA_01"),
+                                   dica="Sumário: todas as telas", z=lib.CAMADAS["acao"], tab=105, realce=C["creme"],
+                                   raio=8, realce_transp=(92, 86))),
         Visual(P, lib.visual_botao("T00_Capa_Comecar", 1680, 560, 120, 70, lib.acao_bookmark("T01_CHEGADA_01"),
                                    dica="Começar: 01 · Placar", z=lib.CAMADAS["acao"], tab=110, realce=C["creme"],
                                    raio=30, realce_transp=(92, 86))),

@@ -71,11 +71,11 @@ CAMADAS = {"conteudo": 300, "acao": 1020, "leitura": 4000, "drawer": 5000, "nave
 TOOLTIP_LARGURA_MINIMA = 400
 
 RE_NOME = re.compile(r"^[A-Za-z0-9_-]+$")
-RE_NOME_VISUAL = re.compile(r"^(T(?:[01][0-9]|2[0-3])|TT)_[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9]+$")   # T00 Capa … T23 Encerramento · TT (tooltip)
+RE_NOME_VISUAL = re.compile(r"^(T(?:[01][0-9]|2[0-3])|TT|TIX)_[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9]+$")   # T00 Capa … T23 Encerramento · TIX (sumário) · TT (tooltip)
 RE_TOOLTIP = re.compile(r"^ttT(?:[01][0-9]|2[0-3])[A-Z][A-Za-z0-9]*$")
 RE_ALIAS = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
 RE_RECURSO = re.compile(r"^[A-Za-z0-9_.-]+\.(svg|png|jpg|jpeg|json)$")
-RE_BOOKMARK = re.compile(r"^T(?:[01][0-9]|2[0-3])_[A-Z0-9]+(?:_[A-Z0-9]+)*_\d{2}$")
+RE_BOOKMARK = re.compile(r"^(?:T(?:[01][0-9]|2[0-3])|TIX)_[A-Z0-9]+(?:_[A-Z0-9]+)*_\d{2}$")
 RE_HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
 MAX_NOME_VISUAL = 50
 MAX_ALT = 250

@@ -6,7 +6,7 @@
                            bodyTemplate — a urna em traço, "NN · NOME" e a pergunta (surgem ao abrir a página), as setas,
                            o "i", o lockup Vizu e a linha de fonte no rodapé. Sem dado: o conteúdo é [Casca · vazio]
   T<nn>_Casca_Anterior/Proxima   botões transparentes sobre as setas (realce redondo no hover)
-  T<nn>_Casca_Inicio       botão sobre a urna: volta à capa
+  T<nn>_Casca_Inicio       botão sobre a urna: abre o sumário (paginas/tix_sumario.py)
   T<nn>_Casca_InfoAbre/Fecha     o "i" abre o cartão de leitura da tela (T<nn>_Leitura, oculto), o × fecha
   T<nn>_Casca_Filtro       VizuFilter de UF (sincronizado entre as telas que o têm) ou de município, só onde a tela tem
                            filtro (roteiro.Tela.filtro)
@@ -186,7 +186,7 @@ def declarar(ctx):
             itens.append(_botao(t, "Proxima", SETA_DIR, lib.acao_bookmark(f"{prox.codigo}_CHEGADA_01"),
                                 f"Próxima: {prox.titulo_pagina} — {prox.pergunta}", 901))
         if p != "T00":
-            itens.append(_botao(t, "Inicio", URNA, lib.acao_bookmark("T00_CHEGADA_01"), "Voltar à capa", 2))
+            itens.append(_botao(t, "Inicio", URNA, lib.acao_bookmark("TIX_CHEGADA_01"), "Sumário: todas as telas", 2))
         # leitura da tela (o "i")
         itens.append(Visual(p, lib.visual_html(
             f"{p}_Casca_Leitura", *LEITURA, VAZIO, folha_de_estilo=CSS, modelo_corpo=corpo_leitura(t),
