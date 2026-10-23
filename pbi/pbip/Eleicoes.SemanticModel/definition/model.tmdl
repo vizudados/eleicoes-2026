@@ -11,13 +11,14 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["pRepositorioRaw","pPastaApuracao","fxCsv","fxJson","fxHora","Apuração Brasil","Apuração UF","Apuração histórico","Apuração status","UF","Ano","Município","Município ano","Candidato ano","Candidato UF","Comparecimento ano","Abstenção perfil","Pesquisa","Debate","Trends tempo","Trends UF","Seguidores","Monitoramento","Anúncios","Trajetória","Transferência","Rejeição","Apoio","Local Contagem","T19 Lado","T20 Local","T22 Para Lula","T22 Não votam","T22 Comparecimento"]
+annotation PBI_QueryOrder = ["pRepositorioRaw","pPastaApuracao","fxCsv","fxJson","fxHora","Apuração Brasil","Apuração UF","Apuração histórico","Apuração exterior","Apuração status","UF","Ano","Município","Município ano","Candidato ano","Candidato UF","Comparecimento ano","Abstenção perfil","Pesquisa","Debate","Trends tempo","Trends UF","Seguidores","Monitoramento","Anúncios","Trajetória","Transferência","Rejeição","Apoio","Local Contagem","Exterior país","T19 Lado","T20 Local","T22 Para Lula","T22 Não votam","T22 Comparecimento"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
 ref table 'Apuração Brasil'
 ref table 'Apuração UF'
 ref table 'Apuração histórico'
+ref table 'Apuração exterior'
 ref table 'Apuração status'
 ref table UF
 ref table Ano
@@ -39,6 +40,7 @@ ref table 'Transferência'
 ref table 'Rejeição'
 ref table Apoio
 ref table 'Local Contagem'
+ref table 'Exterior país'
 ref table 'T19 Lado'
 ref table 'T20 Local'
 ref table 'T22 Para Lula'

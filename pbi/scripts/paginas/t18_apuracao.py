@@ -135,9 +135,12 @@ def declarar(ctx):
         # o exterior país a país (pedido do Alisson, 23/10/2026): o alvo fica sobre o EX e não recebe filtro do mapa
         # nem da casca (some se recebesse); o mapa também não recebe o clique do alvo
         *exterior.declarar(P, "T18_Mapa_Exterior", EX_ALVO, "Exterior · ao vivo · HTML", ordem=181, cruzar=True,
+                           altura=exterior.ALTURA + 34,
                            css_alvo=".ax{cursor:pointer;border-radius:5px}.ax:hover{box-shadow:inset 0 0 0 2px "
                                     + C["tinta"] + "}"),
         Interacao(P, "T18_Casca_Filtro", "T18_Mapa_Exterior", "NoFilter"),
         Interacao(P, "T18_Mapa_Html", "T18_Mapa_Exterior", "NoFilter"),
         Interacao(P, "T18_Mapa_Exterior", "T18_Mapa_Html", "NoFilter"),
+        # o filtro de UF não lista o exterior: filtrado pelo clique no EX, ficaria sem valores
+        Interacao(P, "T18_Mapa_Exterior", "T18_Casca_Filtro", "NoFilter"),
     ]

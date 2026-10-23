@@ -38,6 +38,7 @@ VAR _outros =
     )
 VAR _nl = [Exterior · países com Lula à frente]
 VAR _nf = [Exterior · países com Flávio à frente]
+VAR _ns = [Exterior · países sem vencedor]
 RETURN
     "<div class='tela tx'><div class='fita'></div>"
         & "<div class='rot topo-rot'>" & "EXTERIOR · 1º TURNO DE 2026 · " & [Exterior · cidades] & " CIDADES EM " & [Exterior · países] & " PAÍSES" & "</div>"
@@ -50,4 +51,5 @@ RETURN
         & "</div>"
         & "<div class='cab rot'><span>PAÍS</span><span>LULA</span><span></span><span>FLÁVIO</span><span>2022→26</span></div>"
         & "<div class='lista'>" & _linhas & "</div>" & _outros
-        & "<div class='pe nota'>" & "variação da margem do PT de 2022 (Lula × Bolsonaro) para 2026 (Lula × Flávio), em pontos; negativa: na direção do adversário" & "</div></div>"
+        & "<div class='pe nota'>" & IF ( _ns > 0, "Nos outros " & _ns & IF ( _ns = 1, " país, ", " países, " )
+        & "empate ou nenhum voto válido" & ". " ) & "2022→26: variação da margem do PT de 2022 (Lula × Bolsonaro) para 2026 (Lula × Flávio), em pontos; negativa, na direção do adversário." & "</div></div>"

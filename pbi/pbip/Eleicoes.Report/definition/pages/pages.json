@@ -38,11 +38,13 @@
     "ttT08Dia",
     "ttT18Uf",
     "ttT08Uf",
+    "ttT18Exterior",
     "ttT09Conversa",
     "ttT09Lado",
     "ttT10Instituto",
     "ttT11Municipio",
     "ttT12Uf",
+    "ttT12Exterior",
     "ttT14Ano",
     "ttT15Ano",
     "ttT16Segmento",
@@ -51,7 +53,8 @@
     "ttT17Rejeicao",
     "ttT19Municipio",
     "ttT20Escola",
-    "ttT22UF"
+    "ttT22UF",
+    "ttT22Exterior"
   ],
   "activePageName": "T00"
 }

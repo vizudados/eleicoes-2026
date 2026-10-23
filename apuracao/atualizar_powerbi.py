@@ -22,9 +22,9 @@ def token():
         return json.load(r)["access_token"]
 
 
-# Só as quatro tabelas da apuração (atualização avançada, PPU/Premium/Fabric): segundos em vez de recarregar o painel
+# Só as cinco tabelas da apuração (atualização avançada, PPU/Premium/Fabric): segundos em vez de recarregar o painel
 # inteiro. Em Pro a atualização avançada não existe: cai para a atualização comum do modelo.
-TABELAS = ["Apuração Brasil", "Apuração UF", "Apuração histórico", "Apuração status"]
+TABELAS = ["Apuração Brasil", "Apuração UF", "Apuração histórico", "Apuração exterior", "Apuração status"]
 
 
 def pedir(url, corpo, chave):

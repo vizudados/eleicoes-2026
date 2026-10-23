@@ -7,7 +7,7 @@ são o endereço público do GitHub.
 ## 1. Workspace com capacidade que aceite muitas atualizações
 
 Pro tem teto de 8 atualizações por dia. Use um workspace **PPU, Premium ou Fabric** (a atualização avançada, só das
-quatro tabelas da apuração, leva poucos segundos).
+cinco tabelas da apuração, leva poucos segundos).
 
 ## 2. Publicar
 

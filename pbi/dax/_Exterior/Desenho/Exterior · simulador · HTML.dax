@@ -9,7 +9,7 @@ RETURN
     SUBSTITUTE (
         [Exterior · 1º turno · HTML],
         "<div class='rot topo-rot'>",
-        "<div class='cen'><span class='rot'>NO SEU CENÁRIO, O EXTERIOR DARIA</span><b class='lula-esc'>Lula "
+        "<div class='cen'><span class='rot'>NO SEU CENÁRIO, NO 2º TURNO</span><b class='lula-esc'>Lula "
             & FORMAT ( _l, "0.0%" ) & "</b><b class='flavio-esc'>Flávio " & FORMAT ( _f, "0.0%" ) & "</b></div>"
             & "<div class='rot topo-rot'>"
     )

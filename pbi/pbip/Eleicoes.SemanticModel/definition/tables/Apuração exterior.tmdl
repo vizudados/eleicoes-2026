@@ -1,0 +1,135 @@
+/// As cidades do exterior na última coleta (exterior.csv), cada uma com o seu país: base do tooltip do exterior país a país na apuração.
+table 'Apuração exterior'
+	isHidden
+	lineageTag: b1020814-2ff7-584c-824a-2659731447df
+
+	/// Código TSE da cidade no exterior.
+	column CodTSE
+		dataType: string
+		isHidden
+		lineageTag: 5a14e269-8347-54f0-b381-4c2b1f272bdb
+		summarizeBy: none
+		sourceColumn: CodTSE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cidade com seção no exterior.
+	column Cidade
+		dataType: string
+		isHidden
+		lineageTag: f8e7bc7e-d65a-53b4-9aea-8489b8500d71
+		summarizeBy: none
+		sourceColumn: Cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	/// País da cidade (dados/bruto/exterior/cidade_pais.csv).
+	column 'País'
+		dataType: string
+		isHidden
+		lineageTag: 5568ed18-2c65-5e6f-8ddd-14df5ba1faab
+		summarizeBy: none
+		sourceColumn: País
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Continente ou região do mundo.
+	column Continente
+		dataType: string
+		isHidden
+		lineageTag: a995d890-3020-5e3b-a637-e54d548d33d6
+		summarizeBy: none
+		sourceColumn: Continente
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora de totalização da cidade no TSE.
+	column AtualizadoTSE
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy HH:mm
+		lineageTag: e7bdec22-a1af-5e62-86cb-fe793f41e47e
+		summarizeBy: none
+		sourceColumn: AtualizadoTSE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % de seções totalizadas na cidade.
+	column SecoesPct
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: ce75fdb5-3f49-5e25-8373-cdb5d36a20c9
+		summarizeBy: none
+		sourceColumn: SecoesPct
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Seções da cidade.
+	column SecoesTotal
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4be18395-4ca2-5883-b121-c2be3913f0ee
+		summarizeBy: none
+		sourceColumn: SecoesTotal
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Seções totalizadas na cidade.
+	column SecoesTotalizadas
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: a18ff953-6228-5b80-869f-0d95abf1fa02
+		summarizeBy: none
+		sourceColumn: SecoesTotalizadas
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos na cidade.
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: eadd8e09-53fc-5147-9675-2532255d55db
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Lula na cidade.
+	column LulaVotos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: e7002006-38d4-5219-ab5e-ce07789ddc45
+		summarizeBy: none
+		sourceColumn: LulaVotos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Flávio na cidade.
+	column FlavioVotos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: b2f7ff23-ed42-5347-b37d-bf2419b7848a
+		summarizeBy: none
+		sourceColumn: FlavioVotos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Apuração exterior' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv(pPastaApuracao & "/exterior.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"cd", "cidade", "pais", "continente", "atualizado_tse", "secoes_pct", "secoes_total", "secoes_totalizadas", "validos", "lula_votos", "flavio_votos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"cd", type text}, {"cidade", type text}, {"pais", type text}, {"continente", type text}, {"atualizado_tse", type text}, {"secoes_pct", type number}, {"secoes_total", Int64.Type}, {"secoes_totalizadas", Int64.Type}, {"validos", Int64.Type}, {"lula_votos", Int64.Type}, {"flavio_votos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"cd", "CodTSE"}, {"cidade", "Cidade"}, {"pais", "País"}, {"continente", "Continente"}, {"atualizado_tse", "AtualizadoTSE"}, {"secoes_pct", "SecoesPct"}, {"secoes_total", "SecoesTotal"}, {"secoes_totalizadas", "SecoesTotalizadas"}, {"validos", "Validos"}, {"lula_votos", "LulaVotos"}, {"flavio_votos", "FlavioVotos"}}),
+				    Horas = Table.TransformColumns(Nomes, {{"AtualizadoTSE", fxHora, type nullable datetime}})
+				in
+				    Horas
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,90 @@
+/// Votos do 1º turno no exterior por país, 2022 e 2026: PT (Lula), principal adversário (Bolsonaro em 2022, Flávio em 2026) e válidos, somando as cidades com seção de cada país.
+table 'Exterior país'
+	isHidden
+	lineageTag: 813ae287-144a-5917-9e28-acc651c35640
+
+	/// Ano da eleição.
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 649b07fa-992c-56ff-8d13-dec15f153778
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// País (Guiana Francesa à parte da França; Hong Kong dentro da China).
+	column 'País'
+		dataType: string
+		lineageTag: 404f5fc9-da23-57b3-806b-2eec58122fad
+		summarizeBy: none
+		sourceColumn: País
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Continente ou região do mundo.
+	column Continente
+		dataType: string
+		lineageTag: 4548a753-9589-57ba-8e4a-cbf07f85214a
+		summarizeBy: none
+		sourceColumn: Continente
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cidades com seção no país.
+	column Cidades
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 45844171-34b7-58b1-b849-6bd681818717
+		summarizeBy: none
+		sourceColumn: Cidades
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Lula.
+	column VotosPT
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 92ecfc01-8ac1-5092-87e8-f6e52b51e532
+		summarizeBy: none
+		sourceColumn: VotosPT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do principal adversário (22).
+	column VotosAdversario
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: fda96d21-c27e-5a8c-aad6-b1ea6921a12d
+		summarizeBy: none
+		sourceColumn: VotosAdversario
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos.
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: bc8d0c7f-d2cc-574b-8f69-adef993a9883
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Exterior país' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/exterior_pais.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "pais", "continente", "cidades", "pt", "adv", "validos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"pais", type text}, {"continente", type text}, {"cidades", Int64.Type}, {"pt", Int64.Type}, {"adv", Int64.Type}, {"validos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"pais", "País"}, {"continente", "Continente"}, {"cidades", "Cidades"}, {"pt", "VotosPT"}, {"adv", "VotosAdversario"}, {"validos", "Validos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

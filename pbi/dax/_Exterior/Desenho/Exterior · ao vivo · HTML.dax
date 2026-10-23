@@ -8,7 +8,7 @@ IF (
     SUBSTITUTE (
         [Exterior · 1º turno · HTML],
         "<div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026",
-        "<div class='aviso'>a apuração do exterior começa às 17h de 25/10 · por enquanto, como o exterior votou no 1º turno</div><div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026"
+        "<div class='aviso'>a apuração começa às 17h de 25/10; até lá, o voto do 1º turno</div><div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026"
     ),
 -- 1 · Leituras: os países com mais votos válidos (os 12 maiores) e o resto somado
 VAR _paises = VALUES ( 'Apuração exterior'[País] )
@@ -45,9 +45,10 @@ VAR _outros =
     )
 VAR _nl = [Apuração exterior · países com Lula à frente]
 VAR _nf = [Apuração exterior · países com Flávio à frente]
+VAR _ns = [Apuração exterior · países sem vencedor]
 RETURN
     "<div class='tela tx'><div class='fita'></div>"
-        & "<div class='rot topo-rot'>" & "EXTERIOR · APURAÇÃO DO 2º TURNO · " & FORMAT ( [Apuração exterior · seções %] * 100, "0" ) & "% DAS SEÇÕES EM " & [Apuração exterior · países] & " PAÍSES" & "</div>"
+        & "<div class='rot topo-rot'>" & "EXTERIOR AO VIVO · " & [Apuração · turno] & "º TURNO · " & FORMAT ( [Apuração exterior · seções %] * 100, "0" ) & "% DAS SEÇÕES · " & [Apuração exterior · países] & " PAÍSES" & "</div>"
         & "<div class='topo'><div class='c'><span class='num lula'>" & FORMAT ( _tl * 100, "0.0" ) & "%</span>"
         & "<span class='rot lula-esc'>LULA</span></div><div class='c'><span class='num flavio'>"
         & FORMAT ( _tf * 100, "0.0" ) & "%</span><span class='rot flavio-esc'>FLÁVIO</span></div>"
@@ -57,5 +58,6 @@ RETURN
         & "</div>"
         & "<div class='cab rot'><span>PAÍS</span><span>LULA</span><span></span><span>FLÁVIO</span><span>SEÇÕES</span></div>"
         & "<div class='lista'>" & _linhas & "</div>" & _outros
-        & "<div class='pe nota'>" & "países ordenados pelos votos válidos já apurados; a soma de Lula e Flávio dá 100% no 2º turno" & "</div></div>"
+        & "<div class='pe nota'>" & IF ( _ns > 0, "Nos outros " & _ns & IF ( _ns = 1, " país, ", " países, " )
+        & IF ( [Apuração exterior · seções %] >= 1, "empate ou nenhum voto válido", "empate ou nenhum voto apurado ainda" ) & ". " ) & "Países pelos votos válidos já apurados" & IF ( [Apuração · turno] = 2, "; no 2º turno, Lula e Flávio somam 100%.", "; no 1º turno, o resto é dos outros candidatos." ) & "</div></div>"
 )

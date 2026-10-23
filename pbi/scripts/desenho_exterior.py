@@ -42,9 +42,10 @@ def molde(fonte):
         celula3 = ('"<span class=\'dv " & IF ( [@d] < 0, "neg", "pos" ) & "\'>" & IF ( ISBLANK ( [@d] ), "novo", '
                    'FORMAT ( [@d], "+0.0;−0.0;0.0" ) ) & "</span>"')
         lula_n, flavio_n = "[Exterior · países com Lula à frente]", "[Exterior · países com Flávio à frente]"
+        sem_n, sem_txt = "[Exterior · países sem vencedor]", '"empate ou nenhum voto válido"'
         total_v, total_l, total_f = "[Exterior · válidos]", "[Exterior · Lula %]", "[Exterior · Flávio %]"
-        nota_pe = ('"variação da margem do PT de 2022 (Lula × Bolsonaro) para 2026 (Lula × Flávio), em pontos; '
-                   'negativa: na direção do adversário"')
+        nota_pe = ('"2022→26: variação da margem do PT de 2022 (Lula × Bolsonaro) para 2026 (Lula × Flávio), em '
+                   'pontos; negativa, na direção do adversário."')
     else:
         paises = "VALUES ( 'Apuração exterior'[País] )"
         col = "'Apuração exterior'[País]"
@@ -53,14 +54,19 @@ def molde(fonte):
         resto_v = "CALCULATE ( SUM ( 'Apuração exterior'[Validos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) )"
         resto_l = "CALCULATE ( SUM ( 'Apuração exterior'[LulaVotos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) )"
         resto_f = "CALCULATE ( SUM ( 'Apuração exterior'[FlavioVotos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) )"
-        rotulo = ('"EXTERIOR · APURAÇÃO DO 2º TURNO · " & FORMAT ( [Apuração exterior · seções %] * 100, "0" ) '
-                  '& "% DAS SEÇÕES EM " & [Apuração exterior · países] & " PAÍSES"')
+        rotulo = ('"EXTERIOR AO VIVO · " & [Apuração · turno] & "º TURNO · " '
+                  '& FORMAT ( [Apuração exterior · seções %] * 100, "0" ) & "% DAS SEÇÕES · " '
+                  '& [Apuração exterior · países] & " PAÍSES"')
         coluna3 = "SEÇÕES"
         celula3 = '"<span class=\'dv\'>" & FORMAT ( [@s] * 100, "0" ) & "%</span>"'
         lula_n, flavio_n = "[Apuração exterior · países com Lula à frente]", "[Apuração exterior · países com Flávio à frente]"
+        sem_n = "[Apuração exterior · países sem vencedor]"
+        sem_txt = ('IF ( [Apuração exterior · seções %] >= 1, "empate ou nenhum voto válido", '
+                   '"empate ou nenhum voto apurado ainda" )')
         total_v, total_l, total_f = ("[Apuração exterior · válidos]", "[Apuração exterior · Lula %]",
                                      "[Apuração exterior · Flávio %]")
-        nota_pe = '"países ordenados pelos votos válidos já apurados; a soma de Lula e Flávio dá 100% no 2º turno"'
+        nota_pe = ('"Países pelos votos válidos já apurados" & IF ( [Apuração · turno] = 2, "; no 2º turno, Lula e '
+                   'Flávio somam 100%.", "; no 1º turno, o resto é dos outros candidatos." )')
     return f"""
 -- 1 · Leituras: os países com mais votos válidos (os {TOP} maiores) e o resto somado
 VAR _paises = {paises}
@@ -97,6 +103,7 @@ VAR _outros =
     )
 VAR _nl = {lula_n}
 VAR _nf = {flavio_n}
+VAR _ns = {sem_n}
 RETURN
     "<div class='tela tx'><div class='fita'></div>"
         & "<div class='rot topo-rot'>" & {rotulo} & "</div>"
@@ -109,7 +116,8 @@ RETURN
         & "</div>"
         & "<div class='cab rot'><span>PAÍS</span><span>LULA</span><span></span><span>FLÁVIO</span><span>{coluna3}</span></div>"
         & "<div class='lista'>" & _linhas & "</div>" & _outros
-        & "<div class='pe nota'>" & {nota_pe} & "</div></div>"
+        & "<div class='pe nota'>" & IF ( _ns > 0, "Nos outros " & _ns & IF ( _ns = 1, " país, ", " países, " )
+        & {sem_txt} & ". " ) & {nota_pe} & "</div></div>"
 """
 
 
@@ -128,7 +136,7 @@ IF (
     SUBSTITUTE (
         [Exterior · 1º turno · HTML],
         "<div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026",
-        "<div class='aviso'>a apuração do exterior começa às 17h de 25/10 · por enquanto, como o exterior votou no 1º turno</div><div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026"
+        "<div class='aviso'>a apuração começa às 17h de 25/10; até lá, o voto do 1º turno</div><div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026"
     ),
 {vivo.strip()}
 )""")
@@ -147,7 +155,7 @@ RETURN
     SUBSTITUTE (
         [Exterior · 1º turno · HTML],
         "<div class='rot topo-rot'>",
-        "<div class='cen'><span class='rot'>NO SEU CENÁRIO, O EXTERIOR DARIA</span><b class='lula-esc'>Lula "
+        "<div class='cen'><span class='rot'>NO SEU CENÁRIO, NO 2º TURNO</span><b class='lula-esc'>Lula "
             & FORMAT ( _l, "0.0%" ) & "</b><b class='flavio-esc'>Flávio " & FORMAT ( _f, "0.0%" ) & "</b></div>"
             & "<div class='rot topo-rot'>"
     )

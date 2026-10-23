@@ -10,7 +10,9 @@ visuais HTML), lê o texto que cada visual desenhou e fotografa a tela. Nada é 
 
 Passos do roteiro (lista JSON): {"ir": "18 Apuração"} · {"clicar_botao": [x, y]} (coordenada da página 1920×1080, com
 Ctrl) · {"clicar_html": ".mq .q", "texto": "MG"} (primeiro elemento com o seletor e o texto, dentro de qualquer quadro) ·
-{"ler": ".t18p"} (texto do primeiro quadro que tem o seletor) · {"esperar": 2} · {"foto": "arquivo.png"} ·
+{"pairar_html": ".ax"} ou {"pairar": [x, y]} (mouse sobre o elemento ou a coordenada da página; abre o tooltip) ·
+{"ler": ".t18p"} (texto do primeiro quadro que tem o seletor) · {"esperar": 2} · {"foto": "arquivo.png"} (a página;
+com "janela": true, a janela inteira, para o tooltip que passa da borda) ·
 {"conferir": ".t18p", "contem": "MINAS GERAIS"} (falha se o texto não contiver).
 """
 from __future__ import annotations
@@ -112,6 +114,12 @@ def executar(pg, passos, pasta: Path) -> int:
                 time.sleep(p.get("espera", 3))
             print(f"{i:02d} mouse sobre {p['pairar_html']} {p.get('texto', '')}: {'ok' if el else 'FALHA'}")
             falhas += 0 if el else 1
+        elif "pairar" in p:
+            x0, y0, k = area_da_pagina(pg)
+            x, y = p["pairar"]
+            pg.mouse.move(x0 + x * k, y0 + y * k, steps=6)
+            time.sleep(p.get("espera", 3))
+            print(f"{i:02d} mouse em ({x}, {y})")
         elif "ler" in p:
             f, el = quadro_com(pg, p["ler"])
             print(f"{i:02d} {p['ler']}: " + ((el.inner_text() or "").replace("\n", " · ")[:400] if el else "(não achei)"))
@@ -137,8 +145,8 @@ def executar(pg, passos, pasta: Path) -> int:
             destino.parent.mkdir(parents=True, exist_ok=True)
             for tentativa in (1, 2):
                 try:
-                    pg.screenshot(path=str(destino), clip={"x": x0, "y": y0, "width": 1920 * k, "height": 1080 * k},
-                                  timeout=90000)
+                    recorte = None if p.get("janela") else {"x": x0, "y": y0, "width": 1920 * k, "height": 1080 * k}
+                    pg.screenshot(path=str(destino), clip=recorte, timeout=90000)
                     print(f"{i:02d} foto {destino}")
                     break
                 except Exception as e:  # noqa: BLE001 (página pesada ainda desenhando: tenta de novo, depois segue)
