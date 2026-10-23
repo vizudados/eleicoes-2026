@@ -1,0 +1,7 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0
+@descricao: Degrau no contexto (1 a 5): o grão do gráfico e do tooltip.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+SELECTEDVALUE ( 'T24 Degrau'[Degrau] )

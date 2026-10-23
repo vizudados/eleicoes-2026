@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'15 · Minha cidade: Como votou a minha cidade?'"
+                  "Value": "'16 · Minha cidade: Como votou a minha cidade?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'15 · Minha cidade: Como votou a minha cidade?'"
+                  "Value": "'16 · Minha cidade: Como votou a minha cidade?'"
                 }
               }
             },

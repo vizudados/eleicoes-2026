@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T22",
-  "displayName": "22 Simulador",
+  "displayName": "23 Simulador",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,

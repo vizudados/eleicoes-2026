@@ -1,0 +1,14 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: #,0.000
+@descricao: Máximo do indicador da lente entre os municípios do degrau (R$ por pessoa; fração do eleitorado; famílias por 100 casas; IDHM).
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _l = [T24 · lente]
+VAR _d = [T24 · degrau]
+RETURN
+    CALCULATE (
+        MAX ( 'Social município'[Valor] ),
+        'Social município'[Lente] = _l,
+        'Social município'[Degrau] = _d
+    )

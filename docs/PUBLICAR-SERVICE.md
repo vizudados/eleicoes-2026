@@ -1,6 +1,6 @@
 # Publicar no Power BI Service e ligar a apuração ao vivo
 
-O painel funciona inteiro no Power BI Desktop. Para a tela 18 andar sozinha no Service na noite de 25/10, faltam quatro
+O painel funciona inteiro no Power BI Desktop. Para a tela 19 (Apuração) andar sozinha no Service na noite de 25/10, faltam quatro
 passos que dependem de acesso de administrador (combinado para depois). Nada aqui precisa de gateway: todas as fontes
 são o endereço público do GitHub.
 
@@ -13,7 +13,7 @@ cinco tabelas da apuração, leva poucos segundos).
 
 Abra `pbi/pbip/Eleicoes.pbip` no Desktop e publique no workspace (Arquivo → Publicar). No Service, em Configurações do
 modelo semântico → Credenciais da fonte de dados, deixe `https://raw.githubusercontent.com` como **Anônimo** e o nível
-de privacidade **Público**. Rode uma atualização manual e confira a tela 18 (relógio até as 17h) e a capa (vídeo).
+de privacidade **Público**. Rode uma atualização manual e confira a tela 19, Apuração (relógio até as 17h) e a capa (vídeo).
 
 Recursos usados pelos visuais: o vídeo e as imagens vêm de `https://vizudados.github.io/eleicoes-2026/midia/…`
 (GitHub Pages). Se o administrador do locatário bloquear visuais personalizados com acesso à web, liberar os três
@@ -41,7 +41,7 @@ atualização das tabelas da apuração sempre que o TSE divulga números novos 
 ## Ensaio antes de domingo
 
 No Desktop, sem mexer no GitHub: troque o parâmetro `pPastaApuracao` para `dados/apuracao/ensaio-1turno` (Transformar
-dados → Gerenciar parâmetros) e atualize; a tela 18 mostra o 1º turno encerrado com o carimbo "ENSAIO · 1º TURNO".
+dados → Gerenciar parâmetros) e atualize; a tela 19 (Apuração) mostra o 1º turno encerrado com o carimbo "ENSAIO · 1º TURNO".
 Volte para `dados/apuracao` antes de publicar.
 
 O workflow também pode ser disparado à mão para testar o caminho inteiro (coleta, commit e pedido de atualização):

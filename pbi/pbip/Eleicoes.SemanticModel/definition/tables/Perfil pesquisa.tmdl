@@ -1,0 +1,107 @@
+/// Intenção de voto no 1º turno em Lula e Flávio por renda, escolaridade e Bolsa Família, na última rodada de cada instituto antes de 04/10/2026 que publicou o cruzamento.
+table 'Perfil pesquisa'
+	isHidden
+	lineageTag: af1669b5-9098-5e82-ada5-39b0a0109679
+
+	/// Instituto da pesquisa.
+	column Instituto
+		dataType: string
+		lineageTag: 8f499672-0457-5653-b6c1-3c1e254c9265
+		summarizeBy: none
+		sourceColumn: Instituto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Data de divulgação.
+	column 'Divulgação'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: d2468b6e-432f-58c5-aa2e-56102e5db61c
+		summarizeBy: none
+		sourceColumn: Divulgação
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Período de campo e registro no TSE.
+	column Campo
+		dataType: string
+		isHidden
+		lineageTag: 8beaabbe-e91f-5807-a586-789f34cb53b8
+		summarizeBy: none
+		sourceColumn: Campo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Lula ou Flávio.
+	column Candidato
+		dataType: string
+		lineageTag: 38616b47-4677-58fa-ad1b-d26efb6bd147
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Renda, Escolaridade ou Bolsa Família (a mesma da tela).
+	column Lente
+		dataType: string
+		lineageTag: 46c97028-d09c-5c39-b06f-8ab42731fbd6
+		summarizeBy: none
+		sourceColumn: Lente
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Faixa do instituto (ex. até 2 SM, superior, beneficiário).
+	column Categoria
+		dataType: string
+		lineageTag: 4ad4a9bf-be52-51cf-8935-2b28ac3b438c
+		summarizeBy: none
+		sourceColumn: Categoria
+		sortByColumn: CategoriaOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem da faixa.
+	column CategoriaOrdem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 48644969-5105-5d1b-8b0a-8cee1d0781fd
+		summarizeBy: none
+		sourceColumn: CategoriaOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Intenção de voto no segmento (% do total).
+	column Percentual
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: c22f1898-53f0-56ff-a6de-0d4ef066a6e7
+		summarizeBy: none
+		sourceColumn: Percentual
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Endereço da fonte.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 627fff8b-96eb-57f6-8484-6ded99783a9f
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Perfil pesquisa' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/perfil_pesquisa.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"instituto", "divulgacao", "campo", "candidato", "lente", "categoria", "categoria_ordem", "percentual", "fonte_url"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"instituto", type text}, {"divulgacao", type date}, {"campo", type text}, {"candidato", type text}, {"lente", type text}, {"categoria", type text}, {"categoria_ordem", Int64.Type}, {"percentual", type number}, {"fonte_url", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"instituto", "Instituto"}, {"divulgacao", "Divulgação"}, {"campo", "Campo"}, {"candidato", "Candidato"}, {"lente", "Lente"}, {"categoria", "Categoria"}, {"categoria_ordem", "CategoriaOrdem"}, {"percentual", "Percentual"}, {"fonte_url", "Fonte"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

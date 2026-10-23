@@ -1,0 +1,17 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: #,0
+@descricao: Municípios no degrau, na lente escolhida.
+@oraculo: pandas sobre dados/pbi/municipio_social.csv × municipio_ano.csv (23/10/2026) · Renda: 2.073, 1.507, 1.168, 671, 151
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _l = [T24 · lente]
+VAR _d = [T24 · degrau]
+VAR _m =
+    CALCULATETABLE (
+        VALUES ( 'Social município'[CodIBGE] ),
+        'Social município'[Lente] = _l,
+        'Social município'[Degrau] = _d
+    )
+RETURN
+    COUNTROWS ( _m ) + 0

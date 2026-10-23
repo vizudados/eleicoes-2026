@@ -1,0 +1,20 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: #,0
+@descricao: Votos de Lula no 1º turno de 2022 nos municípios do degrau (na lente).
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _l = [T24 · lente]
+VAR _d = [T24 · degrau]
+VAR _m =
+    CALCULATETABLE (
+        VALUES ( 'Social município'[CodIBGE] ),
+        'Social município'[Lente] = _l,
+        'Social município'[Degrau] = _d
+    )
+RETURN
+    CALCULATE (
+        SUM ( 'Município ano'[VotosPT] ),
+        'Município ano'[Ano] = 2022,
+        TREATAS ( _m, 'Município'[CodIBGE] )
+    )

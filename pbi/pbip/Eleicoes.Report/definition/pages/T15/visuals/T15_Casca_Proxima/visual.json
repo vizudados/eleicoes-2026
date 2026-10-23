@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 16 Os outros — Para onde vão os votos dos outros candidatos?'"
+                  "Value": "'Próxima: 17 Os outros — Para onde vão os votos dos outros candidatos?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 16 Os outros — Para onde vão os votos dos outros candidatos?'"
+                  "Value": "'Próxima: 17 Os outros — Para onde vão os votos dos outros candidatos?'"
                 }
               }
             },

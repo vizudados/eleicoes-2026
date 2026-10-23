@@ -1,8 +1,12 @@
-"""roteiro — as 24 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
+"""roteiro — as 25 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
 
-Cada tela: código (T00…T23, nome da página no PBIR), nome curto, pergunta (o título da tela, na voz de quem assiste),
-ato, se é escura (capa e encerramento), o filtro que a tela tem (só onde muda a leitura, pedido do Alisson em
-23/10/2026) e a linha de fonte do rodapé.
+Cada tela: código (nome da página no PBIR e prefixo de visuais e medidas), nome curto, pergunta (o título da tela, na
+voz de quem assiste), ato, se é escura (capa e encerramento), o filtro que a tela tem (só onde muda a leitura, pedido
+do Alisson em 23/10/2026) e a linha de fonte do rodapé.
+
+O número que o leitor vê ("14 · Quem vota") é a posição na lista, não o código: a tela T24 (quem vota em quem, pedida
+em 23/10/2026 como tela própria para não poluir a 13) entra depois da T13 e as seguintes andam uma casa, sem trocar os
+códigos de páginas, visuais, medidas e marcadores que já existem.
 """
 
 from dataclasses import dataclass
@@ -20,7 +24,8 @@ class Tela:
 
     @property
     def numero(self) -> str:
-        return self.codigo[1:]
+        """Número da tela para o leitor: a posição no roteiro (00 = capa)."""
+        return f"{TELAS.index(self):02d}"
 
     @property
     def titulo_pagina(self) -> str:
@@ -50,6 +55,9 @@ TELAS = [
     Tela("T12", "Estados", "Como cada estado se moveu?", "III · O mapa"),
     Tela("T13", "Perfil", "Em que tipo de cidade Lula perdeu mais?", "III · O mapa", filtro="UF",
          fonte="Fontes: TSE e IBGE (Censo 2022: população e renda domiciliar per capita)"),
+    Tela("T24", "Quem vota", "Quem vota em Lula e quem vota em Flávio?", "III · O mapa",
+         fonte="Fontes: TSE (resultado e perfil do eleitorado), IBGE (Censo 2022), Portal da Transparência (Bolsa "
+               "Família, ago/2026), Atlas do Desenvolvimento Humano (IDHM 2010) e Datafolha"),
     Tela("T14", "Série", "Como o PT chegou até aqui, de 2006 a 2026?", "III · O mapa", filtro="UF"),
     Tela("T15", "Minha cidade", "Como votou a minha cidade?", "Epílogo", filtro="Município"),
     Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "Epílogo",
@@ -68,6 +76,11 @@ TELAS = [
          fonte="Vizu Dados · vizudados.com.br · dados e código em github.com/vizudados/eleicoes-2026"),
 ]
 POR_CODIGO = {t.codigo: t for t in TELAS}
+
+
+def numero(codigo: str) -> str:
+    """Número que o leitor vê para o código de uma tela (ex.: numero("T18") == "19")."""
+    return POR_CODIGO[codigo].numero
 
 
 def anterior(t: Tela) -> Tela | None:

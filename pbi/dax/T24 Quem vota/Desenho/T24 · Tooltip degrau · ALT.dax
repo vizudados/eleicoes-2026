@@ -1,0 +1,8 @@
+/*
+@pasta: T24 Quem vota\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê do degrau.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+"Degrau " & [T24 · degrau] & " da lente " & [T24 · lente] & ": " & FORMAT ( [T24 · municípios], "#,0" ) & " municípios; Lula "
+    & FORMAT ( [T24 · Lula % 2022], "0.0%" ) & " em 2022 e " & FORMAT ( [T24 · Lula % 2026], "0.0%" ) & " em 2026."

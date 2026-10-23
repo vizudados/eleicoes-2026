@@ -1,0 +1,85 @@
+/*
+@pasta: T24 Quem vota\Desenho
+@formato: texto
+@descricao: Um degrau por entrada (granularidade T24 Degrau): a coluna que pega o mouse, os pontos de Lula e Flávio com o %, o traço a caneta até o degrau seguinte, a nota onde a vantagem troca de lado e a faixa do indicador embaixo.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+-- 1 · Leituras
+VAR _d = [T24 · degrau]
+VAR _l = [T24 · lente]
+VAR _lu = [T24 · Lula % 2026]
+VAR _fl = [T24 · Flávio % 2026]
+VAR _lu2 = [T24 · Lula % 2026 · degrau seguinte]
+VAR _fl2 = [T24 · Flávio % 2026 · degrau seguinte]
+VAR _vmin = [T24 · valor mínimo]
+VAR _vmax = [T24 · valor máximo]
+-- 2 · Textos (a faixa do indicador no degrau)
+VAR _fmt =
+    SWITCH ( _l, "Renda", "#,0", "Escolaridade", "0", "Bolsa Família", "0", "0.000" )
+VAR _k = IF ( _l = "Escolaridade", 100, 1 )
+VAR _a = FORMAT ( _vmin * _k, _fmt )
+VAR _b = FORMAT ( _vmax * _k, _fmt )
+-- nas pontas, só o limite de dentro: o extremo de fora é uma cidade só (há cidade com mais famílias que casas)
+VAR _pre = SWITCH ( _l, "Renda", "R$ ", "IDH", "IDHM ", "" )
+VAR _pos = SWITCH ( _l, "Escolaridade", "%", "Bolsa Família", " por 100 casas", "" )
+VAR _faixa =
+    SWITCH ( _d,
+        1, "até " & _pre & _b & _pos,
+        5, "mais de " & _pre & _a & _pos,
+        _pre & _a & IF ( _l = "Escolaridade", "%", "" ) & " a " & _b & _pos )
+-- 3 · Geometria
+VAR _x = 130 + ( _d - 1 ) * 180
+VAR _yl = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _lu ) ) - 0.2 ) * 960 )
+VAR _yf = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _fl ) ) - 0.2 ) * 960 )
+VAR _temSeg = NOT ISBLANK ( _lu2 )
+VAR _x2 = _x + 180
+VAR _yl2 = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _lu2 ) ) - 0.2 ) * 960 )
+VAR _yf2 = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _fl2 ) ) - 0.2 ) * 960 )
+VAR _luCima = _lu >= _fl
+VAR _a1 = _lu - _fl
+VAR _a2 = _lu2 - _fl2
+VAR _cruza = _temSeg && ( ( _a1 > 0 && _a2 < 0 ) || ( _a1 < 0 && _a2 > 0 ) )
+VAR _t = DIVIDE ( _a1, _a1 - _a2 )
+VAR _xc = _x + _t * 180
+VAR _yc = _yl + _t * ( _yl2 - _yl )
+VAR _atraso = 300 + _d * 260
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _d ) && NOT ISBLANK ( _lu ),
+        "<div class='tela t24g'>"
+            & "<div class='banda entra' style='left:" & ( _x - 86 ) & "px;animation-delay:" & ( _d * 80 )
+            & "ms'></div>"
+            & "<svg class='sv' width='940' height='684' viewBox='0 0 940 684'>"
+            & IF (
+                _temSeg,
+                "<line class='traco ll' pathLength='1' filter='url(#rb24)' style='animation-delay:" & _atraso
+                    & "ms' x1='" & _x & "' y1='" & FORMAT ( _yl, "0.0", "en-US" ) & "' x2='" & _x2 & "' y2='" & FORMAT ( _yl2, "0.0", "en-US" ) & "'/>"
+                    & "<line class='traco lf' pathLength='1' filter='url(#rb24)' style='animation-delay:" & _atraso
+                    & "ms' x1='" & _x & "' y1='" & FORMAT ( _yf, "0.0", "en-US" ) & "' x2='" & _x2 & "' y2='" & FORMAT ( _yf2, "0.0", "en-US" ) & "'/>"
+            )
+            & "<circle class='brota pl' style='animation-delay:" & ( _atraso - 150 ) & "ms' cx='" & _x & "' cy='"
+            & FORMAT ( _yl, "0.0", "en-US" ) & "' r='8'/>"
+            & "<circle class='brota pf' style='animation-delay:" & ( _atraso - 150 ) & "ms' cx='" & _x & "' cy='"
+            & FORMAT ( _yf, "0.0", "en-US" ) & "' r='8'/>"
+            & IF (
+                _cruza,
+                "<ellipse class='traco cz' pathLength='1' filter='url(#rb24)' style='animation-delay:"
+                    & ( _atraso + 700 ) & "ms' cx='" & FORMAT ( _xc, "0.0", "en-US" ) & "' cy='" & FORMAT ( _yc, "0.0", "en-US" ) & "' rx='18' ry='14'/>"
+            )
+            & "</svg>"
+            & "<span class='vl lula-esc sobe' style='left:" & ( _x - 50 ) & "px;top:"
+            & FORMAT ( IF ( _luCima, _yl - 44, _yl + 14 ), "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 100 ) & "ms'>"
+            & FORMAT ( _lu * 100, "0.0" ) & "%</span>"
+            & "<span class='vl flavio-esc sobe' style='left:" & ( _x - 50 ) & "px;top:"
+            & FORMAT ( IF ( _luCima, _yf + 14, _yf - 44 ), "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 100 ) & "ms'>"
+            & FORMAT ( _fl * 100, "0.0" ) & "%</span>"
+            & IF (
+                _cruza,
+                "<span class='cruz mao entra' style='left:" & ( IF ( _t < 0.5, _x, _x2 ) - 86 )
+                    & "px;animation-delay:" & ( _atraso + 900 ) & "ms'>aqui troca de lado</span>"
+            )
+            & "<div class='pe' style='left:" & ( _x - 86 ) & "px'><b>" & _d & "º QUINTO</b><span>" & _faixa
+            & "</span></div>"
+        & "</div>"
+    )

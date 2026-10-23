@@ -3,7 +3,7 @@
   "name": "T23_Fecho_Ir17",
   "position": {
     "x": 140,
-    "y": 800,
+    "y": 840,
     "z": 1020,
     "height": 40,
     "width": 1020,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 17: Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.'"
+                  "Value": "'Voltar à tela 18: Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 17: Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.'"
+                  "Value": "'Voltar à tela 18: Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.'"
                 }
               }
             },

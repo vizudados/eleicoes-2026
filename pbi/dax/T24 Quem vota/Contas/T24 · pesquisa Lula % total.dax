@@ -1,0 +1,17 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0%
+@descricao: Intenção de voto em Lula entre todos os eleitores da pesquisa da lente (a linha de referência do cartão).
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _i = [T24 · instituto]
+RETURN
+    DIVIDE (
+        CALCULATE (
+            MAX ( 'Perfil pesquisa'[Percentual] ),
+            'Perfil pesquisa'[Candidato] = "Lula",
+            'Perfil pesquisa'[Lente] = "Todos",
+            'Perfil pesquisa'[Instituto] = _i
+        ),
+        100
+    )

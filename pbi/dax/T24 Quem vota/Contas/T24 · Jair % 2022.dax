@@ -1,0 +1,7 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0.0%
+@descricao: Jair Bolsonaro sobre os válidos de 2022 no degrau.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+DIVIDE ( [T24 · votos de Jair 2022], [T24 · válidos 2022] )

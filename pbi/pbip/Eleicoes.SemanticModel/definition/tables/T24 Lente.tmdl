@@ -1,0 +1,35 @@
+/// As quatro lentes da tela 14 (Quem vota), na ordem dos botões. Sem marca, a tela usa Renda.
+table 'T24 Lente'
+	lineageTag: 39bc8d28-166f-5874-80c0-5b5063b169a9
+
+	/// Renda, Escolaridade, Bolsa Família, IDH.
+	column Lente
+		dataType: string
+		lineageTag: f0896bb3-7a44-5a67-b15d-cbcf5ba3fb32
+		summarizeBy: none
+		sourceColumn: Lente
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem do botão.
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 43ebb1e7-a45d-5451-8cd1-8b31e7fd6d96
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T24 Lente' = m
+		mode: import
+		source =
+				let
+				    Tabela = #table(type table [Lente = text, Ordem = Int64.Type],
+				        {{"Renda", 1}, {"Escolaridade", 2}, {"Bolsa Família", 3}, {"IDH", 4}})
+				in
+				    Tabela
+
+	annotation PBI_ResultType = Table

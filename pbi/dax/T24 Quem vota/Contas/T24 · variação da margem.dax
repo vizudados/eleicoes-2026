@@ -1,0 +1,8 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: +0.0;−0.0;0.0
+@descricao: Variação da margem de Lula de 2022 para 2026 no degrau, em pontos (negativa: na direção do adversário).
+@oraculo: pandas sobre dados/pbi/municipio_social.csv × municipio_ano.csv (23/10/2026) · Renda, degrau 1: 46,0 → 37,0 (−9,0)
+@gerado: pbi/scripts/desenho_t24.py
+*/
+( [T24 · margem 2026] - [T24 · margem 2022] ) * 100

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Sumário — as 24 telas por ato, cada uma clicável (dono: main). Página fora da sequência das setas: a urna do canto
+"""Sumário — as telas por ato, cada uma clicável (dono: main). Página fora da sequência das setas: a urna do canto
 de cada tela abre o sumário, e a capa tem o atalho "sumário".
 
   TIX_Sumario_Html   o título, os atos em colunas (número, nome e a pergunta de cada tela), o rodapé da casa
@@ -24,7 +24,7 @@ C = estilo.COR
 COLUNAS = [
     ("ABERTURA · I · O RESULTADO", ["T00", "T01", "T02", "T03", "T04", "T05", "T06"]),
     ("II · A CAMPANHA", ["T07", "T08", "T09", "T10"]),
-    ("III · O MAPA", ["T11", "T12", "T13", "T14"]),
+    ("III · O MAPA", ["T11", "T12", "T13", "T24", "T14"]),
     ("EPÍLOGO", ["T15", "T16", "T17", "T18"]),
     ("IV · EXPLORE VOCÊ MESMO · FIM", ["T19", "T20", "T21", "T22", "T23"]),
 ]
@@ -76,10 +76,11 @@ def corpo() -> str:
     return (
         f"<style>{css}</style><div class='tela sm'>"
         f"<img alt='' src='{urna}' style='position:absolute;left:52px;top:50px;width:60px'/>"
-        "<div class='cab'><div class='sob sobe'>SUMÁRIO</div><div class='tit sobe d1'>24 telas, quatro atos e um "
-        "epílogo: escolha por onde começar</div></div>"
+        f"<div class='cab'><div class='sob sobe'>SUMÁRIO</div><div class='tit sobe d1'>{len(roteiro.TELAS)} telas, "
+        "quatro atos e um epílogo: escolha por onde começar</div></div>"
         + "".join(partes)
-        + "<div class='nota entra d14'>↑ a 18 fica ao vivo no domingo, 25/10, a partir das 17h</div>"
+        + f"<div class='nota entra d14'>↑ a {roteiro.numero('T18')} fica ao vivo no domingo, 25/10, a partir das "
+        "17h</div>"
         f"<div class='pe'><span>{estilo.logo_vizu(C['marrom'])}</span><span class='fonte'>Vizu Dados · dados e código "
         "em github.com/vizudados/eleicoes-2026</span></div></div>{{content}}"
     )
@@ -93,7 +94,7 @@ def declarar(ctx):
     itens = [Pagina(pag, ordem=0),          # logo depois da capa na lista de páginas
              Visual(P, lib.visual_html("TIX_Sumario_Html", 0, 0, lib.LARGURA, lib.ALTURA, "Casca · vazio",
                                        folha_de_estilo=CSS, modelo_corpo=corpo(), movimento=False,
-                                       alt="Sumário: as 24 telas do painel por ato; clique numa tela para ir até ela.",
+                                       alt=f"Sumário: as {len(roteiro.TELAS)} telas do painel por ato; clique numa tela para ir até ela.",
                                        z=lib.CAMADAS["conteudo"], tab=100))]
     for cod, x, y in _itens():
         t = roteiro.POR_CODIGO[cod]

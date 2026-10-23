@@ -16,6 +16,7 @@
     "T11",
     "T12",
     "T13",
+    "T24",
     "T14",
     "T15",
     "T16",
@@ -54,7 +55,8 @@
     "ttT19Municipio",
     "ttT20Escola",
     "ttT22UF",
-    "ttT22Exterior"
+    "ttT22Exterior",
+    "ttT24Degrau"
   ],
   "activePageName": "T00"
 }

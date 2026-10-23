@@ -50,7 +50,8 @@ python -I -X utf8 pipeline/montar_dados_mockup.py
 
 ## O painel no Power BI (`pbi/`)
 
-24 telas a 1920 × 1080 (00 Capa … 23 Encerramento, `pbi/scripts/roteiro.py`), em quatro atos e um epílogo. Abra
+25 telas a 1920 × 1080 (00 Capa … 24 Encerramento, `pbi/scripts/roteiro.py`), em quatro atos e um epílogo; a
+14 · Quem vota cruza o voto com renda, escolaridade, Bolsa Família e IDH (`pipeline/extrair_social.py`). Abra
 `pbi/pbip/Eleicoes.pbip` no Power BI Desktop; o modelo lê os CSV de `dados/pbi` e de `dados/apuracao` pelo endereço raw
 deste repositório (parâmetro `pRepositorioRaw`), então funciona em qualquer máquina e no Service sem gateway.
 

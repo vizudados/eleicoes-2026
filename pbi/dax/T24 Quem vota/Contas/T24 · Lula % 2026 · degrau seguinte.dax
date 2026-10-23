@@ -1,0 +1,9 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0.0%
+@descricao: Lula no degrau seguinte (para o traço do gráfico ir de um degrau ao outro); vazio no 5º.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _d = [T24 · degrau]
+RETURN
+    IF ( _d < 5, CALCULATE ( [T24 · Lula % 2026], 'T24 Degrau'[Degrau] = _d + 1 ) )

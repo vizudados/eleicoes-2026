@@ -1,0 +1,7 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: texto
+@descricao: Lente escolhida nos botões (Renda, Escolaridade, Bolsa Família ou IDH); sem marca, Renda.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+SELECTEDVALUE ( 'T24 Lente'[Lente], "Renda" )

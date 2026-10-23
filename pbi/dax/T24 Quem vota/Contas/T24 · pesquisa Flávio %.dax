@@ -1,0 +1,18 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0%
+@descricao: Intenção de voto em Flávio na faixa (no contexto: a categoria), na pesquisa da lente, em % do total da faixa.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _l = [T24 · lente]
+VAR _i = [T24 · instituto]
+RETURN
+    DIVIDE (
+        CALCULATE (
+            MAX ( 'Perfil pesquisa'[Percentual] ),
+            'Perfil pesquisa'[Candidato] = "Flávio",
+            'Perfil pesquisa'[Lente] = _l,
+            'Perfil pesquisa'[Instituto] = _i
+        ),
+        100
+    )

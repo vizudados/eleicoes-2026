@@ -1,0 +1,55 @@
+/*
+@pasta: T24 Quem vota\Desenho
+@formato: texto
+@descricao: Dossiê do degrau (página de tooltip ttT24Degrau): municípios e eleitores, a faixa do indicador, Lula e o adversário em 2022 e 2026, a variação da margem e as maiores cidades.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+-- 1 · Leituras
+VAR _d = [T24 · degrau]
+VAR _l = [T24 · lente]
+VAR _mun = [T24 · municípios]
+VAR _ele = [T24 · eleitores]
+VAR _l22 = [T24 · Lula % 2022]
+VAR _j22 = [T24 · Jair % 2022]
+VAR _l26 = [T24 · Lula % 2026]
+VAR _f26 = [T24 · Flávio % 2026]
+VAR _var = [T24 · variação da margem]
+VAR _codigos =
+    CALCULATETABLE (
+        VALUES ( 'Social município'[CodIBGE] ),
+        'Social município'[Lente] = _l,
+        'Social município'[Degrau] = _d
+    )
+VAR _cidades =
+    CALCULATETABLE (
+        TOPN ( 3, VALUES ( 'Município'[Rótulo] ), CALCULATE ( SUM ( 'Município'[População] ) ), DESC ),
+        TREATAS ( _codigos, 'Município'[CodIBGE] )
+    )
+-- 2 · Textos
+VAR _txtCid = CONCATENATEX ( _cidades, 'Município'[Rótulo], ", ", CALCULATE ( SUM ( 'Município'[População] ) ), DESC )
+VAR _ponta =
+    SWITCH ( _d, 1, " · o de menos ", 5, " · o de mais ", " · " )
+    & SWITCH ( _l, "Renda", "renda", "Escolaridade", "escolaridade", "Bolsa Família", "Bolsa Família", "IDH" )
+VAR _ponta2 = IF ( _d = 1 || _d = 5, _ponta, "" )
+VAR _frase =
+    IF ( _var < 0,
+        "A margem de Lula aqui caiu " & FORMAT ( ABS ( _var ), "0.0" ) & IF ( ROUND ( ABS ( _var ), 1 ) = 1, " ponto", " pontos" )
+            & " desde 2022.",
+        "A margem de Lula aqui subiu " & FORMAT ( _var, "0.0" ) & IF ( ROUND ( _var, 1 ) = 1, " ponto", " pontos" )
+            & " desde 2022." )
+-- 3 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        "<div class='tela tt24'><div class='fita'></div>"
+            & "<div class='rot'>" & _d & "º QUINTO DOS ELEITORES" & UPPER ( _ponta2 ) & "</div>"
+            & "<div class='num-l'><b>" & FORMAT ( _mun, "#,0" ) & "</b> " & IF ( _mun = 1, "município", "municípios" )
+            & " · <b>" & FORMAT ( _ele / 1e6, "0.0" ) & " mi</b> de eleitores</div>"
+            & "<div class='duas'><div><span class='rot'>2022</span><span class='lula-esc'>Lula " & FORMAT ( _l22 * 100, "0.0" )
+            & "%</span><span class='flavio-esc'>Jair " & FORMAT ( _j22 * 100, "0.0" ) & "%</span></div>"
+            & "<div><span class='rot'>2026</span><span class='lula-esc'>Lula " & FORMAT ( _l26 * 100, "0.0" )
+            & "%</span><span class='flavio-esc'>Flávio " & FORMAT ( _f26 * 100, "0.0" ) & "%</span></div></div>"
+            & "<div class='txt'>" & _frase & "</div>"
+            & "<div class='cid'><span class='rot'>MAIORES CIDADES</span>" & _txtCid & "</div>"
+        & "</div>"
+    )

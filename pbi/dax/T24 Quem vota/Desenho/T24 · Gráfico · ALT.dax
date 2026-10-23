@@ -1,0 +1,10 @@
+/*
+@pasta: T24 Quem vota\Desenho
+@formato: texto
+@descricao: Texto alternativo do gráfico dos degraus.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+"Gráfico da lente " & [T24 · lente] & ": cinco degraus de eleitores, de menos a mais; Lula começa com "
+    & FORMAT ( [T24 · Lula % 2026 · degrau 1], "0.0%" ) & " e termina com " & FORMAT ( [T24 · Lula % 2026 · degrau 5], "0.0%" )
+    & "; Flávio vai de " & FORMAT ( [T24 · Flávio % 2026 · degrau 1], "0.0%" ) & " a "
+    & FORMAT ( [T24 · Flávio % 2026 · degrau 5], "0.0%" ) & ". Passe o mouse num degrau para ver 2022 e as cidades."

@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 23 Encerramento — O que os números dizem, afinal?'"
+                  "Value": "'Próxima: 24 Encerramento — O que os números dizem, afinal?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 23 Encerramento — O que os números dizem, afinal?'"
+                  "Value": "'Próxima: 24 Encerramento — O que os números dizem, afinal?'"
                 }
               }
             },

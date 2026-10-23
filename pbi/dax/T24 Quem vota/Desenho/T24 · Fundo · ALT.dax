@@ -1,0 +1,11 @@
+/*
+@pasta: T24 Quem vota\Desenho
+@formato: texto
+@descricao: Texto alternativo da manchete da lente.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _l = [T24 · lente]
+RETURN
+    "Lente " & _l & ": no 1º degrau, Lula " & FORMAT ( [T24 · Lula % 2026 · degrau 1], "0.0%" ) & " e Flávio "
+        & FORMAT ( [T24 · Flávio % 2026 · degrau 1], "0.0%" ) & "; no 5º, Lula " & FORMAT ( [T24 · Lula % 2026 · degrau 5], "0.0%" )
+        & " e Flávio " & FORMAT ( [T24 · Flávio % 2026 · degrau 5], "0.0%" ) & "."

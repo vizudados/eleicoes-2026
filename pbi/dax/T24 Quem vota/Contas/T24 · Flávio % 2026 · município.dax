@@ -1,0 +1,10 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0.0%
+@descricao: Flávio sobre os válidos de 2026 no município do contexto (as pontas da régua do IDH no cartão).
+@gerado: pbi/scripts/desenho_t24.py
+*/
+DIVIDE (
+    CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2026 ),
+    CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2026 )
+)

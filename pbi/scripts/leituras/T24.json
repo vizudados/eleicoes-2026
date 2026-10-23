@@ -1,0 +1,6 @@
+{"titulo": "Quem vota em Lula e quem vota em Flávio?",
+ "blocos": [
+  ["Como ler", "Escolha a lente nas abas. O gráfico põe as cidades em fila pelo indicador, da que tem menos para a que tem mais, e corta a fila em cinco degraus com o mesmo número de eleitores. As linhas mostram quanto Lula e Flávio tiveram em cada degrau; passe o mouse num degrau para ver 2022 e as maiores cidades."],
+  ["De onde vêm os números", "Votos do 1º turno do TSE; renda por pessoa e domicílios do Censo 2022 (IBGE); escolaridade do eleitorado do TSE (2026); famílias no Bolsa Família em agosto de 2026 (Portal da Transparência), por 100 domicílios: uma casa pode ter mais de uma família, então é uma aproximação; IDHM de 2010 (Atlas do Desenvolvimento Humano). O cartão da direita é o Datafolha de 29/09 a 01/10, a última rodada do instituto com as três perguntas."],
+  ["Para lembrar", "O voto é secreto: o gráfico mostra onde vivem os eleitores, não quem eles são (numa cidade rica também há eleitor pobre). Por isso a pesquisa fica ao lado, perguntando às pessoas. Cada instituto mede de um jeito: a AtlasIntel, pela internet e com faixas em reais, achou Lula à frente entre quem fez faculdade; o Datafolha, em entrevistas presenciais, achou Flávio."]
+ ]}

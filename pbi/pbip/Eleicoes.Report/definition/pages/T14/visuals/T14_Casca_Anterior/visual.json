@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 13 Perfil'"
+                  "Value": "'Voltar: 14 Quem vota'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 13 Perfil'"
+                  "Value": "'Voltar: 14 Quem vota'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T13_CHEGADA_01'"
+                  "Value": "'T24_CHEGADA_01'"
                 }
               }
             }

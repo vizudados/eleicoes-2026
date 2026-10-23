@@ -1,0 +1,8 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0.0%
+@descricao: Flávio Bolsonaro sobre os válidos de 2026 no degrau.
+@oraculo: pandas sobre dados/pbi/municipio_social.csv × municipio_ano.csv (23/10/2026) · Renda, degrau 1, 2026: 29,3%
+@gerado: pbi/scripts/desenho_t24.py
+*/
+DIVIDE ( [T24 · votos de Flávio 2026], [T24 · válidos 2026] )

@@ -1,0 +1,26 @@
+/// Os cinco degraus da tela 14 (Quem vota): grão do gráfico e do tooltip.
+table 'T24 Degrau'
+	isHidden
+	lineageTag: acf00067-0e09-5ba2-bf7b-ada9b6fae096
+
+	/// Degrau de 1 (menos) a 5 (mais).
+	column Degrau
+		dataType: int64
+		formatString: 0
+		lineageTag: 353542a1-1126-5f0e-8cde-1c552c529906
+		summarizeBy: none
+		sourceColumn: Degrau
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T24 Degrau' = m
+		mode: import
+		source =
+				let
+				    Valores = List.Numbers(1, 5, 1),
+				    Tabela = Table.FromList(Valores, Splitter.SplitByNothing(), {"Degrau"}),
+				    Tipos = Table.TransformColumnTypes(Tabela, {{"Degrau", Int64.Type}})
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

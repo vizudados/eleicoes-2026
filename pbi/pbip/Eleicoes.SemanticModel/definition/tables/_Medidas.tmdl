@@ -16904,6 +16904,766 @@ table _Medidas
 		displayFolder: T22 Simulador\Desenho
 		lineageTag: 7db4dd5e-0af6-50db-9477-182e59dc4026
 
+	/// Degrau no contexto (1 a 5): o grão do gráfico e do tooltip.
+	measure 'T24 · degrau' =
+			SELECTEDVALUE ( 'T24 Degrau'[Degrau] )
+		formatString: 0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 247ea454-5e71-5ad4-8dd7-bcc263c521de
+
+	/// Eleitores aptos de 2026 nos municípios do degrau (cada degrau tem cerca de um quinto).
+	measure 'T24 · eleitores' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			VAR _m =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			RETURN
+			    CALCULATE (
+			        SUM ( 'Município ano'[Aptos] ),
+			        'Município ano'[Ano] = 2026,
+			        TREATAS ( _m, 'Município'[CodIBGE] )
+			    )
+		formatString: #,0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 42182244-52a7-556b-b667-44a735a81b34
+
+	/// Flávio Bolsonaro sobre os válidos de 2026 no degrau.
+	measure 'T24 · Flávio % 2026' =
+			DIVIDE ( [T24 · votos de Flávio 2026], [T24 · válidos 2026] )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 3e73e27e-afc9-53e6-bc2b-d0c5195fd5dc
+
+	/// Flávio no 1º degrau da lente escolhida (manchete).
+	measure 'T24 · Flávio % 2026 · degrau 1' =
+			CALCULATE ( [T24 · Flávio % 2026], 'T24 Degrau'[Degrau] = 1 )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 4df00949-bdd6-56ac-95a8-871b56b3fbff
+
+	/// Flávio no 5º degrau da lente escolhida (manchete).
+	measure 'T24 · Flávio % 2026 · degrau 5' =
+			CALCULATE ( [T24 · Flávio % 2026], 'T24 Degrau'[Degrau] = 5 )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: ae2401ed-cc3f-5056-8bf1-886fa7982b2c
+
+	/// Flávio no degrau seguinte (para o traço do gráfico ir de um degrau ao outro); vazio no 5º.
+	measure 'T24 · Flávio % 2026 · degrau seguinte' =
+			VAR _d = [T24 · degrau]
+			RETURN
+			    IF ( _d < 5, CALCULATE ( [T24 · Flávio % 2026], 'T24 Degrau'[Degrau] = _d + 1 ) )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: dc30daf2-0344-5ad7-b331-5f7e276c23e0
+
+	/// Flávio sobre os válidos de 2026 no município do contexto (as pontas da régua do IDH no cartão).
+	measure 'T24 · Flávio % 2026 · município' =
+			DIVIDE (
+			    CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2026 ),
+			    CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2026 )
+			)
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 166b1420-be59-5f3a-a164-987468f5c95a
+
+	/// Instituto da pesquisa mostrada na lente: Datafolha, Quaest, AtlasIntel ou Ipec, o primeiro que publicou o cruzamento; vazio no IDH (nenhuma pesquisa pergunta).
+	measure 'T24 · instituto' =
+			VAR _l = [T24 · lente]
+			VAR _tem =
+			    CALCULATETABLE ( VALUES ( 'Perfil pesquisa'[Instituto] ), 'Perfil pesquisa'[Lente] = _l )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        "Datafolha" IN _tem, "Datafolha",
+			        "Quaest" IN _tem, "Quaest",
+			        "AtlasIntel" IN _tem, "AtlasIntel",
+			        "Ipec" IN _tem, "Ipec"
+			    )
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 0c3987c1-f7d9-58ab-a19e-c60d1aa9bb16
+
+	/// Jair Bolsonaro sobre os válidos de 2022 no degrau.
+	measure 'T24 · Jair % 2022' =
+			DIVIDE ( [T24 · votos de Jair 2022], [T24 · válidos 2022] )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 3e6debc7-efb1-5bad-a9f6-ad3b5af336a4
+
+	/// Lente escolhida nos botões (Renda, Escolaridade, Bolsa Família ou IDH); sem marca, Renda.
+	measure 'T24 · lente' =
+			SELECTEDVALUE ( 'T24 Lente'[Lente], "Renda" )
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: b720496a-3849-5c41-96fa-72fd3f092fe0
+
+	/// Lula sobre os válidos de 2022 no degrau.
+	measure 'T24 · Lula % 2022' =
+			DIVIDE ( [T24 · votos de Lula 2022], [T24 · válidos 2022] )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 42b55e87-0b8a-5838-a70b-922caf7744ff
+
+	/// Lula sobre os válidos de 2026 no degrau.
+	measure 'T24 · Lula % 2026' =
+			DIVIDE ( [T24 · votos de Lula 2026], [T24 · válidos 2026] )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 52eb5107-714d-5842-9075-1a820878f468
+
+	/// Lula no 1º degrau da lente escolhida (manchete).
+	measure 'T24 · Lula % 2026 · degrau 1' =
+			CALCULATE ( [T24 · Lula % 2026], 'T24 Degrau'[Degrau] = 1 )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 45516be9-cb21-5232-8328-5745e13bdd79
+
+	/// Lula no 5º degrau da lente escolhida (manchete).
+	measure 'T24 · Lula % 2026 · degrau 5' =
+			CALCULATE ( [T24 · Lula % 2026], 'T24 Degrau'[Degrau] = 5 )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 1730017d-4087-5be5-8e23-ac954dc57dce
+
+	/// Lula no degrau seguinte (para o traço do gráfico ir de um degrau ao outro); vazio no 5º.
+	measure 'T24 · Lula % 2026 · degrau seguinte' =
+			VAR _d = [T24 · degrau]
+			RETURN
+			    IF ( _d < 5, CALCULATE ( [T24 · Lula % 2026], 'T24 Degrau'[Degrau] = _d + 1 ) )
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 51857151-cc2d-5a16-bab9-6d3b60f8401b
+
+	/// Lula sobre os válidos de 2026 no município do contexto (as pontas da régua do IDH no cartão).
+	measure 'T24 · Lula % 2026 · município' =
+			DIVIDE (
+			    CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = 2026 ),
+			    CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2026 )
+			)
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: fcbac9ad-f206-5879-8469-cc8209e16aca
+
+	/// Margem de Lula em 2022 no degrau: (Lula − Jair) ÷ válidos.
+	measure 'T24 · margem 2022' =
+			[T24 · Lula % 2022] - [T24 · Jair % 2022]
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 054609d6-a4d4-515e-9f00-db193e8eb7b6
+
+	/// Margem de Lula em 2026 no degrau: (Lula − Flávio) ÷ válidos.
+	measure 'T24 · margem 2026' =
+			[T24 · Lula % 2026] - [T24 · Flávio % 2026]
+		formatString: 0.0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 9fc571d9-85f2-5fe0-96ae-a6d2eef9c633
+
+	/// Municípios no degrau, na lente escolhida.
+	measure 'T24 · municípios' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			VAR _m =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			RETURN
+			    COUNTROWS ( _m ) + 0
+		formatString: #,0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 75ac2f60-ccb0-5ff6-8463-803527571ef8
+
+	/// Campo e registro da pesquisa da lente (texto da fonte).
+	measure 'T24 · pesquisa data' =
+			VAR _l = [T24 · lente]
+			VAR _i = [T24 · instituto]
+			RETURN
+			    CALCULATE (
+			        MAX ( 'Perfil pesquisa'[Campo] ),
+			        'Perfil pesquisa'[Lente] = _l,
+			        'Perfil pesquisa'[Instituto] = _i
+			    )
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 1d5845af-80ac-5ef6-a23e-d4b047efdd04
+
+	/// Intenção de voto em Flávio na faixa (no contexto: a categoria), na pesquisa da lente, em % do total da faixa.
+	measure 'T24 · pesquisa Flávio %' =
+			VAR _l = [T24 · lente]
+			VAR _i = [T24 · instituto]
+			RETURN
+			    DIVIDE (
+			        CALCULATE (
+			            MAX ( 'Perfil pesquisa'[Percentual] ),
+			            'Perfil pesquisa'[Candidato] = "Flávio",
+			            'Perfil pesquisa'[Lente] = _l,
+			            'Perfil pesquisa'[Instituto] = _i
+			        ),
+			        100
+			    )
+		formatString: 0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 142ba0d7-ead2-577c-aea2-58c1e37f5020
+
+	/// Intenção de voto em Flávio entre todos os eleitores da pesquisa da lente (a linha de referência do cartão).
+	measure 'T24 · pesquisa Flávio % total' =
+			VAR _i = [T24 · instituto]
+			RETURN
+			    DIVIDE (
+			        CALCULATE (
+			            MAX ( 'Perfil pesquisa'[Percentual] ),
+			            'Perfil pesquisa'[Candidato] = "Flávio",
+			            'Perfil pesquisa'[Lente] = "Todos",
+			            'Perfil pesquisa'[Instituto] = _i
+			        ),
+			        100
+			    )
+		formatString: 0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: fae579af-247b-55f3-a832-6adcd9915011
+
+	/// Intenção de voto em Lula na faixa (no contexto: a categoria), na pesquisa da lente, em % do total da faixa.
+	measure 'T24 · pesquisa Lula %' =
+			VAR _l = [T24 · lente]
+			VAR _i = [T24 · instituto]
+			RETURN
+			    DIVIDE (
+			        CALCULATE (
+			            MAX ( 'Perfil pesquisa'[Percentual] ),
+			            'Perfil pesquisa'[Candidato] = "Lula",
+			            'Perfil pesquisa'[Lente] = _l,
+			            'Perfil pesquisa'[Instituto] = _i
+			        ),
+			        100
+			    )
+		formatString: 0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 23c344d6-57a1-5771-9c54-4ccf72a6be4a
+
+	/// Intenção de voto em Lula entre todos os eleitores da pesquisa da lente (a linha de referência do cartão).
+	measure 'T24 · pesquisa Lula % total' =
+			VAR _i = [T24 · instituto]
+			RETURN
+			    DIVIDE (
+			        CALCULATE (
+			            MAX ( 'Perfil pesquisa'[Percentual] ),
+			            'Perfil pesquisa'[Candidato] = "Lula",
+			            'Perfil pesquisa'[Lente] = "Todos",
+			            'Perfil pesquisa'[Instituto] = _i
+			        ),
+			        100
+			    )
+		formatString: 0%
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: f5be24e3-5a4e-5e7d-83ef-ced837c70a3d
+
+	/// Máximo do indicador da lente entre os municípios do degrau (R$ por pessoa; fração do eleitorado; famílias por 100 casas; IDHM).
+	measure 'T24 · valor máximo' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			RETURN
+			    CALCULATE (
+			        MAX ( 'Social município'[Valor] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+		formatString: #,0.000
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 583ec33c-1af9-5fd9-ac36-faa669fc1cfb
+
+	/// Mínimo do indicador da lente entre os municípios do degrau (R$ por pessoa; fração do eleitorado; famílias por 100 casas; IDHM).
+	measure 'T24 · valor mínimo' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			RETURN
+			    CALCULATE (
+			        MIN ( 'Social município'[Valor] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+		formatString: #,0.000
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: c52cf33c-58b2-5211-b6e3-1d21bfb7b9d4
+
+	/// Variação da margem de Lula de 2022 para 2026 no degrau, em pontos (negativa: na direção do adversário).
+	measure 'T24 · variação da margem' =
+			( [T24 · margem 2026] - [T24 · margem 2022] ) * 100
+		formatString: +0.0;−0.0;0.0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: bafa9980-56dc-5f68-ac47-3bede01765c9
+
+	/// Votos de Flávio Bolsonaro (PL) no 1º turno de 2026 nos municípios do degrau.
+	measure 'T24 · votos de Flávio 2026' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			VAR _m =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			RETURN
+			    CALCULATE (
+			        SUM ( 'Município ano'[VotosAdversario] ),
+			        'Município ano'[Ano] = 2026,
+			        TREATAS ( _m, 'Município'[CodIBGE] )
+			    )
+		formatString: #,0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: f056fe63-2df4-5c4d-a9d0-f49db4377b80
+
+	/// Votos de Jair Bolsonaro (PL) no 1º turno de 2022 nos municípios do degrau.
+	measure 'T24 · votos de Jair 2022' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			VAR _m =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			RETURN
+			    CALCULATE (
+			        SUM ( 'Município ano'[VotosAdversario] ),
+			        'Município ano'[Ano] = 2022,
+			        TREATAS ( _m, 'Município'[CodIBGE] )
+			    )
+		formatString: #,0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: ec51bacd-66f7-5348-9ef0-9c916de68533
+
+	/// Votos de Lula no 1º turno de 2022 nos municípios do degrau (na lente).
+	measure 'T24 · votos de Lula 2022' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			VAR _m =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			RETURN
+			    CALCULATE (
+			        SUM ( 'Município ano'[VotosPT] ),
+			        'Município ano'[Ano] = 2022,
+			        TREATAS ( _m, 'Município'[CodIBGE] )
+			    )
+		formatString: #,0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: b0db74e1-d77e-528d-af5e-3bf5b4302442
+
+	/// Votos de Lula no 1º turno de 2026 nos municípios do degrau (na lente).
+	measure 'T24 · votos de Lula 2026' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			VAR _m =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			RETURN
+			    CALCULATE (
+			        SUM ( 'Município ano'[VotosPT] ),
+			        'Município ano'[Ano] = 2026,
+			        TREATAS ( _m, 'Município'[CodIBGE] )
+			    )
+		formatString: #,0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 29c2ab1b-ec8c-5a39-bd92-a7c6f076c147
+
+	/// Votos válidos no 1º turno de 2022 nos municípios do degrau.
+	measure 'T24 · válidos 2022' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			VAR _m =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			RETURN
+			    CALCULATE (
+			        SUM ( 'Município ano'[Validos] ),
+			        'Município ano'[Ano] = 2022,
+			        TREATAS ( _m, 'Município'[CodIBGE] )
+			    )
+		formatString: #,0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 85c65efc-6df8-5928-bdbe-c17e4ed934a8
+
+	/// Votos válidos no 1º turno de 2026 nos municípios do degrau.
+	measure 'T24 · válidos 2026' =
+			VAR _l = [T24 · lente]
+			VAR _d = [T24 · degrau]
+			VAR _m =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			RETURN
+			    CALCULATE (
+			        SUM ( 'Município ano'[Validos] ),
+			        'Município ano'[Ano] = 2026,
+			        TREATAS ( _m, 'Município'[CodIBGE] )
+			    )
+		formatString: #,0
+		displayFolder: T24 Quem vota\Contas
+		lineageTag: 535b70cf-41b0-516f-85a2-dfb884f15a3e
+
+	/// Texto alternativo da manchete da lente.
+	measure 'T24 · Fundo · ALT' =
+			VAR _l = [T24 · lente]
+			RETURN
+			    "Lente " & _l & ": no 1º degrau, Lula " & FORMAT ( [T24 · Lula % 2026 · degrau 1], "0.0%" ) & " e Flávio "
+			        & FORMAT ( [T24 · Flávio % 2026 · degrau 1], "0.0%" ) & "; no 5º, Lula " & FORMAT ( [T24 · Lula % 2026 · degrau 5], "0.0%" )
+			        & " e Flávio " & FORMAT ( [T24 · Flávio % 2026 · degrau 5], "0.0%" ) & "."
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: df53fae0-59e9-5a73-b7f8-693db5a3a37c
+
+	/// Manchete da lente (quem lidera em cada ponta, com o %), o que mede o indicador, a grade de % do gráfico e o eixo de menos a mais.
+	measure 'T24 · Fundo · HTML' =
+			-- 1 · Leituras
+			VAR _l = [T24 · lente]
+			VAR _l1 = [T24 · Lula % 2026 · degrau 1]
+			VAR _l5 = [T24 · Lula % 2026 · degrau 5]
+			VAR _f1 = [T24 · Flávio % 2026 · degrau 1]
+			VAR _f5 = [T24 · Flávio % 2026 · degrau 5]
+			-- 2 · Textos
+			VAR _baixo =
+			    SWITCH ( _l,
+			        "Renda", "Nas cidades de renda mais baixa",
+			        "Escolaridade", "Onde menos eleitores terminaram o ensino médio",
+			        "Bolsa Família", "Onde menos casas recebem Bolsa Família",
+			        "Nas cidades de IDH mais baixo" )
+			VAR _alto =
+			    SWITCH ( _l,
+			        "Renda", "Nas cidades de renda mais alta",
+			        "Escolaridade", "Onde mais eleitores terminaram o ensino médio",
+			        "Bolsa Família", "Onde mais casas recebem Bolsa Família",
+			        "Nas cidades de IDH mais alto" )
+			VAR _lulaEmBaixo = _l1 >= _l5
+			VAR _pontaLula = IF ( _lulaEmBaixo, _baixo, _alto )
+			VAR _pontaFlavio = IF ( _lulaEmBaixo, _alto, _baixo )
+			VAR _pctLula = IF ( _lulaEmBaixo, _l1, _l5 )
+			VAR _pctFlavio = IF ( _lulaEmBaixo, _f5, _f1 )
+			VAR _mede =
+			    SWITCH ( _l,
+			        "Renda", "Renda: quanto entra por mês, por pessoa, na casa (média da cidade, Censo 2022).",
+			        "Escolaridade", "Escolaridade: quantos eleitores da cidade têm pelo menos o ensino médio completo (TSE, 2026).",
+			        "Bolsa Família", "Bolsa Família: famílias pagas em agosto de 2026 para cada 100 casas da cidade (Censo 2022).",
+			        "IDH: a nota da cidade de 0 a 1 em renda, escola e saúde (IDHM 2010, o último por município)." )
+			VAR _eixo =
+			    SWITCH ( _l,
+			        "Renda", "menos renda", "Escolaridade", "menos escolaridade", "Bolsa Família", "menos Bolsa Família",
+			        "IDH menor" )
+			VAR _eixo2 =
+			    SWITCH ( _l,
+			        "Renda", "mais renda", "Escolaridade", "mais escolaridade", "Bolsa Família", "mais Bolsa Família",
+			        "IDH maior" )
+			-- 3 · Grade (% de 30 a 60; 50% tracejado)
+			VAR _grade =
+			    CONCATENATEX (
+			        GENERATESERIES ( 3, 6, 1 ),
+			        VAR _p = [Value] / 10
+			        VAR _y = 106 + ( 520 - ( MAX ( 0.2, MIN ( 0.7, _p ) ) - 0.2 ) * 960 )
+			        RETURN
+			            "<i class='g" & IF ( [Value] = 5, " meio", "" ) & "' style='top:" & FORMAT ( _y, "0.0", "en-US" ) & "px'></i>"
+			                & "<span class='gy' style='top:" & FORMAT ( _y - 9, "0.0", "en-US" ) & "px'>" & [Value] * 10 & "%</span>",
+			        "", [Value], ASC
+			    )
+			-- 4 · Marcação
+			RETURN
+			    "<div class='tela t24f'>"
+			        & "<div class='man sobe'>" & _pontaLula & ", <b class='lula'>Lula teve " & FORMAT ( _pctLula * 100, "0" )
+			        & "%</b>. " & _pontaFlavio & ", <b class='flavio'>Flávio teve " & FORMAT ( _pctFlavio * 100, "0" )
+			        & "%</b>.</div>"
+			        & "<div class='mede nota entra d3'>" & _mede & "</div>"
+			        & _grade
+			        & "<div class='eixo rot entra d10'><span>← " & _eixo & "</span><span>CADA DEGRAU: UM QUINTO DOS ELEITORES</span>"
+			        & "<span>" & _eixo2 & " →</span></div>"
+			    & "</div>"
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: 4b4d3495-0ad9-54c7-8475-22051afb358d
+
+	/// Texto alternativo do gráfico dos degraus.
+	measure 'T24 · Gráfico · ALT' =
+			"Gráfico da lente " & [T24 · lente] & ": cinco degraus de eleitores, de menos a mais; Lula começa com "
+			    & FORMAT ( [T24 · Lula % 2026 · degrau 1], "0.0%" ) & " e termina com " & FORMAT ( [T24 · Lula % 2026 · degrau 5], "0.0%" )
+			    & "; Flávio vai de " & FORMAT ( [T24 · Flávio % 2026 · degrau 1], "0.0%" ) & " a "
+			    & FORMAT ( [T24 · Flávio % 2026 · degrau 5], "0.0%" ) & ". Passe o mouse num degrau para ver 2022 e as cidades."
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: 266c8037-44cf-5885-aac1-ec594c3aa0b0
+
+	/// Um degrau por entrada (granularidade T24 Degrau): a coluna que pega o mouse, os pontos de Lula e Flávio com o %, o traço a caneta até o degrau seguinte, a nota onde a vantagem troca de lado e a faixa do indicador embaixo.
+	measure 'T24 · Gráfico · HTML' =
+			-- 1 · Leituras
+			VAR _d = [T24 · degrau]
+			VAR _l = [T24 · lente]
+			VAR _lu = [T24 · Lula % 2026]
+			VAR _fl = [T24 · Flávio % 2026]
+			VAR _lu2 = [T24 · Lula % 2026 · degrau seguinte]
+			VAR _fl2 = [T24 · Flávio % 2026 · degrau seguinte]
+			VAR _vmin = [T24 · valor mínimo]
+			VAR _vmax = [T24 · valor máximo]
+			-- 2 · Textos (a faixa do indicador no degrau)
+			VAR _fmt =
+			    SWITCH ( _l, "Renda", "#,0", "Escolaridade", "0", "Bolsa Família", "0", "0.000" )
+			VAR _k = IF ( _l = "Escolaridade", 100, 1 )
+			VAR _a = FORMAT ( _vmin * _k, _fmt )
+			VAR _b = FORMAT ( _vmax * _k, _fmt )
+			-- nas pontas, só o limite de dentro: o extremo de fora é uma cidade só (há cidade com mais famílias que casas)
+			VAR _pre = SWITCH ( _l, "Renda", "R$ ", "IDH", "IDHM ", "" )
+			VAR _pos = SWITCH ( _l, "Escolaridade", "%", "Bolsa Família", " por 100 casas", "" )
+			VAR _faixa =
+			    SWITCH ( _d,
+			        1, "até " & _pre & _b & _pos,
+			        5, "mais de " & _pre & _a & _pos,
+			        _pre & _a & IF ( _l = "Escolaridade", "%", "" ) & " a " & _b & _pos )
+			-- 3 · Geometria
+			VAR _x = 130 + ( _d - 1 ) * 180
+			VAR _yl = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _lu ) ) - 0.2 ) * 960 )
+			VAR _yf = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _fl ) ) - 0.2 ) * 960 )
+			VAR _temSeg = NOT ISBLANK ( _lu2 )
+			VAR _x2 = _x + 180
+			VAR _yl2 = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _lu2 ) ) - 0.2 ) * 960 )
+			VAR _yf2 = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _fl2 ) ) - 0.2 ) * 960 )
+			VAR _luCima = _lu >= _fl
+			VAR _a1 = _lu - _fl
+			VAR _a2 = _lu2 - _fl2
+			VAR _cruza = _temSeg && ( ( _a1 > 0 && _a2 < 0 ) || ( _a1 < 0 && _a2 > 0 ) )
+			VAR _t = DIVIDE ( _a1, _a1 - _a2 )
+			VAR _xc = _x + _t * 180
+			VAR _yc = _yl + _t * ( _yl2 - _yl )
+			VAR _atraso = 300 + _d * 260
+			-- 4 · Marcação
+			RETURN
+			    IF (
+			        NOT ISBLANK ( _d ) && NOT ISBLANK ( _lu ),
+			        "<div class='tela t24g'>"
+			            & "<div class='banda entra' style='left:" & ( _x - 86 ) & "px;animation-delay:" & ( _d * 80 )
+			            & "ms'></div>"
+			            & "<svg class='sv' width='940' height='684' viewBox='0 0 940 684'>"
+			            & IF (
+			                _temSeg,
+			                "<line class='traco ll' pathLength='1' filter='url(#rb24)' style='animation-delay:" & _atraso
+			                    & "ms' x1='" & _x & "' y1='" & FORMAT ( _yl, "0.0", "en-US" ) & "' x2='" & _x2 & "' y2='" & FORMAT ( _yl2, "0.0", "en-US" ) & "'/>"
+			                    & "<line class='traco lf' pathLength='1' filter='url(#rb24)' style='animation-delay:" & _atraso
+			                    & "ms' x1='" & _x & "' y1='" & FORMAT ( _yf, "0.0", "en-US" ) & "' x2='" & _x2 & "' y2='" & FORMAT ( _yf2, "0.0", "en-US" ) & "'/>"
+			            )
+			            & "<circle class='brota pl' style='animation-delay:" & ( _atraso - 150 ) & "ms' cx='" & _x & "' cy='"
+			            & FORMAT ( _yl, "0.0", "en-US" ) & "' r='8'/>"
+			            & "<circle class='brota pf' style='animation-delay:" & ( _atraso - 150 ) & "ms' cx='" & _x & "' cy='"
+			            & FORMAT ( _yf, "0.0", "en-US" ) & "' r='8'/>"
+			            & IF (
+			                _cruza,
+			                "<ellipse class='traco cz' pathLength='1' filter='url(#rb24)' style='animation-delay:"
+			                    & ( _atraso + 700 ) & "ms' cx='" & FORMAT ( _xc, "0.0", "en-US" ) & "' cy='" & FORMAT ( _yc, "0.0", "en-US" ) & "' rx='18' ry='14'/>"
+			            )
+			            & "</svg>"
+			            & "<span class='vl lula-esc sobe' style='left:" & ( _x - 50 ) & "px;top:"
+			            & FORMAT ( IF ( _luCima, _yl - 44, _yl + 14 ), "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 100 ) & "ms'>"
+			            & FORMAT ( _lu * 100, "0.0" ) & "%</span>"
+			            & "<span class='vl flavio-esc sobe' style='left:" & ( _x - 50 ) & "px;top:"
+			            & FORMAT ( IF ( _luCima, _yf + 14, _yf - 44 ), "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 100 ) & "ms'>"
+			            & FORMAT ( _fl * 100, "0.0" ) & "%</span>"
+			            & IF (
+			                _cruza,
+			                "<span class='cruz mao entra' style='left:" & ( IF ( _t < 0.5, _x, _x2 ) - 86 )
+			                    & "px;animation-delay:" & ( _atraso + 900 ) & "ms'>aqui troca de lado</span>"
+			            )
+			            & "<div class='pe' style='left:" & ( _x - 86 ) & "px'><b>" & _d & "º QUINTO</b><span>" & _faixa
+			            & "</span></div>"
+			        & "</div>"
+			    )
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: f232f75f-056a-5f95-95a5-3bdb7f8b318e
+
+	/// Texto alternativo das abas.
+	measure 'T24 · Lentes · ALT' =
+			"Lentes: Renda, Escolaridade, Bolsa Família e IDH; marcada: " & [T24 · lente] & "."
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: 46fc87c1-bb4a-5dcd-9a25-2781b9b659f8
+
+	/// As quatro abas das lentes, com a escolhida marcada (os botões nativos ficam por cima, invisíveis).
+	measure 'T24 · Lentes · HTML' =
+			VAR _l = [T24 · lente]
+			RETURN
+			    "<div class='tela t24l'>"
+			        & CONCATENATEX (
+			            ALL ( 'T24 Lente' ),
+			            "<div class='ab" & IF ( 'T24 Lente'[Lente] = _l, " on", "" ) & " entra d" & 'T24 Lente'[Ordem] & "'>"
+			                & 'T24 Lente'[Lente] & "</div>",
+			            "", 'T24 Lente'[Ordem], ASC
+			        )
+			    & "</div>"
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: 29eb78cd-fc4c-50e3-b520-dd590fc58d24
+
+	/// Texto alternativo do cartão das pesquisas.
+	measure 'T24 · Pesquisa · ALT' =
+			VAR _i = [T24 · instituto]
+			RETURN
+			    IF (
+			        ISBLANK ( _i ),
+			        "Nesta lente não há pesquisa: o IDH é uma nota do lugar. O voto é secreto; o gráfico mostra os lugares.",
+			        "Pesquisa " & _i & " na lente " & [T24 · lente] & ": intenção de voto de Lula e Flávio em cada faixa. O voto é "
+			            & "secreto; o gráfico mostra os lugares."
+			    )
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: f4266e52-4759-5f0b-9ec0-43d4ad1c6cf4
+
+	/// Cartão das pessoas: a intenção de voto de Lula e Flávio em cada faixa da lente na pesquisa (instituto, campo e registro); no IDH, por que não há pesquisa. A nota do voto secreto é fixa (corpo do visual).
+	measure 'T24 · Pesquisa · HTML' =
+			-- 1 · Leituras
+			VAR _l = [T24 · lente]
+			VAR _i = [T24 · instituto]
+			VAR _campo = [T24 · pesquisa data]
+			VAR _cats =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'Perfil pesquisa', 'Perfil pesquisa'[Categoria], 'Perfil pesquisa'[CategoriaOrdem] ),
+			        'Perfil pesquisa'[Lente] = _l,
+			        'Perfil pesquisa'[Instituto] = _i
+			    )
+			VAR _t =
+			    ADDCOLUMNS ( _cats, "@l", [T24 · pesquisa Lula %], "@f", [T24 · pesquisa Flávio %] )
+			-- 2 · Linhas (barra de 0 a 70%, 300 px)
+			VAR _linhas =
+			    CONCATENATEX (
+			        _t,
+			        "<div class='lin sobe d" & ( 'Perfil pesquisa'[CategoriaOrdem] + 3 ) & "'><div class='cat'>"
+			            & 'Perfil pesquisa'[Categoria] & "</div>"
+			            & "<div class='bs'><div class='b'><i class='bl barra-x' style='width:"
+			            & FORMAT ( MIN ( [@l], 0.7 ) / 0.7 * 300, "0.0", "en-US" ) & "px'></i><span class='lula-esc'>"
+			            & FORMAT ( [@l] * 100, "0" ) & "%</span></div>"
+			            & "<div class='b'><i class='bf barra-x' style='width:" & FORMAT ( MIN ( [@f], 0.7 ) / 0.7 * 300, "0.0", "en-US" )
+			            & "px'></i><span class='flavio-esc'>" & FORMAT ( [@f] * 100, "0" ) & "%</span></div></div></div>",
+			        "", 'Perfil pesquisa'[CategoriaOrdem], ASC
+			    )
+			VAR _lt = [T24 · pesquisa Lula % total]
+			VAR _ft = [T24 · pesquisa Flávio % total]
+			VAR _total =
+			    "<div class='lin tot sobe d9'><div class='cat'>todos os eleitores</div><div class='bs'><div class='b'><i class='bl' "
+			        & "style='width:" & FORMAT ( MIN ( _lt, 0.7 ) / 0.7 * 300, "0.0", "en-US" ) & "px'></i><span class='lula-esc'>"
+			        & FORMAT ( _lt * 100, "0" ) & "%</span></div><div class='b'><i class='bf' style='width:"
+			        & FORMAT ( MIN ( _ft, 0.7 ) / 0.7 * 300, "0.0", "en-US" ) & "px'></i><span class='flavio-esc'>"
+			        & FORMAT ( _ft * 100, "0" ) & "%</span></div></div></div>"
+			VAR _pergunta =
+			    SWITCH ( _l,
+			        "Renda", "por renda da família",
+			        "Escolaridade", "por escolaridade",
+			        "Bolsa Família", "entre quem recebe e quem não recebe Bolsa Família",
+			        "" )
+			-- 3 · As pontas da régua do IDH (a cidade de IDH mais baixo e a de mais alto, com o voto de 2026)
+			VAR _idh =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'Social município', 'Social município'[CodIBGE], 'Social município'[Valor] ),
+			        'Social município'[Lente] = "IDH"
+			    )
+			VAR _cBaixo = MINX ( TOPN ( 1, _idh, 'Social município'[Valor], ASC ), 'Social município'[CodIBGE] )
+			VAR _cAlto = MINX ( TOPN ( 1, _idh, 'Social município'[Valor], DESC ), 'Social município'[CodIBGE] )
+			VAR _ponta =
+			    CONCATENATEX (
+			        { ( 1, _cBaixo, "O MAIS BAIXO" ), ( 2, _cAlto, "O MAIS ALTO" ) },
+			        VAR _cod = [Value2]
+			        VAR _nome = LOOKUPVALUE ( 'Município'[Rótulo], 'Município'[CodIBGE], _cod )
+			        VAR _v = MAXX ( FILTER ( _idh, 'Social município'[CodIBGE] = _cod ), 'Social município'[Valor] )
+			        VAR _lu = CALCULATE ( [T24 · Lula % 2026 · município], TREATAS ( { _cod }, 'Município'[CodIBGE] ) )
+			        VAR _fl = CALCULATE ( [T24 · Flávio % 2026 · município], TREATAS ( { _cod }, 'Município'[CodIBGE] ) )
+			        RETURN
+			            "<div class='pt sobe d" & ( [Value1] + 4 ) & "'><span class='rot'>" & [Value3] & " · IDHM "
+			                & FORMAT ( _v, "0.000" ) & "</span><b>" & _nome & "</b><span><span class='lula-esc'>Lula "
+			                & FORMAT ( _lu * 100, "0" ) & "%</span> × <span class='flavio-esc'>Flávio " & FORMAT ( _fl * 100, "0" )
+			                & "%</span></span></div>",
+			        "", [Value1], ASC
+			    )
+			-- 4 · Marcação
+			VAR _cartao =
+			    IF (
+			        ISBLANK ( _i ),
+			        "<div class='rot entra'>NAS PESQUISAS, AS PESSOAS</div>"
+			            & "<div class='tit sobe d1'>O IDH não se pergunta</div>"
+			            & "<div class='txt sobe d2'>É uma nota do lugar, não da pessoa: junta renda, escola e saúde da cidade. "
+			            & "Por isso, nesta lente, só aparecem os lugares.</div>"
+			            & "<div class='txt sobe d3'>O último IDH por município é de 2010. As 7 cidades criadas depois ficam de fora.</div>"
+			            & "<div class='rot regua entra d4'>A RÉGUA, NAS PONTAS</div>" & _ponta,
+			        "<div class='rot entra'>NAS PESQUISAS, AS PESSOAS</div>"
+			            & "<div class='tit sobe d1'>O que os eleitores disseram ao " & _i & "</div>"
+			            & "<div class='nota sobe d2'>intenção de voto no 1º turno " & _pergunta & ", em % de cada grupo · "
+			            & _campo & "</div>"
+			            & "<div class='leg entra d3'><span><i class='bl'></i>Lula</span><span><i class='bf'></i>Flávio</span></div>"
+			            & "<div class='lista'>" & _linhas & _total & "</div>"
+			    )
+			RETURN
+			    "<div class='tela t24p'><div class='cartao'>" & _cartao & "</div></div>"
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: d2886e2b-5657-5ed1-a26e-8898cfef79d0
+
+	/// Texto alternativo do dossiê do degrau.
+	measure 'T24 · Tooltip degrau · ALT' =
+			"Degrau " & [T24 · degrau] & " da lente " & [T24 · lente] & ": " & FORMAT ( [T24 · municípios], "#,0" ) & " municípios; Lula "
+			    & FORMAT ( [T24 · Lula % 2022], "0.0%" ) & " em 2022 e " & FORMAT ( [T24 · Lula % 2026], "0.0%" ) & " em 2026."
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: 9259b28a-dfdb-5f0f-b5d8-8bb361b45d4e
+
+	/// Dossiê do degrau (página de tooltip ttT24Degrau): municípios e eleitores, a faixa do indicador, Lula e o adversário em 2022 e 2026, a variação da margem e as maiores cidades.
+	measure 'T24 · Tooltip degrau · HTML' =
+			-- 1 · Leituras
+			VAR _d = [T24 · degrau]
+			VAR _l = [T24 · lente]
+			VAR _mun = [T24 · municípios]
+			VAR _ele = [T24 · eleitores]
+			VAR _l22 = [T24 · Lula % 2022]
+			VAR _j22 = [T24 · Jair % 2022]
+			VAR _l26 = [T24 · Lula % 2026]
+			VAR _f26 = [T24 · Flávio % 2026]
+			VAR _var = [T24 · variação da margem]
+			VAR _codigos =
+			    CALCULATETABLE (
+			        VALUES ( 'Social município'[CodIBGE] ),
+			        'Social município'[Lente] = _l,
+			        'Social município'[Degrau] = _d
+			    )
+			VAR _cidades =
+			    CALCULATETABLE (
+			        TOPN ( 3, VALUES ( 'Município'[Rótulo] ), CALCULATE ( SUM ( 'Município'[População] ) ), DESC ),
+			        TREATAS ( _codigos, 'Município'[CodIBGE] )
+			    )
+			-- 2 · Textos
+			VAR _txtCid = CONCATENATEX ( _cidades, 'Município'[Rótulo], ", ", CALCULATE ( SUM ( 'Município'[População] ) ), DESC )
+			VAR _ponta =
+			    SWITCH ( _d, 1, " · o de menos ", 5, " · o de mais ", " · " )
+			    & SWITCH ( _l, "Renda", "renda", "Escolaridade", "escolaridade", "Bolsa Família", "Bolsa Família", "IDH" )
+			VAR _ponta2 = IF ( _d = 1 || _d = 5, _ponta, "" )
+			VAR _frase =
+			    IF ( _var < 0,
+			        "A margem de Lula aqui caiu " & FORMAT ( ABS ( _var ), "0.0" ) & IF ( ROUND ( ABS ( _var ), 1 ) = 1, " ponto", " pontos" )
+			            & " desde 2022.",
+			        "A margem de Lula aqui subiu " & FORMAT ( _var, "0.0" ) & IF ( ROUND ( _var, 1 ) = 1, " ponto", " pontos" )
+			            & " desde 2022." )
+			-- 3 · Marcação
+			RETURN
+			    IF (
+			        NOT ISBLANK ( _d ),
+			        "<div class='tela tt24'><div class='fita'></div>"
+			            & "<div class='rot'>" & _d & "º QUINTO DOS ELEITORES" & UPPER ( _ponta2 ) & "</div>"
+			            & "<div class='num-l'><b>" & FORMAT ( _mun, "#,0" ) & "</b> " & IF ( _mun = 1, "município", "municípios" )
+			            & " · <b>" & FORMAT ( _ele / 1e6, "0.0" ) & " mi</b> de eleitores</div>"
+			            & "<div class='duas'><div><span class='rot'>2022</span><span class='lula-esc'>Lula " & FORMAT ( _l22 * 100, "0.0" )
+			            & "%</span><span class='flavio-esc'>Jair " & FORMAT ( _j22 * 100, "0.0" ) & "%</span></div>"
+			            & "<div><span class='rot'>2026</span><span class='lula-esc'>Lula " & FORMAT ( _l26 * 100, "0.0" )
+			            & "%</span><span class='flavio-esc'>Flávio " & FORMAT ( _f26 * 100, "0.0" ) & "%</span></div></div>"
+			            & "<div class='txt'>" & _frase & "</div>"
+			            & "<div class='cid'><span class='rot'>MAIORES CIDADES</span>" & _txtCid & "</div>"
+			        & "</div>"
+			    )
+		displayFolder: T24 Quem vota\Desenho
+		lineageTag: 676277c6-bde3-528f-9aac-b2fcbcb9133b
+
 	column Value
 		dataType: int64
 		isHidden

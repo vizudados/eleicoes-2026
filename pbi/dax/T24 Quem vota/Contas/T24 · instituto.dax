@@ -1,0 +1,17 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: texto
+@descricao: Instituto da pesquisa mostrada na lente: Datafolha, Quaest, AtlasIntel ou Ipec, o primeiro que publicou o cruzamento; vazio no IDH (nenhuma pesquisa pergunta).
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _l = [T24 · lente]
+VAR _tem =
+    CALCULATETABLE ( VALUES ( 'Perfil pesquisa'[Instituto] ), 'Perfil pesquisa'[Lente] = _l )
+RETURN
+    SWITCH (
+        TRUE (),
+        "Datafolha" IN _tem, "Datafolha",
+        "Quaest" IN _tem, "Quaest",
+        "AtlasIntel" IN _tem, "AtlasIntel",
+        "Ipec" IN _tem, "Ipec"
+    )

@@ -1,0 +1,7 @@
+/*
+@pasta: T24 Quem vota\Desenho
+@formato: texto
+@descricao: Texto alternativo das abas.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+"Lentes: Renda, Escolaridade, Bolsa Família e IDH; marcada: " & [T24 · lente] & "."

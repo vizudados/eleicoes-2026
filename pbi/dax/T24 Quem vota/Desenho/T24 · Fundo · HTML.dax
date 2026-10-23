@@ -1,0 +1,66 @@
+/*
+@pasta: T24 Quem vota\Desenho
+@formato: texto
+@descricao: Manchete da lente (quem lidera em cada ponta, com o %), o que mede o indicador, a grade de % do gráfico e o eixo de menos a mais.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+-- 1 · Leituras
+VAR _l = [T24 · lente]
+VAR _l1 = [T24 · Lula % 2026 · degrau 1]
+VAR _l5 = [T24 · Lula % 2026 · degrau 5]
+VAR _f1 = [T24 · Flávio % 2026 · degrau 1]
+VAR _f5 = [T24 · Flávio % 2026 · degrau 5]
+-- 2 · Textos
+VAR _baixo =
+    SWITCH ( _l,
+        "Renda", "Nas cidades de renda mais baixa",
+        "Escolaridade", "Onde menos eleitores terminaram o ensino médio",
+        "Bolsa Família", "Onde menos casas recebem Bolsa Família",
+        "Nas cidades de IDH mais baixo" )
+VAR _alto =
+    SWITCH ( _l,
+        "Renda", "Nas cidades de renda mais alta",
+        "Escolaridade", "Onde mais eleitores terminaram o ensino médio",
+        "Bolsa Família", "Onde mais casas recebem Bolsa Família",
+        "Nas cidades de IDH mais alto" )
+VAR _lulaEmBaixo = _l1 >= _l5
+VAR _pontaLula = IF ( _lulaEmBaixo, _baixo, _alto )
+VAR _pontaFlavio = IF ( _lulaEmBaixo, _alto, _baixo )
+VAR _pctLula = IF ( _lulaEmBaixo, _l1, _l5 )
+VAR _pctFlavio = IF ( _lulaEmBaixo, _f5, _f1 )
+VAR _mede =
+    SWITCH ( _l,
+        "Renda", "Renda: quanto entra por mês, por pessoa, na casa (média da cidade, Censo 2022).",
+        "Escolaridade", "Escolaridade: quantos eleitores da cidade têm pelo menos o ensino médio completo (TSE, 2026).",
+        "Bolsa Família", "Bolsa Família: famílias pagas em agosto de 2026 para cada 100 casas da cidade (Censo 2022).",
+        "IDH: a nota da cidade de 0 a 1 em renda, escola e saúde (IDHM 2010, o último por município)." )
+VAR _eixo =
+    SWITCH ( _l,
+        "Renda", "menos renda", "Escolaridade", "menos escolaridade", "Bolsa Família", "menos Bolsa Família",
+        "IDH menor" )
+VAR _eixo2 =
+    SWITCH ( _l,
+        "Renda", "mais renda", "Escolaridade", "mais escolaridade", "Bolsa Família", "mais Bolsa Família",
+        "IDH maior" )
+-- 3 · Grade (% de 30 a 60; 50% tracejado)
+VAR _grade =
+    CONCATENATEX (
+        GENERATESERIES ( 3, 6, 1 ),
+        VAR _p = [Value] / 10
+        VAR _y = 106 + ( 520 - ( MAX ( 0.2, MIN ( 0.7, _p ) ) - 0.2 ) * 960 )
+        RETURN
+            "<i class='g" & IF ( [Value] = 5, " meio", "" ) & "' style='top:" & FORMAT ( _y, "0.0", "en-US" ) & "px'></i>"
+                & "<span class='gy' style='top:" & FORMAT ( _y - 9, "0.0", "en-US" ) & "px'>" & [Value] * 10 & "%</span>",
+        "", [Value], ASC
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t24f'>"
+        & "<div class='man sobe'>" & _pontaLula & ", <b class='lula'>Lula teve " & FORMAT ( _pctLula * 100, "0" )
+        & "%</b>. " & _pontaFlavio & ", <b class='flavio'>Flávio teve " & FORMAT ( _pctFlavio * 100, "0" )
+        & "%</b>.</div>"
+        & "<div class='mede nota entra d3'>" & _mede & "</div>"
+        & _grade
+        & "<div class='eixo rot entra d10'><span>← " & _eixo & "</span><span>CADA DEGRAU: UM QUINTO DOS ELEITORES</span>"
+        & "<span>" & _eixo2 & " →</span></div>"
+    & "</div>"

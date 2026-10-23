@@ -1,0 +1,16 @@
+/*
+@pasta: T24 Quem vota\Desenho
+@formato: texto
+@descricao: As quatro abas das lentes, com a escolhida marcada (os botões nativos ficam por cima, invisíveis).
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _l = [T24 · lente]
+RETURN
+    "<div class='tela t24l'>"
+        & CONCATENATEX (
+            ALL ( 'T24 Lente' ),
+            "<div class='ab" & IF ( 'T24 Lente'[Lente] = _l, " on", "" ) & " entra d" & 'T24 Lente'[Ordem] & "'>"
+                & 'T24 Lente'[Lente] & "</div>",
+            "", 'T24 Lente'[Ordem], ASC
+        )
+    & "</div>"

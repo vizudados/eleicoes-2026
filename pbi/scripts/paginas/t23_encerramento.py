@@ -4,7 +4,7 @@
   T23_Fecho_Html    o título que se sublinha à mão, os achados de cada ato (cada linha leva à tela de onde veio), a
                     urna em traço que se revela, o convite para a apuração ao vivo, fontes e créditos
   T23_Fecho_Ir<NN>  um botão transparente por achado: vai à tela (marcador de chegada)
-  T23_Fecho_IrApur  o convite "domingo, 17h" vai à tela 18
+  T23_Fecho_IrApur  o convite "domingo, 17h" vai à tela da apuração (T18)
 
 Os achados repetem as manchetes do 1º turno (números finais do TSE de 22/10/2026), escritos aqui como texto da
 apresentação: não mudam com filtro e o movimento conta cada número na entrada.
@@ -14,6 +14,7 @@ from __future__ import annotations
 import html
 
 import estilo
+import roteiro
 import pbip_lib as lib
 from pbip_lib import Visual
 
@@ -28,6 +29,7 @@ ACHADOS = [
                          ("T10", "Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.")]),
     ("III · O MAPA", [("T11", "711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso."),
                       ("T13", "Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno."),
+                      ("T24", "Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%."),
                       ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
     ("EPÍLOGO", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.")]),
 ]
@@ -43,6 +45,11 @@ def _linhas():
             saida.append((cod, texto, y))
             y += LINHA
     return saida
+
+
+def _topo_fontes() -> int:
+    """As fontes ficam 30 px abaixo do último achado (posição dentro de .fx, que começa em y 150)."""
+    return _linhas()[-1][2] + LINHA + 30 - 150
 
 
 def corpo() -> str:
@@ -68,7 +75,7 @@ def corpo() -> str:
         ".fx .convite .mao{font-size:30px;color:var(--rosa)}"
         ".fx .convite .txt{color:var(--creme);margin-top:6px}"
         ".fx .convite .ir{margin-top:14px;font-size:15px;font-weight:600;letter-spacing:.12em;color:var(--areia)}"
-        f".fx .fontes{{position:absolute;left:0;top:720px;width:1000px;font-size:13px;line-height:1.55;"
+        f".fx .fontes{{position:absolute;left:0;top:{_topo_fontes()}px;width:1000px;font-size:13px;line-height:1.55;"
         f"color:{C['areia']}}}"
         ".fx .fontes b{color:var(--creme);font-weight:600}"
     )
@@ -82,7 +89,8 @@ def corpo() -> str:
         lista.append(f"<div class='grupo rot sobe d{min(16, i + 3)}'>{e(rotulo)}</div>")
         for cod, texto in itens:
             i += 1
-            lista.append(f"<div class='linha sobe d{min(16, i + 3)}'><b>{cod[1:]}</b><span>{e(texto)}</span></div>")
+            lista.append(f"<div class='linha sobe d{min(16, i + 3)}'><b>{roteiro.numero(cod)}</b>"
+                         f"<span>{e(texto)}</span></div>")
     urna = estilo.imagem_b64("arte/limpos/urna-creme.png", 940)
     return (
         f"<style>{css}</style><div class='tela fx' style='left:{X0}px;top:150px;right:150px;bottom:80px'>"
@@ -90,10 +98,12 @@ def corpo() -> str:
         f"<div class='ach'><div class='rot entra d2'>OS ACHADOS, POR ATO · CLIQUE PARA VOLTAR À TELA</div>{''.join(lista)}</div>"
         f"<img class='urna' alt='' src='{urna}'/>"
         "<div class='convite sobe d12'><div class='mao'>domingo, 25/10, 17h</div>"
-        "<div class='txt'>A apuração do 2º turno passa ao vivo na tela 18: o placar se atualiza sozinho, a cada "
+        f"<div class='txt'>A apuração do 2º turno passa ao vivo na tela {roteiro.numero('T18')}: o placar se "
+        "atualiza sozinho, a cada "
         "minuto, direto da API do TSE.</div><div class='ir'>IR PARA A APURAÇÃO →</div></div>"
         "<div class='fontes entra d14'><b>Fontes</b> · TSE (votação, comparecimento, perfil do eleitor e API de "
-        "resultados), IBGE (Censo 2022 e malhas), pesquisas registradas no TSE, Google Trends, Bites, Quaest, Social "
+        "resultados), IBGE (Censo 2022 e malhas), Portal da Transparência (Bolsa Família), Atlas do Desenvolvimento "
+        "Humano (IDHM), pesquisas registradas no TSE, Google Trends, Bites, Quaest, Social "
         "Blade, Datrix, Biblioteca de Anúncios da Meta, emissoras e imprensa. <b>Desenhos</b> · em traço, a partir de "
         "fotos de licença aberta; os créditos estão em cada cartão.</div>"
         "</div>{{content}}"
@@ -108,10 +118,11 @@ def declarar(ctx):
     for cod, texto, y in _linhas():
         itens.append(Visual(P, lib.visual_botao(
             f"T23_Fecho_Ir{cod[1:]}", X0 - 10, 150 + y - 150, 1020, LINHA, lib.acao_bookmark(f"{cod}_CHEGADA_01"),
-            dica=f"Voltar à tela {cod[1:]}: {texto}", z=lib.CAMADAS["acao"], tab=200 + int(cod[1:]),
+            dica=f"Voltar à tela {roteiro.numero(cod)}: {texto}", z=lib.CAMADAS["acao"], tab=200 + int(cod[1:]),
             realce=C["creme"], realce_transp=(92, 86))))
     itens.append(Visual(P, lib.visual_botao(
         "T23_Fecho_IrApur", 1260, 710, 470, 150, lib.acao_bookmark("T18_CHEGADA_01"),
-        dica="Ir para a apuração ao vivo (tela 18)", z=lib.CAMADAS["acao"], tab=300, realce=C["creme"],
+        dica=f"Ir para a apuração ao vivo (tela {roteiro.numero('T18')})", z=lib.CAMADAS["acao"], tab=300,
+        realce=C["creme"],
         realce_transp=(92, 86))))
     return itens

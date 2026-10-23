@@ -1,0 +1,7 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0.0%
+@descricao: Flávio no 1º degrau da lente escolhida (manchete).
+@gerado: pbi/scripts/desenho_t24.py
+*/
+CALCULATE ( [T24 · Flávio % 2026], 'T24 Degrau'[Degrau] = 1 )

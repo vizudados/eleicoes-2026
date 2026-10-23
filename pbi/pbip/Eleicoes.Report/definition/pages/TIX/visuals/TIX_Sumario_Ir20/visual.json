@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'20 · Escola: Como votou cada escola de Contagem?'"
+                  "Value": "'21 · Escola: Como votou cada escola de Contagem?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'20 · Escola: Como votou cada escola de Contagem?'"
+                  "Value": "'21 · Escola: Como votou cada escola de Contagem?'"
                 }
               }
             },

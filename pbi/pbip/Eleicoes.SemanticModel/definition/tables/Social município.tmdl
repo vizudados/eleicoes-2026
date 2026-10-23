@@ -1,0 +1,69 @@
+/// Município × lente (renda, escolaridade, Bolsa Família, IDH): o valor do indicador e o degrau, de 1 (menos) a 5 (mais), com os municípios em fila pelo indicador e a fila cortada em cinco partes com o mesmo número de eleitores de 2026.
+table 'Social município'
+	isHidden
+	lineageTag: 19b8c893-2573-5b64-ad25-e4fe1b804f38
+
+	/// Código IBGE do município.
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: 75fa17fb-50df-5a6a-8ccc-5aae076b448d
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Renda, Escolaridade, Bolsa Família ou IDH.
+	column Lente
+		dataType: string
+		lineageTag: 0b6d6421-0199-51ee-9675-bdb23e98091b
+		summarizeBy: none
+		sourceColumn: Lente
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem da lente.
+	column LenteOrdem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 25503651-2f75-566e-a9fc-f9f0c263da36
+		summarizeBy: none
+		sourceColumn: LenteOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Renda domiciliar per capita (R$, Censo 2022); fatia do eleitorado com ensino médio completo ou mais (TSE, 2026); famílias no Bolsa Família por 100 domicílios (ago/2026 ÷ Censo 2022); IDHM 2010.
+	column Valor
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 6b388e4e-d976-526d-8ddc-2458a48b1433
+		summarizeBy: none
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Degrau de 1 a 5 (cada um com um quinto dos eleitores).
+	column Degrau
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9a0ee8d6-bc5a-5d8c-a713-3f36ec9f3eaf
+		summarizeBy: none
+		sourceColumn: Degrau
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Social município' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/municipio_social.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"cd_ibge", "lente", "lente_ordem", "valor", "degrau"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"cd_ibge", type text}, {"lente", type text}, {"lente_ordem", Int64.Type}, {"valor", type number}, {"degrau", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"cd_ibge", "CodIBGE"}, {"lente", "Lente"}, {"lente_ordem", "LenteOrdem"}, {"valor", "Valor"}, {"degrau", "Degrau"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table
