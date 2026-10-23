@@ -324,20 +324,21 @@ def social():
     return pd.concat(partes, ignore_index=True)
 
 
-LENTE_DA_DIMENSAO = {"renda": "Renda", "escolaridade": "Escolaridade", "bolsa_familia": "Bolsa Família"}
+LENTE_DA_DIMENSAO = {"renda": "Renda", "escolaridade": "Escolaridade", "bolsa_familia": "Bolsa Família",
+                     "total": "Todos"}
 # A tela mostra uma pesquisa só: o Datafolha de 29/09 a 01/10/2026 (BR-08039/2026), a última rodada do instituto com as
 # três lentes (a de 02 e 03/10 não publicou Bolsa Família). As outras rodadas ficam no levantamento bruto.
 PESQUISA_NA_TELA = ("Datafolha", "2026-10-01")
 ROTULO_FAIXA = {"até 2 SM": "até 2 salários mínimos", "mais de 2 a 5 SM": "de 2 a 5 salários",
                 "mais de 5 SM": "mais de 5 salários", "beneficiário": "recebe (ou mora com quem recebe)",
                 "não beneficiário": "não recebe", "fundamental": "até o fundamental", "médio": "ensino médio",
-                "superior": "ensino superior"}
+                "superior": "ensino superior", "total": "todos os eleitores"}
 
 
 def perfil_pesquisa():
     """Intenção de voto de Lula e Flávio por faixa (renda, escolaridade, Bolsa Família) da pesquisa da tela, do
     levantamento dados/bruto/pesquisas/perfil_lula_flavio.csv: a lente, a ordem da faixa (a do instituto) e o campo com
-    o registro no TSE, tirados da observação."""
+    o registro no TSE, tirados da observação. O total da pesquisa entra como lente "Todos" (a linha de referência)."""
     d = pd.read_csv(BRUTO / "pesquisas" / "perfil_lula_flavio.csv", sep=";", dtype=str)
     d = d[(d.instituto == PESQUISA_NA_TELA[0]) & (d.divulgacao == PESQUISA_NA_TELA[1])
           & d.dimensao.isin(LENTE_DA_DIMENSAO)].copy()
