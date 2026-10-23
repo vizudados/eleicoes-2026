@@ -1,0 +1,7 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: 0
+@descricao: Em quantas das seis eleições o contexto teve votos (município novo tem menos).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+COUNTROWS ( FILTER ( ALL ( 'Ano'[Ano] ), NOT ISBLANK ( [T11 · margem no ano] ) ) ) + 0

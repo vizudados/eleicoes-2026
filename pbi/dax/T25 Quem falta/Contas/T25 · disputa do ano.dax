@@ -1,0 +1,11 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: Os dois mais votados no 1º turno do ano da linha (Brasil, resultado oficial), o primeiro antes, com o partido.
+*/
+VAR _1 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 1 )
+VAR _1p = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Partido] ), 'Candidato ano'[Posição] = 1 )
+VAR _2 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 2 )
+VAR _2p = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Partido] ), 'Candidato ano'[Posição] = 2 )
+RETURN
+    IF ( NOT ISBLANK ( _1 ), _1 & " (" & _1p & ") e " & _2 & " (" & _2p & ")" )

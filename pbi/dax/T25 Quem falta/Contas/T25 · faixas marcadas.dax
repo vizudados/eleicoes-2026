@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Quantas faixas de idade estão marcadas (0 sem faixa).
+*/
+IF ( [T25 · com faixa] = 1, COUNTROWS ( VALUES ( 'T25 Faixa'[Faixa] ) ), 0 )

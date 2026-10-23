@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Um quadrinho por instituto comparável (grão 'Rejeição'[Instituto]): a rejeição de Lula e de Flávio na última medição antes do 1º turno (ponto vazado e valor à esquerda) e na última depois (ponto cheio e valor à direita), na mesma escala (40% a 58%), e as datas. Valores afastados quando ficariam um sobre o outro. Cinco por linha, em ordem alfabética. Alvo do dossiê ttT17Rejeicao; vazio nos institutos sem as duas medições ou com pergunta trocada.
+@descricao: Um quadrinho por instituto comparável (grão 'Rejeição'[Instituto]): a rejeição de Lula e de Flávio na última medição antes do 1º turno (ponto vazado e valor à esquerda) e na última depois (ponto cheio e valor à direita), na mesma escala (40% a 58%), e as datas. Valores afastados quando ficariam um sobre o outro. Cinco por linha, em ordem alfabética. Clique num ponto da curva: o quadrinho do instituto daquela pesquisa fica em destaque (fx) e os outros esmaecem (fora), se ele tiver quadrinho. Alvo do dossiê ttT17Rejeicao; vazio nos institutos sem as duas medições ou com pergunta trocada.
 */
 -- 1 · Leituras
 VAR _ok = [T17 · rejeição · comparável]
@@ -13,8 +13,11 @@ VAR _dl = [T17 · rejeição · depois · Lula]
 VAR _df = [T17 · rejeição · depois · Flávio]
 VAR _da = [T17 · rejeição · antes · data]
 VAR _dd = [T17 · rejeição · depois · data]
+VAR _foco = [T17 · foco · instituto da pesquisa]
+VAR _temQ = [T17 · foco · pesquisa com quadrinho]
 -- 2 · Textos
 VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _clsFoco = IF ( _temQ = "Sim", IF ( _foco = _inst, " fx", " fora" ), "" )
 VAR _txtDatas = FORMAT ( _da, "dd/MM" ) & " → " & FORMAT ( _dd, "dd/MM" )
 VAR _tAl = IF ( INT ( _al ) = _al, FORMAT ( _al, "0" ), FORMAT ( _al, "0.0" ) )
 VAR _tAf = IF ( INT ( _af ) = _af, FORMAT ( _af, "0" ), FORMAT ( _af, "0.0" ) )
@@ -41,7 +44,7 @@ VAR _atraso = 600 + _ord * 120 -- geometria
 RETURN
     IF (
         _ok = "Sim",
-        "<div class='tela t17q'><div class='pn entra' style='left:" & _col * 154 & "px;top:" & 122 + _lin * 114
+        "<div class='tela t17q" & _clsFoco & "'><div class='pn entra' style='left:" & _col * 154 & "px;top:" & 122 + _lin * 114
             & "px;animation-delay:" & _atraso & "ms'><b>" & _esc & "</b>"
             & "<svg width='144' height='62' viewBox='0 0 144 62'>"
                 & "<line x1='36' x2='104' y1='" & FORMAT ( _yAl, _f, "en-US" ) & "' y2='" & FORMAT ( _yDl, _f, "en-US" )

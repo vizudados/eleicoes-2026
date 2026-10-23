@@ -1,0 +1,8 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Abstenção no primeiro ano com dado (0–1).
+*/
+VAR _a0 = [T25 · primeiro ano da série]
+RETURN
+    CALCULATE ( DIVIDE ( [T25 · abstenções (cru)], [T25 · aptos (cru)] ), 'Ano'[Ano] = _a0 )

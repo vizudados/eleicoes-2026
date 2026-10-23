@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "T22_ReguaLula_Botoes",
   "position": {
-    "x": 172.0,
+    "x": 172,
     "y": 448,
     "z": 1020,
     "height": 42,
-    "width": 816.0,
+    "width": 816,
     "tabOrder": 111
   },
   "visual": {

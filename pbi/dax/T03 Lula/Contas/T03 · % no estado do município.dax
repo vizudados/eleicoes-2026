@@ -1,0 +1,8 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0%
+@descricao: Parcela de Lula nos válidos de 2026 da UF do município marcado (resultado oficial da UF).
+*/
+VAR _s = [T03 · UF do município]
+RETURN
+    IF ( NOT ISBLANK ( _s ), CALCULATE ( [T03 · %], REMOVEFILTERS ( 'UF' ), 'UF'[UF] = _s ) )

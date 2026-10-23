@@ -1,12 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
   "name": "T10_CHEGADA_01",
-  "displayName": "Chegada · 10 Pesquisas",
+  "displayName": "Chegada · 11 Pesquisas",
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
       "T10_Casca_InfoAbre",
       "T10_Casca_InfoFecha",
+      "T10_Casca_InfoFora",
       "T10_Casca_Leitura"
     ],
     "suppressData": true
@@ -21,6 +22,13 @@
             "singleVisual": {}
           },
           "T10_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T10_Casca_InfoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

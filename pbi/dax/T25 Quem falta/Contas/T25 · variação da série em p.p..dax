@@ -1,0 +1,7 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0
+@descricao: Abstenção de 2026 menos a do primeiro ano com dado, em pontos percentuais.
+@oraculo: Brasil = +4,3 (paginas[6].serie: 16,8% → 21,1%)
+*/
+IF ( [T25 · primeiro ano da série] < 2026, ( [T25 · abstenção % em 2026] - [T25 · abstenção % no primeiro ano] ) * 100 )

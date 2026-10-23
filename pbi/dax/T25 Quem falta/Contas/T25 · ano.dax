@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Ano do recorte: o marcado no bloco de anos (o mais recente, se forem vários) ou 2026; na linha de um ano, o próprio.
+*/
+MAX ( 'Ano'[Ano] )

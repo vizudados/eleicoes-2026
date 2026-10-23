@@ -1,0 +1,12 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: #,0
+@descricao: A maior soma de quem não escolheu ninguém entre os seis anos, no recorte: a escala das colunas da composição.
+@oraculo: Brasil = 40.254.330 (2018, paginas[6].serie[2018].nao_escolheram)
+*/
+MAXX (
+    CALCULATETABLE ( VALUES ( 'Ano'[Ano] ), REMOVEFILTERS ( 'Ano' ) ),
+    VAR _a = 'Ano'[Ano]
+    RETURN
+        CALCULATE ( [T06 · não escolheram (ano)], 'Ano'[Ano] = _a )
+)

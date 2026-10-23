@@ -5,6 +5,10 @@
   T18_Placar_Html   placar: horas do TSE e da coleta, os dois candidatos (contador), selo do estado, frase do momento,
                     relógio até as 17h de 25/10 (aguardando; conta no navegador) e a barra de seções
   T18_Curva_Html    a curva da noite (Brasil): as linhas se desenham a cada hora nova do TSE
+  T18_Curva_Pontos  por cima da curva, uma faixa de clique por atualização do TSE (granularidade 'Apuração
+                    histórico'[AtualizadoTSE]): no mouse, a linha da hora e os dois pontos; dossiê ttT18Momento (o que
+                    entrou desde a anterior e como a diferença se moveu); clique: o placar mostra o retrato daquele
+                    momento (T18 · Placar momento · HTML) e a hora fica marcada; clique de novo volta ao agora
   T18_Mapa_Html     mapa de quadrados (granularidade UF): cor de quem lidera; clique filtra o placar; dossiê da UF no
                     tooltip ttT18Uf. Não recebe o filtro de UF da casca (mostra sempre as 27 + exterior)
   T18_Mapa_Exterior alvo transparente sobre o EX do mapa: abre o tooltip do exterior país a país (ttT18Exterior) e,
@@ -116,6 +120,34 @@ CSS_TT = (
 )
 
 
+# os pontos da curva da noite (23/10/2026): a faixa de clique de cada atualização; a linha e os pontos aparecem no mouse e
+# ficam acesos na atualização clicada (o HTML Content marca as outras com .unselected)
+CSS_PONTOS = (
+    ".t18k{pointer-events:none}"
+    ".t18k .al{position:absolute;top:58px;height:244px;pointer-events:auto;cursor:pointer}"
+    f".t18k .gu{{position:absolute;top:58px;height:244px;width:2px;background:{C['tinta']};opacity:0;"
+    "transition:opacity .15s;pointer-events:none}"
+    f".t18k .pd{{position:absolute;width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 2px {C['papel']};"
+    "opacity:0;transition:opacity .15s;pointer-events:none}"
+    f".t18k .pd.l{{background:{C['vermelho']}}}.t18k .pd.f{{background:{C['azul']}}}"
+    f".t18k .hr{{position:absolute;top:34px;transform:translateX(-50%);font-size:13px;font-weight:700;"
+    f"background:{C['tinta']};color:{C['papel']};padding:1px 6px;white-space:nowrap;opacity:0;pointer-events:none}}"
+    ".t18k:hover .gu{opacity:.35}.t18k:hover .pd{opacity:1}"
+    "body:has(.t18k.unselected) .t18k:not(.unselected) .gu{opacity:1}"
+    "body:has(.t18k.unselected) .t18k:not(.unselected) .pd,body:has(.t18k.unselected) .t18k:not(.unselected) .hr"
+    "{opacity:1}"
+)
+CSS_TT_MOMENTO = (
+    ".tt18m .duo{display:flex;gap:40px;margin:2px 0 2px 0}"
+    ".tt18m .duo small{display:block;font-size:13px;font-weight:600;letter-spacing:.12em}"
+    ".tt18m .duo .num{font-size:32px}"
+    ".tt18m .duo .vr{font-size:14px;font-weight:600;color:var(--grafite);margin-left:8px}"
+    ".tt18m .txt{padding-bottom:30px}"
+    ".tt18m .mao{top:auto;bottom:10px;font-size:26px}"
+    ".tt18m .mao.lula{color:var(--vermelho-escuro)}.tt18m .mao.flavio{color:var(--azul-escuro)}"
+)
+
+
 def declarar(ctx):
     return [
         Visual(P, lib.visual_html("T18_Placar_Html", *PLACAR, "T18 · Placar · HTML", folha_de_estilo=CSS,
@@ -124,6 +156,21 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T18_Curva_Html", *CURVA, "T18 · Curva · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_CURVA}</style>{{{{content}}}}",
                                   alt=lib.medida("T18 · Curva · ALT"), z=lib.CAMADAS["conteudo"] + 1, tab=110)),
+        Visual(P, lib.visual_html("T18_Curva_Pontos", *CURVA, "T18 · Curva pontos · HTML", folha_de_estilo=CSS,
+                                  modelo_corpo=f"<style>{CSS_PONTOS}</style>{{{{content}}}}",
+                                  granularidade=("Apuração histórico", "AtualizadoTSE"), filtro_cruzado=True,
+                                  transparencia_nao_selecionados=False, tooltip_pagina="ttT18Momento",
+                                  alt=lib.medida("T18 · Curva pontos · ALT"), z=lib.CAMADAS["conteudo"] + 3, tab=115)),
+        *pagina_lib.tooltip("ttT18Momento", "Apuração · atualização", 470, 300, "T18 · Tooltip momento · HTML",
+                            ordem=182, folha_de_estilo=CSS,
+                            modelo_corpo=f"<style>{CSS_TT}{CSS_TT_MOMENTO}</style>{{{{content}}}}"),
+        # o clique numa atualização da curva muda só o placar (o retrato daquele momento): a curva de fundo não recebe
+        # (o filtro em AtualizadoTSE a reduziria a um ponto), o mapa e o exterior seguem no agora (o histórico só tem o
+        # Brasil) e o filtro de UF não tem o que mostrar com ele
+        Interacao(P, "T18_Curva_Pontos", "T18_Curva_Html", "NoFilter"),
+        Interacao(P, "T18_Curva_Pontos", "T18_Mapa_Html", "NoFilter"),
+        Interacao(P, "T18_Curva_Pontos", "T18_Mapa_Exterior", "NoFilter"),
+        Interacao(P, "T18_Curva_Pontos", "T18_Casca_Filtro", "NoFilter"),
         Visual(P, lib.visual_html("T18_Mapa_Html", *MAPA, "T18 · Mapa · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=CORPO_MAPA, granularidade=("UF", "UF"), filtro_cruzado=True,
                                   transparencia_nao_selecionados=True, tooltip_pagina="ttT18Uf",

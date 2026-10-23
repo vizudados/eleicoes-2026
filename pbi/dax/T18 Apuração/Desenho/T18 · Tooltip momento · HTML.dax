@@ -1,0 +1,74 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: Dossiê de uma atualização do TSE na curva da noite (ttT18Momento, grão 'Apuração histórico'[AtualizadoTSE]): a hora, as seções, o % de cada um com a mudança desde a anterior, quantos votos entraram e para quem, e como a diferença se moveu; nota à mão com o que aconteceu (abriu, encostou, virou).
+*/
+-- 1 · Leituras
+VAR _m = [T18 · momento escolhido]
+VAR _ant = [T18 · momento · anterior]
+VAR _pos = [T18 · momento · posição]
+VAR _n = [T18 · momento · atualizações da noite]
+VAR _secoes = [T18 · momento · seções %]
+VAR _lulaP = [T18 · momento · Lula %]
+VAR _flavioP = [T18 · momento · Flávio %]
+VAR _varL = [T18 · momento · Lula % variação]
+VAR _varF = [T18 · momento · Flávio % variação]
+VAR _validos = [T18 · momento · válidos]
+VAR _entrou = [T18 · momento · válidos que entraram]
+VAR _ganhouL = [T18 · momento · Lula ganhou]
+VAR _ganhouF = [T18 · momento · Flávio ganhou]
+VAR _dif = [T18 · momento · diferença]
+VAR _difAnt = [T18 · momento · diferença na anterior]
+-- 2 · Textos
+VAR _hora = FORMAT ( _m, "HH:mm" )
+VAR _txtVarL = IF ( ISBLANK ( _varL ), "", "<span class='vr'>" & FORMAT ( _varL * 100, "+0.00;−0.00;0.00" ) & "</span>" )
+VAR _txtVarF = IF ( ISBLANK ( _varF ), "", "<span class='vr'>" & FORMAT ( _varF * 100, "+0.00;−0.00;0.00" ) & "</span>" )
+VAR _txtDif = SWITCH ( TRUE (), _dif > 0, "Lula +", _dif < 0, "Flávio +", "empate" ) & IF ( _dif = 0, "", FORMAT ( ABS ( _dif ), "#,0" ) )
+VAR _txtDifAnt =
+    SWITCH ( TRUE (), _difAnt > 0, "Lula +", _difAnt < 0, "Flávio +", "empate" ) & IF ( _difAnt = 0, "", FORMAT ( ABS ( _difAnt ), "#,0" ) )
+VAR _txtEntrou =
+    IF (
+        ISBLANK ( _ant ),
+        "A primeira parcial da noite: " & FORMAT ( _validos, "#,0" ) & " votos válidos contados.",
+        "Desde a anterior (" & FORMAT ( _ant, "HH:mm" ) & "), entraram " & FORMAT ( _entrou, "#,0" ) & " votos válidos: "
+            & "<b class='lula'>" & FORMAT ( _ganhouL, "#,0" ) & "</b> para Lula e <b class='flavio'>" & FORMAT ( _ganhouF, "#,0" )
+            & "</b> para Flávio. A diferença foi de " & _txtDifAnt & " para " & _txtDif & "."
+    )
+VAR _virou = NOT ISBLANK ( _difAnt ) && _dif <> 0 && SIGN ( _dif ) <> SIGN ( _difAnt )
+VAR _abriu = NOT ISBLANK ( _difAnt ) && ABS ( _dif ) >= ABS ( _difAnt )
+VAR _mao =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _ant ), "a primeira parcial",
+        _virou, "virou aqui",
+        _dif = 0, "empate",
+        _abriu, IF ( _dif > 0, "Lula abriu mais", "Flávio abriu mais" ),
+        IF ( _dif > 0, "Flávio encostou", "Lula encostou" )
+    )
+VAR _corMao =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _ant ) || _dif = 0, "",
+        _virou || _abriu, IF ( _dif > 0, " lula", " flavio" ),
+        IF ( _dif > 0, " flavio", " lula" )
+    )
+-- 3 · Geometria (barra dividida: Lula à esquerda, Flávio à direita, sobre os válidos)
+VAR _wl = FORMAT ( _lulaP * 100, "0.0##", "en-US" )
+VAR _wf = FORMAT ( _flavioP * 100, "0.0##", "en-US" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _m ),
+        "<div class='tela tt18 tt18m'><div class='fita'></div>"
+            & "<div class='rot sobe'>ÀS " & _hora & " · " & _pos & "ª DE " & _n & " · "
+            & FORMAT ( _secoes * 100, "0.00" ) & "% DAS SEÇÕES</div>"
+            & "<div class='duo sobe d2'><div><small class='lula-esc'>LULA</small><span class='num lula'>"
+            & FORMAT ( _lulaP * 100, "0.00" ) & "%</span>" & _txtVarL & "</div>"
+            & "<div><small class='flavio-esc'>FLÁVIO</small><span class='num flavio'>" & FORMAT ( _flavioP * 100, "0.00" )
+            & "%</span>" & _txtVarF & "</div></div>"
+            & "<div class='barra sobe d3'><i class='bl barra-x' style='width:" & _wl & "%'></i>"
+            & "<i class='bf barra-x-dir' style='width:" & _wf & "%'></i></div>"
+            & "<div class='txt sobe d4'>" & _txtEntrou & "</div>"
+            & "<div class='mao" & _corMao & " entra d6'>" & _mao & "</div>"
+        & "</div>"
+    )

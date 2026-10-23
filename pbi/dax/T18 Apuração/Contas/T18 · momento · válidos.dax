@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Votos válidos no Brasil na atualização do TSE em contexto (o histórico só guarda o Brasil); vazio sem um momento.
+*/
+IF ( NOT ISBLANK ( [T18 · momento escolhido] ), SUM ( 'Apuração histórico'[Validos] ) )

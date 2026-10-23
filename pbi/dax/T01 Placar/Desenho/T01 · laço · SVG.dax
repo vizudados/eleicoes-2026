@@ -1,6 +1,0 @@
-/*
-@pasta: T01 Placar\Desenho
-@formato: texto
-@descricao: Laço à mão em volta do número da diferença: escala com a largura do número (preserveAspectRatio none), traço que se desenha com o tremido de caneta. Desenho fixo.
-*/
-"<svg class='laco' viewBox='0 0 100 40' preserveAspectRatio='none' aria-hidden='true'><defs><filter id='rbl' x='-5%' y='-5%' width='110%' height='110%'><feTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='2' seed='3' result='r'/><feDisplacementMap in='SourceGraphic' in2='r' scale='3' xChannelSelector='R' yChannelSelector='G'/></filter></defs><path pathLength='1' class='traco' style='animation-delay:.9s' filter='url(#rbl)' fill='none' stroke='#1C1915' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke' d='M9,30 C2,22 4,8 26,4 C48,0 82,1 95,10 C103,17 97,31 76,36 C55,40 22,40 9,33 C3,28 6,16 22,9 C34,4 52,3 64,4'/></svg>"

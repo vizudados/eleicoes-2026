@@ -1,7 +1,7 @@
 /*
 @pasta: T22 Simulador\Desenho
 @formato: texto
-@descricao: O 2º turno simulado no Brasil (com o exterior): Lula × Flávio em % dos válidos, em quantas UFs cada um fica à frente e a diferença em votos; o rótulo diz se a conta usa os controles ou uma pesquisa.
+@descricao: O 2º turno simulado no Brasil (com o exterior): Lula × Flávio em % dos válidos, em quantas UFs cada um fica à frente e a diferença em votos; o rótulo diz se a conta usa os controles ou uma pesquisa. Com uma UF clicada no mapa (filtro cruzado), o resultado daquela UF, com o 1º turno dela (só os dois) no lugar da contagem de UFs.
 */
 -- 1 · Leituras
 VAR _pesq = [T22 · pesquisa em uso]
@@ -11,6 +11,9 @@ VAR _flavio = [T22 · cenário · Flávio %]
 VAR _ufL = [T22 · cenário · UFs com Lula à frente]
 VAR _ufF = [T22 · cenário · UFs com Flávio à frente]
 VAR _dif = [T22 · cenário · diferença]
+VAR _uf = [T22 · UF escolhida]
+VAR _lula1 = [T22 · Lula % no 1º turno]
+VAR _flavio1 = [T22 · Flávio % no 1º turno]
 -- 2 · Textos
 VAR _rotulo =
     IF (
@@ -18,21 +21,27 @@ VAR _rotulo =
         "Seus controles",
         "Pesquisa " & SUBSTITUTE ( _pesq, "<", "&lt;" ) & ", " & FORMAT ( _data, "dd/MM" )
     )
-VAR _txtUfL = "à frente em " & _ufL & IF ( _ufL = 1, " UF", " UFs" )
-VAR _txtUfF = "à frente em " & _ufF & IF ( _ufF = 1, " UF", " UFs" )
+VAR _ehUf = NOT ISBLANK ( _uf )
+VAR _escUf = SUBSTITUTE ( SUBSTITUTE ( _uf, "&", "&amp;" ), "<", "&lt;" )
+VAR _txtUfL =
+    IF ( _ehUf, "no 1º turno, " & FORMAT ( _lula1, "0.0%" ) & " (só os dois)", "à frente em " & _ufL & IF ( _ufL = 1, " UF", " UFs" ) )
+VAR _txtUfF =
+    IF ( _ehUf, "no 1º turno, " & FORMAT ( _flavio1, "0.0%" ) & " (só os dois)", "à frente em " & _ufF & IF ( _ufF = 1, " UF", " UFs" ) )
+VAR _limite = IF ( _ehUf, 5000, 50000 )
 VAR _nota =
-    SWITCH (
-        TRUE (),
-        ABS ( _dif ) < 50000, "praticamente empatados",
-        _dif > 0, "Lula vence por " & FORMAT ( _dif / 1000000, "0.0" ) & " mi" & " de votos",
-        "Flávio vence por " & FORMAT ( - _dif / 1000000, "0.0" ) & " mi" & " de votos"
-    )
+    IF ( _ehUf, _escUf & ": ", "" )
+        & SWITCH (
+            TRUE (),
+            ABS ( _dif ) < _limite, "praticamente empatados",
+            _dif > 0, "Lula vence por " & IF ( _dif >= 1000000, FORMAT ( _dif / 1000000, "0.0" ) & " mi", FORMAT ( _dif, "#,0" ) ) & " de votos",
+            "Flávio vence por " & IF ( - _dif >= 1000000, FORMAT ( - _dif / 1000000, "0.0" ) & " mi", FORMAT ( - _dif, "#,0" ) ) & " de votos"
+        )
 -- 3 · Geometria
 VAR _wl = _lula * 100 -- geometria
 -- 4 · Marcação
 RETURN
     "<div class='tela t22r'>"
-        & "<div class='rot sobe'>Resultado do 2º turno simulado · " & _rotulo & "</div>"
+        & "<div class='rot sobe'>Resultado do 2º turno simulado · " & IF ( _ehUf, _escUf & " · ", "" ) & _rotulo & "</div>"
         & "<div class='lado l sobe d1'><span class='q'>Lula</span><span class='num'>" & FORMAT ( _lula, "0.0%" )
             & "</span><span class='u'>" & _txtUfL & "</span></div>"
         & "<div class='lado f sobe d2'><span class='q'>Flávio</span><span class='num'>" & FORMAT ( _flavio, "0.0%" )

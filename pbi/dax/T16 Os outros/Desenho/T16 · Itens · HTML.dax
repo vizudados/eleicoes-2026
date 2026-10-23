@@ -1,13 +1,14 @@
 /*
 @pasta: T16 Os outros\Desenho
 @formato: texto
-@descricao: Uma linha (os quatro mais votados depois de Lula e Flávio) ou etiqueta (os menores) por pessoa (grão Apoio[Quem]): o partido e a posição mais recente no 2º turno, com a data e a condição. Alvo do dossiê ttT16Apoio; vazio para quem não está na lista.
+@descricao: Uma linha (os quatro mais votados depois de Lula e Flávio) ou etiqueta (os menores) por pessoa (grão Apoio[Quem]): o partido e a posição mais recente no 2º turno, com a data e a condição. Clique num grupo do diagrama: a linha do candidato daquele grupo fica em destaque (fx) e as outras esmaecem (fora). Alvo do dossiê ttT16Apoio; vazio para quem não está na lista.
 */
 -- 1 · Leituras
 VAR _q = SELECTEDVALUE ( Apoio[Quem] )
 VAR _pos = [T16 · apoio · posição]
 VAR _cond = [T16 · apoio · condicionado]
 VAR _dia = [T16 · apoio · data]
+VAR _foco = [T16 · foco · grupo clicado]
 -- 2 · Textos
 VAR _item =
     SWITCH (
@@ -25,6 +26,8 @@ VAR _item =
     )
 VAR _ordem = IF ( NOT ISBLANK ( _item ), VALUE ( LEFT ( _item, SEARCH ( "|", _item ) - 1 ) ) )
 VAR _partido = IF ( NOT ISBLANK ( _item ), MID ( _item, SEARCH ( "|", _item ) + 1, 40 ) )
+VAR _meuGrupo = SWITCH ( _q, "Augusto Cury", "Cury", "Renan Santos", "Renan", "Ronaldo Caiado", "Caiado" )
+VAR _clsFoco = IF ( ISBLANK ( _foco ) || _foco = "nao_votou", "", IF ( _meuGrupo = _foco, " fx", " fora" ) )
 VAR _cls = SWITCH ( _pos, "Flávio", "f", "Lula", "l", "n" )
 VAR _txtPos = SWITCH ( _pos, "liberou", "liberou o eleitor", _pos )
 VAR _escQ = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _q, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
@@ -39,7 +42,7 @@ VAR _fil = INT ( ( _ordem - 5 ) / 3 ) -- geometria
 RETURN
     IF (
         NOT ISBLANK ( _item ) && NOT ISBLANK ( _pos ),
-        "<div class='tela t16i'>"
+        "<div class='tela t16i" & _clsFoco & "'>"
             & IF (
                 _ordem <= 4,
                 "<div class='ln sobe' style='top:" & _top & "px;animation-delay:" & ( 200 + _ordem * 120 ) & "ms'>"

@@ -71,12 +71,12 @@ CAMADAS = {"conteudo": 300, "acao": 1020, "leitura": 4000, "drawer": 5000, "nave
 TOOLTIP_LARGURA_MINIMA = 400
 
 RE_NOME = re.compile(r"^[A-Za-z0-9_-]+$")
-# T00 Capa … T23 Encerramento, T24 Quem vota (entra depois da T13 no roteiro) · TIX (sumário) · TT (tooltip)
-RE_NOME_VISUAL = re.compile(r"^(T(?:[01][0-9]|2[0-4])|TT|TIX)_[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9]+$")
-RE_TOOLTIP = re.compile(r"^ttT(?:[01][0-9]|2[0-4])[A-Z][A-Za-z0-9]*$")
+# T00 Capa … T23 Encerramento, T24 Quem vota e T25 Quem falta (entram no meio do roteiro) · TIX (sumário) · TT (tooltip)
+RE_NOME_VISUAL = re.compile(r"^(T(?:[01][0-9]|2[0-5])|TT|TIX)_[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9]+$")
+RE_TOOLTIP = re.compile(r"^ttT(?:[01][0-9]|2[0-5])[A-Z][A-Za-z0-9]*$")
 RE_ALIAS = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
 RE_RECURSO = re.compile(r"^[A-Za-z0-9_.-]+\.(svg|png|jpg|jpeg|json)$")
-RE_BOOKMARK = re.compile(r"^(?:T(?:[01][0-9]|2[0-4])|TIX)_[A-Z0-9]+(?:_[A-Z0-9]+)*_\d{2}$")
+RE_BOOKMARK = re.compile(r"^(?:T(?:[01][0-9]|2[0-5])|TIX)_[A-Z0-9]+(?:_[A-Z0-9]+)*_\d{2}$")
 RE_HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
 MAX_NOME_VISUAL = 50
 MAX_ALT = 250
@@ -669,6 +669,17 @@ CSS_ENTRADA_TT = (
     + "".join(f":where(.htmlViewerEntry>*>:nth-child({i})){{animation-delay:{(i - 1) * 45}ms}}" for i in range(2, 15))
     + ":where(.htmlViewerEntry>*>:nth-child(n+15)){animation-delay:630ms}"
 )
+# Realce no hover (preferência do Alisson, 23/10/2026: "passar o mouse no elemento e ele fica destacado, em gráficos a
+# barra em destaque se acende mais e as outras se apagam"): em todo visual com grão, a entrada sob o mouse fica inteira
+# e as outras apagam (transição curta). Só opacidade: quem pega o mouse continua sendo o que cada visual declara (raiz
+# sem ponteiro e alvos com ponteiro, L114). Devolver o ponteiro aos filhos da raiz foi testado e quebrou: contêineres e
+# SVGs do tamanho do visual passaram a pegar o mouse e a última entrada roubava o clique e o tooltip das outras.
+# Fora: os alvos transparentes sobre o desenho de outro visual (o realce deles é o anel que eles mesmos desenham).
+RE_SEM_REALCE = re.compile(r"(Alvo|Alvos|_Mapa_Exterior|_Casca_|_Filtro_|_Botoes)")
+CSS_REALCE = (
+    ".htmlViewerEntry{transition:opacity .18s ease}"
+    "#htmlContent:has(.htmlViewerEntry:hover) .htmlViewerEntry:not(:hover){opacity:.42}"
+)
 _SCRIPT_MOVIMENTO: str | None = None
 
 
@@ -689,7 +700,8 @@ def visual_html(nome: str, x, y, w, h, medida_conteudo: str, *, alt, z: int = CA
                 tooltip_pagina: str | None = None, folha_de_estilo: str | None = None,
                 ordenacao: Iterable[tuple] = (), oculto: bool = False, tabela: str = TABELA_MEDIDAS,
                 sem_dados: str | None = " ", pagina_wh: tuple = (LARGURA, ALTURA), filtros: dict | None = None,
-                modelo_corpo: str | None = None, movimento: bool | None = None) -> dict:
+                modelo_corpo: str | None = None, movimento: bool | None = None,
+                realce: bool | None = None) -> dict:
     """HTML Content Standalone 2.0 (`STANDALONEhtmlContent…6855`). Papel `content` = UMA medida HTML; `granularidade` =
     (tabela, coluna) no papel `sampling` (rótulo "Context" no 2.0). Sem granularidade o visual não cruza filtro nem abre
     tooltip de página (L011). Grava legacyRendering = false e renderMode = rebuild (ver docstring do módulo). Altura
@@ -726,6 +738,10 @@ def visual_html(nome: str, x, y, w, h, medida_conteudo: str, *, alt, z: int = CA
     if movimento is None:
         movimento = not RE_SEM_MOVIMENTO.search(nome)
     tooltip = nome.startswith("TT_")
+    if realce is None:
+        realce = bool(granularidade) and not RE_SEM_REALCE.search(nome)
+    if realce:
+        modelo_corpo = f"<style>{CSS_REALCE}</style>" + (modelo_corpo if modelo_corpo is not None else "{{content}}")
     if movimento:
         modelo_corpo = (modelo_corpo if modelo_corpo is not None else "{{content}}") + script_movimento(tooltip)
         if tooltip:

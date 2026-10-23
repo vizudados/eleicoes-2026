@@ -1,0 +1,11 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: 0.0%
+@descricao: Margem do PT no ano do contexto, somando os municípios do contexto (série 2006–2026).
+@oraculo: paginas[15] › serie › margem (mesma conta da tela Minha cidade)
+@gerado: pbi/scripts/desenho_t11.py
+*/
+DIVIDE (
+    SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ),
+    SUM ( 'Município ano'[Validos] )
+)

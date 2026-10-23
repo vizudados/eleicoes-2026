@@ -21,5 +21,5 @@ RETURN
             & IF ( ISBLANK ( _uf ), " · BRASIL", " · " & UPPER ( _uf ) ) & "</div>"
         & "<div class='man sobe d1'>" & _man & "</div>"
         & "<div class='leg entra d2'><span><i class='pt'></i>PT</span><span><i class='adv'></i>adversário principal: o "
-            & "mais votado fora do PT no ano</span><span><i class='laco'></i>PT atrás</span></div>"
+            & "mais votado fora do PT no ano</span><span><i class='subl'></i>PT atrás</span></div>"
     & "</div>"

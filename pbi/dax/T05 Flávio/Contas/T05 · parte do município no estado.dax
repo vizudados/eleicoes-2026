@@ -1,0 +1,11 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0.0%
+@descricao: Parcela dos votos de Flávio na UF (soma dos municípios) que saiu do município marcado (0–1).
+*/
+VAR _s = [T05 · UF do município]
+RETURN
+    IF (
+        NOT ISBLANK ( _s ),
+        DIVIDE ( [T05 · votos (municípios)], CALCULATE ( [T05 · votos (municípios)], REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'UF' ), 'Município'[UF] = _s ) )
+    )

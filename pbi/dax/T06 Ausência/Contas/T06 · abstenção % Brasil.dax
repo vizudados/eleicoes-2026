@@ -1,7 +1,0 @@
-/*
-@pasta: T06 Ausência\Contas
-@formato: 0.0%
-@descricao: Abstenção oficial do Brasil em 2026 (referência no dossiê do município).
-@oraculo: 21,1%
-*/
-CALCULATE ( DIVIDE ( SUM ( 'Comparecimento ano'[Abstencoes] ), SUM ( 'Comparecimento ano'[Aptos] ) ), 'Comparecimento ano'[Ano] = 2026 )

@@ -1,0 +1,12 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê do ano.
+*/
+LEFT (
+    "1º turno de " & [T25 · ano] & " (" & [T25 · disputa do ano] & "), " & [T25 · lugar] & ": "
+        & FORMAT ( [T25 · abstenção %], "0.0%" ) & " faltaram"
+        & IF ( [T25 · tem idade no ano] = 1, "; a idade que mais passa do seu peso entre os que faltaram é "
+            & [T25 · faixa mais acima do seu peso] & ".", "." ),
+    250
+)

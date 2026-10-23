@@ -1,0 +1,53 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: O placar num momento da noite (atualização do TSE clicada na curva): os dois candidatos com o % e os votos daquela hora, o selo com a hora, a frase do momento e a barra das seções apuradas até ali. Sempre o Brasil (o histórico só guarda o Brasil). Lido pela T18 · Placar · HTML quando há momento escolhido.
+*/
+-- 1 · Leituras
+VAR _m = [T18 · momento escolhido]
+VAR _lula = [T18 · momento · Lula votos]
+VAR _flavio = [T18 · momento · Flávio votos]
+VAR _lulaP = [T18 · momento · Lula %]
+VAR _flavioP = [T18 · momento · Flávio %]
+VAR _secoes = [T18 · momento · seções %]
+VAR _dif = [T18 · momento · diferença]
+VAR _lider = [T18 · momento · líder]
+VAR _brancos = [T18 · momento · brancos]
+VAR _nulos = [T18 · momento · nulos]
+VAR _pos = [T18 · momento · posição]
+VAR _n = [T18 · momento · atualizações da noite]
+-- 2 · Textos
+VAR _hora = FORMAT ( _m, "HH:mm" )
+VAR _lulaTxt = FORMAT ( _lulaP * 100, "0.00" ) & "%"
+VAR _flavioTxt = FORMAT ( _flavioP * 100, "0.00" ) & "%"
+VAR _secoesTxt = FORMAT ( _secoes * 100, "0.00" ) & "%"
+VAR _blocoLula =
+    "<div class='cand sobe d2'><div class='rot lula-esc'>LULA · PT · 13</div><div class='num pct lula'>" & _lulaTxt
+        & "</div><div class='txt votos'>" & FORMAT ( _lula, "#,0" ) & IF ( _lula = 1, " voto", " votos" ) & "</div></div>"
+VAR _blocoFlavio =
+    "<div class='cand sobe d3'><div class='rot flavio-esc'>FLÁVIO BOLSONARO · PL · 22</div><div class='num pct flavio'>"
+        & _flavioTxt & "</div><div class='txt votos'>" & FORMAT ( _flavio, "#,0" ) & IF ( _flavio = 1, " voto", " votos" )
+        & "</div></div>"
+VAR _par = IF ( _lider = "Flávio", _blocoFlavio & _blocoLula, _blocoLula & _blocoFlavio )
+VAR _frase =
+    IF (
+        _lider = "—",
+        "Às " & _hora & ", empate exato, com " & _secoesTxt & " das seções.",
+        "Às " & _hora & ", " & _lider & " liderava por " & FORMAT ( ABS ( _dif ), "#,0" )
+            & IF ( ABS ( _dif ) = 1, " voto", " votos" ) & ", com " & _secoesTxt & " das seções."
+    )
+VAR _barra =
+    "<div class='secoes sobe d5'><div class='rot'>SEÇÕES APURADAS ÀS " & _hora & "</div><div class='trilho'>"
+        & "<div class='enche barra-x' style='width:" & FORMAT ( _secoes * 100, "0.0##", "en-US" ) & "%'></div>"
+        & "<span class='num'>" & _secoesTxt & "</span></div><div class='nota'>Brancos " & FORMAT ( _brancos, "#,0" )
+        & " · nulos " & FORMAT ( _nulos, "#,0" ) & " · atualização " & _pos & " de " & _n
+        & " · clique de novo na curva para voltar ao agora</div></div>"
+VAR _topo =
+    "<div class='rot topo entra'>NAQUELE MOMENTO · TSE ÀS " & _hora & " DE " & FORMAT ( _m, "dd/MM" ) & " · BRASIL</div>"
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _m ),
+        "<div class='tela t18p'>" & _topo & "<div class='par'>" & _par & "<div class='selo entra d6'>RETRATO DAS " & _hora
+            & "</div></div><div class='man frase sobe d4'>" & _frase & "</div>" & _barra & "</div>"
+    )

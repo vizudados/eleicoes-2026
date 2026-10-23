@@ -1,0 +1,40 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Uma linha por região (granularidade UF[Região]), da maior queda à menor: o nome (com a nota à mão quando a região passou para Flávio), a margem 2022 → 2026 num mini eixo de −50 a +50 p.p. e a variação. Mouse: o dossiê da região (ttT12Regiao); clique: a corrida mostra só as unidades da região, nos lugares delas, e a resposta conta a região. Só lê contas.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _pos = [T12 · ordem da região]
+VAR _r = [T12 · região da unidade]
+VAR _m22 = [T12 · margem 2022]
+VAR _m26 = [T12 · margem 2026]
+VAR _d = [T12 · variação]
+-- 2 · Textos
+VAR _cor = IF ( _m26 < 0, "var(--azul)", "var(--vermelho)" )
+VAR _cor22 = IF ( _m22 < 0, "var(--azul)", "var(--vermelho)" )
+VAR _nota = IF ( _m22 > 0 && _m26 < 0, " <span class='mao mud'>passou para Flávio</span>", "" )
+-- 3 · Geometria (linhas a cada 46 px a partir de y 30; mini eixo de −45 a +45 p.p. em 290 px)
+VAR _y = 30 + ( _pos - 1 ) * 46
+VAR _x22 = ( 10 + 290 * ( MAX ( -0.45, MIN ( 0.45, _m22 ) ) + 0.45 ) / 0.9 )
+VAR _x26 = ( 10 + 290 * ( MAX ( -0.45, MIN ( 0.45, _m26 ) ) + 0.45 ) / 0.9 )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pos ),
+        "<div class='tela t12g'><div class='rg sobe d" & ( 8 + _pos ) & "' style='top:" & _y & "px'>"
+            & "<div class='nm'>" & _r & _nota & "</div>"
+            & "<div class='vv'>" & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " → " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & "</div>"
+            & "<svg class='mini' width='310' height='20' viewBox='0 0 310 20'>"
+                & "<line x1='155' x2='155' y1='0' y2='20' class='zero'/>"
+                & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 1200 + _pos * 90 )
+                    & "ms' x1='" & FORMAT ( _x22, "0.0", "en-US" ) & "' x2='" & FORMAT ( _x26, "0.0", "en-US" )
+                    & "' y1='10' y2='10'/>"
+                & "<circle cx='" & FORMAT ( _x22, "0.0", "en-US" ) & "' cy='10' r='4.5' class='m22' stroke='"
+                    & _cor22 & "'/>"
+                & "<circle class='brota' style='animation-delay:" & ( 1500 + _pos * 90 ) & "ms' cx='"
+                    & FORMAT ( _x26, "0.0", "en-US" ) & "' cy='10' r='5.5' fill='" & _cor & "'/>"
+            & "</svg>"
+            & "<div class='dv'>" & FORMAT ( _d * 100, "+0.0;−0.0;0.0" ) & "</div>"
+        & "</div></div>"
+    )

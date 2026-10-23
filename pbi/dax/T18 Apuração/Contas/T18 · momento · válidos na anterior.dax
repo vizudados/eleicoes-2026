@@ -1,0 +1,8 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Votos válidos na atualização anterior à do contexto; vazio na primeira da noite.
+*/
+VAR _a = [T18 · momento · anterior]
+RETURN
+    IF ( NOT ISBLANK ( _a ), CALCULATE ( SUM ( 'Apuração histórico'[Validos] ), REMOVEFILTERS ( 'Apuração histórico' ), 'Apuração histórico'[AtualizadoTSE] = _a ) )

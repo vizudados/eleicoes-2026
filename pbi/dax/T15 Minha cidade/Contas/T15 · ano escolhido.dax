@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0
+@descricao: Eleição que a ficha e as parecidas contam: a barra clicada na série (filtro cruzado no Ano) ou, sem clique, 2026.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › 2026 sem clique
+@gerado: pbi/scripts/desenho_t15.py
+*/
+IF ( ISFILTERED ( 'Ano'[Ano] ) && HASONEVALUE ( 'Ano'[Ano] ), VALUES ( 'Ano'[Ano] ), 2026 )

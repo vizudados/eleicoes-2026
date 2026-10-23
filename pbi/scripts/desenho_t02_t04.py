@@ -11,6 +11,8 @@ em traço olhando para a tela; à direita a cena do comício (a partir de foto r
 embaixo, a protagonista: a trajetória política, uma régua do tempo com os marcos nos anos reais. Os cartões dos marcos
 ficam em vagas iguais (nunca colidem) e um fio liga cada cartão ao seu ponto na régua. Passar o mouse num cartão abre o
 dossiê "polaroide": a foto da época redesenhada em traço, presa com fita, a data, o texto, a legenda e o crédito.
+Marco sem foto de licença aberta: a cena da época recriada como ILUSTRAÇÃO em traço (desenhos.csv, tipo = ilustração),
+com lápis no lugar da câmera no cartão, "Na ilustração:" no dossiê e crédito "Ilustração … recriada de registros da época".
 """
 from __future__ import annotations
 
@@ -60,6 +62,18 @@ def literal(texto: str) -> str:
     return '"' + texto.replace('"', '""') + '"'
 
 
+def ilustracoes() -> list[str]:
+    """Desenhos que são ILUSTRAÇÃO recriada (marco sem foto de licença aberta), não redesenho de foto real."""
+    return sorted(k for k, v in desenhos_csv().items() if v.get("tipo") == "ilustração")
+
+
+def em_ilustracoes(coluna: str) -> str:
+    """Condição DAX 'a coluna é uma ilustração recriada'. Sem nenhuma, a lista leva um nome que nunca existe (vale
+    também como filtro do CALCULATE, onde FALSE () não é aceito)."""
+    nomes = ilustracoes() or ["(nenhuma)"]
+    return f"{coluna} IN {{ {', '.join(literal(n) for n in nomes)} }}"
+
+
 # ---------------------------------------------------------------------------------------------------- contas
 def contas(P: str, L: dict, G: Gravador) -> None:
     c = G.conta
@@ -67,9 +81,14 @@ def contas(P: str, L: dict, G: Gravador) -> None:
     filtro = f"REMOVEFILTERS ( {TR} ), {TR}[Candidato] = {cand}"
     c(f"{P} · Trajetória · marcos", f"Quantos marcos a trajetória de {L['cand']} tem.",
       f"CALCULATE ( COUNTROWS ( {TR} ), {filtro} )", "0", "dados/pbi/trajetoria.csv = 10")
-    c(f"{P} · Trajetória · marcos com foto", f"Quantos marcos de {L['cand']} têm foto da época redesenhada.",
-      f'CALCULATE ( COUNTROWS ( {TR} ), {filtro}, {TR}[Foto] <> "" )', "0",
-      "Lula 7 · Flávio 9 (dados/pbi/trajetoria.csv)")
+    c(f"{P} · Trajetória · marcos com foto", f"Quantos marcos de {L['cand']} têm foto da época redesenhada (sem "
+      "contar as ilustrações recriadas).",
+      f'CALCULATE ( COUNTROWS ( {TR} ), {filtro}, {TR}[Foto] <> "", NOT ( {em_ilustracoes(f"{TR}[Foto]")} ) )', "0",
+      "Lula 8 · Flávio 10 (dados/pbi/trajetoria.csv; desenhos.csv, tipo = foto)")
+    c(f"{P} · Trajetória · marcos ilustrados", f"Quantos marcos de {L['cand']} não têm foto de licença aberta e "
+      "mostram a cena da época recriada em ilustração.",
+      f"CALCULATE ( COUNTROWS ( {TR} ), {filtro}, {em_ilustracoes(f'{TR}[Foto]')} )", "0",
+      "Lula 2 · Flávio 0 (desenhos.csv, tipo = ilustração)")
     c(f"{P} · Trajetória · primeiro ano", f"Ano do primeiro marco de {L['cand']}.",
       f"CALCULATE ( MIN ( {TR}[Ano] ), {filtro} )", "0", "Lula 1975 · Flávio 2002")
     c(f"{P} · Trajetória · último ano", f"Ano do último marco de {L['cand']}.",
@@ -97,8 +116,15 @@ def contas(P: str, L: dict, G: Gravador) -> None:
       f"SELECTEDVALUE ( {TR}[Texto] )", "texto")
     c(f"{P} · Trajetória · foto", "Nome do desenho da foto do marco da linha; vazio quando não há foto livre.",
       f"SELECTEDVALUE ( {TR}[Foto] )", "texto")
-    c(f"{P} · Trajetória · tem foto", "1 quando o marco da linha tem foto da época redesenhada.",
+    c(f"{P} · Trajetória · tem foto", "1 quando o marco da linha tem desenho: foto da época redesenhada ou, sem foto "
+      "de licença aberta, ilustração recriada.",
       f'IF ( SELECTEDVALUE ( {TR}[Foto] ) <> "", 1, 0 )', "0")
+    c(f"{P} · Trajetória · é ilustração", "1 quando o desenho do marco da linha é ilustração recriada da época (não há "
+      "foto de licença aberta). Fonte: dados/bruto/trajetoria/desenhos.csv, coluna tipo.", dax(f"""
+        VAR _f = [{P} · Trajetória · foto]
+        RETURN
+            IF ( {em_ilustracoes('_f')}, 1, 0 )
+        """), "0")
     # legenda e crédito do desenho (dados/bruto/trajetoria/desenhos.csv; reserva: autor e licença da tabela)
     mapa = {k: v for k, v in desenhos_csv().items() if v["candidato"].startswith(L["cand"])}
     casos_leg = "".join(f",\n        {literal(k)}, {literal(v['legenda'])}" for k, v in sorted(mapa.items())
@@ -154,7 +180,8 @@ def contas(P: str, L: dict, G: Gravador) -> None:
 # ---------------------------------------------------------------------------------------------------- desenho
 def desenho(P: str, L: dict, G: Gravador) -> None:
     G.desenho(f"{P} · Ficha · HTML", f"Ficha de {L['cand']} (alto à esquerda da tela): desde quando está na vida "
-              "pública, o 1º turno de 2026 e quantos marcos a linha do tempo tem. Só lê contas.", dax(f"""
+              "pública, o 1º turno de 2026 e quantos marcos a linha do tempo tem (com foto da época e em ilustração "
+              "recriada). Só lê contas.", dax(f"""
         -- 1 · Leituras
         VAR _desde = [{P} · Trajetória · primeiro ano]
         VAR _anos = [{P} · anos de vida pública]
@@ -163,11 +190,20 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _pos = [{P} · posição 2026]
         VAR _marcos = [{P} · Trajetória · marcos]
         VAR _fotos = [{P} · Trajetória · marcos com foto]
+        VAR _ilus = [{P} · Trajetória · marcos ilustrados]
         -- 2 · Textos
         VAR _txtVotos = @MI(_votos)@
         VAR _txtPct = @PCT(_pct)@
         VAR _txtFotos =
-            SWITCH ( _fotos, 0, "nenhum com foto da época", 1, "1 com foto da época", _fotos & " com foto da época" )
+            SWITCH (
+                TRUE (),
+                _fotos = _marcos, "todos com foto da época",
+                _fotos = 0, "nenhum com foto da época",
+                _fotos = 1, "1 com foto da época",
+                _fotos & " com foto da época"
+            )
+        VAR _txtIlus =
+            SWITCH ( _ilus, 0, "", 1, ", 1 em ilustração recriada", ", " & _ilus & " em ilustração recriada" )
         -- 4 · Marcação
         VAR _html =
             "<div class='tela fc'>"
@@ -177,7 +213,8 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
                 & "<div class='val'><span class='{L['cls']}'>" & _txtVotos & "</span><small>de votos · " & _txtPct
                 & " · " & _pos & "º lugar</small></div></div>"
                 & "<div class='lin sobe d5'><div class='rot'>Na linha do tempo abaixo</div>"
-                & "<div class='val'><span>" & _marcos & "</span><small>marcos, " & _txtFotos & "</small></div></div>"
+                & "<div class='val'><span>" & _marcos & "</span><small>marcos, " & _txtFotos & _txtIlus
+                & "</small></div></div>"
             & "</div>"
         RETURN
             _html
@@ -192,8 +229,9 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         """))
     # régua do tempo: uma entrada por marco
     G.desenho(f"{P} · Trajetória · HTML", "Um marco da trajetória (uma entrada por marco, granularidade "
-              "'Trajetória'[Título]): o cartão na sua vaga, o fio até o ponto no ano real e, no 1º marco, a régua "
-              "com os anos. Só lê contas; posições são geometria.", dax(f"""
+              "'Trajetória'[Título]): o cartão na sua vaga (câmera se tem foto da época, lápis se é ilustração "
+              "recriada), o fio até o ponto no ano real e, no 1º marco, a régua com os anos. Só lê contas; posições "
+              "são geometria.", dax(f"""
         -- 1 · Leituras
         VAR _ordem = [{P} · Trajetória · ordem]
         VAR _n = [{P} · Trajetória · marcos]
@@ -201,14 +239,18 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _ano = [{P} · Trajetória · ano]
         VAR _tit = [{P} · Trajetória · título]
         VAR _temFoto = [{P} · Trajetória · tem foto]
+        VAR _ilus = [{P} · Trajetória · é ilustração]
         VAR _ini = [{P} · Trajetória · primeiro ano]
         VAR _fim = [{P} · Trajetória · último ano]
         -- 2 · Textos
         VAR _txtTit = @ESC(_tit)@
         VAR _icone =
-            IF (
+            SWITCH (
+                TRUE (),
+                _ilus = 1,
+                    "<svg class='cam' viewBox='0 0 20 16' aria-label='ilustração recriada da época'><path d='M3,14 L4,10 L13,2 L16,5 L7,13 Z'/><path d='M4,10 L7,13'/></svg>",
                 _temFoto = 1,
-                "<svg class='cam' viewBox='0 0 20 16' aria-label='tem foto da época'><path d='M2,4 H6 L8,2 H12 L14,4 H18 V14 H2 Z'/><circle cx='10' cy='9' r='3'/></svg>",
+                    "<svg class='cam' viewBox='0 0 20 16' aria-label='tem foto da época'><path d='M2,4 H6 L8,2 H12 L14,4 H18 V14 H2 Z'/><circle cx='10' cy='9' r='3'/></svg>",
                 ""
             )
         VAR _cab =
@@ -267,8 +309,8 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         """))
     # dossiê polaroide (página de tooltip)
     G.desenho(f"{P} · Tooltip marco · HTML", "Dossiê do marco (polaroide presa com fita): a foto da época redesenhada "
-              "em traço (ou um desenho e a nota 'sem foto de licença aberta'), a data, o título, o texto, a legenda "
-              "da foto e o crédito. Só lê contas.", dax(f"""
+              "em traço ou, sem foto de licença aberta, a cena recriada em ilustração (reserva: um ícone e a nota "
+              "'sem foto de licença aberta'), a data, o título, o texto, a legenda e o crédito. Só lê contas.", dax(f"""
         -- 1 · Leituras
         VAR _tit = [{P} · Trajetória · título]
         VAR _txt = [{P} · Trajetória · texto do marco]
@@ -276,6 +318,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _data = [{P} · Trajetória · data]
         VAR _foto = [{P} · Trajetória · foto]
         VAR _temFoto = [{P} · Trajetória · tem foto]
+        VAR _ilus = [{P} · Trajetória · é ilustração]
         VAR _leg = [{P} · Trajetória · legenda da foto]
         VAR _cred = [{P} · Trajetória · crédito da foto]
         -- 2 · Textos
@@ -304,7 +347,8 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
                     & "<div class='sem mao'>sem foto de licença aberta</div>"
             )
         VAR _rodape =
-            IF ( _temFoto = 1, "<div class='nota lg'><b>Na foto:</b> " & @ESC(_leg)@ & "</div>"
+            IF ( _temFoto = 1, "<div class='nota lg'><b>" & IF ( _ilus = 1, "Na ilustração:", "Na foto:" ) & "</b> "
+                & @ESC(_leg)@ & "</div>"
                 & "<div class='nota cr'>" & @ESC(_cred)@ & "</div>" )
         -- 4 · Marcação
         VAR _html =

@@ -11,17 +11,26 @@ o Trends dá um índice relativo (0–100 dentro de cada consulta), não o núme
   T08_Curva_Html     fundo da curva diária T2 (01/08 a 22/10): grade, datas, as duas linhas que se desenham, o pico do
                      1º turno e a virada depois do debate
   T08_Curva_Dias     uma faixa por dia (granularidade 'Trends tempo'[DataTexto]) com a marca do dia no mouse; dossiê
-                     ttT08Dia (o dia e, de 01 a 07/10 e de 15 a 21/10, a curva hora a hora)
+                     ttT08Dia (o dia e, de 01 a 07/10 e de 15 a 21/10, a curva hora a hora). Filtro cruzado
+                     (23/10/2026): o clique num dia fixa a marca dele e leva o placar de cima para aquele dia (a parte
+                     de cada um na soma dos dois índices, quem foi mais buscado e se foi um dos dias de pico)
   T08_Mapa_Html      cabeçalho do mapa (27 de 27) e a legenda
   T08_Mapa_Ufs       mapa de quadrados (granularidade UF[UF]): a parte de cada um nas buscas do 2º turno, o fundo pelo
-                     interesse; dossiê ttT08Uf (interesse no estado e o período todo entre os 5 candidatos)
+                     interesse; dossiê ttT08Uf (interesse no estado e o período todo entre os 5 candidatos). Filtro
+                     cruzado (23/10/2026): o clique num estado leva o placar para ele (a manchete diz o lugar) e os
+                     outros quadrados esmaecem.
+
+O que não cruza, e por quê: o Google Trends não dá o dia a dia por estado (só o período todo e o 2º turno, em
+dados/pbi/trends_uf.csv), então o dia clicado não muda o mapa e o estado clicado não muda a curva; o placar diz isso
+ao leitor. As perguntas são uma lista curada (sem grão). NoFilter entre a curva, o mapa e as perguntas: nenhum lê o
+filtro do outro, e assim não se redesenham à toa.
 """
 from __future__ import annotations
 
 import estilo
 import pagina_lib
 import pbip_lib as lib
-from pbip_lib import Visual
+from pbip_lib import Interacao, Visual
 from paginas import _campanha as cp
 
 P = "T08"
@@ -115,6 +124,11 @@ CSS_DIAS = (
     f"transition:opacity .12s;box-shadow:0 0 0 2px {C['papel']}}}"
     f".t08d .dia i.ml{{background:{C['vermelho']}}}.t08d .dia i.mf{{background:{C['azul']}}}"
     ".t08d .dia:hover .v{opacity:.35}.t08d .dia:hover i.m{opacity:1}"
+    # o dia clicado (filtro cruzado) fica marcado: a entrada escolhida é a única sem .unselected
+    "#htmlContent:has(.htmlViewerEntry.unselected) .htmlViewerEntry:not(.unselected) .dia .v,"
+    ".htmlViewerEntry.selected .dia .v{opacity:.6}"
+    "#htmlContent:has(.htmlViewerEntry.unselected) .htmlViewerEntry:not(.unselected) .dia i.m,"
+    ".htmlViewerEntry.selected .dia i.m{opacity:1}"
 )
 
 CSS_MAPA = (
@@ -172,17 +186,26 @@ def declarar(ctx):
                                   modelo_corpo=corpo_curva(), alt=lib.medida("T08 · Curva · ALT"), z=Z + 2, tab=120)),
         Visual(P, lib.visual_html("T08_Curva_Dias", *CURVA, "T08 · Dias · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_DIAS}</style>{{{{content}}}}",
-                                  granularidade=("Trends tempo", "DataTexto"), tooltip_pagina="ttT08Dia",
+                                  granularidade=("Trends tempo", "DataTexto"), filtro_cruzado=True,
+                                  transparencia_nao_selecionados=False, tooltip_pagina="ttT08Dia",
                                   alt=lib.medida("T08 · Dias · ALT"), z=Z + 3, tab=130)),
         Visual(P, lib.visual_html("T08_Mapa_Html", *MAPA, "T08 · Mapa · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_MAPA}</style>{{{{content}}}}",
                                   alt=lib.medida("T08 · Mapa · ALT"), z=Z + 4, tab=140)),
         Visual(P, lib.visual_html("T08_Mapa_Ufs", *MAPA, "T08 · UFs · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_UFS}</style>{{{{content}}}}",
-                                  granularidade=("UF", "UF"), tooltip_pagina="ttT08Uf",
+                                  granularidade=("UF", "UF"), filtro_cruzado=True,
+                                  transparencia_nao_selecionados=True, tooltip_pagina="ttT08Uf",
                                   alt=lib.medida("T08 · UFs · ALT"), z=Z + 5, tab=150)),
-        *pagina_lib.tooltip("ttT08Dia", "Buscas · dia", 460, 340, "T08 · Tooltip dia · HTML", ordem=180,
+        # o dia e o estado clicados só mudam o placar (as outras peças não leem o filtro do outro: ver o docstring)
+        *[Interacao(P, origem, alvo, "NoFilter")
+          for origem, alvos in (("T08_Curva_Dias", ("T08_Perguntas_Html", "T08_Curva_Html", "T08_Mapa_Html",
+                                                    "T08_Mapa_Ufs")),
+                                ("T08_Mapa_Ufs", ("T08_Perguntas_Html", "T08_Curva_Html", "T08_Curva_Dias",
+                                                  "T08_Mapa_Html")))
+          for alvo in alvos],
+        *pagina_lib.tooltip("ttT08Dia", "Buscas · dia", 460, 340, "T08 · Tooltip dia · HTML", ordem=190,
                             folha_de_estilo=CSS, modelo_corpo=cp.dossie("lupa", CSS_TT_DIA)),
-        *pagina_lib.tooltip("ttT08Uf", "Buscas · UF", 460, 290, "T08 · Tooltip UF · HTML", ordem=181,
+        *pagina_lib.tooltip("ttT08Uf", "Buscas · UF", 460, 290, "T08 · Tooltip UF · HTML", ordem=191,
                             folha_de_estilo=CSS, modelo_corpo=cp.dossie("pino", CSS_TT_UF)),
     ]

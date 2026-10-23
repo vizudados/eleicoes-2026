@@ -1,0 +1,19 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Saldo de sentimento de Lula nas redes (% de menções positivas − % de negativas, Datrix) na janela do ponto, em pontos.
+*/
+VAR _i = [T09 · humor · início]
+VAR _f = [T09 · humor · fim]
+RETURN
+    IF (
+        NOT ISBLANK ( _i ),
+        CALCULATE (
+            MAX ( Monitoramento[Valor] ),
+            REMOVEFILTERS ( Monitoramento ),
+            Monitoramento[Métrica] = "saldo de sentimento (% positivas - % negativas)",
+            Monitoramento[Candidato] = "Lula",
+            Monitoramento[Início] = _i,
+            Monitoramento[Fim] = _f
+        )
+    )

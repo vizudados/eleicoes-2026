@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0
+@descricao: Em cada 10 que não escolheram ninguém em 2026, quantos nem foram votar (arredondado), no recorte.
+@oraculo: Brasil = 8
+*/
+CALCULATE ( ROUND ( [T06 · faltaram entre quem não escolheu (ano)] * 10, 0 ), 'Ano'[Ano] = 2026 )

@@ -1,7 +1,7 @@
 /*
 @pasta: T14 Série\Desenho
 @formato: texto
-@descricao: Topo da tela: quantas vezes o PT terminou o 1º turno atrás (ou à frente) e em quais anos, com os candidatos. Só lê contas 'T14 · …'.
+@descricao: Topo da tela. Sem clique: quantas vezes o PT terminou o 1º turno atrás (ou à frente) e em quais anos, com os candidatos, e as seis urnas. Com um ano clicado na série: a margem do PT naquela eleição, a manchete do duelo e a urna do ano em destaque. Com uma região clicada, tudo no lugar dela ('no Nordeste'). Só lê contas 'T14 · …'.
 @gerado: pbi/scripts/desenho_t14.py
 */
 -- 1 · Leituras
@@ -9,36 +9,53 @@ VAR _k = [T14 · eleições com o PT atrás]
 VAR _n = [T14 · eleições]
 VAR _a26 = [T14 · PT atrás em 2026]
 VAR _uf = [T14 · recorte]
+VAR _ondeR = [T14 · onde]
+VAR _ano = [T14 · ano escolhido]
+VAR _mY = [T14 · margem do PT]
+VAR _ptY = [T14 · PT %]
+VAR _advY = [T14 · adversário %]
+VAR _cptY = [T14 · candidato do PT]
+VAR _cadvY = [T14 · adversário]
+VAR _vezY = [T14 · vez em que o PT ficou atrás]
 VAR _anos =
     ADDCOLUMNS (
-        VALUES ( 'Ano'[Ano] ),
-        "@m", [T14 · margem do PT],
-        "@pt", [T14 · PT %],
-        "@adv", [T14 · adversário %],
-        "@cpt", [T14 · candidato do PT],
-        "@cadv", [T14 · adversário]
-    )
+        DATATABLE ( "a", INTEGER, { { 2006 }, { 2010 }, { 2014 }, { 2018 }, { 2022 }, { 2026 } } ),
+        "@m", VAR _a = [a] RETURN CALCULATE ( [T14 · margem do PT], 'Ano'[Ano] = _a ),
+        "@pt", VAR _a = [a] RETURN CALCULATE ( [T14 · PT %], 'Ano'[Ano] = _a ),
+        "@adv", VAR _a = [a] RETURN CALCULATE ( [T14 · adversário %], 'Ano'[Ano] = _a ),
+        "@cpt", VAR _a = [a] RETURN CALCULATE ( [T14 · candidato do PT], 'Ano'[Ano] = _a ),
+        "@cadv", VAR _a = [a] RETURN CALCULATE ( [T14 · adversário], 'Ano'[Ano] = _a ),
+        "@vez", VAR _a = [a] RETURN CALCULATE ( [T14 · vez em que o PT ficou atrás], 'Ano'[Ano] = _a )
+    ) /* lista */
 -- 2 · Textos
+VAR _clique = NOT ISBLANK ( _ano )
 VAR _atras = FILTER ( _anos, [@m] < 0 ) /* lista */
 VAR _nAtras = COUNTROWS ( _atras ) /* lista */
 VAR _txtAnos =
     CONCATENATEX (
         _atras,
-        "em " & 'Ano'[Ano] & " (" & [@cpt] & " " & FORMAT ( [@pt], "0.0%" ) & " × " & [@cadv] & " " & FORMAT ( [@adv], "0.0%" ) & ")",
+        "em " & [a] & " (" & [@cpt] & " " & FORMAT ( [@pt], "0.0%" ) & " × " & [@cadv] & " " & FORMAT ( [@adv], "0.0%" ) & ")",
         "; ",
-        'Ano'[Ano], ASC
+        [a], ASC
     )
 VAR _grande =
     SWITCH (
         TRUE (),
+        _clique, FORMAT ( _mY * 100, "+0.0;−0.0;0.0" ) & "<small> p.p.</small>",
         _k = _n, FORMAT ( _k, "0" ) & " de " & FORMAT ( _n, "0" ),
         _a26 = 1, FORMAT ( _k, "0" ) & "ª vez",
         FORMAT ( _n - _k, "0" ) & " de " & FORMAT ( _n, "0" )
     )
-VAR _onde = IF ( ISBLANK ( _uf ), "", " em " & _uf )
+VAR _clsGrande = IF ( _clique, IF ( _mY < 0, " flavio", " lula" ), "" )
+VAR _onde = IF ( ISBLANK ( _ondeR ), "", " " & _ondeR )
+VAR _abre = IF ( ISBLANK ( _ondeR ), "Em " & _ano, UPPER ( LEFT ( _ondeR, 1 ) ) & MID ( _ondeR, 2, 100 ) & ", em " & _ano )
+VAR _manAno =
+    _abre & ", " & SWITCH ( _cptY, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", _cptY ) & " (" & FORMAT ( _ptY, "0.0%" ) & ") terminou " & FORMAT ( ABS ( _mY ) * 100, "0.0" )
+        & IF ( _mY < 0, " pontos atrás de ", " pontos à frente de " ) & SWITCH ( _cadvY, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", _cadvY ) & " (" & FORMAT ( _advY, "0.0%" ) & ")"
 VAR _man =
     SWITCH (
         TRUE (),
+        _clique, _manAno,
         _k = _n, IF ( ISBLANK ( _uf ), "", _uf & ": " ) & "o PT terminou o 1º turno atrás do adversário nas seis eleições",
         _a26 = 1 && ISBLANK ( _uf ),
             "Pela " & FORMAT ( _k, "0" ) & "ª vez em seis eleições, o PT termina o 1º turno em segundo lugar",
@@ -47,10 +64,14 @@ VAR _man =
         _k = 0, "O PT ficou à frente nas seis eleições" & _onde & ", inclusive em 2026",
         "O PT ficou à frente em " & FORMAT ( _n - _k, "0" ) & " das seis eleições" & _onde & ", inclusive em 2026"
     )
-VAR _soAnos = CONCATENATEX ( _atras, 'Ano'[Ano], ", ", 'Ano'[Ano], ASC )
+VAR _soAnos = CONCATENATEX ( _atras, [a], ", ", [a], ASC )
 VAR _sub =
     SWITCH (
         TRUE (),
+        _clique && NOT ISBLANK ( _vezY ),
+            "Foi a " & FORMAT ( _vezY, "0" ) & "ª vez em seis eleições que o PT ficou atrás" & _onde
+                & ". Clique de novo no ano para voltar às seis eleições.",
+        _clique, "O PT ficou à frente" & _onde & " nessa eleição. Clique de novo no ano para voltar às seis eleições.",
         _nAtras = 0, "",
         _nAtras <= 2, "Atrás " & _txtAnos & ".",
         "Atrás em " & _soAnos & "."
@@ -59,23 +80,24 @@ VAR _sub =
 VAR _urnas =
     CONCATENATEX (
         _anos,
-        VAR _i = ( 'Ano'[Ano] - 2006 ) / 4
-        VAR _vez = CALCULATE ( [T14 · vez em que o PT ficou atrás] )
+        VAR _i = ( [a] - 2006 ) / 4
+        VAR _vez = [@vez]
+        VAR _apaga = IF ( _clique && [a] <> _ano, " apaga", "" )
         RETURN
-            "<div class='ux " & IF ( [@m] < 0, "adv", "pt" ) & " brota' style='left:" & ( 1086 + _i * 92 )
+            "<div class='ux " & IF ( [@m] < 0, "adv", "pt" ) & _apaga & " brota' style='left:" & ( 1086 + _i * 92 )
                 & "px;animation-delay:" & ( 500 + _i * 140 ) & "ms'></div>"
-                & "<div class='ua' style='left:" & ( 1086 + _i * 92 ) & "px'>" & 'Ano'[Ano] & "</div>"
+                & "<div class='ua" & _apaga & "' style='left:" & ( 1086 + _i * 92 ) & "px'>" & [a] & "</div>"
                 & IF (
                     NOT ISBLANK ( _vez ),
-                    "<div class='uv mao entra' style='left:" & ( 1086 + _i * 92 ) & "px;animation-delay:"
+                    "<div class='uv mao entra" & _apaga & "' style='left:" & ( 1086 + _i * 92 ) & "px;animation-delay:"
                         & ( 900 + _i * 140 ) & "ms'>" & FORMAT ( _vez, "0" ) & "ª vez</div>"
                 ),
         "",
-        'Ano'[Ano], ASC
+        [a], ASC
     )
 RETURN
     "<div class='tela t14r'>"
-        & "<div class='num g sobe'>" & _grande & "</div>"
+        & "<div class='num g" & _clsGrande & " sobe'>" & _grande & "</div>"
         & "<div class='man m sobe d2'>" & _man & "</div>"
         & "<div class='nota s entra d4'>" & _sub & "</div>"
         & "<div class='rot ur entra d3'>QUEM TERMINOU NA FRENTE, ELEIÇÃO A ELEIÇÃO</div>"

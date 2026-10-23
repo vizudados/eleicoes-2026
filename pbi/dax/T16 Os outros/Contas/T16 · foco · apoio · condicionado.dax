@@ -1,0 +1,8 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Sim quando a posição mais recente do candidato do grupo em destaque veio com condições; vazio sem destaque.
+*/
+VAR _quem = SWITCH ( [T16 · foco · grupo], "Cury", "Augusto Cury", "Renan", "Renan Santos", "Caiado", "Ronaldo Caiado" )
+RETURN
+    IF ( NOT ISBLANK ( _quem ), CALCULATE ( [T16 · apoio · condicionado], REMOVEFILTERS ( Apoio ), Apoio[Quem] = _quem ) )

@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0%
+@descricao: Parte de Lula nas buscas pelos dois na UF, no 2º turno (05 a 22/10), como fração (o Trends dá o % inteiro de cada um).
+*/
+VAR _l = [T08 · UF · Lula]
+VAR _f = [T08 · UF · Flávio]
+RETURN
+    IF ( NOT ISBLANK ( _l ) && NOT ISBLANK ( _f ), DIVIDE ( _l, _l + _f ) )

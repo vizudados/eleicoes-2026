@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: 1 com o filtro de UF da casca ativo.
+*/
+INT ( ISCROSSFILTERED ( 'UF' ) )

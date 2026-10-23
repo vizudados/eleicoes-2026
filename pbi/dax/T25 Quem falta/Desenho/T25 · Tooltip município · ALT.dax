@@ -1,0 +1,11 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê do município.
+*/
+LEFT (
+    [T25 · município] & ", " & [T25 · ano] & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
+        & FORMAT ( [T25 · abstenção %], "0.0%" ) & " não foram votar (" & FORMAT ( [T25 · abstenções], "#,0" ) & " pessoas); média do "
+        & "recorte, " & FORMAT ( [T25 · abstenção % do recorte], "0.0%" ) & ".",
+    250
+)

@@ -1,12 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
   "name": "T07_CHEGADA_01",
-  "displayName": "Chegada · 07 Debate",
+  "displayName": "Chegada · 08 Debate",
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
       "T07_Casca_InfoAbre",
       "T07_Casca_InfoFecha",
+      "T07_Casca_InfoFora",
       "T07_Casca_Leitura"
     ],
     "suppressData": true
@@ -21,6 +22,13 @@
             "singleVisual": {}
           },
           "T07_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T07_Casca_InfoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

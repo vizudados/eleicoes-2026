@@ -1,8 +1,0 @@
-/*
-@pasta: T15 Minha cidade\Contas
-@formato: 0.0%
-@descricao: Margem de Lula em 2022 no município: (Lula − adversário) ÷ válidos.
-@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › margem22_txt
-@gerado: pbi/scripts/desenho_t15.py
-*/
-DIVIDE ( [T15 · votos de Lula 2022] - [T15 · votos do PL 2022], [T15 · válidos 2022] )

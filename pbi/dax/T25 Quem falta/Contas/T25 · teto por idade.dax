@@ -1,0 +1,11 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Maior abstenção entre as sete faixas no lugar e no ano do recorte (0–1): a escala das barras do bloco de idade.
+*/
+MAXX (
+    CALCULATETABLE ( VALUES ( 'T25 Faixa'[Ordem] ), REMOVEFILTERS ( 'T25 Faixa' ) ),
+    VAR _k = 'T25 Faixa'[Ordem]
+    RETURN
+        CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Ordem] = _k )
+)

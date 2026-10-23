@@ -1,0 +1,14 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: texto
+@descricao: Sim quando a pesquisa em uso não publicou os eleitores dos demais candidatos (nem 'outros', nem Zema, nem o agregado): a conta usa a média de Cury, Renan e Caiado pelos votos; Não nas outras; vazio sem pesquisa em uso.
+*/
+VAR _data = [T22 · pesquisa · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        VAR _linhas = CALCULATETABLE ( 'Transferência', 'Transferência'[Divulgação] = _data )
+        VAR _demais = COUNTROWS ( FILTER ( _linhas, 'Transferência'[Segmento] IN { "outros", "Zema", "agregado_3via" } ) )
+        RETURN
+            IF ( ISBLANK ( _demais ), "Sim", "Não" )
+    )

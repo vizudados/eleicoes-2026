@@ -1,7 +1,7 @@
 /*
 @pasta: T07 Debate\Desenho
 @formato: texto
-@descricao: Fundo do gráfico das pesquisas em volta do debate: título, grade, datas, a linha do debate, as médias antes e depois (traço que se desenha, rótulos com contador), a média de antes prolongada em tracejado e a nota à mão. Os pontos são outro visual (T07 · Pontos · HTML), na mesma caixa e na mesma escala.
+@descricao: Fundo do gráfico das pesquisas em volta do debate: título, grade, datas, a linha do debate, as médias antes e depois (traço que se desenha, rótulos com contador), a média de antes prolongada em tracejado e a nota à mão. Com uma pesquisa clicada (filtro cruzado de Pesquisa[Id] vindo de T07 · Pontos · HTML), vira a lente do instituto dela: as médias de todos esmaecem, as pesquisas do instituto ganham anel e uma linha que as liga no tempo, e a manchete compara o mesmo instituto antes e depois do debate (a comparação justa: médias de institutos diferentes misturam métodos). Os pontos são outro visual (T07 · Pontos · HTML), na mesma caixa e na mesma escala.
 */
 -- 1 · Leituras
 VAR _d = [T07 · debate · data]
@@ -17,16 +17,92 @@ VAR _a0 = [T07 · antes · primeiro campo]
 VAR _a1 = [T07 · antes · último campo]
 VAR _d0 = [T07 · depois · primeiro campo]
 VAR _d1 = [T07 · depois · último campo]
+VAR _inst = [T07 · escolha · instituto]
+VAR _iN = [T07 · escolha · pesquisas]
+VAR _iAd = [T07 · escolha · antes · data]
+VAR _iAdif = [T07 · escolha · antes · diferença]
+VAR _iDd = [T07 · escolha · depois · data]
+VAR _iDdif = [T07 · escolha · depois · diferença]
+VAR _iX = [T07 · escolha · atravessa]
+VAR _trilha =
+    FILTER (
+        ADDCOLUMNS (
+            ALLNOBLANKROW ( Pesquisa[Id] ),
+            "@i", [T07 · pesquisa · instituto],
+            "@fim", [T07 · pesquisa · campo fim],
+            "@l", [T07 · pesquisa · Lula],
+            "@f", [T07 · pesquisa · Flávio],
+            "@o", [T07 · pesquisa · ordem no dia],
+            "@n", [T07 · pesquisa · no mesmo dia]
+        ),
+        NOT ISBLANK ( _inst ) && [@i] = _inst
+    ) /* lista */
 -- 2 · Textos
+VAR _lente = NOT ISBLANK ( _inst )
+VAR _escInst = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 VAR _quemA = IF ( _aDif >= 0, "Flávio", "Lula" )
 VAR _quemD = IF ( _dDif >= 0, "Flávio", "Lula" )
-VAR _txtMan =
+VAR _txtManTodos =
     "Antes do debate, " & _quemA & " tinha " & FORMAT ( ABS ( _aDif ), "0.0" ) & " pontos de vantagem na média; depois, "
         & IF ( _quemD = _quemA, "", _quemD & " passou a ter " ) & FORMAT ( ABS ( _dDif ), "0.0" ) & "."
+-- a vantagem de um lado em texto curto: "Flávio 2,0 à frente", "Lula 1,5 à frente", "empate"
+VAR _vant =
+    "#Q #V à frente"
+VAR _txtVA =
+    IF (
+        ROUND ( _iAdif, 1 ) = 0,
+        "empate",
+        SUBSTITUTE ( SUBSTITUTE ( _vant, "#Q", IF ( _iAdif > 0, "Flávio", "Lula" ) ), "#V", FORMAT ( ABS ( _iAdif ), "0.0" ) )
+    )
+VAR _txtVD =
+    IF (
+        ROUND ( _iDdif, 1 ) = 0,
+        "empate",
+        SUBSTITUTE ( SUBSTITUTE ( _vant, "#Q", IF ( _iDdif > 0, "Flávio", "Lula" ) ), "#V", FORMAT ( ABS ( _iDdif ), "0.0" ) )
+    )
+VAR _txtManInst =
+    SWITCH (
+        TRUE (),
+        NOT ISBLANK ( _iAd ) && NOT ISBLANK ( _iDd ),
+            _escInst & ": " & _txtVA & " antes do debate (" & FORMAT ( _iAd, "dd/MM" ) & "); "
+                & IF (
+                    ROUND ( _iAdif, 1 ) <> 0 && ROUND ( _iDdif, 1 ) <> 0 && SIGN ( _iAdif ) = SIGN ( _iDdif ),
+                    FORMAT ( ABS ( _iDdif ), "0.0" ),
+                    _txtVD
+                ) & " depois (" & FORMAT ( _iDd, "dd/MM" ) & ").",
+        NOT ISBLANK ( _iAd ) && _iN = 1,
+            _escInst & " fez uma pesquisa só, antes do debate (" & FORMAT ( _iAd, "dd/MM" ) & "): " & _txtVA & ".",
+        NOT ISBLANK ( _iAd ),
+            _escInst & " não voltou a campo depois do debate: a última pesquisa antes dele, de " & FORMAT ( _iAd, "dd/MM" )
+                & ", dava " & _txtVA & ".",
+        NOT ISBLANK ( _iDd ),
+            _escInst & " só fez pesquisa depois do debate: " & _txtVD & " em " & FORMAT ( _iDd, "dd/MM" ) & ".",
+        _escInst & " só fez pesquisa com campo no dia do debate: fica fora do antes e depois."
+    )
+VAR _txtMan = IF ( _lente, _txtManInst, _txtManTodos )
+VAR _txtSob =
+    IF (
+        _lente,
+        _escInst & " · " & _iN & IF ( _iN = 1, " pesquisa", " pesquisas" ) & " do 2º turno · votos totais",
+        "As " & _nT & " pesquisas do 2º turno em volta do debate · votos totais"
+    )
 VAR _txtAL = "Lula " & FORMAT ( _aL, "0.0" ) & "%"
 VAR _txtAF = "Flávio " & FORMAT ( _aF, "0.0" ) & "%"
 VAR _txtDL = "Lula " & FORMAT ( _dL, "0.0" ) & "%"
 VAR _txtDF = "Flávio " & FORMAT ( _dF, "0.0" ) & "%"
+VAR _txtLeg =
+    IF (
+        _lente,
+        IF (
+            _iN = 1,
+            "O anel marca a única pesquisa de " & _escInst,
+            "Os anéis marcam as " & _iN & " pesquisas de " & _escInst & " e a linha liga uma à outra no tempo"
+        )
+            & IF ( _iX > 0, " (" & _iX & IF ( _iX = 1, " pegou", " pegaram" ) & " o dia do debate)", "" )
+            & " · clique de novo no ponto para voltar a todas",
+        "Cada par de pontos é uma pesquisa, no último dia de entrevistas · claros: o campo pegou o dia do debate ("
+            & _nX & ", fora das médias) · traço: a média de cada lado · clique num ponto: o mesmo instituto antes e depois"
+    )
 -- 3 · Geometria (eixo x: 06/10 a 22/10 em x 210–1400; eixo y: 38% a 54% em y 250–20; o svg começa em y 76)
 VAR _ini = DATE ( 2026, 10, 6 )
 VAR _xD = 210 + DATEDIFF ( _ini, _d, DAY ) / 16 * 1190 -- geometria
@@ -39,6 +115,7 @@ VAR _yAF = 250 - ( _aF - 38 ) / 16 * 230 -- geometria
 VAR _yDL = 250 - ( _dL - 38 ) / 16 * 230 -- geometria
 VAR _yDF = 250 - ( _dF - 38 ) / 16 * 230 -- geometria
 VAR _f = "0.0"
+VAR _apaga = IF ( _lente, " apaga", "" )
 VAR _grade =
     CONCATENATEX (
         { 40, 45, 50 },
@@ -54,6 +131,31 @@ VAR _datas =
             & "' y='276' class='ex' text-anchor='middle'>" & FORMAT ( [Value], "dd/MM" ) & "</text>",
         ""
     )
+-- a trajetória do instituto clicado: a mesma posição dos pontos (último dia de campo, com o desvio de quem terminou
+-- no mesmo dia), em coordenadas do svg
+VAR _xy =
+    ADDCOLUMNS (
+        _trilha,
+        "@x", 210 + DATEDIFF ( _ini, [@fim], DAY ) / 16 * 1190 + ( [@o] - ( [@n] - 1 ) / 2 ) * 16,
+        "@yl", 250 - ( [@l] - 38 ) / 16 * 230,
+        "@yf", 250 - ( [@f] - 38 ) / 16 * 230
+    ) /* geometria */
+VAR _linL = CONCATENATEX ( _xy, FORMAT ( [@x], _f, "en-US" ) & "," & FORMAT ( [@yl], _f, "en-US" ), " ", [@fim], ASC, [@o], ASC )
+VAR _linF = CONCATENATEX ( _xy, FORMAT ( [@x], _f, "en-US" ) & "," & FORMAT ( [@yf], _f, "en-US" ), " ", [@fim], ASC, [@o], ASC )
+VAR _aneis =
+    CONCATENATEX (
+        _xy,
+        "<circle cx='" & FORMAT ( [@x], _f, "en-US" ) & "' cy='" & FORMAT ( [@yl], _f, "en-US" ) & "' r='12' class='an l brota'/>"
+            & "<circle cx='" & FORMAT ( [@x], _f, "en-US" ) & "' cy='" & FORMAT ( [@yf], _f, "en-US" ) & "' r='12' class='an f brota'/>",
+        ""
+    )
+VAR _lenteSvg =
+    IF (
+        _lente,
+        IF ( COUNTROWS ( _xy ) > 1, "<polyline points='" & _linL & "' pathLength='1' class='il traco' filter='url(#rbu)'/>"
+            & "<polyline points='" & _linF & "' pathLength='1' class='if traco' filter='url(#rbu)'/>" )
+            & _aneis
+    )
 -- 4 · Marcação
 VAR _svg =
     "<svg width='1620' height='290' viewBox='0 0 1620 290'>"
@@ -63,6 +165,7 @@ VAR _svg =
             & "' y1='58' y2='256' class='deb'/>"
         & "<text x='" & FORMAT ( _xD, _f, "en-US" ) & "' y='276' class='ex b' text-anchor='middle'>debate · "
             & FORMAT ( _d, "dd/MM" ) & "</text>"
+        & "<g class='medias" & _apaga & "'>"
         & "<path d='M" & FORMAT ( _xA1, _f, "en-US" ) & " " & FORMAT ( _yAL, _f, "en-US" ) & " H1400' class='fl esmaece'/>"
         & "<path d='M" & FORMAT ( _xA1, _f, "en-US" ) & " " & FORMAT ( _yAF, _f, "en-US" ) & " H1400' class='ff esmaece'/>"
         & "<path d='M" & FORMAT ( _xA0, _f, "en-US" ) & " " & FORMAT ( _yAL, _f, "en-US" ) & " H" & FORMAT ( _xA1, _f, "en-US" )
@@ -73,32 +176,35 @@ VAR _svg =
             & "' pathLength='1' class='ml traco-rapido' filter='url(#rbu)' style='animation-delay:2.2s'/>"
         & "<path d='M" & FORMAT ( _xD0, _f, "en-US" ) & " " & FORMAT ( _yDF, _f, "en-US" ) & " H" & FORMAT ( _xD1, _f, "en-US" )
             & "' pathLength='1' class='mf traco-rapido' filter='url(#rbu)' style='animation-delay:2.2s'/>"
+        & "</g>"
+        & _lenteSvg
     & "</svg>"
 VAR _afasta = IF ( _yAL - _yAF < 30, 10, 0 ) -- geometria
 VAR _afastaD = IF ( _yDL - _yDF < 30, 10, 0 ) -- geometria
 VAR _rotulos =
-    "<div class='rotulo e flavio-esc entra d8' style='right:" & FORMAT ( 1620 - _xA0 + 30, _f, "en-US" ) & "px;top:"
+    "<div class='rotulo e flavio-esc entra d8" & _apaga & "' style='right:" & FORMAT ( 1620 - _xA0 + 30, _f, "en-US" ) & "px;top:"
         & FORMAT ( 76 + _yAF - 14 - _afasta, _f, "en-US" ) & "px'>" & _txtAF & "</div>"
-        & "<div class='rotulo e lula-esc entra d8' style='right:" & FORMAT ( 1620 - _xA0 + 30, _f, "en-US" ) & "px;top:"
+        & "<div class='rotulo e lula-esc entra d8" & _apaga & "' style='right:" & FORMAT ( 1620 - _xA0 + 30, _f, "en-US" ) & "px;top:"
         & FORMAT ( 76 + _yAL - 14 + _afasta, _f, "en-US" ) & "px'>" & _txtAL & "</div>"
-        & "<div class='rotulo flavio-esc entra d16' style='left:" & FORMAT ( _xD1 + 14, _f, "en-US" ) & "px;top:"
+        & "<div class='rotulo flavio-esc entra d16" & _apaga & "' style='left:" & FORMAT ( _xD1 + 14, _f, "en-US" ) & "px;top:"
         & FORMAT ( 76 + _yDF - 14 - _afastaD, _f, "en-US" ) & "px'>" & _txtDF & "</div>"
-        & "<div class='rotulo lula-esc entra d16' style='left:" & FORMAT ( _xD1 + 14, _f, "en-US" ) & "px;top:"
+        & "<div class='rotulo lula-esc entra d16" & _apaga & "' style='left:" & FORMAT ( _xD1 + 14, _f, "en-US" ) & "px;top:"
         & FORMAT ( 76 + _yDL - 14 + _afastaD, _f, "en-US" ) & "px'>" & _txtDL & "</div>"
 VAR _tv =
     "<div class='tv entra d4' style='left:" & FORMAT ( _xD - 29, _f, "en-US" ) & "px;top:84px;width:58px'></div>"
 VAR _nota =
-    "<div class='mao entra d16' style='left:" & FORMAT ( _xD1 - 6, _f, "en-US" ) & "px;top:"
-        & FORMAT ( 76 + _yDF - 88, _f, "en-US" ) & "px'>quase nada mudou</div>"
-        & "<div class='seta entra d16' style='left:" & FORMAT ( _xD1 - 84, _f, "en-US" ) & "px;top:"
-        & FORMAT ( 76 + _yDF - 66, _f, "en-US" ) & "px;width:74px'></div>"
+    IF (
+        NOT _lente,
+        "<div class='mao entra d16' style='left:" & FORMAT ( _xD1 - 6, _f, "en-US" ) & "px;top:"
+            & FORMAT ( 76 + _yDF - 88, _f, "en-US" ) & "px'>quase nada mudou</div>"
+            & "<div class='seta entra d16' style='left:" & FORMAT ( _xD1 - 84, _f, "en-US" ) & "px;top:"
+            & FORMAT ( 76 + _yDF - 66, _f, "en-US" ) & "px;width:74px'></div>"
+    )
 RETURN
     "<div class='tela t07g'>"
-        & "<div class='cab'><div class='sob sobe'>As " & _nT & " pesquisas do 2º turno em volta do debate · votos totais</div>"
+        & "<div class='cab'><div class='sob sobe'>" & _txtSob & "</div>"
         & "<div class='man sobe d2'>" & _txtMan & "</div></div>"
         & _svg & _tv & _rotulos & _nota
         & "<div class='leg entra d12'><b><i style='background:var(--vermelho)'></i>Lula</b>"
-        & "<b><i style='background:var(--azul)'></i>Flávio</b>"
-        & "Cada par de pontos é uma pesquisa, no último dia de entrevistas · pontos claros: o campo pegou o dia do debate ("
-        & _nX & " pesquisas, fora das médias) · traço: a média de cada lado; tracejado: a média de antes, prolongada</div>"
+        & "<b><i style='background:var(--azul)'></i>Flávio</b>" & _txtLeg & "</div>"
     & "</div>"

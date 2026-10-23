@@ -1,0 +1,14 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Margem do PT no Brasil na eleição anterior à escolhida (2022 sem clique), resultado oficial com o exterior (igual às telas 01, 12 e 15).
+@oraculo: paginas[14] › anos (2022 +5,2; 2026 −1,9)
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _a ), DIVIDE (
+        CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Ano'[Ano] = _a, 'Candidato ano'[Partido] = "PT" )
+            - CALCULATE ( MAX ( 'Candidato ano'[Votos] ), 'Ano'[Ano] = _a, 'Candidato ano'[Partido] <> "PT" ),
+        CALCULATE ( MAX ( 'Candidato ano'[ValidosAno] ), 'Ano'[Ano] = _a )
+    ) )

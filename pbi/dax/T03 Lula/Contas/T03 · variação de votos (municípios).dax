@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: Votos do PT em 2026 menos 2022, somados nos municípios do contexto (a ficha do município marcado).
+*/
+[T03 · votos (municípios)] - [T03 · votos 2022 (municípios)]

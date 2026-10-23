@@ -1,0 +1,13 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: Texto alternativo do placar num momento da noite (lido pela T18 · Placar · ALT quando há momento escolhido).
+*/
+VAR _m = [T18 · momento escolhido]
+RETURN
+    IF (
+        NOT ISBLANK ( _m ),
+        "Apuração às " & FORMAT ( _m, "HH:mm" ) & " (Brasil): Lula " & FORMAT ( [T18 · momento · Lula %], "0.00%" )
+            & ", Flávio Bolsonaro " & FORMAT ( [T18 · momento · Flávio %], "0.00%" ) & ", "
+            & FORMAT ( [T18 · momento · seções %], "0.00%" ) & " das seções apuradas."
+    )

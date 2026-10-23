@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
-"""desenho_t06 — tela 06 · Ausência: quantos brasileiros não escolheram ninguém? Dono: agente das telas 01–06.
+"""desenho_t06 — tela 06 · Ausência: quantos brasileiros não escolheram ninguém? Dono: agente das telas 06 e 07.
 
-    python -I -X utf8 pbi/scripts/desenho_t06.py        # grava pbi/dax/T06 Ausência/… e pbi/spec/t06_mapa.json
+    python -I -X utf8 pbi/scripts/desenho_t06.py        # grava pbi/dax/T06 Ausência/…
 
 Protagonista: os 33,5 milhões que não foram votar e a régua que mostra quantas vezes a diferença entre Flávio e Lula
-cabe neles (15). Apoios: a abstenção subindo em duas décadas (2006 → 2026), quem falta mais (por idade, 2014 → 2026)
-e onde (mapa de pontos por município, Deneb, que se desenha em onda). Tons neutros: creme → tinta (sem vermelho/azul).
+cabe neles (15). Apoios: a abstenção subindo em duas décadas (2006 → 2026) e, no lugar do mapa e das idades (que viraram
+a tela 07 · Quem falta, código T25, em 23/10/2026), a composição de quem não escolheu ninguém a cada eleição: quem
+faltou, quem anulou e quem votou em branco, numa coluna por ano. Passar o mouse num ano (na coluna ou na linha) abre o
+dossiê do ano: a disputa, quantas vezes a diferença entre os dois primeiros cabia em quem faltou, brancos e nulos.
+Tons neutros: creme → tinta (sem vermelho/azul).
 
-Fontes: sem filtro, o comparecimento oficial do Brasil ('Comparecimento ano', sem o exterior); com o filtro de UF, a
-soma dos municípios da UF ('Município ano'). O perfil por idade ('Abstenção perfil') só existe para o Brasil.
-Oráculo: mockup/data/eleicoes.json › paginas[6].
+Fontes: sem filtro, o comparecimento oficial do Brasil ('Comparecimento ano', com o exterior: os 158,7 mi aptos do TSE);
+com o filtro de UF, a soma dos municípios da UF ('Município ano'). Oráculo: mockup/data/eleicoes.json › paginas[6].
 """
 from __future__ import annotations
 
@@ -20,7 +22,6 @@ sys.dont_write_bytecode = True
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
 from desenho_t01_t06_comum import URL_MIDIA, Gravador, dax  # noqa: E402
-from desenho_t03_t05 import gravar_spec, spec_mapa  # noqa: E402
 
 P = "T06"
 G = Gravador("T06 Ausência")
@@ -29,22 +30,16 @@ MA = "'Município ano'"
 MU = "'Município'"
 AP = "'Abstenção perfil'"
 CU = "'Candidato UF'"
-FAIXAS = [
-    ("16 e 17 anos", ["16 anos", "17 anos"]),
-    ("18 a 24", ["18 anos", "19 anos", "20 anos", "21 a 24 anos"]),
-    ("25 a 34", ["25 a 29 anos", "30 a 34 anos"]),
-    ("35 a 44", ["35 a 39 anos", "40 a 44 anos"]),
-    ("45 a 59", ["45 a 49 anos", "50 a 54 anos", "55 a 59 anos"]),
-    ("60 a 69", ["60 a 64 anos", "65 a 69 anos"]),
-    ("70 ou mais", ["70 a 74 anos", "75 a 79 anos", "80 a 84 anos", "85 a 89 anos", "90 a 94 anos", "95 a 99 anos",
-                    "100 anos ou mais"]),
-]
+ANOS = [2006, 2010, 2014, 2018, 2022, 2026]
 RESPOSTA = (150, 140, 780, 470)
 SERIE = (150, 640, 780, 360)
-MAPA = (990, 140, 780, 540)
-LEGENDA = (990, 684, 780, 44)
-IDADE = (990, 744, 780, 256)
-TT_W, TT_H = 420, 270
+SERIE_ALVOS = (150, 706, 780, 294)        # um alvo transparente por ano sobre a linha (só a dica)
+COMP_TOPO = (990, 140, 780, 128)
+COMP = (990, 282, 780, 718)
+COMP_SLOT = 130                            # largura de cada ano na composição
+COMP_ALT = 560                             # altura máxima da coluna (a maior soma da série)
+TT = "ttT06Ano"
+TT_W, TT_H = 440, 320
 
 
 def contas() -> None:
@@ -93,35 +88,67 @@ def contas() -> None:
         """), "texto")
     c("T06 · vezes a diferença", "Quantas vezes a diferença entre Flávio e Lula cabe nas abstenções de 2026, no recorte.",
       "DIVIDE ( [T06 · abstenções], [T06 · diferença Flávio Lula] )", "0.0", "paginas[6].vezes_a_diferenca = 15")
-    # perfil por idade (Brasil; o TSE publica desde 2014)
-    for faixa, cats in FAIXAS:
-        lista = ", ".join(f'"{x}"' for x in cats)
-        for ano in (2014, 2026):
-            c(f"T06 · idade {faixa} · {ano}", f"Abstenção da faixa {faixa} no 1º turno de {ano}, no Brasil (0–1): "
-              "faltosos ÷ aptos da faixa.", dax(f"""
-                CALCULATE (
-                    DIVIDE ( SUM ( {AP}[Abstencao] ), SUM ( {AP}[Aptos] ) ),
-                    {AP}[Ano] = {ano},
-                    {AP}[Dimensão] = "faixa_etaria",
-                    {AP}[Categoria] IN {{ {lista} }}
-                )
-                """), "0.0%", f"paginas[6].idade[{faixa}].pct{ano}")
-    # município (mapa e dossiê)
-    c("T06 · abstenções (município)", "Eleitores que faltaram em 2026 nos municípios do contexto (sem o exterior).",
-      f"CALCULATE ( SUM ( {MA}[Abstencoes] ), {MA}[Ano] = 2026 )", "#,0")
-    c("T06 · aptos (município)", "Eleitores aptos em 2026 nos municípios do contexto.",
-      f"CALCULATE ( SUM ( {MA}[Aptos] ), {MA}[Ano] = 2026 )", "#,0")
-    c("T06 · abstenção % (município)", "Abstenção de 2026 nos municípios do contexto (0–1). Cor do ponto no mapa.",
-      "DIVIDE ( [T06 · abstenções (município)], [T06 · aptos (município)] )", "0.0%")
-    c("T06 · abstenção % 2006 (município)", "Abstenção de 2006 nos municípios do contexto (0–1).",
-      f"CALCULATE ( DIVIDE ( SUM ( {MA}[Abstencoes] ), SUM ( {MA}[Aptos] ) ), {MA}[Ano] = 2006 )", "0.0%")
-    c("T06 · um em cada (município)", "De quantos em quantos eleitores um faltou em 2026 no município (arredondado).",
-      "ROUND ( DIVIDE ( [T06 · aptos (município)], [T06 · abstenções (município)] ), 0 )", "0")
-    c("T06 · abstenção % Brasil", "Abstenção oficial do Brasil em 2026 (referência no dossiê do município).",
-      f"CALCULATE ( DIVIDE ( SUM ( {CA}[Abstencoes] ), SUM ( {CA}[Aptos] ) ), {CA}[Ano] = 2026 )", "0.0%", "21,1%")
-    c("T06 · município", "Nome (UF) do município da linha.", f"SELECTEDVALUE ( {MU}[Rótulo] )", "texto")
-    c("T06 · região do município", "Região do município da linha.", f"SELECTEDVALUE ( {MU}[Região] )", "texto")
-
+    # composição de quem não escolheu ninguém, ano a ano (a coluna da direita)
+    c("T06 · não escolheram (ano)", "Abstenções + brancos + nulos no ano do contexto (Brasil oficial ou soma dos "
+      "municípios da UF): quem não escolheu nenhum candidato.",
+      "[T06 · abstenções (ano)] + [T06 · brancos (ano)] + [T06 · nulos (ano)]", "#,0",
+      "paginas[6].serie[].nao_escolheram (2006 = 29.897.525; 2026 = 39.444.291)")
+    c("T06 · faltaram entre quem não escolheu (ano)", "Parcela de quem não escolheu ninguém que nem foi votar, no ano "
+      "do contexto (0–1).", "DIVIDE ( [T06 · abstenções (ano)], [T06 · não escolheram (ano)] )", "0%",
+      "Brasil 2006 = 70,5% · 2026 = 84,9% (abstenções ÷ nao_escolheram, paginas[6].serie)")
+    for ano in (2006, 2026):
+        c(f"T06 · faltaram entre quem não escolheu · em cada 10 · {ano}", f"Em cada 10 que não escolheram ninguém em "
+          f"{ano}, quantos nem foram votar (arredondado), no recorte.",
+          f"CALCULATE ( ROUND ( [T06 · faltaram entre quem não escolheu (ano)] * 10, 0 ), 'Ano'[Ano] = {ano} )", "0",
+          "Brasil = 7" if ano == 2006 else "Brasil = 8")
+        c(f"T06 · brancos e nulos · {ano}", f"Brancos + nulos no 1º turno de {ano}, no recorte.",
+          f"CALCULATE ( [T06 · brancos (ano)] + [T06 · nulos (ano)], 'Ano'[Ano] = {ano} )", "#,0",
+          "paginas[6].serie[2006].brancos_nulos_txt = 8,8 mi" if ano == 2006
+          else "paginas[6].serie[2026].brancos_nulos_txt = 6,0 mi")
+    c("T06 · maior não escolheram da série", "A maior soma de quem não escolheu ninguém entre os seis anos, no recorte: "
+      "a escala das colunas da composição.", dax("""
+        MAXX (
+            CALCULATETABLE ( VALUES ( 'Ano'[Ano] ), REMOVEFILTERS ( 'Ano' ) ),
+            VAR _a = 'Ano'[Ano]
+            RETURN
+                CALCULATE ( [T06 · não escolheram (ano)], 'Ano'[Ano] = _a )
+        )
+        """), "#,0", "Brasil = 40.254.330 (2018, paginas[6].serie[2018].nao_escolheram)")
+    # dossiê do ano (coluna da composição ou ponto da linha)
+    c("T06 · ano", "Ano da linha (coluna da composição ou ponto da série).", "SELECTEDVALUE ( 'Ano'[Ano] )", "0")
+    c("T06 · votos do PT (ano)", "Votos do candidato do PT no ano da linha, somados nos municípios do recorte.",
+      f"SUM ( {MA}[VotosPT] )", "#,0")
+    c("T06 · votos do adversário (ano)", "Votos do principal adversário no ano da linha, somados nos municípios do "
+      "recorte.", f"SUM ( {MA}[VotosAdversario] )", "#,0")
+    c("T06 · disputa do ano", "Os dois primeiros do 1º turno do ano da linha, o mais votado antes: no Brasil, o "
+      "resultado oficial ('Candidato ano'); com UF, o candidato do PT e o principal adversário na ordem dos votos na UF.",
+      dax("""
+        VAR _1 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 1 )
+        VAR _2 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 2 )
+        VAR _pt = SELECTEDVALUE ( 'Ano'[Candidato do PT] )
+        VAR _adv = SELECTEDVALUE ( 'Ano'[Adversário] )
+        RETURN
+            IF (
+                [T06 · com UF] = 1,
+                IF ( [T06 · votos do PT (ano)] >= [T06 · votos do adversário (ano)], _pt & " e " & _adv, _adv & " e " & _pt ),
+                IF ( NOT ISBLANK ( _1 ), _1 & " e " & _2 )
+            )
+        """), "texto", "2026 = Flávio Bolsonaro e Lula")
+    c("T06 · diferença do ano", "Diferença de votos entre os dois primeiros no 1º turno do ano da linha: no Brasil, o "
+      "resultado oficial (com o exterior); com UF, PT × principal adversário nos municípios da UF.", dax("""
+        IF (
+            [T06 · com UF] = 1,
+            ABS ( [T06 · votos do PT (ano)] - [T06 · votos do adversário (ano)] ),
+            CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Posição] = 1 )
+                - CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Posição] = 2 )
+        )
+        """), "#,0", "2026 = 2.224.965 (paginas[1].diferenca.votos)")
+    c("T06 · vezes a diferença (ano)", "Quantas vezes a diferença entre os dois primeiros cabe em quem faltou, no ano da "
+      "linha e no recorte.", "DIVIDE ( [T06 · abstenções (ano)], [T06 · diferença do ano] )", "0.0",
+      "2026 = 15,0 (paginas[6].vezes_a_diferenca)")
+    c("T06 · vezes a diferença em 2026", "A régua de 2026 (quem faltou ÷ a diferença entre Flávio e Lula) vista de "
+      "qualquer ano: a comparação à mão no dossiê do ano.", "CALCULATE ( [T06 · vezes a diferença], 'Ano'[Ano] = 2026 )",
+      "0.0", "Brasil = 15,0")
 
 def desenho() -> None:
     G.desenho("T06 · Resposta · HTML", "Bloco da resposta da tela 06: quantos não foram votar, a régua de quantas vezes "
@@ -267,86 +294,129 @@ def desenho() -> None:
             250
         )
         """))
-    # idade
-    leit = "\n".join(f"        VAR _a{i} = [T06 · idade {f} · 2014]\n        VAR _b{i} = [T06 · idade {f} · 2026]"
-                     for i, (f, _c) in enumerate(FAIXAS))
-    linhas = "\n".join(
-        f"""        VAR _l{i} =
-            VAR _xa = 140 + _a{i} * 700 -- geometria
-            VAR _xb = 140 + _b{i} * 700 -- geometria
-            VAR _d = ( _b{i} - _a{i} ) * 100
-            RETURN
-                "<div class='fx" & IF ( {i} = 1, " dest", "" ) & " sobe d" & ( {i} + 4 ) & "' style='top:" & {68 + i * 26} & "px'>"
-                    & "<span class='nm'>{f}</span>"
-                    & "<i class='lig' style='left:" & @CSS(MIN ( _xa, _xb ))@ & "px;width:" & @CSS(ABS ( _xb - _xa ))@ & "px'></i>"
-                    & "<i class='p14' style='left:" & @CSS(_xa - 6)@ & "px'></i>"
-                    & "<i class='p26' style='left:" & @CSS(_xb - 6)@ & "px'></i>"
-                    & "<span class='vl'>" & @PCT(_b{i})@ & "</span>"
-                    & "<span class='dd'>" & @PP(_d)@ & "</span></div>\""""
-        for i, (f, _c) in enumerate(FAIXAS))
-    soma = " & ".join(f"_l{i}" for i in range(len(FAIXAS)))
-    G.desenho("T06 · Idade · HTML", "Quem falta mais: a abstenção por faixa de idade em 2014 e 2026 (Brasil), um "
-              "haltere por faixa. Só lê contas; posições são geometria.", dax(f"""
+    # composição de quem não escolheu ninguém, ano a ano (a coluna da direita)
+    G.desenho("T06 · Composição topo · HTML", "Título da composição: em cada 10 que não escolheram ninguém, quantos nem "
+              "foram votar em 2026 e em 2006, a legenda das três partes e a nota à mão sobre brancos e nulos. Só lê "
+              "contas.", dax("""
         -- 1 · Leituras
-        VAR _comUF = [T06 · com UF]
-{leit}
+        VAR _recorte = [T06 · recorte]
+        VAR _d26 = [T06 · faltaram entre quem não escolheu · em cada 10 · 2026]
+        VAR _d06 = [T06 · faltaram entre quem não escolheu · em cada 10 · 2006]
+        VAR _bn26 = [T06 · brancos e nulos · 2026]
+        VAR _bn06 = [T06 · brancos e nulos · 2006]
         -- 2 · Textos
-        VAR _manchete =
-            "Dos 18 aos 24 anos, foi de " & @PCT(_a1)@ & " para " & @PCT(_b1)@ & "; acima dos 70, caiu de " & @PCT(_a6)@
-                & " para " & @PCT(_b6)@
-        VAR _rot = "Quem falta mais · por idade, 2014 → 2026" & IF ( _comUF = 1, " · Brasil (o TSE não publica por UF)", "" )
-        -- 3 · Geometria (0% a 70% em x 140–630)
-{linhas}
+        VAR _man =
+            IF (
+                _d26 = _d06,
+                "Desde 2006, " & _d26 & " em cada 10 que não escolhem ninguém nem vão votar",
+                "Hoje, " & _d26 & " em cada 10 que não escolhem ninguém nem vão votar; em 2006, eram " & _d06
+            )
+        VAR _nota = IF ( _bn26 < _bn06, "brancos e nulos encolheram", "brancos e nulos cresceram" )
         -- 4 · Marcação
-        VAR _html =
-            "<div class='tela ida'>"
-                & "<div class='rot sobe'>" & _rot & "</div>"
-                & "<div class='man sobe d1'>" & _manchete & "</div>"
-                & "<div class='leg entra d3'><i class='p14'></i>2014 <i class='p26'></i>2026 · % dos aptos da faixa que não foram votar · variação em pontos</div>"
-                & {soma}
-            & "</div>"
         RETURN
-            _html
+            "<div class='tela ct'>"
+                & "<div class='sob sobe'>Quem não escolheu ninguém · eleição a eleição · " & @ESC(_recorte)@ & "</div>"
+                & "<div class='man sobe d1'>" & _man & "</div>"
+                & "<div class='leg entra d3'><span><i class='f'></i>não foram votar</span>"
+                & "<span><i class='n'></i>anularam</span><span><i class='b'></i>votaram em branco</span>"
+                & "<span class='mao'>" & _nota & "</span></div>"
+            & "</div>"
         """))
-    G.desenho("T06 · Idade · ALT", "Texto para leitor de tela do bloco por idade.", dax("""
+    G.desenho("T06 · Composição topo · ALT", "Texto para leitor de tela do título da composição.", dax("""
         LEFT (
-            "Abstenção por idade no Brasil: dos 18 aos 24 anos, " & @PCT([T06 · idade 18 a 24 · 2014])@ & " em 2014 e "
-                & @PCT([T06 · idade 18 a 24 · 2026])@ & " em 2026; acima dos 70, " & @PCT([T06 · idade 70 ou mais · 2014])@
-                & " e " & @PCT([T06 · idade 70 ou mais · 2026])@ & ".",
+            "Quem não escolheu ninguém, " & [T06 · recorte] & ": em 2006, "
+                & [T06 · faltaram entre quem não escolheu · em cada 10 · 2006] & " em cada 10 nem foram votar; em 2026, "
+                & [T06 · faltaram entre quem não escolheu · em cada 10 · 2026] & ". Brancos e nulos: "
+                & @MI1([T06 · brancos e nulos · 2006])@ & " em 2006 e " & @MI1([T06 · brancos e nulos · 2026])@ & " em 2026.",
             250
         )
         """))
-    # mapa: legenda, ALT e dossiê do município
-    G.desenho("T06 · Legenda · HTML", "Legenda do mapa da abstenção.", dax("""
-        "<div class='tela lgm entra d6'>"
-            & "<span class='it'><i class='bol'></i>cada ponto é um município; o tamanho segue quantos faltaram</span>"
-            & "<span class='it'><span>12%</span><i class='esc'></i><span>30% ou mais faltaram</span></span>"
-        & "</div>"
-        """))
-    G.desenho("T06 · Legenda · ALT", "Texto para leitor de tela da legenda do mapa da abstenção.", dax("""
-        "Legenda: cada ponto é um município; o tamanho segue quantos faltaram e a cor vai do creme (12%) à tinta (30% ou mais de abstenção)."
-        """))
-    G.desenho("T06 · Mapa · ALT", "Texto para leitor de tela do mapa da abstenção.", dax("""
-        LEFT (
-            "Mapa da abstenção de 2026 por município, " & [T06 · recorte]
-                & ": cada ponto é um município, mais escuro onde mais gente faltou. Passe o mouse num ponto para ver a cidade.",
-            250
-        )
-        """))
-    G.desenho("T06 · Tooltip município · HTML", "Dossiê do município do ponto (ficha presa com fita): a abstenção em "
-              "2026 e em 2006, quantas pessoas faltaram e a comparação com o Brasil. Só lê contas.", dax(f"""
+    G.desenho("T06 · Composição · HTML", "Uma coluna por 1º turno (granularidade Ano[Ano]): quem não escolheu ninguém "
+              "empilhado em quem faltou (grafite), quem anulou (marrom) e quem votou em branco (areia); o total em cima e, "
+              "na parte de quem faltou, a parcela que ela é do total. O alvo transparente abre o dossiê do ano. Só lê "
+              "contas; a escala é geometria.", dax(f"""
         -- 1 · Leituras
-        VAR _mun = [T06 · município]
-        VAR _reg = [T06 · região do município]
-        VAR _p26 = [T06 · abstenção % (município)]
-        VAR _p06 = [T06 · abstenção % 2006 (município)]
-        VAR _n = [T06 · abstenções (município)]
-        VAR _aptos = [T06 · aptos (município)]
-        VAR _um = [T06 · um em cada (município)]
-        VAR _br = [T06 · abstenção % Brasil]
+        VAR _ano = [T06 · ano]
+        VAR _abst = [T06 · abstenções (ano)]
+        VAR _nul = [T06 · nulos (ano)]
+        VAR _bra = [T06 · brancos (ano)]
+        VAR _tot = [T06 · não escolheram (ano)]
+        VAR _parte = [T06 · faltaram entre quem não escolheu (ano)]
+        VAR _teto = [T06 · maior não escolheram da série]
         -- 2 · Textos
-        VAR _nota = IF ( _um > 0, "1 em cada " & _um & " faltou", "" )
-        VAR _compara = IF ( _p26 > _br, "acima", IF ( _p26 < _br, "abaixo", "igual" ) )
+        VAR _txtTot = @MI1(_tot)@
+        -- 3 · Geometria (6 colunas em {COMP_SLOT} px cada; de 0 ao teto em {COMP_ALT} px sobre a base a 44 px do pé)
+        VAR _i = ( _ano - 2006 ) / 4 -- geometria
+        VAR _x = _i * {COMP_SLOT} -- geometria
+        VAR _k = DIVIDE ( {COMP_ALT}, _teto ) -- geometria
+        VAR _ha = _abst * _k -- geometria
+        VAR _hn = _nul * _k -- geometria
+        VAR _hb = _bra * _k -- geometria
+        VAR _rotParte = IF ( _ha >= 30, "<span class='pt'>" & @PCT0(_parte)@ & "</span>" )
+        -- 4 · Marcação
+        RETURN
+            IF (
+                NOT ISBLANK ( _tot ),
+                "<div class='tela cp'><div class='col' style='left:" & @CSS(_x)@ & "px'>"
+                    & "<div class='tot sobe d" & ( _i + 6 ) & "' style='bottom:" & @CSS(_ha + _hn + _hb + 52)@ & "px'>"
+                    & _txtTot & "</div>"
+                    & "<div class='pilha barra-y d" & ( _i + 2 ) & "' style='height:" & @CSS(_ha + _hn + _hb)@ & "px'>"
+                    & "<i class='b' style='height:" & @CSS(_hb)@ & "px'></i>"
+                    & "<i class='n' style='height:" & @CSS(_hn)@ & "px'></i>"
+                    & "<i class='f' style='height:" & @CSS(_ha)@ & "px'>" & _rotParte & "</i></div>"
+                    & "<div class='ano'>" & _ano & "</div><div class='alvo'></div></div></div>"
+            )
+        """))
+    G.desenho("T06 · Composição · ALT", "Texto para leitor de tela das colunas da composição.", dax("""
+        LEFT (
+            "Colunas de 2006 a 2026 com quem não escolheu ninguém em " & [T06 · recorte]
+                & ": quem faltou, quem anulou e quem votou em branco. Passe o mouse num ano para ver a disputa e quantas "
+                & "vezes a diferença entre os dois primeiros cabia em quem faltou.",
+            250
+        )
+        """))
+    G.desenho("T06 · Série alvos · HTML", "Alvo transparente de cada ano sobre a linha da série (granularidade "
+              "Ano[Ano]): só recebe o mouse para abrir o dossiê do ano; não desenha nada.", dax("""
+        -- 1 · Leituras
+        VAR _ano = [T06 · ano]
+        VAR _abst = [T06 · abstenções (ano)]
+        -- 3 · Geometria (o x do ano na série: 60 + (ano − 2006) × 32; alvo de 128 px centrado nele)
+        VAR _x = 60 + ( _ano - 2006 ) * 32 - 64 -- geometria
+        -- 4 · Marcação
+        RETURN
+            IF (
+                NOT ISBLANK ( _abst ),
+                "<div class='tela sa'><div class='alvo' style='left:" & @CSS(_x)@ & "px'></div></div>"
+            )
+        """))
+    G.desenho("T06 · Série alvos · ALT", "Texto para leitor de tela dos alvos da série.", dax("""
+        "Passe o mouse num ano da linha para ver a disputa daquele 1º turno e quantas vezes a diferença entre os dois "
+            & "primeiros cabia em quem faltou."
+        """))
+    # dossiê do ano (ficha presa com fita), aberto pela coluna da composição e pelo ponto da série
+    G.desenho("T06 · Tooltip ano · HTML", "Dossiê do ano (ficha presa com fita): quem disputou, quantas vezes a "
+              "diferença entre os dois primeiros cabia em quem faltou, os números de quem faltou e da diferença, quantos "
+              "anularam ou votaram em branco e, à mão, a comparação com 2026. Só lê contas.", dax(f"""
+        -- 1 · Leituras
+        VAR _ano = [T06 · ano]
+        VAR _recorte = [T06 · recorte]
+        VAR _disputa = [T06 · disputa do ano]
+        VAR _vezes = [T06 · vezes a diferença (ano)]
+        VAR _vezes26 = [T06 · vezes a diferença em 2026]
+        VAR _abst = [T06 · abstenções (ano)]
+        VAR _dif = [T06 · diferença do ano]
+        VAR _nul = [T06 · nulos (ano)]
+        VAR _bra = [T06 · brancos (ano)]
+        -- 2 · Textos
+        VAR _txtVezes = IF ( _vezes >= 10, FORMAT ( _vezes, "0" ), FORMAT ( _vezes, "0.0" ) )
+        VAR _txt26 = IF ( _vezes26 >= 10, FORMAT ( _vezes26, "0" ), FORMAT ( _vezes26, "0.0" ) )
+        VAR _cabe =
+            IF (
+                _vezes >= 1,
+                "é quantas vezes a diferença entre os dois primeiros cabia em quem faltou",
+                "a diferença entre " & @ESC(_disputa)@ & " foi maior que o número de quem faltou"
+            )
+        VAR _nota = IF ( _ano <> 2026 && NOT ISBLANK ( _vezes26 ), "em 2026: " & _txt26 & " vezes" )
         -- 4 · Marcação
         VAR _css =
             "<style>"
@@ -357,9 +427,11 @@ def desenho() -> None:
                 & ".tt6 .ic{{position:absolute;right:16px;top:14px;width:34px}}"
                 & ".tt6 .cab{{position:absolute;left:18px;top:14px;right:60px}}"
                 & ".tt6 .nm{{font-size:22px;font-weight:700;line-height:1.15}}"
-                & ".tt6 .big{{position:absolute;left:18px;top:82px;font-size:44px;font-weight:700;letter-spacing:-.03em}}"
-                & ".tt6 .bs{{position:absolute;left:178px;top:90px;right:18px;font-size:15px;color:var(--grafite);line-height:1.35}}"
-                & ".tt6 .lin{{position:absolute;left:18px;right:18px;top:150px;border-top:1px dashed var(--areia);"
+                & ".tt6 .big{{position:absolute;left:18px;top:80px;font-size:44px;font-weight:700;letter-spacing:-.03em;"
+                & "white-space:nowrap}}"
+                & ".tt6 .bs{{position:absolute;left:178px;top:82px;right:18px;font-size:15px;color:var(--grafite);"
+                & "line-height:1.35}}"
+                & ".tt6 .lin{{position:absolute;left:18px;right:18px;border-top:1px dashed var(--areia);"
                 & "padding-top:8px;font-size:15px;color:var(--grafite)}}.tt6 .lin b{{color:var(--tinta)}}"
                 & ".tt6 .mao{{position:absolute;right:18px;bottom:8px;font-size:28px;color:var(--tinta)}}"
             & "</style>"
@@ -368,25 +440,28 @@ def desenho() -> None:
                 & "<div class='tt6'><div class='ficha'>"
                 & "<img class='fita' alt='' src='{URL_MIDIA}/arte/dossie/fita-tinta.png'/>"
                 & "<img class='ic' alt='' src='{URL_MIDIA}/arte/icones/urna-tinta.png'/>"
-                & "<div class='cab sobe'><div class='nm'>" & @ESC(_mun)@ & "</div>"
-                & "<div class='rot'>" & @ESC(_reg)@ & " · " & @INT(_aptos)@ & " eleitores</div></div>"
-                & "<div class='big sobe d1'>" & @PCT(_p26)@ & "</div>"
-                & "<div class='bs sobe d2'>não foram votar em 2026: <b>" & @INT(_n)@ & "</b> pessoas</div>"
-                & "<div class='lin sobe d3'>Em 2006: <b>" & @PCT(_p06)@ & "</b> · " & _compara & " da média do Brasil em 2026 (<b>"
-                & @PCT(_br)@ & "</b>)</div>"
-                & "<div class='mao entra d5'>" & _nota & "</div>"
+                & "<div class='cab sobe'><div class='nm'>1º turno de " & _ano & "</div>"
+                & "<div class='rot'>" & @ESC(_disputa)@ & " · " & @ESC(_recorte)@ & "</div></div>"
+                & "<div class='big sobe d1'>" & _txtVezes & "×</div>"
+                & "<div class='bs sobe d2'>" & _cabe & "</div>"
+                & "<div class='lin sobe d3' style='top:160px'>Faltaram <b>" & @MI1(_abst)@ & "</b>; a diferença entre "
+                & "os dois foi de <b>" & @MI(_dif)@ & "</b></div>"
+                & "<div class='lin sobe d4' style='top:204px'>Anularam <b>" & @MI1(_nul)@ & "</b> · votaram em branco <b>"
+                & @MI1(_bra)@ & "</b></div>"
+                & "<div class='mao entra d6'>" & _nota & "</div>"
                 & "</div></div>"
         RETURN
-            IF ( NOT ISBLANK ( _mun ) && NOT ISBLANK ( _aptos ), _html )
+            IF ( NOT ISBLANK ( _abst ) && NOT ISBLANK ( _dif ), _html )
         """).replace("{{", "{").replace("}}", "}"))
-    G.desenho("T06 · Tooltip município · ALT", "Texto para leitor de tela do dossiê do município (abstenção).", dax("""
+    G.desenho("T06 · Tooltip ano · ALT", "Texto para leitor de tela do dossiê do ano.", dax("""
         LEFT (
-            [T06 · município] & ": " & @PCT([T06 · abstenção % (município)])@ & " não foram votar em 2026 ("
-                & @INT([T06 · abstenções (município)])@ & " pessoas); em 2006, " & @PCT([T06 · abstenção % 2006 (município)])@ & ".",
+            "1º turno de " & [T06 · ano] & " (" & [T06 · disputa do ano] & "), " & [T06 · recorte] & ": faltaram "
+                & @MI1([T06 · abstenções (ano)])@ & ", " & FORMAT ( [T06 · vezes a diferença (ano)], "0.0" )
+                & " vezes a diferença entre os dois primeiros; anularam " & @MI1([T06 · nulos (ano)])@
+                & " e votaram em branco " & @MI1([T06 · brancos (ano)])@ & ".",
             250
         )
         """))
-
 
 # ---------------------------------------------------------------------------------------------------- página
 def _css_resposta() -> str:
@@ -433,49 +508,47 @@ def _css_serie() -> str:
     )
 
 
-def _css_idade() -> str:
+def _css_composicao_topo() -> str:
     return (
-        ".ida>*{position:absolute;left:0}"
-        ".ida .rot{top:0}.ida .man{top:20px;width:780px;font-size:18px;line-height:1.25}"
-        ".ida .leg{top:48px;font-size:13px;color:var(--cinza);display:flex;align-items:center;gap:6px}"
-        ".ida .leg i{position:relative;display:inline-block;margin-left:6px}"
-        ".ida .fx{width:780px;height:24px}"
-        ".ida .fx>*{position:absolute}"
-        ".ida .fx .nm{left:0;top:2px;font-size:15px;font-weight:600;color:var(--grafite)}"
-        ".ida .fx.dest .nm{color:var(--tinta)}"
-        ".ida .lig{top:11px;height:2px;background:var(--areia)}"
-        ".ida .p14,.ida .p26{width:12px;height:12px;border-radius:50%;top:6px}"
-        ".ida .p14{background:var(--papel);box-shadow:inset 0 0 0 2px var(--grafite)}"
-        ".ida .p26{background:var(--tinta)}"
-        ".ida .leg .p14,.ida .leg .p26{position:relative;top:0}"
-        ".ida .fx .vl{left:650px;top:2px;font-size:15px;font-weight:700;font-variant-numeric:tabular-nums}"
-        ".ida .fx .dd{left:700px;width:80px;top:2px;text-align:right;font-size:15px;color:var(--grafite);"
-        "font-variant-numeric:tabular-nums}"
-        ".ida .fx.dest .lig{background:var(--tinta);height:3px}"
+        ".ct>*{position:absolute;left:0}"
+        ".ct .sob{top:0;width:780px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+        ".ct .man{top:28px;width:780px;font-size:24px;line-height:1.25}"
+        ".ct .leg{top:96px;width:780px;display:flex;align-items:center;gap:20px;font-size:14px;color:var(--grafite)}"
+        ".ct .leg span{display:inline-flex;align-items:center;gap:7px}"
+        ".ct .leg i{display:inline-block;width:14px;height:14px}"
+        ".ct .leg .f{background:var(--grafite)}.ct .leg .n{background:var(--marrom)}.ct .leg .b{background:var(--areia)}"
+        ".ct .leg .mao{margin-left:auto;font-size:26px;color:var(--tinta);transform:rotate(-2deg)}"
     )
 
 
-def _css_legenda() -> str:
+def _css_composicao() -> str:
+    w = COMP_SLOT
     return (
-        ".lgm{display:flex;flex-wrap:wrap;gap:4px 22px;align-items:center;font-size:14px;color:var(--grafite)}"
-        ".lgm .it{display:flex;align-items:center;gap:8px}"
-        ".lgm i{display:inline-block;flex:none}"
-        ".lgm .bol{width:22px;height:14px;background:radial-gradient(circle at 4px 9px,var(--grafite) 2.5px,"
-        "transparent 3px),radial-gradient(circle at 15px 7px,var(--grafite) 6px,transparent 6.5px)}"
-        ".lgm .esc{width:90px;height:10px;background:linear-gradient(90deg,#E5DBC8,#CBBDA2,#7A6F60,#1C1915)}"
+        ".cp{pointer-events:none}"
+        f".cp .col{{position:absolute;top:0;width:{w}px;height:718px}}"
+        f".cp .pilha{{position:absolute;left:{(w - 76) / 2:.0f}px;bottom:44px;width:76px;display:flex;"
+        "flex-direction:column}"
+        ".cp .pilha i{display:block;width:76px;flex:none;position:relative;box-shadow:inset 0 1.5px 0 var(--papel)}"
+        ".cp .pilha .f{background:var(--grafite)}.cp .pilha .n{background:var(--marrom)}.cp .pilha .b{background:var(--areia)}"
+        ".cp .pilha .pt{position:absolute;left:0;right:0;top:8px;text-align:center;font-size:15px;font-weight:700;"
+        "color:var(--branco);font-style:normal}"
+        f".cp .tot{{position:absolute;left:0;width:{w}px;text-align:center;font-size:20px;font-weight:700;"
+        "font-variant-numeric:tabular-nums}"
+        f".cp .ano{{position:absolute;left:0;bottom:12px;width:{w}px;text-align:center;font-size:17px;"
+        "font-weight:600;color:var(--grafite)}"
+        ".cp .col::after{content:'';position:absolute;left:10px;right:10px;bottom:43px;height:1.2px;"
+        "background:var(--areia)}"
+        ".cp .alvo{position:absolute;inset:0;pointer-events:auto}"
     )
 
 
 def declarar_ausencia() -> list:
     import pbip_lib as lib
-    from pbip_lib import Pagina, Visual
+    import pagina_lib
+    from pbip_lib import Visual
     css = "Estilo · CSS"
     z = lib.CAMADAS["conteudo"]
-    tt = "ttT06Municipio"
-    campos = [lib.campo_coluna("cod", "Município", "CodIBGE"), lib.campo_coluna("x", "Município", "X"),
-              lib.campo_coluna("y", "Município", "Y"), lib.campo_coluna("uf", "Município", "UF"),
-              lib.campo_medida("tam", "T06 · abstenções (município)"),
-              lib.campo_medida("val", "T06 · abstenção % (município)")]
+    # os alvos da série e as colunas da composição só abrem a dica do ano (sem filtro cruzado)
     return [
         Visual(P, lib.visual_html("T06_Resposta_Html", *RESPOSTA, "T06 · Resposta · HTML", folha_de_estilo=css, z=z,
                                   tab=100, alt=lib.medida("T06 · Resposta · ALT"),
@@ -483,19 +556,22 @@ def declarar_ausencia() -> list:
         Visual(P, lib.visual_html("T06_Serie_Html", *SERIE, "T06 · Série · HTML", folha_de_estilo=css, z=z + 2,
                                   tab=110, alt=lib.medida("T06 · Série · ALT"),
                                   modelo_corpo=f"<style>{_css_serie()}</style>" + "{{content}}")),
-        Visual(P, lib.visual_deneb("T06_Mapa_Pontos", *MAPA, "spec/t06_mapa.json", campos,
-                                   alt=lib.medida("T06 · Mapa · ALT"), z=z + 4, tab=200, tooltip_pagina=tt,
-                                   renderizacao="canvas")),
-        Visual(P, lib.visual_html("T06_Mapa_Legenda", *LEGENDA, "T06 · Legenda · HTML", folha_de_estilo=css,
-                                  z=z + 6, tab=210, alt=lib.medida("T06 · Legenda · ALT"),
-                                  modelo_corpo=f"<style>{_css_legenda()}</style>" + "{{content}}")),
-        Visual(P, lib.visual_html("T06_Idade_Html", *IDADE, "T06 · Idade · HTML", folha_de_estilo=css, z=z + 8,
-                                  tab=220, alt=lib.medida("T06 · Idade · ALT"),
-                                  modelo_corpo=f"<style>{_css_idade()}</style>" + "{{content}}")),
-        Pagina(lib.pagina_tooltip(tt, "Município · ausência", altura=TT_H, largura=TT_W), ordem=160),
-        Visual(tt, lib.visual_html(f"TT_{tt[2:]}_Conteudo", 0, 0, TT_W, TT_H, "T06 · Tooltip município · HTML",
-                                   alt=lib.medida("T06 · Tooltip município · ALT"), pagina_wh=(TT_W, TT_H),
-                                   folha_de_estilo=css)),
+        # alvos transparentes sobre a linha (só a dica do ano; o desenho é o da série)
+        Visual(P, lib.visual_html("T06_Serie_Alvos", *SERIE_ALVOS, "T06 · Série alvos · HTML", folha_de_estilo=css,
+                                  z=z + 3, tab=115, alt=lib.medida("T06 · Série alvos · ALT"),
+                                  granularidade=("Ano", "Ano"), tooltip_pagina=TT, movimento=False,
+                                  modelo_corpo="<style>.sa{pointer-events:none}.sa .alvo{position:absolute;top:0;"
+                                               "width:128px;height:294px;pointer-events:auto}</style>{{content}}")),
+        Visual(P, lib.visual_html("T06_Composicao_Topo", *COMP_TOPO, "T06 · Composição topo · HTML",
+                                  folha_de_estilo=css, z=z + 4, tab=200, alt=lib.medida("T06 · Composição topo · ALT"),
+                                  modelo_corpo=f"<style>{_css_composicao_topo()}</style>" + "{{content}}")),
+        Visual(P, lib.visual_html("T06_Composicao_Html", *COMP, "T06 · Composição · HTML", folha_de_estilo=css,
+                                  z=z + 6, tab=210, alt=lib.medida("T06 · Composição · ALT"),
+                                  granularidade=("Ano", "Ano"), tooltip_pagina=TT,
+                                  ordenacao=[lib.ordem_coluna("Ano", "Ano")],
+                                  modelo_corpo=f"<style>{_css_composicao()}</style>" + "{{content}}")),
+        *pagina_lib.tooltip(TT, "Ano · ausência", TT_W, TT_H, "T06 · Tooltip ano · HTML", ordem=160,
+                            folha_de_estilo=css),
     ]
 
 
@@ -503,9 +579,6 @@ def main() -> int:
     contas()
     desenho()
     apagados = G.limpar()
-    gravar_spec("t06_mapa.json", spec_mapa(
-        "abstencao", ("#E5DBC8", "#7A6F60", "#1C1915"), "Tela 06: um ponto por município (tamanho = quantos faltaram, "
-        "cor = abstenção de 2026, do creme à tinta); contorno das UFs em traço; pontos em onda."))
     print(G.resumo(), "· apagados:", [p.name for p in apagados])
     return 0
 

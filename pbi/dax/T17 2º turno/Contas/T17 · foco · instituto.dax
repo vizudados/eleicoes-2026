@@ -1,0 +1,8 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: Instituto em destaque na tela: o do quadrinho clicado ou o da pesquisa clicada; vazio sem clique.
+*/
+VAR _rej = [T17 · foco · instituto da rejeição]
+RETURN
+    IF ( ISBLANK ( _rej ), [T17 · foco · instituto da pesquisa], _rej )

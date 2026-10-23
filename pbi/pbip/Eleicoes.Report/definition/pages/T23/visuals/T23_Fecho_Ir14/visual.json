@@ -3,9 +3,9 @@
   "name": "T23_Fecho_Ir14",
   "position": {
     "x": 140,
-    "y": 766,
+    "y": 782,
     "z": 1020,
-    "height": 40,
+    "height": 37,
     "width": 1020,
     "tabOrder": 214
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 15: Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.'"
+                  "Value": "'Voltar à tela 16: Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 15: Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.'"
+                  "Value": "'Voltar à tela 16: Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.'"
                 }
               }
             },

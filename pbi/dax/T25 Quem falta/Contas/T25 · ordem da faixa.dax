@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Ordem da faixa da linha (1 = 16 e 17 anos … 7 = 70 ou mais).
+*/
+SELECTEDVALUE ( 'T25 Faixa'[Ordem] )

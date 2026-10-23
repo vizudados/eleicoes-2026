@@ -10,4 +10,5 @@ VAR _tot = [T11 · municípios]
 -- 2 · Textos
 RETURN
     "Mapa de pontos, um por município (" & FORMAT ( _tot, "#,0" ) & "). Em azul forte, os " & FORMAT ( _vir, "#,0" )
-        & " que trocaram Lula por Flávio; em tons claros, quem ficou à frente em 2026. Passe o mouse para o dossiê."
+        & " que trocaram Lula por Flávio. Passe o mouse para o dossiê; clique num ponto ou arraste uma área para "
+        & "filtrar a tela."

@@ -1,0 +1,11 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de uma linha do quadro 'onde foi o erro'.
+*/
+IF (
+    NOT ISBLANK ( [T10 · erro · candidato] ),
+    [T10 · erro · candidato] & " nas " & [T10 · institutos · com válidos] & " pesquisas com votos válidos: de "
+        & FORMAT ( [T10 · erro · menor], "0.0" ) & "% a " & FORMAT ( [T10 · erro · maior], "0.0" ) & "%; na urna, "
+        & FORMAT ( [T10 · erro · urna], "0.0" ) & "%."
+)

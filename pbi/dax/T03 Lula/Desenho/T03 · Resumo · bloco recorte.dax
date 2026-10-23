@@ -1,0 +1,72 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Resumo do recorte: o % de Lula, os votos, em quantos municípios ficou à frente, o que mudou desde 2022 e três fatos (mais forte, mais fraco, cidade grande). A faixa do meio fica livre para a origem (outro visual).
+*/
+-- 1 · Leituras
+VAR _comUF = [T03 · com UF]
+VAR _recorte = [T03 · recorte]
+VAR _votos = [T03 · votos]
+VAR _pct = [T03 · %]
+VAR _pos = [T03 · posição]
+VAR _v22 = [T03 · votos 2022]
+VAR _p22 = [T03 · % 2022]
+VAR _c22 = [T03 · candidato 2022]
+VAR _dv = [T03 · variação de votos]
+VAR _dpp = [T03 · variação em p.p.]
+VAR _nFrente = [T03 · municípios à frente]
+VAR _nMun = [T03 · municípios]
+VAR _eleit = [T03 · eleitores nos municípios à frente]
+VAR _forte = [T03 · lugar mais forte]
+VAR _forteP = [T03 · lugar mais forte %]
+VAR _fraco = [T03 · lugar mais fraco]
+VAR _fracoP = [T03 · lugar mais fraco %]
+VAR _grande = [T03 · cidade grande mais forte]
+VAR _grandeP = [T03 · cidade grande mais forte %]
+VAR _grandePop = [T03 · cidade grande mais forte população]
+-- 2 · Textos
+VAR _txtRec = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtPct = FORMAT ( _pct, "0.0%" )
+VAR _txtVotos = SWITCH ( TRUE (), ABS ( _votos ) >= 1000000, FORMAT ( _votos / 1000000, "0.00" ) & " mi", ABS ( _votos ) >= 1000, FORMAT ( _votos / 1000, "0.0" ) & " mil", FORMAT ( _votos, "#,0" ) )
+VAR _txtNFrente = FORMAT ( _nFrente, "#,0" )
+VAR _txtNMun = FORMAT ( _nMun, "#,0" )
+VAR _txtEleit = IF ( _eleit >= 0.995 && _nFrente < _nMun, FORMAT ( _eleit, "0.0%" ), FORMAT ( _eleit, "0%" ) )
+VAR _txtMun = IF ( _nMun = 1, " município", " municípios" )
+VAR _manchete =
+    SWITCH (
+        TRUE (),
+        _nMun = 1 && _nFrente = 1, "Lula ficou à frente no único município do recorte",
+        _nMun = 1, "Lula ficou atrás no único município do recorte",
+        _nFrente = 0, "Lula não ficou à frente em nenhum dos " & _txtNMun & _txtMun,
+        "Lula ficou à frente em " & _txtNFrente & " dos " & _txtNMun & _txtMun & ", onde votam " & _txtEleit & " dos eleitores"
+    )
+VAR _txtDV = IF ( _dv < 0, "−", "+" ) & SWITCH ( TRUE (), ABS ( ABS ( _dv ) ) >= 1000000, FORMAT ( ABS ( _dv ) / 1000000, "0.00" ) & " mi", ABS ( ABS ( _dv ) ) >= 1000, FORMAT ( ABS ( _dv ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( _dv ), "#,0" ) )
+VAR _txtDPP = FORMAT ( _dpp, "+0.0;−0.0;0.0" )
+VAR _pontos = IF ( ABS ( _dpp ) < 2, " ponto", " pontos" )
+VAR _compara =
+    "Em 2022, " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _c22, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " teve " & SWITCH ( TRUE (), ABS ( _v22 ) >= 1000000, FORMAT ( _v22 / 1000000, "0.00" ) & " mi", ABS ( _v22 ) >= 1000, FORMAT ( _v22 / 1000, "0.0" ) & " mil", FORMAT ( _v22, "#,0" ) ) & " (" & FORMAT ( _p22, "0.0%" ) & "). Agora: <b class='lula-esc'>"
+        & _txtDV & IF ( ABS ( _dv ) >= 1000, " de votos", IF ( ABS ( _dv ) = 1, " voto", " votos" ) )
+        & "</b> e <b class='lula-esc'>" & _txtDPP & _pontos & "</b>."
+VAR _rotForte = IF ( _comUF = 1, "Município mais forte", "UF mais forte" )
+VAR _rotFraco = IF ( _comUF = 1, "Município mais fraco", "UF mais fraca" )
+VAR _fatoGrande =
+    IF (
+        NOT ISBLANK ( _grande ),
+        "<div class='fato sobe d12'><span class='ic g'></span><div><div class='rot'>" & "Entre as cidades de 100 mil+" & "</div><div class='lg'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _grande, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " <small>" & FORMAT ( _grandePop, "#,0" ) & " habitantes</small>" & "</div></div><div class='vp lula'>" & FORMAT ( _grandeP, "0.0%" ) & "</div></div>"
+    )
+-- 4 · Marcação
+VAR _html =
+    "<div class='tela rv'>"
+        & "<div class='sob sobe'>Luiz Inácio Lula da Silva · PT · 13 · " & _txtRec & "</div>"
+        & "<div class='topo'><div class='big lula sobe d1'>" & _txtPct & "</div>"
+        & "<div class='lado sobe d2'><div class='vv lula'>" & _txtVotos & "</div>"
+        & "<div class='txt'>de votos · " & _pos & "º lugar</div></div></div>"
+        & "<div class='man mc sobe d3'>" & _manchete & "</div>"
+        & "<div class='txt cp sobe d4'>" & _compara & "</div>"
+        & "<div class='fatos'>"
+        & "<div class='fato sobe d10'><span class='ic f'></span><div><div class='rot'>" & _rotForte & "</div><div class='lg'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _forte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div><div class='vp lula'>" & FORMAT ( _forteP, "0.0%" ) & "</div></div>"
+        & IF ( _fraco <> _forte, "<div class='fato sobe d11'><span class='ic r'></span><div><div class='rot'>" & _rotFraco & "</div><div class='lg'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fraco, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div><div class='vp'>" & FORMAT ( _fracoP, "0.0%" ) & "</div></div>" )
+        & _fatoGrande & "</div>"
+    & "</div>"
+RETURN
+    _html

@@ -1,0 +1,11 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: O dia clicado na curva (filtro cruzado de T08_Curva_Dias, grão 'Trends tempo'[DataTexto]); vazio sem clique e dentro da própria faixa dos dias (o dia está no grão).
+*/
+IF (
+    ISFILTERED ( 'Trends tempo'[DataTexto] )
+        && NOT ISINSCOPE ( 'Trends tempo'[DataTexto] )
+        && HASONEVALUE ( 'Trends tempo'[DataTexto] ),
+    [T08 · dia · data]
+)

@@ -1,0 +1,26 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: As três cidades mais populosas do contexto (a UF ou a região) que trocaram Lula por Flávio, da maior para a menor, separadas por vírgula (lista para o dossiê).
+@oraculo: Minas Gerais: Montes Claros (MG), Betim (MG), Ribeirão das Neves (MG) (motor, 23/10/2026)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CONCATENATEX (
+    TOPN (
+        3,
+        FILTER (
+            ADDCOLUMNS (
+                VALUES ( 'Município'[CodIBGE] ),
+                "@v", [T12 · município virou],
+                "@pop", [T12 · população],
+                "@nome", [T12 · nome do município]
+            ),
+            [@v] = 1
+        ),
+        [@pop], DESC,
+        'Município'[CodIBGE], ASC
+    ),
+    [@nome],
+    ", ",
+    [@pop], DESC
+)

@@ -1,0 +1,16 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Último dia do período do ponto (o ponto de Lula de 08 a 11/10 é o patamar máximo do período; os outros são de um dia).
+*/
+VAR _d = [T09 · IPD dia · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        CALCULATE (
+            MAX ( Monitoramento[Fim] ),
+            REMOVEFILTERS ( Monitoramento ),
+            Monitoramento[Início] = _d,
+            Monitoramento[Métrica] IN { "IPD", "IPD (patamar máximo)" }
+        )
+    )

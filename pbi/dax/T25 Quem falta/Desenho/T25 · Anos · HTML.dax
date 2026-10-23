@@ -1,0 +1,35 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Uma coluna por 1º turno (granularidade Ano[Ano]): a abstenção do ano no lugar e na faixa do contexto, a linha tracejada da referência e o ano; com faixa marcada, 2006 e 2010 ficam vazios (sem idade). O alvo transparente recebe o clique e a dica. Só lê contas; a escala é geometria.
+*/
+-- 1 · Leituras
+VAR _ano = [T25 · ano]
+VAR _pct = [T25 · abstenção %]
+VAR _teto = [T25 · teto da série]
+VAR _ref = [T25 · referência da série]
+VAR _comFaixa = [T25 · com faixa]
+VAR _temIdade = [T25 · tem idade no ano]
+-- 2 · Textos
+VAR _sem = IF ( _comFaixa = 1 && _temIdade = 0, "sem idade", "sem dado" )
+-- 3 · Geometria (6 anos em 760 px; coluna de 0 ao teto em 150 px sobre a base a 30 px do pé)
+VAR _i = ( _ano - 2006 ) / 4 -- geometria
+VAR _x = _i * 126.6667 -- geometria
+VAR _h = IF ( _teto > 0, DIVIDE ( _pct, _teto ) * 150 ) -- geometria
+VAR _hr = IF ( _teto > 0, DIVIDE ( _ref, _teto ) * 150, 0 ) -- geometria
+VAR _coluna =
+    IF (
+        ISBLANK ( _pct ),
+        "<div class='fant entra d" & ( _i + 2 ) & "'></div><div class='sem entra d" & ( _i + 3 ) & "'>" & _sem & "</div>",
+        "<div class='pc sobe d" & ( _i + 4 ) & "' style='bottom:" & FORMAT ( MAX ( _h, _hr ) + 36, "0.0##", "en-US" ) & "px'>" & FORMAT ( _pct, "0.0%" ) & "</div>"
+            & "<div class='bar barra-y d" & ( _i + 2 ) & "' style='height:" & FORMAT ( MAX ( _h, 2 ), "0.0##", "en-US" ) & "px'></div>"
+    )
+VAR _linhaRef =
+    IF (
+        NOT ISBLANK ( _ref ) && NOT ISBLANK ( _pct ),
+        "<div class='ref entra d10' style='bottom:" & FORMAT ( _hr + 30, "0.0##", "en-US" ) & "px'></div>"
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela an'><div class='col' style='left:" & FORMAT ( _x, "0.0##", "en-US" ) & "px'>" & _coluna & _linhaRef
+        & "<div class='ano'>" & _ano & "</div><div class='alvo'></div></div></div>"

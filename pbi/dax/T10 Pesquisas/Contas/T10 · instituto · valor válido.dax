@@ -1,0 +1,11 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: % do candidato da linha ('Candidato ano'[Partido]) na última pesquisa do instituto, só quando ela é em votos válidos (a lista do dossiê ttT10Erro).
+*/
+VAR _c = [T10 · erro · candidato]
+RETURN
+    IF (
+        [T10 · instituto · base] = "validos",
+        SWITCH ( _c, "Lula", [T10 · instituto · Lula], "Flávio", [T10 · instituto · Flávio] )
+    )

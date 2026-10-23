@@ -1,0 +1,12 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: Menções positivas sobre o total de Lula nas redes nas 24 h depois do debate (FGV/EAESP, dados Brandwatch), em %.
+*/
+CALCULATE (
+    MAX ( Monitoramento[Valor] ),
+    REMOVEFILTERS ( Monitoramento ),
+    Monitoramento[Métrica] = "menções positivas (sobre o total)",
+    Monitoramento[Candidato] = "Lula",
+    Monitoramento[Início] = DATE ( 2026, 10, 18 )
+)

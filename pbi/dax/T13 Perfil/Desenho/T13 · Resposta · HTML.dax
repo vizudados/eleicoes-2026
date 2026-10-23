@@ -1,10 +1,11 @@
 /*
 @pasta: T13 Perfil\Desenho
 @formato: texto
-@descricao: Coluna da resposta: a maior queda (célula, número e exemplos), a menor queda e como ler a célula (com o desenho de uma célula anotada e o que é margem). Só lê contas.
+@descricao: Coluna da resposta. Sem clique: a maior queda (célula, número e exemplos), a menor queda e como ler a célula. Com uma célula clicada na matriz: a queda dessa célula, as cidades dela, a comparação com a maior queda (e a posição entre as células) e a célula anotada. Só lê contas.
 @gerado: pbi/scripts/desenho_t13.py
 */
 -- 1 · Leituras
+VAR _sel = [T13 · célula escolhida]
 VAR _pv = [T13 · maior queda · variação]
 VAR _pp = [T13 · maior queda · porte]
 VAR _pq = [T13 · maior queda · quinto]
@@ -16,41 +17,85 @@ VAR _mq = [T13 · menor queda · quinto]
 VAR _mn = [T13 · menor queda · cidades]
 VAR _me = [T13 · menor queda · exemplos]
 VAR _uf = [T13 · recorte]
-VAR _av = _pv
-VAR _an = _pn
+VAR _cv = [T13 · variação]
+VAR _cp = [T13 · porte da célula]
+VAR _cq = [T13 · quinto da célula]
+VAR _cn = [T13 · cidades]
+VAR _ce = [T13 · exemplos]
+VAR _pos = [T13 · posição da célula na queda]
+VAR _ncel = [T13 · células comparáveis]
 -- 2 · Textos
+VAR _av = IF ( _sel = 1, _cv, _pv )
+VAR _an = IF ( _sel = 1, _cn, _pn )
+VAR _ap = IF ( _sel = 1, _cp, _pp )
+VAR _aq = IF ( _sel = 1, _cq, _pq )
+VAR _ae = IF ( _sel = 1, _ce, _pe )
 VAR _grupo =
-    "cidades de " & _pp & IF ( RIGHT ( _pp, 3 ) = "mil", " habitantes", " de habitantes" )
-        & " e de renda " & SWITCH ( _pq, "mais ricas", "mais alta", "mais pobres", "mais baixa", "no " & _pq )
+    "cidades de " & _ap & IF ( RIGHT ( _ap, 3 ) = "mil", " habitantes", " de habitantes" )
+        & " e de renda " & SWITCH ( _aq, "mais ricas", "mais alta", "mais pobres", "mais baixa", "no " & _aq )
 VAR _grupoM =
     IF ( _mn = 1, "na única cidade", "nas " & FORMAT ( _mn, "#,0" ) & " cidades" ) & " "
         & "de " & _mp & IF ( RIGHT ( _mp, 3 ) = "mil", " habitantes", " de habitantes" )
         & " e de renda " & SWITCH ( _mq, "mais ricas", "mais alta", "mais pobres", "mais baixa", "no " & _mq )
-VAR _verbo = IF ( _pv < 0, "caiu", "subiu" )
+VAR _grupoP =
+    IF ( _pn = 1, "na única cidade", "nas " & FORMAT ( _pn, "#,0" ) & " cidades" ) & " "
+        & "de " & _pp & IF ( RIGHT ( _pp, 3 ) = "mil", " habitantes", " de habitantes" )
+        & " e de renda " & SWITCH ( _pq, "mais ricas", "mais alta", "mais pobres", "mais baixa", "no " & _pq )
+VAR _verbo = IF ( _av < 0, "caiu", "subiu" )
 VAR _man =
     IF ( NOT ISBLANK ( _uf ), _uf & ": n", "N" ) & "as " & _grupo & ", a margem de Lula " & _verbo & " "
-        & FORMAT ( ABS ( _pv ) * 100, "0.0" ) & " pontos"
+        & FORMAT ( ABS ( _av ) * 100, "0.0" ) & " pontos"
 VAR _txtEx =
-    IF ( _pn = 1, "Só uma cidade: ", "São " & FORMAT ( _pn, "#,0" ) & " cidades, como " )
-        & SUBSTITUTE ( SUBSTITUTE ( _pe, "&", "&amp;" ), "<", "&lt;" ) & "."
+    IF ( _an = 1, "Só uma cidade: ", "São " & FORMAT ( _an, "#,0" ) & " cidades, como " )
+        & SUBSTITUTE ( SUBSTITUTE ( _ae, "&", "&amp;" ), "<", "&lt;" ) & "."
 VAR _txtMenor =
     _grupoM & IF ( _mn > 3, ", como ", ": " ) & SUBSTITUTE ( SUBSTITUTE ( _me, "&", "&amp;" ), "<", "&lt;" ) & "."
+VAR _txtPos =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _pos ), "Com tão poucas cidades, a célula escolhida fica fora da comparação: um caso só pesa demais.",
+        _pos = 1, "A célula escolhida é a própria maior queda.",
+        _pos = _ncel, "A célula escolhida tem a menor queda entre as " & FORMAT ( _ncel, "0" )
+            & " células que entram na comparação.",
+        "A célula escolhida é a " & FORMAT ( _pos, "0" ) & "ª maior queda entre as " & FORMAT ( _ncel, "0" )
+            & " células que entram na comparação."
+    )
+VAR _blocoMenor =
+    IF (
+        _sel = 1,
+        "<div class='rot entra d6'>PARA COMPARAR · A MAIOR QUEDA</div>"
+            & "<div class='num v sobe d7'>" & FORMAT ( _pv * 100, "+0.0;−0.0;0.0" ) & "<small> p.p.</small></div>"
+            & "<div class='txt entra d8'>" & _grupoP & ". " & _txtPos & "</div>",
+        "<div class='rot entra d6'>" & IF ( _mv > 0, "ONDE A MARGEM DE LULA MAIS SUBIU", "A MENOR QUEDA" ) & "</div>"
+            & "<div class='num v sobe d7'>" & FORMAT ( _mv * 100, "+0.0;−0.0;0.0" ) & "<small> p.p.</small></div>"
+            & "<div class='txt entra d8'>" & _txtMenor & "</div>"
+    )
+VAR _clsAmostra =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _av ), "",
+        _av >= 0, " c0",
+        _av > -0.05, " c1",
+        _av > -0.08, " c2",
+        _av > -0.11, " c3",
+        _av > -0.14, " c4",
+        " c5"
+    )
+VAR _qual =
+    IF ( _sel = 1, "a célula que você clicou; clique nela de novo para voltar",
+        "a célula com contorno vermelho, na matriz" )
 -- 4 · Marcação
 RETURN
     "<div class='tela t13r'>"
-        & "<div class='g num lula sobe'>" & FORMAT ( _pv * 100, "+0.0;−0.0;0.0" ) & "<small> p.p.</small></div>"
+        & "<div class='g num lula sobe'>" & FORMAT ( _av * 100, "+0.0;−0.0;0.0" ) & "<small> p.p.</small></div>"
         & "<div class='man m1 sobe d2'>" & _man & "</div>"
         & "<div class='txt ex entra d4'>" & _txtEx & "</div>"
-        & "<div class='menor'>"
-            & "<div class='rot entra d6'>" & IF ( _mv > 0, "ONDE A MARGEM DE LULA MAIS SUBIU", "A MENOR QUEDA" ) & "</div>"
-            & "<div class='num v sobe d7'>" & FORMAT ( _mv * 100, "+0.0;−0.0;0.0" ) & "<small> p.p.</small></div>"
-            & "<div class='txt entra d8'>" & _txtMenor & "</div>"
-        & "</div>"
+        & "<div class='menor'>" & _blocoMenor & "</div>"
         & "<div class='ler'>"
             & "<div class='rot entra d9'>COMO LER UMA CÉLULA</div>"
-            & "<div class='amostra entra d10'><span class='num'>" & IF ( ISBLANK ( _av ), "—", FORMAT ( _av * 100, "+0.0;−0.0;0.0" ) )
+            & "<div class='amostra" & _clsAmostra & " entra d10'><span class='num'>" & IF ( ISBLANK ( _av ), "—", FORMAT ( _av * 100, "+0.0;−0.0;0.0" ) )
                 & "</span><span class='n'>" & FORMAT ( _an, "#,0" ) & IF ( _an = 1, " cidade", " cidades" ) & "</span></div>"
-            & "<div class='nota qual entra d10'>a célula com contorno vermelho, na matriz</div>"
+            & "<div class='nota qual entra d10'>" & _qual & "</div>"
             & "<div class='mao a1 entra d11'>quanto a margem caiu</div>"
             & "<div class='mao a2 entra d12'>quantas cidades</div>"
             & "<svg class='setas' width='200' height='110' viewBox='0 0 200 110'>"

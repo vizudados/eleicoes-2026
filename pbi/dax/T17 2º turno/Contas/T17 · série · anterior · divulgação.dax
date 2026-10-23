@@ -1,0 +1,11 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: dd/MM
+@descricao: Dia de divulgação da pesquisa anterior do mesmo instituto (T17 · série · Id anterior): a ponta de onde sai o traço da série; vazio na primeira dele.
+*/
+VAR _ant = [T17 · série · Id anterior]
+RETURN
+    IF (
+        NOT ISBLANK ( _ant ),
+        CALCULATE ( [T17 · pesquisa · divulgação], REMOVEFILTERS ( Pesquisa ), Pesquisa[Id] = _ant )
+    )

@@ -1,0 +1,16 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê de uma pesquisa da lista.
+*/
+-- 1 · Leituras
+VAR _inst = [T22 · pesquisa em uso]
+VAR _data = [T22 · pesquisa · data]
+VAR _ganhaL = [T22 · cenário · votos que Lula ganha]
+VAR _ganhaF = [T22 · cenário · votos que Flávio ganha]
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        _inst & ", " & FORMAT ( _data, "dd/MM" ) & ": dos votos dos outros candidatos, Lula ganha "
+            & FORMAT ( _ganhaL / 1000000, "0.00" ) & " mi e Flávio " & FORMAT ( _ganhaF / 1000000, "0.00" ) & " mi."
+    )

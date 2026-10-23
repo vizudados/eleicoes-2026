@@ -1,0 +1,66 @@
+/// As sete faixas de idade das telas 06 e 07, na ordem da tela, com o rótulo curto e se o voto é obrigatório ou facultativo (16 e 17 anos e 70 ou mais). Grão do bloco de idade da tela 07; o clique numa faixa filtra o mapa e os anos.
+table 'T25 Faixa'
+	lineageTag: 18f1ee18-0d93-56de-bd1c-0c997a13008d
+
+	/// Faixa de idade (ex.: 18 a 24 anos).
+	column Faixa
+		dataType: string
+		lineageTag: 5fbf304f-3cb7-564b-a61b-70ef7b21458d
+		summarizeBy: none
+		sourceColumn: Faixa
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem da faixa, da mais nova para a mais velha.
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 150be010-883a-53e9-9b54-9a1add9173e7
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rótulo curto (ex.: 18–24).
+	column Curta
+		dataType: string
+		isHidden
+		lineageTag: d79230ae-92bc-514d-bc35-86115d8ef8d5
+		summarizeBy: none
+		sourceColumn: Curta
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// obrigatório ou facultativo (16 e 17 anos e 70 ou mais).
+	column Voto
+		dataType: string
+		isHidden
+		lineageTag: b9fe07c7-3328-58f7-b6df-b5a303b1fb15
+		summarizeBy: none
+		sourceColumn: Voto
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T25 Faixa' = m
+		mode: import
+		source =
+				let
+				    Faixas = #table(
+				        type table [Faixa = text, Ordem = Int64.Type, Curta = text, Voto = text],
+				        {
+				        {"16 e 17 anos", 1, "16–17", "facultativo"},
+				        {"18 a 24 anos", 2, "18–24", "obrigatório"},
+				        {"25 a 34 anos", 3, "25–34", "obrigatório"},
+				        {"35 a 44 anos", 4, "35–44", "obrigatório"},
+				        {"45 a 59 anos", 5, "45–59", "obrigatório"},
+				        {"60 a 69 anos", 6, "60–69", "obrigatório"},
+				        {"70 anos ou mais", 7, "70+", "facultativo"}
+				        }
+				    )
+				in
+				    Faixas
+
+	annotation PBI_ResultType = Table

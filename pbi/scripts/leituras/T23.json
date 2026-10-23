@@ -1,0 +1,17 @@
+{
+ "titulo": "O que os números dizem, afinal?",
+ "blocos": [
+  [
+   "Como ler",
+   "Cada linha é um achado de uma tela; clique nela para voltar à tela de onde ele veio. O quadro da direita leva à apuração do 2º turno, que passa ao vivo no domingo, 25/10, a partir das 17h."
+  ],
+  [
+   "De onde vêm os números",
+   "Os mesmos das telas: TSE, IBGE, Portal da Transparência, Atlas do Desenvolvimento Humano, pesquisas registradas no TSE e as fontes digitais citadas em cada uma."
+  ],
+  [
+   "Para lembrar",
+   "Os dados e o código do painel estão abertos em github.com/vizudados/eleicoes-2026."
+  ]
+ ]
+}

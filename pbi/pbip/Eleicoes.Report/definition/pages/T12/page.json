@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T12",
-  "displayName": "12 Estados",
+  "displayName": "13 Estados",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -54,5 +54,17 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T12_Corrida_Html",
+      "target": "T12_Exterior_Alvo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T12_Corrida_Html",
+      "target": "T12_Regioes_Html",
+      "type": "NoFilter"
+    }
+  ]
 }

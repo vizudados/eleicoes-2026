@@ -1,0 +1,9 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0%
+@descricao: Parcela dos faltosos do lugar, no ano da linha, que tinha 70 anos ou mais (0–1), sem a faixa marcada.
+*/
+DIVIDE (
+    CALCULATE ( [T25 · abstenções por idade (cru)], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Ordem] = 7 ),
+    CALCULATE ( [T25 · abstenções por idade (cru)], REMOVEFILTERS ( 'T25 Faixa' ) )
+)

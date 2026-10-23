@@ -1,0 +1,7 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: texto
+@descricao: Nome (UF) da cidade do contexto.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+SELECTEDVALUE ( 'Município'[Rótulo] )

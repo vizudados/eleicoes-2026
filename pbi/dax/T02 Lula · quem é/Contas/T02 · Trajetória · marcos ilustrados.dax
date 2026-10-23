@@ -1,0 +1,7 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: 0
+@descricao: Quantos marcos de Lula não têm foto de licença aberta e mostram a cena da época recriada em ilustração.
+@oraculo: Lula 2 · Flávio 0 (desenhos.csv, tipo = ilustração)
+*/
+CALCULATE ( COUNTROWS ( 'Trajetória' ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Lula", 'Trajetória'[Foto] IN { "lula-1975-sindicato", "lula-1980-fundacao-pt" } )

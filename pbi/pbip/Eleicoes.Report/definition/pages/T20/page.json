@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T20",
-  "displayName": "21 Escola",
+  "displayName": "22 Escola",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -78,6 +78,11 @@
     },
     {
       "source": "T20_Mapa_Html",
+      "target": "T20_Filtro_Pilula",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Mapa_Html",
       "target": "T20_Quedas_Html",
       "type": "NoFilter"
     },
@@ -89,6 +94,11 @@
     {
       "source": "T20_Quedas_Html",
       "target": "T20_Filtro_Escola",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Quedas_Html",
+      "target": "T20_Filtro_Pilula",
       "type": "NoFilter"
     },
     {

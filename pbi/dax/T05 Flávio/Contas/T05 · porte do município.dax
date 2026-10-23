@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: texto
+@descricao: Faixa de população do município marcado.
+*/
+SELECTEDVALUE ( 'Município'[Porte] )

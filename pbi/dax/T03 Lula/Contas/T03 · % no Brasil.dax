@@ -1,0 +1,7 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0%
+@descricao: Parcela de Lula nos válidos de 2026 no Brasil, com o exterior (sem recorte).
+@oraculo: paginas[3].pct
+*/
+CALCULATE ( [T03 · %], REMOVEFILTERS ( 'UF' ) )

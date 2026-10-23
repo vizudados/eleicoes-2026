@@ -1,8 +1,0 @@
-/*
-@pasta: T15 Minha cidade\Contas
-@formato: 0.0%
-@descricao: Votos de Flávio sobre os válidos em 2026 no município.
-@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › serie 2026 › adv 50,3%
-@gerado: pbi/scripts/desenho_t15.py
-*/
-DIVIDE ( [T15 · votos do PL 2026], [T15 · válidos 2026] )

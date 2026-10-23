@@ -1,0 +1,97 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Dossiê do ponto da virada (ficha com clipe): de onde vieram os votos do candidato naquele ano — por região no Brasil, por tamanho de cidade numa UF —, com o % dele em cada grupo em 2022 e em 2026 e a nota à mão com a maior perda ou ganho (2026) ou a base mais forte (2022). Só lê contas.
+*/
+-- 1 · Leituras
+VAR _a = [T01 · ponto · ano]
+VAR _n = [T01 · ponto · número]
+VAR _nome = [T01 · ponto · candidato]
+VAR _par = [T01 · ponto · partido]
+VAR _comUF = [T01 · com UF]
+VAR _rec = [T01 · recorte]
+VAR _regs =
+    TOPN (
+        IF ( _comUF = 0, 10, 0 ),
+        ADDCOLUMNS (
+            VALUES ( 'UF'[Região] ),
+            "@v", [T01 · ponto · votos no grupo],
+            "@p", [T01 · ponto · parte do grupo],
+            "@p22", [T01 · ponto · % no grupo em 2022],
+            "@p26", [T01 · ponto · % no grupo em 2026],
+            "@d", [T01 · ponto · variação no grupo]
+        ),
+        [@v], DESC
+    )
+VAR _portes =
+    TOPN (
+        IF ( _comUF = 1, 10, 0 ),
+        ADDCOLUMNS (
+            VALUES ( 'Município'[Porte] ),
+            "@v", [T01 · ponto · votos no grupo],
+            "@p", [T01 · ponto · parte do grupo],
+            "@p22", [T01 · ponto · % no grupo em 2022],
+            "@p26", [T01 · ponto · % no grupo em 2026],
+            "@d", [T01 · ponto · variação no grupo],
+            "@o", [T01 · ordem do porte]
+        ),
+        [@v], DESC
+    )
+VAR _lista =
+    UNION (
+        SELECTCOLUMNS (
+            FILTER ( _regs, [@v] > 0 ), /* lista */
+            "@g", 'UF'[Região], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", - [@v]
+        ),
+        SELECTCOLUMNS (
+            FILTER ( _portes, [@v] > 0 && LEN ( 'Município'[Porte] ) > 0 ), /* lista */
+            "@g", 'Município'[Porte], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", [@o]
+        )
+    )
+VAR _pmax = MAXX ( _lista, [@p] ) /* lista */
+VAR _topD = TOPN ( 1, _lista, ABS ( [@d] ), DESC, [@g], ASC ) /* lista */
+VAR _topP = TOPN ( 1, _lista, IF ( _a = 2022, [@p22], [@p26] ), DESC, [@g], ASC ) /* lista */
+VAR _gD = MAXX ( _topD, [@g] ) /* lista */
+VAR _dD = MAXX ( _topD, [@d] ) /* lista */
+VAR _gP = MAXX ( _topP, [@g] ) /* lista */
+-- 2 · Textos
+VAR _cls = IF ( _n = 13, "lula", "flavio" )
+VAR _ic = IF ( _n = 13, "barras-vermelho", "barras-azul" )
+VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _a
+VAR _sub = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _par, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _n & " · " & IF ( _comUF = 1, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rec, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ), "Brasil, sem o exterior" )
+VAR _rotG = IF ( _comUF = 1, "cidades de", "região" )
+VAR _nota =
+    IF (
+        _a = 2026,
+        IF ( _dD < 0, "maior perda: ", "maior ganho: " ) & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _gD, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ", " & IF ( _dD < 0, "−", "+" ) & SWITCH ( TRUE (), ABS ( ABS ( _dD ) ) >= 1000000, FORMAT ( ABS ( _dD ) / 1000000, "0.00" ) & " mi", ABS ( ABS ( _dD ) ) >= 1000, FORMAT ( ABS ( _dD ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( _dD ), "#,0" ) ),
+        "base mais forte: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _gP, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+    )
+VAR _on22 = IF ( _a = 2022, " on", "" )
+VAR _on26 = IF ( _a = 2026, " on", "" )
+-- 3 · Geometria (barra do peso em até 84 px; linhas de 30 px)
+VAR _linhas =
+    CONCATENATEX (
+        _lista,
+        VAR _w = FORMAT ( DIVIDE ( [@p], _pmax ) * 84, "0.0##", "en-US" ) -- geometria
+        RETURN
+            "<div class='ln'><span class='g'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@g], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span><span class='br'><i class='barra-x "
+                & _cls & "-bg' style='width:" & _w & "px'></i><b>" & FORMAT ( [@p], "0%" ) & "</b></span>"
+                & "<span class='pc" & _on22 & "'>" & FORMAT ( [@p22], "0.0%" ) & "</span>"
+                & "<span class='pc" & _on26 & "'>" & FORMAT ( [@p26], "0.0%" ) & "</span></div>",
+        "",
+        [@o], ASC
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _nome ) && NOT ISEMPTY ( _lista ),
+        "<div class='tp'><div class='ficha'>"
+            & "<img class='ico entra' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/" & _ic & ".png'/>"
+            & "<div class='cab sobe'><div class='nm " & _cls & "'>" & _txtNome & "</div>"
+            & "<div class='sub'>" & _sub & "</div></div>"
+            & "<div class='hd sobe d1'><span class='g'>" & _rotG & "</span><span class='br'>peso nos votos</span>"
+            & "<span class='pc" & _on22 & "'>% 2022</span><span class='pc" & _on26 & "'>% 2026</span></div>"
+            & "<div class='lista sobe d2'>" & _linhas & "</div>"
+            & "<div class='mao " & _cls & "-esc entra d6'>" & _nota & "</div>"
+        & "</div></div>"
+    )

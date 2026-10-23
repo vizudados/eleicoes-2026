@@ -1,0 +1,242 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "T14_Casca_FiltroPilula",
+  "position": {
+    "x": 1282,
+    "y": 60,
+    "z": 4980,
+    "height": 48,
+    "width": 424,
+    "tabOrder": 4
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Casca · filtro · pílula · HTML"
+                }
+              },
+              "queryRef": "_Medidas.Casca · filtro · pílula · HTML",
+              "nativeQueryRef": "Casca · filtro · pílula · HTML"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.pl{display:flex;align-items:center;gap:12px;padding:0 14px 0 14px;background:#E5DBC8;border:1px solid #CBBDA2;border-radius:6px;color:#1C1915;font-size:16px;box-shadow:0 1px 2px rgba(28,25,21,.06)}.pl .fu{position:relative;display:inline-flex;color:#48423A}.pl .fu i{display:none;position:absolute;right:-3px;top:-2px;width:7px;height:7px;border-radius:4px;background:#B8322A}.pl.ativo .fu i{display:block}.pl b{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pl .sv{color:#48423A}</style>{{content}}'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'T14_Casca_FiltroPilula'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Casca · filtro · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

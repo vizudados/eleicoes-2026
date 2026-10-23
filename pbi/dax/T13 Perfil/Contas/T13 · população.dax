@@ -1,0 +1,7 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: #,0
+@descricao: População das cidades do contexto (Censo 2022).
+@gerado: pbi/scripts/desenho_t13.py
+*/
+SUM ( 'Município'[População] )

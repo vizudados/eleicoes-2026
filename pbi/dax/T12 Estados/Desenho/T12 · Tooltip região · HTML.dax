@@ -1,0 +1,70 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Dossiê da região no tooltip das linhas de região: as fatias de Lula e do adversário em 2022 e 2026 na região (somando as UFs), em quantas das UFs a margem caiu, os municípios que viraram e as três maiores delas. Só lê contas.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _r = [T12 · região da unidade]
+VAR _l22 = [T12 · Lula % 2022]
+VAR _a22 = [T12 · PL % 2022]
+VAR _l26 = [T12 · Lula % 2026]
+VAR _a26 = [T12 · PL % 2026]
+VAR _m22 = [T12 · margem 2022]
+VAR _m26 = [T12 · margem 2026]
+VAR _nUf = [T12 · estados da região]
+VAR _nCaiu = [T12 · unidades do lugar onde a margem caiu]
+VAR _vir = [T12 · municípios que viraram]
+VAR _mun = [T12 · municípios]
+VAR _lista = [T12 · maiores cidades que viraram]
+-- 2 · Textos
+VAR _selo = IF ( _m22 > 0 && _m26 < 0, "MUDOU DE LADO", IF ( _m26 > 0, "LULA À FRENTE", "FLÁVIO À FRENTE" ) )
+VAR _clsSelo = IF ( _m26 < 0, "selo az", "selo vm" ) & IF ( ( _m22 > 0 ) = ( _m26 > 0 ), " leve", "" )
+VAR _txtUf =
+    "a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" ) & IF ( _nUf = 1, " estado", " estados" )
+VAR _nTop = MIN ( 3, _vir )
+VAR _maiores =
+    IF (
+        _nTop > 0,
+        "<div class='ex'>" & IF ( _nTop = 1, "A maior: ", "As maiores: " )
+            & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lista, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ) & ".</div>"
+    )
+VAR _mao =
+    SWITCH (
+        TRUE (),
+        _m22 > 0 && _m26 < 0, "a região virou",
+        _nCaiu = _nUf, "caiu em todos",
+        "nem todos caíram"
+    )
+-- 3 · Geometria (barras: 100% = 200 px)
+VAR _bl22 = FORMAT ( 200 * _l22, "0.0", "en-US" )
+VAR _ba22 = FORMAT ( 200 * _a22, "0.0", "en-US" )
+VAR _bl26 = FORMAT ( 200 * _l26, "0.0", "en-US" )
+VAR _ba26 = FORMAT ( 200 * _a26, "0.0", "en-US" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela tt12'><div class='fita'></div>"
+        & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
+        & "<div class='nm sobe'>" & _r & "</div>"
+        & "<div class='nota sobe d1'>" & _txtUf & "</div>"
+        & "<div class='duelo entra d2'>"
+            & "<div class='ln'><span class='a'>2022</span><span class='tr'><i class='bl barra-x' style='width:" & _bl22
+                & "px'></i><i class='ba barra-x-dir' style='width:" & _ba22 & "px'></i></span><span class='p'><b class='lula'>"
+                & FORMAT ( _l22, "0.0%" ) & "</b> × <b class='flavio'>" & FORMAT ( _a22, "0.0%" ) & "</b></span></div>"
+            & "<div class='ln'><span class='a'>2026</span><span class='tr'><i class='bl barra-x' style='width:" & _bl26
+                & "px'></i><i class='ba barra-x-dir' style='width:" & _ba26 & "px'></i></span><span class='p'><b class='lula'>"
+                & FORMAT ( _l26, "0.0%" ) & "</b> × <b class='flavio'>" & FORMAT ( _a26, "0.0%" ) & "</b></span></div>"
+            & "<div class='nota'>Lula (vermelho) × Jair, em 2022, e Flávio, em 2026 (azul)</div>"
+        & "</div>"
+        & "<div class='mun'>"
+            & SWITCH (
+                TRUE (),
+                _mun = 1 && _vir = 0, "O único município não trocou de lado",
+                _mun = 1, "O único município trocou Lula por Flávio",
+                _vir = 0, "Nenhum dos <b class='num'>" & FORMAT ( _mun, "#,0" ) & "</b> municípios trocou de lado",
+                "<b class='num'>" & FORMAT ( _vir, "#,0" ) & "</b> dos " & FORMAT ( _mun, "#,0" )
+                    & IF ( _vir = 1, " municípios trocou Lula por Flávio", " municípios trocaram Lula por Flávio" )
+            )
+        & "</div>" & IF ( _mun > 1, _maiores, "" )
+        & "<div class='mao entra d6'>" & _mao & "</div>"
+    & "</div>"

@@ -9,8 +9,10 @@ VAR _caiu = [T12 · unidades onde a margem caiu]
 VAR _tot = [T12 · unidades]
 VAR _mudaram = [T12 · mudaram para o adversário]
 VAR _subiu = [T12 · onde a margem subiu]
+VAR _lugar = [T12 · lugar clicado]
 -- 2 · Textos
 RETURN
     "A margem de Lula caiu em " & FORMAT ( _caiu, "0" ) & " de " & FORMAT ( _tot, "0" ) & " unidades. "
         & IF ( NOT ISBLANK ( _mudaram ), _mudaram & " passaram de Lula para Flávio. ", "" )
         & IF ( NOT ISBLANK ( _subiu ) && _subiu <> "", "Subiu em: " & _subiu & ".", "" )
+        & IF ( ISBLANK ( _lugar ), "", " Lugar escolhido: " & _lugar & "." )

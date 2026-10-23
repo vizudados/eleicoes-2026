@@ -12,5 +12,6 @@ CALCULATE (
         ", ",
         'UF'[Nome], ASC
     ),
+    REMOVEFILTERS ( 'UF' ),
     'UF'[Tipo] = "UF"
 )

@@ -1,0 +1,78 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Dossiê de uma pesquisa da lista (página de tooltip ttT22Pesquisa, grão Transferência[Instituto]): para onde vão os eleitores de Cury, Renan, Caiado e dos demais segundo a última pesquisa do instituto depois do 1º turno (barra Lula | Flávio | ninguém, com os votos de cada grupo no 1º turno), quanto cada um ganha no total e como a pesquisa publicou os grupos.
+*/
+-- 1 · Leituras
+VAR _inst0 = [T22 · pesquisa em uso]
+VAR _data = [T22 · pesquisa · data]
+VAR _outros = [T22 · votos dos outros]
+VAR _vCu = [T22 · votos de Cury]
+VAR _lCu = [T22 · pesquisa · Lula entre os eleitores de Cury]
+VAR _fCu = [T22 · pesquisa · Flávio entre os eleitores de Cury]
+VAR _vRe = [T22 · votos de Renan]
+VAR _lRe = [T22 · pesquisa · Lula entre os eleitores de Renan]
+VAR _fRe = [T22 · pesquisa · Flávio entre os eleitores de Renan]
+VAR _vCa = [T22 · votos de Caiado]
+VAR _lCa = [T22 · pesquisa · Lula entre os eleitores de Caiado]
+VAR _fCa = [T22 · pesquisa · Flávio entre os eleitores de Caiado]
+VAR _vde = [T22 · votos dos demais]
+VAR _lde = [T22 · pesquisa · Lula entre os eleitores de demais]
+VAR _fde = [T22 · pesquisa · Flávio entre os eleitores de demais]
+VAR _ganhaL = [T22 · cenário · votos que Lula ganha]
+VAR _ganhaF = [T22 · cenário · votos que Flávio ganha]
+VAR _ninguem = [T22 · pesquisa · votos para ninguém]
+VAR _junta = [T22 · pesquisa · terceira via junta]
+VAR _media = [T22 · pesquisa · demais pela média]
+-- 2 · Textos
+VAR _inst = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst0, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _txtSoma =
+    "No total, Lula ganha <b class='lula'>" & FORMAT ( _ganhaL / 1000000, "0.00" ) & " mi" & "</b> e Flávio, <b class='flavio'>" & FORMAT ( _ganhaF / 1000000, "0.00" ) & " mi"
+        & "</b>; " & FORMAT ( _ninguem / 1000000, "0.00" ) & " mi" & " não vão para nenhum dos dois."
+VAR _nota =
+    SWITCH (
+        TRUE (),
+        _junta = "Sim", "Esta pesquisa publicou os eleitores da terceira via num grupo só: todos os grupos levam o mesmo número.",
+        _media = "Sim", "Sem o grupo dos demais candidatos nesta pesquisa, a conta usa a média de Cury, Renan e Caiado pelo peso dos votos.",
+        "Cada grupo tem poucos entrevistados (em geral menos de 100): é sinal, não medida."
+    )
+VAR _mao =
+    SWITCH ( TRUE (), _ganhaL > _ganhaF, "pendem para Lula", _ganhaF > _ganhaL, "pendem para Flávio", "meio a meio" )
+VAR _gCu =
+    "<div class='gr sobe d3'><span class='g'>Cury<small>" & FORMAT ( _vCu / 1000000, "0.00" ) & " mi" & "</small></span>"
+        & "<span class='b'><i class='l barra-x' style='width:" & FORMAT ( _lCu * 200, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='f barra-x' style='width:" & FORMAT ( _fCu * 200, "0.0##", "en-US" ) & "px'></i></span>"
+        & "<span class='v'><b class='lula'>" & FORMAT ( _lCu, "0%" ) & "</b> · <b class='flavio'>"
+        & FORMAT ( _fCu, "0%" ) & "</b></span></div>"
+VAR _gRe =
+    "<div class='gr sobe d4'><span class='g'>Renan<small>" & FORMAT ( _vRe / 1000000, "0.00" ) & " mi" & "</small></span>"
+        & "<span class='b'><i class='l barra-x' style='width:" & FORMAT ( _lRe * 200, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='f barra-x' style='width:" & FORMAT ( _fRe * 200, "0.0##", "en-US" ) & "px'></i></span>"
+        & "<span class='v'><b class='lula'>" & FORMAT ( _lRe, "0%" ) & "</b> · <b class='flavio'>"
+        & FORMAT ( _fRe, "0%" ) & "</b></span></div>"
+VAR _gCa =
+    "<div class='gr sobe d5'><span class='g'>Caiado<small>" & FORMAT ( _vCa / 1000000, "0.00" ) & " mi" & "</small></span>"
+        & "<span class='b'><i class='l barra-x' style='width:" & FORMAT ( _lCa * 200, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='f barra-x' style='width:" & FORMAT ( _fCa * 200, "0.0##", "en-US" ) & "px'></i></span>"
+        & "<span class='v'><b class='lula'>" & FORMAT ( _lCa, "0%" ) & "</b> · <b class='flavio'>"
+        & FORMAT ( _fCa, "0%" ) & "</b></span></div>"
+VAR _gde =
+    "<div class='gr sobe d6'><span class='g'>Demais<small>" & FORMAT ( _vde / 1000000, "0.00" ) & " mi" & "</small></span>"
+        & "<span class='b'><i class='l barra-x' style='width:" & FORMAT ( _lde * 200, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='f barra-x' style='width:" & FORMAT ( _fde * 200, "0.0##", "en-US" ) & "px'></i></span>"
+        & "<span class='v'><b class='lula'>" & FORMAT ( _lde, "0%" ) & "</b> · <b class='flavio'>"
+        & FORMAT ( _fde, "0%" ) & "</b></span></div>"
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        "<div class='tela tt22p'>"
+            & "<div class='nm sobe'>" & _inst & " · " & FORMAT ( _data, "dd/MM" ) & "</div>"
+            & "<div class='rot sobe d1'>Para onde vão os " & FORMAT ( _outros / 1000000, "0.00" ) & " mi" & " de votos dos outros</div>"
+            & "<div class='leg sobe d2'><i class='l'></i>Lula <i class='f'></i>Flávio <i class='n'></i>nenhum dos dois</div>"
+            & _gCu & _gRe & _gCa & _gde
+            & "<div class='pe sobe d8'>" & _txtSoma & "</div>"
+            & "<div class='nota sobe d9'>" & _nota & "</div>"
+            & "<div class='mao" & IF ( _ganhaF > _ganhaL, " az", "" ) & " entra d10'>os outros " & _mao & "</div>"
+        & "</div>"
+    )

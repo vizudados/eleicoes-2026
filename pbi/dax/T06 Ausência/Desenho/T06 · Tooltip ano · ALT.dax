@@ -1,0 +1,12 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê do ano.
+*/
+LEFT (
+    "1º turno de " & [T06 · ano] & " (" & [T06 · disputa do ano] & "), " & [T06 · recorte] & ": faltaram "
+        & SWITCH ( TRUE (), ABS ( [T06 · abstenções (ano)] ) >= 1000000, FORMAT ( [T06 · abstenções (ano)] / 1000000, "0.0" ) & " mi", ABS ( [T06 · abstenções (ano)] ) >= 1000, FORMAT ( [T06 · abstenções (ano)] / 1000, "0.0" ) & " mil", FORMAT ( [T06 · abstenções (ano)], "#,0" ) ) & ", " & FORMAT ( [T06 · vezes a diferença (ano)], "0.0" )
+        & " vezes a diferença entre os dois primeiros; anularam " & SWITCH ( TRUE (), ABS ( [T06 · nulos (ano)] ) >= 1000000, FORMAT ( [T06 · nulos (ano)] / 1000000, "0.0" ) & " mi", ABS ( [T06 · nulos (ano)] ) >= 1000, FORMAT ( [T06 · nulos (ano)] / 1000, "0.0" ) & " mil", FORMAT ( [T06 · nulos (ano)], "#,0" ) )
+        & " e votaram em branco " & SWITCH ( TRUE (), ABS ( [T06 · brancos (ano)] ) >= 1000000, FORMAT ( [T06 · brancos (ano)] / 1000000, "0.0" ) & " mi", ABS ( [T06 · brancos (ano)] ) >= 1000, FORMAT ( [T06 · brancos (ano)] / 1000, "0.0" ) & " mil", FORMAT ( [T06 · brancos (ano)], "#,0" ) ) & ".",
+    250
+)

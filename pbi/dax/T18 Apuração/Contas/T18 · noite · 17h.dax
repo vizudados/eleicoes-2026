@@ -1,0 +1,8 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: dd/MM/yyyy HH:mm
+@descricao: As 17h do dia da primeira atualização do TSE no histórico: o zero do eixo da curva da noite (uma atualização depois da meia-noite continua à direita, no lugar de voltar para as 17h); vazio antes da primeira divulgação.
+*/
+VAR _min = CALCULATE ( MIN ( 'Apuração histórico'[AtualizadoTSE] ), REMOVEFILTERS ( 'Apuração histórico' ) )
+RETURN
+    IF ( NOT ISBLANK ( _min ), INT ( _min ) + TIME ( 17, 0, 0 ) )

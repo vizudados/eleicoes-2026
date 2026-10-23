@@ -1,0 +1,29 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Título do bloco de anos: o lugar (e a faixa), quanto a abstenção mudou desde o primeiro ano com dado e a legenda da linha de referência. Ignora o clique no próprio bloco.
+*/
+-- 1 · Leituras
+VAR _lugar = [T25 · lugar]
+VAR _faixa = [T25 · faixa]
+VAR _comFaixa = [T25 · com faixa]
+VAR _a0 = [T25 · primeiro ano da série]
+VAR _dpp = [T25 · variação da série em p.p.]
+VAR _nomeRef = [T25 · referência da série (nome)]
+-- 2 · Textos
+VAR _rot = "A ausência ano a ano · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & IF ( _comFaixa = 1, " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _faixa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) )
+VAR _man =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _dpp ), "Sem série neste cruzamento",
+        ABS ( _dpp ) < 0.05, "Igual desde " & _a0,
+        IF ( _dpp > 0, "Subiu ", "Caiu " ) & FORMAT ( ABS ( _dpp ), "0.0" )
+            & IF ( ABS ( _dpp ) < 2, " ponto", " pontos" ) & " desde " & _a0
+    )
+VAR _lado =
+    IF ( _nomeRef <> "", "<span class='lg'><i></i>" & _nomeRef & "</span>" )
+        & IF ( _comFaixa = 1, "<span class='so'>idade só desde 2014</span>" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela at'><div class='l1'><div class='rot sobe'>" & _rot & "</div>"
+        & "<div class='lado entra d3'>" & _lado & "</div></div><div class='man sobe d1'>" & _man & "</div></div>"

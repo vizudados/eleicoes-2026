@@ -7,5 +7,6 @@
 */
 CALCULATE (
     COUNTROWS ( FILTER ( VALUES ( 'UF'[UF] ), [T12 · variação] > 0 ) ),
+    REMOVEFILTERS ( 'UF' ),
     'UF'[Tipo] = "UF"
 ) + 0

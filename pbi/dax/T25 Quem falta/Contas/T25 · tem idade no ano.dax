@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: 1 quando o ano do recorte tem perfil por idade (o TSE publica desde 2014).
+*/
+IF ( [T25 · ano] >= 2014, 1, 0 )

@@ -1,0 +1,8 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: +0.00%;-0.00%;0.00%
+@descricao: Quanto o % de Flávio sobre os válidos mudou da atualização anterior para a do contexto (em fração: 0,003 = 0,3 ponto); vazio na primeira da noite.
+*/
+VAR _antes = DIVIDE ( [T18 · momento · Flávio na anterior], [T18 · momento · válidos na anterior] )
+RETURN
+    IF ( NOT ISBLANK ( [T18 · momento · Flávio na anterior] ), [T18 · momento · Flávio %] - _antes )

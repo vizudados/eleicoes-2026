@@ -1,0 +1,11 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: #,0
+@descricao: Na pesquisa em uso, os votos dos outros candidatos que não vão para Lula nem para Flávio (branco, nulo, não vota ou não sabe); vazio sem pesquisa em uso.
+*/
+VAR _data = [T22 · pesquisa · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        [T22 · votos dos outros] - [T22 · cenário · votos que Lula ganha] - [T22 · cenário · votos que Flávio ganha]
+    )

@@ -1,0 +1,17 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Início da janela do saldo de sentimento da Datrix (% positivas − % negativas) que contém a data do ponto do índice; a mais curta quando há duas (a do dia do debate vence a da semana). Vazio fora das janelas medidas.
+*/
+VAR _d = [T09 · IPD dia · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        CALCULATE (
+            MAX ( Monitoramento[Início] ),
+            REMOVEFILTERS ( Monitoramento ),
+            Monitoramento[Métrica] = "saldo de sentimento (% positivas - % negativas)",
+            Monitoramento[Início] <= _d,
+            Monitoramento[Fim] >= _d
+        )
+    )

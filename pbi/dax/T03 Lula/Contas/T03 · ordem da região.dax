@@ -1,0 +1,14 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0
+@descricao: Colocação da região da linha pelos votos de Lula (1 = a que mais deu votos), entre as regiões do recorte.
+@oraculo: paginas[3].regioes[] (ordem)
+*/
+VAR _v = [T03 · votos (municípios)]
+VAR _maiores =
+    CALCULATETABLE (
+        FILTER ( VALUES ( 'UF'[Região] ), [T03 · votos (municípios)] > _v ),
+        REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] )
+    )
+RETURN
+    IF ( _v > 0, 1 + COUNTROWS ( _maiores ) )

@@ -1,7 +1,7 @@
 /*
 @pasta: T12 Estados\Desenho
 @formato: texto
-@descricao: Coluna da resposta: em quantas unidades a margem de Lula caiu, quem mudou de lado, a exceção, o que é margem (com o Brasil 2022 e 2026) e as cinco regiões. Só lê contas 'T12 · …'.
+@descricao: Coluna da resposta: em quantas unidades a margem de Lula caiu, quem mudou de lado, a exceção e o que é margem (com o Brasil 2022 e 2026 em barras; com uma unidade ou região clicada, as barras e a frase passam a ser do lugar clicado). As regiões são uma camada própria ('T12 · Regiões · HTML'). Só lê contas 'T12 · …'.
 @gerado: pbi/scripts/desenho_t12.py
 */
 -- 1 · Leituras
@@ -13,20 +13,14 @@ VAR _alta = [T12 · alta onde a margem subiu]
 VAR _mudaram = [T12 · mudaram para o adversário]
 VAR _nMud = [T12 · quantas mudaram para o adversário]
 VAR _nMudL = [T12 · quantas mudaram para Lula]
-VAR _l22 = [T12 · Lula % do Brasil 2022]
-VAR _a22 = [T12 · PL % do Brasil 2022]
-VAR _l26 = [T12 · Lula % do Brasil 2026]
-VAR _a26 = [T12 · PL % do Brasil 2026]
-VAR _m22 = [T12 · margem do Brasil 2022]
-VAR _m26 = [T12 · margem do Brasil 2026]
-VAR _dBr = [T12 · variação do Brasil]
-VAR _reg =
-    ADDCOLUMNS (
-        DATATABLE ( "Região", STRING, { { "Norte" }, { "Nordeste" }, { "Centro-Oeste" }, { "Sudeste" }, { "Sul" } } ),
-        "@m22", VAR _r = [Região] RETURN CALCULATE ( [T12 · margem 2022], 'UF'[Região] = _r ),
-        "@m26", VAR _r = [Região] RETURN CALCULATE ( [T12 · margem 2026], 'UF'[Região] = _r ),
-        "@d", VAR _r = [Região] RETURN CALCULATE ( [T12 · variação], 'UF'[Região] = _r )
-    )
+VAR _lugar = [T12 · lugar clicado]
+VAR _l22 = IF ( ISBLANK ( _lugar ), [T12 · Lula % do Brasil 2022], [T12 · Lula % 2022] )
+VAR _a22 = IF ( ISBLANK ( _lugar ), [T12 · PL % do Brasil 2022], [T12 · PL % 2022] )
+VAR _l26 = IF ( ISBLANK ( _lugar ), [T12 · Lula % do Brasil 2026], [T12 · Lula % 2026] )
+VAR _a26 = IF ( ISBLANK ( _lugar ), [T12 · PL % do Brasil 2026], [T12 · PL % 2026] )
+VAR _m22 = IF ( ISBLANK ( _lugar ), [T12 · margem do Brasil 2022], [T12 · margem 2022] )
+VAR _m26 = IF ( ISBLANK ( _lugar ), [T12 · margem do Brasil 2026], [T12 · margem 2026] )
+VAR _dBr = IF ( ISBLANK ( _lugar ), [T12 · variação do Brasil], [T12 · variação] )
 -- 2 · Textos
 VAR _txtMud =
     SWITCH (
@@ -45,40 +39,19 @@ VAR _txtSubiu =
         FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula: " & _subiu & "."
     )
 VAR _txtUnid = IF ( _caiu = 1, "unidade em que", "unidades em que" )
--- 3 · Geometria (barras do Brasil: 100% = 300 px; mini eixos das regiões de −50 a +50 p.p. em 250 px)
+VAR _txtLugar =
+    IF (
+        ISBLANK ( _lugar ),
+        "No Brasil, foi de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos: " & IF ( _dBr < 0, "caiu ", "subiu " )
+            & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) & ".",
+        "<b>" & _lugar & "</b>: de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos, "
+            & IF ( _dBr < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) & "."
+    )
+-- 3 · Geometria (barras: 100% = 300 px)
 VAR _wl22 = 300 * _l22 -- geometria
 VAR _wa22 = 300 * _a22 -- geometria
 VAR _wl26 = 300 * _l26 -- geometria
 VAR _wa26 = 300 * _a26 -- geometria
-VAR _linhasReg =
-    CONCATENATEX (
-        _reg,
-        VAR _pos = RANKX ( _reg, [@d], , ASC, Dense ) /* geometria */
-        VAR _x22 = ( 10 + 290 * ( MAX ( -0.45, MIN ( 0.45, [@m22] ) ) + 0.45 ) / 0.9 )
-        VAR _x26 = ( 10 + 290 * ( MAX ( -0.45, MIN ( 0.45, [@m26] ) ) + 0.45 ) / 0.9 )
-        VAR _cor = IF ( [@m26] < 0, "var(--azul)", "var(--vermelho)" )
-        VAR _cor22 = IF ( [@m22] < 0, "var(--azul)", "var(--vermelho)" )
-        VAR _nota =
-            IF ( [@m22] > 0 && [@m26] < 0, " <span class='mao mud'>passou para Flávio</span>", "" )
-        RETURN
-            "<div class='rg sobe d" & ( 8 + _pos ) & "' style='top:" & ( 30 + ( _pos - 1 ) * 46 ) & "px'>"
-                & "<div class='nm'>" & [Região] & _nota & "</div>"
-                & "<div class='vv'>" & FORMAT ( [@m22] * 100, "+0.0;−0.0;0.0" ) & " → " & FORMAT ( [@m26] * 100, "+0.0;−0.0;0.0" ) & "</div>"
-                & "<svg class='mini' width='310' height='20' viewBox='0 0 310 20'>"
-                    & "<line x1='155' x2='155' y1='0' y2='20' class='zero'/>"
-                    & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 1200 + _pos * 90 )
-                        & "ms' x1='" & FORMAT ( _x22, "0.0", "en-US" ) & "' x2='" & FORMAT ( _x26, "0.0", "en-US" )
-                        & "' y1='10' y2='10'/>"
-                    & "<circle cx='" & FORMAT ( _x22, "0.0", "en-US" ) & "' cy='10' r='4.5' class='m22' stroke='"
-                        & _cor22 & "'/>"
-                    & "<circle class='brota' style='animation-delay:" & ( 1500 + _pos * 90 ) & "ms' cx='"
-                        & FORMAT ( _x26, "0.0", "en-US" ) & "' cy='10' r='5.5' fill='" & _cor & "'/>"
-                & "</svg>"
-                & "<div class='dv'>" & FORMAT ( [@d] * 100, "+0.0;−0.0;0.0" ) & "</div>"
-            & "</div>",
-        "",
-        [@d], ASC
-    )
 -- 4 · Marcação
 VAR _barra =
     "<div class='ano'>{ANO}</div><div class='tr'><i class='bl barra-x' style='width:{WL}px'></i>"
@@ -108,13 +81,7 @@ RETURN
         & "<div class='margem'>"
             & "<div class='rot entra d6'>O QUE É MARGEM</div>"
             & "<div class='txt ex entra d6'>É a distância entre os votos de Lula e os do adversário, em pontos dos "
-                & "votos válidos: positiva, Lula à frente; negativa, o adversário. No Brasil, foi de "
-                & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos: " & IF ( _dBr < 0, "caiu ", "subiu " )
-                & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) & ".</div>"
+                & "votos válidos: positiva, Lula à frente; negativa, o adversário. " & _txtLugar & "</div>"
             & _brasil
-        & "</div>"
-        & "<div class='regioes'>"
-            & "<div class='rot entra d8'>POR REGIÃO · MARGEM DE LULA 2022 → 2026</div>"
-            & _linhasReg
         & "</div>"
     & "</div>"

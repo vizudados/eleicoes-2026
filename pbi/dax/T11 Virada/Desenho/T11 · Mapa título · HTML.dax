@@ -1,7 +1,7 @@
 /*
 @pasta: T11 Virada\Desenho
 @formato: texto
-@descricao: Título do mapa: onde a virada se concentra (regiões no Brasil; a UF no filtro) e a legenda das cores.
+@descricao: Título do mapa: onde a virada se concentra (regiões no Brasil; a UF no filtro; a área marcada ou a cidade escolhida no mapa ou na lista), a legenda das cores e a dica do gesto.
 @gerado: pbi/scripts/desenho_t11.py
 */
 -- 1 · Leituras
@@ -13,12 +13,26 @@ VAR _r1 = [T11 · região com mais viradas]
 VAR _r2 = [T11 · segunda região com mais viradas]
 VAR _n2 = [T11 · viraram nas duas regiões]
 VAR _nr = [T11 · regiões com virada]
+VAR _nSel = [T11 · seleção]
+VAR _nome1 = [T11 · município · nome e UF]
+VAR _sit1 = [T11 · situação]
+VAR _m22 = [T11 · margem 2022]
+VAR _m26 = [T11 · margem 2026]
 -- 2 · Textos
 VAR _sVir = "<span>" & FORMAT ( _vir, "#,0" ) & "</span>"
 VAR _sTot = "<span>" & FORMAT ( _tot, "#,0" ) & "</span>"
+VAR _txtNome1 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _oQue1 =
+    SWITCH ( _sit1, 2, "trocou Lula por Flávio", 3, "trocou Flávio por Lula", 0, "Lula seguiu à frente",
+        1, "o adversário seguiu à frente", "empate exato em 2026" )
 VAR _man =
     SWITCH (
         TRUE (),
+        _nSel = 1, _txtNome1 & ": " & _oQue1,
+        _nSel > 1 && _vir = 0, "Na área marcada, nenhum dos " & _sTot & " municípios trocou de lado",
+        _nSel > 1,
+            "Na área marcada, " & _sVir & " dos " & _sTot & IF ( _vir = 1, " municípios trocou", " municípios trocaram" )
+                & " Lula por Flávio",
         NOT ISBLANK ( _uf ) && _tot = 1 && _vir = 0, _uf & ": o único município não trocou de lado",
         NOT ISBLANK ( _uf ) && _tot = 1, _uf & ": o único município trocou Lula por Flávio",
         NOT ISBLANK ( _uf ) && _vir = 0, _uf & ": nenhum dos " & _sTot & " municípios trocou de lado",
@@ -31,6 +45,8 @@ VAR _man =
     )
 VAR _legVol =
     IF ( _vol > 0, "<span><i class='c-vl'></i>trocou Flávio por Lula</span>", "" )
+VAR _dica =
+    IF ( _nSel > 0, "clique fora dos pontos para limpar", "clique num ponto ou arraste uma área" )
 -- 4 · Marcação
 RETURN
     "<div class='tela t11t'>"
@@ -38,5 +54,6 @@ RETURN
         & "<div class='man sobe d1'>" & _man & "</div>"
         & "<div class='leg entra d3'><span><i class='c-l'></i>Lula à frente</span>"
             & "<span><i class='c-f'></i>Flávio à frente</span>"
-            & "<span><i class='c-v'></i>trocou Lula por Flávio</span>" & _legVol & "</div>"
+            & "<span><i class='c-v'></i>trocou Lula por Flávio</span>" & _legVol
+            & "<span class='dica'>" & _dica & "</span></div>"
     & "</div>"

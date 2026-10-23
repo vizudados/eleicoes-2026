@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Quantos municípios estão marcados no mapa (0 sem marca).
+*/
+IF ( [T25 · com município] = 1, COUNTROWS ( VALUES ( 'Município'[CodIBGE] ) ), 0 )

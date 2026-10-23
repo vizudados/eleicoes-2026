@@ -1,0 +1,39 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: O lugar com a preposição certa para começar a frase (No Acre, Na Bahia, Em Minas Gerais…), da UF da linha ou da clicada no mapa.
+*/
+IF (
+    HASONEVALUE ( UF[UF] ),
+    SWITCH (
+        SELECTEDVALUE ( UF[UF] ),
+        "AC", "No Acre",
+        "AL", "Em Alagoas",
+        "AM", "No Amazonas",
+        "AP", "No Amapá",
+        "BA", "Na Bahia",
+        "CE", "No Ceará",
+        "DF", "No Distrito Federal",
+        "ES", "No Espírito Santo",
+        "GO", "Em Goiás",
+        "MA", "No Maranhão",
+        "MG", "Em Minas Gerais",
+        "MS", "Em Mato Grosso do Sul",
+        "MT", "Em Mato Grosso",
+        "PA", "No Pará",
+        "PB", "Na Paraíba",
+        "PE", "Em Pernambuco",
+        "PI", "No Piauí",
+        "PR", "No Paraná",
+        "RJ", "No Rio de Janeiro",
+        "RN", "No Rio Grande do Norte",
+        "RO", "Em Rondônia",
+        "RR", "Em Roraima",
+        "RS", "No Rio Grande do Sul",
+        "SC", "Em Santa Catarina",
+        "SE", "Em Sergipe",
+        "SP", "Em São Paulo",
+        "TO", "No Tocantins",
+        "Em " & SELECTEDVALUE ( UF[Nome] )
+    )
+)

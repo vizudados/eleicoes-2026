@@ -1,75 +1,80 @@
 /*
 @pasta: T14 Série\Desenho
 @formato: texto
-@descricao: As cinco regiões na mesma escala (10% a 70%): linhas do PT e do adversário e os valores de 2026. Ignoram o filtro de UF; com uma UF escolhida, a região dela fica em destaque.
+@descricao: Uma entrada por região (granularidade Município[Região]), todas na mesma escala (10% a 70%): as linhas do PT e do adversário de 2006 a 2026 e os valores da eleição em destaque (a clicada na série ou 2026). Ignoram o filtro de UF; com uma UF escolhida, a região dela fica em destaque. O clique numa região leva a série e a resposta àquela região; o mouse abre o dossiê dela (ttT14Regiao).
 @gerado: pbi/scripts/desenho_t14.py
 */
 -- 1 · Leituras
-VAR _reg = DATATABLE ( "o", INTEGER, "nome", STRING, { { 1, "Centro-Oeste" }, { 2, "Nordeste" }, { 3, "Norte" }, { 4, "Sudeste" }, { 5, "Sul" } } )
-VAR _anos = DATATABLE ( "a", INTEGER, { { 2006 }, { 2010 }, { 2014 }, { 2018 }, { 2022 }, { 2026 } } )
+VAR _r = [T14 · região do painel]
 VAR _sel = [T14 · região do recorte]
-VAR _uf = [T14 · recorte]
+VAR _ufNome = [T14 · UF do filtro]
+VAR _ano = [T14 · ano dos painéis]
+VAR _clique = NOT ISBLANK ( [T14 · ano escolhido] )
+VAR _anos = DATATABLE ( "a", INTEGER, { { 2006 }, { 2010 }, { 2014 }, { 2018 }, { 2022 }, { 2026 } } )
+VAR _pts =
+    ADDCOLUMNS (
+        _anos,
+        "@pt", VAR _a = [a] RETURN CALCULATE ( [T14 · PT % na região], 'Ano'[Ano] = _a ),
+        "@adv", VAR _a = [a] RETURN CALCULATE ( [T14 · adversário % na região], 'Ano'[Ano] = _a )
+    )
 -- 3 · Geometria e 4 · Marcação (painéis de 300 px a cada 330; x do ano de 8 a 218; y de 10% a 70% em 110 px)
-VAR _paineis =
-    CONCATENATEX (
-        _reg,
-        VAR _o = [o]
-        VAR _r = [nome]
-        VAR _px = ( _o - 1 ) * 330
-        VAR _pts =
-            ADDCOLUMNS (
-                _anos,
-                "@pt",
-                    VAR _a = [a]
-                    RETURN
-                        CALCULATE ( [T14 · PT % na região], 'Município'[Região] = _r, 'Ano'[Ano] = _a ),
-                "@adv",
-                    VAR _a = [a]
-                    RETURN
-                        CALCULATE ( [T14 · adversário % na região], 'Município'[Região] = _r, 'Ano'[Ano] = _a )
-            )
-        VAR _xy =
-            ADDCOLUMNS (
-                _pts,
-                "@x", 8 + ( [a] - 2006 ) / 4 * 42,
-                "@yPt", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@pt] ) ) - 0.1 ) / 0.6,
-                "@yAdv", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@adv] ) ) - 0.1 ) / 0.6
-            )
-        VAR _lPt =
-            CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yPt], "0.0", "en-US" ), " ", [a], ASC )
-        VAR _lAdv =
-            CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yAdv], "0.0", "en-US" ), " ", [a], ASC )
-        VAR _pt26 = MAXX ( FILTER ( _xy, [a] = 2026 ), [@pt] ) /* lista */
-        VAR _adv26 = MAXX ( FILTER ( _xy, [a] = 2026 ), [@adv] ) /* lista */
-        VAR _y26pt = MAXX ( FILTER ( _xy, [a] = 2026 ), [@yPt] ) /* lista */
-        VAR _y26adv = MAXX ( FILTER ( _xy, [a] = 2026 ), [@yAdv] ) /* lista */
-        VAR _sep = IF ( ABS ( _y26pt - _y26adv ) < 16, 8 - ABS ( _y26pt - _y26adv ) / 2, 0 )
-        VAR _cls = IF ( ISBLANK ( _sel ), "pn", IF ( _sel = _r, "pn sel", "pn apaga" ) )
-        RETURN
-            "<div class='" & _cls & " sobe d" & ( 2 + _o ) & "' style='left:" & _px & "px'>"
-                & "<div class='nm'>" & _r & IF ( _sel = _r, " <span class='mao'>região de " & _uf & "</span>", "" )
-                & "</div>"
-                & "<svg width='300' height='132' viewBox='0 0 300 132'>"
-                    & "<line class='b' x1='0' x2='226' y1='116' y2='116'/>"
-                    & "<polyline class='lpt traco' pathLength='1' style='animation-delay:" & ( 600 + _o * 120 )
-                        & "ms' points='" & _lPt & "'/>"
-                    & "<polyline class='ladv traco' pathLength='1' style='animation-delay:" & ( 600 + _o * 120 )
-                        & "ms' points='" & _lAdv & "'/>"
-                    & "<circle class='ppt' cx='218' cy='" & FORMAT ( _y26pt, "0.0", "en-US" ) & "' r='4'/>"
-                    & "<circle class='padv' cx='218' cy='" & FORMAT ( _y26adv, "0.0", "en-US" ) & "' r='4'/>"
-                    & "<text class='vpt' x='228' y='" & FORMAT ( _y26pt + 5 + IF ( _y26pt >= _y26adv, _sep, -_sep ), "0.0", "en-US" )
-                        & "'>" & FORMAT ( _pt26, "0.0%" ) & "</text>"
-                    & "<text class='vadv' x='228' y='" & FORMAT ( _y26adv + 5 + IF ( _y26adv > _y26pt, _sep, -_sep ), "0.0", "en-US" )
-                        & "'>" & FORMAT ( _adv26, "0.0%" ) & "</text>"
-                    & "<text class='ex' x='0' y='130'>2006</text><text class='ex' x='218' y='130' text-anchor='middle'>2026</text>"
-                & "</svg>"
-            & "</div>",
-        "",
-        [o], ASC
+VAR _o = SWITCH ( _r, "Centro-Oeste", 1, "Nordeste", 2, "Norte", 3, "Sudeste", 4, "Sul", 5, 0 )
+VAR _px = ( _o - 1 ) * 330
+VAR _xy =
+    ADDCOLUMNS (
+        _pts,
+        "@x", 8 + ( [a] - 2006 ) / 4 * 42,
+        "@yPt", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@pt] ) ) - 0.1 ) / 0.6,
+        "@yAdv", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@adv] ) ) - 0.1 ) / 0.6
+    )
+VAR _lPt =
+    CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yPt], "0.0", "en-US" ), " ", [a], ASC )
+VAR _lAdv =
+    CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yAdv], "0.0", "en-US" ), " ", [a], ASC )
+VAR _ptA = MAXX ( FILTER ( _xy, [a] = _ano ), [@pt] ) /* lista */
+VAR _advA = MAXX ( FILTER ( _xy, [a] = _ano ), [@adv] ) /* lista */
+VAR _yApt = MAXX ( FILTER ( _xy, [a] = _ano ), [@yPt] ) /* lista */
+VAR _yAadv = MAXX ( FILTER ( _xy, [a] = _ano ), [@yAdv] ) /* lista */
+VAR _xA = 8 + ( _ano - 2006 ) / 4 * 42
+VAR _sep = IF ( ABS ( _yApt - _yAadv ) < 16, 8 - ABS ( _yApt - _yAadv ) / 2, 0 )
+VAR _cls = IF ( _sel = _r, "pn sel", "pn" )
+VAR _marca =
+    IF (
+        _clique,
+        "<line class='mk' x1='" & FORMAT ( _xA, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xA, "0.0", "en-US" )
+            & "' y1='4' y2='116'/>"
+            & "<text class='ex' x='" & FORMAT ( _xA, "0.0", "en-US" ) & "' y='130' text-anchor='middle'>" & _ano & "</text>"
+    )
+VAR _eixo =
+    IF (
+        _clique && _ano > 2006 && _ano < 2026,
+        "<text class='ex' x='0' y='130'>2006</text>",
+        "<text class='ex' x='0' y='130'>2006</text><text class='ex' x='218' y='130' text-anchor='middle'>2026</text>"
     )
 RETURN
-    "<div class='tela t14g'>"
-        & "<div class='rot entra'>POR REGIÃO · MESMA ESCALA, 10% A 70%" & IF ( ISBLANK ( _uf ), "", " · TODO O BRASIL" )
+    IF (
+        _o > 0,
+        "<div class='tela t14g'><div class='" & _cls & " sobe d" & ( 2 + _o ) & "' style='left:" & _px & "px'>"
+            & "<div class='nm'>" & _r & IF ( _sel = _r, " <span class='mao'>região de " & _ufNome & "</span>", "" )
             & "</div>"
-        & _paineis
-    & "</div>"
+            & "<svg width='300' height='132' viewBox='0 0 300 132'>"
+                & "<line class='b' x1='0' x2='226' y1='116' y2='116'/>"
+                & _marca
+                & "<polyline class='lpt traco' pathLength='1' style='animation-delay:" & ( 600 + _o * 120 )
+                    & "ms' points='" & _lPt & "'/>"
+                & "<polyline class='ladv traco' pathLength='1' style='animation-delay:" & ( 600 + _o * 120 )
+                    & "ms' points='" & _lAdv & "'/>"
+                & "<circle class='ppt' cx='" & FORMAT ( _xA, "0.0", "en-US" ) & "' cy='" & FORMAT ( _yApt, "0.0", "en-US" )
+                    & "' r='4'/>"
+                & "<circle class='padv' cx='" & FORMAT ( _xA, "0.0", "en-US" ) & "' cy='"
+                    & FORMAT ( _yAadv, "0.0", "en-US" ) & "' r='4'/>"
+                & "<text class='vpt' x='" & FORMAT ( _xA + 10, "0.0", "en-US" ) & "' y='"
+                    & FORMAT ( _yApt + 5 + IF ( _yApt >= _yAadv, _sep, -_sep ), "0.0", "en-US" )
+                    & "'>" & FORMAT ( _ptA, "0.0%" ) & "</text>"
+                & "<text class='vadv' x='" & FORMAT ( _xA + 10, "0.0", "en-US" ) & "' y='"
+                    & FORMAT ( _yAadv + 5 + IF ( _yAadv > _yApt, _sep, -_sep ), "0.0", "en-US" )
+                    & "'>" & FORMAT ( _advA, "0.0%" ) & "</text>"
+                & _eixo
+            & "</svg>"
+        & "</div></div>"
+    )

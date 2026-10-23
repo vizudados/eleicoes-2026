@@ -4,4 +4,4 @@
 @descricao: Texto para leitor de tela dos pontos das pesquisas do 2º turno.
 */
 "Um ponto por pesquisa do 2º turno (" & [T17 · pesquisas]
-    & "): acima da linha, Flávio à frente; abaixo, Lula. Vazado: simulação antes do 1º turno. Passe o mouse para ver o instituto."
+    & "): acima da linha, Flávio à frente; abaixo, Lula. Vazado: simulação antes do 1º turno. Passe o mouse para ver o instituto; clique para acender a série dele."

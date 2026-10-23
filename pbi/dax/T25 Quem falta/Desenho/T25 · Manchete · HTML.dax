@@ -1,0 +1,80 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: A resposta da tela 07 que muda com o que está marcado: o % de quem faltou (número grande), a frase "1 em cada N eleitores faltou", a comparação com a média do recorte e as etiquetas do que está marcado (ano · idade · lugar) ou a dica de como cruzar. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _pct = [T25 · abstenção %]
+VAR _ano = [T25 · ano]
+VAR _comAno = [T25 · com ano]
+VAR _comFaixa = [T25 · com faixa]
+VAR _nFaixas = [T25 · faixas marcadas]
+VAR _faixa = [T25 · faixa]
+VAR _nMun = [T25 · municípios marcados]
+VAR _lugar = [T25 · lugar]
+VAR _comUF = [T25 · com UF]
+VAR _temIdade = [T25 · tem idade no ano]
+VAR _um = [T25 · um em cada]
+VAR _dez = [T25 · em cada 10]
+VAR _ref = [T25 · abstenção % do recorte]
+VAR _dif = [T25 · diferença para o recorte]
+VAR _todas = [T25 · abstenção % todas as idades]
+-- 2 · Textos
+VAR _semDado = ISBLANK ( _pct )
+VAR _semIdade = _comFaixa = 1 && _temIdade = 0
+VAR _txtPct = IF ( _semDado, "<span class='vz'>sem dado</span>", FORMAT ( _pct, "0.0%" ) )
+VAR _media = IF ( _comUF = 1, "média estadual", "média nacional" )
+VAR _quantos =
+    IF ( _pct >= 0.35, FORMAT ( _dez, "0" ) & " em cada 10", "1 em cada " & FORMAT ( _um, "0" ) )
+VAR _verbo = IF ( _pct >= 0.35, "faltaram", "faltou" )
+VAR _quem =
+    "eleitores"
+        & SWITCH (
+            TRUE (),
+            _nFaixas = 1, " de " & SUBSTITUTE ( _faixa, "16 e 17", "16 ou 17" ),
+            _nFaixas > 1, " das faixas de idade marcadas",
+            ""
+        )
+VAR _compara =
+    SWITCH (
+        TRUE (),
+        _nMun > 0 && NOT ISBLANK ( _ref ),
+            IF (
+                ABS ( _dif ) < 0.05,
+                ", bem na " & _media & " (" & FORMAT ( _ref, "0.0%" ) & ")",
+                ", " & FORMAT ( ABS ( _dif ), "0.0" ) & IF ( ABS ( _dif ) < 2, " ponto ", " pontos " )
+                    & IF ( _dif > 0, "acima", "abaixo" ) & " da " & _media & " (" & FORMAT ( _ref, "0.0%" ) & ")"
+            ),
+        _comFaixa = 1 && NOT ISBLANK ( _todas ), "; com todas as idades, " & FORMAT ( _todas, "0.0%" ),
+        ""
+    )
+VAR _frase =
+    SWITCH (
+        TRUE (),
+        _semIdade, "Em " & _ano & ", o TSE ainda não publicava a idade de quem faltou.",
+        _semDado, "Sem dado neste cruzamento.",
+        _quantos & " " & _quem & " " & _verbo & _compara & "."
+    )
+VAR _chips =
+    IF ( _comAno = 1, "<span class='chip'><b>ano</b>" & _ano & "</span>" )
+        & IF ( _comFaixa = 1, "<span class='chip'><b>idade</b>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _faixa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span>" )
+        & IF ( _nMun > 0, "<span class='chip'><b>lugar</b>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span>" )
+VAR _linha =
+    SWITCH (
+        TRUE (),
+        _semIdade,
+            "<div class='aviso'><span class='ast'>*</span>Escolha 2014, 2018, 2022 ou 2026 para ver por idade.</div>",
+        _chips = "",
+            "<div class='dica'>Clique num ano, numa idade ou num ponto do mapa: as três peças se cruzam.</div>"
+                & "<div class='cruza' aria-hidden='true'><div class='mao entra d10' style='font-size:26px;color:var(--tinta);transform:rotate(-3deg)'>clique para cruzar</div><svg width='150' height='40' viewBox='0 0 150 40' style='position:absolute;left:10px;top:30px'><path class='traco' pathLength='1' style='animation-delay:1.6s' d='M6,6 C50,30 96,34 140,22 M128,14 L141,22 L127,30' fill='none' stroke='#1C1915' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg></div>",
+        "<div class='marc'>" & _chips & "<span class='dica'>clique de novo para desmarcar</span></div>"
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela mq'>"
+        & "<div class='sob sobe'>Quem falta · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · 1º turno de " & _ano & "</div>"
+        & "<div class='topo'><div class='big sobe d1'>" & _txtPct & "</div>"
+        & "<div class='lado sobe d2'><div class='nfv'>não foram votar</div>" & "<svg class='subl' viewBox='0 0 300 16' preserveAspectRatio='none' aria-hidden='true' style='width:236px'><path pathLength='1' class='traco' style='animation-delay:1.1s' d='M3,10 C60,4 140,13 205,7 C240,4 270,6 297,9' fill='none' stroke='#1C1915' stroke-width='3' stroke-linecap='round'/></svg>"
+        & "<div class='txt fr'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _frase, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div></div>"
+        & "<div class='linha sobe d4'>" & _linha & "</div>"
+    & "</div>"

@@ -7,11 +7,15 @@ Grava pbi/dax/T14 Série/{Contas,Desenho}/*.dax. Sem filtro de UF, a série é o
 ano, com o exterior); com UF (ou qualquer recorte de municípios), soma os municípios (Município ano). O adversário de
 cada ano é o mais votado fora do PT (Alckmin, Serra, Aécio, Jair Bolsonaro duas vezes e Flávio Bolsonaro).
 
+Interação (23/10/2026): clicar num ano da série (filtro cruzado no Ano) leva a resposta àquela eleição (a margem, os
+candidatos, a urna em destaque) e os painéis das regiões ao mesmo ano; clicar numa região (granularidade
+Município[Região]) leva a série, o título e a resposta àquela região. A região clicada vale por cima do filtro de UF
+(as contas da série tiram a UF quando há região clicada), e a manchete diz "no Nordeste".
+
 Oráculo: mockup/data/eleicoes.json › paginas[14] (pipeline/montar_dados_mockup.py › tela_serie).
 """
 from __future__ import annotations
 
-import math
 import sys
 from pathlib import Path
 
@@ -58,33 +62,71 @@ def gravar() -> None:
 
 ANOS = [2006, 2010, 2014, 2018, 2022, 2026]
 REGIOES = ["Centro-Oeste", "Nordeste", "Norte", "Sudeste", "Sul"]
+# as UFs de cada região (a mesma lista de pbi/modelo/base.py), para o dossiê da região
+UFS_REGIAO = [("AC", "Norte"), ("AL", "Nordeste"), ("AM", "Norte"), ("AP", "Norte"), ("BA", "Nordeste"),
+              ("CE", "Nordeste"), ("DF", "Centro-Oeste"), ("ES", "Sudeste"), ("GO", "Centro-Oeste"),
+              ("MA", "Nordeste"), ("MG", "Sudeste"), ("MS", "Centro-Oeste"), ("MT", "Centro-Oeste"), ("PA", "Norte"),
+              ("PB", "Nordeste"), ("PE", "Nordeste"), ("PI", "Nordeste"), ("PR", "Sul"), ("RJ", "Sudeste"),
+              ("RN", "Nordeste"), ("RO", "Norte"), ("RR", "Norte"), ("RS", "Sul"), ("SC", "Sul"), ("SE", "Nordeste"),
+              ("SP", "Sudeste"), ("TO", "Norte")]
+_TAB_UFS = ", ".join(f'{{ "{u}", "{r}" }}' for u, r in UFS_REGIAO)
+_TAB_ANOS_R = ", ".join(f"{{ {a} }}" for a in ANOS)
 
 # ==================================================================================================== contas
 conta("T14 · PT %", "0.0%",
       "Votos do candidato do PT sobre os válidos no ano do contexto. Sem recorte de municípios, o resultado nacional "
-      "oficial (com o exterior); com UF, a soma dos municípios.",
+      "oficial (com o exterior); com UF ou região, a soma dos municípios. A região (painel clicado ou do grão) vale por "
+      "cima do filtro de UF.",
       """VAR _mun = ISCROSSFILTERED ( 'Município' )
+VAR _reg = ISFILTERED ( 'Município'[Região] )
 RETURN
-    IF (
-        _mun,
-        DIVIDE ( SUM ( 'Município ano'[VotosPT] ), SUM ( 'Município ano'[Validos] ) ),
+    SWITCH (
+        TRUE (),
+        _reg,
+            CALCULATE (
+                DIVIDE ( SUM ( 'Município ano'[VotosPT] ), SUM ( 'Município ano'[Validos] ) ),
+                REMOVEFILTERS ( 'UF' )
+            ),
+        _mun, DIVIDE ( SUM ( 'Município ano'[VotosPT] ), SUM ( 'Município ano'[Validos] ) ),
         DIVIDE (
             CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Partido] = "PT" ),
             MAX ( 'Candidato ano'[ValidosAno] )
         )
     )""", ORACULO + " › anos › pt › pct (2006 48,6% … 2026 45,2%)")
 conta("T14 · adversário %", "0.0%",
-      "Votos do mais votado fora do PT sobre os válidos no ano do contexto (nacional com o exterior; com UF, os municípios).",
+      "Votos do mais votado fora do PT sobre os válidos no ano do contexto (nacional com o exterior; com UF ou região, "
+      "os municípios; a região vale por cima da UF).",
       """VAR _mun = ISCROSSFILTERED ( 'Município' )
+VAR _reg = ISFILTERED ( 'Município'[Região] )
 RETURN
-    IF (
-        _mun,
-        DIVIDE ( SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) ),
+    SWITCH (
+        TRUE (),
+        _reg,
+            CALCULATE (
+                DIVIDE ( SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) ),
+                REMOVEFILTERS ( 'UF' )
+            ),
+        _mun, DIVIDE ( SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) ),
         DIVIDE (
             CALCULATE ( MAX ( 'Candidato ano'[Votos] ), 'Candidato ano'[Partido] <> "PT" ),
             MAX ( 'Candidato ano'[ValidosAno] )
         )
     )""", ORACULO + " › anos › adversario › pct (2018 46,0%; 2026 47,0%)")
+conta("T14 · eleições com o PT à frente", "0", "Em quantas eleições da série o PT terminou o 1º turno à frente do adversário.",
+      """COUNTROWS (
+    FILTER ( ALL ( 'Ano'[Ano] ), [T14 · margem do PT] > 0 )
+) + 0""", ORACULO + " › 4 no Brasil")
+conta("T14 · região clicada", "texto", "A região clicada nos painéis (filtro cruzado em Município[Região]); vazio sem clique.",
+      """IF (
+    ISFILTERED ( 'Município'[Região] ),
+    CALCULATE ( SELECTEDVALUE ( 'Município'[Região] ), REMOVEFILTERS ( 'UF' ) )
+)""")
+conta("T14 · ano escolhido", "0", "A eleição clicada na série (filtro cruzado no Ano); vazio sem clique.",
+      """IF ( ISFILTERED ( 'Ano'[Ano] ) && HASONEVALUE ( 'Ano'[Ano] ), VALUES ( 'Ano'[Ano] ) )""")
+conta("T14 · ano dos painéis", "0", "A eleição que os painéis das regiões destacam: a clicada na série ou 2026.",
+      """VAR _a = [T14 · ano escolhido]
+RETURN
+    IF ( ISBLANK ( _a ), 2026, _a )""")
 conta("T14 · margem do PT", "0.0%", "PT % menos adversário % no ano do contexto (negativo: o PT atrás).",
       "[T14 · PT %] - [T14 · adversário %]", ORACULO + " › anos › pt_na_frente")
 conta("T14 · eleições", "0", "Quantas eleições há na série (seis, de 2006 a 2026).", "COUNTROWS ( ALL ( 'Ano'[Ano] ) )")
@@ -132,8 +174,47 @@ conta("T14 · adversário", "texto", "Adversário principal no ano do contexto."
 conta("T14 · partido do adversário", "texto", "Partido do adversário principal no ano do contexto.",
       "SELECTEDVALUE ( 'Ano'[Partido do adversário] )")
 conta("T14 · ano", "0", "Ano do contexto (a eleição).", "SELECTEDVALUE ( 'Ano'[Ano] )")
-conta("T14 · recorte", "texto", "Nome da UF escolhida no filtro da tela (vazio = Brasil).",
+conta("T14 · recorte", "texto", "O lugar que a tela conta: a região clicada nos painéis ou a UF do filtro (vazio = Brasil).",
+      """VAR _reg = [T14 · região clicada]
+RETURN
+    IF ( NOT ISBLANK ( _reg ), _reg, IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) ) )""")
+conta("T14 · onde", "texto", "O lugar com a preposição, para as frases: 'no Nordeste' (região clicada) ou 'em Minas Gerais' (UF).",
+      """VAR _reg = [T14 · região clicada]
+RETURN
+    IF (
+        NOT ISBLANK ( _reg ),
+        "no " & _reg,
+        IF ( ISFILTERED ( 'UF'[Nome] ), "em " & SELECTEDVALUE ( 'UF'[Nome] ) )
+    )""")
+conta("T14 · região do painel", "texto",
+      "A região do painel (grão dos painéis das regiões e do dossiê da região), mesmo com uma UF de outra região no filtro.",
+      "CALCULATE ( SELECTEDVALUE ( 'Município'[Região] ), REMOVEFILTERS ( 'UF' ) )")
+for _q, _med in (("PT %", "T14 · PT %"), ("adversário %", "T14 · adversário %")):
+    conta(f"T14 · {_q} da UF na eleição dos painéis", "0.0%",
+          f"{_q} na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel.",
+          f"""VAR _a = [T14 · ano dos painéis]
+RETURN
+    CALCULATE ( [{_med}], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )""")
+conta("T14 · UF do filtro", "texto", "Nome da UF escolhida no filtro de UF da tela (vazio = Brasil), sem a região clicada.",
       "IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )")
+conta("T14 · UFs da região", "0", "Quantas UFs tem a região do painel.",
+      """VAR _r = [T14 · região do painel]
+RETURN
+    COUNTROWS ( FILTER ( ALL ( 'UF'[UF], 'UF'[Região] ), 'UF'[Região] = _r ) ) + 0""", "Nordeste 9, Sul 3")
+conta("T14 · UFs da região com o PT à frente", "0",
+      "Quantas UFs da região do painel tiveram o PT à frente do adversário na eleição em destaque (a clicada ou 2026).",
+      """VAR _r = [T14 · região do painel]
+VAR _a = [T14 · ano dos painéis]
+RETURN
+    COUNTROWS (
+        FILTER (
+            ADDCOLUMNS (
+                FILTER ( ALL ( 'UF'[UF], 'UF'[Região] ), 'UF'[Região] = _r ),
+                "@m", CALCULATE ( [T14 · margem do PT], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )
+            ),
+            [@m] > 0
+        )
+    ) + 0""", "Nordeste 2026: 9 de 9 (motor)")
 conta("T14 · região do recorte", "texto", "Região da UF escolhida no filtro (vazio = Brasil).",
       "IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Região] ) )")
 conta("T14 · PT % na região", "0.0%", "PT % somando os municípios da região do contexto (ignora o filtro de UF).",
@@ -157,57 +238,68 @@ def _pct(v: str) -> str:
     return f'FORMAT ( {v}, "0.0%" )'
 
 
-def _laco(r: float = 30) -> str:
-    """Laço à mão (duas voltas desencontradas) centrado em 0,0 — um path para usar com translate."""
-    pts = []
-    for i in range(0, 46):
-        a = -2.2 + i * (2 * math.pi * 1.15) / 45
-        rr = r * (1 + 0.08 * math.sin(i * 0.9)) * (1.0 + 0.06 * i / 45)
-        pts.append((rr * math.cos(a) * 1.18, rr * math.sin(a) * 0.95))
-    return "M" + " L".join(f"{x:.1f},{y:.1f}" for x, y in pts)
+def _curto(v: str) -> str:
+    """Nome curto do candidato (Dilma, Haddad, Alckmin, Serra, Aécio, Bolsonaro) para frases e rótulos."""
+    return (f'SWITCH ( {v}, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", '
+            f'"José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", {v} )')
 
-
-LACO = _laco()
-_ESC = "( {lo} )"
 
 desenho("T14 · Resposta · HTML",
-        "Topo da tela: quantas vezes o PT terminou o 1º turno atrás (ou à frente) e em quais anos, com os candidatos. "
-        "Só lê contas 'T14 · …'.",
+        "Topo da tela. Sem clique: quantas vezes o PT terminou o 1º turno atrás (ou à frente) e em quais anos, com os "
+        "candidatos, e as seis urnas. Com um ano clicado na série: a margem do PT naquela eleição, a manchete do duelo e "
+        "a urna do ano em destaque. Com uma região clicada, tudo no lugar dela ('no Nordeste'). Só lê contas 'T14 · …'.",
         f"""-- 1 · Leituras
 VAR _k = [T14 · eleições com o PT atrás]
 VAR _n = [T14 · eleições]
 VAR _a26 = [T14 · PT atrás em 2026]
 VAR _uf = [T14 · recorte]
+VAR _ondeR = [T14 · onde]
+VAR _ano = [T14 · ano escolhido]
+VAR _mY = [T14 · margem do PT]
+VAR _ptY = [T14 · PT %]
+VAR _advY = [T14 · adversário %]
+VAR _cptY = [T14 · candidato do PT]
+VAR _cadvY = [T14 · adversário]
+VAR _vezY = [T14 · vez em que o PT ficou atrás]
 VAR _anos =
     ADDCOLUMNS (
-        VALUES ( 'Ano'[Ano] ),
-        "@m", [T14 · margem do PT],
-        "@pt", [T14 · PT %],
-        "@adv", [T14 · adversário %],
-        "@cpt", [T14 · candidato do PT],
-        "@cadv", [T14 · adversário]
-    )
+        DATATABLE ( "a", INTEGER, {{ {_TAB_ANOS_R} }} ),
+        "@m", VAR _a = [a] RETURN CALCULATE ( [T14 · margem do PT], 'Ano'[Ano] = _a ),
+        "@pt", VAR _a = [a] RETURN CALCULATE ( [T14 · PT %], 'Ano'[Ano] = _a ),
+        "@adv", VAR _a = [a] RETURN CALCULATE ( [T14 · adversário %], 'Ano'[Ano] = _a ),
+        "@cpt", VAR _a = [a] RETURN CALCULATE ( [T14 · candidato do PT], 'Ano'[Ano] = _a ),
+        "@cadv", VAR _a = [a] RETURN CALCULATE ( [T14 · adversário], 'Ano'[Ano] = _a ),
+        "@vez", VAR _a = [a] RETURN CALCULATE ( [T14 · vez em que o PT ficou atrás], 'Ano'[Ano] = _a )
+    ) /* lista */
 -- 2 · Textos
+VAR _clique = NOT ISBLANK ( _ano )
 VAR _atras = FILTER ( _anos, [@m] < 0 ) /* lista */
 VAR _nAtras = COUNTROWS ( _atras ) /* lista */
 VAR _txtAnos =
     CONCATENATEX (
         _atras,
-        "em " & 'Ano'[Ano] & " (" & [@cpt] & " " & {_pct("[@pt]")} & " × " & [@cadv] & " " & {_pct("[@adv]")} & ")",
+        "em " & [a] & " (" & [@cpt] & " " & {_pct("[@pt]")} & " × " & [@cadv] & " " & {_pct("[@adv]")} & ")",
         "; ",
-        'Ano'[Ano], ASC
+        [a], ASC
     )
 VAR _grande =
     SWITCH (
         TRUE (),
+        _clique, FORMAT ( _mY * 100, "+0.0;−0.0;0.0" ) & "<small> p.p.</small>",
         _k = _n, FORMAT ( _k, "0" ) & " de " & FORMAT ( _n, "0" ),
         _a26 = 1, FORMAT ( _k, "0" ) & "ª vez",
         FORMAT ( _n - _k, "0" ) & " de " & FORMAT ( _n, "0" )
     )
-VAR _onde = IF ( ISBLANK ( _uf ), "", " em " & _uf )
+VAR _clsGrande = IF ( _clique, IF ( _mY < 0, " flavio", " lula" ), "" )
+VAR _onde = IF ( ISBLANK ( _ondeR ), "", " " & _ondeR )
+VAR _abre = IF ( ISBLANK ( _ondeR ), "Em " & _ano, UPPER ( LEFT ( _ondeR, 1 ) ) & MID ( _ondeR, 2, 100 ) & ", em " & _ano )
+VAR _manAno =
+    _abre & ", " & {_curto("_cptY")} & " (" & {_pct("_ptY")} & ") terminou " & FORMAT ( ABS ( _mY ) * 100, "0.0" )
+        & IF ( _mY < 0, " pontos atrás de ", " pontos à frente de " ) & {_curto("_cadvY")} & " (" & {_pct("_advY")} & ")"
 VAR _man =
     SWITCH (
         TRUE (),
+        _clique, _manAno,
         _k = _n, IF ( ISBLANK ( _uf ), "", _uf & ": " ) & "o PT terminou o 1º turno atrás do adversário nas seis eleições",
         _a26 = 1 && ISBLANK ( _uf ),
             "Pela " & FORMAT ( _k, "0" ) & "ª vez em seis eleições, o PT termina o 1º turno em segundo lugar",
@@ -216,10 +308,14 @@ VAR _man =
         _k = 0, "O PT ficou à frente nas seis eleições" & _onde & ", inclusive em 2026",
         "O PT ficou à frente em " & FORMAT ( _n - _k, "0" ) & " das seis eleições" & _onde & ", inclusive em 2026"
     )
-VAR _soAnos = CONCATENATEX ( _atras, 'Ano'[Ano], ", ", 'Ano'[Ano], ASC )
+VAR _soAnos = CONCATENATEX ( _atras, [a], ", ", [a], ASC )
 VAR _sub =
     SWITCH (
         TRUE (),
+        _clique && NOT ISBLANK ( _vezY ),
+            "Foi a " & FORMAT ( _vezY, "0" ) & "ª vez em seis eleições que o PT ficou atrás" & _onde
+                & ". Clique de novo no ano para voltar às seis eleições.",
+        _clique, "O PT ficou à frente" & _onde & " nessa eleição. Clique de novo no ano para voltar às seis eleições.",
         _nAtras = 0, "",
         _nAtras <= 2, "Atrás " & _txtAnos & ".",
         "Atrás em " & _soAnos & "."
@@ -228,23 +324,24 @@ VAR _sub =
 VAR _urnas =
     CONCATENATEX (
         _anos,
-        VAR _i = ( 'Ano'[Ano] - 2006 ) / 4
-        VAR _vez = CALCULATE ( [T14 · vez em que o PT ficou atrás] )
+        VAR _i = ( [a] - 2006 ) / 4
+        VAR _vez = [@vez]
+        VAR _apaga = IF ( _clique && [a] <> _ano, " apaga", "" )
         RETURN
-            "<div class='ux " & IF ( [@m] < 0, "adv", "pt" ) & " brota' style='left:" & ( 1086 + _i * 92 )
+            "<div class='ux " & IF ( [@m] < 0, "adv", "pt" ) & _apaga & " brota' style='left:" & ( 1086 + _i * 92 )
                 & "px;animation-delay:" & ( 500 + _i * 140 ) & "ms'></div>"
-                & "<div class='ua' style='left:" & ( 1086 + _i * 92 ) & "px'>" & 'Ano'[Ano] & "</div>"
+                & "<div class='ua" & _apaga & "' style='left:" & ( 1086 + _i * 92 ) & "px'>" & [a] & "</div>"
                 & IF (
                     NOT ISBLANK ( _vez ),
-                    "<div class='uv mao entra' style='left:" & ( 1086 + _i * 92 ) & "px;animation-delay:"
+                    "<div class='uv mao entra" & _apaga & "' style='left:" & ( 1086 + _i * 92 ) & "px;animation-delay:"
                         & ( 900 + _i * 140 ) & "ms'>" & FORMAT ( _vez, "0" ) & "ª vez</div>"
                 ),
         "",
-        'Ano'[Ano], ASC
+        [a], ASC
     )
 RETURN
     "<div class='tela t14r'>"
-        & "<div class='num g sobe'>" & _grande & "</div>"
+        & "<div class='num g" & _clsGrande & " sobe'>" & _grande & "</div>"
         & "<div class='man m sobe d2'>" & _man & "</div>"
         & "<div class='nota s entra d4'>" & _sub & "</div>"
         & "<div class='rot ur entra d3'>QUEM TERMINOU NA FRENTE, ELEIÇÃO A ELEIÇÃO</div>"
@@ -253,14 +350,18 @@ RETURN
     & "</div>\"""")
 
 desenho("T14 · Resposta · ALT", "Texto alternativo do topo da tela.",
-        """-- 1 · Leituras
+        f"""-- 1 · Leituras
 VAR _k = [T14 · eleições com o PT atrás]
 VAR _a26 = [T14 · PT atrás em 2026]
 VAR _uf = [T14 · recorte]
+VAR _ano = [T14 · ano escolhido]
+VAR _mY = [T14 · margem do PT]
 -- 2 · Textos
 RETURN
     IF ( ISBLANK ( _uf ), "Brasil", _uf ) & ": o PT terminou o 1º turno atrás do adversário em " & FORMAT ( _k, "0" )
-        & " das seis eleições de 2006 a 2026" & IF ( _a26 = 1, ", inclusive em 2026.", "; em 2026, à frente." )""")
+        & " das seis eleições de 2006 a 2026" & IF ( _a26 = 1, ", inclusive em 2026.", "; em 2026, à frente." )
+        & IF ( ISBLANK ( _ano ), "", " Em " & _ano & ", a margem do PT foi de " & FORMAT ( _mY * 100, "+0.0;−0.0;0.0" )
+            & " pontos." )""")
 
 desenho("T14 · Linhas título · HTML", "Sobretítulo, manchete do gráfico (melhor e pior ano do PT) e a legenda.",
         f"""-- 1 · Leituras
@@ -280,7 +381,7 @@ RETURN
             & IF ( ISBLANK ( _uf ), " · BRASIL", " · " & UPPER ( _uf ) ) & "</div>"
         & "<div class='man sobe d1'>" & _man & "</div>"
         & "<div class='leg entra d2'><span><i class='pt'></i>PT</span><span><i class='adv'></i>adversário principal: o "
-            & "mais votado fora do PT no ano</span><span><i class='laco'></i>PT atrás</span></div>"
+            & "mais votado fora do PT no ano</span><span><i class='subl'></i>PT atrás</span></div>"
     & "</div>\"""")
 
 desenho("T14 · Linhas título · ALT", "Texto alternativo do título do gráfico.",
@@ -293,8 +394,9 @@ RETURN
 
 desenho("T14 · Linhas · HTML",
         "Uma entrada por eleição (granularidade Ano): os pontos do PT e do adversário com o rótulo, o trecho de linha "
-        "até a eleição seguinte (que se desenha em sequência), o laço à mão quando o PT ficou atrás e o eixo com os "
-        "candidatos. A 1ª eleição desenha a grade. Escala pelas contas 'T14 · escala …'.",
+        "até a eleição seguinte (que se desenha em sequência), o sublinhado à mão sob o PT quando ele ficou atrás e o "
+        "eixo com os candidatos. A 1ª eleição desenha a grade. Escala pelas contas 'T14 · escala …'. O clique num ano "
+        "leva a resposta e os painéis das regiões àquela eleição.",
         f"""-- 1 · Leituras
 VAR _ano = [T14 · ano]
 VAR _pt = [T14 · PT %]
@@ -325,6 +427,7 @@ VAR _f = FORMAT ( _x, "0.0", "en-US" )
 VAR _fN = FORMAT ( _x + 276, "0.0", "en-US" )
 VAR _atraso = 300 + _i * 380
 VAR _ptCima = _pt >= _adv
+VAR _yRotPt = IF ( _ptCima, _yPt - 38, _yPt + 12 )
 VAR _grade =
     IF (
         _ano = 2006,
@@ -346,11 +449,16 @@ VAR _seg =
             & "<line class='ladv traco' pathLength='1' style='animation-delay:" & _atraso & "ms' x1='" & _f & "' y1='"
             & FORMAT ( _yAdv, "0.0", "en-US" ) & "' x2='" & _fN & "' y2='" & FORMAT ( _yAdvN, "0.0", "en-US" ) & "'/>"
     )
-VAR _laco =
+VAR _sublinha =
     IF (
         _atras,
-        "<path class='laco traco' pathLength='1' style='animation-delay:" & ( _atraso + 900 ) & "ms' transform='translate("
-            & _f & "," & FORMAT ( _yPt, "0.0", "en-US" ) & ")' d='{LACO}'/>"
+        VAR _yy = _yRotPt + 27
+        RETURN
+            "<path class='subl traco' pathLength='1' style='animation-delay:" & ( _atraso + 900 ) & "ms' d='M"
+                & FORMAT ( _x - 36, "0.0", "en-US" ) & "," & FORMAT ( _yy + 1, "0.0", "en-US" ) & " C"
+                & FORMAT ( _x - 12, "0.0", "en-US" ) & "," & FORMAT ( _yy - 2, "0.0", "en-US" ) & " "
+                & FORMAT ( _x + 12, "0.0", "en-US" ) & "," & FORMAT ( _yy + 3, "0.0", "en-US" ) & " "
+                & FORMAT ( _x + 38, "0.0", "en-US" ) & "," & FORMAT ( _yy - 1, "0.0", "en-US" ) & "'/>"
     )
 -- 4 · Marcação
 RETURN
@@ -359,14 +467,14 @@ RETURN
         "<div class='tela ano'>"
             & "<div class='alvo' style='left:" & FORMAT ( _x - 128, "0.0", "en-US" ) & "px'></div>"
             & "<svg class='sv' width='1620' height='370' viewBox='0 0 1620 370'>"
-                & _grade & _seg & _laco
+                & _grade & _seg & _sublinha
                 & "<circle class='ppt brota' style='animation-delay:" & ( _atraso - 120 ) & "ms' cx='" & _f & "' cy='"
                     & FORMAT ( _yPt, "0.0", "en-US" ) & "' r='7.5'/>"
                 & "<circle class='padv brota' style='animation-delay:" & ( _atraso - 120 ) & "ms' cx='" & _f & "' cy='"
                     & FORMAT ( _yAdv, "0.0", "en-US" ) & "' r='7.5'/>"
             & "</svg>"
             & "<div class='vl vpt sobe' style='left:" & FORMAT ( _x - 60, "0.0", "en-US" ) & "px;top:"
-                & FORMAT ( IF ( _ptCima, _yPt - 38, _yPt + IF ( _atras, 30, 12 ) ), "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 200 )
+                & FORMAT ( _yRotPt, "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 200 )
                 & "ms'>" & {_pct("_pt")} & "</div>"
             & "<div class='vl vadv sobe' style='left:" & FORMAT ( _x - 60, "0.0", "en-US" ) & "px;top:"
                 & FORMAT ( IF ( _ptCima, _yAdv + 12, _yAdv - 38 ), "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 200 )
@@ -383,83 +491,91 @@ VAR _uf = [T14 · recorte]
 -- 2 · Textos
 RETURN
     "Gráfico de linhas, " & IF ( ISBLANK ( _uf ), "Brasil", _uf ) & ": % dos votos válidos do PT e do adversário "
-        & "principal em cada 1º turno de 2006 a 2026; o PT ficou atrás em " & FORMAT ( _k, "0" ) & " delas.\"""")
+        & "principal em cada 1º turno de 2006 a 2026; o PT ficou atrás em " & FORMAT ( _k, "0" ) & " delas. Clique "
+        & "num ano para levar a resposta e as regiões àquela eleição.\"""")
 
-_TAB_REG = ", ".join(f'{{ {i + 1}, "{r}" }}' for i, r in enumerate(REGIOES))
 _TAB_ANOS = ", ".join(f"{{ {a} }}" for a in ANOS)
+_ORDEM_REG = ", ".join(f'"{r}", {i + 1}' for i, r in enumerate(REGIOES))
 
 desenho("T14 · Regiões · HTML",
-        "As cinco regiões na mesma escala (10% a 70%): linhas do PT e do adversário e os valores de 2026. Ignoram o "
-        "filtro de UF; com uma UF escolhida, a região dela fica em destaque.",
+        "Uma entrada por região (granularidade Município[Região]), todas na mesma escala (10% a 70%): as linhas do PT e "
+        "do adversário de 2006 a 2026 e os valores da eleição em destaque (a clicada na série ou 2026). Ignoram o filtro "
+        "de UF; com uma UF escolhida, a região dela fica em destaque. O clique numa região leva a série e a resposta "
+        "àquela região; o mouse abre o dossiê dela (ttT14Regiao).",
         f"""-- 1 · Leituras
-VAR _reg = DATATABLE ( "o", INTEGER, "nome", STRING, {{ {_TAB_REG} }} )
-VAR _anos = DATATABLE ( "a", INTEGER, {{ {_TAB_ANOS} }} )
+VAR _r = [T14 · região do painel]
 VAR _sel = [T14 · região do recorte]
-VAR _uf = [T14 · recorte]
+VAR _ufNome = [T14 · UF do filtro]
+VAR _ano = [T14 · ano dos painéis]
+VAR _clique = NOT ISBLANK ( [T14 · ano escolhido] )
+VAR _anos = DATATABLE ( "a", INTEGER, {{ {_TAB_ANOS} }} )
+VAR _pts =
+    ADDCOLUMNS (
+        _anos,
+        "@pt", VAR _a = [a] RETURN CALCULATE ( [T14 · PT % na região], 'Ano'[Ano] = _a ),
+        "@adv", VAR _a = [a] RETURN CALCULATE ( [T14 · adversário % na região], 'Ano'[Ano] = _a )
+    )
 -- 3 · Geometria e 4 · Marcação (painéis de 300 px a cada 330; x do ano de 8 a 218; y de 10% a 70% em 110 px)
-VAR _paineis =
-    CONCATENATEX (
-        _reg,
-        VAR _o = [o]
-        VAR _r = [nome]
-        VAR _px = ( _o - 1 ) * 330
-        VAR _pts =
-            ADDCOLUMNS (
-                _anos,
-                "@pt",
-                    VAR _a = [a]
-                    RETURN
-                        CALCULATE ( [T14 · PT % na região], 'Município'[Região] = _r, 'Ano'[Ano] = _a ),
-                "@adv",
-                    VAR _a = [a]
-                    RETURN
-                        CALCULATE ( [T14 · adversário % na região], 'Município'[Região] = _r, 'Ano'[Ano] = _a )
-            )
-        VAR _xy =
-            ADDCOLUMNS (
-                _pts,
-                "@x", 8 + ( [a] - 2006 ) / 4 * 42,
-                "@yPt", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@pt] ) ) - 0.1 ) / 0.6,
-                "@yAdv", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@adv] ) ) - 0.1 ) / 0.6
-            )
-        VAR _lPt =
-            CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yPt], "0.0", "en-US" ), " ", [a], ASC )
-        VAR _lAdv =
-            CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yAdv], "0.0", "en-US" ), " ", [a], ASC )
-        VAR _pt26 = MAXX ( FILTER ( _xy, [a] = 2026 ), [@pt] ) /* lista */
-        VAR _adv26 = MAXX ( FILTER ( _xy, [a] = 2026 ), [@adv] ) /* lista */
-        VAR _y26pt = MAXX ( FILTER ( _xy, [a] = 2026 ), [@yPt] ) /* lista */
-        VAR _y26adv = MAXX ( FILTER ( _xy, [a] = 2026 ), [@yAdv] ) /* lista */
-        VAR _sep = IF ( ABS ( _y26pt - _y26adv ) < 16, 8 - ABS ( _y26pt - _y26adv ) / 2, 0 )
-        VAR _cls = IF ( ISBLANK ( _sel ), "pn", IF ( _sel = _r, "pn sel", "pn apaga" ) )
-        RETURN
-            "<div class='" & _cls & " sobe d" & ( 2 + _o ) & "' style='left:" & _px & "px'>"
-                & "<div class='nm'>" & _r & IF ( _sel = _r, " <span class='mao'>região de " & _uf & "</span>", "" )
-                & "</div>"
-                & "<svg width='300' height='132' viewBox='0 0 300 132'>"
-                    & "<line class='b' x1='0' x2='226' y1='116' y2='116'/>"
-                    & "<polyline class='lpt traco' pathLength='1' style='animation-delay:" & ( 600 + _o * 120 )
-                        & "ms' points='" & _lPt & "'/>"
-                    & "<polyline class='ladv traco' pathLength='1' style='animation-delay:" & ( 600 + _o * 120 )
-                        & "ms' points='" & _lAdv & "'/>"
-                    & "<circle class='ppt' cx='218' cy='" & FORMAT ( _y26pt, "0.0", "en-US" ) & "' r='4'/>"
-                    & "<circle class='padv' cx='218' cy='" & FORMAT ( _y26adv, "0.0", "en-US" ) & "' r='4'/>"
-                    & "<text class='vpt' x='228' y='" & FORMAT ( _y26pt + 5 + IF ( _y26pt >= _y26adv, _sep, -_sep ), "0.0", "en-US" )
-                        & "'>" & {_pct("_pt26")} & "</text>"
-                    & "<text class='vadv' x='228' y='" & FORMAT ( _y26adv + 5 + IF ( _y26adv > _y26pt, _sep, -_sep ), "0.0", "en-US" )
-                        & "'>" & {_pct("_adv26")} & "</text>"
-                    & "<text class='ex' x='0' y='130'>2006</text><text class='ex' x='218' y='130' text-anchor='middle'>2026</text>"
-                & "</svg>"
-            & "</div>",
-        "",
-        [o], ASC
+VAR _o = SWITCH ( _r, {_ORDEM_REG}, 0 )
+VAR _px = ( _o - 1 ) * 330
+VAR _xy =
+    ADDCOLUMNS (
+        _pts,
+        "@x", 8 + ( [a] - 2006 ) / 4 * 42,
+        "@yPt", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@pt] ) ) - 0.1 ) / 0.6,
+        "@yAdv", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@adv] ) ) - 0.1 ) / 0.6
+    )
+VAR _lPt =
+    CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yPt], "0.0", "en-US" ), " ", [a], ASC )
+VAR _lAdv =
+    CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yAdv], "0.0", "en-US" ), " ", [a], ASC )
+VAR _ptA = MAXX ( FILTER ( _xy, [a] = _ano ), [@pt] ) /* lista */
+VAR _advA = MAXX ( FILTER ( _xy, [a] = _ano ), [@adv] ) /* lista */
+VAR _yApt = MAXX ( FILTER ( _xy, [a] = _ano ), [@yPt] ) /* lista */
+VAR _yAadv = MAXX ( FILTER ( _xy, [a] = _ano ), [@yAdv] ) /* lista */
+VAR _xA = 8 + ( _ano - 2006 ) / 4 * 42
+VAR _sep = IF ( ABS ( _yApt - _yAadv ) < 16, 8 - ABS ( _yApt - _yAadv ) / 2, 0 )
+VAR _cls = IF ( _sel = _r, "pn sel", "pn" )
+VAR _marca =
+    IF (
+        _clique,
+        "<line class='mk' x1='" & FORMAT ( _xA, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xA, "0.0", "en-US" )
+            & "' y1='4' y2='116'/>"
+            & "<text class='ex' x='" & FORMAT ( _xA, "0.0", "en-US" ) & "' y='130' text-anchor='middle'>" & _ano & "</text>"
+    )
+VAR _eixo =
+    IF (
+        _clique && _ano > 2006 && _ano < 2026,
+        "<text class='ex' x='0' y='130'>2006</text>",
+        "<text class='ex' x='0' y='130'>2006</text><text class='ex' x='218' y='130' text-anchor='middle'>2026</text>"
     )
 RETURN
-    "<div class='tela t14g'>"
-        & "<div class='rot entra'>POR REGIÃO · MESMA ESCALA, 10% A 70%" & IF ( ISBLANK ( _uf ), "", " · TODO O BRASIL" )
+    IF (
+        _o > 0,
+        "<div class='tela t14g'><div class='" & _cls & " sobe d" & ( 2 + _o ) & "' style='left:" & _px & "px'>"
+            & "<div class='nm'>" & _r & IF ( _sel = _r, " <span class='mao'>região de " & _ufNome & "</span>", "" )
             & "</div>"
-        & _paineis
-    & "</div>\"""")
+            & "<svg width='300' height='132' viewBox='0 0 300 132'>"
+                & "<line class='b' x1='0' x2='226' y1='116' y2='116'/>"
+                & _marca
+                & "<polyline class='lpt traco' pathLength='1' style='animation-delay:" & ( 600 + _o * 120 )
+                    & "ms' points='" & _lPt & "'/>"
+                & "<polyline class='ladv traco' pathLength='1' style='animation-delay:" & ( 600 + _o * 120 )
+                    & "ms' points='" & _lAdv & "'/>"
+                & "<circle class='ppt' cx='" & FORMAT ( _xA, "0.0", "en-US" ) & "' cy='" & FORMAT ( _yApt, "0.0", "en-US" )
+                    & "' r='4'/>"
+                & "<circle class='padv' cx='" & FORMAT ( _xA, "0.0", "en-US" ) & "' cy='"
+                    & FORMAT ( _yAadv, "0.0", "en-US" ) & "' r='4'/>"
+                & "<text class='vpt' x='" & FORMAT ( _xA + 10, "0.0", "en-US" ) & "' y='"
+                    & FORMAT ( _yApt + 5 + IF ( _yApt >= _yAadv, _sep, -_sep ), "0.0", "en-US" )
+                    & "'>" & {_pct("_ptA")} & "</text>"
+                & "<text class='vadv' x='" & FORMAT ( _xA + 10, "0.0", "en-US" ) & "' y='"
+                    & FORMAT ( _yAadv + 5 + IF ( _yAadv > _yApt, _sep, -_sep ), "0.0", "en-US" )
+                    & "'>" & {_pct("_advA")} & "</text>"
+                & _eixo
+            & "</svg>"
+        & "</div></div>"
+    )""")
 
 desenho("T14 · Regiões · ALT", "Texto alternativo das regiões.",
         """-- 1 · Leituras
@@ -467,7 +583,71 @@ VAR _sel = [T14 · região do recorte]
 -- 2 · Textos
 RETURN
     "Cinco pequenos gráficos, um por região, com o PT e o adversário de 2006 a 2026 na mesma escala"
-        & IF ( ISBLANK ( _sel ), ".", "; em destaque, " & _sel & "." )""")
+        & IF ( ISBLANK ( _sel ), ".", "; em destaque, " & _sel & "." ) & " Clique numa região para ver a série dela.\"""")
+
+desenho("T14 · Tooltip região · HTML",
+        "Dossiê da região no tooltip dos painéis: os estados dela na eleição em destaque (a clicada na série ou 2026), "
+        "cada um com o duelo PT × adversário em barras, do mais petista ao menos; quantos tiveram o PT à frente e em "
+        "quantas das seis eleições o PT ficou à frente na região. Só lê contas.",
+        f"""-- 1 · Leituras
+VAR _r = [T14 · região do painel]
+VAR _ano = [T14 · ano dos painéis]
+VAR _fr = [T14 · eleições com o PT à frente]
+VAR _n = [T14 · eleições]
+VAR _nUf = [T14 · UFs da região]
+VAR _nPt = [T14 · UFs da região com o PT à frente]
+VAR _cpt = CALCULATE ( [T14 · candidato do PT], 'Ano'[Ano] = _ano )
+VAR _cadv = CALCULATE ( [T14 · adversário], 'Ano'[Ano] = _ano )
+VAR _todas = DATATABLE ( "uf", STRING, "reg", STRING, {{ {_TAB_UFS} }} )
+VAR _daRegiao = FILTER ( _todas, [reg] = _r ) /* lista */
+VAR _ufs =
+    ADDCOLUMNS (
+        _daRegiao,
+        "@pt", VAR _u = [uf] RETURN CALCULATE ( [T14 · PT % da UF na eleição dos painéis], 'UF'[UF] = _u ),
+        "@adv", VAR _u = [uf] RETURN CALCULATE ( [T14 · adversário % da UF na eleição dos painéis], 'UF'[UF] = _u )
+    ) /* lista */
+-- 2 · Textos
+VAR _selo = "PT À FRENTE EM " & FORMAT ( _fr, "0" ) & " DE " & FORMAT ( _n, "0" )
+VAR _clsSelo = IF ( _fr * 2 > _n, "selo vm", "selo az" )
+VAR _mao =
+    SWITCH (
+        TRUE (),
+        _nPt = _nUf, "todos com o PT",
+        _nPt = 0, "nenhum com o PT",
+        "dividida: " & FORMAT ( _nPt, "0" ) & " a " & FORMAT ( _nUf - _nPt, "0" )
+    )
+-- 3 · Geometria e 4 · Marcação (barras de duelo: 100% = 190 px)
+VAR _linhas =
+    CONCATENATEX (
+        _ufs,
+        "<div class='ln'><span class='a'>" & [uf] & "</span><span class='tr'><i class='bl barra-x' style='width:"
+            & FORMAT ( 190 * [@pt], "0.0", "en-US" ) & "px'></i><i class='ba barra-x-dir' style='width:"
+            & FORMAT ( 190 * [@adv], "0.0", "en-US" ) & "px'></i></span><span class='p'><b class='lula'>"
+            & {_pct("[@pt]")} & "</b> × <b class='flavio'>" & {_pct("[@adv]")} & "</b></span></div>",
+        "",
+        [@pt] - [@adv], DESC
+    )
+RETURN
+    "<div class='tela tt14r'><div class='fita'></div>"
+        & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
+        & "<div class='an sobe'>" & _r & " · " & _ano & "</div>"
+        & "<div class='rot entra d1'>OS ESTADOS · " & UPPER ( {_curto("_cpt")} ) & " × " & UPPER ( {_curto("_cadv")} )
+            & "</div>"
+        & "<div class='lista entra d2'>" & _linhas & "</div>"
+        & "<div class='nota entra d3'>Votos válidos de cada estado, somando os municípios (sem o exterior).</div>"
+        & "<div class='mao entra d5'>" & _mao & "</div>"
+    & "</div>\"""")
+
+desenho("T14 · Tooltip região · ALT", "Texto alternativo do dossiê da região.",
+        """-- 1 · Leituras
+VAR _r = [T14 · região do painel]
+VAR _ano = [T14 · ano dos painéis]
+VAR _nUf = [T14 · UFs da região]
+VAR _nPt = [T14 · UFs da região com o PT à frente]
+-- 2 · Textos
+RETURN
+    _r & ", " & _ano & ": o PT ficou à frente em " & FORMAT ( _nPt, "0" ) & " de " & FORMAT ( _nUf, "0" )
+        & IF ( _nUf = 1, " estado.", " estados." )""")
 
 desenho("T14 · Tooltip ano · HTML",
         "Dossiê da eleição no tooltip da série: os quatro mais votados no Brasil (com o exterior), a colocação do PT e "

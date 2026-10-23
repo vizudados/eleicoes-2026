@@ -1,0 +1,16 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: A parte dos comentários nos perfis dos dois que ficou com esse candidato no dia do ponto (Quaest), em %.
+*/
+VAR _d = [T09 · IPD dia · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        CALCULATE (
+            MAX ( Monitoramento[Valor] ),
+            REMOVEFILTERS ( Monitoramento ),
+            Monitoramento[Métrica] = "participação nos comentários dos perfis dos dois candidatos",
+            Monitoramento[Início] = _d
+        )
+    )

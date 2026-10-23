@@ -1,0 +1,6 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: texto
+@descricao: Nome curto do candidato da linha da coluna da direita (Lula ou Flávio).
+*/
+SWITCH ( [T09 · lado · nome completo], "Lula", "Lula", "Flávio Bolsonaro", "Flávio" )

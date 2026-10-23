@@ -1,0 +1,11 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: A pesquisa clicada no gráfico (filtro cruzado de T07_Pesquisas_Pontos, grão Pesquisa[Id]); vazia sem clique, dentro da própria camada de pontos (o Id está no grão) e fora das pesquisas do 2º turno depois do 1º turno.
+*/
+VAR _id = SELECTEDVALUE ( Pesquisa[Id] )
+RETURN
+    IF (
+        ISFILTERED ( Pesquisa[Id] ) && NOT ISINSCOPE ( Pesquisa[Id] ) && NOT ISBLANK ( _id ),
+        IF ( NOT ISBLANK ( [T07 · pesquisa · janela] ), _id )
+    )

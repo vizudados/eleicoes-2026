@@ -1,0 +1,16 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Alvo transparente de cada ano sobre a linha da série (granularidade Ano[Ano]): só recebe o mouse para abrir o dossiê do ano; não desenha nada.
+*/
+-- 1 · Leituras
+VAR _ano = [T06 · ano]
+VAR _abst = [T06 · abstenções (ano)]
+-- 3 · Geometria (o x do ano na série: 60 + (ano − 2006) × 32; alvo de 128 px centrado nele)
+VAR _x = 60 + ( _ano - 2006 ) * 32 - 64 -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _abst ),
+        "<div class='tela sa'><div class='alvo' style='left:" & FORMAT ( _x, "0.0##", "en-US" ) & "px'></div></div>"
+    )

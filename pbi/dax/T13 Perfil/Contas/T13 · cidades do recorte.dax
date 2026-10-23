@@ -1,0 +1,12 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: #,0
+@descricao: Cidades do recorte de UF, sem o clique numa célula.
+@oraculo: mockup/data/eleicoes.json › paginas[13] › 5.571
+@gerado: pbi/scripts/desenho_t13.py
+*/
+CALCULATE (
+    [T13 · cidades],
+    REMOVEFILTERS ( 'Município' ),
+    VALUES ( 'UF'[UF] )
+)

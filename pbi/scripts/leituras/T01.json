@@ -1,6 +1,17 @@
-{"titulo": "Como ler o placar",
+{
+ "titulo": "Como ler o placar",
  "blocos": [
-  ["Como ler", "O número grande é a distância entre os dois mais votados. A barra reúne todos os votos válidos, um pedaço por candidato: passe o mouse num pedaço para ver onde ele foi mais forte. À direita, as duas linhas ligam 2022 a 2026."],
-  ["De onde vêm os números", "TSE, resultado do 1º turno (arquivo de 22/10/2026). No Brasil, a conta inclui os votos do exterior; com o filtro, só a UF escolhida."],
-  ["Para lembrar", "Votos válidos são os dados a algum candidato: brancos e nulos ficam de fora. Em 2022, o PL concorreu com Jair Bolsonaro; em 2026, com Flávio Bolsonaro. Ponto percentual é a distância entre dois percentuais."]
- ]}
+  [
+   "Como ler",
+   "O número grande é a distância entre os dois mais votados. A barra reúne todos os votos válidos, um pedaço por candidato: passe o mouse num pedaço para ver onde ele foi mais forte. À direita, as linhas ligam 2022 a 2026: passe o mouse num ponto para ver de onde vieram os votos daquele ano."
+  ],
+  [
+   "De onde vêm os números",
+   "TSE, resultado do 1º turno (arquivo de 22/10/2026). No Brasil, a conta inclui os votos do exterior; com o filtro, só a UF escolhida. O dossiê de cada ponto soma as urnas dos municípios, sem o exterior."
+  ],
+  [
+   "Para lembrar",
+   "Votos válidos são os dados a algum candidato: brancos e nulos ficam de fora. Em 2022, o PL concorreu com Jair Bolsonaro; em 2026, com Flávio Bolsonaro. Ponto percentual é a distância entre dois percentuais."
+  ]
+ ]
+}

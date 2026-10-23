@@ -1,0 +1,11 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: O lugar que a tela mostra: o município marcado, N municípios marcados, a UF do filtro ou o Brasil.
+*/
+SWITCH (
+    TRUE (),
+    [T25 · municípios marcados] = 1, [T25 · município],
+    [T25 · municípios marcados] > 1, FORMAT ( [T25 · municípios marcados], "#,0" ) & " municípios marcados",
+    [T25 · recorte]
+)

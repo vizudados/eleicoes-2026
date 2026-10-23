@@ -1,0 +1,69 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T25_CHEGADA_01",
+  "displayName": "Chegada · 07 Quem falta",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T25_Casca_Filtro",
+      "T25_Casca_FiltroAbre",
+      "T25_Casca_FiltroFora",
+      "T25_Casca_InfoAbre",
+      "T25_Casca_InfoFecha",
+      "T25_Casca_InfoFora",
+      "T25_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T25",
+    "sections": {
+      "T25": {
+        "visualContainers": {
+          "T25_Casca_Filtro": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_FiltroAbre": {
+            "singleVisual": {}
+          },
+          "T25_Casca_FiltroFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T25_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_InfoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

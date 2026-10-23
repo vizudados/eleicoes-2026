@@ -1,0 +1,18 @@
+/*
+@pasta: T05 Flávio\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da origem dos votos.
+*/
+LEFT (
+    SWITCH (
+        TRUE (),
+        [T05 · com município] = 1,
+            [T05 · município] & ": " & FORMAT ( [T05 · parte do município no estado], "0.0%" ) & " dos votos de Flávio em "
+                & [T05 · estado do município] & ".",
+        [T05 · com UF] = 1,
+            "As cidades que mais deram votos a Flávio em " & [T05 · recorte] & ".",
+        "De onde vêm os votos de Flávio, por região. Clique numa região para ver só ela no mapa; passe o mouse "
+            & "para ver os estados dela."
+    ),
+    250
+)

@@ -188,8 +188,63 @@ conta("T11 · população", "#,0", "População do Censo 2022, somada no context
       ORACULO + " › maiores_que_viraram › populacao")
 conta("T11 · porte", "texto", "Porte do município do contexto (faixa de população).", "SELECTEDVALUE ( 'Município'[Porte] )")
 
+# ---- a seleção no mapa (clique num ponto ou retângulo arrastado: filtro cruzado em Município) e a lista das maiores
+conta("T11 · seleção", "#,0",
+      "Quantos municípios estão selecionados no mapa (clique num ponto ou área arrastada) ou na lista; vazio sem "
+      "seleção. O filtro cruzado chega como filtro direto nas colunas do Município (o de UF da casca, não).",
+      "IF ( ISFILTERED ( 'Município' ), COUNTROWS ( VALUES ( 'Município'[CodIBGE] ) ) )")
+conta("T11 · município · nome e UF", "texto", "Nome (UF) do município do contexto, como as listas mostram.",
+      "SELECTEDVALUE ( 'Município'[Rótulo] )")
+conta("T11 · população das que viraram", "#,0",
+      "População do município quando ele trocou de lado (situação 2 ou 3); vazio nos outros. Ordena e recorta a lista "
+      "das maiores que viraram (filtro Top 6 do visual).",
+      """VAR _s = [T11 · situação]
+RETURN
+    IF ( _s = 2 || _s = 3, [T11 · população] )""", ORACULO + " › maiores_que_viraram › populacao (Osasco 728.615)")
+conta("T11 · posição entre as maiores que viraram", "0",
+      "Posição do município na lista das maiores que viraram (1 = a mais populosa entre as que a lista mostra: o Top 6 "
+      "do visual, dentro do recorte e da seleção do mapa).",
+      """IF (
+    HASONEVALUE ( 'Município'[CodIBGE] ) && NOT ISBLANK ( [T11 · população das que viraram] ),
+    RANKX ( ALLSELECTED ( 'Município'[CodIBGE] ), [T11 · população das que viraram], , DESC, SKIP )
+)""", ORACULO + " › maiores_que_viraram (ordem)")
+conta("T11 · escala das maiores", "0.0%",
+      "Maior afastamento do zero (margem de 2022 ou 2026) entre as cidades da lista; escala comum dos mini gráficos.",
+      """MAXX (
+    FILTER (
+        ADDCOLUMNS (
+            ALLSELECTED ( 'Município'[CodIBGE] ),
+            "@p", [T11 · população das que viraram],
+            "@a", MAX ( ABS ( [T11 · margem 2022] ), ABS ( [T11 · margem 2026] ) )
+        ),
+        NOT ISBLANK ( [@p] )
+    ),
+    [@a]
+)""")
+conta("T11 · margem no ano", "0.0%", "Margem do PT no ano do contexto, somando os municípios do contexto (série 2006–2026).",
+      """DIVIDE (
+    SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ),
+    SUM ( 'Município ano'[Validos] )
+)""", "paginas[15] › serie › margem (mesma conta da tela Minha cidade)")
+conta("T11 · eleições com o adversário à frente", "0",
+      "Em quantas das seis eleições (2006–2026) o adversário do PT ficou à frente no contexto.",
+      """COUNTROWS ( FILTER ( ALL ( 'Ano'[Ano] ), [T11 · margem no ano] < 0 ) ) + 0""")
+conta("T11 · eleições com votos", "0", "Em quantas das seis eleições o contexto teve votos (município novo tem menos).",
+      """COUNTROWS ( FILTER ( ALL ( 'Ano'[Ano] ), NOT ISBLANK ( [T11 · margem no ano] ) ) ) + 0""")
+conta("T11 · antes de 2026, a última com o adversário à frente", "0",
+      "A eleição mais recente antes de 2026 em que o adversário do PT ficou à frente no contexto (vazio se nenhuma).",
+      """MAXX (
+    FILTER ( ALL ( 'Ano'[Ano] ), 'Ano'[Ano] < 2026 && [T11 · margem no ano] < 0 ),
+    'Ano'[Ano]
+)""")
+conta("T11 · candidato do PT no ano", "texto", "Candidato do PT no ano do contexto.",
+      "SELECTEDVALUE ( 'Ano'[Candidato do PT] )")
+
 
 # ==================================================================================================== desenho
+ESC = 'SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( {v}, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )'
+
+
 def _fmt_votos(var: str, saida: str) -> str:
     """Texto com sinal e unidade (mi, mil) para uma variação de votos já lida."""
     return f"""VAR {saida} =
@@ -213,7 +268,8 @@ def _faixa(a0: str, a1: str, b0: str, b1: str, saida: str) -> str:
 
 desenho("T11 · Resposta · HTML",
         "Coluna da resposta: quantos municípios trocaram Lula por Flávio, o caminho inverso e a fila das cidades "
-        "2022 → 2026 (barras e faixas, com a faixa dos que trocaram anotada à mão). Só lê contas 'T11 · …'.",
+        "2022 → 2026 (barras e faixas, com a faixa dos que trocaram anotada à mão). Com seleção no mapa, conta a área "
+        "marcada; com uma cidade só, diz o que ela fez. Só lê contas 'T11 · …'.",
         f"""-- 1 · Leituras
 VAR _vir = [T11 · viraram]
 VAR _vol = [T11 · voltaram]
@@ -226,27 +282,55 @@ VAR _e26 = [T11 · empates em 2026]
 VAR _ll = [T11 · seguiram com Lula]
 VAR _ff = [T11 · seguiram com o adversário]
 VAR _tot = [T11 · municípios]
+VAR _nSel = [T11 · seleção]
+VAR _nome1 = [T11 · município · nome e UF]
+VAR _sit1 = [T11 · situação]
+VAR _m22 = [T11 · margem 2022]
+VAR _m26 = [T11 · margem 2026]
 -- 2 · Textos
-VAR _txtVir = IF ( _vir = 0, "nenhum", FORMAT ( _vir, "#,0" ) )
+VAR _um = _nSel = 1
+VAR _area = _nSel > 1
+VAR _virou1 = _sit1 = 2 || _sit1 = 3
+VAR _txtNome1 = {ESC.format(v="_nome1")}
+VAR _txtVir =
+    SWITCH ( TRUE (), _um && _virou1, "virou", _um, "não virou", _vir = 0, "nenhum", FORMAT ( _vir, "#,0" ) )
 VAR _txtFrase =
-    IF ( _vir <= 1, "município trocou", "municípios trocaram" )
+    IF ( _vir <= 1, "município", "municípios" ) & IF ( _area, " da área marcada", "" )
+        & IF ( _vir <= 1, " trocou", " trocaram" )
+VAR _lula = "<span class='lula'>Lula</span>"
+VAR _flavio = "<span class='flavio'>Flávio</span>"
+VAR _frase =
+    SWITCH (
+        TRUE (),
+        _um && _sit1 = 2, _txtNome1 & " trocou " & _lula & " por " & _flavio & " de 2022 para 2026",
+        _um && _sit1 = 3, _txtNome1 & " trocou " & _flavio & " por " & _lula & " de 2022 para 2026",
+        _um && _sit1 = 0, _txtNome1 & " seguiu com " & _lula & " de 2022 para 2026",
+        _um && _sit1 = 1, _txtNome1 & " seguiu com o adversário de 2022 para 2026",
+        _um, _txtNome1 & ": empate exato em 2026",
+        _area, _txtFrase & " " & _lula & " por " & _flavio,
+        _txtFrase & " " & _lula & " por " & _flavio & " de 2022 para 2026"
+    )
 VAR _txtInv =
     SWITCH (
         TRUE (),
+        _um, "margem de Lula: " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " → " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
+            & " p.p.",
         _vol = 0 && _vir = 0, "e nenhum trocou Flávio por Lula",
         _vol = 0, "nenhum fez o caminho inverso",
         _vol = 1, "1 fez o caminho inverso",
         FORMAT ( _vol, "#,0" ) & " fizeram o caminho inverso"
     )
-VAR _clsGrande = IF ( _vir = 0, "grande palavra", "grande" )
+VAR _clsGrande = IF ( _vir = 0 || _um, "grande palavra", "grande" )
 VAR _txtNota =
-    IF ( _vir = 0, "", IF ( _vir = 1, "o 1 que trocou", "os " & FORMAT ( _vir, "#,0" ) & " que trocaram" ) & " →" )
+    IF ( _vir = 0 || _um, "", IF ( _vir = 1, "o 1 que trocou", "os " & FORMAT ( _vir, "#,0" ) & " que trocaram" ) & " →" )
 VAR _txtEmp =
     IF (
         _e22 + _e26 > 0,
         " Empates exatos (" & FORMAT ( _e22, "#,0" ) & " em 2022, " & FORMAT ( _e26, "#,0" ) & " em 2026) ficam de fora.",
         ""
     )
+VAR _rotFila =
+    SWITCH ( TRUE (), _um, "A CIDADE ESCOLHIDA", _area, "NA ÁREA MARCADA", "CIDADE A CIDADE" ) & " · QUEM FICOU À FRENTE"
 -- 3 · Geometria (fila de 420 px com 6 px entre os blocos: uma cidade = 408 ÷ total)
 VAR _s = DIVIDE ( 408, _tot ) -- geometria
 VAR _xE22 = _l22 * _s + 6 -- geometria
@@ -279,14 +363,13 @@ VAR _svg =
 VAR _html =
     "<div class='tela t11r'>"
         & "<div class='num " & _clsGrande & " sobe'>" & _txtVir & "</div>"
-        & "<div class='man frase sobe d2'>" & _txtFrase & " <span class='lula'>Lula</span> por "
-            & "<span class='flavio'>Flávio</span> de 2022 para 2026</div>"
+        & "<div class='man frase sobe d2'>" & _frase & "</div>"
         & "<div class='inv entra d4'><span>" & _txtInv & "</span>"
             & "<svg width='330' height='16' viewBox='0 0 330 16'><path class='traco' style='animation-delay:900ms' "
             & "pathLength='1' d='M3,10 C70,4 170,13 326,6' fill='none' stroke='var(--tinta)' stroke-width='5' "
             & "stroke-linecap='round'/></svg></div>"
         & "<div class='fluxo'>"
-            & "<div class='rot entra d5'>CIDADE A CIDADE · QUEM FICOU À FRENTE</div>"
+            & "<div class='rot entra d5'>" & _rotFila & "</div>"
             & "<div class='lb cima'><span class='e'><span class='ano'>2022</span><b class='num lula'>" & FORMAT ( _l22, "#,0" )
                 & "</b><span> com Lula</span></span><span class='d'><b class='num flavio'>" & FORMAT ( _a22, "#,0" )
                 & "</b><span> com Bolsonaro</span></span></div>"
@@ -310,16 +393,19 @@ VAR _vol = [T11 · voltaram]
 VAR _l26 = [T11 · Lula à frente em 2026]
 VAR _f26 = [T11 · Flávio à frente em 2026]
 VAR _tot = [T11 · municípios]
+VAR _nSel = [T11 · seleção]
 -- 2 · Textos
 RETURN
-    FORMAT ( _vir, "#,0" ) & IF ( _vir = 1, " município trocou", " municípios trocaram" )
+    IF ( _nSel > 0, IF ( _nSel = 1, "Na cidade escolhida no mapa: ", "Na área marcada no mapa: " ), "" )
+        & FORMAT ( _vir, "#,0" ) & IF ( _vir = 1, " município trocou", " municípios trocaram" )
         & " Lula por Flávio de 2022 para 2026; " & FORMAT ( _vol, "#,0" ) & " fizeram o caminho inverso. Em 2026, "
-        & "Lula ficou à frente em " & FORMAT ( _l26, "#,0" ) & " e Flávio em " & FORMAT ( _f26, "#,0" ) & " dos "
-        & FORMAT ( _tot, "#,0" ) & " municípios.\"""")
+        & "Lula ficou à frente em " & FORMAT ( _l26, "#,0" ) & " e Flávio em " & FORMAT ( _f26, "#,0" )
+        & IF ( _tot = 1, " do único município.", " dos " & FORMAT ( _tot, "#,0" ) & " municípios." )""")
 
 desenho("T11 · Mapa título · HTML",
-        "Título do mapa: onde a virada se concentra (regiões no Brasil; a UF no filtro) e a legenda das cores.",
-        """-- 1 · Leituras
+        "Título do mapa: onde a virada se concentra (regiões no Brasil; a UF no filtro; a área marcada ou a cidade "
+        "escolhida no mapa ou na lista), a legenda das cores e a dica do gesto.",
+        f"""-- 1 · Leituras
 VAR _vir = [T11 · viraram]
 VAR _vol = [T11 · voltaram]
 VAR _tot = [T11 · municípios]
@@ -328,12 +414,26 @@ VAR _r1 = [T11 · região com mais viradas]
 VAR _r2 = [T11 · segunda região com mais viradas]
 VAR _n2 = [T11 · viraram nas duas regiões]
 VAR _nr = [T11 · regiões com virada]
+VAR _nSel = [T11 · seleção]
+VAR _nome1 = [T11 · município · nome e UF]
+VAR _sit1 = [T11 · situação]
+VAR _m22 = [T11 · margem 2022]
+VAR _m26 = [T11 · margem 2026]
 -- 2 · Textos
 VAR _sVir = "<span>" & FORMAT ( _vir, "#,0" ) & "</span>"
 VAR _sTot = "<span>" & FORMAT ( _tot, "#,0" ) & "</span>"
+VAR _txtNome1 = {ESC.format(v="_nome1")}
+VAR _oQue1 =
+    SWITCH ( _sit1, 2, "trocou Lula por Flávio", 3, "trocou Flávio por Lula", 0, "Lula seguiu à frente",
+        1, "o adversário seguiu à frente", "empate exato em 2026" )
 VAR _man =
     SWITCH (
         TRUE (),
+        _nSel = 1, _txtNome1 & ": " & _oQue1,
+        _nSel > 1 && _vir = 0, "Na área marcada, nenhum dos " & _sTot & " municípios trocou de lado",
+        _nSel > 1,
+            "Na área marcada, " & _sVir & " dos " & _sTot & IF ( _vir = 1, " municípios trocou", " municípios trocaram" )
+                & " Lula por Flávio",
         NOT ISBLANK ( _uf ) && _tot = 1 && _vir = 0, _uf & ": o único município não trocou de lado",
         NOT ISBLANK ( _uf ) && _tot = 1, _uf & ": o único município trocou Lula por Flávio",
         NOT ISBLANK ( _uf ) && _vir = 0, _uf & ": nenhum dos " & _sTot & " municípios trocou de lado",
@@ -346,6 +446,8 @@ VAR _man =
     )
 VAR _legVol =
     IF ( _vol > 0, "<span><i class='c-vl'></i>trocou Flávio por Lula</span>", "" )
+VAR _dica =
+    IF ( _nSel > 0, "clique fora dos pontos para limpar", "clique num ponto ou arraste uma área" )
 -- 4 · Marcação
 RETURN
     "<div class='tela t11t'>"
@@ -353,7 +455,8 @@ RETURN
         & "<div class='man sobe d1'>" & _man & "</div>"
         & "<div class='leg entra d3'><span><i class='c-l'></i>Lula à frente</span>"
             & "<span><i class='c-f'></i>Flávio à frente</span>"
-            & "<span><i class='c-v'></i>trocou Lula por Flávio</span>" & _legVol & "</div>"
+            & "<span><i class='c-v'></i>trocou Lula por Flávio</span>" & _legVol
+            & "<span class='dica'>" & _dica & "</span></div>"
     & "</div>\"""")
 
 desenho("T11 · Mapa título · ALT", "Texto alternativo do título do mapa.",
@@ -363,12 +466,17 @@ VAR _uf = [T11 · recorte]
 VAR _r1 = [T11 · região com mais viradas]
 VAR _r2 = [T11 · segunda região com mais viradas]
 VAR _n2 = [T11 · viraram nas duas regiões]
+VAR _nSel = [T11 · seleção]
+VAR _nome1 = [T11 · município · nome e UF]
 -- 2 · Textos
 RETURN
-    IF (
+    SWITCH (
+        TRUE (),
+        _nSel = 1, "Cidade escolhida no mapa: " & _nome1 & ".",
+        _nSel > 1, "Área marcada no mapa: " & FORMAT ( _vir, "#,0" ) & " municípios trocaram Lula por Flávio.",
         ISBLANK ( _uf ),
-        "A virada se concentra em " & _r1 & " e " & _r2 & ": " & FORMAT ( _n2, "#,0" ) & " dos "
-            & FORMAT ( _vir, "#,0" ) & " municípios que trocaram de lado.",
+            "A virada se concentra em " & _r1 & " e " & _r2 & ": " & FORMAT ( _n2, "#,0" ) & " dos "
+                & FORMAT ( _vir, "#,0" ) & " municípios que trocaram de lado.",
         _uf & ": " & FORMAT ( _vir, "#,0" ) & " municípios trocaram Lula por Flávio."
     )""")
 
@@ -379,77 +487,29 @@ VAR _tot = [T11 · municípios]
 -- 2 · Textos
 RETURN
     "Mapa de pontos, um por município (" & FORMAT ( _tot, "#,0" ) & "). Em azul forte, os " & FORMAT ( _vir, "#,0" )
-        & " que trocaram Lula por Flávio; em tons claros, quem ficou à frente em 2026. Passe o mouse para o dossiê."\
+        & " que trocaram Lula por Flávio. Passe o mouse para o dossiê; clique num ponto ou arraste uma área para "
+        & "filtrar a tela."\
 """)
 
 desenho("T11 · Maiores · HTML",
-        "Coluna 'As maiores que viraram': até 6 municípios que trocaram de lado, por população, com a margem "
-        "2022 → 2026 num mini gráfico. Monta a lista com VALUES do município e lê as contas de cada um.",
+        "A moldura da lista 'As maiores que viraram': o título, a explicação do mini gráfico (com a seleção do mapa, "
+        "'na área marcada'), o aviso quando nenhuma cidade trocou de lado e a explicação de margem. As cidades são "
+        "desenhadas por cima, uma por ponto de dado ('T11 · Lista · HTML').",
         """-- 1 · Leituras
 VAR _vir = [T11 · viraram]
-VAR _lista =
-    ADDCOLUMNS ( VALUES ( 'Município'[CodIBGE] ), "@s", [T11 · situação] )
-VAR _viradas =
-    FILTER ( _lista, [@s] = 2 || [@s] = 3 ) /* lista */
-VAR _top =
-    TOPN (
-        6,
-        ADDCOLUMNS (
-            _viradas,
-            "@pop", [T11 · população],
-            "@nome", [T11 · município · nome],
-            "@uf", [T11 · município · UF],
-            "@m22", [T11 · margem 2022],
-            "@m26", [T11 · margem 2026]
-        ),
-        [@pop], DESC,
-        'Município'[CodIBGE], ASC
-    )
--- 3 · Geometria (mini gráfico de 300 px: zero no meio; escala pelo maior afastamento da lista)
-VAR _esc =
-    MAX ( 0.05, MAXX ( _top, MAX ( ABS ( [@m22] ), ABS ( [@m26] ) ) ) ) /* geometria */
-VAR _linhas =
-    ADDCOLUMNS (
-        _top,
-        "@pos", RANKX ( _top, [@pop], , DESC, Dense ) /* geometria */,
-        "@x22", 150 + 132 * [@m22] / _esc,
-        "@x26", 150 + 132 * [@m26] / _esc
-    )
--- 2 · Textos e 4 · Marcação
-VAR _itens =
-    CONCATENATEX (
-        _linhas,
-        VAR _y = 96 + ( [@pos] - 1 ) * 104
-        VAR _cor = IF ( [@m26] < 0, "var(--azul)", "var(--vermelho)" )
-        VAR _nome =
-            SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
-        RETURN
-            "<div class='it sobe d" & ( [@pos] + 1 ) & "' style='top:" & _y & "px'>"
-                & "<span class='pos mao'>" & [@pos] & "</span>"
-                & "<div class='nm'>" & _nome & " <span class='uf'>" & [@uf] & "</span></div>"
-                & "<div class='nota'>" & FORMAT ( [@pop], "#,0" ) & " habitantes</div>"
-                & "<svg class='db' width='300' height='22' viewBox='0 0 300 22'>"
-                    & "<line x1='150' x2='150' y1='1' y2='21' class='zero'/>"
-                    & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 700 + [@pos] * 90 )
-                        & "ms' x1='" & FORMAT ( [@x22], "0.0", "en-US" ) & "' x2='" & FORMAT ( [@x26], "0.0", "en-US" )
-                        & "' y1='11' y2='11'/>"
-                    & "<circle cx='" & FORMAT ( [@x22], "0.0", "en-US" ) & "' cy='11' r='5' class='m22'/>"
-                    & "<circle class='brota' style='animation-delay:" & ( 1100 + [@pos] * 90 ) & "ms' cx='"
-                        & FORMAT ( [@x26], "0.0", "en-US" ) & "' cy='11' r='6' fill='" & _cor & "'/>"
-                & "</svg>"
-                & "<div class='mg'>" & FORMAT ( [@m22] * 100, "+0.0;−0.0;0.0" ) & " → "
-                    & FORMAT ( [@m26] * 100, "+0.0;−0.0;0.0" ) & " p.p.</div>"
-            & "</div>",
-        "",
-        [@pos], ASC
-    )
+VAR _nSel = [T11 · seleção]
+-- 2 · Textos
+VAR _onde =
+    SWITCH ( TRUE (), _nSel = 1, " · na cidade escolhida", _nSel > 1, " · na área marcada", "" )
 VAR _vazio =
-    "<div class='vz txt entra d2'>Nenhum município trocou de lado neste recorte.</div>"
+    "<div class='vz txt entra d2'>Nenhum município trocou de lado "
+        & IF ( _nSel > 0, "na seleção do mapa", "neste recorte" ) & ".</div>"
+-- 4 · Marcação
 RETURN
     "<div class='tela t11m'>"
         & "<div class='rot entra'>AS MAIORES QUE VIRARAM</div>"
-        & "<div class='txt sub entra d1'>Pela população; o traço vai da margem de 2022 à de 2026</div>"
-        & IF ( _vir = 0, _vazio, _itens )
+        & "<div class='txt sub entra d1'>Pela população; o traço vai da margem de 2022 à de 2026" & _onde & "</div>"
+        & IF ( _vir = 0, _vazio, "" )
         & "<div class='pe nota entra d10'><b>Margem</b> é a diferença entre os votos de Lula e os do adversário, "
             & "em pontos percentuais dos votos válidos. À direita do traço do meio, Lula à frente; à esquerda, o "
             & "adversário.</div>"
@@ -476,6 +536,139 @@ RETURN
         "Nenhum município trocou de lado neste recorte.",
         "As maiores cidades que trocaram Lula por Flávio: " & _nomes & "."
     )""")
+
+desenho("T11 · Lista · HTML",
+        "Uma cidade da lista 'As maiores que viraram' (granularidade Município[CodIBGE], Top 6 pela população entre as "
+        "que trocaram de lado): a posição à mão, o nome e a UF, os habitantes e a margem 2022 → 2026 num mini gráfico "
+        "com escala comum. Vazia fora das 6. Mouse: a série da cidade (ttT11Serie); clique: o mapa vai até ela. Só lê "
+        "contas.",
+        f"""-- 1 · Leituras
+VAR _pos = [T11 · posição entre as maiores que viraram]
+VAR _pop = [T11 · população]
+VAR _nome = [T11 · município · nome]
+VAR _uf = [T11 · município · UF]
+VAR _m22 = [T11 · margem 2022]
+VAR _m26 = [T11 · margem 2026]
+VAR _esc0 = [T11 · escala das maiores]
+-- 2 · Textos
+VAR _txtNome = {ESC.format(v="_nome")}
+VAR _cor = IF ( _m26 < 0, "var(--azul)", "var(--vermelho)" )
+-- 3 · Geometria (mini gráfico de 300 px: zero no meio; itens a cada 104 px a partir de y 96)
+VAR _esc = MAX ( 0.05, _esc0 )
+VAR _x22 = 156 + 132 * _m22 / _esc
+VAR _x26 = 156 + 132 * _m26 / _esc
+VAR _y = 96 + ( _pos - 1 ) * 104
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pos ) && _pos <= 6,
+        "<div class='tela t11l'><div class='it sobe d" & ( _pos + 1 ) & "' style='top:" & _y & "px'>"
+            & "<span class='pos mao'>" & _pos & "</span>"
+            & "<div class='nm'>" & _txtNome & " <span class='uf'>" & _uf & "</span></div>"
+            & "<div class='nota'>" & FORMAT ( _pop, "#,0" ) & " habitantes</div>"
+            & "<svg class='db' width='306' height='22' viewBox='0 0 306 22'>"
+                & "<line x1='156' x2='156' y1='1' y2='21' class='zero'/>"
+                & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 700 + _pos * 90 )
+                    & "ms' x1='" & FORMAT ( _x22, "0.0", "en-US" ) & "' x2='" & FORMAT ( _x26, "0.0", "en-US" )
+                    & "' y1='11' y2='11'/>"
+                & "<circle cx='" & FORMAT ( _x22, "0.0", "en-US" ) & "' cy='11' r='5' class='m22'/>"
+                & "<circle class='brota' style='animation-delay:" & ( 1100 + _pos * 90 ) & "ms' cx='"
+                    & FORMAT ( _x26, "0.0", "en-US" ) & "' cy='11' r='6' fill='" & _cor & "'/>"
+            & "</svg>"
+            & "<div class='mg'>" & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " → "
+                & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " p.p.</div>"
+        & "</div></div>"
+    )""")
+
+desenho("T11 · Lista · ALT", "Texto alternativo da lista das maiores que viraram (a camada clicável).",
+        """-- 1 · Leituras
+VAR _vir = [T11 · viraram]
+-- 2 · Textos
+RETURN
+    "Lista das maiores cidades que trocaram de lado (" & FORMAT ( _vir, "#,0" ) & " no recorte): passe o mouse para a "
+        & "série de 2006 a 2026 de cada uma; clique para levar o mapa até ela.\"""")
+
+_ANOS_SERIE = [2006, 2010, 2014, 2018, 2022, 2026]
+_TAB_ANOS_SERIE = ", ".join(f"{{ {a} }}" for a in _ANOS_SERIE)
+
+desenho("T11 · Tooltip série · HTML",
+        "Dossiê da cidade no tooltip da lista: a margem do PT em cada eleição de 2006 a 2026 em barras (para cima, PT à "
+        "frente; para baixo, o adversário), com o candidato do PT de cada ano, e em quantas o adversário ficou à frente. "
+        "Só lê contas.",
+        f"""-- 1 · Leituras
+VAR _nome = [T11 · município · nome]
+VAR _uf = [T11 · município · UF]
+VAR _sit = [T11 · situação]
+VAR _nAdv = [T11 · eleições com o adversário à frente]
+VAR _nVot = [T11 · eleições com votos]
+VAR _ult = [T11 · antes de 2026, a última com o adversário à frente]
+VAR _anos =
+    ADDCOLUMNS (
+        DATATABLE ( "a", INTEGER, {{ {_TAB_ANOS_SERIE} }} ),
+        "@m", VAR _a = [a] RETURN CALCULATE ( [T11 · margem no ano], 'Ano'[Ano] = _a ),
+        "@c", VAR _a = [a] RETURN CALCULATE ( [T11 · candidato do PT no ano], 'Ano'[Ano] = _a )
+    ) /* lista */
+-- 2 · Textos
+VAR _txtNome = {ESC.format(v="_nome")}
+VAR _selo = SWITCH ( _sit, 2, "VIROU EM 2026", 3, "VOLTOU AO PT", 0, "PT À FRENTE", 1, "ADVERSÁRIO À FRENTE", "EMPATE" )
+VAR _clsSelo = IF ( _sit = 2 || _sit = 1, "selo az", "selo vm" )
+VAR _mao =
+    SWITCH (
+        TRUE (),
+        _sit = 2 && _nAdv = 1, "1ª vez sem o PT na frente",
+        _sit = 2, "já tinha virado em " & _ult,
+        _nAdv = 0, "sempre com o PT",
+        _nAdv = _nVot, "nunca com o PT",
+        "virou e voltou"
+    )
+VAR _txtConta =
+    "O adversário do PT ficou à frente aqui em " & FORMAT ( _nAdv, "0" ) & " de " & FORMAT ( _nVot, "0" )
+        & IF ( _nVot = 1, " eleição", " eleições" ) & "."
+-- 3 · Geometria (barras de 44 px a cada 64; zero em y 70; maior margem da cidade = 54 px)
+VAR _esc = MAX ( 0.05, MAXX ( _anos, ABS ( [@m] ) ) ) /* geometria */
+VAR _barras =
+    CONCATENATEX (
+        FILTER ( _anos, NOT ISBLANK ( [@m] ) ), /* lista */
+        VAR _i = ( [a] - 2006 ) / 4
+        VAR _x = 10 + _i * 64
+        VAR _h = MAX ( 1.5, 54 * ABS ( [@m] ) / _esc )
+        VAR _cima = [@m] >= 0
+        VAR _yb = IF ( _cima, 70 - _h, 70 )
+        VAR _yt = IF ( _cima, 70 - _h - 6, 70 + _h + 15 )
+        VAR _c = SWITCH ( [@c], "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", [@c] )
+        RETURN
+            "<rect class='" & IF ( _cima, "pt", "adv" ) & IF ( _cima, " barra-y", " desce" ) & "' style='animation-delay:"
+                & ( 150 + _i * 70 ) & "ms' x='" & FORMAT ( _x, "0.0", "en-US" ) & "' y='" & FORMAT ( _yb, "0.0", "en-US" )
+                & "' width='44' height='" & FORMAT ( _h, "0.0", "en-US" ) & "'/>"
+                & "<text class='v " & IF ( _cima, "pt", "adv" ) & "' x='" & FORMAT ( _x + 22, "0.0", "en-US" ) & "' y='"
+                & FORMAT ( _yt, "0.0", "en-US" ) & "'>" & FORMAT ( [@m] * 100, "+0;−0;0" ) & "</text>"
+                & "<text class='an' x='" & FORMAT ( _x + 22, "0.0", "en-US" ) & "' y='158'>" & [a] & "</text>"
+                & "<text class='cd' x='" & FORMAT ( _x + 22, "0.0", "en-US" ) & "' y='172'>" & _c & "</text>",
+        "",
+        [a], ASC
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela tt11s'><div class='fita'></div>"
+        & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
+        & "<div class='nm sobe'>" & _txtNome & " <span class='uf'>" & _uf & "</span></div>"
+        & "<div class='rot entra d1'>MARGEM DO PT, ELEIÇÃO A ELEIÇÃO</div>"
+        & "<svg class='serie' width='392' height='176' viewBox='0 0 392 176'>"
+            & "<line class='zero' x1='0' x2='392' y1='70' y2='70'/>" & _barras
+        & "</svg>"
+        & "<div class='nota entra d4'>" & _txtConta & "</div>"
+        & "<div class='mao entra d6'>" & _mao & "</div>"
+    & "</div>\"""")
+
+desenho("T11 · Tooltip série · ALT", "Texto alternativo da série da cidade no tooltip da lista.",
+        """-- 1 · Leituras
+VAR _nome = [T11 · município · nome]
+VAR _nAdv = [T11 · eleições com o adversário à frente]
+VAR _nVot = [T11 · eleições com votos]
+-- 2 · Textos
+RETURN
+    _nome & ": o adversário do PT ficou à frente em " & FORMAT ( _nAdv, "0" ) & " de " & FORMAT ( _nVot, "0" )
+        & " eleições de 2006 a 2026.\"""")
 
 desenho("T11 · Tooltip município · HTML",
         "Dossiê do município no tooltip do mapa: carimbo da situação, a margem 2022 → 2026 numa régua, as fatias "
@@ -567,7 +760,8 @@ RETURN
 CAMINHOS = PBI / "assets" / "mapas" / "uf_caminhos.json"
 SPEC = PBI / "spec" / "t11_mapa.json"
 COR = {"papel": "#F1EBDF", "creme": "#E5DBC8", "areia": "#CBBDA2", "tinta": "#1C1915", "grafite": "#48423A",
-       "cinza": "#6B6357", "vermelho": "#B8322A", "rosa": "#D9877B", "azul": "#2B5797", "azul_claro": "#8FA8CF"}
+       "cinza": "#6B6357", "vermelho": "#B8322A", "rosa": "#D9877B", "azul": "#2B5797", "azul_claro": "#8FA8CF",
+       "vermelho_escuro": "#8E2620"}
 
 
 def _aneis(d: str) -> list[list[tuple[float, float]]]:
@@ -625,11 +819,19 @@ def gerar_spec() -> dict:
     c = COR
     # tempo (ms): contorno 0–1900 (onda de oeste a leste); fundo creme 500–1600; pontos apagados 900–2300 (norte →
     # sul); os que viraram 2300–4400 (onda a partir do centro da virada); fim 4600
+    # gesto (23/10/2026): clique num ponto filtra a tela por ele; arrastar desenha um retângulo que filtra pelos pontos
+    # de dentro (pbiCrossFilterApply avançado, até 2.500); clique no vazio limpa. Realce vindo da lista (sit__highlight
+    # Status = 'on'): a câmera vai até a UF da cidade, que ganha um anel; os outros pontos esmaecem.
+    st = "datum['sit__highlightStatus']"
+    apaga = (f"(datum.__selected__ == 'off' || {st} == 'off' ? 0.3 : 1)")
+    rx = "(ret.x0 - ox) / k"
     spec = {
         "$schema": "https://vega.github.io/schema/vega/v6.json",
         "description": "T11 · Virada: um ponto por município no quadro 1000 × 1000 dos mapas do painel (Município[X]/[Y]); "
                        "o contorno das UFs se desenha em rabisco, os pontos esmaecem e os que trocaram de lado acendem "
-                       "em ondas. Com o filtro de UF, enquadra a UF. Estado parado (prévia, PDF) = desenho final.",
+                       "em ondas. Com o filtro de UF, enquadra a UF; com uma cidade realçada pela lista, vai até a UF "
+                       "dela. Clique num ponto ou arraste uma área para filtrar a tela; clique no vazio limpa. Estado "
+                       "parado (prévia, PDF) = desenho final.",
         "width": {"signal": "pbiContainerWidth"},
         "height": {"signal": "pbiContainerHeight"},
         "padding": 0,
@@ -643,6 +845,9 @@ def gerar_spec() -> dict:
             {"name": "t", "init": "estatico ? fim : 0",
              "on": [{"events": "timer{33}", "update": "estatico ? fim : min(now() - t0, fim)"}]},
             {"name": "folga", "value": 22},
+            {"name": "temFoco", "update": "length(data('foco')) > 0"},
+            {"name": "nSel", "update": "length(data('selecionados'))"},
+            {"name": "temSel", "update": "nSel > 0"},
             {"name": "nAtivas", "update": "length(data('ufsDoRecorte'))"},
             {"name": "temPts", "update": "length(data('extPontos')) > 0"},
             {"name": "qx0", "update": "nAtivas ? min(data('quadro')[0].x0, temPts ? data('extPontos')[0].x0 : 1e9) : 0"},
@@ -656,11 +861,50 @@ def gerar_spec() -> dict:
             {"name": "umaUF", "update": "nAtivas == 1"},
             {"name": "cvx", "update": "length(data('centro')) ? data('centro')[0].cx : 500"},
             {"name": "cvy", "update": "length(data('centro')) ? data('centro')[0].cy : 500"},
+            # gesto: retângulo arrastado (em px da vista) e o estado da seleção
+            {"name": "p0", "value": [0, 0], "on": [{"events": "mousedown", "update": "xy()"}]},
+            {"name": "p1", "value": [0, 0],
+             "on": [{"events": "mousedown", "update": "xy()"},
+                    {"events": "[mousedown, window:mouseup] > window:mousemove", "update": "xy()"}]},
+            {"name": "grande_o_bastante", "update": "abs(p1[0] - p0[0]) > 6 && abs(p1[1] - p0[1]) > 6"},
+            {"name": "ret", "value": None,
+             "on": [{"events": "[mousedown, window:mouseup] > window:mousemove",
+                     "update": "grande_o_bastante ? {x0: min(p0[0], p1[0]), x1: max(p0[0], p1[0]), "
+                               "y0: min(p0[1], p1[1]), y1: max(p0[1], p1[1])} : null"},
+                    {"events": "mousedown", "update": "null"}]},
+            {"name": "mx0", "update": f"ret ? {rx} : 0"},
+            {"name": "mx1", "update": "ret ? (ret.x1 - ox) / k : 0"},
+            {"name": "my0", "update": "ret ? (ret.y0 - oy) / k : 0"},
+            {"name": "my1", "update": "ret ? (ret.y1 - oy) / k : 0"},
+            {"name": "arrastou", "value": False, "on": [{"events": "window:mouseup", "update": "ret != null"}]},
+            {"name": "estado", "value": "neutro",
+             "on": [
+                 {"events": "window:mouseup",
+                  "update": "ret == null ? estado : (length(data('laco')) > 2500 ? 'grande' : "
+                            "(length(data('laco')) == 0 ? 'vazio' : [pbiCrossFilterApply(event, "
+                            "'_{x}_ >= ' + mx0 + ' && _{x}_ <= ' + mx1 + ' && _{y}_ >= ' + my0 + "
+                            "' && _{y}_ <= ' + my1, {limit: 2500}), 'area'][1]))"},
+                 {"events": "@pontosApagados:click", "filter": ["!event.ctrlKey"],
+                  "update": "arrastou ? estado : [pbiCrossFilterApply(event), 'ponto'][1]"},
+                 {"events": "@pontosViradas:click", "filter": ["!event.ctrlKey"],
+                  "update": "arrastou ? estado : [pbiCrossFilterApply(event), 'ponto'][1]"},
+                 {"events": "@fundoClique:click",
+                  "update": "arrastou ? estado : [pbiCrossFilterClear(), 'neutro'][1]"}]},
+            {"name": "ret_fixo", "value": None,
+             "on": [{"events": "window:mouseup", "update": "ret != null ? ret : ret_fixo"},
+                    {"events": "@fundoClique:click", "update": "arrastou ? ret_fixo : null"},
+                    {"events": "@pontosApagados:click", "update": "arrastou ? ret_fixo : null"},
+                    {"events": "@pontosViradas:click", "update": "arrastou ? ret_fixo : null"}]},
         ],
         "data": [
             {"name": "dataset"},
+            {"name": "foco", "source": "dataset",
+             "transform": [{"type": "filter", "expr": f"{st} == 'on'"}]},
+            {"name": "selecionados", "source": "dataset",
+             "transform": [{"type": "filter", "expr": "datum.__selected__ == 'on'"}]},
             {"name": "ufsDoRecorte", "source": "dataset",
-             "transform": [{"type": "aggregate", "groupby": ["uf"]}]},
+             "transform": [{"type": "filter", "expr": f"!temFoco || {st} == 'on'"},
+                           {"type": "aggregate", "groupby": ["uf"]}]},
             {"name": "ufs", "values": ufs,
              "transform": [
                  {"type": "lookup", "from": "ufsDoRecorte", "key": "uf", "fields": ["uf"], "as": ["noRecorte"]},
@@ -680,8 +924,12 @@ def gerar_spec() -> dict:
             {"name": "comLugar", "source": "dataset",
              "transform": [{"type": "filter", "expr": "isValid(datum.x) && isValid(datum.y)"}]},
             {"name": "extPontos", "source": "comLugar",
-             "transform": [{"type": "aggregate", "fields": ["x", "y", "x", "y"], "ops": ["min", "min", "max", "max"],
+             "transform": [{"type": "filter", "expr": f"!temFoco || {st} == 'on'"},
+                           {"type": "aggregate", "fields": ["x", "y", "x", "y"], "ops": ["min", "min", "max", "max"],
                             "as": ["x0", "y0", "x1", "y1"]}]},
+            {"name": "laco", "source": "comLugar",
+             "transform": [{"type": "filter",
+                            "expr": "ret != null && datum.x >= mx0 && datum.x <= mx1 && datum.y >= my0 && datum.y <= my1"}]},
             {"name": "viradas", "source": "comLugar",
              "transform": [{"type": "filter", "expr": "datum.sit == 2 || datum.sit == 3"}]},
             {"name": "centro", "source": "viradas",
@@ -699,12 +947,19 @@ def gerar_spec() -> dict:
                  {"type": "formula", "as": "atraso",
                   "expr": "900 + 900 * clamp((datum.y - qy0) / max(qy1 - qy0, 1), 0, 1) + (toNumber(datum.cod) % 7) * 15"},
              ]},
+            # o anel: a cidade realçada pela lista ou a única cidade selecionada no mapa
+            {"name": "anel", "source": "comLugar",
+             "transform": [{"type": "filter", "expr": f"{st} == 'on' || (nSel == 1 && datum.__selected__ == 'on')"}]},
         ],
         "marks": [{
             "type": "group", "name": "palco", "clip": True,
             "encode": {"update": {"x": {"value": 0}, "y": {"value": 0}, "width": {"signal": "width"},
                                   "height": {"signal": "height"}}},
             "marks": [
+                # o fundo que recebe o clique no vazio (limpa a seleção) e o começo do arrasto
+                {"type": "rect", "name": "fundoClique", "interactive": True,
+                 "encode": {"enter": {"x": {"value": 0}, "y": {"value": 0}, "fill": {"value": "transparent"}},
+                            "update": {"width": {"signal": "width"}, "height": {"signal": "height"}}}},
                 # UFs vizinhas (só quando o recorte é uma UF): contorno fino, sem animação de traço
                 {"type": "path", "from": {"data": "contexto"}, "interactive": False,
                  "encode": {"update": {
@@ -744,8 +999,9 @@ def gerar_spec() -> dict:
                          "x": {"signal": "ox + datum.x * k"}, "y": {"signal": "oy + datum.y * k"},
                          "shape": {"value": "circle"}, "size": {"signal": "pow(2 * raio, 2)"},
                          "fill": {"signal": f"datum.sit == 0 ? '{c['rosa']}' : datum.sit == 1 ? '{c['azul_claro']}' : '{c['areia']}'"},
-                         "fillOpacity": {"signal": "clamp((t - datum.atraso) / 500, 0, 1) * 0.85"},
-                         "stroke": {"value": None}, "tooltip": {"signal": "datum"}},
+                         "fillOpacity": {"signal": f"clamp((t - datum.atraso) / 500, 0, 1) * 0.85 * {apaga}"},
+                         "stroke": {"value": None},
+                         "cursor": {"value": "pointer"}, "tooltip": {"signal": "datum"}},
                      "hover": {"stroke": {"value": c["tinta"]}, "strokeWidth": {"value": 1.4},
                                "fillOpacity": {"value": 1}}}},
                 # os que trocaram de lado: acendem em azul (ou vermelho, o caminho inverso) em ondas
@@ -756,10 +1012,40 @@ def gerar_spec() -> dict:
                          "shape": {"value": "circle"},
                          "size": {"signal": "pow(2 * raio * 1.3 * (1 + 2.2 * pow(clamp((t - datum.atraso) / 420, 0, 1) - 1, 3) + 1.2 * pow(clamp((t - datum.atraso) / 420, 0, 1) - 1, 2)), 2)"},
                          "fill": {"signal": f"datum.sit == 3 ? '{c['vermelho']}' : '{c['azul']}'"},
-                         "fillOpacity": {"signal": "clamp((t - datum.atraso) / 200, 0, 1)"},
+                         "fillOpacity": {"signal": f"clamp((t - datum.atraso) / 200, 0, 1) * {apaga}"},
                          "stroke": {"value": c["papel"]}, "strokeWidth": {"value": 0.5},
-                         "tooltip": {"signal": "datum"}},
+                         "cursor": {"value": "pointer"}, "tooltip": {"signal": "datum"}},
                      "hover": {"stroke": {"value": c["tinta"]}, "strokeWidth": {"value": 1.6}}}},
+                # a cidade realçada pela lista (ou a única selecionada no mapa): dois anéis à mão em volta do ponto
+                {"type": "symbol", "from": {"data": "anel"}, "interactive": False,
+                 "encode": {"update": {
+                     "x": {"signal": "ox + datum.x * k"}, "y": {"signal": "oy + datum.y * k"},
+                     "shape": {"value": "circle"}, "size": {"signal": "pow(2 * raio + 14, 2)"},
+                     "fill": {"value": None}, "stroke": {"value": c["tinta"]}, "strokeWidth": {"value": 1.8}}}},
+                {"type": "symbol", "from": {"data": "anel"}, "interactive": False,
+                 "encode": {"update": {
+                     "x": {"signal": "ox + datum.x * k + 1"}, "y": {"signal": "oy + datum.y * k - 1"},
+                     "shape": {"value": "circle"}, "size": {"signal": "pow(2 * raio + 26, 2)"},
+                     "fill": {"value": None}, "stroke": {"value": c["grafite"]}, "strokeWidth": {"value": 0.9},
+                     "strokeOpacity": {"value": 0.6}}}},
+                # o retângulo arrastado (e o que ficou depois de soltar, enquanto a seleção vale)
+                {"type": "rect", "name": "retangulo", "interactive": False,
+                 "encode": {"update": {
+                     "x": {"signal": "(ret || ret_fixo || {x0: 0}).x0"},
+                     "x2": {"signal": "(ret || ret_fixo || {x1: 0}).x1"},
+                     "y": {"signal": "(ret || ret_fixo || {y0: 0}).y0"},
+                     "y2": {"signal": "(ret || ret_fixo || {y1: 0}).y1"},
+                     "fill": {"value": c["tinta"]}, "fillOpacity": {"value": 0.04},
+                     "stroke": {"value": c["tinta"]}, "strokeWidth": {"value": 1.4}, "strokeDash": {"value": [5, 4]},
+                     "opacity": {"signal": "ret || (ret_fixo && temSel) ? 1 : 0"}}}},
+                {"type": "text", "name": "aviso", "interactive": False,
+                 "encode": {"update": {
+                     "x": {"signal": "width / 2"}, "y": {"value": 18}, "align": {"value": "center"},
+                     "text": {"signal": "estado == 'grande' ? 'Área grande demais (mais de 2.500 cidades): marque uma "
+                                        "menor ou use o filtro de estado' : estado == 'vazio' ? 'Nenhum município "
+                                        "nessa área' : ''"},
+                     "fill": {"value": c["vermelho_escuro"]}, "font": {"value": "Sora Eleicoes, Segoe UI, sans-serif"},
+                     "fontSize": {"value": 15}, "fontWeight": {"value": 600}}}},
             ],
         }],
     }
@@ -773,7 +1059,7 @@ def main() -> int:
     gravar()
     spec = gerar_spec()
     print(f"T11: {len(MEDIDAS)} medidas · spec {SPEC.name} {SPEC.stat().st_size:,} B "
-          f"({len(spec['data'][2]['values'])} UFs)")
+          f"({len(next(d for d in spec['data'] if d['name'] == 'ufs')['values'])} UFs)")
     return 0
 
 

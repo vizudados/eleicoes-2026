@@ -1,0 +1,10 @@
+/*
+@pasta: T14 Série\Contas
+@formato: texto
+@descricao: A região clicada nos painéis (filtro cruzado em Município[Região]); vazio sem clique.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+IF (
+    ISFILTERED ( 'Município'[Região] ),
+    CALCULATE ( SELECTEDVALUE ( 'Município'[Região] ), REMOVEFILTERS ( 'UF' ) )
+)

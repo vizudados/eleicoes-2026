@@ -1,0 +1,38 @@
+/*
+@pasta: T13 Perfil\Desenho
+@formato: texto
+@descricao: Uma entrada por célula da matriz (granularidade T13 Célula[Célula]): a queda da margem de Lula e as cidades da célula, na cor da escala, com contorno vermelho na célula de maior queda e tracejado quando há menos de 10 cidades. Passar o mouse abre o dossiê (ttT13Celula); o clique filtra as cidades da célula na resposta. Vazia fora de uma célula com cidades. Só lê contas.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+-- 1 · Leituras
+VAR _p = [T13 · ordem do porte]
+VAR _q = [T13 · ordem do quinto]
+VAR _n = [T13 · cidades]
+VAR _v = [T13 · variação]
+VAR _pior = [T13 · é a célula da maior queda]
+-- 2 · Textos
+VAR _cls =
+    SWITCH (
+                TRUE (),
+                _n = 0 || ISBLANK ( _v ), "vazia",
+                _v >= 0, "c0",
+                _v > -0.05, "c1",
+                _v > -0.08, "c2",
+                _v > -0.11, "c3",
+                _v > -0.14, "c4",
+                "c5"
+            )
+VAR _poucas = IF ( _n < 10, " poucas", "" )
+VAR _clsPior = IF ( _pior = 1, " pior", "" )
+-- 3 · Geometria (a mesma da moldura: colunas a partir de x 190, passo 176; linhas a partir de y 166, passo 100)
+VAR _x = 190 + ( _q - 1 ) * 176
+VAR _y = 166 + ( _p - 1 ) * 100
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _p ) && NOT ISBLANK ( _q ) && _cls <> "vazia",
+        "<div class='tela t13c'><div class='cel " & _cls & _poucas & _clsPior & " brota' style='left:" & _x & "px;top:"
+            & _y & "px;animation-delay:" & ( 300 + ( _p + _q ) * 70 ) & "ms'>"
+            & "<span class='num'>" & FORMAT ( _v * 100, "+0.0;−0.0;0.0" ) & "</span><span class='n'>" & FORMAT ( _n, "#,0" )
+            & IF ( _n = 1, " cidade", " cidades" ) & "</span></div></div>"
+    )

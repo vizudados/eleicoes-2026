@@ -1,0 +1,274 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "T09_Popularidade_Alvos",
+  "position": {
+    "x": 1010,
+    "y": 140,
+    "z": 306,
+    "height": 300,
+    "width": 760,
+    "tabOrder": 115
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T09 · Popularidade pontos · HTML"
+                }
+              },
+              "queryRef": "_Medidas.T09 · Popularidade pontos · HTML",
+              "nativeQueryRef": "T09 · Popularidade pontos · HTML"
+            }
+          ]
+        },
+        "sampling": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Monitoramento"
+                    }
+                  },
+                  "Property": "Início"
+                }
+              },
+              "queryRef": "Monitoramento.Início",
+              "nativeQueryRef": "Início"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.t09p{pointer-events:none}.t09p .dia{position:absolute;top:72px;height:150px;width:32px;pointer-events:auto;cursor:help}.t09p .dia .v{position:absolute;left:15.5px;top:0;bottom:0;width:1px;background:#1C1915;opacity:0;transition:opacity .12s}.t09p .dia i.m{position:absolute;left:9px;width:14px;height:14px;border-radius:50%;opacity:0;transition:opacity .12s;box-shadow:0 0 0 2px #F1EBDF,0 0 0 3.5px #1C1915}.t09p .dia i.ml{background:#B8322A}.t09p .dia i.mf{background:#2B5797}.t09p .dia:hover .v{opacity:.35}.t09p .dia:hover i.m{opacity:1}</style>{{content}}'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'T09_Popularidade_Alvos'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            },
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ttT09Ipd'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T09 · Popularidade pontos · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

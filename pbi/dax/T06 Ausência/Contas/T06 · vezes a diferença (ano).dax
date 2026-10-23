@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0.0
+@descricao: Quantas vezes a diferença entre os dois primeiros cabe em quem faltou, no ano da linha e no recorte.
+@oraculo: 2026 = 15,0 (paginas[6].vezes_a_diferenca)
+*/
+DIVIDE ( [T06 · abstenções (ano)], [T06 · diferença do ano] )

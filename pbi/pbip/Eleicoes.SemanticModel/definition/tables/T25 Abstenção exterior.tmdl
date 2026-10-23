@@ -1,0 +1,82 @@
+/// Exterior (ZZ) × faixa de idade × eleição (1º turno, 2014–2026): aptos e abstenções, que só entram no total do Brasil (sem filtro de UF nem município).
+table 'T25 Abstenção exterior'
+	isHidden
+	lineageTag: 3b59a319-9478-5066-b258-aa6cb0fc2df9
+
+	/// Ano da eleição (2014, 2018, 2022, 2026).
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3205649d-eb33-51ea-a33b-b08eba6fd63b
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla da UF do município (ZZ = exterior).
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 09643e66-7a4a-545d-a0fc-1e9ee422038f
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Código IBGE do município (vazio no exterior).
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: 529b17fe-2a3a-5dbe-8035-b61e1e940b45
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem da faixa de idade (1 = 16 e 17 anos … 7 = 70 anos ou mais); liga com T25 Faixa.
+	column FaixaOrdem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 66a77d07-a7e8-55e5-9084-c76b02f714cf
+		summarizeBy: none
+		sourceColumn: FaixaOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores aptos na faixa.
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: d13e87c8-6ea3-5c91-b490-d1be325bcc77
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores da faixa que faltaram.
+	column Abstencoes
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: ce8cf56c-c138-5496-be84-26c21c0ffa16
+		summarizeBy: none
+		sourceColumn: Abstencoes
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T25 Abstenção exterior' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/abstencao_faixa_municipio.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "uf", "cd_ibge", "faixa_ordem", "aptos", "abstencoes"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"uf", type text}, {"cd_ibge", type text}, {"faixa_ordem", Int64.Type}, {"aptos", Int64.Type}, {"abstencoes", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"uf", "UF"}, {"cd_ibge", "CodIBGE"}, {"faixa_ordem", "FaixaOrdem"}, {"aptos", "Aptos"}, {"abstencoes", "Abstencoes"}}),
+				    Filtro = Table.SelectRows(Nomes, each [UF] = "ZZ")
+				in
+				    Filtro
+
+	annotation PBI_ResultType = Table

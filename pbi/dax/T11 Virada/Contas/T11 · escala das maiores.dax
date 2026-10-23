@@ -1,0 +1,17 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: 0.0%
+@descricao: Maior afastamento do zero (margem de 2022 ou 2026) entre as cidades da lista; escala comum dos mini gráficos.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+MAXX (
+    FILTER (
+        ADDCOLUMNS (
+            ALLSELECTED ( 'Município'[CodIBGE] ),
+            "@p", [T11 · população das que viraram],
+            "@a", MAX ( ABS ( [T11 · margem 2022] ), ABS ( [T11 · margem 2026] ) )
+        ),
+        NOT ISBLANK ( [@p] )
+    ),
+    [@a]
+)

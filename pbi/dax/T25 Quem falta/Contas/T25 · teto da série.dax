@@ -1,0 +1,14 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Maior valor entre os seis anos (a abstenção e a referência) no lugar e na faixa do contexto (0–1): a escala das colunas do bloco de anos.
+*/
+MAXX (
+    CALCULATETABLE ( VALUES ( 'Ano'[Ano] ), REMOVEFILTERS ( 'Ano' ) ),
+    VAR _a = 'Ano'[Ano]
+    RETURN
+        MAX (
+            CALCULATE ( DIVIDE ( [T25 · abstenções (cru)], [T25 · aptos (cru)] ), 'Ano'[Ano] = _a ),
+            CALCULATE ( [T25 · referência da série], 'Ano'[Ano] = _a )
+        )
+)

@@ -20,14 +20,17 @@ G = Gravador("T01 Placar")
 URL = "https://vizudados.github.io/eleicoes-2026/midia"
 CU = "'Candidato UF'"
 
-LACO = ("<svg class='laco' viewBox='0 0 100 40' preserveAspectRatio='none' aria-hidden='true'>"
-        "<defs><filter id='rbl' x='-5%' y='-5%' width='110%' height='110%'><feTurbulence type='fractalNoise' "
-        "baseFrequency='0.04' numOctaves='2' seed='3' result='r'/><feDisplacementMap in='SourceGraphic' in2='r' "
-        "scale='3' xChannelSelector='R' yChannelSelector='G'/></filter></defs>"
-        "<path pathLength='1' class='traco' style='animation-delay:.9s' filter='url(#rbl)' fill='none' "
-        "stroke='#1C1915' stroke-width='3.2' stroke-linecap='round' vector-effect='non-scaling-stroke' "
-        "d='M9,30 C2,22 4,8 26,4 C48,0 82,1 95,10 C103,17 97,31 76,36 C55,40 22,40 9,33 C3,28 6,16 22,9 "
-        "C34,4 52,3 64,4'/></svg>")
+# Sublinhado duplo à mão embaixo do número da diferença (o laço em volta cruzava os dígitos; o Alisson, 23/10/2026:
+# "os rabiscos que ficam em cima dos números não ficou muito bom"). Escala com a largura do número.
+SUBLINHADO = ("<svg class='sub' viewBox='0 0 400 24' preserveAspectRatio='none' aria-hidden='true'>"
+              "<defs><filter id='rbl' filterUnits='userSpaceOnUse' x='-10' y='-10' width='420' height='44'>"
+              "<feTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='2' seed='3' result='r'/>"
+              "<feDisplacementMap in='SourceGraphic' in2='r' scale='2.2' xChannelSelector='R' yChannelSelector='G'/>"
+              "</filter></defs>"
+              "<path pathLength='1' class='traco' style='animation-delay:.9s' filter='url(#rbl)' fill='none' "
+              "stroke='#1C1915' stroke-width='3.6' stroke-linecap='round' d='M6,8 C120,3 280,2 394,7'/>"
+              "<path pathLength='1' class='traco' style='animation-delay:1.25s' filter='url(#rbl)' fill='none' "
+              "stroke='#1C1915' stroke-width='3' stroke-linecap='round' d='M44,19 C150,14 280,14 356,17'/></svg>")
 RABISCO = ("<defs><filter id='rb' x='-5%' y='-5%' width='110%' height='110%'><feTurbulence type='fractalNoise' "
            "baseFrequency='0.035' numOctaves='2' seed='7' result='r'/><feDisplacementMap in='SourceGraphic' in2='r' "
            "scale='2.2' xChannelSelector='R' yChannelSelector='G'/></filter></defs>")
@@ -163,8 +166,9 @@ def contas():
 
 # ---------------------------------------------------------------------------------------------------- desenho
 def desenho_placar():
-    G.desenho("T01 · laço · SVG", "Laço à mão em volta do número da diferença: escala com a largura do número "
-              "(preserveAspectRatio none), traço que se desenha com o tremido de caneta. Desenho fixo.", literal(LACO))
+    G.desenho("T01 · sublinhado · SVG", "Sublinhado duplo à mão embaixo do número da diferença: escala com a largura "
+              "do número (preserveAspectRatio none), traço que se desenha com o tremido de caneta. Desenho fixo.",
+              literal(SUBLINHADO))
     cartao = """
         VAR _card{k} =
             "<div class='cand sobe d4'><div class='rt {rt}'><span class='selo'>" & _lugar{k} & "</span></div>"
@@ -177,7 +181,7 @@ def desenho_placar():
     linha = """
             "<div class='ln'><i class='sw s{n}'></i><span class='nm'>" & @ESC({cu}[Candidato])@ & " · " & [@par]
                 & "</span><span class='vv'>" & @MI([@v])@ & "</span><span class='pp'>" & @PCT([@p])@ & "</span></div>\""""
-    G.desenho("T01 · Placar · HTML", "Bloco da esquerda da tela 01: a diferença (com o laço à mão), a manchete, o "
+    G.desenho("T01 · Placar · HTML", "Bloco da esquerda da tela 01: a diferença (com o sublinhado à mão), a manchete, o "
               "duelo Flávio × Lula (o mais votado à esquerda) e a legenda dos outros candidatos. Só lê as contas "
               "'T01 · …'.", dax(f"""
         -- 1 · Leituras
@@ -251,7 +255,7 @@ def desenho_placar():
         VAR _html =
             "<div class='tela t1'>"
                 & "<div class='sob sobe'>" & _sobDif & "</div>"
-                & "<div class='dn'><span class='dnum sobe d1'>" & _txtDif & "</span>" & [T01 · laço · SVG] & "</div>"
+                & "<div class='dn'><span class='dnum sobe d1'>" & _txtDif & "</span>" & [T01 · sublinhado · SVG] & "</div>"
                 & "<div class='mm sobe d3'><div class='man m1'>" & _manchete & "</div>"
                 & "<div class='txt m2'>" & _detalhe & "</div></div>"
                 & "<div class='duelo'>" & _duelo & "</div>"
@@ -592,12 +596,213 @@ def tooltip_candidato():
         """))
 
 
+# A escala da virada (as mesmas linhas do bloco 3 de 'T01 · Virada · HTML'; main() confere que continuam iguais):
+# os alvos dos pontos ficam exatamente sobre as bolinhas desenhadas.
+ESCALA_VIRADA = """VAR _max = MAX ( MAX ( _pt22, _pl22 ), MAX ( _pt26, _pl26 ) ) -- geometria
+        VAR _min = MIN ( MIN ( _pt22, _pl22 ), MIN ( _pt26, _pl26 ) ) -- geometria
+        VAR _folga = MAX ( ( _max - _min ) * 0.18, _max * 0.02 ) -- geometria
+        VAR _topo = _max + _folga -- geometria
+        VAR _esc = DIVIDE ( 480, _topo - ( _min - _folga ) ) -- geometria"""
+MA = "'Município ano'"
+MU = "'Município'"
+GRUPO = "REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ), REMOVEFILTERS ( 'Município'[Porte], 'Município'[PorteOrdem] )"
+
+
+def pontos_virada():
+    """Os quatro pontos da virada (ano × candidato) ganham grão: um HTML de alvos por cima do desenho (grão 'Candidato
+    UF'[Ano] × [Número], só PT e PL), com o dossiê do ponto: de onde vieram os votos daquele candidato naquele ano —
+    por região no Brasil, por tamanho de cidade numa UF —, o % dele em cada grupo em 2022 e em 2026 e a nota à mão com
+    a maior perda/ganho (2026) ou a base mais forte (2022). A camada nova é composição × tempo; o total do ponto, que já
+    está na tela, não se repete."""
+    c = G.conta
+    c("T01 · ponto · ano", "Ano do ponto da virada (linha do grão 'Candidato UF'[Ano]).",
+      f"SELECTEDVALUE ( {CU}[Ano] )", "0")
+    c("T01 · ponto · número", "Número do candidato do ponto da virada (13 = PT, 22 = PL).",
+      f"SELECTEDVALUE ( {CU}[Número] )", "0")
+    c("T01 · ponto · candidato", "Nome de urna do candidato do ponto da virada.",
+      f"SELECTEDVALUE ( {CU}[Candidato] )", "texto")
+    c("T01 · ponto · partido", "Sigla do partido do candidato do ponto da virada.",
+      f"SELECTEDVALUE ( {CU}[Partido] )", "texto")
+    for nome, ano, desc in (("votos no grupo", "_a", "no ano do ponto"), ("votos no grupo em 2022", "2022", "em 2022"),
+                            ("votos no grupo em 2026", "2026", "em 2026")):
+        c(f"T01 · ponto · {nome}", f"Votos do partido do ponto (PT ou PL) {desc}, somados nos municípios do contexto "
+          "(sem o exterior): a região ou o porte da linha do dossiê.", dax(f"""
+            VAR _a = [T01 · ponto · ano]
+            VAR _n = [T01 · ponto · número]
+            RETURN
+                SWITCH (
+                    _n,
+                    13, CALCULATE ( SUM ( {MA}[VotosPT] ), {MA}[Ano] = {ano} ),
+                    22, CALCULATE ( SUM ( {MA}[VotosAdversario] ), {MA}[Ano] = {ano} )
+                )
+            """), "#,0")
+    c("T01 · ponto · parte do grupo", "Parcela dos votos do partido do ponto, no ano do ponto, que veio da região ou do "
+      "porte da linha (0–1). Tira só as colunas do grupo.", dax(f"""
+        DIVIDE ( [T01 · ponto · votos no grupo], CALCULATE ( [T01 · ponto · votos no grupo], {GRUPO} ) )
+        """), "0%", "Lula 2026 › Nordeste 40% (paginas[3].regioes)")
+    for ano in (2022, 2026):
+        c(f"T01 · ponto · % no grupo em {ano}", f"Parcela do partido do ponto nos válidos de {ano} da região ou do "
+          "porte da linha (0–1).", dax(f"""
+            DIVIDE ( [T01 · ponto · votos no grupo em {ano}], CALCULATE ( SUM ( {MA}[Validos] ), {MA}[Ano] = {ano} ) )
+            """), "0.0%", "Lula 2026 › Nordeste 63,8% (paginas[3].regioes)" if ano == 2026 else None)
+    c("T01 · ponto · variação no grupo", "Votos do partido do ponto em 2026 menos 2022 na região ou no porte da linha.",
+      "[T01 · ponto · votos no grupo em 2026] - [T01 · ponto · votos no grupo em 2022]", "#,0")
+    c("T01 · ordem do porte", "Ordem do porte da linha (1 = até 10 mil habitantes), para listar do menor ao maior.",
+      f"MIN ( {MU}[PorteOrdem] )", "0")
+    # ---- os alvos (um por ponto, sobre a bolinha desenhada pela virada)
+    G.desenho("T01 · Ponto · HTML", "Alvo do ponto da virada (uma entrada por ano × candidato, só PT e PL): um círculo "
+              "transparente sobre a bolinha desenhada, com um anel no hover; abre o dossiê do ponto. A posição usa a "
+              "mesma escala do bloco da virada.", dax(f"""
+        -- 1 · Leituras
+        VAR _a = [T01 · ponto · ano]
+        VAR _n = [T01 · ponto · número]
+        VAR _pt22 = [T01 · PT 2022 votos]
+        VAR _pl22 = [T01 · PL 2022 votos]
+        VAR _pt26 = [T01 · Lula votos]
+        VAR _pl26 = [T01 · Flávio votos]
+        -- 2 · Textos
+        VAR _cls = IF ( _n = 13, "lula", "flavio" )
+        -- 3 · Geometria (a escala da virada; eixos em x 175 e 545; o gráfico começa em y 116 do visual)
+        {ESCALA_VIRADA}
+        VAR _v =
+            SWITCH (
+                TRUE (),
+                _a = 2022 && _n = 13, _pt22,
+                _a = 2022 && _n = 22, _pl22,
+                _a = 2026 && _n = 13, _pt26,
+                _a = 2026 && _n = 22, _pl26
+            ) -- geometria
+        VAR _cx = IF ( _a = 2022, 175, 545 ) -- geometria
+        VAR _cy = 116 + 40 + ( _topo - _v ) * _esc -- geometria
+        -- 4 · Marcação
+        RETURN
+            IF (
+                _v > 0,
+                "<div class='tela vp'><div class='alvo " & _cls & "' style='left:" & @CSS(_cx - 24)@ & "px;top:"
+                    & @CSS(_cy - 24)@ & "px'></div></div>"
+            )
+        """))
+    G.desenho("T01 · Ponto · ALT", "Texto para leitor de tela dos alvos da virada.", dax("""
+        "Pontos da virada: Lula e o PL em 2022 e em 2026. Passe o mouse num ponto para ver de onde vieram os votos "
+            & "daquele ano."
+        """))
+    # ---- o dossiê do ponto
+    G.desenho("T01 · Tooltip ponto · HTML", "Dossiê do ponto da virada (ficha com clipe): de onde vieram os votos do "
+              "candidato naquele ano — por região no Brasil, por tamanho de cidade numa UF —, com o % dele em cada "
+              "grupo em 2022 e em 2026 e a nota à mão com a maior perda ou ganho (2026) ou a base mais forte (2022). Só "
+              "lê contas.", dax(f"""
+        -- 1 · Leituras
+        VAR _a = [T01 · ponto · ano]
+        VAR _n = [T01 · ponto · número]
+        VAR _nome = [T01 · ponto · candidato]
+        VAR _par = [T01 · ponto · partido]
+        VAR _comUF = [T01 · com UF]
+        VAR _rec = [T01 · recorte]
+        VAR _regs =
+            TOPN (
+                IF ( _comUF = 0, 10, 0 ),
+                ADDCOLUMNS (
+                    VALUES ( 'UF'[Região] ),
+                    "@v", [T01 · ponto · votos no grupo],
+                    "@p", [T01 · ponto · parte do grupo],
+                    "@p22", [T01 · ponto · % no grupo em 2022],
+                    "@p26", [T01 · ponto · % no grupo em 2026],
+                    "@d", [T01 · ponto · variação no grupo]
+                ),
+                [@v], DESC
+            )
+        VAR _portes =
+            TOPN (
+                IF ( _comUF = 1, 10, 0 ),
+                ADDCOLUMNS (
+                    VALUES ( {MU}[Porte] ),
+                    "@v", [T01 · ponto · votos no grupo],
+                    "@p", [T01 · ponto · parte do grupo],
+                    "@p22", [T01 · ponto · % no grupo em 2022],
+                    "@p26", [T01 · ponto · % no grupo em 2026],
+                    "@d", [T01 · ponto · variação no grupo],
+                    "@o", [T01 · ordem do porte]
+                ),
+                [@v], DESC
+            )
+        VAR _lista =
+            UNION (
+                SELECTCOLUMNS (
+                    FILTER ( _regs, [@v] > 0 ), /* lista */
+                    "@g", 'UF'[Região], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", - [@v]
+                ),
+                SELECTCOLUMNS (
+                    FILTER ( _portes, [@v] > 0 && LEN ( {MU}[Porte] ) > 0 ), /* lista */
+                    "@g", {MU}[Porte], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", [@o]
+                )
+            )
+        VAR _pmax = MAXX ( _lista, [@p] ) /* lista */
+        VAR _topD = TOPN ( 1, _lista, ABS ( [@d] ), DESC, [@g], ASC ) /* lista */
+        VAR _topP = TOPN ( 1, _lista, IF ( _a = 2022, [@p22], [@p26] ), DESC, [@g], ASC ) /* lista */
+        VAR _gD = MAXX ( _topD, [@g] ) /* lista */
+        VAR _dD = MAXX ( _topD, [@d] ) /* lista */
+        VAR _gP = MAXX ( _topP, [@g] ) /* lista */
+        -- 2 · Textos
+        VAR _cls = IF ( _n = 13, "lula", "flavio" )
+        VAR _ic = IF ( _n = 13, "barras-vermelho", "barras-azul" )
+        VAR _txtNome = @ESC(_nome)@ & " · " & _a
+        VAR _sub = @ESC(_par)@ & " · " & _n & " · " & IF ( _comUF = 1, @ESC(_rec)@, "Brasil, sem o exterior" )
+        VAR _rotG = IF ( _comUF = 1, "cidades de", "região" )
+        VAR _nota =
+            IF (
+                _a = 2026,
+                IF ( _dD < 0, "maior perda: ", "maior ganho: " ) & @ESC(_gD)@ & ", " & @MIS(_dD)@,
+                "base mais forte: " & @ESC(_gP)@
+            )
+        VAR _on22 = IF ( _a = 2022, " on", "" )
+        VAR _on26 = IF ( _a = 2026, " on", "" )
+        -- 3 · Geometria (barra do peso em até 84 px; linhas de 30 px)
+        VAR _linhas =
+            CONCATENATEX (
+                _lista,
+                VAR _w = @CSS(DIVIDE ( [@p], _pmax ) * 84)@ -- geometria
+                RETURN
+                    "<div class='ln'><span class='g'>" & @ESC([@g])@ & "</span><span class='br'><i class='barra-x "
+                        & _cls & "-bg' style='width:" & _w & "px'></i><b>" & @PCT0([@p])@ & "</b></span>"
+                        & "<span class='pc" & _on22 & "'>" & @PCT([@p22])@ & "</span>"
+                        & "<span class='pc" & _on26 & "'>" & @PCT([@p26])@ & "</span></div>",
+                "",
+                [@o], ASC
+            )
+        -- 4 · Marcação
+        RETURN
+            IF (
+                NOT ISBLANK ( _nome ) && NOT ISEMPTY ( _lista ),
+                "<div class='tp'><div class='ficha'>"
+                    & "<img class='ico entra' alt='' src='{URL}/arte/icones/" & _ic & ".png'/>"
+                    & "<div class='cab sobe'><div class='nm " & _cls & "'>" & _txtNome & "</div>"
+                    & "<div class='sub'>" & _sub & "</div></div>"
+                    & "<div class='hd sobe d1'><span class='g'>" & _rotG & "</span><span class='br'>peso nos votos</span>"
+                    & "<span class='pc" & _on22 & "'>% 2022</span><span class='pc" & _on26 & "'>% 2026</span></div>"
+                    & "<div class='lista sobe d2'>" & _linhas & "</div>"
+                    & "<div class='mao " & _cls & "-esc entra d6'>" & _nota & "</div>"
+                & "</div></div>"
+            )
+        """))
+    G.desenho("T01 · Tooltip ponto · ALT", "Texto para leitor de tela do dossiê do ponto da virada.", dax("""
+        LEFT (
+            [T01 · ponto · candidato] & " em " & [T01 · ponto · ano] & ": de onde vieram os votos, por "
+                & IF ( [T01 · com UF] = 1, "tamanho de cidade", "região" ) & ", e o % dele em cada grupo em 2022 e 2026.",
+            250
+        )
+        """))
+
+
 def main() -> int:
     contas()
     desenho_placar()
     desenho_barra()
     desenho_virada()
     tooltip_candidato()
+    pontos_virada()
+    virada = (G.raiz / "Desenho" / "T01 · Virada · HTML.dax").read_text(encoding="utf-8")
+    if "\n".join(l.strip() for l in ESCALA_VIRADA.splitlines()) not in virada:
+        raise SystemExit("a escala dos alvos (ESCALA_VIRADA) não é mais a da virada: alinhe as duas")
     apagados = G.limpar()
     print(G.resumo(), "· apagados:", [p.name for p in apagados])
     return 0

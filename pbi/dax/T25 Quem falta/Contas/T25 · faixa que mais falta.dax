@@ -1,0 +1,17 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: Faixa de idade com a maior abstenção no lugar e no ano do recorte (ignora a faixa marcada).
+@oraculo: Brasil 2026 = 70 anos ou mais, 49,2%
+*/
+VAR _faixas =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'T25 Faixa'[Faixa] ), REMOVEFILTERS ( 'T25 Faixa' ) ),
+        "@p",
+            VAR _f = 'T25 Faixa'[Faixa]
+            RETURN
+                CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Faixa] = _f )
+    )
+VAR _comDado = FILTER ( _faixas, NOT ISBLANK ( [@p] ) )
+RETURN
+    MAXX ( TOPN ( 1, _comDado, [@p], DESC, 'T25 Faixa'[Faixa], ASC ), 'T25 Faixa'[Faixa] )

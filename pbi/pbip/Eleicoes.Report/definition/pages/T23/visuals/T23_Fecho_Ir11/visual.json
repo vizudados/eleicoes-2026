@@ -3,9 +3,9 @@
   "name": "T23_Fecho_Ir11",
   "position": {
     "x": 140,
-    "y": 646,
+    "y": 671,
     "z": 1020,
-    "height": 40,
+    "height": 37,
     "width": 1020,
     "tabOrder": 211
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 11: 711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso.'"
+                  "Value": "'Voltar à tela 12: 711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 11: 711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso.'"
+                  "Value": "'Voltar à tela 12: 711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso.'"
                 }
               }
             },

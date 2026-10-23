@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: A sigla da UF clicada no mapa (filtro cruzado de T08_Mapa_Ufs, grão UF[UF]); vazia sem clique e dentro do próprio mapa.
+*/
+IF (
+    ISFILTERED ( UF[UF] ) && NOT ISINSCOPE ( UF[UF] ) && HASONEVALUE ( UF[UF] ) && NOT ISBLANK ( [T08 · UF · Lula] ),
+    SELECTEDVALUE ( UF[UF] )
+)

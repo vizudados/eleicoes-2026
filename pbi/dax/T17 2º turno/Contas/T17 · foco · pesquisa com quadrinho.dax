@@ -1,0 +1,18 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: Sim quando o instituto da pesquisa clicada na curva tem quadrinho de rejeição (mediu Lula e Flávio antes e depois do 1º turno com pergunta comparável), Não quando não tem; vazio sem clique num ponto.
+*/
+VAR _inst = [T17 · foco · instituto da pesquisa]
+RETURN
+    IF (
+        NOT ISBLANK ( _inst ),
+        VAR _ok =
+            CALCULATE (
+                [T17 · rejeição · comparável],
+                REMOVEFILTERS ( 'Rejeição' ),
+                'Rejeição'[Instituto] = _inst
+            )
+        RETURN
+            IF ( _ok = "Sim", "Sim", "Não" )
+    )

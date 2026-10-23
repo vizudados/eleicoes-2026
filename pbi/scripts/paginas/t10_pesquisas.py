@@ -11,14 +11,20 @@ número de Flávio: na média dos 10 institutos que divulgaram votos válidos, L
                         números do eixo, a legenda e a nota à mão
   T10_Regua_Institutos  uma linha por instituto (granularidade Pesquisa[Instituto]): nome, haste a partir do empate,
                         marca (círculo = válidos, quadrado = totais) e a vantagem; dossiê ttT10Instituto com a
-                        trajetória do instituto no 1º turno
+                        trajetória do instituto no 1º turno. Filtro cruzado (23/10/2026, revisão de interação): o
+                        clique num instituto leva o quadro "onde foi o erro" para a última pesquisa dele contra a urna
+                        (nos válidos, Lula e Flávio um a um; nos totais, só a diferença); os outros institutos
+                        esmaecem. A resposta e o fundo da régua não mudam (NoFilter: são o retrato de todos).
+  T10_Erro_Alvos        faixas transparentes sobre as linhas de Lula e de Flávio do quadro do erro (granularidade
+                        'Candidato ano'[Partido]: PT, PL) → dossiê ttT10Erro: o que cada instituto com válidos deu ao
+                        candidato, um por linha, contra a urna (a média esconde o espalhamento)
 """
 from __future__ import annotations
 
 import estilo
 import pagina_lib
 import pbip_lib as lib
-from pbip_lib import Visual
+from pbip_lib import Interacao, Visual
 from paginas import _campanha as cp
 
 P = "T10"
@@ -50,9 +56,18 @@ CSS_ERRO = (
     ".t10e .vl b{font-weight:700}"
     f".t10e .seta{{stroke:{C['azul']};stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}}"
     ".t10e .mao{position:absolute;font-size:30px;white-space:nowrap;transform:rotate(-3deg)}"
-    ".t10e .ok{position:absolute;font-size:26px;white-space:nowrap;transform:rotate(-3deg);color:var(--vermelho-escuro)}"
+    ".t10e .ok{position:absolute;font-size:26px;white-space:nowrap;transform:rotate(-3deg);font-family:var(--mao);"
+    "font-weight:600;line-height:1.05}"
     ".t10e .txt{position:absolute;left:0;width:540px}"
     ".t10e .expl{position:absolute;left:0;width:540px;font-size:15px;line-height:1.42;color:var(--grafite)}"
+)
+
+
+CSS_ALVOS = (
+    ".t10a{pointer-events:none}"
+    ".t10a .alvo{position:absolute;left:0;width:560px;height:64px;pointer-events:auto;cursor:help;border-radius:6px;"
+    "transition:background .15s}"
+    ".t10a .alvo:hover{background:rgba(203,189,162,.2)}"
 )
 
 
@@ -102,6 +117,23 @@ CSS_INST = (
     ".t10i .vl.l{color:var(--vermelho-escuro)}.t10i .vl.f{color:var(--azul-escuro)}"
 )
 
+CSS_TT_ERRO = (
+    ".tt10e .lista{position:relative;margin-top:6px;padding-top:24px}"
+    ".tt10e .li{display:grid;grid-template-columns:150px 220px 50px;align-items:center;height:22px}"
+    ".tt10e .in{font-size:13px;color:var(--grafite);text-align:right;padding-right:12px;white-space:nowrap;overflow:hidden;"
+    "text-overflow:ellipsis}"
+    ".tt10e .tr{position:relative;height:22px}"
+    f".tt10e .tr::before{{content:'';position:absolute;left:0;right:0;top:11px;border-top:1px dashed {C['areia']}}}"
+    ".tt10e .pt{position:absolute;top:5px;width:12px;height:12px;border-radius:50%}"
+    f".tt10e .pt.lula{{background:{C['vermelho']}}}.tt10e .pt.flavio{{background:{C['azul']}}}"
+    ".tt10e .vv{font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums;color:var(--grafite)}"
+    ".tt10e .li.on .in,.tt10e .li.on .vv{font-weight:700;color:var(--tinta)}"
+    f".tt10e .li.on .pt{{box-shadow:0 0 0 3px {C['papel']},0 0 0 5px {C['tinta']}}}"
+    f".tt10e .urna{{position:absolute;top:2px;width:0;border-left:2px solid {C['tinta']}}}"
+    ".tt10e .urna b{position:absolute;left:6px;top:-2px;font-size:13px;font-weight:700;white-space:nowrap}"
+    ".tt10e .nota{margin-top:10px;padding-right:200px}"
+)
+
 CSS_TT = (
     ".tt10 .par{margin:2px 0 6px 0}"
     ".tt10 .par{gap:22px}"
@@ -128,10 +160,21 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T10_Regua_Html", *REGUA, "T10 · Régua · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=corpo_regua(), alt=lib.medida("T10 · Régua · ALT"), z=Z + 2,
                                   tab=120)),
+        Visual(P, lib.visual_html("T10_Erro_Alvos", *ERRO, "T10 · Erro alvos · HTML", folha_de_estilo=CSS,
+                                  modelo_corpo=f"<style>{CSS_ALVOS}</style>{{{{content}}}}",
+                                  granularidade=("Candidato ano", "Partido"), tooltip_pagina="ttT10Erro",
+                                  alt=lib.medida("T10 · Erro alvos · ALT"), z=Z + 4, tab=115)),
         Visual(P, lib.visual_html("T10_Regua_Institutos", *REGUA, "T10 · Institutos · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_INST}</style>{{{{content}}}}",
-                                  granularidade=("Pesquisa", "Instituto"), tooltip_pagina="ttT10Instituto",
+                                  granularidade=("Pesquisa", "Instituto"), filtro_cruzado=True,
+                                  transparencia_nao_selecionados=True, tooltip_pagina="ttT10Instituto",
                                   alt=lib.medida("T10 · Institutos · ALT"), z=Z + 3, tab=130)),
+        # o clique num instituto mexe só no quadro do erro (e nos alvos dele): a resposta e o fundo da régua são o
+        # retrato dos 18 e não leem o instituto
+        Interacao(P, "T10_Regua_Institutos", "T10_Resposta_Html", "NoFilter"),
+        Interacao(P, "T10_Regua_Institutos", "T10_Regua_Html", "NoFilter"),
         *pagina_lib.tooltip("ttT10Instituto", "Pesquisas · instituto", 480, 404, "T10 · Tooltip instituto · HTML",
-                            ordem=200, folha_de_estilo=CSS, modelo_corpo=cp.dossie("barras", CSS_TT)),
+                            ordem=210, folha_de_estilo=CSS, modelo_corpo=cp.dossie("barras", CSS_TT)),
+        *pagina_lib.tooltip("ttT10Erro", "Pesquisas · erro um a um", 480, 440, "T10 · Tooltip erro · HTML",
+                            ordem=211, folha_de_estilo=CSS, modelo_corpo=cp.dossie("lupa", CSS_TT_ERRO)),
     ]

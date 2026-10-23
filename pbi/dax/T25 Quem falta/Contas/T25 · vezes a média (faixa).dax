@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0
+@descricao: Abstenção da faixa da linha dividida pela de todas as idades, no lugar e no ano.
+*/
+DIVIDE ( [T25 · abstenção %], [T25 · abstenção % todas as idades] )

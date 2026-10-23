@@ -1,0 +1,8 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: texto
+@descricao: Quem estava à frente na atualização em contexto: Lula, Flávio ou — (empate); vazio sem um momento.
+*/
+VAR _d = [T18 · momento · diferença]
+RETURN
+    IF ( NOT ISBLANK ( [T18 · momento escolhido] ), SWITCH ( TRUE (), _d > 0, "Lula", _d < 0, "Flávio", "—" ) )

@@ -24,7 +24,8 @@ C = estilo.COR
 
 ACHADOS = [
     ("I · O RESULTADO", [("T01", "Flávio terminou 2,22 mi de votos à frente de Lula."),
-                         ("T06", "33,5 milhões não foram votar: 15 vezes a diferença entre os dois.")]),
+                         ("T06", "33,5 milhões não foram votar: 15 vezes a diferença entre os dois."),
+                         ("T25", "Quem tem 70 anos ou mais falta 3,9 vezes mais que quem tem 16 ou 17.")]),
     ("II · A CAMPANHA", [("T07", "O único frente a frente, na Band, não mexeu nas pesquisas."),
                          ("T10", "Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.")]),
     ("III · O MAPA", [("T11", "711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso."),
@@ -33,7 +34,7 @@ ACHADOS = [
                       ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
     ("EPÍLOGO", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.")]),
 ]
-X0, Y_ACHADOS, LINHA, GRUPO = 150, 384, 40, 34           # geometria da lista (o botão de cada linha segue a mesma)
+X0, Y_ACHADOS, LINHA, GRUPO = 150, 384, 37, 34           # geometria da lista (o botão de cada linha segue a mesma)
 
 
 def _linhas():

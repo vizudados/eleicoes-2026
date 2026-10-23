@@ -1,7 +1,7 @@
 /*
 @pasta: T05 Flávio\Contas
 @formato: texto
-@descricao: UF (no Brasil) ou município (numa UF) onde o candidato teve o forte % dos válidos.
+@descricao: UF (no Brasil ou na região) ou município (numa UF) onde o candidato teve o forte % dos válidos.
 @oraculo: paginas[5].ufs_mais_fortes[0].nome
 */
 VAR _ufs =

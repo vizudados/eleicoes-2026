@@ -1,0 +1,8 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: dd/MM
+@descricao: Data da posição mais recente do candidato do grupo em destaque; vazio sem destaque, para quem não votou ou sem data.
+*/
+VAR _quem = SWITCH ( [T16 · foco · grupo], "Cury", "Augusto Cury", "Renan", "Renan Santos", "Caiado", "Ronaldo Caiado" )
+RETURN
+    IF ( NOT ISBLANK ( _quem ), CALCULATE ( [T16 · apoio · data], REMOVEFILTERS ( Apoio ), Apoio[Quem] = _quem ) )

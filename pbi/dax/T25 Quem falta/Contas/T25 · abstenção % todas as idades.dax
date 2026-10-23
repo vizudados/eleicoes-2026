@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Abstenção do lugar no ano do recorte, com todas as idades (0–1): a linha de referência do bloco de idade.
+*/
+CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'T25 Faixa' ) )

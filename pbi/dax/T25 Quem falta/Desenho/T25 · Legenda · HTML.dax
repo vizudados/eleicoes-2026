@@ -1,0 +1,17 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Legenda do mapa: o ponto e a cor (abaixo e acima da média do recorte).
+*/
+-- 1 · Leituras
+VAR _ref = [T25 · abstenção % do recorte]
+VAR _comUF = [T25 · com UF]
+-- 2 · Textos
+VAR _media = IF ( _comUF = 1, "média estadual", "média nacional" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela lgm entra d6'>"
+        & "<span class='it'><i class='bol'></i>cada ponto é um município; o tamanho segue quantos faltaram</span>"
+        & "<span class='it'><span>abaixo</span><i class='esc'></i><span>acima da " & _media
+        & IF ( NOT ISBLANK ( _ref ), " (" & FORMAT ( _ref, "0.0%" ) & ")" ) & "</span></span>"
+    & "</div>"

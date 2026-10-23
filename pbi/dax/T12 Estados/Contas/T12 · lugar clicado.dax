@@ -1,0 +1,11 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: O lugar clicado na tela: a unidade da corrida (filtro cruzado em UF[UF]) ou a região (UF[Região]); vazio sem clique.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+SWITCH (
+    TRUE (),
+    ISFILTERED ( 'UF'[UF] ) && HASONEVALUE ( 'UF'[UF] ), SELECTEDVALUE ( 'UF'[Nome] ),
+    ISFILTERED ( 'UF'[Região] ) && HASONEVALUE ( 'UF'[Região] ), SELECTEDVALUE ( 'UF'[Região] )
+)

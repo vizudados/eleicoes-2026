@@ -1,12 +1,16 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
   "name": "T13_CHEGADA_01",
-  "displayName": "Chegada · 13 Perfil",
+  "displayName": "Chegada · 14 Perfil",
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
+      "T13_Casca_Filtro",
+      "T13_Casca_FiltroAbre",
+      "T13_Casca_FiltroFora",
       "T13_Casca_InfoAbre",
       "T13_Casca_InfoFecha",
+      "T13_Casca_InfoFora",
       "T13_Casca_Leitura"
     ],
     "suppressData": true
@@ -17,10 +21,34 @@
     "sections": {
       "T13": {
         "visualContainers": {
+          "T13_Casca_Filtro": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T13_Casca_FiltroAbre": {
+            "singleVisual": {}
+          },
+          "T13_Casca_FiltroFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "T13_Casca_InfoAbre": {
             "singleVisual": {}
           },
           "T13_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T13_Casca_InfoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

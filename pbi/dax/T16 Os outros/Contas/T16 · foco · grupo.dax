@@ -1,0 +1,8 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Grupo em destaque no diagrama: o clicado no diagrama ou o do candidato clicado na lista dos apoios; vazio sem clique.
+*/
+VAR _g = [T16 · foco · grupo clicado]
+RETURN
+    IF ( ISBLANK ( _g ), [T16 · foco · grupo do apoio clicado], _g )

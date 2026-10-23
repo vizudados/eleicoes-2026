@@ -1,0 +1,11 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: dd/MM/yyyy HH:mm
+@descricao: A atualização do TSE imediatamente antes do momento em contexto; vazio na primeira da noite.
+*/
+VAR _m = [T18 · momento escolhido]
+RETURN
+    IF (
+        NOT ISBLANK ( _m ),
+        CALCULATE ( MAX ( 'Apuração histórico'[AtualizadoTSE] ), REMOVEFILTERS ( 'Apuração histórico' ), 'Apuração histórico'[AtualizadoTSE] < _m )
+    )

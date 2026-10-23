@@ -1,0 +1,14 @@
+/*
+@pasta: _Casca
+@formato: texto
+@descricao: O botão fechado do filtro de UF (a pílula): o estado em uso ou "Todo o Brasil", com o funil (ponto vermelho quando há estado) e a seta. O clique abre o VizuFilter alto por cima (marcador FILTRO_ABRE); fechado, só a pílula ocupa a tela e o mapa embaixo segue pegando o mouse.
+*/
+VAR _uf = SELECTEDVALUE ( 'UF'[Nome] )
+VAR _txt = IF ( ISBLANK ( _uf ), "Todo o Brasil", _uf )
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+RETURN
+    "<div class='tela pl" & IF ( ISBLANK ( _uf ), "", " ativo" ) & "'><span class='fu'><svg width='16' height='16' "
+        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
+        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><b>" & _esc & "</b>"
+        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
+        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>"

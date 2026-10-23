@@ -1,0 +1,14 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0
+@descricao: Lugar do município marcado entre as cidades da UF dele pelos votos de Flávio (1 = o maior).
+*/
+VAR _s = [T05 · UF do município]
+VAR _v = [T05 · votos (municípios)]
+VAR _maiores =
+    CALCULATETABLE (
+        FILTER ( VALUES ( 'Município'[CodIBGE] ), [T05 · válidos (municípios)] > 0 && [T05 · votos (municípios)] > _v ),
+        REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'UF' ), 'Município'[UF] = _s
+    )
+RETURN
+    IF ( NOT ISBLANK ( _s ) && _v > 0, 1 + COUNTROWS ( _maiores ) )

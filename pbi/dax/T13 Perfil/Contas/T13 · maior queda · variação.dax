@@ -6,13 +6,17 @@
 @gerado: pbi/scripts/desenho_t13.py
 */
 VAR _c =
-    ADDCOLUMNS (
-        FILTER (
-            SUMMARIZE ( 'Município', 'Município'[Porte], 'Município'[Quinto de renda] ),
-            NOT ISBLANK ( 'Município'[Porte] ) && NOT ISBLANK ( 'Município'[Quinto de renda] )
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            FILTER (
+                SUMMARIZE ( 'Município', 'Município'[Porte], 'Município'[Quinto de renda] ),
+                NOT ISBLANK ( 'Município'[Porte] ) && NOT ISBLANK ( 'Município'[Quinto de renda] )
+            ),
+            "@n", [T13 · cidades],
+            "@v", [T13 · variação]
         ),
-        "@n", [T13 · cidades],
-        "@v", [T13 · variação]
+        REMOVEFILTERS ( 'Município' ),
+        VALUES ( 'UF'[UF] )
     )
 VAR _piso =
     SWITCH (

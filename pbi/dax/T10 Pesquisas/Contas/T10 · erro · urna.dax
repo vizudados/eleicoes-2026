@@ -1,0 +1,6 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: % do candidato da linha na urna (votos válidos do 1º turno de 2026).
+*/
+SWITCH ( [T10 · erro · candidato], "Lula", [T10 · urna · Lula], "Flávio", [T10 · urna · Flávio] )

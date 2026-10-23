@@ -1,7 +1,7 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Os dois balões de fala de um candidato (grão Monitoramento[Candidato]; vazio para quem não é Lula nem Flávio): área proporcional à média de interações por dia na campanha do 1º turno e no 2º turno, sobre o chão do fundo (y 410). Embaixo, o total da janela (contador) e os dias. Cada balão é alvo do dossiê ttT09Conversa.
+@descricao: Os dois balões de fala de um candidato (grão Monitoramento[Candidato]; vazio para quem não é Lula nem Flávio): área proporcional à média de interações por dia na campanha do 1º turno e no 2º turno, sobre o chão do fundo (y 410). Embaixo, o total da janela (contador) e os dias. Cada balão é alvo do dossiê ttT09Conversa. Com um candidato clicado na coluna da direita ('T09 · foco'), os balões do outro esmaecem (o clique nos próprios balões esmaece pelo visual).
 */
 -- 1 · Leituras
 VAR _c = [T09 · candidato]
@@ -12,9 +12,12 @@ VAR _p2 = [T09 · interações por dia · 2º turno]
 VAR _max = [T09 · interações por dia · maior]
 VAR _d1 = [T09 · 1º turno · dias]
 VAR _d2 = [T09 · 2º turno · dias]
+VAR _foco = [T09 · foco]
 -- 2 · Textos
 VAR _cls = IF ( _c = "Lula", "l", "f" )
 VAR _clsTxt = IF ( _c = "Lula", "lula-esc", "flavio-esc" )
+VAR _focoCurto = SWITCH ( _foco, "Lula", "Lula", "Flávio Bolsonaro", "Flávio" )
+VAR _apaga = IF ( NOT ISBLANK ( _focoCurto ) && _focoCurto <> _c, " apaga", "" )
 VAR _txt1 = FORMAT ( _i1 / 1000000, "0.0" ) & " mi"
 VAR _txt2 = FORMAT ( _i2 / 1000000, "0.0" ) & " mi"
 -- 3 · Geometria (raio até 132 px; área ∝ média por dia; chão em y 410)
@@ -65,7 +68,7 @@ VAR _b2 =
 RETURN
     IF (
         NOT ISBLANK ( _c ) && NOT ISBLANK ( _i1 ),
-        "<div class='tela t09b'>"
+        "<div class='tela t09b" & _apaga & "'>"
             & "<svg width='1040' height='530' viewBox='0 0 1040 530'>" & _b1b & _b2 & "</svg>"
             & "<div class='lab sobe d8' style='left:" & _cx1 & "px;top:420px'><b class='" & _clsTxt & "'>" & _c & "</b>"
                 & "<span class='num " & _clsTxt & "'>" & _txt1 & "</span><span class='sub'>em " & _d1 & " dias</span></div>"

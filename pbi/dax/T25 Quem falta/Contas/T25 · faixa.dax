@@ -1,0 +1,10 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: A faixa marcada (ex.: 18 a 24 anos), ou "N faixas de idade"; vazio sem faixa.
+*/
+SWITCH (
+    TRUE (),
+    [T25 · faixas marcadas] = 1, SELECTEDVALUE ( 'T25 Faixa'[Faixa] ),
+    [T25 · faixas marcadas] > 1, FORMAT ( [T25 · faixas marcadas], "0" ) & " faixas de idade"
+)

@@ -1,6 +1,6 @@
 {"titulo": "Para onde vão os votos dos outros",
  "blocos": [
-  ["Como ler", "À esquerda, quem votou em Cury, Renan, Caiado ou faltou no 1º turno. Cada faixa leva a parte desse grupo que diz votar em Lula, em Flávio ou em branco e nulo: quanto mais grossa, maior a parte. Passe o mouse num grupo para ver cada instituto."],
+  ["Como ler", "À esquerda, quem votou em Cury, Renan, Caiado ou faltou no 1º turno. Cada faixa leva a parte desse grupo que diz votar em Lula, em Flávio ou em branco e nulo: quanto mais grossa, maior a parte. Passe o mouse num grupo para ver cada instituto; clique nele (ou no candidato, na lista dos apoios) para destacar só os eleitores dele."],
   ["De onde vêm os números", "Pesquisas registradas no TSE que publicaram o cruzamento depois do 1º turno, em votos totais: a média da última de cada instituto. Apoios: imprensa e redes dos candidatos. Quem segue o apoio: Vox Brasil, 09/10."],
   ["Para lembrar", "Cada grupo tem poucos entrevistados (em geral menos de 100), e a margem de erro vai de 10 a 24 pontos. Os números mostram para onde o grupo pende, não quantos votos cada um vai levar."]
  ]}

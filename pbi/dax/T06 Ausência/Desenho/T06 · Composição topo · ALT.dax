@@ -1,0 +1,12 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do título da composição.
+*/
+LEFT (
+    "Quem não escolheu ninguém, " & [T06 · recorte] & ": em 2006, "
+        & [T06 · faltaram entre quem não escolheu · em cada 10 · 2006] & " em cada 10 nem foram votar; em 2026, "
+        & [T06 · faltaram entre quem não escolheu · em cada 10 · 2026] & ". Brancos e nulos: "
+        & SWITCH ( TRUE (), ABS ( [T06 · brancos e nulos · 2006] ) >= 1000000, FORMAT ( [T06 · brancos e nulos · 2006] / 1000000, "0.0" ) & " mi", ABS ( [T06 · brancos e nulos · 2006] ) >= 1000, FORMAT ( [T06 · brancos e nulos · 2006] / 1000, "0.0" ) & " mil", FORMAT ( [T06 · brancos e nulos · 2006], "#,0" ) ) & " em 2006 e " & SWITCH ( TRUE (), ABS ( [T06 · brancos e nulos · 2026] ) >= 1000000, FORMAT ( [T06 · brancos e nulos · 2026] / 1000000, "0.0" ) & " mi", ABS ( [T06 · brancos e nulos · 2026] ) >= 1000, FORMAT ( [T06 · brancos e nulos · 2026] / 1000, "0.0" ) & " mil", FORMAT ( [T06 · brancos e nulos · 2026], "#,0" ) ) & " em 2026.",
+    250
+)

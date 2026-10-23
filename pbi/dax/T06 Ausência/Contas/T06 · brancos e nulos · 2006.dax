@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: #,0
+@descricao: Brancos + nulos no 1º turno de 2006, no recorte.
+@oraculo: paginas[6].serie[2006].brancos_nulos_txt = 8,8 mi
+*/
+CALCULATE ( [T06 · brancos (ano)] + [T06 · nulos (ano)], 'Ano'[Ano] = 2006 )

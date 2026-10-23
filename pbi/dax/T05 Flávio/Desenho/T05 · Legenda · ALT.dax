@@ -4,4 +4,5 @@
 @descricao: Texto para leitor de tela da legenda do mapa.
 */
 "Legenda: cada ponto é um município, o tamanho segue os votos de Flávio; a cor mostra onde Flávio ficou à "
-    & "frente (mais escuro, maior margem) e, em areia, onde Lula ficou à frente."
+    & "frente (mais escuro, maior margem) e, em areia, onde Lula ficou à frente. Clique num ponto para levar "
+    & "a cidade ao painel."

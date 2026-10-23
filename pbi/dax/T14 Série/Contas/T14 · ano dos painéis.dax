@@ -1,0 +1,9 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: A eleição que os painéis das regiões destacam: a clicada na série ou 2026.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _a = [T14 · ano escolhido]
+RETURN
+    IF ( ISBLANK ( _a ), 2026, _a )

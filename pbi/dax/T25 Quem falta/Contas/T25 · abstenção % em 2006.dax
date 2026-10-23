@@ -1,0 +1,7 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Abstenção no 1º turno de 2006 no lugar e na faixa do contexto (0–1); vazio sem dado (por idade, só de 2014 em diante).
+@oraculo: Brasil = 16,8% (paginas[6].abstencao_2006_txt)
+*/
+CALCULATE ( DIVIDE ( [T25 · abstenções (cru)], [T25 · aptos (cru)] ), 'Ano'[Ano] = 2006 )

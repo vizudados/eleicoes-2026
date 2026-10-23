@@ -14,13 +14,20 @@ voltou mais. A rejeição não forma série entre institutos (cada um pergunta d
                         2º turno, a média móvel de 10 dias (traço que se desenha) e a nota à mão na virada
   T17_Curva_Pontos      um ponto por pesquisa (granularidade Pesquisa[Id]): vazado = simulação antes do 1º turno,
                         cheio = depois; dossiê ttT17Pesquisa (instituto, campo, a anterior do mesmo instituto, a média)
+
+Filtro cruzado (23/10/2026, pedido do Alisson: "clicar num instituto destaca a série e muda o painel de rejeição"):
+  clique num quadrinho  → a série daquele instituto se acende na curva (traço ligando as pesquisas dele, o nome na
+                          última, os outros pontos esmaecem) e o placar contorna os quadradinhos dele, com a contagem dele
+  clique num ponto      → a série do mesmo instituto se acende (regras :has da folha dos pontos), o quadrinho dele fica em
+                          destaque (ou a nota diz que ele não tem quadrinho) e o placar contorna os quadradinhos dele
+  nada clicado          → a tela como antes
 """
 from __future__ import annotations
 
 import estilo
 import pagina_lib
 import pbip_lib as lib
-from pbip_lib import Visual
+from pbip_lib import Interacao, Visual
 from paginas import _campanha as cp
 
 P = "T17"
@@ -52,6 +59,11 @@ CSS_PLACAR = (
     f".t17a .grade .e{{background:{C['areia']}}}"
     ".t17a .cont{margin-top:8px;font-size:15px;color:var(--grafite);display:flex;gap:16px}"
     ".t17a .cont b{font-weight:700}"
+    # instituto em destaque (clique num quadrinho da rejeição ou num ponto da curva): os quadradinhos dele com contorno,
+    # os outros esmaecem; a contagem embaixo passa a ser a dele, com o nome
+    ".t17a .grade i.fora{opacity:.22}"
+    f".t17a .grade i.fx{{box-shadow:0 0 0 1.5px {C['papel']},0 0 0 3px {C['tinta']}}}"
+    ".t17a .cont .fo{font-weight:600;color:var(--tinta);white-space:nowrap}"
 )
 
 CSS_REJ = (
@@ -75,6 +87,10 @@ CSS_PAINEIS = (
     f".t17q .al{{fill:{C['papel']};stroke:{C['vermelho']};stroke-width:2}}.t17q .af{{fill:{C['papel']};stroke:{C['azul']};"
     "stroke-width:2}"
     f".t17q .dl{{fill:{C['vermelho']}}}.t17q .df{{fill:{C['azul']}}}"
+    # clique num ponto da curva: o quadrinho do instituto daquela pesquisa em destaque, os outros esmaecem
+    ".t17q{transition:opacity .25s}.t17q.fora{opacity:.28}"
+    f".t17q.fx .pn{{background:rgba(229,219,200,.55);box-shadow:0 0 0 4px rgba(229,219,200,.55);"
+    f"border-top-color:{C['tinta']}}}"
 )
 
 
@@ -125,7 +141,30 @@ CSS_PONTOS = (
     f".t17p .sim.l{{background:{C['papel']};box-shadow:inset 0 0 0 2.4px {C['vermelho']}}}"
     f".t17p .sim.e{{background:{C['papel']};box-shadow:inset 0 0 0 2.4px {C['cinza']}}}"
     f".t17p .pt:hover{{outline:2px solid {C['tinta']};outline-offset:2px}}"
+    # a série do instituto: o traço até a pesquisa anterior dele e o nome na última, escondidos; aparecem com a série em
+    # destaque (fx = clique num quadrinho da rejeição; ou o próprio clique num ponto, pelas regras de _serie_css)
+    ".t17p{transition:opacity .25s}"
+    ".t17p .sg{position:absolute;left:0;top:0;overflow:visible;opacity:0;transition:opacity .25s}"
+    f".t17p .sg line{{stroke:{C['marrom']};stroke-width:2.4;stroke-linecap:round;stroke-dasharray:7 4}}"
+    ".t17p .nm{position:absolute;transform:translateX(-50%);opacity:0;transition:opacity .25s;font-size:15px;"
+    f"font-weight:700;white-space:nowrap;color:{C['marrom']};background:{C['papel']};padding:1px 6px;"
+    f"box-shadow:0 0 0 1.5px {C['marrom']}}}"
+    ".t17p.fx .sg,.t17p.fx .nm{opacity:1}"
+    f".t17p.fx .pt{{outline:2px solid {C['marrom']};outline-offset:1.5px}}"
+    ".t17p.fora,.t17p.unselected{opacity:.18}"
 )
+
+
+def _serie_css(n: int = 40) -> str:
+    """Clique num ponto: o HTML Content marca as outras entradas com .unselected; estas regras devolvem a cor às do
+    MESMO instituto (classe i<n>, T17 · série · número do instituto) e mostram o traço e o nome da série dele."""
+    regras = []
+    for k in range(1, n + 1):
+        cond = f"body:has(.t17p.unselected):has(.t17p.i{k}:not(.unselected))"
+        regras.append(f"{cond} .t17p.i{k}{{opacity:1}}{cond} .t17p.i{k} .sg,{cond} .t17p.i{k} .nm{{opacity:1}}"
+                      f"{cond} .t17p.i{k} .pt{{outline:2px solid {C['marrom']};outline-offset:1.5px}}")
+    return "".join(regras)
+
 
 CSS_TT_PESQ = ".tt17p .par{margin-top:2px}"
 CSS_TT_REJ = (
@@ -150,15 +189,25 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T17_Rejeicao_Paineis", *REJEICAO, "T17 · Painéis · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_PAINEIS}</style>{{{{content}}}}",
                                   granularidade=("Rejeição", "Instituto"), tooltip_pagina="ttT17Rejeicao",
+                                  filtro_cruzado=True, transparencia_nao_selecionados=True,
                                   alt=lib.medida("T17 · Painéis · ALT"), z=Z + 2, tab=120)),
         Visual(P, lib.visual_html("T17_Curva_Html", *CURVA, "T17 · Curva · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=corpo_curva(), alt=lib.medida("T17 · Curva · ALT"), z=Z + 3, tab=130)),
         Visual(P, lib.visual_html("T17_Curva_Pontos", *CURVA, "T17 · Pontos · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=f"<style>{CSS_PONTOS}</style>{{{{content}}}}",
+                                  modelo_corpo=f"<style>{CSS_PONTOS}{_serie_css()}</style>{{{{content}}}}",
                                   granularidade=("Pesquisa", "Id"), tooltip_pagina="ttT17Pesquisa",
+                                  filtro_cruzado=True, transparencia_nao_selecionados=False,
                                   alt=lib.medida("T17 · Pontos · ALT"), z=Z + 4, tab=140)),
         *pagina_lib.tooltip("ttT17Pesquisa", "2º turno · pesquisa", 470, 300, "T17 · Tooltip pesquisa · HTML",
                             ordem=270, folha_de_estilo=CSS, modelo_corpo=cp.dossie("lupa", CSS_TT_PESQ)),
         *pagina_lib.tooltip("ttT17Rejeicao", "2º turno · rejeição", 480, 360, "T17 · Tooltip rejeição · HTML",
                             ordem=271, folha_de_estilo=CSS, modelo_corpo=cp.dossie("balanca", CSS_TT_REJ)),
+        # filtro cruzado (23/10/2026): o quadrinho da rejeição e o ponto da curva escolhem um instituto; os pontos
+        # mostram a série dele, o placar contorna os quadradinhos dele e os quadrinhos destacam o da pesquisa clicada.
+        # Exceções: a curva de fundo (a média de todos) não recebe o clique do ponto (o filtro em Pesquisa[Id]
+        # esvaziaria a média) nem o do quadrinho (a rejeição não mexe nela); o cabeçalho da rejeição não recebe o clique
+        # do próprio quadrinho (ele já se destaca sozinho)
+        Interacao(P, "T17_Curva_Pontos", "T17_Curva_Html", "NoFilter"),
+        Interacao(P, "T17_Rejeicao_Paineis", "T17_Curva_Html", "NoFilter"),
+        Interacao(P, "T17_Rejeicao_Paineis", "T17_Rejeicao_Html", "NoFilter"),
     ]

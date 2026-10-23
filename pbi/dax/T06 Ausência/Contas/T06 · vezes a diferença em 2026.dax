@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0.0
+@descricao: A régua de 2026 (quem faltou ÷ a diferença entre Flávio e Lula) vista de qualquer ano: a comparação à mão no dossiê do ano.
+@oraculo: Brasil = 15,0
+*/
+CALCULATE ( [T06 · vezes a diferença], 'Ano'[Ano] = 2026 )

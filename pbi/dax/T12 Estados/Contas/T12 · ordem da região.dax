@@ -1,0 +1,19 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0
+@descricao: Posição da região da linha entre as cinco pela variação da margem (1 = a maior queda); posiciona a linha. Percorre Região e RegiaoOrdem juntas: o Power BI põe a coluna de ordenação no grão do visual, e ALL só da Região deixava todas as regiões em 1º (as cinco linhas uma sobre a outra no Desktop).
+@oraculo: mockup/data/eleicoes.json › paginas[12] › regioes (Sul −11,0 … Norte −6,1)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+VAR _r = [T12 · região da unidade]
+RETURN
+    IF (
+        NOT ISBLANK ( _r ) && _r <> "Exterior",
+        RANKX (
+            FILTER ( ALL ( 'UF'[Região], 'UF'[RegiaoOrdem] ), 'UF'[Região] <> "Exterior" ),
+            [T12 · variação],
+            ,
+            ASC,
+            DENSE
+        )
+    )

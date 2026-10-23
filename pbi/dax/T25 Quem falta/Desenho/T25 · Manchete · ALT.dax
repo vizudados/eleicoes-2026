@@ -1,0 +1,13 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da manchete.
+*/
+LEFT (
+    [T25 · lugar] & ", 1º turno de " & [T25 · ano]
+        & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
+        & IF ( ISBLANK ( [T25 · abstenção %] ), "sem dado neste cruzamento.",
+            FORMAT ( [T25 · abstenção %], "0.0%" ) & " dos eleitores não foram votar." )
+        & " Clique num ano, numa idade ou num ponto do mapa para cruzar.",
+    250
+)

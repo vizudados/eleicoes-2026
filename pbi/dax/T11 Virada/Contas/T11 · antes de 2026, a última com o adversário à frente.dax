@@ -1,0 +1,10 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: 0
+@descricao: A eleição mais recente antes de 2026 em que o adversário do PT ficou à frente no contexto (vazio se nenhuma).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+MAXX (
+    FILTER ( ALL ( 'Ano'[Ano] ), 'Ano'[Ano] < 2026 && [T11 · margem no ano] < 0 ),
+    'Ano'[Ano]
+)

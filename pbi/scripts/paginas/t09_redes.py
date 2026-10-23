@@ -12,15 +12,26 @@ diferentes e não se somam.
   T09_Conversa_Baloes um par de balões de fala por candidato (granularidade Monitoramento[Candidato]): área = média
                       de interações por dia, na campanha do 1º turno e no 2º turno → dossiê ttT09Conversa
   T09_Lado_Html       fundo da coluna da direita: seguidores ganhos e anúncios na Meta (títulos, notas, ressalva)
-  T09_Lado_Linhas     a barra de seguidores e o gasto de cada um (granularidade Monitoramento[Candidato]) → dossiê
+  T09_Lado_Linhas     a barra de seguidores e o ritmo de cada um (granularidade Seguidores[Candidato]) → dossiê
                       ttT09Lado (seguidores por rede, o 2º turno e os pagamentos ao TSE)
+  T09_Popularidade_Alvos  uma faixa por data do índice da Quaest (granularidade Monitoramento[Início]) sobre o
+                      desenho do índice → dossiê ttT09Ipd: o humor da conversa naquele dia (saldo de sentimento da
+                      Datrix na semana, menções da FGV depois do debate ou os comentários no dia do 1º turno)
+
+Filtro cruzado (23/10/2026, "clicar num lado filtra os balões"): o clique num candidato, nos balões ou na coluna da
+direita, apaga o outro candidato nas três peças (balões, coluna e índice) e a manchete do índice conta o caminho de quem
+foi clicado. Para o clique realçar sem sumir com linha nenhuma, cada lado usa uma coluna de candidato diferente e sem
+relação entre si: os balões, Monitoramento[Candidato]; a coluna da direita, Seguidores[Candidato] (a tabela de
+seguidores, que é o assunto dela). As contas da coluna recebem o candidato da linha por CALCULATE em
+Monitoramento[Candidato]; 'T09 · foco' lê o clique de qualquer um dos dois (ISINSCOPE separa o grão do clique).
+NoFilter para o herói, os fundos e os alvos do índice (não leem o candidato).
 """
 from __future__ import annotations
 
 import estilo
 import pagina_lib
 import pbip_lib as lib
-from pbip_lib import Visual
+from pbip_lib import Interacao, Visual
 from paginas import _campanha as cp
 
 P = "T09"
@@ -56,6 +67,18 @@ CSS_IPD = (
     ".t09i .rotulo.e{text-align:right}"
     ".t09i .mao{position:absolute;font-size:30px;transform:rotate(-4deg);white-space:nowrap}"
     ".t09i .nota{position:absolute;left:0;right:0;top:258px}"
+    ".t09i .apaga{opacity:.14;transition:opacity .35s}"
+)
+
+CSS_IPD_ALVOS = (
+    ".t09p{pointer-events:none}"
+    ".t09p .dia{position:absolute;top:72px;height:150px;width:32px;pointer-events:auto;cursor:help}"
+    f".t09p .dia .v{{position:absolute;left:15.5px;top:0;bottom:0;width:1px;background:{C['tinta']};opacity:0;"
+    "transition:opacity .12s}"
+    ".t09p .dia i.m{position:absolute;left:9px;width:14px;height:14px;border-radius:50%;opacity:0;"
+    f"transition:opacity .12s;box-shadow:0 0 0 2px {C['papel']},0 0 0 3.5px {C['tinta']}}}"
+    f".t09p .dia i.ml{{background:{C['vermelho']}}}.t09p .dia i.mf{{background:{C['azul']}}}"
+    ".t09p .dia:hover .v{opacity:.35}.t09p .dia:hover i.m{opacity:1}"
 )
 
 CSS_CONVERSA = (
@@ -88,6 +111,7 @@ CSS_BALOES = (
     ".t09b .lab b{display:block;font-size:17px;font-weight:600}"
     ".t09b .lab .num{display:block;font-size:30px;margin-top:2px}"
     ".t09b .lab .sub{display:block;font-size:15px;color:var(--grafite);margin-top:3px}"
+    ".t09b{transition:opacity .35s}.t09b.apaga{opacity:.18}"
 )
 
 CSS_LADO = (
@@ -116,6 +140,7 @@ def corpo_linhas() -> str:
         f".t09r .ritmo .seta-r{{display:inline-block;width:48px;height:16px;background:url({seta}) center/contain "
         "no-repeat;opacity:.8}"
         ".t09r .ritmo .sub{font-size:15px;color:var(--grafite)}"
+        ".t09r{transition:opacity .35s}.t09r.apaga{opacity:.18}"
     )
     return f"<style>{css}</style>{{{{content}}}}"
 
@@ -129,6 +154,24 @@ CSS_TT_CONVERSA = (
     f".tt9c .tab .on{{background:{C['creme']};box-shadow:0 0 0 4px {C['creme']}}}"
     ".tt9c .txt{margin-top:12px}"
     ".dos .tt9c .mao{position:static;display:block;text-align:right;margin-top:4px}"
+)
+
+CSS_TT_IPD = (
+    ".tt9i .par{margin:2px 0 6px 0}"
+    ".dos .tt9i .par .num.vazio{color:var(--cinza);font-weight:400}"
+    ".tt9i .rot{margin:2px 0 8px 0}"
+    ".tt9i .hb{display:grid;grid-template-columns:70px 240px 64px;align-items:center;height:28px}"
+    ".tt9i .hb .hn{font-size:15px;font-weight:600}"
+    ".tt9i .hb .trilho{position:relative;height:14px}"
+    f".tt9i .hb .trilho::before{{content:'';position:absolute;left:120px;top:-4px;bottom:-4px;border-left:1.5px solid {C['tinta']}}}"
+    ".tt9i .hb i{position:absolute;top:1px;height:12px;animation:uCresceX .7s cubic-bezier(.2,.7,.2,1) both}"
+    ".tt9i .hb i.pos{left:121px;transform-origin:left center}.tt9i .hb i.neg{right:120px;transform-origin:right center}"
+    f".tt9i .hb i.l{{background:{C['vermelho']}}}.tt9i .hb i.f{{background:{C['azul']}}}"
+    ".tt9i .hb b{font-size:17px;font-weight:700;text-align:right;font-variant-numeric:tabular-nums}"
+    ".tt9i .mt{display:grid;grid-template-columns:90px 110px 110px;row-gap:4px;align-items:baseline}"
+    ".tt9i .mt .h{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--cinza)}"
+    ".tt9i .mt span{font-size:15px;font-weight:600}.tt9i .mt b{font-size:20px;font-weight:700}"
+    ".tt9i .nota{margin-top:6px;padding-right:170px}"
 )
 
 CSS_TT_LADO = (
@@ -160,19 +203,31 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T09_Conversa_Html", *CONVERSA, "T09 · Conversa · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=corpo_conversa(), alt=lib.medida("T09 · Conversa · ALT"), z=Z + 2,
                                   tab=120)),
+        Visual(P, lib.visual_html("T09_Popularidade_Alvos", *IPD, "T09 · Popularidade pontos · HTML", folha_de_estilo=CSS,
+                                  modelo_corpo=f"<style>{CSS_IPD_ALVOS}</style>{{{{content}}}}",
+                                  granularidade=("Monitoramento", "Início"), tooltip_pagina="ttT09Ipd",
+                                  alt=lib.medida("T09 · Popularidade pontos · ALT"), z=Z + 6, tab=115)),
         Visual(P, lib.visual_html("T09_Conversa_Baloes", *CONVERSA, "T09 · Balões · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_BALOES}</style>{cp.defs_rabisco()}{{{{content}}}}",
-                                  granularidade=gran, tooltip_pagina="ttT09Conversa",
+                                  granularidade=gran, filtro_cruzado=True, transparencia_nao_selecionados=True,
+                                  tooltip_pagina="ttT09Conversa",
                                   alt=lib.medida("T09 · Balões · ALT"), z=Z + 3, tab=130)),
         Visual(P, lib.visual_html("T09_Lado_Html", *LADO, "T09 · Lado · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_LADO}</style>{{{{content}}}}",
                                   alt=lib.medida("T09 · Lado · ALT"), z=Z + 4, tab=140)),
         Visual(P, lib.visual_html("T09_Lado_Linhas", *LADO, "T09 · Linhas · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=corpo_linhas(),
-                                  granularidade=gran, tooltip_pagina="ttT09Lado",
+                                  granularidade=("Seguidores", "Candidato"), filtro_cruzado=True,
+                                  transparencia_nao_selecionados=True, tooltip_pagina="ttT09Lado",
                                   alt=lib.medida("T09 · Linhas · ALT"), z=Z + 5, tab=150)),
+        # o clique num candidato (balões ou coluna) só realça: o herói, os fundos e os alvos do índice não o leem
+        *[Interacao(P, origem, alvo, "NoFilter")
+          for origem in ("T09_Conversa_Baloes", "T09_Lado_Linhas")
+          for alvo in ("T09_Heroi_Html", "T09_Conversa_Html", "T09_Lado_Html", "T09_Popularidade_Alvos")],
         *pagina_lib.tooltip("ttT09Conversa", "Redes · interações", 520, 340, "T09 · Tooltip conversa · HTML",
-                            ordem=190, folha_de_estilo=CSS, modelo_corpo=cp.dossie("celular", CSS_TT_CONVERSA)),
+                            ordem=200, folha_de_estilo=CSS, modelo_corpo=cp.dossie("celular", CSS_TT_CONVERSA)),
         *pagina_lib.tooltip("ttT09Lado", "Redes · seguidores e anúncios", 760, 420, "T09 · Tooltip lado · HTML",
-                            ordem=191, folha_de_estilo=CSS, modelo_corpo=cp.dossie("pessoas", CSS_TT_LADO)),
+                            ordem=201, folha_de_estilo=CSS, modelo_corpo=cp.dossie("pessoas", CSS_TT_LADO)),
+        *pagina_lib.tooltip("ttT09Ipd", "Redes · dia do índice", 460, 330, "T09 · Tooltip IPD · HTML",
+                            ordem=202, folha_de_estilo=CSS, modelo_corpo=cp.dossie("celular", CSS_TT_IPD)),
     ]

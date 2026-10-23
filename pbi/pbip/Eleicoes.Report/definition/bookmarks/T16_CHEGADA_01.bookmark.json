@@ -1,12 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
   "name": "T16_CHEGADA_01",
-  "displayName": "Chegada · 17 Os outros",
+  "displayName": "Chegada · 18 Os outros",
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
       "T16_Casca_InfoAbre",
       "T16_Casca_InfoFecha",
+      "T16_Casca_InfoFora",
       "T16_Casca_Leitura"
     ],
     "suppressData": true
@@ -21,6 +22,13 @@
             "singleVisual": {}
           },
           "T16_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T16_Casca_InfoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

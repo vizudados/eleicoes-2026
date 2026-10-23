@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Quantos em cada 10 eleitores do recorte faltaram, arredondado (para a frase quando é 35% ou mais).
+*/
+IF ( [T25 · abstenção %] > 0, ROUND ( [T25 · abstenção %] * 10, 0 ) )

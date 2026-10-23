@@ -1,0 +1,19 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: Quantas UFs da região do painel tiveram o PT à frente do adversário na eleição em destaque (a clicada ou 2026).
+@oraculo: Nordeste 2026: 9 de 9 (motor)
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _r = [T14 · região do painel]
+VAR _a = [T14 · ano dos painéis]
+RETURN
+    COUNTROWS (
+        FILTER (
+            ADDCOLUMNS (
+                FILTER ( ALL ( 'UF'[UF], 'UF'[Região] ), 'UF'[Região] = _r ),
+                "@m", CALCULATE ( [T14 · margem do PT], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )
+            ),
+            [@m] > 0
+        )
+    ) + 0

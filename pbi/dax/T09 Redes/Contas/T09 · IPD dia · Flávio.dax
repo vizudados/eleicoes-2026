@@ -1,0 +1,8 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Índice de popularidade digital de Flávio na data do ponto (Quaest); vazio quando a Quaest não divulgou o dele naquele dia.
+*/
+VAR _d = [T09 · IPD dia · data]
+RETURN
+    IF ( NOT ISBLANK ( _d ), CALCULATE ( [T09 · IPD], REMOVEFILTERS ( Monitoramento ), Monitoramento[Início] = _d, Monitoramento[Candidato] = "Flávio Bolsonaro" ) )

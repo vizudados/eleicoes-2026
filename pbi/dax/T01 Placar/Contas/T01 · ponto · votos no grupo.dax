@@ -1,0 +1,13 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: #,0
+@descricao: Votos do partido do ponto (PT ou PL) no ano do ponto, somados nos municípios do contexto (sem o exterior): a região ou o porte da linha do dossiê.
+*/
+VAR _a = [T01 · ponto · ano]
+VAR _n = [T01 · ponto · número]
+RETURN
+    SWITCH (
+        _n,
+        13, CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = _a ),
+        22, CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = _a )
+    )

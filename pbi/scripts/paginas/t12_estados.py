@@ -3,13 +3,21 @@
 
 Lula perdeu margem em 26 das 27 unidades; Minas Gerais e Tocantins mudaram de lado; só o Distrito Federal subiu.
 
-  T12_Resposta_Html   coluna da resposta: "26 de 27" (contador), quem mudou de lado (sublinhado à mão), a exceção, o que
-                      é margem (o Brasil 2022 e 2026 em barras) e as cinco regiões em mini setas
-  T12_Corrida_Titulo  sobretítulo, a manchete das setas e a legenda
+  T12_Resposta_Html   coluna da resposta: "26 de 27" (contador), quem mudou de lado (sublinhado à mão), a exceção e o que
+                      é margem (o Brasil 2022 e 2026 em barras; com uma unidade ou região clicada, o lugar clicado)
+  T12_Regioes_Html    as cinco regiões em mini setas, uma entrada por região (granularidade UF[Região]), da maior queda
+                      à menor. Tooltip: dossiê da região (ttT12Regiao). Clique: a corrida mostra só as unidades da
+                      região, nos lugares delas; a resposta e a manchete contam a região
+  T12_Corrida_Titulo  sobretítulo, a manchete das setas (com clique, o lugar clicado) e a legenda
   T12_Corrida_Html    a corrida das unidades (granularidade UF, 27 + exterior): da maior queda à alta, o ponto vazado de
                       2022 e o cheio de 2026, que desliza até o lugar na entrada; eixo de −60 a +60 p.p. no bodyTemplate.
-                      Tooltip: dossiê da UF (ttT12Uf)
+                      Tooltip: dossiê da UF (ttT12Uf). Clique numa unidade: a resposta e a manchete contam a unidade
+                      (as outras linhas esmaecem)
   T12_Exterior_Alvo   alvo transparente sobre a linha do exterior: abre o tooltip do exterior país a país (ttT12Exterior)
+
+Interações (só as exceções): o clique numa unidade não filtra as regiões (que são o mapa da tela inteira) nem o alvo
+do exterior (que segue abrindo o país a país); o clique numa região chega ao alvo do exterior, que some (o exterior não
+é de região nenhuma) para não ficar sobre outra linha.
 
 Medidas em pbi/dax/T12 Estados (geradas por pbi/scripts/desenho_t12.py).
 """
@@ -22,13 +30,17 @@ import estilo
 import exterior
 import pagina_lib
 import pbip_lib as lib
-from pbip_lib import Visual
+import roteiro
+from pbip_lib import Interacao, Visual
 
 P = "T12"
 CSS = "Estilo · CSS"
 Z = lib.CAMADAS["conteudo"]
 
-RESPOSTA = (150, 140, 560, 860)
+RESPOSTA = (150, 140, 560, 560)
+REGIOES = (144, 700, 572, 300)     # o bloco das regiões (6 px de folga à esquerda para o realce da linha, L080)
+# páginas de tooltip: ordem 100 + número da tela para o leitor × 10 (o número sai do roteiro e anda com ele)
+ORDEM_TT = 100 + int(roteiro.numero(P)) * 10
 TITULO = (760, 140, 1010, 96)
 CORRIDA = (760, 236, 1010, 764)
 ORACULO = Path(__file__).resolve().parents[3] / "mockup" / "data" / "eleicoes.json"
@@ -62,17 +74,27 @@ CSS_RESPOSTA = (
     ".t12r .br .ba{display:block;height:14px;background:var(--azul)}"
     ".t12r .br .pc{font-size:15px;font-weight:600;white-space:nowrap}"
     ".t12r .br .mg{font-size:24px;text-align:right}"
-    ".t12r .regioes{position:absolute;left:0;top:560px;width:560px}"
-    ".t12r .rg{position:absolute;left:0;width:560px;height:44px}"
-    ".t12r .rg .nm{position:absolute;left:0;top:-2px;font-size:16px;font-weight:600;white-space:nowrap}"
-    ".t12r .rg .mud{font-size:24px;font-weight:600;color:var(--azul-escuro);margin-left:8px}"
-    ".t12r .rg .vv{position:absolute;left:0;top:22px;font-size:13px;color:var(--cinza)}"
-    ".t12r .rg .mini{position:absolute;left:170px;top:6px}"
-    ".t12r .rg .dv{position:absolute;right:0;top:3px;font-size:17px;font-weight:700;color:var(--grafite)}"
-    ".t12r .rg .zero{stroke:var(--grafite);stroke-width:1;stroke-dasharray:2 3}"
-    ".t12r .rg line.traco-rapido{stroke:var(--grafite);stroke-width:2}"
-    ".t12r .rg .m22{fill:var(--papel);stroke-width:2}"
 )
+
+# as regiões, uma entrada por região (raiz sem ponteiro, L114; a linha pega o mouse, com fundo no realce, L054)
+CSS_REGIOES = (
+    ".t12g0 .rot{position:absolute;left:6px;top:0}"
+    ".t12g{pointer-events:none}"
+    ".t12g .rg{position:absolute;left:0;width:572px;height:44px;margin-top:-4px;border-radius:4px;pointer-events:auto;"
+    "cursor:pointer;transition:background .15s,opacity .15s}"
+    ".t12g .rg:hover{background:rgba(28,25,21,.06)}"
+    "#htmlContent:has(.rg:hover) .rg:not(:hover){opacity:.55}"
+    ".t12g .rg .nm{position:absolute;left:6px;top:2px;font-size:16px;font-weight:600;white-space:nowrap}"
+    ".t12g .rg .mud{font-size:24px;font-weight:600;color:var(--azul-escuro);margin-left:8px}"
+    ".t12g .rg .vv{position:absolute;left:6px;top:26px;font-size:13px;color:var(--cinza)}"
+    ".t12g .rg .mini{position:absolute;left:176px;top:10px}"
+    ".t12g .rg .dv{position:absolute;right:6px;top:7px;font-size:17px;font-weight:700;color:var(--grafite)}"
+    ".t12g .rg .zero{stroke:var(--grafite);stroke-width:1;stroke-dasharray:2 3}"
+    ".t12g .rg line.traco-rapido{stroke:var(--grafite);stroke-width:2}"
+    ".t12g .rg .m22{fill:var(--papel);stroke-width:2}"
+)
+CORPO_REGIOES = (f"<style>{CSS_REGIOES}</style><div class='tela t12g0' style='pointer-events:none'><div class='rot "
+                 "entra d8'>POR REGIÃO · MARGEM DE LULA 2022 → 2026</div></div>{{content}}")
 
 CSS_TITULO = (
     ".t12t .rot{position:absolute;left:0;top:0}"
@@ -148,14 +170,15 @@ CSS_TOOLTIP = (
     ".tt12 .ln .p{font-size:14px;white-space:nowrap}"
     ".tt12 .duelo .nota{font-size:12px;margin-top:2px}"
     ".tt12 .mun{margin-top:12px;font-size:15px;color:var(--grafite)}.tt12 .mun .num{font-size:22px;color:var(--azul)}"
+    ".tt12 .ex{margin-top:4px;font-size:14px;color:var(--tinta);padding-right:20px}"
     ".tt12 .mao{position:absolute;right:22px;bottom:12px;font-size:25px;color:var(--vermelho-escuro);"
     "transform:rotate(-2deg)}"
 )
 
 
-def _corpo_tt(css: str) -> str:
+def _corpo_tt(css: str, icone: str = "balanca-tinta.png") -> str:
     """bodyTemplate do tooltip: o cartão (conteúdo) e, por cima, o ícone em traço no canto de baixo."""
-    img = estilo.imagem_b64("docs/midia/arte/icones/balanca-tinta.png", 96)
+    img = estilo.imagem_b64(f"docs/midia/arte/icones/{icone}", 96)
     return (f"<style>{css}.ttic{{position:fixed;left:22px;bottom:12px;width:42px;height:42px;opacity:.8;"
             f"background:url({img}) center/contain no-repeat;pointer-events:none}}</style>{{{{content}}}}"
             "<div class='ttic entra d5'></div>")
@@ -171,15 +194,25 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T12_Resposta_Html", *RESPOSTA, "T12 · Resposta · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=_corpo(CSS_RESPOSTA), alt=lib.medida("T12 · Resposta · ALT"),
                                   z=Z, tab=100)),
+        Visual(P, lib.visual_html("T12_Regioes_Html", *REGIOES, "T12 · Regiões · HTML", folha_de_estilo=CSS,
+                                  modelo_corpo=CORPO_REGIOES, granularidade=("UF", "Região"), filtro_cruzado=True,
+                                  transparencia_nao_selecionados=True, tooltip_pagina="ttT12Regiao",
+                                  alt=lib.medida("T12 · Regiões · ALT"), z=Z + 3, tab=105)),
         Visual(P, lib.visual_html("T12_Corrida_Titulo", *TITULO, "T12 · Corrida título · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=_corpo(CSS_TITULO), alt=lib.medida("T12 · Corrida título · ALT"),
                                   z=Z + 1, tab=110)),
         Visual(P, lib.visual_html("T12_Corrida_Html", *CORRIDA, "T12 · Corrida · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=corpo_corrida, granularidade=("UF", "UF"), tooltip_pagina="ttT12Uf",
+                                  modelo_corpo=corpo_corrida, granularidade=("UF", "UF"), filtro_cruzado=True,
+                                  transparencia_nao_selecionados=True, tooltip_pagina="ttT12Uf",
                                   alt=lib.medida("T12 · Corrida · ALT"), z=Z + 2, tab=120)),
-        *pagina_lib.tooltip("ttT12Uf", "Estados · UF", 440, 300, "T12 · Tooltip UF · HTML", ordem=220,
+        *pagina_lib.tooltip("ttT12Uf", "Estados · UF", 440, 330, "T12 · Tooltip UF · HTML", ordem=ORDEM_TT,
                             folha_de_estilo=CSS, modelo_corpo=_corpo_tt(CSS_TOOLTIP)),
+        *pagina_lib.tooltip("ttT12Regiao", "Estados · região", 440, 330, "T12 · Tooltip região · HTML",
+                            ordem=ORDEM_TT + 2, folha_de_estilo=CSS, modelo_corpo=_corpo_tt(CSS_TOOLTIP, "pino-tinta.png")),
         # o exterior ganha o tooltip país a país (pedido do Alisson, 23/10/2026)
-        *exterior.declarar(P, "T12_Exterior_Alvo", _caixa_exterior(), "Exterior · 1º turno · HTML", ordem=221,
+        *exterior.declarar(P, "T12_Exterior_Alvo", _caixa_exterior(), "Exterior · 1º turno · HTML", ordem=ORDEM_TT + 1,
                            css_alvo=".ax{cursor:default;border-radius:2px}.ax:hover{background:rgba(28,25,21,.07)}"),
+        # o clique numa unidade não filtra as regiões (o mapa da tela inteira) nem o alvo do exterior
+        Interacao(P, "T12_Corrida_Html", "T12_Regioes_Html", "NoFilter"),
+        Interacao(P, "T12_Corrida_Html", "T12_Exterior_Alvo", "NoFilter"),
     ]

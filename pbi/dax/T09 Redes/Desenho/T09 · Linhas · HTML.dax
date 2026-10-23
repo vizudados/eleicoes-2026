@@ -1,17 +1,20 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: A linha de um candidato na coluna da direita (grão Monitoramento[Candidato]; vazio para os outros): a barra larga dos seguidores ganhos na campanha do 1º turno (cresce) com o número grande, e o ritmo por dia antes e logo depois do 1º turno (mesma fonte, mesmas redes). As duas linhas são alvo do dossiê ttT09Lado (seguidores rede a rede e anúncios na Meta).
+@descricao: A linha de um candidato na coluna da direita (grão Seguidores[Candidato], para o clique aqui não apagar os balões e o clique nos balões não sumir com uma linha daqui; vazio para quem não é Lula nem Flávio): a barra larga dos seguidores ganhos na campanha do 1º turno (cresce) com o número grande, e o ritmo por dia antes e logo depois do 1º turno (mesma fonte, mesmas redes). As contas de Monitoramento recebem o candidato da linha. Com um candidato clicado nos balões ('T09 · foco'), a linha do outro esmaece. As duas linhas são alvo do dossiê ttT09Lado (seguidores rede a rede e anúncios na Meta).
 */
 -- 1 · Leituras
-VAR _c = [T09 · candidato]
-VAR _s = [T09 · seguidores ganhos · campanha]
+VAR _c = [T09 · lado · candidato]
+VAR _cBase = [T09 · lado · nome completo]
+VAR _foco = [T09 · foco]
+VAR _s = CALCULATE ( [T09 · seguidores ganhos · campanha], Monitoramento[Candidato] = _cBase )
 VAR _sMax = [T09 · seguidores ganhos · maior]
-VAR _p1 = [T09 · seguidores por dia · campanha]
-VAR _p2 = [T09 · seguidores por dia · após o 1º turno]
+VAR _p1 = CALCULATE ( [T09 · seguidores por dia · campanha], Monitoramento[Candidato] = _cBase )
+VAR _p2 = CALCULATE ( [T09 · seguidores por dia · após o 1º turno], Monitoramento[Candidato] = _cBase )
 -- 2 · Textos
 VAR _cls = IF ( _c = "Lula", "l", "f" )
 VAR _clsTxt = IF ( _c = "Lula", "lula-esc", "flavio-esc" )
+VAR _apaga = IF ( NOT ISBLANK ( _foco ) && _foco <> _cBase, " apaga", "" )
 VAR _txtS = "+" & FORMAT ( _s / 1000000, "0.00" ) & " mi"
 VAR _txtP1 = FORMAT ( _p1 / 1000, "0" ) & " mil"
 VAR _txtP2 = FORMAT ( _p2 / 1000, "0" ) & " mil"
@@ -24,7 +27,7 @@ VAR _f = "0.0"
 RETURN
     IF (
         NOT ISBLANK ( _c ) && NOT ISBLANK ( _s ),
-        "<div class='tela t09r'>"
+        "<div class='tela t09r" & _apaga & "'>"
             & "<div class='alvo' style='left:-8px;top:" & _y - 8 & "px;width:546px;height:88px'></div>"
             & "<div class='nome " & _clsTxt & " sobe d4' style='left:0;top:" & _y & "px'>" & _c & "</div>"
             & "<div class='barra " & _cls & " barra-x' style='left:0;top:" & _y + 36 & "px;width:" & FORMAT ( _larg, _f, "en-US" ) & "px'></div>"

@@ -1,0 +1,70 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Dossiê da cidade no tooltip da lista: a margem do PT em cada eleição de 2006 a 2026 em barras (para cima, PT à frente; para baixo, o adversário), com o candidato do PT de cada ano, e em quantas o adversário ficou à frente. Só lê contas.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _nome = [T11 · município · nome]
+VAR _uf = [T11 · município · UF]
+VAR _sit = [T11 · situação]
+VAR _nAdv = [T11 · eleições com o adversário à frente]
+VAR _nVot = [T11 · eleições com votos]
+VAR _ult = [T11 · antes de 2026, a última com o adversário à frente]
+VAR _anos =
+    ADDCOLUMNS (
+        DATATABLE ( "a", INTEGER, { { 2006 }, { 2010 }, { 2014 }, { 2018 }, { 2022 }, { 2026 } } ),
+        "@m", VAR _a = [a] RETURN CALCULATE ( [T11 · margem no ano], 'Ano'[Ano] = _a ),
+        "@c", VAR _a = [a] RETURN CALCULATE ( [T11 · candidato do PT no ano], 'Ano'[Ano] = _a )
+    ) /* lista */
+-- 2 · Textos
+VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _selo = SWITCH ( _sit, 2, "VIROU EM 2026", 3, "VOLTOU AO PT", 0, "PT À FRENTE", 1, "ADVERSÁRIO À FRENTE", "EMPATE" )
+VAR _clsSelo = IF ( _sit = 2 || _sit = 1, "selo az", "selo vm" )
+VAR _mao =
+    SWITCH (
+        TRUE (),
+        _sit = 2 && _nAdv = 1, "1ª vez sem o PT na frente",
+        _sit = 2, "já tinha virado em " & _ult,
+        _nAdv = 0, "sempre com o PT",
+        _nAdv = _nVot, "nunca com o PT",
+        "virou e voltou"
+    )
+VAR _txtConta =
+    "O adversário do PT ficou à frente aqui em " & FORMAT ( _nAdv, "0" ) & " de " & FORMAT ( _nVot, "0" )
+        & IF ( _nVot = 1, " eleição", " eleições" ) & "."
+-- 3 · Geometria (barras de 44 px a cada 64; zero em y 70; maior margem da cidade = 54 px)
+VAR _esc = MAX ( 0.05, MAXX ( _anos, ABS ( [@m] ) ) ) /* geometria */
+VAR _barras =
+    CONCATENATEX (
+        FILTER ( _anos, NOT ISBLANK ( [@m] ) ), /* lista */
+        VAR _i = ( [a] - 2006 ) / 4
+        VAR _x = 10 + _i * 64
+        VAR _h = MAX ( 1.5, 54 * ABS ( [@m] ) / _esc )
+        VAR _cima = [@m] >= 0
+        VAR _yb = IF ( _cima, 70 - _h, 70 )
+        VAR _yt = IF ( _cima, 70 - _h - 6, 70 + _h + 15 )
+        VAR _c = SWITCH ( [@c], "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", [@c] )
+        RETURN
+            "<rect class='" & IF ( _cima, "pt", "adv" ) & IF ( _cima, " barra-y", " desce" ) & "' style='animation-delay:"
+                & ( 150 + _i * 70 ) & "ms' x='" & FORMAT ( _x, "0.0", "en-US" ) & "' y='" & FORMAT ( _yb, "0.0", "en-US" )
+                & "' width='44' height='" & FORMAT ( _h, "0.0", "en-US" ) & "'/>"
+                & "<text class='v " & IF ( _cima, "pt", "adv" ) & "' x='" & FORMAT ( _x + 22, "0.0", "en-US" ) & "' y='"
+                & FORMAT ( _yt, "0.0", "en-US" ) & "'>" & FORMAT ( [@m] * 100, "+0;−0;0" ) & "</text>"
+                & "<text class='an' x='" & FORMAT ( _x + 22, "0.0", "en-US" ) & "' y='158'>" & [a] & "</text>"
+                & "<text class='cd' x='" & FORMAT ( _x + 22, "0.0", "en-US" ) & "' y='172'>" & _c & "</text>",
+        "",
+        [a], ASC
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela tt11s'><div class='fita'></div>"
+        & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
+        & "<div class='nm sobe'>" & _txtNome & " <span class='uf'>" & _uf & "</span></div>"
+        & "<div class='rot entra d1'>MARGEM DO PT, ELEIÇÃO A ELEIÇÃO</div>"
+        & "<svg class='serie' width='392' height='176' viewBox='0 0 392 176'>"
+            & "<line class='zero' x1='0' x2='392' y1='70' y2='70'/>" & _barras
+        & "</svg>"
+        & "<div class='nota entra d4'>" & _txtConta & "</div>"
+        & "<div class='mao entra d6'>" & _mao & "</div>"
+    & "</div>"

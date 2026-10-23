@@ -7,14 +7,26 @@
 -- 1 · Leituras
 VAR _ok = [T15 · cidade escolhida]
 VAR _cid = [T15 · cidade]
-VAR _l26 = [T15 · Lula % 2026]
-VAR _p26 = [T15 · PL % 2026]
+VAR _y = [T15 · ano escolhido]
+VAR _y0 = [T15 · ano anterior]
+VAR _pt = [T15 · PT % no ano escolhido]
+VAR _ad = [T15 · adversário % no ano escolhido]
 VAR _var = [T15 · variação]
+VAR _cpt1 = [T15 · candidato do PT no ano escolhido]
+VAR _cpt0 = [T15 · candidato do PT no ano anterior]
+VAR _cad1 = [T15 · adversário no ano escolhido]
 -- 2 · Textos
+VAR _sPt = SWITCH ( _cpt1, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", "Flávio Bolsonaro", "Flávio", _cpt1 )
+VAR _sAd = SWITCH ( _cad1, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", "Flávio Bolsonaro", "Flávio", _cad1 )
+VAR _dono = IF ( NOT ISBLANK ( _y0 ) && _cpt0 = _cpt1, "de " & _sPt, "do PT" )
 RETURN
     IF (
         _ok = 1,
-        _cid & ": em 2026, Lula " & FORMAT ( _l26, "0.0%" ) & " e Flávio " & FORMAT ( _p26, "0.0%" ) & "; a margem de Lula variou "
-            & FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " pontos desde 2022.",
+        _cid & ": em " & _y & ", " & _sPt & " " & FORMAT ( _pt, "0.0%" ) & " e " & _sAd & " " & FORMAT ( _ad, "0.0%" )
+            & IF (
+                ISBLANK ( _var ),
+                ".",
+                "; a margem " & _dono & " variou " & FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " pontos desde " & _y0 & "."
+            ),
         "Nenhuma cidade escolhida: use o filtro de município."
     )

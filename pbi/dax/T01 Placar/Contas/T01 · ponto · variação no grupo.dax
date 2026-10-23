@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: #,0
+@descricao: Votos do partido do ponto em 2026 menos 2022 na região ou no porte da linha.
+*/
+[T01 · ponto · votos no grupo em 2026] - [T01 · ponto · votos no grupo em 2022]

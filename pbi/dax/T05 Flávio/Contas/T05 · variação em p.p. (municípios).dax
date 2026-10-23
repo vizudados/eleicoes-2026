@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0.0
+@descricao: Variação do % do PL de 2022 para 2026 nos municípios do contexto, em pontos percentuais.
+*/
+( [T05 · % (municípios)] - [T05 · % 2022 (municípios)] ) * 100

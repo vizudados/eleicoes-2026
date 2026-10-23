@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Votos de Lula menos votos de Flávio na atualização em contexto (positivo = Lula à frente).
+*/
+[T18 · momento · Lula votos] - [T18 · momento · Flávio votos]

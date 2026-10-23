@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00%
+@descricao: Flávio sobre os válidos no Brasil na atualização do TSE em contexto; vazio sem um momento.
+*/
+IF ( NOT ISBLANK ( [T18 · momento escolhido] ), [Histórico · Flávio %] )

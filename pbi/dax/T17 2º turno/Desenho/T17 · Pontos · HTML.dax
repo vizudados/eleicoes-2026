@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Um ponto por pesquisa de 2º turno (grão Pesquisa[Id]) na escala do fundo (T17 · Curva · HTML): x no dia de divulgação, y na diferença Flávio − Lula. Azul = Flávio à frente, vermelho = Lula, cinza = empate; vazado = simulação feita antes do 1º turno. Alvo do dossiê ttT17Pesquisa; vazio fora do conjunto.
+@descricao: Um ponto por pesquisa de 2º turno (grão Pesquisa[Id]) na escala do fundo (T17 · Curva · HTML): x no dia de divulgação, y na diferença Flávio − Lula. Azul = Flávio à frente, vermelho = Lula, cinza = empate; vazado = simulação feita antes do 1º turno. Cada ponto leva o traço até a pesquisa anterior do MESMO instituto e, na última dele, o nome: escondidos, aparecem quando a série está em destaque (clique num quadrinho da rejeição = classe fx; clique num ponto = a folha liga os pontos com a mesma classe i<n>); os outros esmaecem. Alvo do dossiê ttT17Pesquisa; vazio fora do conjunto.
 */
 -- 1 · Leituras
 VAR _mom = [T17 · pesquisa · momento]
@@ -9,18 +9,46 @@ VAR _dif = [T17 · pesquisa · diferença]
 VAR _dia = [T17 · pesquisa · divulgação]
 VAR _ord = [T17 · pesquisa · ordem no dia]
 VAR _n = [T17 · pesquisa · no mesmo dia]
+VAR _inst = [T17 · pesquisa · instituto]
+VAR _num = [T17 · série · número do instituto]
+VAR _diaA = [T17 · série · anterior · divulgação]
+VAR _difA = [T17 · série · anterior · diferença]
+VAR _ordA = [T17 · série · anterior · ordem no dia]
+VAR _nA = [T17 · série · anterior · no mesmo dia]
+VAR _ult = [T17 · série · última do instituto]
+VAR _foco = [T17 · foco · instituto da rejeição]
 -- 2 · Textos
 VAR _cls =
     SWITCH ( TRUE (), _dif > 0, "f", _dif < 0, "l", "e" ) & IF ( _mom = "antes_1turno", " sim", "" )
--- 3 · Geometria (x: 01/08 a 27/10 em x 70–1440; y: −10 a +10 em y 360–20; o svg do fundo começa em y 72; ponto de 12 px)
+VAR _clsFoco = IF ( ISBLANK ( _foco ), "", IF ( _foco = _inst, " fx", " fora" ) )
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+-- 3 · Geometria (x: 01/08 a 27/10 em x 70–1440; y: −10 a +10 em y 360–20; o svg do fundo começa em y 72; ponto de 12 px;
+--   o traço vai do centro da pesquisa anterior do mesmo instituto ao centro desta)
 VAR _dias = DATEDIFF ( DATE ( 2026, 8, 1 ), _dia, DAY )
 VAR _x = 70 + _dias / 87 * 1370 + ( _ord - ( _n - 1 ) / 2 ) * 7 - 6 -- geometria
 VAR _y = 72 + 190 - MAX ( MIN ( _dif, 10 ), -10 ) / 10 * 170 - 6 -- geometria
+VAR _xA = 70 + DATEDIFF ( DATE ( 2026, 8, 1 ), _diaA, DAY ) / 87 * 1370 + ( _ordA - ( _nA - 1 ) / 2 ) * 7 -- geometria
+VAR _yA = 72 + 190 - MAX ( MIN ( _difA, 10 ), -10 ) / 10 * 170 -- geometria
 VAR _atraso = 500 + _dias * 22 + _ord * 25 -- geometria
+VAR _f = "0.0"
+VAR _traco =
+    IF (
+        NOT ISBLANK ( _diaA ),
+        "<svg class='sg' width='1620' height='495' viewBox='0 0 1620 495'><line x1='" & FORMAT ( _xA, _f, "en-US" )
+            & "' y1='" & FORMAT ( _yA, _f, "en-US" ) & "' x2='" & FORMAT ( _x + 6, _f, "en-US" ) & "' y2='"
+            & FORMAT ( _y + 6, _f, "en-US" ) & "'/></svg>"
+    )
+VAR _nome =
+    IF (
+        _ult = "Sim",
+        "<b class='nm' style='left:" & FORMAT ( _x + 6, _f, "en-US" ) & "px;top:" & FORMAT ( _y - 28, _f, "en-US" )
+            & "px'>" & _esc & "</b>"
+    )
 -- 4 · Marcação
 RETURN
     IF (
         NOT ISBLANK ( _mom ),
-        "<div class='tela t17p'><i class='pt " & _cls & "' style='left:" & FORMAT ( _x, "0.0", "en-US" ) & "px;top:"
-            & FORMAT ( _y, "0.0", "en-US" ) & "px;animation-delay:" & _atraso & "ms'></i></div>"
+        "<div class='tela t17p i" & _num & _clsFoco & "'>" & _traco & "<i class='pt " & _cls & "' style='left:"
+            & FORMAT ( _x, _f, "en-US" ) & "px;top:" & FORMAT ( _y, _f, "en-US" ) & "px;animation-delay:" & _atraso
+            & "ms'></i>" & _nome & "</div>"
     )

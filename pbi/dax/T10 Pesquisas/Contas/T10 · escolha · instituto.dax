@@ -1,0 +1,11 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: texto
+@descricao: O instituto clicado na régua (filtro cruzado de T10_Regua_Institutos, grão Pesquisa[Instituto]); vazio sem clique, dentro da própria régua (o instituto da linha está no grão) e para quem não tem pesquisa de 1º turno.
+*/
+VAR _i = SELECTEDVALUE ( Pesquisa[Instituto] )
+RETURN
+    IF (
+        ISFILTERED ( Pesquisa[Instituto] ) && NOT ISINSCOPE ( Pesquisa[Instituto] ) && NOT ISBLANK ( _i ),
+        IF ( NOT ISBLANK ( [T10 · instituto · pesquisa] ), _i )
+    )

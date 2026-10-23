@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T08",
-  "displayName": "08 Buscas",
+  "displayName": "09 Buscas",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -54,5 +54,47 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T08_Curva_Dias",
+      "target": "T08_Curva_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T08_Curva_Dias",
+      "target": "T08_Mapa_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T08_Curva_Dias",
+      "target": "T08_Mapa_Ufs",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T08_Curva_Dias",
+      "target": "T08_Perguntas_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T08_Mapa_Ufs",
+      "target": "T08_Curva_Dias",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T08_Mapa_Ufs",
+      "target": "T08_Curva_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T08_Mapa_Ufs",
+      "target": "T08_Mapa_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T08_Mapa_Ufs",
+      "target": "T08_Perguntas_Html",
+      "type": "NoFilter"
+    }
+  ]
 }

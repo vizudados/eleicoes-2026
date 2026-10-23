@@ -1,0 +1,288 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "T01_Virada_Alvos",
+  "position": {
+    "x": 1040,
+    "y": 140,
+    "z": 306,
+    "height": 860,
+    "width": 730,
+    "tabOrder": 210
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T01 · Ponto · HTML"
+                }
+              },
+              "queryRef": "_Medidas.T01 · Ponto · HTML",
+              "nativeQueryRef": "T01 · Ponto · HTML"
+            }
+          ]
+        },
+        "sampling": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Candidato UF"
+                    }
+                  },
+                  "Property": "Ano"
+                }
+              },
+              "queryRef": "Candidato UF.Ano",
+              "nativeQueryRef": "Ano"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Candidato UF"
+                    }
+                  },
+                  "Property": "Número"
+                }
+              },
+              "queryRef": "Candidato UF.Número",
+              "nativeQueryRef": "Número"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.vp{pointer-events:none}.vp .alvo{position:absolute;width:48px;height:48px;border-radius:50%;pointer-events:auto;cursor:default}.vp .alvo::after{content:'''';position:absolute;left:10px;top:10px;width:28px;height:28px;box-sizing:border-box;border-radius:50%;border:2.4px solid currentColor;opacity:0;transform:scale(.6);transition:opacity .15s ease,transform .15s ease}.vp .alvo:hover::after{opacity:1;transform:scale(1)}.vp .lula{color:var(--vermelho-escuro)}.vp .flavio{color:var(--azul-escuro)}</style>{{content}}'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'T01_Virada_Alvos'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            },
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ttT01Ponto'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T01 · Ponto · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

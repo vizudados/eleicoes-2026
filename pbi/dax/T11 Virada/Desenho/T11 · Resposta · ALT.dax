@@ -10,9 +10,11 @@ VAR _vol = [T11 · voltaram]
 VAR _l26 = [T11 · Lula à frente em 2026]
 VAR _f26 = [T11 · Flávio à frente em 2026]
 VAR _tot = [T11 · municípios]
+VAR _nSel = [T11 · seleção]
 -- 2 · Textos
 RETURN
-    FORMAT ( _vir, "#,0" ) & IF ( _vir = 1, " município trocou", " municípios trocaram" )
+    IF ( _nSel > 0, IF ( _nSel = 1, "Na cidade escolhida no mapa: ", "Na área marcada no mapa: " ), "" )
+        & FORMAT ( _vir, "#,0" ) & IF ( _vir = 1, " município trocou", " municípios trocaram" )
         & " Lula por Flávio de 2022 para 2026; " & FORMAT ( _vol, "#,0" ) & " fizeram o caminho inverso. Em 2026, "
-        & "Lula ficou à frente em " & FORMAT ( _l26, "#,0" ) & " e Flávio em " & FORMAT ( _f26, "#,0" ) & " dos "
-        & FORMAT ( _tot, "#,0" ) & " municípios."
+        & "Lula ficou à frente em " & FORMAT ( _l26, "#,0" ) & " e Flávio em " & FORMAT ( _f26, "#,0" )
+        & IF ( _tot = 1, " do único município.", " dos " & FORMAT ( _tot, "#,0" ) & " municípios." )

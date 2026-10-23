@@ -1,0 +1,16 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Abstenção da faixa que mais falta (0–1).
+*/
+VAR _faixas =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'T25 Faixa'[Faixa] ), REMOVEFILTERS ( 'T25 Faixa' ) ),
+        "@p",
+            VAR _f = 'T25 Faixa'[Faixa]
+            RETURN
+                CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Faixa] = _f )
+    )
+VAR _comDado = FILTER ( _faixas, NOT ISBLANK ( [@p] ) )
+RETURN
+    MAXX ( _comDado, [@p] )

@@ -1,0 +1,18 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: texto
+@descricao: O que foi o dia do ponto do índice, para o leitor: dia do 1º turno, dia do debate, um dia depois do debate ou o dia da semana.
+*/
+VAR _d = [T09 · IPD dia · data]
+VAR _deb = [T09 · debate · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        SWITCH (
+            TRUE (),
+            _d = DATE ( 2026, 10, 4 ), "dia do 1º turno",
+            _d = _deb, "dia do debate",
+            _d = _deb + 1, "um dia depois do debate",
+            FORMAT ( _d, "dddd" )
+        )
+    )

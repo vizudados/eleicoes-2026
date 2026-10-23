@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0
+@descricao: Variação do % do PT de 2022 para 2026 nos municípios do contexto, em pontos percentuais.
+*/
+( [T03 · % (municípios)] - [T03 · % 2022 (municípios)] ) * 100

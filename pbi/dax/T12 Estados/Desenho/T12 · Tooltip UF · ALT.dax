@@ -12,4 +12,4 @@ VAR _vir = [T12 · municípios que viraram]
 -- 2 · Textos
 RETURN
     _nome & ": em 2026, Lula " & FORMAT ( _l26, "0.0%" ) & " e Flávio " & FORMAT ( _a26, "0.0%" ) & "; "
-        & FORMAT ( _vir, "#,0" ) & " municípios trocaram Lula por Flávio."
+        & FORMAT ( _vir, "#,0" ) & IF ( _vir = 1, " município trocou", " municípios trocaram" ) & " Lula por Flávio."

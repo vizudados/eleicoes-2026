@@ -10,9 +10,11 @@ Para empatar, Lula precisaria de 62% dos 9,32 mi de votos dos outros candidatos.
   T22_ReguaAbst_Html/_Botoes   quantos não escolhem ninguém (T22 Não votam, 0–50 em passos de 5)
   T22_ReguaComp_Html/_Botoes   mudança no comparecimento (T22 Comparecimento, −5 a +5; metade para cada um)
   T22_Pesquisas_Html      as 8 pesquisas (granularidade Transferência[Instituto]): para onde vão os votos dos outros e o
-                          2º turno que isso daria; clique leva o cenário da pesquisa ao resultado e ao mapa
+                          2º turno que isso daria; clique leva o cenário da pesquisa ao resultado e ao mapa; dossiê
+                          ttT22Pesquisa (cada grupo: Cury, Renan, Caiado e os demais, e quanto cada um ganha)
   T22_Resultado_Html      o 2º turno simulado (Brasil com o exterior): Lula × Flávio, UFs à frente, diferença
-  T22_Grade_Html          o mapa de quadrados das UFs (granularidade UF[UF]); tooltip: dossiê da UF (ttT22UF)
+  T22_Grade_Html          o mapa de quadrados das UFs (granularidade UF[UF]); tooltip: dossiê da UF (ttT22UF); clique:
+                          o resultado passa a ser o daquela UF (o resto da tela segue no Brasil)
   T22_Exterior_Alvo       alvo transparente sobre o EX: o exterior no cenário e o 1º turno país a país (ttT22Exterior)
   T22_Legenda_Html        legenda e dica (fixo)
 
@@ -64,18 +66,22 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T22_Pesquisas_Html", *D.PESQUISAS, "T22 · Pesquisas · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=D.corpo_pesquisas(), alt=lib.medida("T22 · Pesquisas · ALT"), z=Z + 4,
                                   tab=140, granularidade=("Transferência", "Instituto"), filtro_cruzado=True,
-                                  transparencia_nao_selecionados=True)),
+                                  transparencia_nao_selecionados=True, tooltip_pagina="ttT22Pesquisa")),
         Visual(P, lib.visual_html("T22_Resultado_Html", *D.RESULTADO, "T22 · Resultado · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=D.corpo_resultado(), alt=lib.medida("T22 · Resultado · ALT"), z=Z + 5,
                                   tab=200)),
         Visual(P, lib.visual_html("T22_Grade_Html", *D.GRADE, "T22 · UF · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=D.corpo_grade(), alt=lib.medida("T22 · UF · ALT"), z=Z + 6, tab=210,
-                                  granularidade=("UF", "UF"), tooltip_pagina=TT)),
+                                  granularidade=("UF", "UF"), tooltip_pagina=TT, filtro_cruzado=True,
+                                  transparencia_nao_selecionados=True)),
         Visual(P, lib.visual_html("T22_Legenda_Html", *D.LEGENDA, VAZIO, folha_de_estilo=CSS,
                                   modelo_corpo=D.corpo_legenda(), alt="Legenda do mapa de quadrados e dica",
                                   z=Z + 7, tab=220)),
         *pagina_lib.tooltip(TT, "UF · cenário", 420, 250, "T22 · Tooltip UF · HTML", ordem=320,
                             folha_de_estilo=CSS, modelo_corpo=D.corpo_tooltip()),
+        # a lista das pesquisas ganha o dossiê (23/10/2026): para onde vai cada grupo de eleitores dos outros
+        *pagina_lib.tooltip("ttT22Pesquisa", "Pesquisa · para onde vão", 500, 360, "T22 · Tooltip pesquisa · HTML",
+                            ordem=322, folha_de_estilo=CSS, modelo_corpo=D.corpo_tooltip_pesquisa()),
         # o EX da grade (coluna 5, linha 0) abre o tooltip do exterior país a país, com o cenário no topo
         *exterior.declarar(P, "T22_Exterior_Alvo", (D.GRADE[0] + 5 * D.PASSO, D.GRADE[1], D.LADO, D.LADO),
                            "Exterior · simulador · HTML", ordem=321, altura=exterior.ALTURA + 50),
@@ -84,4 +90,10 @@ def declarar(ctx):
     for alvo in ("T22_ReguaLula_Html", "T22_Heroi_Html", "T22_ReguaAbst_Html", "T22_ReguaComp_Html",
                  "T22_ReguaLula_Botoes", "T22_ReguaAbst_Botoes", "T22_ReguaComp_Botoes"):
         itens.append(Interacao(P, "T22_Pesquisas_Html", alvo, "NoFilter"))
+    # o clique numa UF do mapa (23/10/2026) leva o resultado àquela UF (e o rótulo diz qual); a resposta, as réguas, a
+    # lista das pesquisas (o 2º turno de cada uma é o do Brasil) e o alvo do exterior seguem no Brasil
+    for alvo in ("T22_Heroi_Html", "T22_ReguaLula_Html", "T22_ReguaAbst_Html", "T22_ReguaComp_Html",
+                 "T22_ReguaLula_Botoes", "T22_ReguaAbst_Botoes", "T22_ReguaComp_Botoes", "T22_Pesquisas_Html",
+                 "T22_Exterior_Alvo"):
+        itens.append(Interacao(P, "T22_Grade_Html", alvo, "NoFilter"))
     return itens

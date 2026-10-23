@@ -1,0 +1,6 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Urna − pesquisa no número de Lula, em pontos, na última pesquisa do instituto (só quando ela é em votos válidos; positivo = a pesquisa deu menos que a urna).
+*/
+IF ( [T10 · instituto · base] = "validos", [T10 · urna · Lula] - [T10 · instituto · Lula] )

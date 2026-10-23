@@ -1,7 +1,7 @@
 /*
 @pasta: T03 Lula\Contas
 @formato: texto
-@descricao: UF (no Brasil) ou município (numa UF) onde o candidato teve o fraco % dos válidos.
+@descricao: UF (no Brasil ou na região) ou município (numa UF) onde o candidato teve o fraco % dos válidos.
 @oraculo: paginas[3].uf_mais_fraca.nome
 */
 VAR _ufs =

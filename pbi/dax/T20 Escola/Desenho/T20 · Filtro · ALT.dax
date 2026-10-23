@@ -1,0 +1,9 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: Texto alternativo do filtro de escola: a escolha em uso.
+*/
+-- 1 · Leituras
+VAR _ha = [T20 · há escolha]
+RETURN
+    IF ( _ha = 1, "Filtro de escola: " & [T20 · nome do local], "Filtro de escola: nenhuma escolhida" )

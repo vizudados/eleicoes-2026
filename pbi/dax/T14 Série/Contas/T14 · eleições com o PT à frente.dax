@@ -1,0 +1,10 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: Em quantas eleições da série o PT terminou o 1º turno à frente do adversário.
+@oraculo: mockup/data/eleicoes.json › paginas[14] › 4 no Brasil
+@gerado: pbi/scripts/desenho_t14.py
+*/
+COUNTROWS (
+    FILTER ( ALL ( 'Ano'[Ano] ), [T14 · margem do PT] > 0 )
+) + 0

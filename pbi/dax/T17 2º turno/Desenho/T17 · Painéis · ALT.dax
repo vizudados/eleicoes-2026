@@ -4,4 +4,4 @@
 @descricao: Texto para leitor de tela dos quadrinhos da rejeição (um por instituto).
 */
 "Um quadrinho por instituto (" & [T17 · rejeição · institutos comparáveis]
-    & "): rejeição de Lula e de Flávio na última medição antes e na última depois do 1º turno. Passe o mouse para ver a série."
+    & "): rejeição de Lula e de Flávio na última medição antes e na última depois do 1º turno. Passe o mouse para ver a série; clique para acender as pesquisas do instituto na curva."

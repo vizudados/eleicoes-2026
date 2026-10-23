@@ -1,0 +1,14 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Primeiro ano com dado no lugar e na faixa do contexto (2006, ou 2014 com faixa).
+*/
+MINX (
+    FILTER (
+        CALCULATETABLE ( VALUES ( 'Ano'[Ano] ), REMOVEFILTERS ( 'Ano' ) ),
+        VAR _a = 'Ano'[Ano]
+        RETURN
+            NOT ISBLANK ( CALCULATE ( [T25 · aptos (cru)], 'Ano'[Ano] = _a ) )
+    ),
+    'Ano'[Ano]
+)

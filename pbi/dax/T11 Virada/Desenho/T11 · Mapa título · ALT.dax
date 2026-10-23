@@ -10,11 +10,16 @@ VAR _uf = [T11 · recorte]
 VAR _r1 = [T11 · região com mais viradas]
 VAR _r2 = [T11 · segunda região com mais viradas]
 VAR _n2 = [T11 · viraram nas duas regiões]
+VAR _nSel = [T11 · seleção]
+VAR _nome1 = [T11 · município · nome e UF]
 -- 2 · Textos
 RETURN
-    IF (
+    SWITCH (
+        TRUE (),
+        _nSel = 1, "Cidade escolhida no mapa: " & _nome1 & ".",
+        _nSel > 1, "Área marcada no mapa: " & FORMAT ( _vir, "#,0" ) & " municípios trocaram Lula por Flávio.",
         ISBLANK ( _uf ),
-        "A virada se concentra em " & _r1 & " e " & _r2 & ": " & FORMAT ( _n2, "#,0" ) & " dos "
-            & FORMAT ( _vir, "#,0" ) & " municípios que trocaram de lado.",
+            "A virada se concentra em " & _r1 & " e " & _r2 & ": " & FORMAT ( _n2, "#,0" ) & " dos "
+                & FORMAT ( _vir, "#,0" ) & " municípios que trocaram de lado.",
         _uf & ": " & FORMAT ( _vir, "#,0" ) & " municípios trocaram Lula por Flávio."
     )

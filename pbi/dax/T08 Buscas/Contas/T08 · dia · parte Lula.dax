@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0%
+@descricao: Parte de Lula na soma dos dois índices do dia (candidatos como tópico, consulta T2).
+*/
+VAR _l = [T08 · dia · Lula]
+VAR _f = [T08 · dia · Flávio]
+RETURN
+    IF ( NOT ISBLANK ( _l ) && NOT ISBLANK ( _f ), DIVIDE ( _l, _l + _f ) )

@@ -1,16 +1,39 @@
 /*
 @pasta: T12 Estados\Desenho
 @formato: texto
-@descricao: Título da corrida das unidades: a direção das setas e a legenda.
+@descricao: Título da corrida das unidades: a direção das setas e a legenda; com uma unidade ou região clicada, a manchete diz o lugar e o que aconteceu com a margem nele.
 @gerado: pbi/scripts/desenho_t12.py
 */
 -- 1 · Leituras
 VAR _nSubiu = [T12 · unidades onde a margem subiu]
 VAR _subiu = [T12 · onde a margem subiu]
+VAR _lugar = [T12 · lugar clicado]
+VAR _m22 = [T12 · margem 2022]
+VAR _m26 = [T12 · margem 2026]
+VAR _d = [T12 · variação]
+VAR _ordem = [T12 · ordem da queda]
+VAR _nUf = [T12 · estados da região]
+VAR _nCaiu = [T12 · unidades do lugar onde a margem caiu]
 -- 2 · Textos
+VAR _ehUF = [T12 · clique numa unidade] = 1
+VAR _lado =
+    SWITCH (
+        TRUE (),
+        _m22 > 0 && _m26 < 0, ", e mudou de lado",
+        _m22 < 0 && _m26 > 0, ", e mudou de lado",
+        ""
+    )
 VAR _man =
     SWITCH (
         TRUE (),
+        NOT ISBLANK ( _lugar ) && _ehUF,
+            _lugar & ": a margem de Lula " & IF ( _d < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _d ) * 100, "0.0" )
+                & " pontos" & IF ( _d < 0 && NOT ISBLANK ( _ordem ), " (" & FORMAT ( _ordem, "0" ) & "ª maior queda)", "" )
+                & _lado,
+        NOT ISBLANK ( _lugar ),
+            _lugar & ": a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" )
+                & IF ( _nUf = 1, " unidade", " unidades" ) & "; na região, de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para "
+                & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos",
         _nSubiu = 0, "Todas as setas apontam para a esquerda, a direção do adversário",
         _nSubiu = 1, "Quase todas as setas vão para a esquerda; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
             & _subiu & " foi na direção de Lula",
@@ -23,5 +46,6 @@ RETURN
         & "<div class='man sobe d1'>" & _man & "</div>"
         & "<div class='leg entra d3'><span><i class='o'></i>2022</span><span><i class='f vm'></i><i class='f az'></i>"
             & "2026: vermelho, Lula à frente; azul, Flávio</span><span><i class='mud'></i>mudou de lado</span>"
-            & "<span class='dir'>variação, em pontos</span></div>"
+            & "<span class='dir'>variação em pontos · " & IF ( ISBLANK ( _lugar ), "clique numa unidade ou região",
+                "clique de novo para voltar" ) & "</span></div>"
     & "</div>"

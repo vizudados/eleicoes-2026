@@ -1,7 +1,7 @@
 /*
 @pasta: T12 Estados\Desenho
 @formato: texto
-@descricao: Dossiê da unidade no tooltip da corrida: carimbo, as fatias de Lula e do adversário em 2022 e 2026, a posição na queda e os municípios que viraram. Só lê contas.
+@descricao: Dossiê da unidade no tooltip da corrida: carimbo, as fatias de Lula e do adversário em 2022 e 2026, a posição na queda, os municípios que viraram e as três maiores delas. Só lê contas.
 @gerado: pbi/scripts/desenho_t12.py
 */
 -- 1 · Leituras
@@ -18,6 +18,7 @@ VAR _ordem = [T12 · ordem da queda]
 VAR _vir = [T12 · municípios que viraram]
 VAR _mun = [T12 · municípios]
 VAR _val = [T12 · válidos 2026]
+VAR _lista = [T12 · maiores cidades que viraram]
 -- 2 · Textos
 VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
 VAR _selo =
@@ -36,6 +37,13 @@ VAR _txtOrdem =
         IF ( _m26 > _m22, "a margem de Lula subiu aqui",
             FORMAT ( _ordem, "0" ) & "ª maior queda entre as 27 unidades" )
     )
+VAR _nTop = MIN ( 3, _vir )
+VAR _maiores =
+    IF (
+        _nTop > 0,
+        "<div class='ex'>" & IF ( _nTop = 1, "A maior: ", "As maiores: " )
+            & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lista, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ) & ".</div>"
+    )
 VAR _txtMun =
     IF (
         ISBLANK ( _ordem ),
@@ -49,7 +57,7 @@ VAR _txtMun =
                 "<b class='num'>" & FORMAT ( _vir, "#,0" ) & "</b> dos " & FORMAT ( _mun, "#,0" )
                     & IF ( _vir = 1, " municípios trocou Lula por Flávio", " municípios trocaram Lula por Flávio" )
             )
-        & "</div>"
+            & "</div>" & IF ( _mun > 1, _maiores, "" )
     )
 VAR _mao =
     SWITCH (

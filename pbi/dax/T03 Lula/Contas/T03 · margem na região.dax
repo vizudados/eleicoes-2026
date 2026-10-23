@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0
+@descricao: Margem de Lula na região da linha em 2026, em pontos (votos dele − votos de Flávio) ÷ válidos × 100.
+*/
+[T03 · margem] * 100

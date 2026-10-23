@@ -1,0 +1,180 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "T25",
+  "displayName": "07 Quem falta",
+  "displayOption": "FitToPage",
+  "width": 1920,
+  "height": 1080,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F1EBDF'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F1EBDF'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "T25_Anos_Html",
+      "target": "T25_Anos_Topo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T25_Anos_Html",
+      "target": "T25_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T25_Anos_Html",
+      "target": "T25_Casca_FiltroPilula",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T25_Anos_Html",
+      "target": "T25_Idade_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Anos_Html",
+      "target": "T25_Idade_Topo",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Anos_Html",
+      "target": "T25_Manchete_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Anos_Html",
+      "target": "T25_Mapa_Legenda",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Anos_Html",
+      "target": "T25_Mapa_Pontos",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Idade_Html",
+      "target": "T25_Anos_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Idade_Html",
+      "target": "T25_Anos_Topo",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Idade_Html",
+      "target": "T25_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T25_Idade_Html",
+      "target": "T25_Casca_FiltroPilula",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T25_Idade_Html",
+      "target": "T25_Idade_Topo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T25_Idade_Html",
+      "target": "T25_Manchete_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Idade_Html",
+      "target": "T25_Mapa_Legenda",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Idade_Html",
+      "target": "T25_Mapa_Pontos",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Mapa_Pontos",
+      "target": "T25_Anos_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Mapa_Pontos",
+      "target": "T25_Anos_Topo",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Mapa_Pontos",
+      "target": "T25_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T25_Mapa_Pontos",
+      "target": "T25_Casca_FiltroPilula",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T25_Mapa_Pontos",
+      "target": "T25_Idade_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Mapa_Pontos",
+      "target": "T25_Idade_Topo",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Mapa_Pontos",
+      "target": "T25_Manchete_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T25_Mapa_Pontos",
+      "target": "T25_Mapa_Legenda",
+      "type": "DataFilter"
+    }
+  ]
+}

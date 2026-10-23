@@ -1,10 +1,15 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do dossiê de seguidores e anúncios (grão Monitoramento[Candidato]).
+@descricao: Texto para leitor de tela do dossiê da coluna da direita (grão Seguidores[Candidato]).
 */
-IF (
-    NOT ISBLANK ( [T09 · candidato] ),
-    [T09 · candidato] & ": seguidores rede a rede; anúncios da página na Meta, R$ " & FORMAT ( [T09 · Meta · 90 dias] / 1000000, "0.00" )
-        & " mi em 90 dias; e, em outra base, pagamentos à Meta declarados ao TSE, R$ " & FORMAT ( [T09 · TSE · pagamentos à Meta] / 1000000, "0.00" ) & " mi."
-)
+VAR _c = [T09 · lado · candidato]
+VAR _cBase = [T09 · lado · nome completo]
+RETURN
+    IF (
+        NOT ISBLANK ( _c ),
+        _c & ": seguidores rede a rede e anúncios na Meta, R$ "
+            & FORMAT ( CALCULATE ( [T09 · Meta · 90 dias], Monitoramento[Candidato] = _cBase ) / 1000000, "0.00" )
+            & " mi em 90 dias na Biblioteca de Anúncios; em outra base, pagamentos à Meta declarados ao TSE, R$ "
+            & FORMAT ( CALCULATE ( [T09 · TSE · pagamentos à Meta], Monitoramento[Candidato] = _cBase ) / 1000000, "0.00" ) & " mi."
+    )

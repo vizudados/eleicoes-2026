@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: #,0
+@descricao: Eleitores que faltaram no perfil por idade (T25 Abstenção faixa) no contexto, mais o exterior quando o recorte é o Brasil inteiro; soma os anos do contexto.
+*/
+SUM ( 'T25 Abstenção faixa'[Abstencoes] ) + IF ( [T25 · sem exterior] = 0, SUM ( 'T25 Abstenção exterior'[Abstencoes] ) )

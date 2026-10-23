@@ -1,0 +1,14 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0%
+@descricao: Onde a região da linha começa na barra da origem: soma das parcelas das regiões que deram mais votos que ela (0–1).
+*/
+VAR _v = [T03 · votos (municípios)]
+VAR _antes =
+    CALCULATE (
+        SUMX ( FILTER ( VALUES ( 'UF'[Região] ), [T03 · votos (municípios)] > _v ), [T03 · votos (municípios)] ),
+        REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] )
+    )
+VAR _total = CALCULATE ( [T03 · votos (municípios)], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+RETURN
+    IF ( _v > 0, DIVIDE ( _antes, _total ) + 0 )

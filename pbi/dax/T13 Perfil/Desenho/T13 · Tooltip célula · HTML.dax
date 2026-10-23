@@ -1,0 +1,126 @@
+/*
+@pasta: T13 Perfil\Desenho
+@formato: texto
+@descricao: Dossiê da célula no tooltip da matriz: o carimbo com a posição na queda, o grupo de cidades e a população, a margem de Lula de 2022 a 2026 numa régua, como ficaram as cidades (seguiram com Lula, trocaram para Flávio, seguiram com o adversário) e as três maiores, cada uma com a sua variação. Só lê contas.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+-- 1 · Leituras
+VAR _cp = [T13 · porte da célula]
+VAR _cq = [T13 · quinto da célula]
+VAR _uf = [T13 · recorte]
+VAR _n = [T13 · cidades]
+VAR _pop = [T13 · população]
+VAR _m22 = [T13 · margem 2022]
+VAR _m26 = [T13 · margem 2026]
+VAR _v = [T13 · variação]
+VAR _vir = [T13 · cidades que viraram]
+VAR _ll = [T13 · cidades com Lula à frente nas duas]
+VAR _aa = [T13 · cidades com o adversário à frente nas duas]
+VAR _pos = [T13 · posição da célula na queda]
+VAR _ncel = [T13 · células comparáveis]
+VAR _top =
+    TOPN (
+        3,
+        ADDCOLUMNS (
+            VALUES ( 'Município'[CodIBGE] ),
+            "@pop", [T13 · população],
+            "@nome", [T13 · nome da cidade],
+            "@v", [T13 · variação]
+        ),
+        [@pop], DESC,
+        'Município'[CodIBGE], ASC
+    ) /* lista */
+-- 2 · Textos
+VAR _grupo =
+    "cidades de " & _cp & IF ( RIGHT ( _cp, 3 ) = "mil", " habitantes", " de habitantes" )
+        & " e de renda " & SWITCH ( _cq, "mais ricas", "mais alta", "mais pobres", "mais baixa", "no " & _cq )
+VAR _tit = UPPER ( LEFT ( _cp, 1 ) ) & MID ( _cp, 2, 100 ) & IF ( RIGHT ( _cp, 3 ) = "mil", " habitantes", " de habitantes" )
+VAR _renda =
+    "renda " & SWITCH ( _cq, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres", "no " & _cq )
+VAR _selo =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _pos ), "POUCAS CIDADES",
+        _v > 0, "SUBIU",
+        _pos = 1, "A MAIOR QUEDA",
+        _pos = _ncel, "A MENOR QUEDA",
+        FORMAT ( _pos, "0" ) & "ª MAIOR QUEDA"
+    )
+VAR _clsSelo = IF ( _pos = 1, "selo vm", "selo" )
+VAR _txtPop =
+    SWITCH (
+        TRUE (),
+        _pop >= 1000000, FORMAT ( _pop / 1000000, "0.0" ) & " mi de habitantes",
+        _pop >= 10000, FORMAT ( _pop / 1000, "#,0" ) & " mil habitantes",
+        FORMAT ( _pop, "#,0" ) & " habitantes"
+    )
+VAR _txtNota =
+    FORMAT ( _n, "#,0" ) & IF ( _n = 1, " cidade", " cidades" ) & " · " & _txtPop
+        & IF ( ISBLANK ( _uf ), "", " · " & _uf )
+VAR _txtM22 = FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" )
+VAR _txtM26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
+VAR _mao =
+    SWITCH (
+        TRUE (),
+        _vir = 0 && _ll > _aa, "Lula segue à frente",
+        _vir = 0, "nenhuma virou",
+        _vir * 2 >= _n, "metade ou mais virou",
+        _vir * 10 >= _n, "1 em cada " & FORMAT ( ROUND ( _n / _vir, 0 ), "0" ) & " virou",
+        "poucas viraram"
+    )
+VAR _maiores =
+    CONCATENATEX (
+        _top,
+        VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+        RETURN
+            "<div class='mc'><span class='nm'>" & _nome & "</span><span class='vv " & IF ( [@v] < 0, "neg", "pos" )
+                & "'>" & FORMAT ( [@v] * 100, "+0.0;−0.0;0.0" ) & "</span></div>",
+        "",
+        [@pop], DESC
+    )
+-- 3 · Geometria (régua de 400 px: zero no meio, ±130 px; os valores ao lado dos pontos; barra das cidades de 400 px)
+VAR _esc = MAX ( 0.1, MAX ( ABS ( _m22 ), ABS ( _m26 ) ) ) /* geometria */
+VAR _x22 = 200 + 130 * _m22 / _esc
+VAR _x26 = 200 + 130 * _m26 / _esc
+VAR _esq22 = _x22 <= _x26
+VAR _sxE = FORMAT ( MIN ( _x22, _x26 ) - 12, "0.0", "en-US" )
+VAR _sxD = FORMAT ( MAX ( _x22, _x26 ) + 12, "0.0", "en-US" )
+VAR _cor = IF ( _m26 < 0, "var(--azul)", IF ( _m26 > 0, "var(--vermelho)", "var(--cinza)" ) )
+VAR _sx22 = FORMAT ( _x22, "0.0", "en-US" )
+VAR _sx26 = FORMAT ( _x26, "0.0", "en-US" )
+VAR _tot = MAX ( 1, _ll + _vir + _aa ) /* geometria */
+VAR _wll = 400 * _ll / _tot
+VAR _wvir = 400 * _vir / _tot
+VAR _waa = 400 * _aa / _tot
+-- 4 · Marcação
+RETURN
+    "<div class='tela tt13'><div class='fita'></div>"
+        & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
+        & "<div class='nm sobe'>" & _tit & "</div>"
+        & "<div class='sub sobe d1'>" & _renda & "</div>"
+        & "<div class='nota sobe d1'>" & _txtNota & "</div>"
+        & "<div class='rot r1 entra d2'>MARGEM DE LULA NA CÉLULA · 2022 → 2026</div>"
+        & "<svg class='regua' width='400' height='54' viewBox='0 0 400 54'>"
+            & "<line x1='200' x2='200' y1='4' y2='38' class='zero'/>"
+            & "<text x='196' y='52' text-anchor='end' class='lado'>← adversário</text>"
+            & "<text x='204' y='52' class='lado'>Lula →</text>"
+            & "<line class='traco-rapido' pathLength='1' style='animation-delay:300ms' x1='" & _sx22 & "' x2='" & _sx26
+                & "' y1='22' y2='22'/>"
+            & "<circle cx='" & _sx22 & "' cy='22' r='6' class='m22'/>"
+            & "<circle class='brota' style='animation-delay:700ms' cx='" & _sx26 & "' cy='22' r='7' fill='" & _cor & "'/>"
+            & "<text x='" & _sxE & "' y='27' text-anchor='end'>" & IF ( _esq22, _txtM22, _txtM26 ) & "</text>"
+            & "<text x='" & _sxD & "' y='27'>" & IF ( _esq22, _txtM26, _txtM22 ) & "</text>"
+        & "</svg>"
+        & "<div class='rot r2 entra d3'>COMO FICARAM AS CIDADES · 2022 → 2026</div>"
+        & "<div class='pilha entra d4'>"
+            & "<i class='ll barra-x' style='width:" & FORMAT ( _wll, "0.0", "en-US" ) & "px'></i>"
+            & "<i class='vir barra-x' style='width:" & FORMAT ( _wvir, "0.0", "en-US" ) & "px'></i>"
+            & "<i class='aa barra-x' style='width:" & FORMAT ( _waa, "0.0", "en-US" ) & "px'></i>"
+        & "</div>"
+        & "<div class='leg entra d5'><span><i class='ll'></i>Lula nas duas <b>" & FORMAT ( _ll, "#,0" ) & "</b></span>"
+            & "<span><i class='vir'></i>viraram <b>" & FORMAT ( _vir, "#,0" ) & "</b></span>"
+            & "<span><i class='aa'></i>adversário nas duas <b>" & FORMAT ( _aa, "#,0" ) & "</b></span></div>"
+        & "<div class='rot r3 entra d6'>" & IF ( _n <= 3, "AS CIDADES", "AS MAIORES" ) & " · VARIAÇÃO DA MARGEM</div>"
+        & "<div class='maiores entra d7'>" & _maiores & "</div>"
+        & "<div class='mao entra d8'>" & _mao & "</div>"
+    & "</div>"

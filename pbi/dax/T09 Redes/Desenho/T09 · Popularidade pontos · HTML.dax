@@ -1,0 +1,26 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Um alvo por data do índice de popularidade digital (grão Monitoramento[Início]; vazio nas datas sem índice), na mesma caixa e escala de T09 · Popularidade · HTML: uma faixa vertical que, no mouse, mostra a linha do dia e os pontos dos dois; cada faixa abre o dossiê ttT09Ipd (o humor da conversa naquele dia).
+*/
+-- 1 · Leituras
+VAR _d = [T09 · IPD dia · data]
+VAR _l = [T09 · IPD dia · Lula]
+VAR _fl = [T09 · IPD dia · Flávio]
+VAR _ini = [T09 · IPD · primeiro dia]
+VAR _fim = [T09 · IPD · último dia]
+-- 3 · Geometria (x: primeiro a último dia em 130–600; y: 68 a 86 pontos em 140–10; o svg do fundo começa em y 72)
+VAR _dias = DATEDIFF ( _ini, _fim, DAY ) -- geometria
+VAR _x = 130 + DATEDIFF ( _ini, _d, DAY ) / _dias * 470 -- geometria
+VAR _yl = 72 + 140 - ( _l - 68 ) / 18 * 130 -- geometria
+VAR _yf = 72 + 140 - ( _fl - 68 ) / 18 * 130 -- geometria
+VAR _f = "0.0"
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        "<div class='tela t09p'><div class='dia' style='left:" & FORMAT ( _x - 16, _f, "en-US" ) & "px'><i class='v'></i>"
+            & IF ( NOT ISBLANK ( _fl ), "<i class='m mf' style='top:" & FORMAT ( _yf - 72 - 7, _f, "en-US" ) & "px'></i>" )
+            & IF ( NOT ISBLANK ( _l ), "<i class='m ml' style='top:" & FORMAT ( _yl - 72 - 7, _f, "en-US" ) & "px'></i>" )
+        & "</div></div>"
+    )

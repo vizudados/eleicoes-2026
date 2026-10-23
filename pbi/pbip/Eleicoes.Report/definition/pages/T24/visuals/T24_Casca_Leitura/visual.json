@@ -5,7 +5,7 @@
     "x": 1180,
     "y": 124,
     "z": 4000,
-    "height": 780,
+    "height": 806,
     "width": 600,
     "tabOrder": 950
   },
@@ -91,7 +91,7 @@
             "bodyTemplate": {
               "expr": {
                 "Literal": {
-                  "Value": "'<style>.lt{background:#F1EBDF;color:#1C1915;padding:36px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.18);clip-path:polygon(0 0,calc(100% - 46px) 0,100% 46px,100% 100%,0 100%)}.lt .orelha{position:absolute;right:0;top:0;width:46px;height:46px;background:#E5DBC8;border-left:1.5px solid #CBBDA2;border-bottom:1.5px solid #CBBDA2}.lt .x{position:absolute;right:56px;top:16px;font-size:26px;line-height:1;color:var(--grafite)}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:60px}.lt .bl{margin-bottom:20px}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''lt tela''><div class=''orelha''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>Quem vota em Lula e quem vota em Flávio?</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>Escolha a lente nas abas. O gráfico põe as cidades em fila pelo indicador, da que tem menos para a que tem mais, e corta a fila em cinco degraus com o mesmo número de eleitores. As linhas mostram quanto Lula e Flávio tiveram em cada degrau; passe o mouse num degrau para ver 2022 e as maiores cidades.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>Votos do 1º turno do TSE; renda por pessoa e domicílios do Censo 2022 (IBGE); escolaridade do eleitorado do TSE (2026); famílias no Bolsa Família em agosto de 2026 (Portal da Transparência), por 100 domicílios: uma casa pode ter mais de uma família, então é uma aproximação; IDHM de 2010 (Atlas do Desenvolvimento Humano). O cartão da direita é o Datafolha de 29/09 a 01/10, a última rodada do instituto com as três perguntas.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>O voto é secreto: o gráfico mostra onde vivem os eleitores, não quem eles são (numa cidade rica também há eleitor pobre). Por isso a pesquisa fica ao lado, perguntando às pessoas. Cada instituto mede de um jeito: a AtlasIntel, pela internet e com faixas em reais, achou Lula à frente entre quem fez faculdade; o Datafolha, em entrevistas presenciais, achou Flávio.</div></div></div>{{content}}'"
+                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#F1EBDF;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>Quem vota em Lula e quem vota em Flávio?</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>Escolha a lente nas abas. O gráfico põe as cidades em fila pelo indicador, da que tem menos para a que tem mais, e corta a fila em cinco degraus com o mesmo número de eleitores. As linhas mostram quanto Lula e Flávio tiveram em cada degrau; passe o mouse num degrau para ver 2022 e as maiores cidades.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>Votos do 1º turno do TSE; renda por pessoa e domicílios do Censo 2022 (IBGE); escolaridade do eleitorado do TSE (2026); famílias no Bolsa Família em agosto de 2026 (Portal da Transparência), por 100 domicílios: uma casa pode ter mais de uma família, então é uma aproximação; IDHM de 2010 (Atlas do Desenvolvimento Humano). O cartão da direita é o Datafolha de 29/09 a 01/10, a última rodada do instituto com as três perguntas.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>O voto é secreto: o gráfico mostra onde vivem os eleitores, não quem eles são (numa cidade rica também há eleitor pobre). Por isso a pesquisa fica ao lado, perguntando às pessoas. Cada instituto mede de um jeito: a AtlasIntel, pela internet e com faixas em reais, achou Lula à frente entre quem fez faculdade; o Datafolha, em entrevistas presenciais, achou Flávio.</div></div></div></div>{{content}}'"
                 }
               }
             }
@@ -225,7 +225,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Como ler a tela 14 · Quem vota'"
+                  "Value": "'Como ler a tela 15 · Quem vota'"
                 }
               }
             }

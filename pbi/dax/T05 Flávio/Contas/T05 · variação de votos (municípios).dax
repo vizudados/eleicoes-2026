@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: #,0
+@descricao: Votos do PL em 2026 menos 2022, somados nos municípios do contexto (a ficha do município marcado).
+*/
+[T05 · votos (municípios)] - [T05 · votos 2022 (municípios)]

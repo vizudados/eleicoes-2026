@@ -8,6 +8,7 @@
 VAR _t =
     CALCULATETABLE (
         FILTER ( VALUES ( 'UF'[Nome] ), [T12 · margem 2022] > 0 && [T12 · margem 2026] < 0 ),
+        REMOVEFILTERS ( 'UF' ),
         'UF'[Tipo] = "UF"
     )
 VAR _n = COUNTROWS ( _t )

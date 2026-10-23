@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T07",
-  "displayName": "07 Debate",
+  "displayName": "08 Debate",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -54,5 +54,27 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T07_Pesquisas_Pontos",
+      "target": "T07_Audiencia_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T07_Pesquisas_Pontos",
+      "target": "T07_Debates_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T07_Pesquisas_Pontos",
+      "target": "T07_Debates_Marcas",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T07_Pesquisas_Pontos",
+      "target": "T07_Palco_Html",
+      "type": "NoFilter"
+    }
+  ]
 }

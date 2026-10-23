@@ -1,0 +1,15 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê da região.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _r = [T14 · região do painel]
+VAR _ano = [T14 · ano dos painéis]
+VAR _nUf = [T14 · UFs da região]
+VAR _nPt = [T14 · UFs da região com o PT à frente]
+-- 2 · Textos
+RETURN
+    _r & ", " & _ano & ": o PT ficou à frente em " & FORMAT ( _nPt, "0" ) & " de " & FORMAT ( _nUf, "0" )
+        & IF ( _nUf = 1, " estado.", " estados." )

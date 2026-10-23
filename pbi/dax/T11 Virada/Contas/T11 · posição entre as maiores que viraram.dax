@@ -1,0 +1,11 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: 0
+@descricao: Posição do município na lista das maiores que viraram (1 = a mais populosa entre as que a lista mostra: o Top 6 do visual, dentro do recorte e da seleção do mapa).
+@oraculo: mockup/data/eleicoes.json › paginas[11] › maiores_que_viraram (ordem)
+@gerado: pbi/scripts/desenho_t11.py
+*/
+IF (
+    HASONEVALUE ( 'Município'[CodIBGE] ) && NOT ISBLANK ( [T11 · população das que viraram] ),
+    RANKX ( ALLSELECTED ( 'Município'[CodIBGE] ), [T11 · população das que viraram], , DESC, SKIP )
+)

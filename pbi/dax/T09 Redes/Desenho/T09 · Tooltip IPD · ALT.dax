@@ -1,0 +1,11 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de uma data do índice de popularidade.
+*/
+IF (
+    NOT ISBLANK ( [T09 · IPD dia · data] ),
+    "Índice de popularidade digital em " & FORMAT ( [T09 · IPD dia · data], "dd/MM" ) & ": Lula "
+        & IF ( ISBLANK ( [T09 · IPD dia · Lula] ), "sem dado", FORMAT ( [T09 · IPD dia · Lula], "0.0" ) ) & ", Flávio "
+        & IF ( ISBLANK ( [T09 · IPD dia · Flávio] ), "sem dado", FORMAT ( [T09 · IPD dia · Flávio], "0.0" ) ) & "."
+)

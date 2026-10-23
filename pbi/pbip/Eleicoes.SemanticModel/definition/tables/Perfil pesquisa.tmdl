@@ -83,6 +83,17 @@ table 'Perfil pesquisa'
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Fatia do grupo na amostra (base ponderada ÷ n), quando o instituto publicou; 1 no total.
+	column Fatia
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 3708257e-edb0-5c94-86f0-44bff4716031
+		summarizeBy: none
+		sourceColumn: Fatia
+
+		annotation SummarizationSetBy = Automatic
+
 	/// Endereço da fonte.
 	column Fonte
 		dataType: string
@@ -98,9 +109,9 @@ table 'Perfil pesquisa'
 		source =
 				let
 				    Fonte = fxCsv("dados/pbi/perfil_pesquisa.csv", ","),
-				    Colunas = Table.SelectColumns(Fonte, {"instituto", "divulgacao", "campo", "candidato", "lente", "categoria", "categoria_ordem", "percentual", "fonte_url"}, MissingField.UseNull),
-				    Tipos = Table.TransformColumnTypes(Colunas, {{"instituto", type text}, {"divulgacao", type date}, {"campo", type text}, {"candidato", type text}, {"lente", type text}, {"categoria", type text}, {"categoria_ordem", Int64.Type}, {"percentual", type number}, {"fonte_url", type text}}, "en-US"),
-				    Nomes = Table.RenameColumns(Tipos, {{"instituto", "Instituto"}, {"divulgacao", "Divulgação"}, {"campo", "Campo"}, {"candidato", "Candidato"}, {"lente", "Lente"}, {"categoria", "Categoria"}, {"categoria_ordem", "CategoriaOrdem"}, {"percentual", "Percentual"}, {"fonte_url", "Fonte"}})
+				    Colunas = Table.SelectColumns(Fonte, {"instituto", "divulgacao", "campo", "candidato", "lente", "categoria", "categoria_ordem", "percentual", "fatia", "fonte_url"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"instituto", type text}, {"divulgacao", type date}, {"campo", type text}, {"candidato", type text}, {"lente", type text}, {"categoria", type text}, {"categoria_ordem", Int64.Type}, {"percentual", type number}, {"fatia", type number}, {"fonte_url", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"instituto", "Instituto"}, {"divulgacao", "Divulgação"}, {"campo", "Campo"}, {"candidato", "Candidato"}, {"lente", "Lente"}, {"categoria", "Categoria"}, {"categoria_ordem", "CategoriaOrdem"}, {"percentual", "Percentual"}, {"fatia", "Fatia"}, {"fonte_url", "Fonte"}})
 				in
 				    Nomes
 

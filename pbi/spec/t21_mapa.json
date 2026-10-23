@@ -213,6 +213,20 @@
    "update": "0 * (width / 1620)"
   },
   {
+   "name": "anoSobre",
+   "value": -1,
+   "on": [
+    {
+     "events": "@anoAlvo:mouseover, @anoBola:mouseover",
+     "update": "datum.i"
+    },
+    {
+     "events": "@anoAlvo:mouseout, @anoBola:mouseout",
+     "update": "-1"
+    }
+   ]
+  },
+  {
    "name": "sobre",
    "value": null,
    "on": [
@@ -803,7 +817,7 @@
       "signal": "(750 - 74 * datum.n / datum.nmax * clamp(entrada * 2 - 0.6, 0, 1)) * (width / 1620)"
      },
      "fill": {
-      "signal": "datum.i == estado.para ? '#1C1915' : '#CBBDA2'"
+      "signal": "datum.i == estado.para ? '#1C1915' : (datum.i == anoSobre ? '#48423A' : '#CBBDA2')"
      }
     }
    }
@@ -878,7 +892,7 @@
       "value": "circle"
      },
      "size": {
-      "signal": "datum.i == estado.para ? pow(22 * (width / 1620), 2) : pow(15 * (width / 1620), 2)"
+      "signal": "datum.i == estado.para ? pow(22 * (width / 1620), 2) : (datum.i == anoSobre ? pow(19 * (width / 1620), 2) : pow(15 * (width / 1620), 2))"
      },
      "fill": {
       "signal": "datum.i == estado.para ? '#1C1915' : '#F1EBDF'"

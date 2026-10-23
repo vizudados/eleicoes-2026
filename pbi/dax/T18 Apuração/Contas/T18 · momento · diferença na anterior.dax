@@ -1,0 +1,8 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Votos de Lula menos votos de Flávio na atualização anterior à do contexto; vazio na primeira da noite.
+*/
+VAR _l = [T18 · momento · Lula na anterior]
+RETURN
+    IF ( NOT ISBLANK ( _l ), _l - [T18 · momento · Flávio na anterior] )

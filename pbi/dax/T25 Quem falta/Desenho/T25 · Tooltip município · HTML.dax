@@ -1,0 +1,96 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Dossiê do município do ponto (ficha presa com fita): o % de quem faltou no ano e na faixa do recorte, quantas pessoas, a comparação com a média do recorte, a minilinha de 2006 (ou 2014) a 2026 e, sem faixa marcada, a idade que mais e menos falta ali. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _mun = [T25 · município]
+VAR _reg = [T25 · região do município]
+VAR _ano = [T25 · ano]
+VAR _comFaixa = [T25 · com faixa]
+VAR _faixa = [T25 · faixa]
+VAR _comUF = [T25 · com UF]
+VAR _pct = [T25 · abstenção %]
+VAR _n = [T25 · abstenções]
+VAR _aptos = [T25 · aptos]
+VAR _um = [T25 · um em cada]
+VAR _ref = [T25 · abstenção % do recorte]
+VAR _dif = [T25 · diferença para o recorte]
+VAR _mais = [T25 · faixa que mais falta]
+VAR _maisP = [T25 · faixa que mais falta %]
+VAR _menos = [T25 · faixa que menos falta]
+VAR _menosP = [T25 · faixa que menos falta %]
+VAR _p06 = [T25 · abstenção % em 2006]
+VAR _p10 = [T25 · abstenção % em 2010]
+VAR _p14 = [T25 · abstenção % em 2014]
+VAR _p18 = [T25 · abstenção % em 2018]
+VAR _p22 = [T25 · abstenção % em 2022]
+VAR _p26 = [T25 · abstenção % em 2026]
+-- 2 · Textos
+VAR _media = IF ( _comUF = 1, "média estadual", "média nacional" )
+VAR _quem = IF ( _comFaixa = 1, " de " & _faixa, "" )
+VAR _compara =
+    IF (
+        NOT ISBLANK ( _ref ),
+        IF (
+            ABS ( _dif ) < 0.05,
+            "Bem na " & _media,
+            FORMAT ( ABS ( _dif ), "0.0" ) & IF ( ABS ( _dif ) < 2, " ponto ", " pontos " )
+                & IF ( _dif > 0, "acima", "abaixo" ) & " da " & _media
+        ) & " (<b>" & FORMAT ( _ref, "0.0%" ) & "</b>)"
+    )
+VAR _idade =
+    IF (
+        _comFaixa = 0 && NOT ISBLANK ( _mais ),
+        "Quem mais falta aqui: <b>" & _mais & "</b> (" & FORMAT ( _maisP, "0.0%" ) & "); quem menos: <b>" & _menos
+            & "</b> (" & FORMAT ( _menosP, "0.0%" ) & ")",
+        "A série" & _quem & " no município, ano a ano"
+    )
+VAR _nota = IF ( _um > 0, "1 em cada " & _um & " faltou" )
+-- 3 · Geometria (minilinha de 230 × 64)
+VAR _serie = { ( 2006, _p06 ), ( 2010, _p10 ), ( 2014, _p14 ), ( 2018, _p18 ), ( 2022, _p22 ), ( 2026, _p26 ) } /* lista */
+VAR _pts = FILTER ( _serie, NOT ISBLANK ( [Value2] ) ) /* lista */
+VAR _min = MINX ( _pts, [Value2] ) -- geometria
+VAR _max = MAXX ( _pts, [Value2] ) -- geometria
+VAR _xy =
+    ADDCOLUMNS (
+        _pts, /* lista */
+        "@x", 8 + ( [Value1] - 2006 ) / 20 * 214, -- geometria
+        "@y", IF ( _max > _min, 46 - ( [Value2] - _min ) / ( _max - _min ) * 34, 32 ) -- geometria
+    )
+VAR _primeiro = MINX ( _xy, [Value1] ) -- geometria
+VAR _ultimo = MAXX ( _xy, [Value1] ) -- geometria
+VAR _linha = CONCATENATEX ( _xy, FORMAT ( [@x], "0.0##", "en-US" ) & "," & FORMAT ( [@y], "0.0##", "en-US" ), " L", [Value1], ASC ) -- geometria
+VAR _bolas =
+    CONCATENATEX (
+        _xy,
+        "<circle cx='" & FORMAT ( [@x], "0.0##", "en-US" ) & "' cy='" & FORMAT ( [@y], "0.0##", "en-US" ) & "' r='" & IF ( [Value1] = _ultimo, "4.5", "3" ) & "'/>",
+        "",
+        [Value1], ASC
+    )
+VAR _rots =
+    CONCATENATEX (
+        FILTER ( _xy, [Value1] = _primeiro || [Value1] = _ultimo ), /* lista */
+        "<span class='sr' style='left:" & FORMAT ( [@x] - 40, "0.0##", "en-US" ) & "px;top:" & FORMAT ( [@y] - 24, "0.0##", "en-US" ) & "px'>"
+            & FORMAT ( [Value2], "0.0%" ) & "</span><span class='sa' style='left:" & FORMAT ( [@x] - 40, "0.0##", "en-US" ) & "px'>"
+            & [Value1] & "</span>",
+        "",
+        [Value1], ASC
+    )
+-- 4 · Marcação
+VAR _html =
+    "<style>.tt{position:fixed;inset:0;background:var(--papel)}.tt .ficha{position:absolute;left:14px;top:22px;right:14px;bottom:14px;background:var(--branco);border:1.5px solid var(--areia);box-shadow:3px 4px 0 rgba(28,25,21,.07)}.tt .fita{position:absolute;left:150px;top:-16px;width:96px;transform:rotate(3deg);opacity:.9}.tt .ic{position:absolute;right:16px;top:14px;width:34px}.tt .cab{position:absolute;left:18px;top:14px;right:60px}.tt .nm{font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-.01em}.tt .big{position:absolute;left:18px;font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1}.tt .bs{position:absolute;left:176px;right:18px;font-size:15px;color:var(--grafite);line-height:1.35}.tt .bs b,.tt .lin b{color:var(--tinta);font-weight:700}.tt .lin{position:absolute;left:18px;right:18px;border-top:1px dashed var(--areia);padding-top:8px;font-size:15px;color:var(--grafite);line-height:1.35}.tt .mao{position:absolute;right:18px;bottom:8px;font-size:28px;color:var(--tinta)}.tt .sp{position:absolute;left:18px}.tt .sp svg{overflow:visible}.tt .sp path{fill:none;stroke:var(--tinta);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.tt .sp circle{fill:var(--tinta);stroke:var(--branco);stroke-width:2}.tt .sp .sr{position:absolute;width:80px;text-align:center;font-size:13px;font-weight:700}.tt .sp .sa{position:absolute;bottom:-20px;width:80px;text-align:center;font-size:13px;color:var(--cinza)}</style>"
+        & "<div class='tt tm'><div class='ficha'>"
+        & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/>"
+        & "<img class='ic' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/urna-tinta.png'/>"
+        & "<div class='cab sobe'><div class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mun, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & FORMAT ( _aptos, "#,0" ) & " eleitores" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _quem, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
+        & "<div class='big sobe d1' style='top:84px'>" & FORMAT ( _pct, "0.0%" ) & "</div>"
+        & "<div class='bs sobe d2' style='top:88px'>não foram votar em " & _ano & ": <b>" & FORMAT ( _n, "#,0" ) & "</b> "
+        & IF ( _n = 1, "pessoa", "pessoas" ) & ". " & _compara & ".</div>"
+        & "<div class='lin sobe d3' style='top:150px'>" & _idade & "</div>"
+        & "<div style='position:absolute;left:0;top:206px'>" & "<div class='sp'><svg width='230' height='64' viewBox='0 0 230 64'><path class='traco' pathLength='1' d='M" & _linha & "'/>" & _bolas & "</svg>" & _rots & "</div>" & "</div>"
+        & "<div class='mao entra d6'>" & _nota & "</div>"
+        & "</div></div>"
+RETURN
+    IF ( NOT ISBLANK ( _mun ) && NOT ISBLANK ( _aptos ), _html )

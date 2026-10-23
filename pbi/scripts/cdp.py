@@ -114,6 +114,13 @@ def executar(pg, passos, pasta: Path) -> int:
                 time.sleep(p.get("espera", 3))
             print(f"{i:02d} mouse sobre {p['pairar_html']} {p.get('texto', '')}: {'ok' if el else 'FALHA'}")
             falhas += 0 if el else 1
+        elif "clicar" in p:
+            # clique simples numa coordenada da página (dentro de visual próprio, onde o Ctrl mudaria o gesto)
+            x0, y0, k = area_da_pagina(pg)
+            x, y = p["clicar"]
+            pg.mouse.click(x0 + x * k, y0 + y * k)
+            time.sleep(p.get("espera", 4))
+            print(f"{i:02d} clique em ({x}, {y})")
         elif "pairar" in p:
             x0, y0, k = area_da_pagina(pg)
             x, y = p["pairar"]
@@ -137,6 +144,21 @@ def executar(pg, passos, pasta: Path) -> int:
             falhas += 0 if ok else 1
             print(f"{i:02d} {'ok   ' if ok else 'FALHA'} {p['conferir']} contém {p['contem']!r}"
                   + ("" if ok else f" — leu: {txt.replace(chr(10), ' · ')[:200]!r}"))
+        elif "achar" in p:
+            # o texto em qualquer visual visível da página (inclusive no tooltip aberto); tenta por até 15 s
+            alvo, ok, fim = p["achar"], False, time.time() + p.get("ate", 15)
+            while time.time() < fim and not ok:
+                for f in pg.frames:
+                    try:
+                        if f.frame_element().is_visible() and alvo in (f.evaluate("document.body ? document.body.innerText : ''") or ""):
+                            ok = True
+                            break
+                    except Exception:  # noqa: BLE001
+                        continue
+                if not ok:
+                    time.sleep(1)
+            falhas += 0 if ok else 1
+            print(f"{i:02d} {'ok   ' if ok else 'FALHA'} achar {alvo!r}")
         elif "esperar" in p:
             time.sleep(p["esperar"])
         elif "foto" in p:

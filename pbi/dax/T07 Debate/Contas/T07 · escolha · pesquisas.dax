@@ -1,0 +1,20 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) o instituto clicado fez, em qualquer janela.
+*/
+VAR _inst = [T07 · escolha · instituto]
+RETURN
+    IF (
+        NOT ISBLANK ( _inst ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            Pesquisa[Momento] = "apos_1turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _inst
+        ) + 0
+    )

@@ -1,0 +1,35 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: Os pontos da curva da noite (grão 'Apuração histórico'[AtualizadoTSE]), na mesma caixa e escala da T18 · Curva · HTML: uma faixa de clique por atualização do TSE (de meio caminho da anterior a meio caminho da seguinte), com a linha da hora e os dois pontos que aparecem no mouse. Clique: o placar mostra o retrato daquele momento (e a hora fica marcada); dossiê ttT18Momento. Vazio antes da primeira divulgação.
+*/
+-- 1 · Leituras
+VAR _m = [T18 · momento escolhido]
+VAR _ant = [T18 · momento · anterior]
+VAR _seg = [T18 · momento · seguinte]
+VAR _base = [T18 · noite · 17h]
+VAR _l = [T18 · momento · Lula %]
+VAR _f = [T18 · momento · Flávio %]
+-- 2 · Textos
+VAR _hora = FORMAT ( _m, "HH:mm" )
+-- 3 · Geometria (a da curva: svg a 44 px do topo; x 70–840 = 17h–0h, contadas das 17h do dia da primeira atualização;
+--   y 20–250 = 60%–40%; a faixa de clique vai do meio do caminho até a anterior ao meio do caminho até a seguinte)
+VAR _x = 70 + MIN ( MAX ( ( _m - _base ) * 24, 0 ), 7 ) / 7 * 770 -- geometria
+VAR _xa = IF ( ISBLANK ( _ant ), 64, ( 70 + MIN ( MAX ( ( _ant - _base ) * 24, 0 ), 7 ) / 7 * 770 + _x ) / 2 ) -- geometria
+VAR _xs = IF ( ISBLANK ( _seg ), 846, ( 70 + MIN ( MAX ( ( _seg - _base ) * 24, 0 ), 7 ) / 7 * 770 + _x ) / 2 ) -- geometria
+VAR _ini = MIN ( _xa, _x - 3 ) -- geometria
+VAR _larg = MAX ( _xs, _x + 3 ) - _ini -- geometria
+VAR _yl = 44 + 20 + ( 1 - ( MIN ( MAX ( _l, 0.40 ), 0.60 ) - 0.40 ) / 0.20 ) * 230 -- geometria
+VAR _yf = 44 + 20 + ( 1 - ( MIN ( MAX ( _f, 0.40 ), 0.60 ) - 0.40 ) / 0.20 ) * 230 -- geometria
+VAR _fm = "0.0"
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _m ),
+        "<div class='tela t18k'><i class='al' style='left:" & FORMAT ( _ini, _fm, "en-US" ) & "px;width:"
+            & FORMAT ( _larg, _fm, "en-US" ) & "px'></i><i class='gu' style='left:" & FORMAT ( _x - 1, _fm, "en-US" )
+            & "px'></i><i class='pd l' style='left:" & FORMAT ( _x - 6, _fm, "en-US" ) & "px;top:"
+            & FORMAT ( _yl - 6, _fm, "en-US" ) & "px'></i><i class='pd f' style='left:" & FORMAT ( _x - 6, _fm, "en-US" )
+            & "px;top:" & FORMAT ( _yf - 6, _fm, "en-US" ) & "px'></i><b class='hr' style='left:"
+            & FORMAT ( _x, _fm, "en-US" ) & "px'>" & _hora & "</b></div>"
+    )

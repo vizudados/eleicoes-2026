@@ -1,0 +1,28 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Título da composição: em cada 10 que não escolheram ninguém, quantos nem foram votar em 2026 e em 2006, a legenda das três partes e a nota à mão sobre brancos e nulos. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _recorte = [T06 · recorte]
+VAR _d26 = [T06 · faltaram entre quem não escolheu · em cada 10 · 2026]
+VAR _d06 = [T06 · faltaram entre quem não escolheu · em cada 10 · 2006]
+VAR _bn26 = [T06 · brancos e nulos · 2026]
+VAR _bn06 = [T06 · brancos e nulos · 2006]
+-- 2 · Textos
+VAR _man =
+    IF (
+        _d26 = _d06,
+        "Desde 2006, " & _d26 & " em cada 10 que não escolhem ninguém nem vão votar",
+        "Hoje, " & _d26 & " em cada 10 que não escolhem ninguém nem vão votar; em 2006, eram " & _d06
+    )
+VAR _nota = IF ( _bn26 < _bn06, "brancos e nulos encolheram", "brancos e nulos cresceram" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela ct'>"
+        & "<div class='sob sobe'>Quem não escolheu ninguém · eleição a eleição · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='man sobe d1'>" & _man & "</div>"
+        & "<div class='leg entra d3'><span><i class='f'></i>não foram votar</span>"
+        & "<span><i class='n'></i>anularam</span><span><i class='b'></i>votaram em branco</span>"
+        & "<span class='mao'>" & _nota & "</span></div>"
+    & "</div>"

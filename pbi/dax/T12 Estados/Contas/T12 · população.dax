@@ -1,0 +1,7 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: #,0
+@descricao: População das cidades do contexto (Censo 2022).
+@gerado: pbi/scripts/desenho_t12.py
+*/
+SUM ( 'Município'[População] )

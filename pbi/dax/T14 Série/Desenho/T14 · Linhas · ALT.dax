@@ -10,4 +10,5 @@ VAR _uf = [T14 · recorte]
 -- 2 · Textos
 RETURN
     "Gráfico de linhas, " & IF ( ISBLANK ( _uf ), "Brasil", _uf ) & ": % dos votos válidos do PT e do adversário "
-        & "principal em cada 1º turno de 2006 a 2026; o PT ficou atrás em " & FORMAT ( _k, "0" ) & " delas."
+        & "principal em cada 1º turno de 2006 a 2026; o PT ficou atrás em " & FORMAT ( _k, "0" ) & " delas. Clique "
+        & "num ano para levar a resposta e as regiões àquela eleição."

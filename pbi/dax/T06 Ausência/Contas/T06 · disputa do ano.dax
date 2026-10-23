@@ -1,0 +1,16 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: texto
+@descricao: Os dois primeiros do 1º turno do ano da linha, o mais votado antes: no Brasil, o resultado oficial ('Candidato ano'); com UF, o candidato do PT e o principal adversário na ordem dos votos na UF.
+@oraculo: 2026 = Flávio Bolsonaro e Lula
+*/
+VAR _1 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 1 )
+VAR _2 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 2 )
+VAR _pt = SELECTEDVALUE ( 'Ano'[Candidato do PT] )
+VAR _adv = SELECTEDVALUE ( 'Ano'[Adversário] )
+RETURN
+    IF (
+        [T06 · com UF] = 1,
+        IF ( [T06 · votos do PT (ano)] >= [T06 · votos do adversário (ano)], _pt & " e " & _adv, _adv & " e " & _pt ),
+        IF ( NOT ISBLANK ( _1 ), _1 & " e " & _2 )
+    )

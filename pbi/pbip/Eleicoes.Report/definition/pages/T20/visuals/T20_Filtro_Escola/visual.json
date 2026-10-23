@@ -5,9 +5,9 @@
     "x": 1282,
     "y": 60,
     "z": 5000,
-    "height": 48,
+    "height": 626,
     "width": 424,
-    "tabOrder": 5
+    "tabOrder": 6
   },
   "visual": {
     "visualType": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
@@ -70,14 +70,14 @@
             "startOpen": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
             "alwaysOpen": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -147,14 +147,14 @@
             "placeholderText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Todas as escolas'"
+                  "Value": "'Escolha uma escola'"
                 }
               }
             },
             "allOptionText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Todas as escolas'"
+                  "Value": "'Nenhuma (volta ao exemplo)'"
                 }
               }
             },
@@ -209,7 +209,7 @@
             "dropdownHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "560D"
+                  "Value": "572D"
                 }
               }
             },
@@ -704,5 +704,6 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  }
+  },
+  "isHidden": true
 }

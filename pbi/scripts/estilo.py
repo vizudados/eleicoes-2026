@@ -144,6 +144,8 @@ def css_base() -> str:
         ".esmaece{animation:uEntra 1.2s ease-out .9s both}",
         ".brota{transform-box:fill-box;transform-origin:center;animation:eEscala .6s cubic-bezier(.2,.9,.3,1.3) both}",
         passos,
+        # realce no hover dentro de um desenho só (gráfico sem grão): o filho sob o mouse fica, os irmãos apagam
+        ".realce>*{transition:opacity .18s ease}.realce:has(>:hover)>:not(:hover){opacity:.42}",
         "@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}",
     ])
 

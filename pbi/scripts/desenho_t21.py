@@ -217,6 +217,10 @@ def spec() -> dict:
             {"name": "k", "update": f"{MAPA_K} * {sx}"},
             {"name": "ox", "update": f"{MAPA_X} * {sx}"},
             {"name": "oy", "update": f"{MAPA_Y} * {sx}"},
+            # o ano sob o mouse (coluna ou ponto da régua): a coluna escurece e a bola cresce, antes do clique
+            {"name": "anoSobre", "value": -1,
+             "on": [{"events": "@anoAlvo:mouseover, @anoBola:mouseover", "update": "datum.i"},
+                    {"events": "@anoAlvo:mouseout, @anoBola:mouseout", "update": "-1"}]},
             {"name": "sobre", "value": None,
              "on": [{"events": "@pontos:mouseover", "update": "datum"}, {"events": "@pontos:mouseout",
                                                                          "update": "null"}]},
@@ -287,7 +291,8 @@ def spec() -> dict:
                  "y2": {"signal": f"{BARRAS_BASE} * {sx}"},
                  "y": {"signal": f"({BARRAS_BASE} - {BARRAS_H} * datum.n / datum.nmax * clamp(entrada * 2 - 0.6, 0, 1))"
                                  f" * {sx}"},
-                 "fill": {"signal": f"datum.i == estado.para ? '{c['tinta']}' : '{c['areia']}'"}}}},
+                 "fill": {"signal": f"datum.i == estado.para ? '{c['tinta']}' : (datum.i == anoSobre ? "
+                                    f"'{c['grafite']}' : '{c['areia']}')"}}}},
             # régua: linha, alvos de clique e pontos
             {"type": "rule", "interactive": False,
              "encode": {"update": {"x": {"signal": f"{REGUA_X[0]} * {sx}"}, "x2": {"signal": f"{REGUA_X[-1]} * {sx}"},
@@ -302,7 +307,8 @@ def spec() -> dict:
              "encode": {"update": {
                  "x": {"signal": f"({json.dumps(REGUA_X)})[datum.i] * {sx}"}, "y": {"signal": f"{REGUA_Y} * {sx}"},
                  "shape": {"value": "circle"},
-                 "size": {"signal": f"datum.i == estado.para ? pow(22 * {sx}, 2) : pow(15 * {sx}, 2)"},
+                 "size": {"signal": f"datum.i == estado.para ? pow(22 * {sx}, 2) : (datum.i == anoSobre ? "
+                                    f"pow(19 * {sx}, 2) : pow(15 * {sx}, 2))"},
                  "fill": {"signal": f"datum.i == estado.para ? '{c['tinta']}' : '{c['papel']}'"},
                  "stroke": {"value": c["tinta"]}, "strokeWidth": {"value": 1.8}, "cursor": {"value": "pointer"}}}},
             # play / pausa

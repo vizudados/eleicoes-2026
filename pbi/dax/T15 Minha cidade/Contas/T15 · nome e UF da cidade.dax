@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: texto
+@descricao: Nome (UF) do município escolhido no filtro, como a lista do filtro mostra.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › Contagem (MG)
+@gerado: pbi/scripts/desenho_t15.py
+*/
+SELECTEDVALUE ( 'Município'[Rótulo] )

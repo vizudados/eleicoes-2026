@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: texto
+@descricao: Nome da região da linha da origem (grão 'UF'[Região]).
+*/
+SELECTEDVALUE ( 'UF'[Região] )

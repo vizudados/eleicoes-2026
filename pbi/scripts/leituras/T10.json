@@ -1,6 +1,6 @@
 {"titulo": "As pesquisas da véspera e a urna",
  "blocos": [
-  ["Como ler", "Cada linha da régua é a última pesquisa de um instituto antes do 1º turno: à esquerda do empate, ela dava Lula à frente; à direita, Flávio. A linha preta é o resultado da urna. Passe o mouse num instituto para ver todas as pesquisas dele."],
+  ["Como ler", "Cada linha da régua é a última pesquisa de um instituto antes do 1º turno: à esquerda do empate, ela dava Lula à frente; à direita, Flávio. A linha preta é a urna. Passe o mouse num instituto para ver as pesquisas dele; clique nele e o quadro do erro mostra só aquele instituto contra a urna."],
   ["De onde vêm os números", "Pesquisas registradas no TSE, conferidas no relatório do instituto ou do contratante (levantamento de 22/10/2026). Resultado: TSE, votos válidos do 1º turno de 2026."],
   ["Para lembrar", "Votos válidos contam só quem escolheu um candidato, como a urna; votos totais incluem brancos, nulos e indecisos. Por isso o erro contra a urna só é medido em quem divulgou válidos. Pesquisa é retrato do momento, não previsão."]
  ]}

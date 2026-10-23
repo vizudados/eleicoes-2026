@@ -1,7 +1,7 @@
 /*
 @pasta: T04 Flávio · quem é\Desenho
 @formato: texto
-@descricao: Um marco da trajetória (uma entrada por marco, granularidade 'Trajetória'[Título]): o cartão na sua vaga, o fio até o ponto no ano real e, no 1º marco, a régua com os anos. Só lê contas; posições são geometria.
+@descricao: Um marco da trajetória (uma entrada por marco, granularidade 'Trajetória'[Título]): o cartão na sua vaga (câmera se tem foto da época, lápis se é ilustração recriada), o fio até o ponto no ano real e, no 1º marco, a régua com os anos. Só lê contas; posições são geometria.
 */
 -- 1 · Leituras
 VAR _ordem = [T04 · Trajetória · ordem]
@@ -10,14 +10,18 @@ VAR _tempo = [T04 · Trajetória · tempo]
 VAR _ano = [T04 · Trajetória · ano]
 VAR _tit = [T04 · Trajetória · título]
 VAR _temFoto = [T04 · Trajetória · tem foto]
+VAR _ilus = [T04 · Trajetória · é ilustração]
 VAR _ini = [T04 · Trajetória · primeiro ano]
 VAR _fim = [T04 · Trajetória · último ano]
 -- 2 · Textos
 VAR _txtTit = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _tit, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 VAR _icone =
-    IF (
+    SWITCH (
+        TRUE (),
+        _ilus = 1,
+            "<svg class='cam' viewBox='0 0 20 16' aria-label='ilustração recriada da época'><path d='M3,14 L4,10 L13,2 L16,5 L7,13 Z'/><path d='M4,10 L7,13'/></svg>",
         _temFoto = 1,
-        "<svg class='cam' viewBox='0 0 20 16' aria-label='tem foto da época'><path d='M2,4 H6 L8,2 H12 L14,4 H18 V14 H2 Z'/><circle cx='10' cy='9' r='3'/></svg>",
+            "<svg class='cam' viewBox='0 0 20 16' aria-label='tem foto da época'><path d='M2,4 H6 L8,2 H12 L14,4 H18 V14 H2 Z'/><circle cx='10' cy='9' r='3'/></svg>",
         ""
     )
 VAR _cab =

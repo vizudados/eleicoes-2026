@@ -1,8 +1,20 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela da abertura das buscas (≤ 250 caracteres).
+@descricao: Texto para leitor de tela da abertura das buscas (≤ 250 caracteres): o resumo dos 30 dias, o dia clicado na curva ou o estado clicado no mapa.
 */
-"Central do Google, últimos 30 dias: Lula " & FORMAT ( [T08 · Central · Lula], "0%" ) & " e Flávio "
-    & FORMAT ( [T08 · Central · Flávio], "0%" ) & " do interesse. Lula foi mais buscado em " & [T08 · dias com Lula à frente]
-    & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & "."
+VAR _dia = [T08 · escolha · dia]
+VAR _uf = [T08 · escolha · UF]
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT ISBLANK ( _dia ),
+            "Em " & FORMAT ( _dia, "dd/MM" ) & ", índice de buscas: Lula " & [T08 · dia · Lula] & " e Flávio "
+                & [T08 · dia · Flávio] & ", de 0 a 100.",
+        NOT ISBLANK ( _uf ),
+            [T08 · UF · nome] & ", 2º turno: Lula " & FORMAT ( [T08 · UF · parte Lula], "0%" ) & " e Flávio "
+                & FORMAT ( [T08 · UF · parte Flávio], "0%" ) & " das buscas pelos dois.",
+        "Central do Google, últimos 30 dias: Lula " & FORMAT ( [T08 · Central · Lula], "0%" ) & " e Flávio "
+            & FORMAT ( [T08 · Central · Flávio], "0%" ) & " do interesse. Lula foi mais buscado em " & [T08 · dias com Lula à frente]
+            & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & "."
+    )

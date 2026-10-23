@@ -1,0 +1,35 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Uma linha por faixa de idade (granularidade T25 Faixa[Faixa]): a barra da abstenção da faixa no ano e no lugar do recorte, o valor e a linha tracejada de todas as idades; * = voto facultativo. Sem dado (antes de 2014), a linha fica vazia. Só lê contas; posições são geometria.
+*/
+-- 1 · Leituras
+VAR _k = [T25 · ordem da faixa]
+VAR _nome = [T25 · faixa da linha]
+VAR _voto = [T25 · voto da faixa]
+VAR _pct = [T25 · abstenção %]
+VAR _teto = [T25 · teto por idade]
+VAR _ref = [T25 · abstenção % todas as idades]
+-- 2 · Textos
+VAR _ast = IF ( _voto = "facultativo", "<sup>*</sup>" )
+-- 3 · Geometria (linhas a cada 35 px; barra de 0 ao teto em 450 px a partir de x 196)
+VAR _top = ( _k - 1 ) * 35 -- geometria
+VAR _w = IF ( _teto > 0, DIVIDE ( _pct, _teto ) * 450 ) -- geometria
+VAR _xr = 196 + IF ( _teto > 0, DIVIDE ( _ref, _teto ) * 450 ) -- geometria
+VAR _barra =
+    IF (
+        ISBLANK ( _pct ),
+        "<span class='vl sem'>—</span>",
+        "<i class='br barra-x d" & ( _k + 2 ) & "' style='width:" & FORMAT ( MAX ( _w, 2 ), "0.0##", "en-US" ) & "px'></i>"
+            & "<span class='vl sobe d" & ( _k + 4 ) & "'>" & FORMAT ( _pct, "0.0%" ) & "</span>"
+    )
+VAR _linhaRef =
+    IF ( NOT ISBLANK ( _ref ) && NOT ISBLANK ( _pct ), "<i class='rf entra d11' style='left:" & FORMAT ( _xr, "0.0##", "en-US" ) & "px'></i>" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _k ),
+        "<div class='tela fx'><div class='ln' style='top:" & _top & "px'>"
+            & "<span class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & _ast & "</span><i class='tr'></i>" & _barra & _linhaRef
+            & "<div class='alvo'></div></div></div>"
+    )

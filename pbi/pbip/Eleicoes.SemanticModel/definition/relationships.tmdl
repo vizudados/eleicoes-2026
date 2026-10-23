@@ -38,6 +38,30 @@ relationship 9a44cd5c-10f9-5635-8593-a0f9537b4765
 	fromColumn: 'Trends UF'.UF
 	toColumn: UF.UF
 
+relationship 922afb0a-a8df-5a0f-a70a-9bd35488330f
+	fromColumn: 'Município'.CodIBGE
+	toColumn: 'T13 Célula'.CodIBGE
+
 relationship 5483d1e2-decd-5334-903b-9382c3b9fe3c
 	fromColumn: 'Município'.CodIBGE
 	toColumn: 'T19 Lado'.CodIBGE
+
+relationship 6209f28c-9c07-517f-b93b-a1a68ff7e668
+	fromColumn: 'T25 Abstenção faixa'.CodIBGE
+	toColumn: 'Município'.CodIBGE
+
+relationship e25e2337-5713-554f-b278-c50c74dcecaf
+	fromColumn: 'T25 Abstenção faixa'.Ano
+	toColumn: Ano.Ano
+
+relationship 6e614049-de32-51cd-87b5-f0fa68fff382
+	fromColumn: 'T25 Abstenção faixa'.FaixaOrdem
+	toColumn: 'T25 Faixa'.Ordem
+
+relationship c9d3a910-6bfd-5d42-95cc-488d6a7b1ea7
+	fromColumn: 'T25 Abstenção exterior'.Ano
+	toColumn: Ano.Ano
+
+relationship 3db4dde4-80b4-5096-af0d-d7b933e0da12
+	fromColumn: 'T25 Abstenção exterior'.FaixaOrdem
+	toColumn: 'T25 Faixa'.Ordem

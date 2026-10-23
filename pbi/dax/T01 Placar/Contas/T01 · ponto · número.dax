@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0
+@descricao: Número do candidato do ponto da virada (13 = PT, 22 = PL).
+*/
+SELECTEDVALUE ( 'Candidato UF'[Número] )

@@ -1,0 +1,7 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0
+@descricao: Ordem do porte da célula do contexto (1 = até 10 mil); posiciona a célula na matriz.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+SELECTEDVALUE ( 'Município'[PorteOrdem] )

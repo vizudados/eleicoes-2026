@@ -1,0 +1,11 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Linha tracejada do bloco de anos (0–1): com município marcado, a média do recorte (UF ou Brasil) no mesmo ano e faixa; só com faixa marcada, todas as idades do lugar; sem marca, vazio.
+*/
+SWITCH (
+    TRUE (),
+    [T25 · com município] = 1, [T25 · abstenção % do recorte],
+    [T25 · com faixa] = 1, CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'T25 Faixa' ) ),
+    BLANK ()
+)

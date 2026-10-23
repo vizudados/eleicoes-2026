@@ -1,0 +1,9 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0%
+@descricao: Parcela dos votos de Flávio na região que veio da UF da linha (0–1), resultado oficial.
+*/
+DIVIDE (
+    [T05 · votos],
+    CALCULATE ( [T05 · votos], REMOVEFILTERS ( 'UF'[UF], 'UF'[Nome], 'UF'[Ordem] ) )
+)

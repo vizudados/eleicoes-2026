@@ -1,0 +1,10 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: Quantas UFs tem a região do painel.
+@oraculo: Nordeste 9, Sul 3
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _r = [T14 · região do painel]
+RETURN
+    COUNTROWS ( FILTER ( ALL ( 'UF'[UF], 'UF'[Região] ), 'UF'[Região] = _r ) ) + 0

@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: texto
+@descricao: Sigla da UF do município da linha (ou do município marcado).
+*/
+SELECTEDVALUE ( 'Município'[UF] )

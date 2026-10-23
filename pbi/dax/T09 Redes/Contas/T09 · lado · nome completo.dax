@@ -1,0 +1,8 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: texto
+@descricao: O candidato da linha da coluna da direita (grão Seguidores[Candidato] em T09_Lado_Linhas e no dossiê ttT09Lado), como na base; vazio para quem não é Lula nem Flávio.
+*/
+VAR _c = SELECTEDVALUE ( Seguidores[Candidato] )
+RETURN
+    IF ( _c IN { "Lula", "Flávio Bolsonaro" }, _c )

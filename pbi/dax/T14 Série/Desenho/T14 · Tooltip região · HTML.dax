@@ -1,0 +1,54 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Dossiê da região no tooltip dos painéis: os estados dela na eleição em destaque (a clicada na série ou 2026), cada um com o duelo PT × adversário em barras, do mais petista ao menos; quantos tiveram o PT à frente e em quantas das seis eleições o PT ficou à frente na região. Só lê contas.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _r = [T14 · região do painel]
+VAR _ano = [T14 · ano dos painéis]
+VAR _fr = [T14 · eleições com o PT à frente]
+VAR _n = [T14 · eleições]
+VAR _nUf = [T14 · UFs da região]
+VAR _nPt = [T14 · UFs da região com o PT à frente]
+VAR _cpt = CALCULATE ( [T14 · candidato do PT], 'Ano'[Ano] = _ano )
+VAR _cadv = CALCULATE ( [T14 · adversário], 'Ano'[Ano] = _ano )
+VAR _todas = DATATABLE ( "uf", STRING, "reg", STRING, { { "AC", "Norte" }, { "AL", "Nordeste" }, { "AM", "Norte" }, { "AP", "Norte" }, { "BA", "Nordeste" }, { "CE", "Nordeste" }, { "DF", "Centro-Oeste" }, { "ES", "Sudeste" }, { "GO", "Centro-Oeste" }, { "MA", "Nordeste" }, { "MG", "Sudeste" }, { "MS", "Centro-Oeste" }, { "MT", "Centro-Oeste" }, { "PA", "Norte" }, { "PB", "Nordeste" }, { "PE", "Nordeste" }, { "PI", "Nordeste" }, { "PR", "Sul" }, { "RJ", "Sudeste" }, { "RN", "Nordeste" }, { "RO", "Norte" }, { "RR", "Norte" }, { "RS", "Sul" }, { "SC", "Sul" }, { "SE", "Nordeste" }, { "SP", "Sudeste" }, { "TO", "Norte" } } )
+VAR _daRegiao = FILTER ( _todas, [reg] = _r ) /* lista */
+VAR _ufs =
+    ADDCOLUMNS (
+        _daRegiao,
+        "@pt", VAR _u = [uf] RETURN CALCULATE ( [T14 · PT % da UF na eleição dos painéis], 'UF'[UF] = _u ),
+        "@adv", VAR _u = [uf] RETURN CALCULATE ( [T14 · adversário % da UF na eleição dos painéis], 'UF'[UF] = _u )
+    ) /* lista */
+-- 2 · Textos
+VAR _selo = "PT À FRENTE EM " & FORMAT ( _fr, "0" ) & " DE " & FORMAT ( _n, "0" )
+VAR _clsSelo = IF ( _fr * 2 > _n, "selo vm", "selo az" )
+VAR _mao =
+    SWITCH (
+        TRUE (),
+        _nPt = _nUf, "todos com o PT",
+        _nPt = 0, "nenhum com o PT",
+        "dividida: " & FORMAT ( _nPt, "0" ) & " a " & FORMAT ( _nUf - _nPt, "0" )
+    )
+-- 3 · Geometria e 4 · Marcação (barras de duelo: 100% = 190 px)
+VAR _linhas =
+    CONCATENATEX (
+        _ufs,
+        "<div class='ln'><span class='a'>" & [uf] & "</span><span class='tr'><i class='bl barra-x' style='width:"
+            & FORMAT ( 190 * [@pt], "0.0", "en-US" ) & "px'></i><i class='ba barra-x-dir' style='width:"
+            & FORMAT ( 190 * [@adv], "0.0", "en-US" ) & "px'></i></span><span class='p'><b class='lula'>"
+            & FORMAT ( [@pt], "0.0%" ) & "</b> × <b class='flavio'>" & FORMAT ( [@adv], "0.0%" ) & "</b></span></div>",
+        "",
+        [@pt] - [@adv], DESC
+    )
+RETURN
+    "<div class='tela tt14r'><div class='fita'></div>"
+        & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
+        & "<div class='an sobe'>" & _r & " · " & _ano & "</div>"
+        & "<div class='rot entra d1'>OS ESTADOS · " & UPPER ( SWITCH ( _cpt, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", _cpt ) ) & " × " & UPPER ( SWITCH ( _cadv, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", _cadv ) )
+            & "</div>"
+        & "<div class='lista entra d2'>" & _linhas & "</div>"
+        & "<div class='nota entra d3'>Votos válidos de cada estado, somando os municípios (sem o exterior).</div>"
+        & "<div class='mao entra d5'>" & _mao & "</div>"
+    & "</div>"

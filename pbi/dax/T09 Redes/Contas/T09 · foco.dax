@@ -1,0 +1,18 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: texto
+@descricao: O candidato clicado (nome como na base: Lula ou Flávio Bolsonaro): nos balões (filtro cruzado de Monitoramento[Candidato]) ou na coluna da direita (filtro cruzado de Seguidores[Candidato]); vazio sem clique e dentro do próprio visual que tem o candidato no grão. As outras peças apagam o outro candidato.
+*/
+VAR _pelosBaloes =
+    IF (
+        ISFILTERED ( Monitoramento[Candidato] ) && NOT ISINSCOPE ( Monitoramento[Candidato] ) && HASONEVALUE ( Monitoramento[Candidato] ),
+        SELECTEDVALUE ( Monitoramento[Candidato] )
+    )
+VAR _pelaColuna =
+    IF (
+        ISFILTERED ( Seguidores[Candidato] ) && NOT ISINSCOPE ( Seguidores[Candidato] ) && HASONEVALUE ( Seguidores[Candidato] ),
+        SELECTEDVALUE ( Seguidores[Candidato] )
+    )
+VAR _c = COALESCE ( _pelosBaloes, _pelaColuna )
+RETURN
+    IF ( _c IN { "Lula", "Flávio Bolsonaro" }, _c )

@@ -1,0 +1,10 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: #,0
+@descricao: Eleitores que faltaram no contexto, sem fixar o ano: com faixa marcada, o perfil por idade; sem faixa, 'Município ano' nos recortes de municípios e o total oficial ('Comparecimento ano', com o exterior) no Brasil.
+*/
+IF (
+    [T25 · com faixa] = 1,
+    [T25 · abstenções por idade (cru)],
+    IF ( [T25 · sem exterior] = 1, SUM ( 'Município ano'[Abstencoes] ), SUM ( 'Comparecimento ano'[Abstencoes] ) )
+)

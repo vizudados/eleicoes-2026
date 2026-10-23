@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T22",
-  "displayName": "23 Simulador",
+  "displayName": "24 Simulador",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -56,6 +56,51 @@
     ]
   },
   "visualInteractions": [
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_Exterior_Alvo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_Heroi_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_Pesquisas_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_ReguaAbst_Botoes",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_ReguaAbst_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_ReguaComp_Botoes",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_ReguaComp_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_ReguaLula_Botoes",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Grade_Html",
+      "target": "T22_ReguaLula_Html",
+      "type": "NoFilter"
+    },
     {
       "source": "T22_Pesquisas_Html",
       "target": "T22_Heroi_Html",

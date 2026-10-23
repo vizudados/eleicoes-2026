@@ -1,0 +1,115 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Dossiê do ano da coluna: quem disputou, quantos faltaram no lugar (e na faixa) e, de 2014 em diante, quem eram os que faltaram — o peso de cada idade entre os faltosos ao lado do peso entre os eleitores, com a nota à mão da idade que mais passa do seu peso. Antes de 2014, o aviso de que o TSE não publicava a idade. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _ano = [T25 · ano]
+VAR _disputa = [T25 · disputa do ano]
+VAR _lugar = [T25 · lugar]
+VAR _comFaixa = [T25 · com faixa]
+VAR _faixa = [T25 · faixa]
+VAR _pct = [T25 · abstenção %]
+VAR _n = [T25 · abstenções]
+VAR _aptos = [T25 · aptos]
+VAR _temIdade = [T25 · tem idade no ano]
+VAR _k = IF ( _comFaixa = 1, [T25 · ordem da faixa] )
+VAR _acima = [T25 · faixa mais acima do seu peso]
+VAR _acimaX = [T25 · faixa mais acima do seu peso (vezes)]
+VAR _todas = [T25 · abstenção % todas as idades]
+VAR _f1 = [T25 · parte dos que faltaram · 16 e 17 anos]
+VAR _e1 = [T25 · parte dos aptos · 16 e 17 anos]
+VAR _f2 = [T25 · parte dos que faltaram · 18 a 24 anos]
+VAR _e2 = [T25 · parte dos aptos · 18 a 24 anos]
+VAR _f3 = [T25 · parte dos que faltaram · 25 a 34 anos]
+VAR _e3 = [T25 · parte dos aptos · 25 a 34 anos]
+VAR _f4 = [T25 · parte dos que faltaram · 35 a 44 anos]
+VAR _e4 = [T25 · parte dos aptos · 35 a 44 anos]
+VAR _f5 = [T25 · parte dos que faltaram · 45 a 59 anos]
+VAR _e5 = [T25 · parte dos aptos · 45 a 59 anos]
+VAR _f6 = [T25 · parte dos que faltaram · 60 a 69 anos]
+VAR _e6 = [T25 · parte dos aptos · 60 a 69 anos]
+VAR _f7 = [T25 · parte dos que faltaram · 70 anos ou mais]
+VAR _e7 = [T25 · parte dos aptos · 70 anos ou mais]
+-- 2 · Textos
+VAR _quem = IF ( _comFaixa = 1, " de " & _faixa, "" )
+VAR _nota = IF ( NOT ISBLANK ( _acimaX ), _acima & " pesam " & FORMAT ( _acimaX, "0.0" ) & " vezes mais" )
+-- 3 · Geometria (barras de 0 ao maior peso em 210 px)
+VAR _pesos = { ( 1, _f1, _e1 ), ( 2, _f2, _e2 ), ( 3, _f3, _e3 ), ( 4, _f4, _e4 ), ( 5, _f5, _e5 ), ( 6, _f6, _e6 ), ( 7, _f7, _e7 ) } /* lista */
+VAR _teto = MAX ( MAXX ( _pesos, [Value2] ), MAXX ( _pesos, [Value3] ) ) -- geometria
+VAR _linhas =
+    CONCATENATEX (
+        _pesos,
+        VAR _rot =
+            SWITCH (
+                [Value1],
+                1, "16–17",
+                2, "18–24",
+                3, "25–34",
+                4, "35–44",
+                5, "45–59",
+                6, "60–69",
+                7, "70+",
+                ""
+            )
+        RETURN
+            "<div class='cp" & IF ( [Value1] = _k, " on" ) & "' style='top:" & ( 44 + ( [Value1] - 1 ) * 24 ) & "px'>"
+                & "<span class='nf'>" & _rot & "</span>"
+                & "<i class='bf barra-x' style='width:" & FORMAT ( DIVIDE ( [Value2], _teto ) * 210, "0.0##", "en-US" ) & "px'></i>" -- geometria
+                & "<i class='be' style='width:" & FORMAT ( DIVIDE ( [Value3], _teto ) * 210, "0.0##", "en-US" ) & "px'></i>" -- geometria
+                & "<span class='vf'>" & FORMAT ( [Value2], "0%" ) & "</span><span class='ve'>" & FORMAT ( [Value3], "0%" )
+                & "</span></div>",
+        "",
+        [Value1], ASC
+    )
+VAR _css =
+    "<style>"
+        & ".ta .dp{margin-top:3px;font-size:15px;color:var(--grafite);white-space:nowrap;overflow:hidden;"
+        & "text-overflow:ellipsis}"
+        & ".ta .cps{position:absolute;left:18px;right:18px;top:150px;height:220px;border-top:1px dashed var(--areia);"
+        & "padding-top:8px}"
+        & ".ta .cps .tl{position:absolute;left:0;top:10px;font-size:15px;font-weight:600;color:var(--tinta)}"
+        & ".ta .cps .lg2{position:absolute;left:0;top:30px;font-size:13px;color:var(--cinza)}"
+        & ".ta .cps .lg2 i{display:inline-block;width:12px;height:8px;margin:0 5px 0 0}"
+        & ".ta .cps .lg2 i+i,.ta .cps .lg2 span+i{margin-left:14px}"
+        & ".ta .cp{position:absolute;left:0;right:0;height:22px;font-size:13px;color:var(--grafite)}"
+        & ".ta .cp>*{position:absolute}.ta .cp .nf{left:0;top:3px;width:48px;font-weight:600}"
+        & ".ta .cp.on .nf{color:var(--tinta);font-weight:800}"
+        & ".ta .cp .bf{left:52px;top:3px;height:9px;background:var(--tinta)}"
+        & ".ta .cp .be{left:52px;top:14px;height:4px;background:var(--areia)}"
+        & ".ta .cp .vf{left:276px;top:2px;width:44px;text-align:right;font-weight:700;color:var(--tinta)}"
+        & ".ta .cp .ve{left:328px;top:2px;width:56px;text-align:right;color:var(--cinza)}"
+        & ".ta .si{position:absolute;left:18px;right:18px;top:160px;font-size:17px;line-height:1.4;color:var(--grafite);"
+        & "border-top:1px dashed var(--areia);padding-top:12px}"
+    & "</style>"
+-- 4 · Marcação
+VAR _corpo =
+    IF (
+        _temIdade = 1 && NOT ISBLANK ( _teto ),
+        "<div class='cps sobe d3'><div class='tl'>Quem eram os que faltaram, por idade</div>"
+            & "<div class='lg2'><i style='background:var(--tinta)'></i>entre os que faltaram"
+            & "<span></span><i style='background:var(--areia);height:4px;margin-left:14px'></i>entre os eleitores</div>"
+            & _linhas & "</div>"
+            & "<div class='mao entra d8'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nota, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>",
+        "<div class='si sobe d3'>Em " & _ano & ", o TSE ainda não publicava a idade de quem faltou. O perfil por "
+            & "idade começa em 2014.</div>"
+    )
+VAR _html =
+    "<style>.tt{position:fixed;inset:0;background:var(--papel)}.tt .ficha{position:absolute;left:14px;top:22px;right:14px;bottom:14px;background:var(--branco);border:1.5px solid var(--areia);box-shadow:3px 4px 0 rgba(28,25,21,.07)}.tt .fita{position:absolute;left:150px;top:-16px;width:96px;transform:rotate(3deg);opacity:.9}.tt .ic{position:absolute;right:16px;top:14px;width:34px}.tt .cab{position:absolute;left:18px;top:14px;right:60px}.tt .nm{font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-.01em}.tt .big{position:absolute;left:18px;font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1}.tt .bs{position:absolute;left:176px;right:18px;font-size:15px;color:var(--grafite);line-height:1.35}.tt .bs b,.tt .lin b{color:var(--tinta);font-weight:700}.tt .lin{position:absolute;left:18px;right:18px;border-top:1px dashed var(--areia);padding-top:8px;font-size:15px;color:var(--grafite);line-height:1.35}.tt .mao{position:absolute;right:18px;bottom:8px;font-size:28px;color:var(--tinta)}.tt .sp{position:absolute;left:18px}.tt .sp svg{overflow:visible}.tt .sp path{fill:none;stroke:var(--tinta);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.tt .sp circle{fill:var(--tinta);stroke:var(--branco);stroke-width:2}.tt .sp .sr{position:absolute;width:80px;text-align:center;font-size:13px;font-weight:700}.tt .sp .sa{position:absolute;bottom:-20px;width:80px;text-align:center;font-size:13px;color:var(--cinza)}</style>" & _css
+        & "<div class='tt ta'><div class='ficha'>"
+        & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/>"
+        & "<img class='ic' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/urna-tinta.png'/>"
+        & "<div class='cab sobe'><div class='nm'>1º turno de " & _ano & "</div>"
+        & "<div class='dp'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _disputa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
+        & IF (
+            ISBLANK ( _pct ),
+            "<div class='big sobe d1' style='top:78px'>" & FORMAT ( _todas, "0.0%" ) & "</div>"
+                & "<div class='bs sobe d2' style='top:82px'>faltaram, com todas as idades · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>",
+            "<div class='big sobe d1' style='top:78px'>" & SWITCH ( TRUE (), ABS ( _n ) >= 1000000, FORMAT ( _n / 1000000, "0.0" ) & " mi", ABS ( _n ) >= 1000, FORMAT ( _n / 1000, "0.0" ) & " mil", FORMAT ( _n, "#,0" ) ) & "</div>"
+                & "<div class='bs sobe d2' style='top:82px'>de " & SWITCH ( TRUE (), ABS ( _aptos ) >= 1000000, FORMAT ( _aptos / 1000000, "0.0" ) & " mi", ABS ( _aptos ) >= 1000, FORMAT ( _aptos / 1000, "0.0" ) & " mil", FORMAT ( _aptos, "#,0" ) ) & " eleitores" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _quem, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+                & " faltaram · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        )
+        & _corpo
+        & "</div></div>"
+RETURN
+    IF ( NOT ISBLANK ( _aptos ) || NOT ISBLANK ( _disputa ), _html )

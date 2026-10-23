@@ -59,6 +59,8 @@ TABELAS = [
          col("categoria_ordem", "CategoriaOrdem", tipo="int", descricao="Ordem da faixa.", oculta=True, formato="0"),
          col("percentual", "Percentual", tipo="number", descricao="Intenção de voto no segmento (% do total).",
              oculta=True),
+         col("fatia", "Fatia", tipo="number", descricao="Fatia do grupo na amostra (base ponderada ÷ n), quando o "
+             "instituto publicou; 1 no total.", oculta=True),
          col("fonte_url", "Fonte", descricao="Endereço da fonte.", oculta=True)],
         oculta=True),
 ]

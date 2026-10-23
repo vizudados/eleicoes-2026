@@ -1,0 +1,61 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Com um município marcado (uma entrada só): o lugar dele entre as cidades da UF — a fatia dos votos de Lula no estado que saiu dele e as posições em votos e em % dos válidos. Sem clique.
+*/
+-- 1 · Leituras
+VAR _mun = [T03 · município]
+VAR _est = [T03 · estado do município]
+VAR _parte = [T03 · parte do município no estado]
+VAR _posV = [T03 · posição em votos no estado]
+VAR _posP = [T03 · posição em % no estado]
+VAR _n = [T03 · municípios no estado do município]
+-- 2 · Textos
+VAR _nm = IF ( RIGHT ( _mun, 1 ) = ")", LEFT ( _mun, LEN ( _mun ) - 5 ), _mun )
+VAR _txtNm = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nm, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtEst = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _est, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _rotulo =
+    IF (
+        _n = 1,
+        _txtNm & " · " & _txtEst & " · o único município",
+        "No estado · " & _txtEst & " · " & FORMAT ( _n, "#,0" ) & " cidades"
+    )
+VAR _txtParte = FORMAT ( _parte, "0.0%" ) & " dos votos de Lula no estado saíram daqui"
+VAR _linhaV =
+    IF (
+        _posV = 1,
+        "a cidade que mais deu votos a Lula no estado",
+        "cidade que mais deu votos a Lula no estado"
+    )
+VAR _linhaP =
+    IF (
+        _posP = 1,
+        "onde Lula teve o maior % dos válidos no estado",
+        "no % dos válidos de Lula, da mais forte à mais fraca"
+    )
+-- 3 · Geometria (barra de 620 px)
+VAR _w = MAX ( _parte * 620, 4 ) -- geometria
+VAR _dentro = _w >= 360 -- geometria
+VAR _xr = FORMAT ( _w + 12, "0.0##", "en-US" ) -- geometria
+-- 4 · Marcação
+VAR _rk =
+    IF (
+        _n > 1,
+        "<div class='rk sobe d8' style='top:96px'><span class='n lula'>" & _posV & "ª</span><span class='t'>"
+            & _linhaV & "</span></div>"
+            & "<div class='rk sobe d10' style='top:160px'><span class='n'>" & _posP & "ª</span><span class='t'>"
+            & _linhaP & "</span></div>"
+    )
+RETURN
+    IF (
+        NOT ISBLANK ( _mun ),
+        "<div class='tela og'><div class='oc'>"
+            & "<div class='rot ro sobe'>" & _rotulo & "</div>"
+            & "<div class='trilho entra d3'></div>"
+            & "<div class='fa o1 barra-x d5' style='left:0;width:" & FORMAT ( _w, "0.0##", "en-US" ) & "px'><span>"
+            & IF ( _dentro, _txtParte ) & "</span></div>"
+            & IF ( NOT _dentro, "<span class='lfa entra d8' style='left:" & _xr & "px'>" & _txtParte & "</span>" )
+            & _rk
+            & "<div class='dica entra d14'>clique no vazio do mapa para voltar</div>"
+        & "</div></div>"
+    )

@@ -1,0 +1,24 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: Faixa cujo peso entre os que faltaram mais passa do peso entre os aptos, no lugar e no ano da linha (a nota à mão da dica do ano).
+*/
+VAR _t =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'T25 Faixa'[Curta] ), REMOVEFILTERS ( 'T25 Faixa' ) ),
+        "@r",
+            VAR _c = 'T25 Faixa'[Curta]
+            RETURN
+                DIVIDE (
+                    DIVIDE (
+                        CALCULATE ( [T25 · abstenções por idade (cru)], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Curta] = _c ),
+                        CALCULATE ( [T25 · abstenções por idade (cru)], REMOVEFILTERS ( 'T25 Faixa' ) )
+                    ),
+                    DIVIDE (
+                        CALCULATE ( [T25 · aptos por idade (cru)], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Curta] = _c ),
+                        CALCULATE ( [T25 · aptos por idade (cru)], REMOVEFILTERS ( 'T25 Faixa' ) )
+                    )
+                )
+    )
+RETURN
+    MAXX ( TOPN ( 1, FILTER ( _t, NOT ISBLANK ( [@r] ) ), [@r], DESC, 'T25 Faixa'[Curta], ASC ), 'T25 Faixa'[Curta] )

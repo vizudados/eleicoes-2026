@@ -1,0 +1,10 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0
+@descricao: 1 quando o contexto é uma célula só, menor que o recorte de UF (a célula clicada na matriz); 0 se não. Lê o Município, não a T13 Célula, para valer também na prévia.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _n = [T13 · cidades]
+VAR _tot = [T13 · cidades do recorte]
+RETURN
+    IF ( HASONEVALUE ( 'Município'[PorteOrdem] ) && HASONEVALUE ( 'Município'[QuintoOrdem] ) && _n < _tot, 1, 0 )

@@ -1,0 +1,9 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: Instituto da pesquisa escolhida no clique de um ponto da curva (filtro cruzado em Pesquisa[Id]); vazio sem clique. Lido pelos quadrinhos da rejeição, pelo cabeçalho dela e pelo placar.
+*/
+IF (
+    ISFILTERED ( Pesquisa[Id] ) && HASONEVALUE ( Pesquisa[Id] ),
+    [T17 · pesquisa · instituto]
+)

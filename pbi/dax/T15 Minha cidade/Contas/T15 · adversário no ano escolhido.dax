@@ -1,0 +1,9 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: texto
+@descricao: Adversário principal (o mais votado fora do PT) na eleição escolhida (2026 sem clique).
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · ano escolhido]
+RETURN
+    CALCULATE ( SELECTEDVALUE ( 'Ano'[Adversário] ), 'Ano'[Ano] = _a )

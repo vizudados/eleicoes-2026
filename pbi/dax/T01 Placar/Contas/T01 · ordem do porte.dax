@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0
+@descricao: Ordem do porte da linha (1 = até 10 mil habitantes), para listar do menor ao maior.
+*/
+MIN ( 'Município'[PorteOrdem] )

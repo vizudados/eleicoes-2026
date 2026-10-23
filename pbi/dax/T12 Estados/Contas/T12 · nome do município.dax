@@ -1,0 +1,7 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: Nome (UF) do município do contexto.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+SELECTEDVALUE ( 'Município'[Rótulo] )

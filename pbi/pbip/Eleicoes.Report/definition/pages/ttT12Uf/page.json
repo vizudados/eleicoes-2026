@@ -4,7 +4,7 @@
   "displayName": "Estados · UF",
   "displayOption": "ActualSize",
   "width": 440,
-  "height": 300,
+  "height": 330,
   "type": "Tooltip",
   "visibility": "HiddenInViewMode",
   "pageBinding": {

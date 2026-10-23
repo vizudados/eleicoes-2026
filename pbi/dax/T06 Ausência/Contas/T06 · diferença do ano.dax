@@ -1,0 +1,12 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: #,0
+@descricao: Diferença de votos entre os dois primeiros no 1º turno do ano da linha: no Brasil, o resultado oficial (com o exterior); com UF, PT × principal adversário nos municípios da UF.
+@oraculo: 2026 = 2.224.965 (paginas[1].diferenca.votos)
+*/
+IF (
+    [T06 · com UF] = 1,
+    ABS ( [T06 · votos do PT (ano)] - [T06 · votos do adversário (ano)] ),
+    CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Posição] = 1 )
+        - CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Posição] = 2 )
+)

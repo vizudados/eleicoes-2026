@@ -1,0 +1,7 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Parcela dos aptos que faltou no ano, no lugar e na faixa do recorte (0–1): o número grande da manchete; na linha de um ano, de uma faixa ou de um município, o % dela.
+@oraculo: Brasil 2026 = 21,1% (paginas[6].abstencao_2026_txt); 18 a 24 anos 2026 = 23,2% (paginas[6].idade[1].pct2026)
+*/
+DIVIDE ( [T25 · abstenções], [T25 · aptos] )

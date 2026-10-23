@@ -1,0 +1,295 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "T18_Curva_Pontos",
+  "position": {
+    "x": 150,
+    "y": 640,
+    "z": 303,
+    "height": 340,
+    "width": 900,
+    "tabOrder": 115
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T18 · Curva pontos · HTML"
+                }
+              },
+              "queryRef": "_Medidas.T18 · Curva pontos · HTML",
+              "nativeQueryRef": "T18 · Curva pontos · HTML"
+            }
+          ]
+        },
+        "sampling": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Apuração histórico"
+                    }
+                  },
+                  "Property": "AtualizadoTSE"
+                }
+              },
+              "queryRef": "Apuração histórico.AtualizadoTSE",
+              "nativeQueryRef": "AtualizadoTSE"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "crossFilter": [
+        {
+          "properties": {
+            "enabled": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "useTransparency": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.htmlViewerEntry{transition:opacity .18s ease}#htmlContent:has(.htmlViewerEntry:hover) .htmlViewerEntry:not(:hover){opacity:.42}</style><style>.t18k{pointer-events:none}.t18k .al{position:absolute;top:58px;height:244px;pointer-events:auto;cursor:pointer}.t18k .gu{position:absolute;top:58px;height:244px;width:2px;background:#1C1915;opacity:0;transition:opacity .15s;pointer-events:none}.t18k .pd{position:absolute;width:12px;height:12px;border-radius:50%;box-shadow:0 0 0 2px #F1EBDF;opacity:0;transition:opacity .15s;pointer-events:none}.t18k .pd.l{background:#B8322A}.t18k .pd.f{background:#2B5797}.t18k .hr{position:absolute;top:34px;transform:translateX(-50%);font-size:13px;font-weight:700;background:#1C1915;color:#F1EBDF;padding:1px 6px;white-space:nowrap;opacity:0;pointer-events:none}.t18k:hover .gu{opacity:.35}.t18k:hover .pd{opacity:1}body:has(.t18k.unselected) .t18k:not(.unselected) .gu{opacity:1}body:has(.t18k.unselected) .t18k:not(.unselected) .pd,body:has(.t18k.unselected) .t18k:not(.unselected) .hr{opacity:1}</style>{{content}}<script>(function(){''use strict'';try{var W=window,D=document;if(W.matchMedia&&W.matchMedia(''(prefers-reduced-motion: reduce)'').matches){return;}if(W.__mvAgenda){W.__mvAgenda();return;}var M={n:{},b:{},nb:-1,t0:0},TT=!!W.__mvTT;var RX=/(\\d{1,3}(?:\\.\\d{3})+|\\d+)(?:,(\\d+))?/;var GX={uX:1,uCresceX:1,rkW:1},GY={uY:1,uCresceY:1,tcCol:1},GE={uEntra:1,uSobe:1,jAcende:1,tcIn:1,eTraco:1,eCor:1,eCorEsc:1,eEscala:1};var fmt=function(x,dec,grp){var t=Math.abs(x).toFixed(dec).split(''.''),i=t[0];if(grp){i=i.replace(/\\B(?=(\\d{3})+(?!\\d))/g,''.'');}return (x<0?''-'':'''')+(t.length>1?i+'',''+t[1]:i);};var processar=function(){var R=D.getElementById(''htmlContent'')||D.body;if(!R){return;}var agora=Date.now();if(!M.t0){M.t0=agora;}var entrada=TT||(agora-M.t0)<1500;var tw=D.createTreeWalker(R,4,null),no,cs=[];while((no=tw.nextNode())){var v=no.nodeValue;if(!v||!/\\d/.test(v)){continue;}var p=no.parentNode;if(!p||p.nodeType!==1||(p.closest&&p.closest(''.nc,script,style,title''))){continue;}var m=RX.exec(v);if(!m){continue;}var resto=v.slice(0,m.index)+v.slice(m.index+m[0].length);if(/\\d/.test(resto)||resto.replace(/\\s+/g,'' '').trim().length>12){continue;}if(!m[2]&&m[1].length===4&&+m[1]>=1990&&+m[1]<=2100){continue;}if(/^[ºª°]/.test(v.slice(m.index+m[0].length))){continue;}var fs=parseFloat(W.getComputedStyle(p).fontSize)||0;if(fs<20){continue;}cs.push([no,m,v]);}var A=[],novo={};for(var i=0;i<cs.length;i++){var c=cs[i],mm=c[1],v0=c[2],val=parseFloat(mm[1].replace(/\\./g,'''')+''.''+(mm[2]||''0''));var k=i+''|''+v0.slice(0,mm.index)+''#''+v0.slice(mm.index+mm[0].length);var pv=M.n[k];novo[k]=val;var de=TT?(pv===undefined?0:pv):(entrada?0:pv);if(de===undefined||de===val){continue;}A.push({t:c[0],a:v0.slice(0,mm.index),z:v0.slice(mm.index+mm[0].length),de:de,ate:val,dec:mm[2]?mm[2].length:0,grp:mm[1].indexOf(''.'')>=0,o:v0});}M.n=novo;if(A.length){for(var j=0;j<A.length;j++){var e=A[j];e.t.nodeValue=e.a+fmt(e.de,e.dec,e.grp)+e.z;}var dur=TT?650:(entrada?1000:700),ini=null;var passo=function(ts){if(ini===null){ini=ts;}var q=Math.min(1,(ts-ini)/dur),f=1-Math.pow(1-q,3);for(var j=0;j<A.length;j++){var e=A[j];e.t.nodeValue=q>=1?e.o:e.a+fmt(e.de+(e.ate-e.de)*f,e.dec,e.grp)+e.z;}if(q<1){W.requestAnimationFrame(passo);}};W.requestAnimationFrame(passo);}var els=R.getElementsByTagName(''*''),bs=[],fe=[];for(var b=0;b<els.length;b++){var el=els[b];if(!(el instanceof HTMLElement)){continue;}var an=W.getComputedStyle(el).animationName;if(!an||an===''none''){continue;}an=an.split('','')[0].trim();if(GX[an]){bs.push([el,0]);}else if(GY[an]){bs.push([el,1]);}else if(GE[an]){fe.push(el);}}var nb=bs.length,tam={},mv=[];for(var r=0;r<nb;r++){var x=bs[r][0],ax=bs[r][1],sz=ax?x.offsetHeight:x.offsetWidth,kk=r+(ax?''y'':''x'');tam[kk]=sz;if(entrada||M.nb!==nb){continue;}var ant=M.b[kk];if(ant===undefined||sz<=0){continue;}x.style.animation=''none'';if(Math.abs(ant-sz)<0.5){continue;}x.style.transition=''none'';x.style.transform=(ax?''scaleY('':''scaleX('')+Math.max(0,ant/sz).toFixed(4)+'')'';mv.push(x);}M.b=tam;M.nb=nb;if(!entrada){for(var f2=0;f2<fe.length;f2++){fe[f2].style.animation=''none'';}}if(mv.length){void R.offsetHeight;for(var g=0;g<mv.length;g++){mv[g].style.transition=''transform .7s cubic-bezier(.2,.7,.2,1)'';mv[g].style.transform='''';}}};var pend=0;var agenda=function(){if(pend){return;}pend=1;W.requestAnimationFrame(function(){pend=0;try{processar();}catch(x){}});};W.__mvAgenda=agenda;var entra=function(x){return x.nodeType===1&&(x.classList.contains(''htmlViewerEntry'')||(x.querySelector&&x.querySelector(''.htmlViewerEntry'')!==null));};if(W.MutationObserver){new W.MutationObserver(function(rs){for(var i=0;i<rs.length;i++){var ad=rs[i].addedNodes;for(var j=0;j<ad.length;j++){if(entra(ad[j])){agenda();return;}}}}).observe(D.body,{childList:true,subtree:true});}agenda();}catch(x){}})();</script>'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'T18_Curva_Pontos'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            },
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ttT18Momento'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T18 · Curva pontos · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

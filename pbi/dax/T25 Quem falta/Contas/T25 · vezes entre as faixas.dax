@@ -1,0 +1,7 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0
+@descricao: Quantas vezes a faixa que mais falta falta mais que a que menos falta.
+@oraculo: Brasil 2026 = 3,9 (49,2% ÷ 12,7%)
+*/
+DIVIDE ( [T25 · faixa que mais falta %], [T25 · faixa que menos falta %] )

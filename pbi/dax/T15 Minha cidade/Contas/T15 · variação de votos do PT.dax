@@ -1,0 +1,10 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Votos do PT na eleição escolhida menos na anterior, no município.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › votos › variacao_lula_txt = −11.920
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _ant = [T15 · votos do PT no ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _ant ), [T15 · votos do PT no ano escolhido] - _ant )

@@ -1,0 +1,18 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: O maior % que um instituto com votos válidos deu ao candidato da linha na véspera.
+*/
+VAR _lista =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@v", [T10 · instituto · valor válido]
+    )
+RETURN
+    MAXX ( FILTER ( _lista, NOT ISBLANK ( [@v] ) ), [@v] )

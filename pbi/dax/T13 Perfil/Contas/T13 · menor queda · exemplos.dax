@@ -10,6 +10,8 @@ VAR _q = [T13 · menor queda · quinto]
 RETURN
     CALCULATE (
         [T13 · exemplos],
+        REMOVEFILTERS ( 'Município' ),
+        VALUES ( 'UF'[UF] ),
         'Município'[Porte] = _p,
         'Município'[Quinto de renda] = _q
     )

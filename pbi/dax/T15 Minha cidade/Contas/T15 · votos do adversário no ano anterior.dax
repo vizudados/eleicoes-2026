@@ -1,0 +1,10 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Votos do adversário na eleição anterior à escolhida (2022 sem clique), no município.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › votos › pl22
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _a ), CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Ano'[Ano] = _a ) )

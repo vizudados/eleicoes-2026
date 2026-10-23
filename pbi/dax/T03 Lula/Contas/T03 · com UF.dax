@@ -1,6 +1,8 @@
 /*
 @pasta: T03 Lula\Contas
 @formato: 0
-@descricao: 1 quando o filtro de UF da casca está ativo (a tela mostra a UF), 0 no Brasil.
+@descricao: 1 quando o recorte é UMA UF (filtro da casca), 0 no Brasil, numa região ou sem UF.
 */
-INT ( ISCROSSFILTERED ( 'UF' ) )
+VAR _ufs = CALCULATE ( DISTINCTCOUNT ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+RETURN
+    IF ( ISCROSSFILTERED ( 'UF' ) && _ufs = 1, 1, 0 )

@@ -1,12 +1,14 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Cabeçalho da rejeição: em quantos institutos a rejeição de Flávio ficou igual ou abaixo da de Lula depois do 1º turno e como ler os quadrinhos (um por instituto, outro visual: T17 · Painéis · HTML). Só lê contas 'T17 · rejeição · …'.
+@descricao: Cabeçalho da rejeição: em quantos institutos a rejeição de Flávio ficou igual ou abaixo da de Lula depois do 1º turno e como ler os quadrinhos (um por instituto, outro visual: T17 · Painéis · HTML). Com um ponto da curva clicado, a nota diz se o instituto daquela pesquisa tem quadrinho. Só lê contas 'T17 · rejeição · …' e 'T17 · foco · …'.
 */
 -- 1 · Leituras
 VAR _n = [T17 · rejeição · institutos comparáveis]
 VAR _abaixo = [T17 · rejeição · Flávio igual ou abaixo]
 VAR _caiu = [T17 · rejeição · Flávio caiu]
+VAR _foco = [T17 · foco · instituto da pesquisa]
+VAR _temQ = [T17 · foco · pesquisa com quadrinho]
 -- 2 · Textos
 VAR _txtMan =
     "Depois do 1º turno, a rejeição de Flávio ficou igual ou abaixo da de Lula em " & _abaixo & " de " & _n
@@ -14,11 +16,19 @@ VAR _txtMan =
 VAR _txtNota =
     "Cada instituto pergunta de um jeito: compare só dentro do quadrinho. À esquerda, a última medição antes do 1º turno; "
         & "à direita, a última depois. A de Flávio caiu em " & _caiu & " deles."
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _foco, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtFoco =
+    SWITCH (
+        _temQ,
+        "Sim", "Em destaque: <b>" & _esc & "</b>, o instituto da pesquisa clicada na curva. Clique de novo no ponto para ver todos.",
+        "Não", "<b>" & _esc & "</b>, o instituto da pesquisa clicada, não tem quadrinho: não mediu a rejeição antes e depois do 1º turno com a mesma pergunta.",
+        _txtNota
+    )
 -- 4 · Marcação
 RETURN
     "<div class='tela t17r'>"
         & "<div class='sob sobe'>Rejeição: quem não votaria de jeito nenhum</div>"
         & "<div class='man sobe d2'>" & _txtMan & "</div>"
         & "<div class='nota sobe d3'><i style='background:var(--vermelho)'></i>Lula <i style='background:var(--azul);margin-left:12px'></i>Flávio · "
-        & _txtNota & "</div>"
+        & _txtFoco & "</div>"
     & "</div>"

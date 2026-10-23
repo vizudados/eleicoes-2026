@@ -1,0 +1,7 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: De quantos em quantos eleitores do recorte um faltou (1 em cada N), arredondado.
+@oraculo: Brasil 2026 = 5
+*/
+IF ( [T25 · abstenção %] > 0, ROUND ( DIVIDE ( 1, [T25 · abstenção %] ), 0 ) )

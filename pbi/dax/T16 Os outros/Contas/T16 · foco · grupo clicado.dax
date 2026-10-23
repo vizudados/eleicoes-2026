@@ -1,0 +1,12 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Grupo de eleitores escolhido no clique num grupo do diagrama (filtro cruzado em 'Transferência'[Segmento]): Cury, Renan, Caiado ou nao_votou; vazio sem clique. Lido pelo diagrama e pela lista dos apoios.
+*/
+VAR _seg =
+    IF (
+        ISFILTERED ( 'Transferência'[Segmento] ) && HASONEVALUE ( 'Transferência'[Segmento] ),
+        VALUES ( 'Transferência'[Segmento] )
+    )
+RETURN
+    IF ( _seg IN { "Cury", "Renan", "Caiado", "nao_votou" }, _seg )

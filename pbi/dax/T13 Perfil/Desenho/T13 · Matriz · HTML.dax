@@ -1,7 +1,7 @@
 /*
 @pasta: T13 Perfil\Desenho
 @formato: texto
-@descricao: Matriz porte × quinto de renda: a queda da margem de Lula em cada célula (cor mais escura, queda maior), as cidades de cada uma, os totais de linha e de coluna e, ao passar o mouse, as três maiores cidades da célula. Só lê contas 'T13 · …' com filtro de igualdade no porte e no quinto.
+@descricao: A moldura da matriz porte × quinto de renda: título e manchete, as faixas de renda, os portes com o total de cada linha, as células vazias (sem município no recorte), o total de cada coluna e a nota. As células com cidades são desenhadas por cima, uma por ponto de dado ('T13 · Células · HTML'). Só lê contas 'T13 · …'.
 @gerado: pbi/scripts/desenho_t13.py
 */
 -- 1 · Leituras
@@ -27,8 +27,6 @@ VAR _quintos =
         { 5, "mais ricas", "MAIS RICAS" }
         }
     )
-VAR _pP = [T13 · maior queda · porte]
-VAR _pQ = [T13 · maior queda · quinto]
 VAR _cres = [T13 · queda cresce quando a cidade diminui]
 VAR _pPorte = [T13 · porte com maior queda]
 VAR _qMin = [T13 · menor queda por renda]
@@ -66,45 +64,18 @@ VAR _rotLinhas =
         "",
         [o], ASC
     )
-VAR _cel =
+VAR _vazias =
     CONCATENATEX (
-        CROSSJOIN ( SELECTCOLUMNS ( _portes, "p", [o], "pn", [nome] ), SELECTCOLUMNS ( _quintos, "q", [o], "qn", [nome] ) ),
+        CROSSJOIN ( SELECTCOLUMNS ( _portes, "p", [o] ), SELECTCOLUMNS ( _quintos, "q", [o] ) ),
         VAR _p = [p]
         VAR _q = [q]
-        VAR _x = 190 + ( _q - 1 ) * 176
-        VAR _y = 166 + ( _p - 1 ) * 100
         VAR _n = CALCULATE ( [T13 · cidades], 'Município'[PorteOrdem] = _p, 'Município'[QuintoOrdem] = _q )
-        VAR _v = CALCULATE ( [T13 · variação], 'Município'[PorteOrdem] = _p, 'Município'[QuintoOrdem] = _q )
-        VAR _m26 = CALCULATE ( [T13 · margem 2026], 'Município'[PorteOrdem] = _p, 'Município'[QuintoOrdem] = _q )
-        VAR _ex = CALCULATE ( [T13 · exemplos], 'Município'[PorteOrdem] = _p, 'Município'[QuintoOrdem] = _q )
-        VAR _cls =
-            SWITCH (
-                TRUE (),
-                _n = 0 || ISBLANK ( _v ), "vazia",
-                _v >= 0, "c0",
-                _v > -0.05, "c1",
-                _v > -0.08, "c2",
-                _v > -0.11, "c3",
-                _v > -0.14, "c4",
-                "c5"
-            )
-        VAR _poucas = IF ( _n > 0 && _n < 10, " poucas", "" )
-        VAR _pior = IF ( [pn] = _pP && [qn] = _pQ, " pior", "" )
-        VAR _lado = IF ( [q] >= 4, " esq", "" ) & IF ( [p] >= 4, " cima", "" )
-        VAR _exEsc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _ex, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
         RETURN
-            "<div class='cel " & _cls & _poucas & _pior & _lado & " brota' style='left:" & _x & "px;top:" & _y
-                & "px;animation-delay:" & ( 300 + ( [p] + [q] ) * 70 ) & "ms'>"
-                & IF (
-                    _cls = "vazia",
-                    "<span class='tr'>—</span>",
-                    "<span class='num'>" & FORMAT ( _v * 100, "+0.0;−0.0;0.0" ) & "</span><span class='n'>" & FORMAT ( _n, "#,0" )
-                        & IF ( _n = 1, " cidade", " cidades" ) & "</span>"
-                        & "<div class='card'><b>" & [pn] & " × " & [qn] & "</b><span>Lula em 2026: margem de "
-                        & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " ponto" & IF ( ABS ( _m26 ) >= 0.015, "s", "" ) & "</span><span class='ex'>"
-                        & IF ( _n <= 3, "", "Maiores: " ) & _exEsc & "</span></div>"
-                )
-            & "</div>",
+            IF (
+                _n = 0,
+                "<div class='cel vazia entra' style='left:" & ( 190 + ( _q - 1 ) * 176 ) & "px;top:"
+                    & ( 166 + ( _p - 1 ) * 100 ) & "px'><span class='tr'>—</span></div>"
+            ),
         "",
         [p], ASC, [q], ASC
     )
@@ -125,10 +96,11 @@ RETURN
         & "<div class='rot entra'>QUEDA DA MARGEM DE LULA, 2022 → 2026 · EM PONTOS</div>"
         & "<div class='man sobe d1'>" & _man & "</div>"
         & "<div class='eixoP rot'>PORTE ↓</div><div class='eixoQ rot'>RENDA POR PESSOA →</div>"
-        & _cab & _rotLinhas & _cel
+        & _cab & _rotLinhas & _vazias
         & "<div class='todas entra d9'><b>todas</b><span class='num'>" & FORMAT ( _tudo * 100, "+0.0;−0.0;0.0" ) & "</span>"
             & "<i>soma dos municípios, sem o exterior</i></div>"
         & _rodape
-        & "<div class='nota pe entra d12'>Passe o mouse numa célula para ver as maiores cidades dela. — = não há "
-            & "município nessa combinação; células claras e tracejadas têm menos de 10 cidades.</div>"
+        & "<div class='nota pe entra d12'>Passe o mouse numa célula para o dossiê dela; clique para ver a célula na "
+            & "resposta, ao lado (clique de novo para voltar). — = não há município nessa combinação; células claras e "
+            & "tracejadas têm menos de 10 cidades.</div>"
     & "</div>"

@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0
+@descricao: Abstenção do lugar menos a média do recorte, em pontos percentuais.
+*/
+IF ( NOT ISBLANK ( [T25 · abstenção %] ), ( [T25 · abstenção %] - [T25 · abstenção % do recorte] ) * 100 )

@@ -1,6 +1,6 @@
 /*
 @pasta: T02 Lula · quem é\Contas
 @formato: 0
-@descricao: 1 quando o marco da linha tem foto da época redesenhada.
+@descricao: 1 quando o marco da linha tem desenho: foto da época redesenhada ou, sem foto de licença aberta, ilustração recriada.
 */
 IF ( SELECTEDVALUE ( 'Trajetória'[Foto] ) <> "", 1, 0 )

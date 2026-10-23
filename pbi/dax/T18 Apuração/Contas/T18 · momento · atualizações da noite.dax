@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0
+@descricao: Quantas atualizações do TSE o histórico guardou na noite toda (ignora o momento em contexto).
+*/
+CALCULATE ( COUNTROWS ( 'Apuração histórico' ), REMOVEFILTERS ( 'Apuração histórico' ) ) + 0

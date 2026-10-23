@@ -1,0 +1,12 @@
+/*
+@pasta: T13 Perfil\Desenho
+@formato: texto
+@descricao: Texto alternativo da camada de células da matriz.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+-- 1 · Leituras
+VAR _v = [T13 · maior queda · variação]
+-- 2 · Textos
+RETURN
+    "Células da matriz: passe o mouse para o dossiê de cada grupo de cidades e clique para vê-lo na resposta. A maior "
+        & "queda é de " & FORMAT ( _v * 100, "+0.0;−0.0;0.0" ) & " pontos."

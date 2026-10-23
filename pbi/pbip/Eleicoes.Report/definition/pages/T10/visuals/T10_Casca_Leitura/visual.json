@@ -5,7 +5,7 @@
     "x": 1180,
     "y": 124,
     "z": 4000,
-    "height": 780,
+    "height": 591,
     "width": 600,
     "tabOrder": 950
   },
@@ -91,7 +91,7 @@
             "bodyTemplate": {
               "expr": {
                 "Literal": {
-                  "Value": "'<style>.lt{background:#F1EBDF;color:#1C1915;padding:36px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.18);clip-path:polygon(0 0,calc(100% - 46px) 0,100% 46px,100% 100%,0 100%)}.lt .orelha{position:absolute;right:0;top:0;width:46px;height:46px;background:#E5DBC8;border-left:1.5px solid #CBBDA2;border-bottom:1.5px solid #CBBDA2}.lt .x{position:absolute;right:56px;top:16px;font-size:26px;line-height:1;color:var(--grafite)}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:60px}.lt .bl{margin-bottom:20px}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''lt tela''><div class=''orelha''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>As pesquisas da véspera e a urna</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>Cada linha da régua é a última pesquisa de um instituto antes do 1º turno: à esquerda do empate, ela dava Lula à frente; à direita, Flávio. A linha preta é o resultado da urna. Passe o mouse num instituto para ver todas as pesquisas dele.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>Pesquisas registradas no TSE, conferidas no relatório do instituto ou do contratante (levantamento de 22/10/2026). Resultado: TSE, votos válidos do 1º turno de 2026.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>Votos válidos contam só quem escolheu um candidato, como a urna; votos totais incluem brancos, nulos e indecisos. Por isso o erro contra a urna só é medido em quem divulgou válidos. Pesquisa é retrato do momento, não previsão.</div></div></div>{{content}}'"
+                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#F1EBDF;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>As pesquisas da véspera e a urna</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>Cada linha da régua é a última pesquisa de um instituto antes do 1º turno: à esquerda do empate, ela dava Lula à frente; à direita, Flávio. A linha preta é a urna. Passe o mouse num instituto para ver as pesquisas dele; clique nele e o quadro do erro mostra só aquele instituto contra a urna.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>Pesquisas registradas no TSE, conferidas no relatório do instituto ou do contratante (levantamento de 22/10/2026). Resultado: TSE, votos válidos do 1º turno de 2026.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>Votos válidos contam só quem escolheu um candidato, como a urna; votos totais incluem brancos, nulos e indecisos. Por isso o erro contra a urna só é medido em quem divulgou válidos. Pesquisa é retrato do momento, não previsão.</div></div></div></div>{{content}}'"
                 }
               }
             }
@@ -225,7 +225,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Como ler a tela 10 · Pesquisas'"
+                  "Value": "'Como ler a tela 11 · Pesquisas'"
                 }
               }
             }

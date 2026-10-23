@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T15",
-  "displayName": "16 Minha cidade",
+  "displayName": "17 Minha cidade",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -54,5 +54,22 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T15_Serie_Html",
+      "target": "T15_Filtro_Municipio",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T15_Serie_Html",
+      "target": "T15_Filtro_Pilula",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T15_Serie_Html",
+      "target": "T15_Serie_Titulo",
+      "type": "NoFilter"
+    }
+  ]
 }

@@ -1,0 +1,21 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Número do instituto da pesquisa da linha entre os institutos com pesquisa de 2º turno (ordem alfabética, 1 = o primeiro): a classe que liga os pontos do mesmo instituto quando um deles é clicado.
+*/
+VAR _inst = [T17 · pesquisa · instituto]
+RETURN
+    IF (
+        NOT ISBLANK ( _inst ),
+        VAR _todos =
+            CALCULATETABLE (
+                VALUES ( Pesquisa[Instituto] ),
+                REMOVEFILTERS ( Pesquisa ),
+                Pesquisa[Cenário] = "2º turno",
+                Pesquisa[Tipo] = "totais",
+                NOT ISBLANK ( Pesquisa[Lula] ),
+                NOT ISBLANK ( Pesquisa[Flavio] )
+            )
+        RETURN
+            COUNTROWS ( FILTER ( _todos, Pesquisa[Instituto] <= _inst ) )
+    )

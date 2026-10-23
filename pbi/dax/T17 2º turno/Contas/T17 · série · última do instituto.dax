@@ -1,0 +1,28 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: Sim quando a pesquisa da linha é a mais recente de 2º turno do instituto (onde o nome dele aparece quando a série está em destaque); Não nas outras; vazio fora das pesquisas de 2º turno.
+*/
+VAR _inst = [T17 · pesquisa · instituto]
+VAR _dia = [T17 · pesquisa · divulgação]
+VAR _id = SELECTEDVALUE ( Pesquisa[Id] )
+RETURN
+    IF (
+        NOT ISBLANK ( _dia ),
+        VAR _depois =
+            CALCULATE (
+                COUNTROWS ( Pesquisa ),
+                REMOVEFILTERS ( Pesquisa ),
+                Pesquisa[Cenário] = "2º turno",
+                Pesquisa[Tipo] = "totais",
+                NOT ISBLANK ( Pesquisa[Lula] ),
+                NOT ISBLANK ( Pesquisa[Flavio] ),
+                Pesquisa[Instituto] = _inst,
+                FILTER (
+                    ALL ( Pesquisa[Divulgação], Pesquisa[Id] ),
+                    Pesquisa[Divulgação] > _dia || ( Pesquisa[Divulgação] = _dia && Pesquisa[Id] > _id )
+                )
+            )
+        RETURN
+            IF ( ISBLANK ( _depois ), "Sim", "Não" )
+    )

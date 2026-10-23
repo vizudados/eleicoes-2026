@@ -1,0 +1,7 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da legenda do mapa.
+*/
+"Legenda: cada ponto é um município, o tamanho segue quantos faltaram; a cor vai do claro (abaixo da média do "
+    & "recorte) ao escuro (metade acima da média ou mais)."

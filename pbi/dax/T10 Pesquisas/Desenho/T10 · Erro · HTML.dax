@@ -1,82 +1,209 @@
 /*
 @pasta: T10 Pesquisas\Desenho
 @formato: texto
-@descricao: Onde foi o erro: a média de Lula e de Flávio nas últimas pesquisas com votos válidos contra a urna, numa régua de 40% a 50% (círculo vazio = pesquisas, cheio = urna; a seta de Flávio se desenha), o erro médio da diferença e a explicação de válidos × totais. Só lê as contas 'T10 · …'.
+@descricao: Onde foi o erro. Sem clique: a média de Lula e de Flávio nas últimas pesquisas com votos válidos contra a urna, numa régua de 38% a 50% (círculo vazio = pesquisas, cheio = urna; a seta se desenha quando erraram), o erro médio da diferença e a explicação de válidos × totais. Com um instituto clicado na régua (filtro cruzado de Pesquisa[Instituto]): a última pesquisa dele contra a urna — nos válidos, Lula e Flávio um a um; nos totais, só a diferença entre os dois, na régua de −8 a +4. Só lê as contas 'T10 · …'.
 */
 -- 1 · Leituras
-VAR _mL = [T10 · válidos · média Lula]
-VAR _mF = [T10 · válidos · média Flávio]
+VAR _inst = [T10 · escolha · instituto]
+VAR _base = [T10 · instituto · base]
 VAR _uL = [T10 · urna · Lula]
 VAR _uF = [T10 · urna · Flávio]
-VAR _eL = [T10 · válidos · erro Lula]
-VAR _eF = [T10 · válidos · erro Flávio]
-VAR _eM = [T10 · válidos · erro médio]
+VAR _uDif = [T10 · urna · diferença]
 VAR _nV = [T10 · institutos · com válidos]
+VAR _data = [T10 · instituto · última divulgação]
+VAR _iDif = [T10 · instituto · diferença]
+VAR _iDist = [T10 · instituto · distância da urna]
+VAR _modo = IF ( ISBLANK ( _inst ), "media", IF ( _base = "validos", "valido", "total" ) )
+VAR _pL = IF ( _modo = "media", [T10 · válidos · média Lula], [T10 · instituto · Lula] )
+VAR _pF = IF ( _modo = "media", [T10 · válidos · média Flávio], [T10 · instituto · Flávio] )
+VAR _eL = IF ( _modo = "media", [T10 · válidos · erro Lula], [T10 · instituto · erro Lula] )
+VAR _eF = IF ( _modo = "media", [T10 · válidos · erro Flávio], [T10 · instituto · erro Flávio] )
+VAR _eM = IF ( _modo = "media", [T10 · válidos · erro médio], [T10 · instituto · erro vs urna] )
 -- 2 · Textos
-VAR _txtEF = IF ( _eF >= 0, "+", "−" ) & FORMAT ( ABS ( _eF ), "0.0" )
-VAR _txtEM =
-    FORMAT ( ABS ( _eM ), "0.0" ) & IF ( ROUND ( ABS ( _eM ), 1 ) < 2, " ponto", " pontos" ) & " a favor de "
-        & IF ( _eM < 0, "Lula", "Flávio" )
+VAR _escInst = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _plural = _modo = "media"
+VAR _quemPesq = IF ( _plural, "pesquisas", "pesquisa" )
 VAR _okL = ABS ( _eL ) < 0.5
 VAR _okF = ABS ( _eF ) < 0.5
+VAR _acertou = IF ( _plural, "acertaram", "acertou" )
+VAR _errou = IF ( _plural, "erraram", "errou" )
+VAR _sujeito = IF ( _plural, "As pesquisas", _escInst )
+VAR _txtSob =
+    "Onde foi o erro · " & IF ( _plural, "média de " & _nV & " institutos", _escInst ) & " × urna"
 VAR _txtMan =
     SWITCH (
         TRUE (),
-        _okL && NOT _okF, "As pesquisas acertaram o número de Lula e erraram o de Flávio",
-        _okF && NOT _okL, "As pesquisas acertaram o número de Flávio e erraram o de Lula",
-        _okL && _okF, "As pesquisas acertaram os dois números",
-        "As pesquisas erraram os dois números"
+        _modo = "total", _escInst & " divulgou votos totais: a comparação justa é a diferença",
+        _okL && NOT _okF, _sujeito & " " & _acertou & " o número de Lula e " & _errou & " o de Flávio",
+        _okF && NOT _okL, _sujeito & " " & _acertou & " o número de Flávio e " & _errou & " o de Lula",
+        _okL && _okF, _sujeito & " " & _acertou & " os dois números",
+        _sujeito & " " & _errou & " os dois números"
     )
--- 3 · Geometria (régua de 40% a 50% em x 90–520; Lula em y 34, Flávio em y 132)
-VAR _xmL = 90 + ( _mL - 40 ) * 43 -- geometria
-VAR _xuL = 90 + ( _uL - 40 ) * 43 -- geometria
-VAR _xmF = 90 + ( _mF - 40 ) * 43 -- geometria
-VAR _xuF = 90 + ( _uF - 40 ) * 43 -- geometria
-VAR _sentido = IF ( _xuF >= _xmF, 1, -1 ) -- geometria
+VAR _pts = IF ( ROUND ( ABS ( _eM ), 1 ) < 2, " ponto", " pontos" )
+VAR _txtEM =
+    IF (
+        ABS ( _eM ) < 0.5,
+        "ficou a " & FORMAT ( ABS ( _eM ), "0.0" ) & " ponto do resultado",
+        FORMAT ( ABS ( _eM ), "0.0" ) & _pts & " a favor de " & IF ( _eM < 0, "Lula", "Flávio" )
+    )
+VAR _quemDif = IF ( _iDif > 0, "Flávio", IF ( _iDif < 0, "Lula", "" ) )
+VAR _txtLead =
+    IF ( _quemDif = "", "Dava empate", "Dava " & _quemDif & " " & FORMAT ( ABS ( _iDif ), "0.0" ) & " à frente" )
+VAR _quemUrna = IF ( _uDif >= 0, "Flávio", "Lula" )
+VAR _txt =
+    SWITCH (
+        _modo,
+        "media", "Erro médio na diferença: " & _txtEM & ".",
+        "valido", "Na diferença entre os dois, " & IF ( ABS ( _eM ) < 0.5, _txtEM, "errou " & _txtEM ) & ".",
+        _txtLead & "; a urna deu " & _quemUrna & " " & FORMAT ( ABS ( _uDif ), "0.0" ) & "."
+    )
+VAR _expl =
+    SWITCH (
+        _modo,
+        "media", "Só entram os institutos que divulgaram votos válidos: sem brancos, nulos e indecisos, como a urna conta.",
+        "valido", "Última pesquisa do instituto antes da urna, divulgada em " & FORMAT ( _data, "dd/MM" )
+            & ", em votos válidos. Clique de novo no nome para voltar à média.",
+        "Votos totais contam brancos, nulos e indecisos: só a diferença se compara com a urna. Clique de novo no "
+            & "nome para voltar à média."
+    )
+-- 3 · Geometria (régua de 38% a 50% em x 90–520, 35,83 px por ponto; Lula em y 34, Flávio em y 132; na base de
+--     votos totais, a régua da diferença de −8 a +4 com a mesma escala, linha em y 84; o svg começa em y 96)
+VAR _k = 430 / 12 -- geometria
 VAR _f = "0.0"
-VAR _xs0 = FORMAT ( _xmF + 13 * _sentido, _f, "en-US" )
-VAR _xs1 = FORMAT ( _xuF - 14 * _sentido, _f, "en-US" )
-VAR _xp = FORMAT ( _xuF - 22 * _sentido, _f, "en-US" )
+VAR _xpL = 90 + ( _pL - 38 ) * _k -- geometria
+VAR _xuL = 90 + ( _uL - 38 ) * _k -- geometria
+VAR _xpF = 90 + ( _pF - 38 ) * _k -- geometria
+VAR _xuF = 90 + ( _uF - 38 ) * _k -- geometria
+VAR _xd = 90 + ( _iDif + 8 ) * _k -- geometria
+VAR _xu = 90 + ( _uDif + 8 ) * _k -- geometria
 VAR _ticks =
     CONCATENATEX (
         { 40, 45, 50 },
-        "<text x='" & FORMAT ( 90 + ( [Value] - 40 ) * 43, _f, "en-US" ) & "' y='188' class='ex' text-anchor='middle'>"
+        "<text x='" & FORMAT ( 90 + ( [Value] - 38 ) * _k, _f, "en-US" ) & "' y='188' class='ex' text-anchor='middle'>"
             & [Value] & "%</text>",
         ""
     )
+-- uma linha da régua de válidos: rótulo, trilho, urna (cheio), pesquisa (vazio), seta e rótulos dos números
+VAR _linhaL =
+    VAR _xa = _xpL
+    VAR _xb = _xuL
+    VAR _s = IF ( _xb >= _xa, 1, -1 )
+    VAR _perto = ABS ( _xb - _xa ) < 125
+    RETURN
+        "<circle cx='" & FORMAT ( _xb, _f, "en-US" ) & "' cy='34' r='10' style='fill:var(--vermelho)' class='brota d6'/>"
+            & "<circle cx='" & FORMAT ( _xa, _f, "en-US" ) & "' cy='34' r='" & IF ( _okL, "16", "10" )
+            & "' style='fill:" & IF ( _okL, "none", "var(--papel)" ) & ";stroke:var(--vermelho);stroke-width:2.6' class='brota d4'/>"
+            & IF (
+                NOT _okL,
+                "<path d='M" & FORMAT ( _xa + 13 * _s, _f, "en-US" ) & " 34 L" & FORMAT ( _xb - 14 * _s, _f, "en-US" )
+                    & " 34 M" & FORMAT ( _xb - 22 * _s, _f, "en-US" ) & " 26 L" & FORMAT ( _xb - 14 * _s, _f, "en-US" )
+                    & " 34 L" & FORMAT ( _xb - 22 * _s, _f, "en-US" ) & " 42' pathLength='1' class='seta traco' "
+                    & "style='stroke:var(--vermelho);animation-delay:1.4s' filter='url(#rbu10)'/>"
+            )
+            & IF (
+                _okL || _perto,
+                "<text x='" & FORMAT ( ( _xa + _xb ) / 2, _f, "en-US" ) & "' y='68' class='vl' text-anchor='middle'>"
+                    & IF (
+                        FORMAT ( _pL, "0.0" ) = FORMAT ( _uL, "0.0" ),
+                        _quemPesq & " e urna, <tspan font-weight='700'>" & FORMAT ( _pL, "0.0" ) & "%</tspan>",
+                        _quemPesq & " <tspan font-weight='700'>" & FORMAT ( _pL, "0.0" ) & "%</tspan> · urna <tspan font-weight='700'>"
+                            & FORMAT ( _uL, "0.0" ) & "%</tspan>"
+                    ) & "</text>",
+                "<text x='" & FORMAT ( _xa, _f, "en-US" ) & "' y='68' class='vl' text-anchor='middle'>" & _quemPesq
+                    & " <tspan font-weight='700'>" & FORMAT ( _pL, "0.0" ) & "%</tspan></text>"
+                    & "<text x='" & FORMAT ( _xb, _f, "en-US" ) & "' y='68' class='vl' text-anchor='middle'>urna <tspan font-weight='700'>"
+                    & FORMAT ( _uL, "0.0" ) & "%</tspan></text>"
+            )
+VAR _linhaF =
+    VAR _xa = _xpF
+    VAR _xb = _xuF
+    VAR _s = IF ( _xb >= _xa, 1, -1 )
+    VAR _perto = ABS ( _xb - _xa ) < 125
+    RETURN
+        "<circle cx='" & FORMAT ( _xb, _f, "en-US" ) & "' cy='132' r='10' style='fill:var(--azul)' class='brota d10'/>"
+            & "<circle cx='" & FORMAT ( _xa, _f, "en-US" ) & "' cy='132' r='" & IF ( _okF, "16", "10" )
+            & "' style='fill:" & IF ( _okF, "none", "var(--papel)" ) & ";stroke:var(--azul);stroke-width:2.6' class='brota d4'/>"
+            & IF (
+                NOT _okF,
+                "<path d='M" & FORMAT ( _xa + 13 * _s, _f, "en-US" ) & " 132 L" & FORMAT ( _xb - 14 * _s, _f, "en-US" )
+                    & " 132 M" & FORMAT ( _xb - 22 * _s, _f, "en-US" ) & " 124 L" & FORMAT ( _xb - 14 * _s, _f, "en-US" )
+                    & " 132 L" & FORMAT ( _xb - 22 * _s, _f, "en-US" ) & " 140' pathLength='1' class='seta traco' "
+                    & "style='animation-delay:1.4s' filter='url(#rbu10)'/>"
+            )
+            & IF (
+                _okF || _perto,
+                "<text x='" & FORMAT ( ( _xa + _xb ) / 2, _f, "en-US" ) & "' y='166' class='vl' text-anchor='middle'>"
+                    & IF (
+                        FORMAT ( _pF, "0.0" ) = FORMAT ( _uF, "0.0" ),
+                        _quemPesq & " e urna, <tspan font-weight='700'>" & FORMAT ( _pF, "0.0" ) & "%</tspan>",
+                        _quemPesq & " <tspan font-weight='700'>" & FORMAT ( _pF, "0.0" ) & "%</tspan> · urna <tspan font-weight='700'>"
+                            & FORMAT ( _uF, "0.0" ) & "%</tspan>"
+                    ) & "</text>",
+                "<text x='" & FORMAT ( _xa, _f, "en-US" ) & "' y='166' class='vl' text-anchor='middle'>" & _quemPesq
+                    & " <tspan font-weight='700'>" & FORMAT ( _pF, "0.0" ) & "%</tspan></text>"
+                    & "<text x='" & FORMAT ( _xb, _f, "en-US" ) & "' y='166' class='vl' text-anchor='middle'>urna <tspan font-weight='700'>"
+                    & FORMAT ( _uF, "0.0" ) & "%</tspan></text>"
+            )
+-- a nota à mão de cada linha fica à direita do marcador mais à direita (nunca por cima de número)
+VAR _xnL = MAX ( _xpL, _xuL ) + IF ( _okL, 30, 24 ) -- geometria
+VAR _xnF = MAX ( _xpF, _xuF ) + IF ( _okF, 30, 24 ) -- geometria
+VAR _notaL =
+    "<div class='" & IF ( _okL, "ok", "mao" ) & " lula-esc entra d12' style='left:" & FORMAT ( _xnL, _f, "en-US" )
+        & "px;top:" & IF ( _okL, "108", "106" ) & "px'>"
+        & IF ( _okL, _acertou, IF ( _eL >= 0, "+", "−" ) & FORMAT ( ABS ( _eL ), "0.0" ) ) & "</div>"
+VAR _notaF =
+    "<div class='" & IF ( _okF, "ok", "mao" ) & " flavio-esc entra d12' style='left:" & FORMAT ( _xnF, _f, "en-US" )
+        & "px;top:" & IF ( _okF, "206", "204" ) & "px'>"
+        & IF ( _okF, _acertou, IF ( _eF >= 0, "+", "−" ) & FORMAT ( ABS ( _eF ), "0.0" ) ) & "</div>"
+-- régua da diferença (votos totais)
+VAR _sd = IF ( _xu >= _xd, 1, -1 )
+VAR _ticksDif =
+    CONCATENATEX (
+        { -8, -4, 0, 4 },
+        "<line x1='" & FORMAT ( 90 + ( [Value] + 8 ) * _k, _f, "en-US" ) & "' x2='" & FORMAT ( 90 + ( [Value] + 8 ) * _k, _f, "en-US" )
+            & "' y1='74' y2='94' class='trilho'/><text x='" & FORMAT ( 90 + ( [Value] + 8 ) * _k, _f, "en-US" )
+            & "' y='114' class='ex' text-anchor='middle'" & IF ( [Value] = 0, " font-weight='700'", "" ) & ">"
+            & IF ( [Value] = 0, "empate", ABS ( [Value] ) ) & "</text>",
+        ""
+    )
+VAR _rDif =
+    "<text x='0' y='90' class='nm'>Diferença</text>"
+        & "<line x1='90' x2='520' y1='84' y2='84' class='trilho'/>"
+        & _ticksDif
+        & "<rect x='" & FORMAT ( _xd - 9, _f, "en-US" ) & "' y='75' width='18' height='18' style='fill:var(--papel);stroke:"
+            & IF ( _iDif < 0, "var(--vermelho)", "var(--azul)" ) & ";stroke-width:2.6' class='brota d4'/>"
+        & "<path d='M" & FORMAT ( _xd + 14 * _sd, _f, "en-US" ) & " 84 L" & FORMAT ( _xu - 14 * _sd, _f, "en-US" ) & " 84 M"
+            & FORMAT ( _xu - 22 * _sd, _f, "en-US" ) & " 76 L" & FORMAT ( _xu - 14 * _sd, _f, "en-US" ) & " 84 L"
+            & FORMAT ( _xu - 22 * _sd, _f, "en-US" ) & " 92' pathLength='1' class='seta traco' style='stroke:var(--tinta);animation-delay:1.4s' "
+            & "filter='url(#rbu10)'/>"
+        & "<circle cx='" & FORMAT ( _xu, _f, "en-US" ) & "' cy='84' r='10' style='fill:var(--tinta)' class='brota d10'/>"
+        & "<text x='" & FORMAT ( _xd, _f, "en-US" ) & "' y='150' class='vl' text-anchor='middle'>pesquisa <tspan font-weight='700'>"
+            & IF ( _quemDif = "", "empate", _quemDif & " +" & FORMAT ( ABS ( _iDif ), "0.0" ) ) & "</tspan></text>"
+        & "<text x='" & FORMAT ( _xu, _f, "en-US" ) & "' y='" & IF ( ABS ( _xu - _xd ) < 150, "174", "150" )
+            & "' class='vl' text-anchor='middle'>urna <tspan font-weight='700'>" & _quemUrna & " +" & FORMAT ( ABS ( _uDif ), "0.0" )
+            & "</tspan></text>"
+VAR _notaDif =
+    "<div class='mao entra d12' style='left:" & FORMAT ( ( _xd + _xu ) / 2 - 40, _f, "en-US" ) & "px;top:130px'>"
+        & FORMAT ( _iDist, "0.0" ) & IF ( ROUND ( _iDist, 1 ) < 2, " ponto", " pontos" ) & "</div>"
 -- 4 · Marcação
 VAR _svg =
     "<svg width='560' height='196' viewBox='0 0 560 196'>"
-        & "<text x='0' y='40' class='nm l'>Lula</text>"
-        & "<text x='0' y='138' class='nm f'>Flávio</text>"
-        & "<line x1='90' x2='520' y1='34' y2='34' class='trilho'/>"
-        & "<line x1='90' x2='520' y1='132' y2='132' class='trilho'/>"
-        & _ticks
-        & "<circle cx='" & FORMAT ( _xuL, _f, "en-US" ) & "' cy='34' r='10' style='fill:var(--vermelho)' class='brota d6'/>"
-        & "<circle cx='" & FORMAT ( _xmL, _f, "en-US" ) & "' cy='34' r='16' style='fill:none;stroke:var(--vermelho);stroke-width:2.6' class='brota d4'/>"
-        & "<text x='" & FORMAT ( _xmL, _f, "en-US" ) & "' y='68' class='vl' text-anchor='middle'><tspan>pesquisas e urna, </tspan><tspan font-weight='700'>"
-            & FORMAT ( _mL, "0.0" ) & "%</tspan></text>"
-        & "<circle cx='" & FORMAT ( _xmF, _f, "en-US" ) & "' cy='132' r='10' style='fill:var(--papel);stroke:var(--azul);stroke-width:2.6' class='brota d4'/>"
-        & "<path d='M" & _xs0 & " 132 L" & _xs1 & " 132 M" & _xp & " 124 L" & _xs1 & " 132 L" & _xp & " 140' pathLength='1' class='seta traco' filter='url(#rbu10)' style='animation-delay:1.4s'/>"
-        & "<circle cx='" & FORMAT ( _xuF, _f, "en-US" ) & "' cy='132' r='10' style='fill:var(--azul)' class='brota d10'/>"
-        & "<text x='" & FORMAT ( _xmF, _f, "en-US" ) & "' y='164' class='vl' text-anchor='middle'>pesquisas <tspan font-weight='700'>"
-            & FORMAT ( _mF, "0.0" ) & "%</tspan></text>"
-        & "<text x='" & FORMAT ( _xuF, _f, "en-US" ) & "' y='164' class='vl' text-anchor='middle'>urna <tspan font-weight='700'>"
-            & FORMAT ( _uF, "0.0" ) & "%</tspan></text>"
+        & IF (
+            _modo = "total",
+            _rDif,
+            "<text x='0' y='40' class='nm l'>Lula</text>"
+                & "<text x='0' y='138' class='nm f'>Flávio</text>"
+                & "<line x1='90' x2='520' y1='34' y2='34' class='trilho'/>"
+                & "<line x1='90' x2='520' y1='132' y2='132' class='trilho'/>"
+                & _ticks & _linhaL & _linhaF
+        )
     & "</svg>"
-VAR _notaF =
-    "<div class='mao flavio-esc entra d12' style='left:" & FORMAT ( ( _xmF + _xuF ) / 2 - 26, _f, "en-US" ) & "px;top:186px'>"
-        & _txtEF & "</div>"
-VAR _notaL =
-    IF (
-        _okL,
-        "<div class='ok entra d10' style='left:" & FORMAT ( _xuL + 26, _f, "en-US" ) & "px;top:100px'>acertaram</div>"
-    )
 RETURN
     "<div class='tela t10e'>"
-        & "<div class='sob sobe'>Onde foi o erro · média de " & _nV & " institutos × urna</div>"
+        & "<div class='sob sobe'>" & _txtSob & "</div>"
         & "<div class='man sobe d2'>" & _txtMan & "</div>"
-        & _svg & _notaL & _notaF
-        & "<div class='txt sobe d8' style='top:302px'>Erro médio na diferença: " & _txtEM & ".</div>"
-        & "<div class='expl sobe d9' style='top:340px'>Só entram os institutos que divulgaram votos válidos: sem brancos, nulos e indecisos, como a urna conta.</div>"
+        & _svg
+        & IF ( _modo = "total", _notaDif, _notaL & _notaF )
+        & "<div class='txt sobe d8' style='top:302px'>" & _txt & "</div>"
+        & "<div class='expl sobe d9' style='top:340px'>" & _expl & "</div>"
     & "</div>"

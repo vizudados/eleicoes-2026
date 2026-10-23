@@ -1,0 +1,6 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: O instituto da pesquisa clicada no gráfico; vazio sem clique.
+*/
+IF ( NOT ISBLANK ( [T07 · escolha · pesquisa] ), [T07 · pesquisa · instituto] )

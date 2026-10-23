@@ -14,6 +14,11 @@ sinal, não medida. Os apoios declarados existem, mas só 17,2% dizem seguir o c
   T16_Apoios_Itens   uma linha ou etiqueta por pessoa (granularidade Apoio[Quem]): para quem foi o apoio → dossiê
                      ttT16Apoio (a frase, a data, a condição)
   T16_Seguir_Html    17,2%: só uma parte diz que segue o candidato (Vox Brasil)
+
+Filtro cruzado (23/10/2026): clique num grupo do diagrama → as faixas dos outros esmaecem, a manchete passa a ser a do
+grupo (para onde pende e o que o candidato dele declarou) e, na lista dos apoios, a linha do candidato fica em destaque;
+clique em Cury, Renan ou Caiado na lista → o diagrama destaca os eleitores dele, com a mesma manchete. Os governadores e
+o 17,2% não mudam (contas sobre a tabela toda). Nada clicado: a tela como antes.
 """
 from __future__ import annotations
 
@@ -62,6 +67,8 @@ def corpo_fluxo() -> str:
         f".t16f .ds .ft.f{{background-image:url({cp.img('arte/limpos/retrato-flavio-tinta.png', 124)})}}"
         f".t16f .ds .ft.b{{height:54px;background-image:url({cp.icone('caixa-de-votos', 124)})}}"
         f".t16f .mao{{position:absolute;font-size:27px;color:{C['grafite']};transform:rotate(-4deg);white-space:nowrap}}"
+        # grupo em destaque (clique num grupo ou num candidato da lista dos apoios): o resto esmaece
+        ".t16f .fora{opacity:.16;transition:opacity .25s}.t16f .gr.fora{opacity:.3}"
         ".t16f .seta{position:absolute;width:70px;height:52px;background:url("
         f"{cp.img('arte/limpos/rabiscos/seta-curva-esquerda-tinta.png', 140)}) center/contain no-repeat;opacity:.85}}"
     )
@@ -73,6 +80,9 @@ CSS_GRUPOS = (
     ".t16g .alvo{position:absolute;left:-8px;width:300px;pointer-events:auto;cursor:help;border-radius:6px;"
     "transition:background .15s}"
     ".t16g .alvo:hover{background:rgba(28,25,21,.05);box-shadow:inset 3px 0 0 var(--tinta)}"
+    # o grupo clicado fica marcado (o HTML Content marca os outros alvos com .unselected)
+    "body:has(.t16g.unselected) .t16g:not(.unselected) .alvo{background:rgba(28,25,21,.05);"
+    "box-shadow:inset 3px 0 0 var(--tinta)}"
 )
 
 CSS_APOIOS = (
@@ -107,6 +117,9 @@ CSS_ITENS = (
     "font-size:15px;font-weight:600}"
     ".t16i .ch .bd{font-size:13px;padding:3px 8px}"
     ".t16i .ln:hover,.t16i .ch:hover{background:rgba(28,25,21,.05)}"
+    # clique num grupo do diagrama: a linha do candidato do grupo em destaque, as outras esmaecem
+    ".t16i{transition:opacity .25s}.t16i.fora{opacity:.3}"
+    ".t16i.fx .ln{background:rgba(229,219,200,.6)}"
 )
 
 CSS_SEGUIR = (
@@ -152,6 +165,7 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T16_Fluxo_Grupos", *FLUXO, "T16 · Grupos · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_GRUPOS}</style>{{{{content}}}}",
                                   granularidade=("Transferência", "Segmento"), tooltip_pagina="ttT16Segmento",
+                                  filtro_cruzado=True, transparencia_nao_selecionados=False,
                                   alt=lib.medida("T16 · Grupos · ALT"), z=Z + 1, tab=110)),
         Visual(P, lib.visual_html("T16_Apoios_Html", *APOIOS, "T16 · Apoios · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_APOIOS}</style>{{{{content}}}}",
@@ -159,6 +173,7 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T16_Apoios_Itens", *APOIOS, "T16 · Itens · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_ITENS}</style>{{{{content}}}}",
                                   granularidade=("Apoio", "Quem"), tooltip_pagina="ttT16Apoio",
+                                  filtro_cruzado=True, transparencia_nao_selecionados=True,
                                   alt=lib.medida("T16 · Itens · ALT"), z=Z + 3, tab=130)),
         Visual(P, lib.visual_html("T16_Seguir_Html", *SEGUIR, "T16 · Seguir · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_SEGUIR}</style><div class='ic16 entra'></div>{{{{content}}}}",

@@ -1,0 +1,10 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0
+@descricao: 1 se a célula do contexto é a de maior queda do recorte; 0 se não.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _p = SELECTEDVALUE ( 'Município'[Porte] )
+VAR _q = SELECTEDVALUE ( 'Município'[Quinto de renda] )
+RETURN
+    IF ( NOT ISBLANK ( _p ) && _p = [T13 · maior queda · porte] && _q = [T13 · maior queda · quinto], 1, 0 )

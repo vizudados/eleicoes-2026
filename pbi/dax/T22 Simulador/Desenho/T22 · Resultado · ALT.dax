@@ -8,6 +8,11 @@ VAR _lula = [T22 · cenário · Lula %]
 VAR _flavio = [T22 · cenário · Flávio %]
 VAR _ufL = [T22 · cenário · UFs com Lula à frente]
 VAR _ufF = [T22 · cenário · UFs com Flávio à frente]
+VAR _uf = [T22 · UF escolhida]
 RETURN
-    "2º turno simulado: Lula " & FORMAT ( _lula, "0.0%" ) & ", Flávio " & FORMAT ( _flavio, "0.0%" ) & ". Lula à frente "
-        & "em " & _ufL & IF ( _ufL = 1, " UF", " UFs" ) & ", Flávio em " & _ufF & IF ( _ufF = 1, " UF.", " UFs." )
+    IF (
+        NOT ISBLANK ( _uf ),
+        "2º turno simulado em " & _uf & ": Lula " & FORMAT ( _lula, "0.0%" ) & ", Flávio " & FORMAT ( _flavio, "0.0%" ) & ".",
+        "2º turno simulado: Lula " & FORMAT ( _lula, "0.0%" ) & ", Flávio " & FORMAT ( _flavio, "0.0%" ) & ". Lula à frente "
+            & "em " & _ufL & IF ( _ufL = 1, " UF", " UFs" ) & ", Flávio em " & _ufF & IF ( _ufF = 1, " UF.", " UFs." )
+    )

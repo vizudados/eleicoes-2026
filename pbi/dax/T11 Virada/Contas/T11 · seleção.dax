@@ -1,0 +1,7 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Quantos municípios estão selecionados no mapa (clique num ponto ou área arrastada) ou na lista; vazio sem seleção. O filtro cruzado chega como filtro direto nas colunas do Município (o de UF da casca, não).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+IF ( ISFILTERED ( 'Município' ), COUNTROWS ( VALUES ( 'Município'[CodIBGE] ) ) )

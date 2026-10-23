@@ -1,13 +1,15 @@
 /*
 @pasta: T24 Quem vota\Desenho
 @formato: texto
-@descricao: Cartão das pessoas: a intenção de voto de Lula e Flávio em cada faixa da lente na pesquisa (instituto, campo e registro); no IDH, por que não há pesquisa. A nota do voto secreto é fixa (corpo do visual).
+@descricao: Cartão das pessoas: em cada faixa da lente, a vantagem na pesquisa (barra que sai do centro: à direita, Lula à frente; à esquerda, Flávio), os dois % e o tamanho do grupo; a marca tracejada é a vantagem entre todos os eleitores, e a nota marca a faixa em que a vantagem troca de lado. No IDH, por que não há pesquisa e as pontas da régua. A nota do voto secreto é fixa (corpo do visual).
 @gerado: pbi/scripts/desenho_t24.py
 */
 -- 1 · Leituras
 VAR _l = [T24 · lente]
 VAR _i = [T24 · instituto]
 VAR _campo = [T24 · pesquisa data]
+VAR _lt = [T24 · pesquisa Lula % total]
+VAR _ft = [T24 · pesquisa Flávio % total]
 VAR _cats =
     CALCULATETABLE (
         SUMMARIZE ( 'Perfil pesquisa', 'Perfil pesquisa'[Categoria], 'Perfil pesquisa'[CategoriaOrdem] ),
@@ -15,34 +17,67 @@ VAR _cats =
         'Perfil pesquisa'[Instituto] = _i
     )
 VAR _t =
-    ADDCOLUMNS ( _cats, "@l", [T24 · pesquisa Lula %], "@f", [T24 · pesquisa Flávio %] )
--- 2 · Linhas (barra de 0 a 70%, 300 px)
+    ADDCOLUMNS (
+        _cats,
+        "@l", [T24 · pesquisa Lula %],
+        "@f", [T24 · pesquisa Flávio %],
+        "@s", [T24 · pesquisa fatia]
+    )
+VAR _t2 =
+    ADDCOLUMNS (
+        _t,
+        "@v", ( [@l] - [@f] ) * 100,
+        "@vAnt",
+            VAR _o = 'Perfil pesquisa'[CategoriaOrdem]
+            RETURN MAXX ( FILTER ( _t, 'Perfil pesquisa'[CategoriaOrdem] = _o - 1 ), ( [@l] - [@f] ) * 100 )
+    )
+-- 2 · Geometria: o centro da régua em 195 px da coluna do gráfico; 40 pontos de vantagem = 160 px
+VAR _ref = ( _lt - _ft ) * 100
+VAR _xRef = 195 + MAX ( -40, MIN ( 40, _ref ) ) / 40 * 160
 VAR _linhas =
     CONCATENATEX (
-        _t,
-        "<div class='lin sobe d" & ( 'Perfil pesquisa'[CategoriaOrdem] + 3 ) & "'><div class='cat'>"
-            & 'Perfil pesquisa'[Categoria] & "</div>"
-            & "<div class='bs'><div class='b'><i class='bl barra-x' style='width:"
-            & FORMAT ( MIN ( [@l], 0.7 ) / 0.7 * 300, "0.0", "en-US" ) & "px'></i><span class='lula-esc'>"
-            & FORMAT ( [@l] * 100, "0" ) & "%</span></div>"
-            & "<div class='b'><i class='bf barra-x' style='width:" & FORMAT ( MIN ( [@f], 0.7 ) / 0.7 * 300, "0.0", "en-US" )
-            & "px'></i><span class='flavio-esc'>" & FORMAT ( [@f] * 100, "0" ) & "%</span></div></div></div>",
+        _t2,
+        VAR _v = [@v]
+        VAR _w = MIN ( ABS ( _v ), 40 ) / 40 * 160
+        VAR _x = IF ( _v >= 0, 195, 195 - _w )
+        VAR _troca = NOT ISBLANK ( [@vAnt] ) && SIGN ( [@vAnt] ) <> SIGN ( _v ) && _v <> 0
+        RETURN
+            "<div class='lin sobe d" & ( 'Perfil pesquisa'[CategoriaOrdem] + 3 ) & "'><div class='cat'><b>"
+                & 'Perfil pesquisa'[Categoria] & "</b>"
+                & IF ( NOT ISBLANK ( [@s] ), "<i>" & FORMAT ( [@s], "0%" ) & " dos entrevistados</i>" )
+                & "</div><div class='gr'><i class='ref' style='left:" & FORMAT ( _xRef, "0.0", "en-US" ) & "px'></i>"
+                & "<i class='ct'></i><i class='vb " & IF ( _v >= 0, "bl", "bf" ) & " " & IF ( _v >= 0, "barra-x", "barra-x-dir" )
+                & "' style='left:" & FORMAT ( _x, "0.0", "en-US" ) & "px;width:" & FORMAT ( _w, "0.0", "en-US" ) & "px'></i>"
+                & "<span class='vt " & IF ( _v >= 0, "lula-esc", "flavio-esc" ) & "' style='"
+                & IF ( _v >= 0, "left:" & FORMAT ( 195 + _w + 8, "0.0", "en-US" ) & "px",
+                    "right:" & FORMAT ( 390 - ( 195 - _w ) + 8, "0.0", "en-US" ) & "px" ) & "'>"
+                & IF ( _v >= 0, "Lula +", "Flávio +" ) & FORMAT ( ABS ( _v ), "0" ) & "</span>"
+                & "<span class='pp'><span class='lula-esc'>" & FORMAT ( [@l] * 100, "0" ) & "%</span> × "
+                & "<span class='flavio-esc'>" & FORMAT ( [@f] * 100, "0" ) & "%</span></span>"
+                & IF ( _troca, "<span class='tr mao'>troca de lado</span>" )
+                & "</div></div>",
         "", 'Perfil pesquisa'[CategoriaOrdem], ASC
     )
-VAR _lt = [T24 · pesquisa Lula % total]
-VAR _ft = [T24 · pesquisa Flávio % total]
 VAR _total =
-    "<div class='lin tot sobe d9'><div class='cat'>todos os eleitores</div><div class='bs'><div class='b'><i class='bl' "
-        & "style='width:" & FORMAT ( MIN ( _lt, 0.7 ) / 0.7 * 300, "0.0", "en-US" ) & "px'></i><span class='lula-esc'>"
-        & FORMAT ( _lt * 100, "0" ) & "%</span></div><div class='b'><i class='bf' style='width:"
-        & FORMAT ( MIN ( _ft, 0.7 ) / 0.7 * 300, "0.0", "en-US" ) & "px'></i><span class='flavio-esc'>"
-        & FORMAT ( _ft * 100, "0" ) & "%</span></div></div></div>"
+    "<div class='lin tot sobe d9'><div class='cat'><b>todos os eleitores</b><i>a marca tracejada</i></div>"
+        & "<div class='gr'><i class='ct'></i><i class='vb " & IF ( _ref >= 0, "bl", "bf" ) & "' style='left:"
+        & FORMAT ( IF ( _ref >= 0, 195, 195 - MIN ( ABS ( _ref ), 40 ) / 40 * 160 ), "0.0", "en-US" ) & "px;width:"
+        & FORMAT ( MIN ( ABS ( _ref ), 40 ) / 40 * 160, "0.0", "en-US" ) & "px'></i>"
+        & "<span class='vt " & IF ( _ref >= 0, "lula-esc", "flavio-esc" ) & "' style='left:"
+        & FORMAT ( 195 + IF ( _ref >= 0, MIN ( ABS ( _ref ), 40 ) / 40 * 160, 0 ) + 8, "0.0", "en-US" ) & "px'>"
+        & IF ( _ref >= 0, "Lula +", "Flávio +" ) & FORMAT ( ABS ( _ref ), "0" ) & "</span>"
+        & "<span class='pp'><span class='lula-esc'>" & FORMAT ( _lt * 100, "0" ) & "%</span> × <span class='flavio-esc'>"
+        & FORMAT ( _ft * 100, "0" ) & "%</span></span></div></div>"
 VAR _pergunta =
     SWITCH ( _l,
         "Renda", "por renda da família",
         "Escolaridade", "por escolaridade",
         "Bolsa Família", "entre quem recebe e quem não recebe Bolsa Família",
         "" )
+VAR _notaBF =
+    IF ( _l = "Bolsa Família",
+        "<div class='nota nbf entra d10'>Recebe = recebe Bolsa Família ou mora com quem recebe. O Datafolha não publicou "
+            & "o tamanho de cada grupo nesta pergunta.</div>" )
 -- 3 · As pontas da régua do IDH (a cidade de IDH mais baixo e a de mais alto, com o voto de 2026)
 VAR _idh =
     CALCULATETABLE (
@@ -78,10 +113,10 @@ VAR _cartao =
             & "<div class='rot regua entra d4'>A RÉGUA, NAS PONTAS</div>" & _ponta,
         "<div class='rot entra'>NAS PESQUISAS, AS PESSOAS</div>"
             & "<div class='tit sobe d1'>O que os eleitores disseram ao " & _i & "</div>"
-            & "<div class='nota sobe d2'>intenção de voto no 1º turno " & _pergunta & ", em % de cada grupo · "
-            & _campo & "</div>"
-            & "<div class='leg entra d3'><span><i class='bl'></i>Lula</span><span><i class='bf'></i>Flávio</span></div>"
-            & "<div class='lista'>" & _linhas & _total & "</div>"
+            & "<div class='nota sobe d2'>intenção de voto no 1º turno " & _pergunta & " · " & _campo & "</div>"
+            & "<div class='eixo entra d3'><span class='flavio-esc'>← Flávio à frente</span>"
+            & "<span class='lula-esc'>Lula à frente →</span></div>"
+            & "<div class='lista realce'>" & _linhas & _total & "</div>" & _notaBF
     )
 RETURN
     "<div class='tela t24p'><div class='cartao'>" & _cartao & "</div></div>"

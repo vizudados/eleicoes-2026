@@ -1,9 +1,22 @@
 /*
 @pasta: T10 Pesquisas\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do quadro 'onde foi o erro'.
+@descricao: Texto para leitor de tela do quadro 'onde foi o erro' (a média ou o instituto clicado na régua).
 */
-"Média de " & [T10 · institutos · com válidos] & " institutos com votos válidos contra a urna: Lula "
-    & FORMAT ( [T10 · válidos · média Lula], "0.0" ) & "% nas pesquisas e " & FORMAT ( [T10 · urna · Lula], "0.0" )
-    & "% na urna; Flávio " & FORMAT ( [T10 · válidos · média Flávio], "0.0" ) & "% e " & FORMAT ( [T10 · urna · Flávio], "0.0" )
-    & "%. Erro médio de " & FORMAT ( ABS ( [T10 · válidos · erro médio] ), "0.0" ) & " pontos a favor de Lula."
+VAR _inst = [T10 · escolha · instituto]
+VAR _base = [T10 · instituto · base]
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _inst ),
+            "Média de " & [T10 · institutos · com válidos] & " institutos com votos válidos contra a urna: Lula "
+                & FORMAT ( [T10 · válidos · média Lula], "0.0" ) & "% nas pesquisas e " & FORMAT ( [T10 · urna · Lula], "0.0" )
+                & "% na urna; Flávio " & FORMAT ( [T10 · válidos · média Flávio], "0.0" ) & "% e " & FORMAT ( [T10 · urna · Flávio], "0.0" )
+                & "%. Erro médio de " & FORMAT ( ABS ( [T10 · válidos · erro médio] ), "0.0" ) & " pontos a favor de Lula.",
+        _base = "validos",
+            _inst & " contra a urna, votos válidos: Lula " & FORMAT ( [T10 · instituto · Lula], "0.0" ) & "% na pesquisa e "
+                & FORMAT ( [T10 · urna · Lula], "0.0" ) & "% na urna; Flávio " & FORMAT ( [T10 · instituto · Flávio], "0.0" )
+                & "% e " & FORMAT ( [T10 · urna · Flávio], "0.0" ) & "%.",
+        _inst & " divulgou votos totais: diferença de " & FORMAT ( [T10 · instituto · diferença], "0.0" )
+            & " pontos (Flávio − Lula) na pesquisa e " & FORMAT ( [T10 · urna · diferença], "0.0" ) & " na urna."
+    )

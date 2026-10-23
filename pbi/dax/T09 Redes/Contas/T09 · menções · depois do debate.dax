@@ -1,0 +1,9 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: 1 quando a data do ponto do índice cai nas 24 h depois do debate da Band (18 e 19/10), em que a FGV mediu as menções positivas e negativas.
+*/
+VAR _d = [T09 · IPD dia · data]
+VAR _deb = [T09 · debate · data]
+RETURN
+    IF ( NOT ISBLANK ( _d ) && _d >= _deb && _d <= _deb + 1, 1 )

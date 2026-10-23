@@ -1,0 +1,7 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: texto
+@descricao: Nome (UF) do município do contexto, como as listas mostram.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+SELECTEDVALUE ( 'Município'[Rótulo] )

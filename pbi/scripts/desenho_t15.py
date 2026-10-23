@@ -7,6 +7,10 @@ Grava pbi/dax/T15 Minha cidade/{Contas,Desenho}/*.dax. Tudo responde ao filtro d
 Município[Rótulo], cidade inicial Contagem (MG)). As contas da cidade somam Município ano (sem o exterior, que não tem
 município). "Entre as cidades parecidas" = mesmo porte e mesmo quinto de renda, em todo o Brasil (ignora o filtro).
 
+Viagem no tempo (23/10/2026): clicar numa barra da série filtra o Ano; a ficha e as parecidas passam a contar a eleição
+escolhida contra a anterior (ano escolhido − 4). Sem clique, o ano escolhido é 2026 e a tela é a de antes, texto por
+texto (2022 → 2026, conferido contra o oráculo). Em 2006 não há eleição anterior na série: a ficha mostra só o ano.
+
 Oráculo: mockup/data/eleicoes.json › paginas[15] (pipeline/montar_dados_mockup.py › ficha_cidade / tela_cidade).
 """
 from __future__ import annotations
@@ -80,44 +84,102 @@ conta("T15 · porte", "texto", "Faixa de população do município escolhido.", 
 conta("T15 · quinto de renda", "texto", "Quinto de renda do município escolhido.",
       "SELECTEDVALUE ( 'Município'[Quinto de renda] )", ORACULO + " › quinto")
 
-for _a in (2022, 2026):
-    conta(f"T15 · votos de Lula {_a}", "#,0", f"Votos de Lula (PT) em {_a} no município.", _soma("VotosPT", _a),
-          ORACULO + f" › votos › lula{str(_a)[2:]}")
-    conta(f"T15 · votos do PL {_a}", "#,0", f"Votos do adversário do PL em {_a} no município.",
-          _soma("VotosAdversario", _a), ORACULO + f" › votos › pl{str(_a)[2:]}")
-    conta(f"T15 · válidos {_a}", "#,0", f"Votos válidos em {_a} no município.", _soma("Validos", _a))
-    conta(f"T15 · margem {_a}", "0.0%", f"Margem de Lula em {_a} no município: (Lula − adversário) ÷ válidos.",
-          f"DIVIDE ( [T15 · votos de Lula {_a}] - [T15 · votos do PL {_a}], [T15 · válidos {_a}] )",
-          ORACULO + f" › margem{str(_a)[2:]}_txt")
-conta("T15 · Lula % 2026", "0.0%", "Votos de Lula sobre os válidos em 2026 no município.",
-      "DIVIDE ( [T15 · votos de Lula 2026], [T15 · válidos 2026] )", ORACULO + " › serie 2026 › pt 39,3%")
-conta("T15 · PL % 2026", "0.0%", "Votos de Flávio sobre os válidos em 2026 no município.",
-      "DIVIDE ( [T15 · votos do PL 2026], [T15 · válidos 2026] )", ORACULO + " › serie 2026 › adv 50,3%")
-conta("T15 · variação", "0.0%", "Variação da margem de Lula de 2022 para 2026 (somando os votos do contexto).",
-      "[T15 · margem 2026] - [T15 · margem 2022]", ORACULO + " › variacao_txt = −5,4 p.p.")
-conta("T15 · variação de votos de Lula", "#,0", "Votos de Lula em 2026 menos em 2022 no município.",
-      "[T15 · votos de Lula 2026] - [T15 · votos de Lula 2022]", ORACULO + " › votos › variacao_lula_txt = −11.920")
-conta("T15 · variação de votos do PL", "#,0", "Votos do PL em 2026 (Flávio) menos em 2022 (Jair) no município.",
-      "[T15 · votos do PL 2026] - [T15 · votos do PL 2022]", ORACULO + " › votos › variacao_pl_txt = +6.957")
+conta("T15 · nome e UF da cidade", "texto", "Nome (UF) do município escolhido no filtro, como a lista do filtro mostra.",
+      "SELECTEDVALUE ( 'Município'[Rótulo] )", ORACULO + " › Contagem (MG)")
+
+# ---- a eleição escolhida (clique numa barra da série) e a anterior
+conta("T15 · ano escolhido", "0",
+      "Eleição que a ficha e as parecidas contam: a barra clicada na série (filtro cruzado no Ano) ou, sem clique, 2026.",
+      """IF ( ISFILTERED ( 'Ano'[Ano] ) && HASONEVALUE ( 'Ano'[Ano] ), VALUES ( 'Ano'[Ano] ), 2026 )""",
+      ORACULO + " › 2026 sem clique")
+conta("T15 · ano anterior", "0", "A eleição antes da escolhida (quatro anos antes); vazio em 2006, o começo da série.",
+      """VAR _a = [T15 · ano escolhido]
+RETURN
+    IF ( _a > 2006, _a - 4 )""", ORACULO + " › 2022 sem clique")
+conta("T15 · margem 2026", "0.0%", "Margem de Lula em 2026 no município: (Lula − Flávio) ÷ válidos. Fixa em 2026 (título "
+      "da série), não muda com o clique.",
+      f"DIVIDE ( {_soma('VotosPT', 2026)} - {_soma('VotosAdversario', 2026)}, {_soma('Validos', 2026)} )",
+      ORACULO + " › margem26_txt = −11,0")
+
+for _q, _qual in (("escolhido", "escolhido"), ("anterior", "anterior")):
+    _ler = f"VAR _a = [T15 · ano {_qual}]"
+    _guarda = "IF ( NOT ISBLANK ( _a ), " if _q == "anterior" else ""
+    _fim = " )" if _q == "anterior" else ""
+    _desc = "na eleição escolhida (2026 sem clique)" if _q == "escolhido" else "na eleição anterior à escolhida (2022 sem clique)"
+    for _nome, _col, _orc in (("votos do PT", "VotosPT", "lula"), ("votos do adversário", "VotosAdversario", "pl"),
+                              ("válidos", "Validos", None)):
+        conta(f"T15 · {_nome} no ano {_q}", "#,0", f"{_nome.capitalize()} {_desc}, no município.",
+              f"""{_ler}
+RETURN
+    {_guarda}CALCULATE ( SUM ( 'Município ano'[{_col}] ), 'Ano'[Ano] = _a ){_fim}""",
+              (ORACULO + f" › votos › {_orc}{'26' if _q == 'escolhido' else '22'}") if _orc else None)
+    conta(f"T15 · margem no ano {_q}", "0.0%", f"Margem do PT {_desc}, no município: (PT − adversário) ÷ válidos.",
+          f"DIVIDE ( [T15 · votos do PT no ano {_q}] - [T15 · votos do adversário no ano {_q}], "
+          f"[T15 · válidos no ano {_q}] )", ORACULO + f" › margem{'26' if _q == 'escolhido' else '22'}_txt")
+    conta(f"T15 · candidato do PT no ano {_q}", "texto", f"Candidato do PT {_desc}.",
+          f"""{_ler}
+RETURN
+    {_guarda}CALCULATE ( SELECTEDVALUE ( 'Ano'[Candidato do PT] ), 'Ano'[Ano] = _a ){_fim}""")
+    conta(f"T15 · adversário no ano {_q}", "texto", f"Adversário principal (o mais votado fora do PT) {_desc}.",
+          f"""{_ler}
+RETURN
+    {_guarda}CALCULATE ( SELECTEDVALUE ( 'Ano'[Adversário] ), 'Ano'[Ano] = _a ){_fim}""")
+    conta(f"T15 · partido do adversário no ano {_q}", "texto", f"Partido do adversário principal {_desc}.",
+          f"""{_ler}
+RETURN
+    {_guarda}CALCULATE ( SELECTEDVALUE ( 'Ano'[Partido do adversário] ), 'Ano'[Ano] = _a ){_fim}""")
+    conta(f"T15 · margem na UF no ano {_q}", "0.0%",
+          f"Margem do PT {_desc} na UF da cidade, somando os municípios dela (igual à conta da tela 12).",
+          f"""VAR _uf = [T15 · UF da cidade]
+{_ler}
+RETURN
+    IF (
+        NOT ISBLANK ( _uf ) && NOT ISBLANK ( _a ),
+        CALCULATE (
+            [T15 · margem no ano],
+            REMOVEFILTERS ( 'Município' ),
+            REMOVEFILTERS ( 'UF' ),
+            'Município'[UF] = _uf,
+            'Ano'[Ano] = _a
+        )
+    )""", "paginas[12] › ufs › margem (MG +4,7 → −4,9)")
+    conta(f"T15 · margem do Brasil no ano {_q}", "0.0%",
+          f"Margem do PT no Brasil {_desc}, resultado oficial com o exterior (igual às telas 01, 12 e 15).",
+          f"""{_ler}
+RETURN
+    {_guarda}DIVIDE (
+        CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Ano'[Ano] = _a, 'Candidato ano'[Partido] = "PT" )
+            - CALCULATE ( MAX ( 'Candidato ano'[Votos] ), 'Ano'[Ano] = _a, 'Candidato ano'[Partido] <> "PT" ),
+        CALCULATE ( MAX ( 'Candidato ano'[ValidosAno] ), 'Ano'[Ano] = _a )
+    ){_fim}""", "paginas[14] › anos (2022 +5,2; 2026 −1,9)")
+
+conta("T15 · PT % no ano escolhido", "0.0%", "Votos do PT sobre os válidos na eleição escolhida, no município.",
+      "DIVIDE ( [T15 · votos do PT no ano escolhido], [T15 · válidos no ano escolhido] )",
+      ORACULO + " › serie 2026 › pt 39,3%")
+conta("T15 · adversário % no ano escolhido", "0.0%",
+      "Votos do adversário principal sobre os válidos na eleição escolhida, no município.",
+      "DIVIDE ( [T15 · votos do adversário no ano escolhido], [T15 · válidos no ano escolhido] )",
+      ORACULO + " › serie 2026 › adv 50,3%")
+conta("T15 · variação", "0.0%",
+      "Variação da margem do PT da eleição anterior para a escolhida (sem clique, 2022 → 2026), somando os votos do "
+      "contexto; vazia em 2006.",
+      """VAR _ant = [T15 · margem no ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _ant ), [T15 · margem no ano escolhido] - _ant )""", ORACULO + " › variacao_txt = −5,4 p.p.")
+conta("T15 · variação de votos do PT", "#,0", "Votos do PT na eleição escolhida menos na anterior, no município.",
+      """VAR _ant = [T15 · votos do PT no ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _ant ), [T15 · votos do PT no ano escolhido] - _ant )""",
+      ORACULO + " › votos › variacao_lula_txt = −11.920")
+conta("T15 · variação de votos do adversário", "#,0",
+      "Votos do adversário principal na eleição escolhida menos os do adversário na anterior, no município.",
+      """VAR _ant = [T15 · votos do adversário no ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _ant ), [T15 · votos do adversário no ano escolhido] - _ant )""",
+      ORACULO + " › votos › variacao_pl_txt = +6.957")
 
 conta("T15 · nome da UF", "texto", "Nome da UF do município escolhido.",
       "LOOKUPVALUE ( 'UF'[Nome], 'UF'[UF], [T15 · UF da cidade] )")
-for _a in (2022, 2026):
-    conta(f"T15 · margem {_a} na UF", "0.0%",
-          f"Margem de Lula em {_a} na UF da cidade, somando os municípios dela (igual à conta da tela 12).",
-          f"""VAR _uf = [T15 · UF da cidade]
-RETURN
-    IF (
-        NOT ISBLANK ( _uf ),
-        CALCULATE ( [T15 · margem {_a}], REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'UF' ), 'Município'[UF] = _uf )
-    )""", "paginas[12] › ufs › margem" + str(_a)[2:] + " (MG +4,7 → −4,9)")
-    conta(f"T15 · margem do Brasil {_a}", "0.0%",
-          f"Margem de Lula no Brasil em {_a}, resultado oficial com o exterior (igual às telas 01 e 12).",
-          f"""DIVIDE (
-    CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Ano] = {_a}, 'Candidato ano'[Partido] = "PT" )
-        - CALCULATE ( MAX ( 'Candidato ano'[Votos] ), 'Candidato ano'[Ano] = {_a}, 'Candidato ano'[Partido] <> "PT" ),
-    CALCULATE ( MAX ( 'Candidato ano'[ValidosAno] ), 'Candidato ano'[Ano] = {_a} )
-)""", "paginas[14] › anos (2022 +5,2; 2026 −1,9)")
 conta("T15 · margem no ano", "0.0%", "Margem do PT no ano do contexto, no município (série 2006–2026).",
       f"DIVIDE ( {_soma('VotosPT')} - {_soma('VotosAdversario')}, {_soma('Validos')} )",
       ORACULO + " › serie › margem (2006 +30,0 … 2026 −11,0)")
@@ -254,9 +316,18 @@ _VAZIO = ("\"<div class='tela t15v'><div class='ic entra'></div><div class='rot 
           "5.571 municípios do Brasil. A tela mostra como ela votou de 2006 a 2026 e como se compara com as cidades "
           "parecidas.</div></div>\"")
 
+def _curto(v: str) -> str:
+    """Nome curto do candidato (Dilma, Haddad, Aécio, Bolsonaro, Flávio…) para frases e rótulos."""
+    return (f'SWITCH ( {v}, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", '
+            f'"José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", "Flávio Bolsonaro", '
+            f'"Flávio", {v} )')
+
+
 desenho("T15 · Ficha · HTML",
-        "Ficha da cidade escolhida: quem venceu e com quanto, a manchete da mudança desde 2022, os dados da cidade e os "
-        "votos de Lula e do PL em 2022 e 2026. Sem cidade escolhida, o convite para escolher. Só lê contas.",
+        "Ficha da cidade escolhida na eleição escolhida (sem clique, 2026 contra 2022): quem ficou à frente e com "
+        "quanto, a manchete da mudança desde a eleição anterior, os dados da cidade, os votos do PT e do adversário nas "
+        "duas eleições e a margem na cidade, no estado e no país. Sem cidade escolhida, o convite para escolher. Só lê "
+        "contas.",
         f"""-- 1 · Leituras
 VAR _ok = [T15 · cidade escolhida]
 VAR _cid = [T15 · cidade]
@@ -265,46 +336,64 @@ VAR _pop = [T15 · população]
 VAR _renda = [T15 · renda per capita]
 VAR _porte = [T15 · porte]
 VAR _quinto = [T15 · quinto de renda]
-VAR _l26 = [T15 · Lula % 2026]
-VAR _p26 = [T15 · PL % 2026]
-VAR _m26 = [T15 · margem 2026]
+VAR _y = [T15 · ano escolhido]
+VAR _y0 = [T15 · ano anterior]
+VAR _pt = [T15 · PT % no ano escolhido]
+VAR _ad = [T15 · adversário % no ano escolhido]
+VAR _mB = [T15 · margem no ano escolhido]
+VAR _mA = [T15 · margem no ano anterior]
 VAR _var = [T15 · variação]
-VAR _vl22 = [T15 · votos de Lula 2022]
-VAR _vl26 = [T15 · votos de Lula 2026]
-VAR _vp22 = [T15 · votos do PL 2022]
-VAR _vp26 = [T15 · votos do PL 2026]
-VAR _dl = [T15 · variação de votos de Lula]
-VAR _dp = [T15 · variação de votos do PL]
-VAR _m22 = [T15 · margem 2022]
+VAR _vt0 = [T15 · votos do PT no ano anterior]
+VAR _vt1 = [T15 · votos do PT no ano escolhido]
+VAR _va0 = [T15 · votos do adversário no ano anterior]
+VAR _va1 = [T15 · votos do adversário no ano escolhido]
+VAR _dt = [T15 · variação de votos do PT]
+VAR _da = [T15 · variação de votos do adversário]
+VAR _cpt1 = [T15 · candidato do PT no ano escolhido]
+VAR _cpt0 = [T15 · candidato do PT no ano anterior]
+VAR _cad1 = [T15 · adversário no ano escolhido]
+VAR _cad0 = [T15 · adversário no ano anterior]
+VAR _pad1 = [T15 · partido do adversário no ano escolhido]
+VAR _pad0 = [T15 · partido do adversário no ano anterior]
 VAR _ufNome = [T15 · nome da UF]
-VAR _u22 = [T15 · margem 2022 na UF]
-VAR _u26 = [T15 · margem 2026 na UF]
-VAR _b22 = [T15 · margem do Brasil 2022]
-VAR _b26 = [T15 · margem do Brasil 2026]
+VAR _uA = [T15 · margem na UF no ano anterior]
+VAR _uB = [T15 · margem na UF no ano escolhido]
+VAR _bA = [T15 · margem do Brasil no ano anterior]
+VAR _bB = [T15 · margem do Brasil no ano escolhido]
 -- 2 · Textos
 VAR _nome = {ESC.format(v="_cid")}
-VAR _flavio = _m26 < 0
-VAR _empate = _m26 = 0
-VAR _venc = IF ( _flavio, "Flávio", "Lula" )
-VAR _pVenc = IF ( _flavio, _p26, _l26 )
+VAR _clique = _y <> 2026
+VAR _tem0 = NOT ISBLANK ( _y0 )
+VAR _sPt = {_curto("_cpt1")}
+VAR _sPt0 = {_curto("_cpt0")}
+VAR _sAd = {_curto("_cad1")}
+VAR _sAd0 = {_curto("_cad0")}
+VAR _flavio = _mB < 0
+VAR _empate = _mB = 0
+VAR _venc = IF ( _flavio, _sAd, _sPt )
+VAR _pVenc = IF ( _flavio, _ad, _pt )
 VAR _clsVenc = IF ( _flavio, "flavio", "lula" )
-VAR _txtVenc = IF ( _flavio, "para Flávio Bolsonaro", "para Lula" )
+VAR _txtVenc = "para " & IF ( _flavio, _cad1, _cpt1 )
 VAR _txtOutro =
-    IF ( _flavio, "<span class='lula'>Lula " & {_pct("_l26")} & "</span>",
-        "<span class='flavio'>Flávio " & {_pct("_p26")} & "</span>" )
+    IF ( _flavio, "<span class='lula'>" & _sPt & " " & {_pct("_pt")} & "</span>",
+        "<span class='flavio'>" & _sAd & " " & {_pct("_ad")} & "</span>" )
+VAR _dono = IF ( _tem0 && _cpt0 = _cpt1, "de " & _sPt, "do PT" )
 VAR _txtMuda =
     SWITCH (
         TRUE (),
-        ISBLANK ( _var ), "a cidade não votou em 2022",
-        _var < 0, "a margem de Lula caiu " & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p. desde 2022",
-        _var > 0, "a margem de Lula subiu " & FORMAT ( _var * 100, "0.0" ) & " p.p. desde 2022",
-        "a margem de Lula ficou igual à de 2022"
+        NOT _tem0, "é o começo da série",
+        ISBLANK ( _var ), "a cidade não votou em " & _y0,
+        _var < 0, "a margem " & _dono & " caiu " & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p. desde " & _y0,
+        _var > 0, "a margem " & _dono & " subiu " & FORMAT ( _var * 100, "0.0" ) & " p.p. desde " & _y0,
+        "a margem " & _dono & " ficou igual à de " & _y0
     )
+VAR _onde = IF ( _clique, "Em " & _y, "Em " & _nome )
 VAR _man =
-    IF (
-        _empate,
-        "Em " & _nome & ", Lula e Flávio empataram; " & _txtMuda,
-        "Em " & _nome & ", " & _venc & " venceu com " & {_pct("_pVenc")} & "; " & _txtMuda
+    SWITCH (
+        TRUE (),
+        _empate, _onde & ", " & _sPt & " e " & _sAd & " empataram; " & _txtMuda,
+        _clique, _onde & ", " & _venc & " ficou à frente com " & {_pct("_pVenc")} & "; " & _txtMuda,
+        _onde & ", " & _venc & " venceu com " & {_pct("_pVenc")} & "; " & _txtMuda
     )
 VAR _txtQuinto =
     SWITCH ( _quinto, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres",
@@ -313,8 +402,29 @@ VAR _fatos =
     _nome & " (" & _uf & ") · " & FORMAT ( _pop, "#,0" ) & " habitantes · renda por pessoa de R$ "
         & FORMAT ( _renda, "#,0" ) & " por mês · porte " & _porte & " · " & _txtQuinto
 VAR _fmtD = "+#,0;−#,0;0"
+VAR _anos = IF ( _tem0, _y0 & " → " & _y, FORMAT ( _y, "0" ) )
+VAR _rotPt = IF ( _tem0 && _cpt0 <> _cpt1, _sPt0 & " → ", "" ) & _sPt & " · PT"
+VAR _rotAd =
+    SWITCH (
+        TRUE (),
+        NOT _tem0 || _cad0 = _cad1, _sAd & " · " & _pad1,
+        _pad0 = _pad1, _sAd0 & " → " & _sAd & " · " & _pad1,
+        _sAd0 & " · " & _pad0 & " → " & _sAd & " · " & _pad1
+    )
+VAR _txtVotosPt = IF ( _tem0, FORMAT ( _vt0, "#,0" ) & " → " & FORMAT ( _vt1, "#,0" ), "votos em " & _y )
+VAR _txtVotosAd = IF ( _tem0, FORMAT ( _va0, "#,0" ) & " → " & FORMAT ( _va1, "#,0" ), "votos em " & _y )
+VAR _numPt = IF ( _tem0, FORMAT ( _dt, _fmtD ), FORMAT ( _vt1, "#,0" ) )
+VAR _numAd = IF ( _tem0, FORMAT ( _da, _fmtD ), FORMAT ( _va1, "#,0" ) )
+VAR _notaVotos =
+    IF ( _tem0, "Votos na cidade; a diferença é de " & _y & " para " & _y0 & ".",
+        "Votos na cidade em " & _y & ", o começo da série." )
+VAR _mesmo = NOT _tem0 || _cpt0 = _cpt1
+VAR _quemMargem = IF ( _mesmo, UPPER ( "de " & _sPt ), "DO PT" )
+VAR _notaComp =
+    IF ( _tem0, "Círculo vazado: " & _y0 & "; cheio: " & _y & ".", "Cada círculo é " & _y & "." )
+        & " À direita do traço, " & IF ( _mesmo, _sPt, "o PT" ) & " à frente."
 -- 3 · Geometria (três mini setas num eixo de ±escala em 300 px, zero em x 150)
-VAR _esc = MAX ( 0.08, MAX ( MAX ( ABS ( _m22 ), ABS ( _m26 ) ), MAX ( MAX ( ABS ( _u22 ), ABS ( _u26 ) ), MAX ( ABS ( _b22 ), ABS ( _b26 ) ) ) ) * 1.15 ) /* geometria */
+VAR _esc = MAX ( 0.08, MAX ( MAX ( ABS ( _mA ), ABS ( _mB ) ), MAX ( MAX ( ABS ( _uA ), ABS ( _uB ) ), MAX ( ABS ( _bA ), ABS ( _bB ) ) ) ) * 1.15 ) /* geometria */
 VAR _comp =
     CONCATENATEX (
         DATATABLE (
@@ -326,21 +436,24 @@ VAR _comp =
         VAR _o = [o]
         VAR _rot = SWITCH ( _o, 1, _nome, 2, _ufNome, "Brasil" )
         VAR _sub = SWITCH ( _o, 1, "a cidade", 2, "o estado", "o país, com o exterior" )
-        VAR _a = SWITCH ( _o, 1, _m22, 2, _u22, _b22 )
-        VAR _b = SWITCH ( _o, 1, _m26, 2, _u26, _b26 )
+        VAR _a = SWITCH ( _o, 1, _mA, 2, _uA, _bA )
+        VAR _b = SWITCH ( _o, 1, _mB, 2, _uB, _bB )
         VAR _xa = 150 + 140 * _a / _esc
         VAR _xb = 150 + 140 * _b / _esc
         VAR _cor = IF ( _b < 0, "var(--azul)", "var(--vermelho)" )
         RETURN
             "<div class='cp sobe d" & ( 9 + _o ) & "'><div class='nm'><b>" & _rot & "</b><span>" & _sub & "</span></div>"
                 & "<svg width='300' height='24' viewBox='0 0 300 24'><line x1='150' x2='150' y1='0' y2='24' class='zero'/>"
-                & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 1300 + _o * 120 ) & "ms' x1='"
-                & FORMAT ( _xa, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xb, "0.0", "en-US" ) & "' y1='12' y2='12'/>"
-                & "<circle cx='" & FORMAT ( _xa, "0.0", "en-US" ) & "' cy='12' r='5' class='m22'/>"
+                & IF (
+                    _tem0,
+                    "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 1300 + _o * 120 ) & "ms' x1='"
+                        & FORMAT ( _xa, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xb, "0.0", "en-US" ) & "' y1='12' y2='12'/>"
+                        & "<circle cx='" & FORMAT ( _xa, "0.0", "en-US" ) & "' cy='12' r='5' class='m22'/>"
+                )
                 & "<circle class='brota' style='animation-delay:" & ( 1600 + _o * 120 ) & "ms' cx='"
                 & FORMAT ( _xb, "0.0", "en-US" ) & "' cy='12' r='6.5' fill='" & _cor & "'/></svg>"
-                & "<div class='vv'>" & FORMAT ( _a * 100, "+0.0;−0.0;0.0" ) & " → " & FORMAT ( _b * 100, "+0.0;−0.0;0.0" )
-                & "</div></div>",
+                & "<div class='vv'>" & IF ( _tem0, FORMAT ( _a * 100, "+0.0;−0.0;0.0" ) & " → ", "" )
+                & FORMAT ( _b * 100, "+0.0;−0.0;0.0" ) & "</div></div>",
         "",
         [o], ASC
     )
@@ -352,19 +465,18 @@ VAR _html =
         & "<div class='man m sobe d3'>" & _man & "</div>"
         & "<div class='nota fatos entra d5'>" & _fatos & "</div>"
         & "<div class='votos'>"
-            & "<div class='rot entra d6'>VOTOS NO 1º TURNO · 2022 → 2026</div>"
-            & "<div class='lv sobe d7'><i class='q lula-q'></i><div class='nm'><b>Lula · PT</b><span>"
-                & FORMAT ( _vl22, "#,0" ) & " → " & FORMAT ( _vl26, "#,0" ) & "</span></div><div class='num dv lula'>"
-                & FORMAT ( _dl, _fmtD ) & "</div></div>"
-            & "<div class='lv sobe d8'><i class='q flavio-q'></i><div class='nm'><b>Bolsonaro → Flávio · PL</b><span>"
-                & FORMAT ( _vp22, "#,0" ) & " → " & FORMAT ( _vp26, "#,0" ) & "</span></div><div class='num dv flavio'>"
-                & FORMAT ( _dp, _fmtD ) & "</div></div>"
-            & "<div class='nota entra d9'>Votos na cidade; a diferença é de 2026 para 2022.</div>"
+            & "<div class='rot entra d6'>VOTOS NO 1º TURNO · " & _anos & "</div>"
+            & "<div class='lv sobe d7'><i class='q lula-q'></i><div class='nm'><b>" & _rotPt & "</b><span>"
+                & _txtVotosPt & "</span></div><div class='num dv lula'>" & _numPt & "</div></div>"
+            & "<div class='lv sobe d8'><i class='q flavio-q'></i><div class='nm'><b>" & _rotAd & "</b><span>"
+                & _txtVotosAd & "</span></div><div class='num dv flavio'>" & _numAd & "</div></div>"
+            & "<div class='nota entra d9'>" & _notaVotos & "</div>"
         & "</div>"
         & "<div class='comp'>"
-            & "<div class='rot entra d9'>A CIDADE, O ESTADO E O PAÍS · MARGEM DE LULA 2022 → 2026</div>"
+            & "<div class='rot entra d9'>A CIDADE, O ESTADO E O PAÍS · MARGEM " & _quemMargem & " "
+                & IF ( _tem0, _anos, "EM " & _y ) & "</div>"
             & _comp
-            & "<div class='nota entra d13'>Círculo vazado: 2022; cheio: 2026. À direita do traço, Lula à frente.</div>"
+            & "<div class='nota entra d13'>" & _notaComp & "</div>"
         & "</div>"
     & "</div>"
 RETURN
@@ -374,17 +486,52 @@ desenho("T15 · Ficha · ALT", "Texto alternativo da ficha da cidade.",
         f"""-- 1 · Leituras
 VAR _ok = [T15 · cidade escolhida]
 VAR _cid = [T15 · cidade]
-VAR _l26 = [T15 · Lula % 2026]
-VAR _p26 = [T15 · PL % 2026]
+VAR _y = [T15 · ano escolhido]
+VAR _y0 = [T15 · ano anterior]
+VAR _pt = [T15 · PT % no ano escolhido]
+VAR _ad = [T15 · adversário % no ano escolhido]
 VAR _var = [T15 · variação]
+VAR _cpt1 = [T15 · candidato do PT no ano escolhido]
+VAR _cpt0 = [T15 · candidato do PT no ano anterior]
+VAR _cad1 = [T15 · adversário no ano escolhido]
 -- 2 · Textos
+VAR _sPt = {_curto("_cpt1")}
+VAR _sAd = {_curto("_cad1")}
+VAR _dono = IF ( NOT ISBLANK ( _y0 ) && _cpt0 = _cpt1, "de " & _sPt, "do PT" )
 RETURN
     IF (
         _ok = 1,
-        _cid & ": em 2026, Lula " & {_pct("_l26")} & " e Flávio " & {_pct("_p26")} & "; a margem de Lula variou "
-            & {_pp("_var")} & " pontos desde 2022.",
+        _cid & ": em " & _y & ", " & _sPt & " " & {_pct("_pt")} & " e " & _sAd & " " & {_pct("_ad")}
+            & IF (
+                ISBLANK ( _var ),
+                ".",
+                "; a margem " & _dono & " variou " & {_pp("_var")} & " pontos desde " & _y0 & "."
+            ),
         "Nenhuma cidade escolhida: use o filtro de município."
     )""")
+
+desenho("T15 · Filtro · pílula · HTML",
+        "O botão fechado do filtro de município (a pílula, no lugar do filtro da casca): a cidade em uso ou o convite, "
+        "com o funil e a seta. O clique abre o VizuFilter alto por cima (marcador T15_FILTRO_ABRE_01).",
+        f"""-- 1 · Leituras
+VAR _cid = [T15 · nome e UF da cidade]
+-- 2 · Textos
+VAR _txt = IF ( ISBLANK ( _cid ), "Escolha uma cidade", _cid )
+VAR _esc = {ESC.format(v="_txt")}
+-- 4 · Marcação
+RETURN
+    "<div class='tela pl" & IF ( ISBLANK ( _cid ), "", " ativo" ) & "'><span class='fu'><svg width='16' height='16' "
+        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
+        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><span class='rt'>Município</span><b>" & _esc
+        & "</b><svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
+        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>\"""")
+
+desenho("T15 · Filtro · pílula · ALT", "Texto alternativo do filtro de município (pílula e lista).",
+        """-- 1 · Leituras
+VAR _cid = [T15 · nome e UF da cidade]
+-- 2 · Textos
+RETURN
+    IF ( ISBLANK ( _cid ), "Filtro de município: nenhuma cidade escolhida", "Filtro de município: " & _cid )""")
 
 desenho("T15 · Série título · HTML", "Título da série da cidade: de onde a margem saiu, aonde chegou e quando virou.",
         f"""-- 1 · Leituras
@@ -488,11 +635,12 @@ VAR _cid = [T15 · cidade]
 -- 2 · Textos
 RETURN
     "Barras da margem do PT em " & _cid & " em cada 1º turno de 2006 a 2026: para cima, PT à frente; para baixo, o "
-        & "adversário. Passe o mouse num ano para ver a votação daquele ano.\"""")
+        & "adversário. Passe o mouse num ano para ver a votação; clique para levar a ficha àquela eleição.\"""")
 
 desenho("T15 · Parecidas · HTML",
-        "Entre as cidades parecidas (mesmo porte e quinto de renda): a posição da cidade na queda, a variação do grupo "
-        "e o histograma das variações com a cidade marcada. Só lê contas.",
+        "Entre as cidades parecidas (mesmo porte e quinto de renda): a posição da cidade na queda da eleição anterior "
+        "para a escolhida (sem clique, 2022 → 2026), a variação do grupo e o histograma das variações com a cidade "
+        "marcada; em 2006, o começo da série, o convite para escolher outra eleição. Só lê contas.",
         f"""-- 1 · Leituras
 VAR _ok = [T15 · cidade escolhida]
 VAR _cid = [T15 · cidade]
@@ -505,8 +653,13 @@ VAR _max = [T15 · parecidas · maior variação]
 VAR _lista = [T15 · parecidas · contagem por faixa]
 VAR _porte = [T15 · porte]
 VAR _quinto = [T15 · quinto de renda]
+VAR _y = [T15 · ano escolhido]
+VAR _y0 = [T15 · ano anterior]
+VAR _cpt1 = [T15 · candidato do PT no ano escolhido]
+VAR _cpt0 = [T15 · candidato do PT no ano anterior]
 -- 2 · Textos
 VAR _nome = {ESC.format(v="_cid")}
+VAR _dono = IF ( _cpt0 = _cpt1, "de " & {_curto("_cpt1")}, "do PT" )
 VAR _grupo =
     "cidades de " & _porte & IF ( RIGHT ( _porte, 3 ) = "mil", " habitantes", " de habitantes" ) & " e renda "
         & SWITCH ( _quinto, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres", "no " & _quinto )
@@ -544,7 +697,7 @@ VAR _barras =
         [Value], ASC
     )
 -- 4 · Marcação
-RETURN
+VAR _html =
     IF (
         _ok = 1 && NOT ISBLANK ( _n ),
         "<div class='tela t15p'>"
@@ -564,18 +717,30 @@ RETURN
                         & FORMAT ( _xCid, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xCid, "0.0", "en-US" ) & "' y1='150' y2='282'/>"
                     & "<text class='tk' x='0' y='298'>" & {_pp("_min")} & "</text>"
                     & "<text class='tk' x='1000' y='298' text-anchor='end'>" & {_pp("_max")} & "</text>"
-                    & "<text class='tk' x='500' y='298' text-anchor='middle'>quanto variou a margem de Lula em cada cidade "
-                        & "parecida, 2022 → 2026, em pontos; cada barra junta as cidades de uma faixa"
-                        & "</text>"
+                    & "<text class='tk' x='500' y='298' text-anchor='middle'>quanto variou a margem " & _dono
+                        & " em cada cidade parecida, " & _y0 & " → " & _y & ", em pontos; cada barra junta as cidades de "
+                        & "uma faixa</text>"
                 & "</svg>"
-                & "<div class='rc cid entra d8' style='left:" & FORMAT ( _xCid - 120, "0.0", "en-US" ) & "px'><span>" & _nome
-                    & " " & {_pp("_var")} & "</span></div>"
-                & "<div class='rc grp entra d9' style='left:" & FORMAT ( _xGrupo - 120, "0.0", "en-US" ) & "px'><span>grupo "
-                    & {_pp("_vg")} & "</span></div>",
+                & "<div class='rc cid entra d8' style='left:" & FORMAT ( MAX ( 0, MIN ( 770, _xCid - 120 ) ), "0.0", "en-US" )
+                    & "px;text-align:" & SWITCH ( TRUE (), _xCid < 120, "left", _xCid > 890, "right", "center" ) & "'><span>"
+                    & _nome & " " & {_pp("_var")} & "</span></div>"
+                & "<div class='rc grp entra d9' style='left:" & FORMAT ( MAX ( 0, MIN ( 770, _xGrupo - 120 ) ), "0.0", "en-US" )
+                    & "px;text-align:" & SWITCH ( TRUE (), _xGrupo < 120, "left", _xGrupo > 890, "right", "center" )
+                    & "'><span>grupo " & {_pp("_vg")} & "</span></div>",
                 ""
             )
         & "</div>"
-    )""")
+    )
+VAR _inicio =
+    "<div class='tela t15p'>"
+        & "<div class='rot entra'>" & IF ( _n = 1, "SEM CIDADES PARECIDAS", "ENTRE AS " & FORMAT ( _n, "#,0" )
+            & " CIDADES PARECIDAS" ) & " · MESMO PORTE E MESMA RENDA</div>"
+        & "<div class='pos sobe d1'>" & _y & ", o começo da série</div>"
+        & "<div class='txt comp entra d3'>Não há eleição antes desta para comparar. Clique em outro ano na série para "
+            & "ver como " & _nome & " mudou contra as " & _grupo & ".</div>"
+    & "</div>"
+RETURN
+    IF ( _ok = 1 && NOT ISBLANK ( _n ) && ISBLANK ( _y0 ), _inicio, _html )""")
 
 desenho("T15 · Parecidas · ALT", "Texto alternativo das cidades parecidas.",
         f"""-- 1 · Leituras
@@ -583,10 +748,18 @@ VAR _cid = [T15 · cidade]
 VAR _n = [T15 · parecidas · quantidade]
 VAR _pos = [T15 · parecidas · posição]
 VAR _vg = [T15 · parecidas · variação do grupo]
+VAR _y = [T15 · ano escolhido]
+VAR _y0 = [T15 · ano anterior]
 -- 2 · Textos
 RETURN
-    _cid & ": " & FORMAT ( _pos, "0" ) & "ª maior queda de margem entre " & FORMAT ( _n, "#,0" )
-        & " cidades parecidas; o grupo variou " & {_pp("_vg")} & " pontos.\"""")
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _cid ), "Escolha uma cidade para compará-la com as cidades parecidas.",
+        ISBLANK ( _y0 ),
+        _cid & ": " & _y & " é o começo da série; não há eleição anterior para comparar com as cidades parecidas.",
+        _cid & ": " & FORMAT ( _pos, "0" ) & "ª maior queda de margem entre " & FORMAT ( _n, "#,0" )
+            & " cidades parecidas, de " & _y0 & " para " & _y & "; o grupo variou " & {_pp("_vg")} & " pontos."
+    )""")
 
 desenho("T15 · Tooltip ano · HTML",
         "Dossiê da eleição na cidade: PT, adversário e os demais candidatos em barras, a abstenção e os nomes. Só lê "

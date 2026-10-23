@@ -1,0 +1,23 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Quantas pesquisas do instituto clicado tiveram campo no dia do debate (fora da comparação antes × depois).
+*/
+VAR _inst = [T07 · escolha · instituto]
+VAR _d = [T07 · debate · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _inst ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            Pesquisa[Momento] = "apos_1turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _inst,
+            Pesquisa[Campo fim] >= _d,
+            Pesquisa[Campo início] <= _d
+        ) + 0
+    )

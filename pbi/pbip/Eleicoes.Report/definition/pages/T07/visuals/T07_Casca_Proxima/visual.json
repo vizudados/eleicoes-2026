@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 08 Buscas — O que o Brasil perguntou ao Google?'"
+                  "Value": "'Próxima: 09 Buscas — O que o Brasil perguntou ao Google?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 08 Buscas — O que o Brasil perguntou ao Google?'"
+                  "Value": "'Próxima: 09 Buscas — O que o Brasil perguntou ao Google?'"
                 }
               }
             },

@@ -1,0 +1,20 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Margem do PT na eleição escolhida (2026 sem clique) na UF da cidade, somando os municípios dela (igual à conta da tela 12).
+@oraculo: paginas[12] › ufs › margem (MG +4,7 → −4,9)
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _uf = [T15 · UF da cidade]
+VAR _a = [T15 · ano escolhido]
+RETURN
+    IF (
+        NOT ISBLANK ( _uf ) && NOT ISBLANK ( _a ),
+        CALCULATE (
+            [T15 · margem no ano],
+            REMOVEFILTERS ( 'Município' ),
+            REMOVEFILTERS ( 'UF' ),
+            'Município'[UF] = _uf,
+            'Ano'[Ano] = _a
+        )
+    )

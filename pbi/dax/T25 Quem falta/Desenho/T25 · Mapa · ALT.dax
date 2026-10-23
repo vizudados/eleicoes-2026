@@ -1,0 +1,14 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do mapa.
+*/
+VAR _comUF = [T25 · com UF]
+RETURN
+    LEFT (
+        "Mapa de " & [T25 · recorte] & ", " & [T25 · ano]
+            & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] )
+            & ": um ponto por município, mais escuro onde se faltou mais que a " & IF ( _comUF = 1, "média estadual", "média nacional" ) & " ("
+            & FORMAT ( [T25 · abstenção % do recorte], "0.0%" ) & "). Clique num ponto para ver o município nas outras peças.",
+        250
+    )

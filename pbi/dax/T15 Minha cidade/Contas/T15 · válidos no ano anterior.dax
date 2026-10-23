@@ -1,0 +1,9 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Válidos na eleição anterior à escolhida (2022 sem clique), no município.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _a ), CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Ano'[Ano] = _a ) )

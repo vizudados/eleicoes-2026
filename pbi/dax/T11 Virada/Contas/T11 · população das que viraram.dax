@@ -1,0 +1,10 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: População do município quando ele trocou de lado (situação 2 ou 3); vazio nos outros. Ordena e recorta a lista das maiores que viraram (filtro Top 6 do visual).
+@oraculo: mockup/data/eleicoes.json › paginas[11] › maiores_que_viraram › populacao (Osasco 728.615)
+@gerado: pbi/scripts/desenho_t11.py
+*/
+VAR _s = [T11 · situação]
+RETURN
+    IF ( _s = 2 || _s = 3, [T11 · população] )

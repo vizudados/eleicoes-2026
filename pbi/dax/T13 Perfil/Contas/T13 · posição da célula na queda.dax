@@ -1,0 +1,36 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0
+@descricao: Posição da célula do contexto entre as células do recorte pela queda da margem (1 = a maior). Só células com o mínimo de cidades da matriz (10; com menos no recorte, 3 ou 1); vazia nas outras.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _c =
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            FILTER (
+                SUMMARIZE ( 'Município', 'Município'[Porte], 'Município'[Quinto de renda] ),
+                NOT ISBLANK ( 'Município'[Porte] ) && NOT ISBLANK ( 'Município'[Quinto de renda] )
+            ),
+            "@n", [T13 · cidades],
+            "@v", [T13 · variação]
+        ),
+        REMOVEFILTERS ( 'Município' ),
+        VALUES ( 'UF'[UF] )
+    )
+VAR _piso =
+    SWITCH (
+        TRUE (),
+        COUNTROWS ( FILTER ( _c, [@n] >= 10 && NOT ISBLANK ( [@v] ) ) ) > 0, 10,
+        COUNTROWS ( FILTER ( _c, [@n] >= 3 && NOT ISBLANK ( [@v] ) ) ) > 0, 3,
+        1
+    )
+VAR _validas =
+    FILTER ( _c, [@n] >= _piso && NOT ISBLANK ( [@v] ) )
+VAR _pior =
+    TOPN ( 1, _validas, [@v], ASC, 'Município'[Porte], ASC, 'Município'[Quinto de renda], ASC )
+VAR _melhor =
+    TOPN ( 1, _validas, [@v], DESC, 'Município'[Porte], ASC, 'Município'[Quinto de renda], ASC )
+VAR _n = [T13 · cidades]
+VAR _v = [T13 · variação]
+RETURN
+    IF ( NOT ISBLANK ( _v ) && _n >= _piso, COUNTROWS ( FILTER ( _validas, [@v] < _v ) ) + 1 )

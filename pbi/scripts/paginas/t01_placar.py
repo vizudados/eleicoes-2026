@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """T01 · Placar — quem venceu o 1º turno, e por quanto? (dono: agente das telas 01–06)
 
-Protagonista: a diferença (2,22 mi) com o laço à mão. Apoios: o duelo Flávio × Lula com os retratos em traço, a barra
-dos votos válidos (um segmento por candidato, com tooltip dossiê) e, à direita, as duas linhas de 2022 para 2026 que
-se cruzam. Filtro de UF da casca: com UF, tudo vira o resultado da UF ('Candidato UF').
+Protagonista: a diferença (2,22 mi) com o sublinhado à mão. Apoios: o duelo Flávio × Lula com os retratos em traço, a
+barra dos votos válidos (um segmento por candidato, com tooltip dossiê) e, à direita, as duas linhas de 2022 para 2026
+que se cruzam — os quatro pontos têm alvos com grão (ano × candidato) por cima do desenho e abrem o dossiê do ponto (de
+onde vieram os votos daquele ano). Filtro de UF da casca: com UF, tudo vira o resultado da UF ('Candidato UF'); sem
+filtro cruzado entre as peças (clicar num candidato ou num ano mudaria as contas do placar, que somam todos).
 
 Medidas: pbi/dax/T01 Placar (geradas por pbi/scripts/desenho_t01.py).
 """
@@ -34,7 +36,7 @@ def _css_placar() -> str:
         ".t1 .dn{top:52px;display:inline-block}"
         ".t1 .dnum{display:inline-block;font-size:128px;font-weight:700;letter-spacing:-.035em;line-height:1;"
         "font-variant-numeric:tabular-nums lining-nums;padding:0 4px}"
-        ".t1 .laco{position:absolute;left:-8%;top:-22%;width:116%;height:144%;overflow:visible;pointer-events:none}"
+        ".t1 .sub{position:absolute;left:0;bottom:-30px;width:100%;height:24px;overflow:visible;pointer-events:none}"
         ".t1 .mm{top:232px;width:860px}.t1 .mm .m1{font-size:30px;line-height:1.2}.t1 .mm .m2{margin-top:8px}"
         ".t1 .duelo{top:352px;width:860px;display:flex;justify-content:space-between}"
         ".t1 .cand{position:relative;width:420px;height:190px;padding-left:124px}"
@@ -100,7 +102,61 @@ def _css_virada() -> str:
     )
 
 
+def _css_alvos() -> str:
+    """Alvos dos pontos da virada: a raiz de cada entrada sem ponteiro (L114), só o círculo transparente pega o mouse
+    (fixo, sem animação: L012); no hover, um anel na cor do candidato em volta da bolinha desenhada pela virada."""
+    return (
+        ".vp{pointer-events:none}"
+        ".vp .alvo{position:absolute;width:48px;height:48px;border-radius:50%;pointer-events:auto;cursor:default}"
+        ".vp .alvo::after{content:'';position:absolute;left:10px;top:10px;width:28px;height:28px;box-sizing:border-box;"
+        "border-radius:50%;border:2.4px solid currentColor;opacity:0;transform:scale(.6);"
+        "transition:opacity .15s ease,transform .15s ease}"
+        ".vp .alvo:hover::after{opacity:1;transform:scale(1)}"
+        ".vp .lula{color:var(--vermelho-escuro)}.vp .flavio{color:var(--azul-escuro)}"
+    )
+
+
+def _css_tt_ponto() -> str:
+    """Dossiê do ponto: a ficha branca com clipe do dossiê do candidato, uma linha por grupo (região ou porte)."""
+    return (
+        ".tp{position:fixed;inset:0;background:var(--papel)}"
+        ".tp .ficha{position:absolute;left:14px;top:18px;right:14px;bottom:14px;background:var(--branco);"
+        "border:1.5px solid var(--areia);box-shadow:3px 4px 0 rgba(28,25,21,.08)}"
+        ".clipe{position:fixed;right:44px;top:4px;width:32px;transform:rotate(8deg);z-index:2}"
+        ".tp .ico{position:fixed;right:30px;top:42px;width:36px;opacity:.85;z-index:2}"
+        ".tp .cab{position:absolute;left:18px;top:14px;right:64px}"
+        ".tp .nm{font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-.01em}"
+        ".tp .sub{margin-top:4px;font-size:14px;color:var(--grafite);white-space:nowrap;overflow:hidden;"
+        "text-overflow:ellipsis}"
+        ".tp .hd,.tp .ln{display:flex;align-items:center;gap:8px}"
+        ".tp .hd{position:absolute;left:18px;right:18px;top:76px;font-size:11px;font-weight:600;letter-spacing:.08em;"
+        "text-transform:uppercase;white-space:nowrap;color:var(--cinza);border-bottom:1px dashed var(--areia);"
+        "padding-bottom:5px}"
+        ".tp .lista{position:absolute;left:18px;right:18px;top:100px}"
+        ".tp .ln{height:30px;font-size:15px;border-bottom:1px solid var(--creme)}"
+        ".tp .g{width:138px;flex:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--tinta)}"
+        ".tp .br{width:124px;flex:none;display:flex;align-items:center;gap:6px}"
+        ".tp .br i{display:block;height:10px;flex:none}.tp .br b{font-weight:700;font-size:14px}"
+        ".tp .lula-bg{background:var(--vermelho)}.tp .flavio-bg{background:var(--azul)}"
+        ".tp .pc{flex:1;text-align:right;font-variant-numeric:tabular-nums;color:var(--cinza)}"
+        ".tp .ln .pc.on{font-weight:700;color:var(--tinta)}.tp .hd .pc.on{color:var(--tinta)}"
+        ".tp .mao{position:absolute;right:20px;bottom:6px;font-size:26px;transform:rotate(-2deg);white-space:nowrap}"
+    )
+
+
+def _alvos() -> dict:
+    """Os quatro pontos da virada com grão (ano × candidato): o papel sampling leva 'Candidato UF'[Ano] e [Número]
+    (o HTML Content aceita várias colunas no grão, L091); a medida só desenha PT e PL."""
+    doc = lib.visual_html(
+        "T01_Virada_Alvos", *VIRADA, "T01 · Ponto · HTML", folha_de_estilo=CSS, alt=lib.medida("T01 · Ponto · ALT"),
+        z=Z + 6, tab=210, granularidade=("Candidato UF", "Ano"), tooltip_pagina="ttT01Ponto",
+        modelo_corpo=f"<style>{_css_alvos()}</style>{{{{content}}}}")
+    doc["visual"]["query"]["queryState"]["sampling"]["projections"].append(lib.proj_coluna("Candidato UF", "Número"))
+    return doc
+
+
 def declarar(ctx):
+    clipe = "https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/clipe-tinta.png"
     return [
         Visual(P, lib.visual_html(
             "T01_Placar_Html", *PLACAR, "T01 · Placar · HTML", folha_de_estilo=CSS,
@@ -117,4 +173,9 @@ def declarar(ctx):
             modelo_corpo=f"<style>{_css_virada()}</style>{{{{content}}}}")),
         *pagina_lib.tooltip("ttT01Candidato", "Candidato · dossiê", 460, 300, "T01 · Tooltip candidato · HTML",
                             ordem=110, folha_de_estilo=CSS),
+        Visual(P, _alvos()),
+        *pagina_lib.tooltip("ttT01Ponto", "Ponto da virada · dossiê", 460, 330, "T01 · Tooltip ponto · HTML",
+                            ordem=111, folha_de_estilo=CSS,
+                            modelo_corpo=f"<style>{_css_tt_ponto()}</style>{{{{content}}}}"
+                                         f"<img class='clipe' alt='' src='{clipe}'/>"),
     ]

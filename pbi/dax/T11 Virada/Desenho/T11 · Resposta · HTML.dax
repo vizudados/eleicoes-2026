@@ -1,7 +1,7 @@
 /*
 @pasta: T11 Virada\Desenho
 @formato: texto
-@descricao: Coluna da resposta: quantos municípios trocaram Lula por Flávio, o caminho inverso e a fila das cidades 2022 → 2026 (barras e faixas, com a faixa dos que trocaram anotada à mão). Só lê contas 'T11 · …'.
+@descricao: Coluna da resposta: quantos municípios trocaram Lula por Flávio, o caminho inverso e a fila das cidades 2022 → 2026 (barras e faixas, com a faixa dos que trocaram anotada à mão). Com seleção no mapa, conta a área marcada; com uma cidade só, diz o que ela fez. Só lê contas 'T11 · …'.
 @gerado: pbi/scripts/desenho_t11.py
 */
 -- 1 · Leituras
@@ -16,27 +16,55 @@ VAR _e26 = [T11 · empates em 2026]
 VAR _ll = [T11 · seguiram com Lula]
 VAR _ff = [T11 · seguiram com o adversário]
 VAR _tot = [T11 · municípios]
+VAR _nSel = [T11 · seleção]
+VAR _nome1 = [T11 · município · nome e UF]
+VAR _sit1 = [T11 · situação]
+VAR _m22 = [T11 · margem 2022]
+VAR _m26 = [T11 · margem 2026]
 -- 2 · Textos
-VAR _txtVir = IF ( _vir = 0, "nenhum", FORMAT ( _vir, "#,0" ) )
+VAR _um = _nSel = 1
+VAR _area = _nSel > 1
+VAR _virou1 = _sit1 = 2 || _sit1 = 3
+VAR _txtNome1 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _txtVir =
+    SWITCH ( TRUE (), _um && _virou1, "virou", _um, "não virou", _vir = 0, "nenhum", FORMAT ( _vir, "#,0" ) )
 VAR _txtFrase =
-    IF ( _vir <= 1, "município trocou", "municípios trocaram" )
+    IF ( _vir <= 1, "município", "municípios" ) & IF ( _area, " da área marcada", "" )
+        & IF ( _vir <= 1, " trocou", " trocaram" )
+VAR _lula = "<span class='lula'>Lula</span>"
+VAR _flavio = "<span class='flavio'>Flávio</span>"
+VAR _frase =
+    SWITCH (
+        TRUE (),
+        _um && _sit1 = 2, _txtNome1 & " trocou " & _lula & " por " & _flavio & " de 2022 para 2026",
+        _um && _sit1 = 3, _txtNome1 & " trocou " & _flavio & " por " & _lula & " de 2022 para 2026",
+        _um && _sit1 = 0, _txtNome1 & " seguiu com " & _lula & " de 2022 para 2026",
+        _um && _sit1 = 1, _txtNome1 & " seguiu com o adversário de 2022 para 2026",
+        _um, _txtNome1 & ": empate exato em 2026",
+        _area, _txtFrase & " " & _lula & " por " & _flavio,
+        _txtFrase & " " & _lula & " por " & _flavio & " de 2022 para 2026"
+    )
 VAR _txtInv =
     SWITCH (
         TRUE (),
+        _um, "margem de Lula: " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " → " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
+            & " p.p.",
         _vol = 0 && _vir = 0, "e nenhum trocou Flávio por Lula",
         _vol = 0, "nenhum fez o caminho inverso",
         _vol = 1, "1 fez o caminho inverso",
         FORMAT ( _vol, "#,0" ) & " fizeram o caminho inverso"
     )
-VAR _clsGrande = IF ( _vir = 0, "grande palavra", "grande" )
+VAR _clsGrande = IF ( _vir = 0 || _um, "grande palavra", "grande" )
 VAR _txtNota =
-    IF ( _vir = 0, "", IF ( _vir = 1, "o 1 que trocou", "os " & FORMAT ( _vir, "#,0" ) & " que trocaram" ) & " →" )
+    IF ( _vir = 0 || _um, "", IF ( _vir = 1, "o 1 que trocou", "os " & FORMAT ( _vir, "#,0" ) & " que trocaram" ) & " →" )
 VAR _txtEmp =
     IF (
         _e22 + _e26 > 0,
         " Empates exatos (" & FORMAT ( _e22, "#,0" ) & " em 2022, " & FORMAT ( _e26, "#,0" ) & " em 2026) ficam de fora.",
         ""
     )
+VAR _rotFila =
+    SWITCH ( TRUE (), _um, "A CIDADE ESCOLHIDA", _area, "NA ÁREA MARCADA", "CIDADE A CIDADE" ) & " · QUEM FICOU À FRENTE"
 -- 3 · Geometria (fila de 420 px com 6 px entre os blocos: uma cidade = 408 ÷ total)
 VAR _s = DIVIDE ( 408, _tot ) -- geometria
 VAR _xE22 = _l22 * _s + 6 -- geometria
@@ -85,14 +113,13 @@ VAR _svg =
 VAR _html =
     "<div class='tela t11r'>"
         & "<div class='num " & _clsGrande & " sobe'>" & _txtVir & "</div>"
-        & "<div class='man frase sobe d2'>" & _txtFrase & " <span class='lula'>Lula</span> por "
-            & "<span class='flavio'>Flávio</span> de 2022 para 2026</div>"
+        & "<div class='man frase sobe d2'>" & _frase & "</div>"
         & "<div class='inv entra d4'><span>" & _txtInv & "</span>"
             & "<svg width='330' height='16' viewBox='0 0 330 16'><path class='traco' style='animation-delay:900ms' "
             & "pathLength='1' d='M3,10 C70,4 170,13 326,6' fill='none' stroke='var(--tinta)' stroke-width='5' "
             & "stroke-linecap='round'/></svg></div>"
         & "<div class='fluxo'>"
-            & "<div class='rot entra d5'>CIDADE A CIDADE · QUEM FICOU À FRENTE</div>"
+            & "<div class='rot entra d5'>" & _rotFila & "</div>"
             & "<div class='lb cima'><span class='e'><span class='ano'>2022</span><b class='num lula'>" & FORMAT ( _l22, "#,0" )
                 & "</b><span> com Lula</span></span><span class='d'><b class='num flavio'>" & FORMAT ( _a22, "#,0" )
                 & "</b><span> com Bolsonaro</span></span></div>"

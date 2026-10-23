@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 07 Debate — O que mudou depois do debate na Band?'"
+                  "Value": "'Próxima: 07 Quem falta — Quem mais falta às urnas, e onde?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 07 Debate — O que mudou depois do debate na Band?'"
+                  "Value": "'Próxima: 07 Quem falta — Quem mais falta às urnas, e onde?'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T07_CHEGADA_01'"
+                  "Value": "'T25_CHEGADA_01'"
                 }
               }
             }

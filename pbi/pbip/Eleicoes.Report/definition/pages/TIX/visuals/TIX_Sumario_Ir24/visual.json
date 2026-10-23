@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'14 · Quem vota: Quem vota em Lula e quem vota em Flávio?'"
+                  "Value": "'15 · Quem vota: Quem vota em Lula e quem vota em Flávio?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'14 · Quem vota: Quem vota em Lula e quem vota em Flávio?'"
+                  "Value": "'15 · Quem vota: Quem vota em Lula e quem vota em Flávio?'"
                 }
               }
             },

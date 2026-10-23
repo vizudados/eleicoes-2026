@@ -1,0 +1,7 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0
+@descricao: Quantas UFs há na região da linha.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE ( COUNTROWS ( 'UF' ), 'UF'[Tipo] = "UF" ) + 0

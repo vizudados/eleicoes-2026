@@ -7,5 +7,6 @@
 */
 CALCULATE (
     COUNTROWS ( FILTER ( VALUES ( 'UF'[UF] ), [T12 · margem 2022] > 0 && [T12 · margem 2026] < 0 ) ),
+    REMOVEFILTERS ( 'UF' ),
     'UF'[Tipo] = "UF"
 ) + 0

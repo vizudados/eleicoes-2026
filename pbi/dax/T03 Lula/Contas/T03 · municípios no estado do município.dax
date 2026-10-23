@@ -1,0 +1,8 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: Quantos municípios tem a UF do município marcado.
+*/
+VAR _s = [T03 · UF do município]
+RETURN
+    IF ( NOT ISBLANK ( _s ), CALCULATE ( [T03 · municípios], REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'UF' ), 'Município'[UF] = _s ) )

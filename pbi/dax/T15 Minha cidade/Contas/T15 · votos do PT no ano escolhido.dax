@@ -1,0 +1,10 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Votos do pt na eleição escolhida (2026 sem clique), no município.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › votos › lula26
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · ano escolhido]
+RETURN
+    CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Ano'[Ano] = _a )

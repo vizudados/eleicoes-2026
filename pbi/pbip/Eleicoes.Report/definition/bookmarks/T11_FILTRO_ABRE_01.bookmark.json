@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T11_FILTRO_ABRE_01",
+  "displayName": "T11 · filtro aberto",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T11_Casca_Filtro",
+      "T11_Casca_FiltroAbre",
+      "T11_Casca_FiltroFora"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T11",
+    "sections": {
+      "T11": {
+        "visualContainers": {
+          "T11_Casca_Filtro": {
+            "singleVisual": {}
+          },
+          "T11_Casca_FiltroAbre": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T11_Casca_FiltroFora": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

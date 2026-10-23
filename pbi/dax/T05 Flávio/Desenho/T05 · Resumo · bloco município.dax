@@ -1,0 +1,63 @@
+/*
+@pasta: T05 Flávio\Desenho
+@formato: texto
+@descricao: Ficha do município marcado no mapa: o % e os votos de Flávio lá, a margem sobre Lula (e se a cidade virou desde 2022), 2022 → 2026 e três comparações: o estado, as cidades do mesmo porte no Brasil e o Brasil.
+*/
+-- 1 · Leituras
+VAR _mun = [T05 · município]
+VAR _pct = [T05 · % (municípios)]
+VAR _votos = [T05 · votos (municípios)]
+VAR _m26 = [T05 · margem]
+VAR _sit = [T05 · situação]
+VAR _v22 = [T05 · votos 2022 (municípios)]
+VAR _p22 = [T05 · % 2022 (municípios)]
+VAR _c22 = [T05 · candidato 2022]
+VAR _dv = [T05 · variação de votos (municípios)]
+VAR _dpp = [T05 · variação em p.p. (municípios)]
+VAR _est = [T05 · estado do município]
+VAR _pEst = [T05 · % no estado do município]
+VAR _porte = [T05 · porte do município]
+VAR _pPorte = [T05 · % no porte do município]
+VAR _nPorte = [T05 · cidades do porte]
+VAR _pBr = [T05 · % no Brasil]
+-- 2 · Textos
+VAR _nm = IF ( RIGHT ( _mun, 1 ) = ")", LEFT ( _mun, LEN ( _mun ) - 5 ), _mun )
+VAR _txtNm = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nm, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtMun = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mun, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _mpp = ABS ( _m26 ) * 100
+VAR _txtM = FORMAT ( _mpp, "0.0" ) & IF ( _mpp < 2, " ponto", " pontos" )
+VAR _lado = IF ( _m26 > 0, "à frente de Lula", "atrás de Lula" )
+VAR _manchete =
+    SWITCH (
+        TRUE (),
+        _m26 = 0, "Em " & _txtNm & ", Flávio e Lula empataram",
+        _sit = 2 || _sit = 3, _txtNm & " virou: Flávio ficou " & _txtM & " " & _lado,
+        "Em " & _txtNm & ", Flávio ficou " & _txtM & " " & _lado & ", como em 2022"
+    )
+VAR _clsMc = IF ( LEN ( _manchete ) > 74, " l", "" )
+VAR _txtLado = IF ( _m26 > 0, "à frente de Lula", IF ( _m26 < 0, "atrás de Lula", "empate com Lula" ) )
+VAR _txtDV = IF ( _dv < 0, "−", "+" ) & SWITCH ( TRUE (), ABS ( ABS ( _dv ) ) >= 1000000, FORMAT ( ABS ( _dv ) / 1000000, "0.00" ) & " mi", ABS ( ABS ( _dv ) ) >= 1000, FORMAT ( ABS ( _dv ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( _dv ), "#,0" ) )
+VAR _pontos = IF ( ABS ( _dpp ) < 2, " ponto", " pontos" )
+VAR _compara =
+    "Em 2022, " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _c22, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " teve " & SWITCH ( TRUE (), ABS ( _v22 ) >= 1000000, FORMAT ( _v22 / 1000000, "0.00" ) & " mi", ABS ( _v22 ) >= 1000, FORMAT ( _v22 / 1000, "0.0" ) & " mil", FORMAT ( _v22, "#,0" ) ) & IF ( _v22 = 1, " voto", " votos" ) & " aqui ("
+        & FORMAT ( _p22, "0.0%" ) & "). Agora: <b class='flavio-esc'>" & _txtDV
+        & IF ( ABS ( _dv ) >= 1000, " de votos", IF ( ABS ( _dv ) = 1, " voto", " votos" ) )
+        & "</b> e <b class='flavio-esc'>" & FORMAT ( _dpp, "+0.0;−0.0;0.0" ) & _pontos & "</b>."
+VAR _txtPorte = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _porte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " <small>" & FORMAT ( _nPorte, "#,0" ) & IF ( _nPorte = 1, " cidade", " cidades" ) & "</small>"
+-- 4 · Marcação
+VAR _html =
+    "<div class='tela rv'>"
+        & "<div class='sob sobe'>Flávio · PL · 22 · " & _txtMun & "</div>"
+        & "<div class='topo'><div class='big flavio sobe d1'>" & FORMAT ( _pct, "0.0%" ) & "</div>"
+        & "<div class='lado sobe d2'><div class='vv flavio'>" & SWITCH ( TRUE (), ABS ( _votos ) >= 1000000, FORMAT ( _votos / 1000000, "0.00" ) & " mi", ABS ( _votos ) >= 1000, FORMAT ( _votos / 1000, "0.0" ) & " mil", FORMAT ( _votos, "#,0" ) ) & "</div>"
+        & "<div class='txt'>de votos · " & _txtLado & "</div></div></div>"
+        & "<div class='man mc" & _clsMc & " sobe d3'>" & _manchete & "</div>"
+        & "<div class='txt cp sobe d4'>" & _compara & "</div>"
+        & "<div class='fatos'>"
+        & "<div class='fato sobe d10'><span class='ic f'></span><div><div class='rot'>" & "Em todo o estado" & "</div><div class='lg'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _est, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div><div class='vp flavio'>" & FORMAT ( _pEst, "0.0%" ) & "</div></div>"
+        & "<div class='fato sobe d11'><span class='ic g'></span><div><div class='rot'>" & "Nas cidades do mesmo porte, no Brasil" & "</div><div class='lg'>" & _txtPorte & "</div></div><div class='vp'>" & FORMAT ( _pPorte, "0.0%" ) & "</div></div>"
+        & "<div class='fato sobe d12'><span class='ic r'></span><div><div class='rot'>" & "No Brasil inteiro" & "</div><div class='lg'>" & "resultado oficial, com o exterior" & "</div></div><div class='vp'>" & FORMAT ( _pBr, "0.0%" ) & "</div></div>"
+        & "</div>"
+    & "</div>"
+RETURN
+    IF ( NOT ISBLANK ( _mun ) && NOT ISBLANK ( _votos ), _html )

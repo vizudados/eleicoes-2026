@@ -11,7 +11,14 @@ pesquisas não se mexeram (antes: 24 pesquisas; depois: 5; as 10 com campo atrav
   T07_Pesquisas_Html   fundo do gráfico: grade, datas, a linha do debate, as médias antes e depois (traço que se
                        desenha) e a nota à mão
   T07_Pesquisas_Pontos um ponto por pesquisa (granularidade Pesquisa[Id]): Lula e Flávio no último dia de campo;
-                       dossiê ttT07Pesquisa (o instituto, o campo, a margem e a pesquisa anterior do mesmo instituto)
+                       dossiê ttT07Pesquisa (o instituto, o campo, a margem e a pesquisa anterior do mesmo instituto).
+                       Filtro cruzado (23/10/2026): o clique numa pesquisa vira a lente do instituto dela no fundo
+                       (T07_Pesquisas_Html): as médias de todos esmaecem, as pesquisas do instituto ganham anel e uma
+                       linha no tempo e a manchete compara o mesmo instituto antes e depois do debate — a comparação
+                       justa, porque médias de institutos diferentes misturam métodos. Os outros pontos esmaecem.
+                       NoFilter para a audiência, o palco e os debates (não leem a pesquisa).
+                       Os debates (T07_Debates_Marcas) ficam só com o dossiê: dos 11, um só reuniu os dois, e não há
+                       "antes e depois" de Lula e Flávio num debate a que os dois faltaram.
   T07_Debates_Html     os 11 debates marcados: o eixo, o corte do 1º turno e "1 de 11"
   T07_Debates_Marcas   uma marca por debate (granularidade Debate[Data]); dossiê ttT07Debate (quem foi, por que caiu)
 """
@@ -20,7 +27,7 @@ from __future__ import annotations
 import estilo
 import pagina_lib
 import pbip_lib as lib
-from pbip_lib import Visual
+from pbip_lib import Interacao, Visual
 from paginas import _campanha as cp
 
 P = "T07"
@@ -83,6 +90,11 @@ CSS_PESQ = (
     ".t07g .leg{position:absolute;left:0;bottom:0;font-size:13px;color:var(--cinza)}"
     ".t07g .leg i{display:inline-block;width:11px;height:11px;border-radius:50%;margin:0 6px 0 0;vertical-align:-1px}"
     ".t07g .leg b{font-weight:600;color:var(--grafite);margin-right:16px}"
+    # lente do instituto (pesquisa clicada): as médias de todos esmaecem, as pesquisas do instituto ganham anel e linha
+    ".t07g .apaga{opacity:.16;transition:opacity .4s}"
+    f".t07g .an{{fill:none;stroke-width:2.2}}.t07g .an.l{{stroke:{C['vermelho']}}}.t07g .an.f{{stroke:{C['azul']}}}"
+    f".t07g .il{{stroke:{C['vermelho']};stroke-width:2.2;fill:none;stroke-linejoin:round;stroke-linecap:round}}"
+    f".t07g .if{{stroke:{C['azul']};stroke-width:2.2;fill:none;stroke-linejoin:round;stroke-linecap:round}}"
 )
 
 
@@ -168,7 +180,8 @@ def declarar(ctx):
                                   tab=120)),
         Visual(P, lib.visual_html("T07_Pesquisas_Pontos", *PESQ, "T07 · Pontos · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_PONTOS}</style>{{{{content}}}}",
-                                  granularidade=("Pesquisa", "Id"), tooltip_pagina="ttT07Pesquisa",
+                                  granularidade=("Pesquisa", "Id"), filtro_cruzado=True,
+                                  transparencia_nao_selecionados=True, tooltip_pagina="ttT07Pesquisa",
                                   alt=lib.medida("T07 · Pontos · ALT"),
                                   z=Z + 3, tab=130)),
         Visual(P, lib.visual_html("T07_Debates_Html", *DEBATES, "T07 · Debates · HTML", folha_de_estilo=CSS,
@@ -179,10 +192,14 @@ def declarar(ctx):
                                   granularidade=("Debate", "Data"), tooltip_pagina="ttT07Debate",
                                   alt=lib.medida("T07 · Marcas · ALT"),
                                   z=Z + 5, tab=150)),
+        # o clique numa pesquisa só mexe no gráfico (a lente do instituto no fundo); a audiência, o palco e a linha dos
+        # debates não leem a pesquisa
+        *[Interacao(P, "T07_Pesquisas_Pontos", alvo, "NoFilter")
+          for alvo in ("T07_Audiencia_Html", "T07_Palco_Html", "T07_Debates_Html", "T07_Debates_Marcas")],
         *pagina_lib.tooltip("ttT07Pesquisa", "Debate · pesquisa", 460, 280, "T07 · Tooltip pesquisa · HTML",
-                            ordem=170, folha_de_estilo=CSS, modelo_corpo=cp.dossie("lupa", CSS_TT_PESQ)),
+                            ordem=180, folha_de_estilo=CSS, modelo_corpo=cp.dossie("lupa", CSS_TT_PESQ)),
         *pagina_lib.tooltip("ttT07Debate", "Debate · debate marcado", 460, 230, "T07 · Tooltip debate · HTML",
-                            ordem=171, folha_de_estilo=CSS, modelo_corpo=cp.dossie("tv-debate")),
+                            ordem=181, folha_de_estilo=CSS, modelo_corpo=cp.dossie("tv-debate")),
         *pagina_lib.tooltip("ttT07Palco", "Debate · palco", 560, 420, "T07 · Tooltip palco · HTML",
-                            ordem=172, folha_de_estilo=CSS, modelo_corpo=cp.dossie("microfone", CSS_TT_PALCO)),
+                            ordem=182, folha_de_estilo=CSS, modelo_corpo=cp.dossie("microfone", CSS_TT_PALCO)),
     ]

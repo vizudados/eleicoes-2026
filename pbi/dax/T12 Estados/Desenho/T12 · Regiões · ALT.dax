@@ -1,0 +1,12 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Texto alternativo das regiões.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _r = [T12 · região da unidade]
+-- 2 · Textos
+RETURN
+    "As cinco regiões, da maior queda da margem de Lula à menor; clique numa região para ver só as unidades dela na "
+        & "corrida."

@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T13",
-  "displayName": "13 Perfil",
+  "displayName": "14 Perfil",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -54,5 +54,12 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T13_Matriz_Celulas",
+      "target": "T13_Matriz_Html",
+      "type": "NoFilter"
+    }
+  ]
 }

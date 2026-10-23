@@ -1,0 +1,31 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Título do bloco de idade: o ano e o lugar, quantas vezes a faixa que mais falta falta mais que a que menos falta, a legenda de todas as idades e do voto facultativo. Ignora o clique no próprio bloco.
+*/
+-- 1 · Leituras
+VAR _ano = [T25 · ano]
+VAR _lugar = [T25 · lugar]
+VAR _temIdade = [T25 · tem idade no ano]
+VAR _mais = [T25 · faixa que mais falta]
+VAR _menos = [T25 · faixa que menos falta]
+VAR _vezes = [T25 · vezes entre as faixas]
+VAR _todas = [T25 · abstenção % todas as idades]
+-- 2 · Textos
+VAR _rot = "Quem falta mais · por idade · " & _ano
+VAR _man =
+    SWITCH (
+        TRUE (),
+        _temIdade = 0, "Por idade, o TSE só publica desde 2014",
+        ISBLANK ( _mais ), "Sem dado por idade neste recorte",
+        "Os de " & SUBSTITUTE ( _mais, "16 e 17", "16 ou 17" ) & " faltam " & FORMAT ( _vezes, "0.0" )
+            & " vezes mais que os de " & SUBSTITUTE ( _menos, "16 e 17", "16 ou 17" )
+    )
+VAR _lado =
+    IF ( NOT ISBLANK ( _todas ) && _temIdade = 1,
+        "<span class='lg'><i></i>todas as idades · " & FORMAT ( _todas, "0.0%" ) & "</span>" )
+        & "<span class='so'>* voto facultativo</span>"
+-- 4 · Marcação
+RETURN
+    "<div class='tela it'><div class='l1'><div class='rot sobe'>" & _rot & "</div>"
+        & "<div class='lado entra d3'>" & _lado & "</div></div><div class='man sobe d1'>" & _man & "</div></div>"

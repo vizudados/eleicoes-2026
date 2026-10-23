@@ -1,0 +1,10 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê da região.
+*/
+LEFT (
+    "Lula na região " & [T03 · região da linha] & ", estado por estado: a parte de cada estado nos votos dele, "
+        & "o % dele em cada um e a mudança desde 2022.",
+    250
+)

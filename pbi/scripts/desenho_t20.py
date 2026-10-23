@@ -263,6 +263,30 @@ VAR _t22 = IF ( ISBLANK ( _m22 ), "sem dado em 2022", FORMAT ( _m22 * 100, {PP} 
 RETURN
     IF ( NOT ISBLANK ( _nome ), _nome & ": margem de Lula " & _t22 & " e " & FORMAT ( _m26 * 100, {PP} ) & " em 2026." )
 """)
+    # --- a pílula do filtro de escola (23/10/2026: o mesmo padrão do filtro de UF da casca, pílula + painel)
+    gravar("T20 · Filtro · pílula · HTML", "O botão fechado do filtro de escola (a pílula, na caixa do filtro da casca): "
+           "a escola escolhida no filtro ou 'Escolha uma escola', com o funil (ponto vermelho quando há escolha) e a "
+           "seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01); fechado, só a pílula ocupa a "
+           "tela. Recebe só o filtro de escola (o clique no mapa e na lista não mexe nela).", rf"""
+-- 1 · Leituras
+VAR _ha = [T20 · há escolha]
+{_escapa("_nome", "[T20 · nome do local]")}
+-- 2 · Textos
+VAR _txt = IF ( _ha = 1, _nome, "Escolha uma escola" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela pl" & IF ( _ha = 1, " ativo", "" ) & "'><span class='fu'><svg width='16' height='16' "
+        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
+        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><b>" & _txt & "</b>"
+        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
+        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>"
+""")
+    gravar("T20 · Filtro · ALT", "Texto alternativo do filtro de escola: a escolha em uso.", r"""
+-- 1 · Leituras
+VAR _ha = [T20 · há escolha]
+RETURN
+    IF ( _ha = 1, "Filtro de escola: " & [T20 · nome do local], "Filtro de escola: nenhuma escolhida" )
+""")
 
 
 def ficha() -> str:

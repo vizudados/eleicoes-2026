@@ -1,7 +1,7 @@
 /*
 @pasta: T15 Minha cidade\Desenho
 @formato: texto
-@descricao: Entre as cidades parecidas (mesmo porte e quinto de renda): a posição da cidade na queda, a variação do grupo e o histograma das variações com a cidade marcada. Só lê contas.
+@descricao: Entre as cidades parecidas (mesmo porte e quinto de renda): a posição da cidade na queda da eleição anterior para a escolhida (sem clique, 2022 → 2026), a variação do grupo e o histograma das variações com a cidade marcada; em 2006, o começo da série, o convite para escolher outra eleição. Só lê contas.
 @gerado: pbi/scripts/desenho_t15.py
 */
 -- 1 · Leituras
@@ -16,8 +16,13 @@ VAR _max = [T15 · parecidas · maior variação]
 VAR _lista = [T15 · parecidas · contagem por faixa]
 VAR _porte = [T15 · porte]
 VAR _quinto = [T15 · quinto de renda]
+VAR _y = [T15 · ano escolhido]
+VAR _y0 = [T15 · ano anterior]
+VAR _cpt1 = [T15 · candidato do PT no ano escolhido]
+VAR _cpt0 = [T15 · candidato do PT no ano anterior]
 -- 2 · Textos
 VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cid, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _dono = IF ( _cpt0 = _cpt1, "de " & SWITCH ( _cpt1, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", "Flávio Bolsonaro", "Flávio", _cpt1 ), "do PT" )
 VAR _grupo =
     "cidades de " & _porte & IF ( RIGHT ( _porte, 3 ) = "mil", " habitantes", " de habitantes" ) & " e renda "
         & SWITCH ( _quinto, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres", "no " & _quinto )
@@ -55,7 +60,7 @@ VAR _barras =
         [Value], ASC
     )
 -- 4 · Marcação
-RETURN
+VAR _html =
     IF (
         _ok = 1 && NOT ISBLANK ( _n ),
         "<div class='tela t15p'>"
@@ -75,15 +80,27 @@ RETURN
                         & FORMAT ( _xCid, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xCid, "0.0", "en-US" ) & "' y1='150' y2='282'/>"
                     & "<text class='tk' x='0' y='298'>" & FORMAT ( _min * 100, "+0.0;−0.0;0.0" ) & "</text>"
                     & "<text class='tk' x='1000' y='298' text-anchor='end'>" & FORMAT ( _max * 100, "+0.0;−0.0;0.0" ) & "</text>"
-                    & "<text class='tk' x='500' y='298' text-anchor='middle'>quanto variou a margem de Lula em cada cidade "
-                        & "parecida, 2022 → 2026, em pontos; cada barra junta as cidades de uma faixa"
-                        & "</text>"
+                    & "<text class='tk' x='500' y='298' text-anchor='middle'>quanto variou a margem " & _dono
+                        & " em cada cidade parecida, " & _y0 & " → " & _y & ", em pontos; cada barra junta as cidades de "
+                        & "uma faixa</text>"
                 & "</svg>"
-                & "<div class='rc cid entra d8' style='left:" & FORMAT ( _xCid - 120, "0.0", "en-US" ) & "px'><span>" & _nome
-                    & " " & FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & "</span></div>"
-                & "<div class='rc grp entra d9' style='left:" & FORMAT ( _xGrupo - 120, "0.0", "en-US" ) & "px'><span>grupo "
-                    & FORMAT ( _vg * 100, "+0.0;−0.0;0.0" ) & "</span></div>",
+                & "<div class='rc cid entra d8' style='left:" & FORMAT ( MAX ( 0, MIN ( 770, _xCid - 120 ) ), "0.0", "en-US" )
+                    & "px;text-align:" & SWITCH ( TRUE (), _xCid < 120, "left", _xCid > 890, "right", "center" ) & "'><span>"
+                    & _nome & " " & FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & "</span></div>"
+                & "<div class='rc grp entra d9' style='left:" & FORMAT ( MAX ( 0, MIN ( 770, _xGrupo - 120 ) ), "0.0", "en-US" )
+                    & "px;text-align:" & SWITCH ( TRUE (), _xGrupo < 120, "left", _xGrupo > 890, "right", "center" )
+                    & "'><span>grupo " & FORMAT ( _vg * 100, "+0.0;−0.0;0.0" ) & "</span></div>",
                 ""
             )
         & "</div>"
     )
+VAR _inicio =
+    "<div class='tela t15p'>"
+        & "<div class='rot entra'>" & IF ( _n = 1, "SEM CIDADES PARECIDAS", "ENTRE AS " & FORMAT ( _n, "#,0" )
+            & " CIDADES PARECIDAS" ) & " · MESMO PORTE E MESMA RENDA</div>"
+        & "<div class='pos sobe d1'>" & _y & ", o começo da série</div>"
+        & "<div class='txt comp entra d3'>Não há eleição antes desta para comparar. Clique em outro ano na série para "
+            & "ver como " & _nome & " mudou contra as " & _grupo & ".</div>"
+    & "</div>"
+RETURN
+    IF ( _ok = 1 && NOT ISBLANK ( _n ) && ISBLANK ( _y0 ), _inicio, _html )

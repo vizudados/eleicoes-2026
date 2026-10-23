@@ -1,0 +1,8 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Posição mais recente, no 2º turno, do candidato do grupo em destaque (Lula, Flávio, liberou, neutro ou voto nulo); vazio sem destaque e para quem não votou.
+*/
+VAR _quem = SWITCH ( [T16 · foco · grupo], "Cury", "Augusto Cury", "Renan", "Renan Santos", "Caiado", "Ronaldo Caiado" )
+RETURN
+    IF ( NOT ISBLANK ( _quem ), CALCULATE ( [T16 · apoio · posição], REMOVEFILTERS ( Apoio ), Apoio[Quem] = _quem ) )

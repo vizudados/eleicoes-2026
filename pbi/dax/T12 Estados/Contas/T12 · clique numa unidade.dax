@@ -1,0 +1,7 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0
+@descricao: 1 quando uma unidade da corrida está clicada (filtro cruzado em UF[UF]); 0 se não.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+IF ( ISFILTERED ( 'UF'[UF] ) && HASONEVALUE ( 'UF'[UF] ), 1, 0 )

@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0%
+@descricao: Parcela de quem não escolheu ninguém que nem foi votar, no ano do contexto (0–1).
+@oraculo: Brasil 2006 = 70,5% · 2026 = 84,9% (abstenções ÷ nao_escolheram, paginas[6].serie)
+*/
+DIVIDE ( [T06 · abstenções (ano)], [T06 · não escolheram (ano)] )

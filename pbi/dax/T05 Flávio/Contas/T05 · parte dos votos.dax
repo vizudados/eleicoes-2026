@@ -1,10 +1,10 @@
 /*
 @pasta: T05 Flávio\Contas
 @formato: 0%
-@descricao: Parcela dos votos de Flávio (soma dos municípios do recorte) que veio da região ou do município da linha (0–1).
+@descricao: Parcela dos votos de Flávio (soma dos municípios do recorte) que veio da região ou do município da linha (0–1). Tira só as colunas do item (a região e a ordem dela, o rótulo do município).
 @oraculo: paginas[5].regioes[].parte_dos_votos
 */
 DIVIDE (
     [T05 · votos (municípios)],
-    CALCULATE ( [T05 · votos (municípios)], REMOVEFILTERS ( 'UF'[Região] ), REMOVEFILTERS ( 'Município'[Rótulo] ) )
+    CALCULATE ( [T05 · votos (municípios)], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ), REMOVEFILTERS ( 'Município'[Rótulo] ) )
 )

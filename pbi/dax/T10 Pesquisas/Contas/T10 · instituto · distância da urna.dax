@@ -1,0 +1,8 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Distância, em pontos, entre a diferença Flávio − Lula da última pesquisa do instituto e a da urna, em qualquer base (nos votos totais é a única comparação justa com a urna).
+*/
+VAR _d = [T10 · instituto · diferença]
+RETURN
+    IF ( NOT ISBLANK ( _d ), ABS ( _d - [T10 · urna · diferença] ) )

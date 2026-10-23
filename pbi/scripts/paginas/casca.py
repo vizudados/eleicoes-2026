@@ -18,6 +18,8 @@ O texto da leitura de cada tela vem de leituras.py (Como ler · De onde vêm os 
 from __future__ import annotations
 
 import html
+import importlib
+import math
 
 import estilo
 import leituras
@@ -27,13 +29,24 @@ from pbip_lib import Bookmark, Pagina, Visual
 
 CSS = "Estilo · CSS"
 VAZIO = "Casca · vazio"
-FILTRO = (1282, 60, 424, 48)
+# O VizuFilter é um visual próprio: a lista abre dentro da caixa dele, então a caixa vai até onde a lista desce
+# (altura que o Alisson deixou na 01 · Placar em 23/10/2026). Uma caixa alta pega o mouse da área inteira, mesmo
+# fechada (medido no Desktop: os quadrados do mapa da apuração ficavam mortos), então a tela mostra só a pílula
+# (FILTRO_PILULA, HTML com o estado em uso) e o VizuFilter alto aparece por cima quando ela é clicada, já aberto; o
+# véu em volta (FILTRO_FORA) fecha ao clicar fora.
+FILTRO = (1282, 60, 424, 626)
+FILTRO_PILULA = (1282, 60, 424, 48)
+FILTRO_FORA = (0, 0, 1920, 1080)
+# telas com filtro próprio no mesmo padrão (pílula + VizuFilter alto + véu); cada módulo expõe NOMES_FILTRO
+FILTROS_PROPRIOS = {"T15": "t15_minha_cidade", "T20": "t20_escola"}
 INFO = (1724, 62, 44, 44)
 SETA_ESQ = (36, 500, 80, 80)
 SETA_DIR = (1804, 500, 80, 80)
 URNA = (40, 40, 92, 92)
-LEITURA = (1180, 124, 600, 780)
-FECHAR = (1724, 140, 40, 40)        # o × desenhado no canto do cartão de leitura
+LEITURA = (1180, 124, 600)          # x, y, largura; a altura sai do texto de cada tela (_altura_leitura)
+TOPO_CARTAO = 14                     # o cartão começa 14 px abaixo do topo do visual (a fita fica por cima)
+FECHAR = (1724, 124 + TOPO_CARTAO + 14, 40, 40)   # o × desenhado no canto do cartão: 16 px da direita, 14 do topo
+FORA = (0, 0, 1920, 1080)            # véu da leitura aberta: clicar fora do cartão também fecha
 GRUPO_UF = "Eleicoes_UF"
 Z = {"fundo": 10, "leitura": lib.CAMADAS["leitura"], "filtro": lib.CAMADAS["drawer"],
      "nav": lib.CAMADAS["navegacao"]}
@@ -90,29 +103,49 @@ def corpo_casca(t: roteiro.Tela) -> str:
             f"<span class='fonte'>{e(t.fonte)}</span></div></div>{{{{content}}}}")
 
 
+def _texto_leitura(t: roteiro.Tela) -> dict:
+    return leituras.LEITURAS.get(t.codigo) or leituras.padrao(t)
+
+
+def _linhas(texto: str, por_linha: int) -> int:
+    return max(1, math.ceil(len(texto) / por_linha))
+
+
+def _altura_leitura(t: roteiro.Tela) -> int:
+    """Altura do visual da leitura: o cartão cresce com o texto (Sora 16 px em 520 px ≈ 58 caracteres por linha; título
+    24 px em 460 px ≈ 32), com folga de 24 px; assim a caixa transparente embaixo do cartão quase não sobra."""
+    texto = _texto_leitura(t)
+    h = TOPO_CARTAO + 40 + _linhas(texto["titulo"], 32) * 31 + 22
+    h += sum(17 + 6 + _linhas(p, 58) * 23 + 20 for _, p in texto["blocos"])
+    return int(min(880, h + 32 + 24))
+
+
 def corpo_leitura(t: roteiro.Tela) -> str:
-    """Cartão de leitura (o "i"): papel com orelha, título, três blocos e o × no canto."""
-    k = _tom(t)
+    """Cartão de leitura (o "i"): papel do tamanho do texto, fita no topo, título, três blocos e o × num círculo no
+    canto, exatamente sobre o botão que fecha (FECHAR)."""
     c = estilo.COR
-    texto = leituras.LEITURAS.get(t.codigo) or leituras.padrao(t)
+    texto = _texto_leitura(t)
     e = html.escape
     blocos = "".join(
         f"<div class='bl sobe d{i + 2}'><div class='rot'>{e(r)}</div><div class='txt'>{e(p)}</div></div>"
         for i, (r, p) in enumerate(texto["blocos"]))
     papel, tinta = (c["papel"], c["tinta"]) if not t.escura else (c["creme"], c["tinta"])
     css = (
-        f".lt{{background:{papel};color:{tinta};padding:36px 40px 32px 40px;"
-        f"border:1.5px solid {c['areia']};box-shadow:0 18px 40px rgba(28,25,21,.18);"
-        "clip-path:polygon(0 0,calc(100% - 46px) 0,100% 46px,100% 100%,0 100%)}"
-        f".lt .orelha{{position:absolute;right:0;top:0;width:46px;height:46px;background:{c['creme']};"
-        f"border-left:1.5px solid {c['areia']};border-bottom:1.5px solid {c['areia']}}}"
-        ".lt .x{position:absolute;right:56px;top:16px;font-size:26px;line-height:1;color:var(--grafite)}"
+        f".lt{{position:absolute;left:0;top:{TOPO_CARTAO}px;width:{LEITURA[2]}px;background:{papel};color:{tinta};"
+        f"padding:40px 40px 32px 40px;border:1.5px solid {c['areia']};box-shadow:0 18px 40px rgba(28,25,21,.22)}}"
+        f".lt .fita{{position:absolute;left:230px;top:-{TOPO_CARTAO}px;width:140px;height:26px;background:{c['areia']};"
+        "opacity:.8;transform:rotate(-2deg)}"
+        f".lt .x{{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid "
+        f"{c['areia']};display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;"
+        f"color:{c['grafite']}}}"
         ".lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}"
-        ".lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:60px}"
-        ".lt .bl{margin-bottom:20px}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}"
+        ".lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}"
+        ".lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}"
+        ".lt .bl .txt{font-size:16px;color:var(--tinta)}"
     )
-    return (f"<style>{css}</style><div class='lt tela'><div class='orelha'></div><div class='x'>×</div>"
-            f"<div class='tt sobe'><span class='ast'>*</span>{e(texto['titulo'])}</div>{blocos}</div>{{{{content}}}}")
+    return (f"<style>{css}</style><div class='tela'><div class='lt'><div class='fita'></div><div class='x'>×</div>"
+            f"<div class='tt sobe'><span class='ast'>*</span>{e(texto['titulo'])}</div>{blocos}</div></div>"
+            "{{content}}")
 
 
 def _pagina(t: roteiro.Tela) -> dict:
@@ -121,6 +154,18 @@ def _pagina(t: roteiro.Tela) -> dict:
             "displayOption": "FitToPage", "width": lib.LARGURA, "height": lib.ALTURA,
             "objects": {"background": [{"properties": {"color": lib.cor(cor), "transparency": lib.lit(0)}}],
                         "outspace": [{"properties": {"color": lib.cor(cor), "transparency": lib.lit(0)}}]}}
+
+
+CSS_PILULA = (
+    f".pl{{display:flex;align-items:center;gap:12px;padding:0 14px 0 14px;background:{estilo.COR['creme']};"
+    f"border:1px solid {estilo.COR['areia']};border-radius:6px;color:{estilo.COR['tinta']};font-size:16px;"
+    "box-shadow:0 1px 2px rgba(28,25,21,.06)}"
+    f".pl .fu{{position:relative;display:inline-flex;color:{estilo.COR['grafite']}}}"
+    f".pl .fu i{{display:none;position:absolute;right:-3px;top:-2px;width:7px;height:7px;border-radius:4px;"
+    f"background:{estilo.COR['vermelho']}}}.pl.ativo .fu i{{display:block}}"
+    ".pl b{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+    f".pl .sv{{color:{estilo.COR['grafite']}}}"
+)
 
 
 def _estilo_filtro(t: roteiro.Tela) -> dict:
@@ -139,12 +184,13 @@ def _estilo_filtro(t: roteiro.Tela) -> dict:
 
 def _filtro(t: roteiro.Tela) -> list:
     x, y, w, h = FILTRO
-    layout = {"controlWidth": w, "controlHeight": h, "dropdownWidth": w, "dropdownHeight": 560, "gap": 6,
+    hp = FILTRO_PILULA[3]
+    layout = {"controlWidth": w, "controlHeight": hp, "dropdownWidth": w, "dropdownHeight": h - hp - 6, "gap": 6,
               "optionHeight": 40, "searchHeight": 44, "triggerIconGap": 12, "borderRadius": 6, "checkboxSize": 14,
               "checkboxRadius": 2, "scrollbarWidth": 4, "wrapOptionLabels": False}
     if t.filtro == "UF":
         geral = {"mode": "dropdown", "singleSelect": True, "singleSelectAllowAll": True, "sortAscending": True,
-                 "startOpen": False, "alwaysOpen": False, "showSearch": True, "showSelectAll": False,
+                 "startOpen": True, "alwaysOpen": True, "showSearch": True, "showSelectAll": False,
                  "showReset": False, "showSelectedCount": False, "showSelectedValue": True,
                  "selectedValueOnly": True, "syncSelectionWithHost": True, "triggerMode": "value",
                  "triggerLabel": "UF", "placeholderText": "Todo o Brasil", "allOptionText": "Todo o Brasil",
@@ -155,11 +201,30 @@ def _filtro(t: roteiro.Tela) -> list:
         for f in recorte["filters"]:
             f["isHiddenInViewMode"] = True
             f["isLockedInViewMode"] = True
-        return [Visual(t.codigo, lib.visual_vizufilter(
-            f"{t.codigo}_Casca_Filtro", x, y, w, h, categoria=("UF", "Nome", "Estado"), geral=geral, layout=layout,
-            estilo=_estilo_filtro(t), alt=lib.medida("Casca · filtro · ALT"), z=Z["filtro"], tab=5,
-            sincronia=lib.grupo_sincronia(GRUPO_UF), filtros=recorte,
-            medidas={"itemGroup": "Casca · filtro · região", "itemSort": "Casca · filtro · ordem"}, extras=extras))]
+        p = t.codigo
+        return [
+            Visual(p, lib.visual_html(f"{p}_Casca_FiltroPilula", *FILTRO_PILULA, "Casca · filtro · pílula · HTML",
+                                      folha_de_estilo=CSS, modelo_corpo=f"<style>{CSS_PILULA}</style>{{{{content}}}}",
+                                      alt=lib.medida("Casca · filtro · ALT"), z=Z["filtro"] - 20, tab=4,
+                                      movimento=False)),
+            _botao(t, "FiltroAbre", FILTRO_PILULA, lib.acao_bookmark(f"{p}_FILTRO_ABRE_01"),
+                   "Escolher um estado", 5, raio=6),
+            _botao(t, "FiltroFora", FILTRO_FORA, lib.acao_bookmark(f"{p}_FILTRO_FECHA_01"), "Fechar o filtro", 7,
+                   oculto=True, raio=0, z=Z["filtro"] - 10, realce=None, fundo=(estilo.COR["tinta"], 90)),
+            Visual(p, lib.visual_vizufilter(
+                f"{p}_Casca_Filtro", x, y, w, h, categoria=("UF", "Nome", "Estado"), geral=geral, layout=layout,
+                estilo=_estilo_filtro(t), alt=lib.medida("Casca · filtro · ALT"), z=Z["filtro"], tab=6, oculto=True,
+                sincronia=lib.grupo_sincronia(GRUPO_UF), filtros=recorte,
+                medidas={"itemGroup": "Casca · filtro · região", "itemSort": "Casca · filtro · ordem"}, extras=extras)),
+            Bookmark(lib.bookmark_exibicao(f"{p}_FILTRO_ABRE_01", p, {f"{p}_Casca_Filtro": True,
+                                                                    f"{p}_Casca_FiltroFora": True,
+                                                                    f"{p}_Casca_FiltroAbre": False},
+                                           titulo=f"{p} · filtro aberto"), grupo=("Filtros", "Filtros")),
+            Bookmark(lib.bookmark_exibicao(f"{p}_FILTRO_FECHA_01", p, {f"{p}_Casca_Filtro": False,
+                                                                     f"{p}_Casca_FiltroFora": False,
+                                                                     f"{p}_Casca_FiltroAbre": True},
+                                           titulo=f"{p} · filtro fechado"), grupo=("Filtros", "Filtros")),
+        ]
     return []                     # município (T15) e local (T20) são declarados pelas próprias telas
 
 
@@ -189,18 +254,32 @@ def declarar(ctx):
             itens.append(_botao(t, "Inicio", URNA, lib.acao_bookmark("TIX_CHEGADA_01"), "Sumário: todas as telas", 2))
         # leitura da tela (o "i")
         itens.append(Visual(p, lib.visual_html(
-            f"{p}_Casca_Leitura", *LEITURA, VAZIO, folha_de_estilo=CSS, modelo_corpo=corpo_leitura(t),
-            alt=f"Como ler a tela {t.numero} · {t.nome}", z=Z["leitura"], tab=950, oculto=True, movimento=False)))
+            f"{p}_Casca_Leitura", *LEITURA, _altura_leitura(t), VAZIO, folha_de_estilo=CSS,
+            modelo_corpo=corpo_leitura(t), alt=f"Como ler a tela {t.numero} · {t.nome}", z=Z["leitura"], tab=950,
+            oculto=True, movimento=False)))
         itens.append(_botao(t, "InfoAbre", INFO, lib.acao_bookmark(f"{p}_LEITURA_ABRE_01"),
                             "Como ler esta tela e de onde vêm os números", 6))
         itens.append(_botao(t, "InfoFecha", FECHAR, lib.acao_bookmark(f"{p}_LEITURA_FECHA_01"), "Fechar a leitura",
                             951, oculto=True, raio=20))
-        aberta = {f"{p}_Casca_Leitura": True, f"{p}_Casca_InfoFecha": True, f"{p}_Casca_InfoAbre": False}
-        fechada = {f"{p}_Casca_Leitura": False, f"{p}_Casca_InfoFecha": False, f"{p}_Casca_InfoAbre": True}
+        # véu da leitura aberta (embaixo do cartão): escurece a tela de leve e fecha a leitura no clique fora
+        itens.append(_botao(t, "InfoFora", FORA, lib.acao_bookmark(f"{p}_LEITURA_FECHA_01"), "Fechar a leitura",
+                            949, oculto=True, raio=0, z=Z["leitura"] - 10, realce=None,
+                            fundo=(estilo.COR["tinta"], 86)))
+        aberta = {f"{p}_Casca_Leitura": True, f"{p}_Casca_InfoFecha": True, f"{p}_Casca_InfoFora": True,
+                  f"{p}_Casca_InfoAbre": False}
+        fechada = {f"{p}_Casca_Leitura": False, f"{p}_Casca_InfoFecha": False, f"{p}_Casca_InfoFora": False,
+                   f"{p}_Casca_InfoAbre": True}
         itens.append(Bookmark(lib.bookmark_exibicao(f"{p}_LEITURA_ABRE_01", p, aberta, titulo=f"{p} · leitura aberta"),
                               grupo=("Leituras", "Leituras")))
         itens.append(Bookmark(lib.bookmark_exibicao(f"{p}_LEITURA_FECHA_01", p, fechada,
                                                     titulo=f"{p} · leitura fechada"), grupo=("Leituras", "Leituras")))
+        if t.filtro == "UF":
+            fechada = {**fechada, f"{p}_Casca_Filtro": False, f"{p}_Casca_FiltroFora": False,
+                       f"{p}_Casca_FiltroAbre": True}
+        elif p in FILTROS_PROPRIOS:
+            # telas com VizuFilter próprio (pílula + painel declarados por elas): a chegada deixa o painel fechado
+            nomes = importlib.import_module(f"paginas.{FILTROS_PROPRIOS[p]}").NOMES_FILTRO
+            fechada = {**fechada, nomes["lista"]: False, nomes["fora"]: False, nomes["abre"]: True}
         itens.append(Bookmark(lib.bookmark_chegada(f"{p}_CHEGADA_01", p, fechada, titulo=f"Chegada · {t.titulo_pagina}"),
                               grupo=("Chegadas", "Chegadas")))
         itens += _filtro(t)

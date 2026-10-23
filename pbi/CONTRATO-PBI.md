@@ -111,6 +111,11 @@ def declarar(ctx):
   - `.cor` / `.cor-esc`: o preenchimento esmaece do creme (ou da tinta) até a cor final; `.esmaece` (opacidade);
     `.brota` (escala do ponto).
   - Mapas: contorno se desenha (traço), depois a cor esmaece por região ou por onda (atrasos), depois os rótulos sobem.
+- **Realce no hover (pedido do Alisson, 23/10/2026)**: o elemento sob o mouse fica inteiro e os outros apagam. Visual
+  HTML com grão: automático (`pbip_lib.CSS_REALCE`; a raiz da entrada não pega o mouse, os filhos pegam). Desenho sem
+  grão: classe `.realce` no contêiner dos itens. Deneb: sinal de hover; em mapa denso, só o contorno do ponto.
+- **Todo gráfico com pontos tem grão, tooltip de página e, onde fizer sentido, filtro cruzado** (mapa ↔ tempo ↔
+  categoria ↔ lista). Nada de rabisco por cima de número.
 
 ## 6. Dados (modelo em pbi/modelo/*.py; CSV em dados/pbi)
 

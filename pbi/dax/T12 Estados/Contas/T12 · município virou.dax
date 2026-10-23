@@ -1,0 +1,10 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0
+@descricao: 1 se o município do contexto tinha Lula à frente em 2022 e Flávio em 2026; 0 se não.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+VAR _d22 = [T12 · saldo municipal 2022]
+VAR _d26 = [T12 · saldo municipal 2026]
+RETURN
+    IF ( _d22 > 0 && _d26 < 0, 1, 0 )

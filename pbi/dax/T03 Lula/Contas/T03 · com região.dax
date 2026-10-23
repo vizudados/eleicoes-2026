@@ -1,0 +1,8 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0
+@descricao: 1 quando o recorte é um grupo de UFs (a região clicada na origem), 0 nos outros casos.
+*/
+VAR _ufs = CALCULATE ( DISTINCTCOUNT ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+RETURN
+    IF ( ISCROSSFILTERED ( 'UF' ) && _ufs > 1, 1, 0 )

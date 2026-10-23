@@ -1,0 +1,11 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0%
+@descricao: Parcela de Lula nos válidos de 2026 somados em todas as cidades do Brasil com o mesmo porte do município marcado.
+*/
+VAR _p = [T03 · porte do município]
+RETURN
+    IF (
+        NOT ISBLANK ( _p ),
+        CALCULATE ( [T03 · % (municípios)], REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'UF' ), 'Município'[Porte] = _p )
+    )

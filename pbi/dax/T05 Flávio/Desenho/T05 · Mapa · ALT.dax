@@ -4,9 +4,9 @@
 @descricao: Texto para leitor de tela do mapa de pontos.
 */
 LEFT (
-    "Mapa de " & [T05 · recorte] & " com um ponto por município: Flávio ficou à frente em "
+    "Mapa (" & [T05 · recorte] & ") com um ponto por município: Flávio ficou à frente em "
         & [T05 · municípios à frente] & " de " & [T05 · municípios]
         & IF ( [T05 · municípios] = 1, " município", " municípios" ) & ". Passe o mouse num ponto "
-        & "para ver a cidade.",
+        & "para ver a cidade; clique para levá-la ao painel.",
     250
 )

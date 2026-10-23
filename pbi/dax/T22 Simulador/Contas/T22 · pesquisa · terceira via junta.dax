@@ -1,0 +1,14 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: texto
+@descricao: Sim quando a pesquisa em uso publicou os eleitores de Cury, Renan e Caiado num grupo só (agregado da terceira via): os três ganham o mesmo número; Não quando publicou cada um; vazio sem pesquisa em uso.
+*/
+VAR _data = [T22 · pesquisa · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        VAR _linhas = CALCULATETABLE ( 'Transferência', 'Transferência'[Divulgação] = _data )
+        VAR _separados = COUNTROWS ( FILTER ( _linhas, 'Transferência'[Segmento] IN { "Cury", "Renan", "Caiado" } ) )
+        RETURN
+            IF ( ISBLANK ( _separados ), "Sim", "Não" )
+    )

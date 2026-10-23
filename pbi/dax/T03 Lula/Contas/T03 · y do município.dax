@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.00
+@descricao: Centro do município no quadro 1000 × 1000 dos mapas (y, para baixo).
+*/
+SELECTEDVALUE ( 'Município'[Y] )

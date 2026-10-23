@@ -1,0 +1,6 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: texto
+@descricao: O candidato da linha do quadro 'onde foi o erro' (grão 'Candidato ano'[Partido] na camada de alvos e no dossiê ttT10Erro): PT = Lula, PL = Flávio; vazio nos outros partidos.
+*/
+SWITCH ( SELECTEDVALUE ( 'Candidato ano'[Partido] ), "PT", "Lula", "PL", "Flávio" )

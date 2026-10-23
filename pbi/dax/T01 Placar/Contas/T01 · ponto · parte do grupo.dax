@@ -1,0 +1,7 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0%
+@descricao: Parcela dos votos do partido do ponto, no ano do ponto, que veio da região ou do porte da linha (0–1). Tira só as colunas do grupo.
+@oraculo: Lula 2026 › Nordeste 40% (paginas[3].regioes)
+*/
+DIVIDE ( [T01 · ponto · votos no grupo], CALCULATE ( [T01 · ponto · votos no grupo], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ), REMOVEFILTERS ( 'Município'[Porte], 'Município'[PorteOrdem] ) ) )

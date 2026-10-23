@@ -1,7 +1,7 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
 @formato: 0
-@descricao: Quantos marcos de Flávio têm foto da época redesenhada.
-@oraculo: Lula 7 · Flávio 9 (dados/pbi/trajetoria.csv)
+@descricao: Quantos marcos de Flávio têm foto da época redesenhada (sem contar as ilustrações recriadas).
+@oraculo: Lula 8 · Flávio 10 (dados/pbi/trajetoria.csv; desenhos.csv, tipo = foto)
 */
-CALCULATE ( COUNTROWS ( 'Trajetória' ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Flávio", 'Trajetória'[Foto] <> "" )
+CALCULATE ( COUNTROWS ( 'Trajetória' ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Flávio", 'Trajetória'[Foto] <> "", NOT ( 'Trajetória'[Foto] IN { "lula-1975-sindicato", "lula-1980-fundacao-pt" } ) )

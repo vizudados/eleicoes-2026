@@ -1,0 +1,91 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Dossiê de uma data do índice de popularidade digital (ttT09Ipd, grão Monitoramento[Início]): o índice dos dois no dia (ou só de quem a Quaest divulgou) e uma camada nova, o humor da conversa: o saldo de sentimento da Datrix (% de menções positivas − % de negativas) da semana que contém o dia, ou, nas 24 h depois do debate, as menções positivas e negativas medidas pela FGV, ou, no dia do 1º turno, quem ficou com os comentários nos perfis dos dois (Quaest). Nota à mão quando quem lidera o índice não é quem tem o melhor humor. Só lê contas 'T09 · …'.
+*/
+-- 1 · Leituras
+VAR _d = [T09 · IPD dia · data]
+VAR _d1 = [T09 · IPD dia · fim]
+VAR _marco = [T09 · IPD dia · marco]
+VAR _l = [T09 · IPD dia · Lula]
+VAR _fl = [T09 · IPD dia · Flávio]
+VAR _hI = [T09 · humor · início]
+VAR _hF = [T09 · humor · fim]
+VAR _hL = [T09 · humor · Lula]
+VAR _hFl = [T09 · humor · Flávio]
+VAR _deb = [T09 · menções · depois do debate]
+VAR _pL = [T09 · menções · positivas · Lula]
+VAR _pF = [T09 · menções · positivas · Flávio]
+VAR _nL = [T09 · menções · negativas · Lula]
+VAR _nF = [T09 · menções · negativas · Flávio]
+VAR _cQ = [T09 · comentários · quem]
+VAR _cP = [T09 · comentários · parte]
+-- 2 · Textos
+VAR _txtData =
+    IF ( _d1 > _d, FORMAT ( _d, "dd" ) & " a " & FORMAT ( _d1, "dd/MM" ), FORMAT ( _d, "dd/MM" ) & " · " & _marco )
+VAR _txtNum = "<span class='num'>#V</span>"
+VAR _numL = IF ( ISBLANK ( _l ), "<span class='num vazio'>—</span>", SUBSTITUTE ( _txtNum, "#V", FORMAT ( _l, "0.0" ) ) )
+VAR _numF = IF ( ISBLANK ( _fl ), "<span class='num vazio'>—</span>", SUBSTITUTE ( _txtNum, "#V", FORMAT ( _fl, "0.0" ) ) )
+VAR _txtIpd =
+    SWITCH (
+        TRUE (),
+        _d1 > _d, "De " & FORMAT ( _d, "dd/MM" ) & " a " & FORMAT ( _d1, "dd/MM" ) & ", a Quaest divulgou só o patamar máximo de Lula.",
+        ISBLANK ( _l ), "Nesse dia, a Quaest divulgou só o índice de Flávio.",
+        ISBLANK ( _fl ), "Nesse dia, a Quaest divulgou só o índice de Lula.",
+        "Índice de 0 a 100: mede popularidade nas redes, no Google e na Wikipédia, não voto."
+    )
+VAR _modo = SWITCH ( TRUE (), NOT ISBLANK ( _hL ), "humor", _deb = 1, "mencoes", NOT ISBLANK ( _cQ ), "comentarios", "" )
+VAR _txtJanela = IF ( _hF > _hI, FORMAT ( _hI, "dd" ) & " a " & FORMAT ( _hF, "dd/MM" ), FORMAT ( _hI, "dd/MM" ) )
+VAR _sinal = "#S#V"
+VAR _txtHL = SUBSTITUTE ( SUBSTITUTE ( _sinal, "#S", IF ( _hL > 0, "+", IF ( _hL < 0, "−", "" ) ) ), "#V", FORMAT ( ABS ( _hL ), "0.0" ) )
+VAR _txtHF = SUBSTITUTE ( SUBSTITUTE ( _sinal, "#S", IF ( _hFl > 0, "+", IF ( _hFl < 0, "−", "" ) ) ), "#V", FORMAT ( ABS ( _hFl ), "0.0" ) )
+VAR _liderIpd = IF ( NOT ISBLANK ( _l ) && NOT ISBLANK ( _fl ), IF ( _l > _fl, "Lula", "Flávio" ) )
+VAR _liderHumor = IF ( _modo = "humor", IF ( _hL > _hFl, "Lula", "Flávio" ) )
+VAR _mao =
+    IF (
+        NOT ISBLANK ( _liderIpd ) && NOT ISBLANK ( _liderHumor ) && _liderIpd <> _liderHumor,
+        "popularidade não é simpatia"
+    )
+VAR _nomeQ = IF ( _cQ = "Lula", "Lula", "Flávio" )
+-- 3 · Geometria (barras do humor: 0 no meio, 6 px por ponto, até 20 pontos para cada lado)
+VAR _k = 6 -- geometria
+VAR _barra =
+    "<div class='hb'><span class='hn #C'>#N</span><span class='trilho'><i class='#C #D' style='width:#Wpx'></i></span>"
+        & "<b class='#C'>#T</b></div>"
+VAR _barraL =
+    SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _barra, "#C", "lula-esc l" ), "#N", "Lula" ),
+        "#D", IF ( _hL < 0, "neg", "pos" ) ), "#W", FORMAT ( MIN ( ABS ( _hL ), 20 ) * _k, "0.0", "en-US" ) ), "#T", _txtHL )
+VAR _barraF =
+    SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _barra, "#C", "flavio-esc f" ), "#N", "Flávio" ),
+        "#D", IF ( _hFl < 0, "neg", "pos" ) ), "#W", FORMAT ( MIN ( ABS ( _hFl ), 20 ) * _k, "0.0", "en-US" ) ), "#T", _txtHF )
+-- 4 · Marcação
+VAR _humor =
+    SWITCH (
+        _modo,
+        "humor",
+            "<div class='rot sobe d5'>O humor da conversa · " & _txtJanela & " · Datrix</div>"
+                & "<div class='sobe d6'>" & _barraL & _barraF & "</div>"
+                & "<div class='nota sobe d7'>% de menções positivas menos % de negativas, em pontos.</div>",
+        "mencoes",
+            "<div class='rot sobe d5'>O humor nas 24 h depois do debate · FGV</div>"
+                & "<div class='mt sobe d6'><span></span><span class='h'>positivas</span><span class='h'>negativas</span>"
+                & "<span class='lula-esc'>Lula</span><b>" & _pL & "%</b><b>" & _nL & "%</b>"
+                & "<span class='flavio-esc'>Flávio</span><b>" & _pF & "%</b><b>" & _nF & "%</b></div>"
+                & "<div class='nota sobe d7'>Parte das menções a cada um, nas redes.</div>",
+        "comentarios",
+            "<div class='rot sobe d5'>A conversa no dia · Quaest</div>"
+                & "<div class='txt sobe d6'>Nos comentários dos perfis dos dois, <b>" & _cP & "%</b> foram no de " & _nomeQ & ".</div>",
+        ""
+    )
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        "<div class='tt9i'>"
+            & "<div class='sob sobe'>" & _txtData & "</div>"
+            & "<div class='par sobe d2'><div class='lula'><small>Lula</small>" & _numL & "</div>"
+                & "<div class='flavio'><small>Flávio</small>" & _numF & "</div></div>"
+            & "<div class='txt sobe d3'>" & _txtIpd & "</div>"
+            & IF ( _modo <> "", "<hr class='sobe d4'/>" & _humor )
+            & IF ( NOT ISBLANK ( _mao ), "<div class='mao ti entra d8'>" & _mao & "</div>" )
+        & "</div>"
+    )

@@ -1,7 +1,7 @@
 /*
 @pasta: T02 Lula · quem é\Desenho
 @formato: texto
-@descricao: Ficha de Lula (alto à esquerda da tela): desde quando está na vida pública, o 1º turno de 2026 e quantos marcos a linha do tempo tem. Só lê contas.
+@descricao: Ficha de Lula (alto à esquerda da tela): desde quando está na vida pública, o 1º turno de 2026 e quantos marcos a linha do tempo tem (com foto da época e em ilustração recriada). Só lê contas.
 */
 -- 1 · Leituras
 VAR _desde = [T02 · Trajetória · primeiro ano]
@@ -11,11 +11,20 @@ VAR _pct = [T02 · % 2026]
 VAR _pos = [T02 · posição 2026]
 VAR _marcos = [T02 · Trajetória · marcos]
 VAR _fotos = [T02 · Trajetória · marcos com foto]
+VAR _ilus = [T02 · Trajetória · marcos ilustrados]
 -- 2 · Textos
 VAR _txtVotos = SWITCH ( TRUE (), ABS ( _votos ) >= 1000000, FORMAT ( _votos / 1000000, "0.00" ) & " mi", ABS ( _votos ) >= 1000, FORMAT ( _votos / 1000, "0.0" ) & " mil", FORMAT ( _votos, "#,0" ) )
 VAR _txtPct = FORMAT ( _pct, "0.0%" )
 VAR _txtFotos =
-    SWITCH ( _fotos, 0, "nenhum com foto da época", 1, "1 com foto da época", _fotos & " com foto da época" )
+    SWITCH (
+        TRUE (),
+        _fotos = _marcos, "todos com foto da época",
+        _fotos = 0, "nenhum com foto da época",
+        _fotos = 1, "1 com foto da época",
+        _fotos & " com foto da época"
+    )
+VAR _txtIlus =
+    SWITCH ( _ilus, 0, "", 1, ", 1 em ilustração recriada", ", " & _ilus & " em ilustração recriada" )
 -- 4 · Marcação
 VAR _html =
     "<div class='tela fc'>"
@@ -25,7 +34,8 @@ VAR _html =
         & "<div class='val'><span class='lula'>" & _txtVotos & "</span><small>de votos · " & _txtPct
         & " · " & _pos & "º lugar</small></div></div>"
         & "<div class='lin sobe d5'><div class='rot'>Na linha do tempo abaixo</div>"
-        & "<div class='val'><span>" & _marcos & "</span><small>marcos, " & _txtFotos & "</small></div></div>"
+        & "<div class='val'><span>" & _marcos & "</span><small>marcos, " & _txtFotos & _txtIlus
+        & "</small></div></div>"
     & "</div>"
 RETURN
     _html

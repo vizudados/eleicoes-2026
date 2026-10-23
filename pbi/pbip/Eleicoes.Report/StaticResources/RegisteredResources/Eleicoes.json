@@ -1,6 +1,17 @@
 {
   "name": "Eleicoes",
-  "dataColors": ["#B8322A", "#2B5797", "#CBBDA2", "#48423A", "#D9877B", "#8FA8CF", "#7A5A43", "#6B6357", "#8E2620", "#1D3C6E"],
+  "dataColors": [
+    "#B8322A",
+    "#2B5797",
+    "#CBBDA2",
+    "#48423A",
+    "#D9877B",
+    "#8FA8CF",
+    "#7A5A43",
+    "#6B6357",
+    "#8E2620",
+    "#1D3C6E"
+  ],
   "background": "#F1EBDF",
   "foreground": "#1C1915",
   "tableAccent": "#7A5A43",
@@ -11,19 +22,75 @@
   "center": "#E5DBC8",
   "minimum": "#B8322A",
   "textClasses": {
-    "label": {"fontFace": "Segoe UI", "fontSize": 12, "color": "#48423A"},
-    "callout": {"fontFace": "Segoe UI Semibold", "fontSize": 28, "color": "#1C1915"},
-    "title": {"fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#1C1915"},
-    "header": {"fontFace": "Segoe UI Semibold", "fontSize": 12, "color": "#1C1915"}
+    "label": {
+      "fontFace": "Segoe UI",
+      "fontSize": 12,
+      "color": "#48423A"
+    },
+    "callout": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 28,
+      "color": "#1C1915"
+    },
+    "title": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 14,
+      "color": "#1C1915"
+    },
+    "header": {
+      "fontFace": "Segoe UI Semibold",
+      "fontSize": 12,
+      "color": "#1C1915"
+    }
   },
   "visualStyles": {
-    "*": {"*": {
-      "background": [{"show": false}],
-      "border": [{"show": false}],
-      "visualHeader": [{"show": false}],
-      "dropShadow": [{"show": false}]
-    }},
-    "page": {"*": {"background": [{"color": {"solid": {"color": "#F1EBDF"}}, "transparency": 0}],
-                   "outspace": [{"color": {"solid": {"color": "#F1EBDF"}}, "transparency": 0}]}}
+    "*": {
+      "*": {
+        "background": [
+          {
+            "show": false
+          }
+        ],
+        "border": [
+          {
+            "show": false
+          }
+        ],
+        "visualHeader": [
+          {
+            "show": false
+          }
+        ],
+        "dropShadow": [
+          {
+            "show": false
+          }
+        ]
+      }
+    },
+    "page": {
+      "*": {
+        "background": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F1EBDF"
+              }
+            },
+            "transparency": 0
+          }
+        ],
+        "outspace": [
+          {
+            "color": {
+              "solid": {
+                "color": "#F1EBDF"
+              }
+            },
+            "transparency": 0
+          }
+        ]
+      }
+    }
   }
 }

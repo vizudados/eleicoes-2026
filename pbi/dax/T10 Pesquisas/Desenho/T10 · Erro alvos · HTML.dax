@@ -1,0 +1,19 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Camada de alvos do quadro 'onde foi o erro' (grão 'Candidato ano'[Partido]: PT = Lula, PL = Flávio): uma faixa transparente sobre a linha de cada um, que abre o dossiê ttT10Erro com os institutos um a um. Vazia nos outros partidos e quando o instituto clicado divulgou votos totais (o quadro mostra só a diferença).
+*/
+-- 1 · Leituras
+VAR _c = [T10 · erro · candidato]
+VAR _inst = [T10 · escolha · instituto]
+VAR _base = [T10 · instituto · base]
+-- 2 · Textos
+VAR _ok = NOT ISBLANK ( _c ) && ( ISBLANK ( _inst ) || _base = "validos" )
+-- 3 · Geometria (o svg do quadro começa em y 96; linha de Lula em 34, de Flávio em 132; a faixa pega o rótulo de baixo)
+VAR _top = IF ( _c = "Lula", 96 + 34 - 30, 96 + 132 - 30 ) -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        _ok,
+        "<div class='tela t10a'><div class='alvo' style='top:" & _top & "px'></div></div>"
+    )

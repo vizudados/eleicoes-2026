@@ -1,15 +1,21 @@
 /*
 @pasta: T14 Série\Contas
 @formato: 0.0%
-@descricao: Votos do mais votado fora do PT sobre os válidos no ano do contexto (nacional com o exterior; com UF, os municípios).
+@descricao: Votos do mais votado fora do PT sobre os válidos no ano do contexto (nacional com o exterior; com UF ou região, os municípios; a região vale por cima da UF).
 @oraculo: mockup/data/eleicoes.json › paginas[14] › anos › adversario › pct (2018 46,0%; 2026 47,0%)
 @gerado: pbi/scripts/desenho_t14.py
 */
 VAR _mun = ISCROSSFILTERED ( 'Município' )
+VAR _reg = ISFILTERED ( 'Município'[Região] )
 RETURN
-    IF (
-        _mun,
-        DIVIDE ( SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) ),
+    SWITCH (
+        TRUE (),
+        _reg,
+            CALCULATE (
+                DIVIDE ( SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) ),
+                REMOVEFILTERS ( 'UF' )
+            ),
+        _mun, DIVIDE ( SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) ),
         DIVIDE (
             CALCULATE ( MAX ( 'Candidato ano'[Votos] ), 'Candidato ano'[Partido] <> "PT" ),
             MAX ( 'Candidato ano'[ValidosAno] )

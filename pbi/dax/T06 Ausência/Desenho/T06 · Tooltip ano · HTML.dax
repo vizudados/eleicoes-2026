@@ -1,0 +1,60 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Dossiê do ano (ficha presa com fita): quem disputou, quantas vezes a diferença entre os dois primeiros cabia em quem faltou, os números de quem faltou e da diferença, quantos anularam ou votaram em branco e, à mão, a comparação com 2026. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _ano = [T06 · ano]
+VAR _recorte = [T06 · recorte]
+VAR _disputa = [T06 · disputa do ano]
+VAR _vezes = [T06 · vezes a diferença (ano)]
+VAR _vezes26 = [T06 · vezes a diferença em 2026]
+VAR _abst = [T06 · abstenções (ano)]
+VAR _dif = [T06 · diferença do ano]
+VAR _nul = [T06 · nulos (ano)]
+VAR _bra = [T06 · brancos (ano)]
+-- 2 · Textos
+VAR _txtVezes = IF ( _vezes >= 10, FORMAT ( _vezes, "0" ), FORMAT ( _vezes, "0.0" ) )
+VAR _txt26 = IF ( _vezes26 >= 10, FORMAT ( _vezes26, "0" ), FORMAT ( _vezes26, "0.0" ) )
+VAR _cabe =
+    IF (
+        _vezes >= 1,
+        "é quantas vezes a diferença entre os dois primeiros cabia em quem faltou",
+        "a diferença entre " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _disputa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " foi maior que o número de quem faltou"
+    )
+VAR _nota = IF ( _ano <> 2026 && NOT ISBLANK ( _vezes26 ), "em 2026: " & _txt26 & " vezes" )
+-- 4 · Marcação
+VAR _css =
+    "<style>"
+        & ".tt6{position:fixed;inset:0;background:var(--papel)}"
+        & ".tt6 .ficha{position:absolute;left:14px;top:22px;right:14px;bottom:14px;background:var(--branco);"
+        & "border:1.5px solid var(--areia);box-shadow:3px 4px 0 rgba(28,25,21,.07)}"
+        & ".tt6 .fita{position:absolute;left:150px;top:-16px;width:96px;transform:rotate(3deg);opacity:.9}"
+        & ".tt6 .ic{position:absolute;right:16px;top:14px;width:34px}"
+        & ".tt6 .cab{position:absolute;left:18px;top:14px;right:60px}"
+        & ".tt6 .nm{font-size:22px;font-weight:700;line-height:1.15}"
+        & ".tt6 .big{position:absolute;left:18px;top:80px;font-size:44px;font-weight:700;letter-spacing:-.03em;"
+        & "white-space:nowrap}"
+        & ".tt6 .bs{position:absolute;left:178px;top:82px;right:18px;font-size:15px;color:var(--grafite);"
+        & "line-height:1.35}"
+        & ".tt6 .lin{position:absolute;left:18px;right:18px;border-top:1px dashed var(--areia);"
+        & "padding-top:8px;font-size:15px;color:var(--grafite)}.tt6 .lin b{color:var(--tinta)}"
+        & ".tt6 .mao{position:absolute;right:18px;bottom:8px;font-size:28px;color:var(--tinta)}"
+    & "</style>"
+VAR _html =
+    _css
+        & "<div class='tt6'><div class='ficha'>"
+        & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/>"
+        & "<img class='ic' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/urna-tinta.png'/>"
+        & "<div class='cab sobe'><div class='nm'>1º turno de " & _ano & "</div>"
+        & "<div class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _disputa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
+        & "<div class='big sobe d1'>" & _txtVezes & "×</div>"
+        & "<div class='bs sobe d2'>" & _cabe & "</div>"
+        & "<div class='lin sobe d3' style='top:160px'>Faltaram <b>" & SWITCH ( TRUE (), ABS ( _abst ) >= 1000000, FORMAT ( _abst / 1000000, "0.0" ) & " mi", ABS ( _abst ) >= 1000, FORMAT ( _abst / 1000, "0.0" ) & " mil", FORMAT ( _abst, "#,0" ) ) & "</b>; a diferença entre "
+        & "os dois foi de <b>" & SWITCH ( TRUE (), ABS ( _dif ) >= 1000000, FORMAT ( _dif / 1000000, "0.00" ) & " mi", ABS ( _dif ) >= 1000, FORMAT ( _dif / 1000, "0.0" ) & " mil", FORMAT ( _dif, "#,0" ) ) & "</b></div>"
+        & "<div class='lin sobe d4' style='top:204px'>Anularam <b>" & SWITCH ( TRUE (), ABS ( _nul ) >= 1000000, FORMAT ( _nul / 1000000, "0.0" ) & " mi", ABS ( _nul ) >= 1000, FORMAT ( _nul / 1000, "0.0" ) & " mil", FORMAT ( _nul, "#,0" ) ) & "</b> · votaram em branco <b>"
+        & SWITCH ( TRUE (), ABS ( _bra ) >= 1000000, FORMAT ( _bra / 1000000, "0.0" ) & " mi", ABS ( _bra ) >= 1000, FORMAT ( _bra / 1000, "0.0" ) & " mil", FORMAT ( _bra, "#,0" ) ) & "</b></div>"
+        & "<div class='mao entra d6'>" & _nota & "</div>"
+        & "</div></div>"
+RETURN
+    IF ( NOT ISBLANK ( _abst ) && NOT ISBLANK ( _dif ), _html )

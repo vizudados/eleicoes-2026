@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T25_LEITURA_ABRE_01",
+  "displayName": "T25 · leitura aberta",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T25_Casca_InfoAbre",
+      "T25_Casca_InfoFecha",
+      "T25_Casca_InfoFora",
+      "T25_Casca_Leitura"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T25",
+    "sections": {
+      "T25": {
+        "visualContainers": {
+          "T25_Casca_InfoAbre": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_InfoFecha": {
+            "singleVisual": {}
+          },
+          "T25_Casca_InfoFora": {
+            "singleVisual": {}
+          },
+          "T25_Casca_Leitura": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

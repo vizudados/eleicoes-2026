@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T10",
-  "displayName": "10 Pesquisas",
+  "displayName": "11 Pesquisas",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -54,5 +54,17 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T10_Regua_Institutos",
+      "target": "T10_Regua_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T10_Regua_Institutos",
+      "target": "T10_Resposta_Html",
+      "type": "NoFilter"
+    }
+  ]
 }

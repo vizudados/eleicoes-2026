@@ -1,0 +1,58 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Numa UF (uma entrada só): as cidades que mais deram votos a Lula na barra (as 5 maiores e os demais municípios) e na lista. Sem clique (o clique numa cidade é no mapa).
+*/
+-- 1 · Leituras
+VAR _munsBase =
+    TOPN (
+        5,
+        ADDCOLUMNS (
+            VALUES ( 'Município'[Rótulo] ),
+            "@v", [T03 · votos (municípios)],
+            "@p", [T03 · parte dos votos],
+            "@pv", [T03 · % (municípios)]
+        ),
+        [@v], DESC
+    )
+VAR _lista =
+    SELECTCOLUMNS ( FILTER ( _munsBase, [@v] > 0 ), "@nome", 'Município'[Rótulo], "@v", [@v], "@p", [@p], "@pv", [@pv] ) /* lista */
+-- 3 · Geometria (barra de 620 px; as fatias seguem a ordem dos votos; linhas de 30 px a partir de y 92)
+VAR _comIni =
+    ADDCOLUMNS (
+        _lista,
+        "@ini", VAR _vv = [@v] RETURN SUMX ( FILTER ( _lista, [@v] > _vv ), [@p] ) + 0, /* lista */
+        "@ord", VAR _vv = [@v] RETURN 1 + COUNTROWS ( FILTER ( _lista, [@v] > _vv ) ) /* lista */
+    )
+VAR _fatias =
+    CONCATENATEX (
+        _comIni,
+        VAR _w = [@p] * 620 -- geometria
+        VAR _nm = IF ( RIGHT ( [@nome], 1 ) = ")", LEFT ( [@nome], LEN ( [@nome] ) - 5 ), [@nome] )
+        VAR _rot = IF ( _w >= 120, _nm & " " & FORMAT ( [@p], "0%" ), IF ( _w >= 44, FORMAT ( [@p], "0%" ), "" ) )
+        RETURN
+            "<div class='fa o" & MIN ( [@ord], 5 ) & " barra-x d" & ( [@ord] + 4 ) & "' style='left:"
+                & FORMAT ( [@ini] * 620, "0.0##", "en-US" ) & "px;width:" & FORMAT ( _w, "0.0##", "en-US" ) & "px'><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rot, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span></div>",
+        "",
+        [@v], DESC
+    )
+VAR _linhas =
+    CONCATENATEX (
+        _comIni,
+        VAR _nm = IF ( RIGHT ( [@nome], 1 ) = ")", LEFT ( [@nome], LEN ( [@nome] ) - 5 ), [@nome] )
+        RETURN
+            "<div class='li sobe d" & ( [@ord] + 6 ) & "' style='top:" & ( 92 + ( [@ord] - 1 ) * 30 ) & "px'>"
+                & "<i class='sw o" & MIN ( [@ord], 5 ) & "'></i><span class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nm, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span>"
+                & "<span class='a'>" & FORMAT ( [@p], "0%" ) & " dos votos dele · " & SWITCH ( TRUE (), ABS ( [@v] ) >= 1000000, FORMAT ( [@v] / 1000000, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( [@v] / 1000, "0.0" ) & " mil", FORMAT ( [@v], "#,0" ) ) & "</span>"
+                & "<span class='b'>" & FORMAT ( [@pv], "0.0%" ) & " dos válidos</span></div>",
+        "",
+        [@v], DESC
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela og'><div class='oc'>"
+        & "<div class='rot ro sobe'>De onde vêm os votos · as cidades que mais deram votos</div>"
+        & "<div class='trilho entra d3'></div><span class='resto entra d9'>demais municípios</span>"
+        & _fatias & _linhas
+        & "<div class='dica entra d14'>clique num ponto do mapa para ver uma cidade</div>"
+    & "</div></div>"

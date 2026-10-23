@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 23 Simulador — E se os eleitores dos outros candidatos escolherem?'"
+                  "Value": "'Próxima: 24 Simulador — E se os eleitores dos outros candidatos escolherem?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 23 Simulador — E se os eleitores dos outros candidatos escolherem?'"
+                  "Value": "'Próxima: 24 Simulador — E se os eleitores dos outros candidatos escolherem?'"
                 }
               }
             },

@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0
+@descricao: 1 quando há município marcado (o clique no mapa filtra 'Município'[CodIBGE]).
+*/
+INT ( ISFILTERED ( 'Município'[CodIBGE] ) || ISFILTERED ( 'Município'[Rótulo] ) )

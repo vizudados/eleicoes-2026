@@ -1,0 +1,86 @@
+/*
+@pasta: T25 Quem falta\Desenho
+@formato: texto
+@descricao: Dossiê da faixa de idade da barra: quantas pessoas faltaram (o % já está na barra), o peso da faixa entre os eleitores e entre os que faltaram, a minilinha de 2014 a 2026 e a nota à mão de quantas vezes a média de todas as idades. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _nome = [T25 · faixa da linha]
+VAR _voto = [T25 · voto da faixa]
+VAR _ano = [T25 · ano]
+VAR _lugar = [T25 · lugar]
+VAR _pct = [T25 · abstenção %]
+VAR _n = [T25 · abstenções]
+VAR _aptos = [T25 · aptos]
+VAR _pa = [T25 · parte dos aptos (faixa)]
+VAR _pf = [T25 · parte dos que faltaram (faixa)]
+VAR _vezes = [T25 · vezes a média (faixa)]
+VAR _p14 = [T25 · abstenção % em 2014]
+VAR _p18 = [T25 · abstenção % em 2018]
+VAR _p22 = [T25 · abstenção % em 2022]
+VAR _p26 = [T25 · abstenção % em 2026]
+-- 2 · Textos
+VAR _cab = _nome
+VAR _sub = _lugar & " · " & _ano & IF ( _voto = "facultativo", " · voto facultativo" )
+VAR _nota =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _vezes ), "",
+        _vezes >= 1.05, FORMAT ( _vezes, "0.0" ) & " vezes a média",
+        _vezes <= 0.95, "abaixo da média",
+        "bem na média"
+    )
+-- 3 · Geometria (minilinha de 200 × 60)
+VAR _serie = { ( 2014, _p14 ), ( 2018, _p18 ), ( 2022, _p22 ), ( 2026, _p26 ) } /* lista */
+VAR _pts = FILTER ( _serie, NOT ISBLANK ( [Value2] ) ) /* lista */
+VAR _min = MINX ( _pts, [Value2] ) -- geometria
+VAR _max = MAXX ( _pts, [Value2] ) -- geometria
+VAR _xy =
+    ADDCOLUMNS (
+        _pts, /* lista */
+        "@x", 8 + ( [Value1] - 2014 ) / 12 * 184, -- geometria
+        "@y", IF ( _max > _min, 42 - ( [Value2] - _min ) / ( _max - _min ) * 30, 30 ) -- geometria
+    )
+VAR _primeiro = MINX ( _xy, [Value1] ) -- geometria
+VAR _ultimo = MAXX ( _xy, [Value1] ) -- geometria
+VAR _linha = CONCATENATEX ( _xy, FORMAT ( [@x], "0.0##", "en-US" ) & "," & FORMAT ( [@y], "0.0##", "en-US" ), " L", [Value1], ASC ) -- geometria
+VAR _bolas =
+    CONCATENATEX (
+        _xy,
+        "<circle cx='" & FORMAT ( [@x], "0.0##", "en-US" ) & "' cy='" & FORMAT ( [@y], "0.0##", "en-US" ) & "' r='" & IF ( [Value1] = _ultimo, "4.5", "3" ) & "'/>",
+        "",
+        [Value1], ASC
+    )
+VAR _rots =
+    CONCATENATEX (
+        FILTER ( _xy, [Value1] = _primeiro || [Value1] = _ultimo ), /* lista */
+        "<span class='sr' style='left:" & FORMAT ( [@x] - 40, "0.0##", "en-US" ) & "px;top:" & FORMAT ( [@y] - 24, "0.0##", "en-US" ) & "px'>"
+            & FORMAT ( [Value2], "0.0%" ) & "</span><span class='sa' style='left:" & FORMAT ( [@x] - 40, "0.0##", "en-US" ) & "px'>"
+            & [Value1] & "</span>",
+        "",
+        [Value1], ASC
+    )
+-- 4 · Marcação
+VAR _corpo =
+    IF (
+        ISBLANK ( _pct ),
+        "<div class='lin sobe d1' style='top:84px'>Em " & _ano & ", o TSE ainda não publicava a idade de quem "
+            & "faltou. O perfil por idade começa em 2014.</div>",
+        "<div class='big sobe d1' style='top:80px'>" & SWITCH ( TRUE (), ABS ( _n ) >= 1000000, FORMAT ( _n / 1000000, "0.0" ) & " mi", ABS ( _n ) >= 1000, FORMAT ( _n / 1000, "0.0" ) & " mil", FORMAT ( _n, "#,0" ) ) & "</div>"
+            & "<div class='bs sobe d2' style='top:84px'>de " & SWITCH ( TRUE (), ABS ( _aptos ) >= 1000000, FORMAT ( _aptos / 1000000, "0.0" ) & " mi", ABS ( _aptos ) >= 1000, FORMAT ( _aptos / 1000, "0.0" ) & " mil", FORMAT ( _aptos, "#,0" ) ) & " eleitores dessa idade "
+            & "faltaram</div>"
+            & "<div class='lin sobe d3' style='top:146px'>São <b>" & FORMAT ( _pa, "0%" ) & "</b> dos eleitores e <b>"
+            & FORMAT ( _pf, "0%" ) & "</b> de quem faltou</div>"
+            & "<div style='position:absolute;left:0;top:200px'>" & "<div class='sp'><svg width='200' height='60' viewBox='0 0 200 60'><path class='traco' pathLength='1' d='M" & _linha & "'/>" & _bolas & "</svg>" & _rots & "</div>" & "</div>"
+            & "<div class='mao entra d6'>" & _nota & "</div>"
+    )
+VAR _html =
+    "<style>.tt{position:fixed;inset:0;background:var(--papel)}.tt .ficha{position:absolute;left:14px;top:22px;right:14px;bottom:14px;background:var(--branco);border:1.5px solid var(--areia);box-shadow:3px 4px 0 rgba(28,25,21,.07)}.tt .fita{position:absolute;left:150px;top:-16px;width:96px;transform:rotate(3deg);opacity:.9}.tt .ic{position:absolute;right:16px;top:14px;width:34px}.tt .cab{position:absolute;left:18px;top:14px;right:60px}.tt .nm{font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-.01em}.tt .big{position:absolute;left:18px;font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1}.tt .bs{position:absolute;left:176px;right:18px;font-size:15px;color:var(--grafite);line-height:1.35}.tt .bs b,.tt .lin b{color:var(--tinta);font-weight:700}.tt .lin{position:absolute;left:18px;right:18px;border-top:1px dashed var(--areia);padding-top:8px;font-size:15px;color:var(--grafite);line-height:1.35}.tt .mao{position:absolute;right:18px;bottom:8px;font-size:28px;color:var(--tinta)}.tt .sp{position:absolute;left:18px}.tt .sp svg{overflow:visible}.tt .sp path{fill:none;stroke:var(--tinta);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.tt .sp circle{fill:var(--tinta);stroke:var(--branco);stroke-width:2}.tt .sp .sr{position:absolute;width:80px;text-align:center;font-size:13px;font-weight:700}.tt .sp .sa{position:absolute;bottom:-20px;width:80px;text-align:center;font-size:13px;color:var(--cinza)}</style>"
+        & "<div class='tt ti'><div class='ficha'>"
+        & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/>"
+        & "<img class='ic' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/urna-tinta.png'/>"
+        & "<div class='cab sobe'><div class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cab, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _sub, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
+        & _corpo
+        & "</div></div>"
+RETURN
+    IF ( NOT ISBLANK ( _nome ), _html )

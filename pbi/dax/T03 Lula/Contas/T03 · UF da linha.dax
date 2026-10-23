@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: texto
+@descricao: Nome da UF da linha (lista de estados do dossiê da região).
+*/
+SELECTEDVALUE ( 'UF'[Nome] )

@@ -1,0 +1,18 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Fim da janela do saldo de sentimento da Datrix usada no ponto do índice.
+*/
+VAR _i = [T09 · humor · início]
+VAR _d = [T09 · IPD dia · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _i ),
+        CALCULATE (
+            MAX ( Monitoramento[Fim] ),
+            REMOVEFILTERS ( Monitoramento ),
+            Monitoramento[Métrica] = "saldo de sentimento (% positivas - % negativas)",
+            Monitoramento[Início] = _i,
+            Monitoramento[Fim] >= _d
+        )
+    )

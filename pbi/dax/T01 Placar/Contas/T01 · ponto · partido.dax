@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: texto
+@descricao: Sigla do partido do candidato do ponto da virada.
+*/
+SELECTEDVALUE ( 'Candidato UF'[Partido] )

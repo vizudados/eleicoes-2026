@@ -1,7 +1,7 @@
 /*
 @pasta: T02 Lula · quem é\Desenho
 @formato: texto
-@descricao: Dossiê do marco (polaroide presa com fita): a foto da época redesenhada em traço (ou um desenho e a nota 'sem foto de licença aberta'), a data, o título, o texto, a legenda da foto e o crédito. Só lê contas.
+@descricao: Dossiê do marco (polaroide presa com fita): a foto da época redesenhada em traço ou, sem foto de licença aberta, a cena recriada em ilustração (reserva: um ícone e a nota 'sem foto de licença aberta'), a data, o título, o texto, a legenda e o crédito. Só lê contas.
 */
 -- 1 · Leituras
 VAR _tit = [T02 · Trajetória · título]
@@ -10,6 +10,7 @@ VAR _ano = [T02 · Trajetória · ano]
 VAR _data = [T02 · Trajetória · data]
 VAR _foto = [T02 · Trajetória · foto]
 VAR _temFoto = [T02 · Trajetória · tem foto]
+VAR _ilus = [T02 · Trajetória · é ilustração]
 VAR _leg = [T02 · Trajetória · legenda da foto]
 VAR _cred = [T02 · Trajetória · crédito da foto]
 -- 2 · Textos
@@ -38,7 +39,8 @@ VAR _quadro =
             & "<div class='sem mao'>sem foto de licença aberta</div>"
     )
 VAR _rodape =
-    IF ( _temFoto = 1, "<div class='nota lg'><b>Na foto:</b> " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _leg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+    IF ( _temFoto = 1, "<div class='nota lg'><b>" & IF ( _ilus = 1, "Na ilustração:", "Na foto:" ) & "</b> "
+        & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _leg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
         & "<div class='nota cr'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cred, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>" )
 -- 4 · Marcação
 VAR _html =

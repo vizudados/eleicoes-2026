@@ -1,0 +1,9 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: #,0
+@descricao: Eleitores que faltaram no ano do recorte (o marcado ou 2026), no lugar e na faixa do contexto. Tamanho do ponto no mapa.
+@oraculo: Brasil 2026 = 33.469.244 (paginas[6].serie[2026].abstencoes)
+*/
+VAR _ano = [T25 · ano]
+RETURN
+    CALCULATE ( [T25 · abstenções (cru)], 'Ano'[Ano] = _ano )

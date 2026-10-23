@@ -1,0 +1,56 @@
+/*
+@pasta: T05 Flávio\Desenho
+@formato: texto
+@descricao: Dossiê da região da origem (ficha com clipe): os estados da região, do que mais deu votos a Flávio ao que menos — a parte de cada um nos votos dele na região, o % dele lá e a mudança desde 2022 —, com a nota à mão da maior mudança. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _reg = [T05 · região da linha]
+VAR _mg = [T05 · margem na região]
+VAR _ufs =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" ),
+        "@nome", [T05 · UF da linha],
+        "@v", [T05 · votos],
+        "@s", [T05 · parte do estado na região],
+        "@p", [T05 · %],
+        "@d", [T05 · variação em p.p.]
+    )
+VAR _lista = FILTER ( _ufs, [@v] > 0 ) /* lista */
+VAR _n = COUNTROWS ( _lista ) /* lista */
+VAR _smax = MAXX ( _lista, [@s] ) /* lista */
+VAR _top = TOPN ( 1, _lista, ABS ( [@d] ), DESC, 'UF'[UF], ASC ) /* lista */
+VAR _topNome = MAXX ( _top, [@nome] ) /* lista */
+VAR _topD = MAXX ( _top, [@d] ) /* lista */
+-- 2 · Textos
+VAR _txtReg = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtMg = "Flávio ficou " & FORMAT ( ABS ( _mg ), "0.0" ) & IF ( ABS ( _mg ) < 2, " ponto ", " pontos " )
+    & IF ( _mg >= 0, "à frente de Lula", "atrás de Lula" ) & " na região"
+VAR _nota = IF ( _topD < 0, "maior queda: ", "maior alta: " ) & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _topNome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _clsNota = IF ( _topD < 0, "neutro", "flavio-esc" )
+-- 3 · Geometria (barra da parte em até 120 px; linhas de 26 px)
+VAR _h = IF ( _n > 7, 24, 27 ) -- geometria
+VAR _linhas =
+    CONCATENATEX (
+        _lista,
+        VAR _w = FORMAT ( DIVIDE ( [@s], _smax ) * 60, "0.0##", "en-US" ) -- geometria
+        RETURN
+            "<div class='ln' style='height:" & _h & "px'><span class='uf'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span>"
+                & "<span class='br'><i class='barra-x flavio-bg' style='width:" & _w & "px'></i><b>"
+                & FORMAT ( [@s], "0%" ) & "</b></span><span class='pc'>" & FORMAT ( [@p], "0.0%" ) & "</span>"
+                & "<span class='dd " & IF ( [@d] < 0, "neg", "pos" ) & "'>" & FORMAT ( [@d], "+0.0;−0.0;0.0" ) & "</span></div>",
+        "",
+        [@v], DESC
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _reg ) && _n > 0,
+        "<div class='tt3r'><div class='ficha'>"
+            & "<div class='cab sobe'><div class='nm flavio'>" & _txtReg & ", por estado</div>"
+            & "<div class='sub'>" & _txtMg & "</div></div>"
+            & "<div class='hd sobe d1'><span class='uf'>UF</span><span class='br'>peso</span>"
+            & "<span class='pc'>% dele</span><span class='dd'>vs. 2022</span></div>"
+            & "<div class='lista sobe d2'>" & _linhas & "</div>"
+            & "<div class='mao " & _clsNota & " entra d6'>" & _nota & "</div>"
+        & "</div></div>"
+    )

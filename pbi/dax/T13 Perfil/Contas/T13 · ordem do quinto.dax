@@ -1,0 +1,7 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0
+@descricao: Ordem do quinto de renda da célula do contexto (1 = mais pobres).
+@gerado: pbi/scripts/desenho_t13.py
+*/
+SELECTEDVALUE ( 'Município'[QuintoOrdem] )

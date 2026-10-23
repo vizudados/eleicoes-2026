@@ -1,7 +1,7 @@
 /*
 @pasta: T01 Placar\Desenho
 @formato: texto
-@descricao: Bloco da esquerda da tela 01: a diferença (com o laço à mão), a manchete, o duelo Flávio × Lula (o mais votado à esquerda) e a legenda dos outros candidatos. Só lê as contas 'T01 · …'.
+@descricao: Bloco da esquerda da tela 01: a diferença (com o sublinhado à mão), a manchete, o duelo Flávio × Lula (o mais votado à esquerda) e a legenda dos outros candidatos. Só lê as contas 'T01 · …'.
 */
 -- 1 · Leituras
 VAR _comUF = [T01 · com UF]
@@ -90,7 +90,7 @@ VAR _linhaD =
 VAR _html =
     "<div class='tela t1'>"
         & "<div class='sob sobe'>" & _sobDif & "</div>"
-        & "<div class='dn'><span class='dnum sobe d1'>" & _txtDif & "</span>" & [T01 · laço · SVG] & "</div>"
+        & "<div class='dn'><span class='dnum sobe d1'>" & _txtDif & "</span>" & [T01 · sublinhado · SVG] & "</div>"
         & "<div class='mm sobe d3'><div class='man m1'>" & _manchete & "</div>"
         & "<div class='txt m2'>" & _detalhe & "</div></div>"
         & "<div class='duelo'>" & _duelo & "</div>"

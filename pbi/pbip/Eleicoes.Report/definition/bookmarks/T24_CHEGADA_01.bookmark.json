@@ -1,12 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
   "name": "T24_CHEGADA_01",
-  "displayName": "Chegada · 14 Quem vota",
+  "displayName": "Chegada · 15 Quem vota",
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
       "T24_Casca_InfoAbre",
       "T24_Casca_InfoFecha",
+      "T24_Casca_InfoFora",
       "T24_Casca_Leitura"
     ],
     "suppressData": true
@@ -21,6 +22,13 @@
             "singleVisual": {}
           },
           "T24_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T24_Casca_InfoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

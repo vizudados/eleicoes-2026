@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: A eleição clicada na série (filtro cruzado no Ano); vazio sem clique.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+IF ( ISFILTERED ( 'Ano'[Ano] ) && HASONEVALUE ( 'Ano'[Ano] ), VALUES ( 'Ano'[Ano] ) )

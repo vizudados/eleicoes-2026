@@ -1,0 +1,11 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela das colunas da composição.
+*/
+LEFT (
+    "Colunas de 2006 a 2026 com quem não escolheu ninguém em " & [T06 · recorte]
+        & ": quem faltou, quem anulou e quem votou em branco. Passe o mouse num ano para ver a disputa e quantas "
+        & "vezes a diferença entre os dois primeiros cabia em quem faltou.",
+    250
+)

@@ -1,12 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
   "name": "T22_CHEGADA_01",
-  "displayName": "Chegada · 23 Simulador",
+  "displayName": "Chegada · 24 Simulador",
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
       "T22_Casca_InfoAbre",
       "T22_Casca_InfoFecha",
+      "T22_Casca_InfoFora",
       "T22_Casca_Leitura"
     ],
     "suppressData": true
@@ -21,6 +22,13 @@
             "singleVisual": {}
           },
           "T22_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T22_Casca_InfoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

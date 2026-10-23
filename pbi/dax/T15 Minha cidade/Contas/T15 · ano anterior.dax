@@ -1,0 +1,10 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0
+@descricao: A eleição antes da escolhida (quatro anos antes); vazio em 2006, o começo da série.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › 2022 sem clique
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · ano escolhido]
+RETURN
+    IF ( _a > 2006, _a - 4 )

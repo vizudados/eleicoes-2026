@@ -7,7 +7,10 @@ VAR _f = [T02 · Trajetória · foto]
 RETURN
     SWITCH (
         _f,
+"lula-1975-sindicato", "Assembleia de metalúrgicos num estádio do ABC paulista, fim dos anos 1970 (cena recriada)",
+"lula-1980-fundacao-pt", "Fundação do PT no Colégio Sion, São Paulo, 10 de fevereiro de 1980 (cena recriada)",
 "lula-1986-constituinte", "Assembleia Nacional Constituinte, Brasília, 1987–1988 (foto de arquivo)",
+"lula-1989-presidencia", "Homenagem do Diap a constituintes, Brasília, outubro de 1988",
 "lula-2002-posse", "Posse no Palácio do Planalto, Brasília, 1º de janeiro de 2003",
 "lula-2006-reeleicao", "Depois de votar no 2º turno, São Bernardo do Campo (SP), 29 de outubro de 2006",
 "lula-2018-prisao", "Carregado por apoiadores, São Bernardo do Campo (SP), 7 de abril de 2018",

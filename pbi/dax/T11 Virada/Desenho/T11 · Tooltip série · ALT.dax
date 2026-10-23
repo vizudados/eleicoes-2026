@@ -1,0 +1,14 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Texto alternativo da série da cidade no tooltip da lista.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _nome = [T11 · município · nome]
+VAR _nAdv = [T11 · eleições com o adversário à frente]
+VAR _nVot = [T11 · eleições com votos]
+-- 2 · Textos
+RETURN
+    _nome & ": o adversário do PT ficou à frente em " & FORMAT ( _nAdv, "0" ) & " de " & FORMAT ( _nVot, "0" )
+        & " eleições de 2006 a 2026."

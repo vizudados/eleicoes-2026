@@ -1,0 +1,9 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: dd/MM/yyyy HH:mm
+@descricao: A hora de totalização do TSE em contexto quando há uma só: a atualização clicada na curva da noite (filtro cruzado em 'Apuração histórico'[AtualizadoTSE]) ou a da linha nos pontos da curva e no dossiê. Vazio sem clique: o placar mostra o agora.
+*/
+IF (
+    ISFILTERED ( 'Apuração histórico'[AtualizadoTSE] ) && HASONEVALUE ( 'Apuração histórico'[AtualizadoTSE] ),
+    VALUES ( 'Apuração histórico'[AtualizadoTSE] )
+)

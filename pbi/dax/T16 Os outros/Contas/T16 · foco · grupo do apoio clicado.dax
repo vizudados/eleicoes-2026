@@ -1,0 +1,8 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Grupo de eleitores do candidato escolhido no clique na lista dos apoios (filtro cruzado em Apoio[Quem]): Augusto Cury → Cury, Renan Santos → Renan, Ronaldo Caiado → Caiado; vazio para os outros nomes ou sem clique. Lido pelo diagrama.
+*/
+VAR _quem = IF ( ISFILTERED ( Apoio[Quem] ) && HASONEVALUE ( Apoio[Quem] ), VALUES ( Apoio[Quem] ) )
+RETURN
+    SWITCH ( _quem, "Augusto Cury", "Cury", "Renan Santos", "Renan", "Ronaldo Caiado", "Caiado" )

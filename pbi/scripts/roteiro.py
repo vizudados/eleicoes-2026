@@ -1,4 +1,4 @@
-"""roteiro — as 25 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
+"""roteiro — as 26 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
 
 Cada tela: código (nome da página no PBIR e prefixo de visuais e medidas), nome curto, pergunta (o título da tela, na
 voz de quem assiste), ato, se é escura (capa e encerramento), o filtro que a tela tem (só onde muda a leitura, pedido
@@ -6,7 +6,8 @@ do Alisson em 23/10/2026) e a linha de fonte do rodapé.
 
 O número que o leitor vê ("14 · Quem vota") é a posição na lista, não o código: a tela T24 (quem vota em quem, pedida
 em 23/10/2026 como tela própria para não poluir a 13) entra depois da T13 e as seguintes andam uma casa, sem trocar os
-códigos de páginas, visuais, medidas e marcadores que já existem.
+códigos de páginas, visuais, medidas e marcadores que já existem. Do mesmo jeito, a T25 (quem falta e onde, o segundo
+painel da ausência com filtro cruzado, pedido em 23/10/2026) entra logo depois da T06 e vira a 07.
 """
 
 from dataclasses import dataclass
@@ -42,7 +43,9 @@ TELAS = [
          fonte="Fontes: Senado, Alerj, TSE · fotos redesenhadas em traço (créditos no cartão)"),
     Tela("T05", "Flávio", "Onde estão os votos de Flávio?", "I · O resultado", filtro="UF"),
     Tela("T06", "Ausência", "Quantos brasileiros não escolheram ninguém?", "I · O resultado", filtro="UF",
-         fonte="Fonte: TSE · comparecimento e perfil do eleitor, 2006 a 2026"),
+         fonte="Fonte: TSE · comparecimento, brancos e nulos do 1º turno, 2006 a 2026"),
+    Tela("T25", "Quem falta", "Quem mais falta às urnas, e onde?", "I · O resultado", filtro="UF",
+         fonte="Fonte: TSE · comparecimento por município (2006 a 2026) e perfil do eleitor por idade (2014 a 2026)"),
     Tela("T07", "Debate", "O que mudou depois do debate na Band?", "II · A campanha",
          fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
     Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "II · A campanha",

@@ -1,0 +1,8 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Quantos votos (válidos) entraram entre a atualização anterior e a do contexto; vazio na primeira da noite.
+*/
+VAR _antes = [T18 · momento · válidos na anterior]
+RETURN
+    IF ( NOT ISBLANK ( _antes ), [T18 · momento · válidos] - _antes )

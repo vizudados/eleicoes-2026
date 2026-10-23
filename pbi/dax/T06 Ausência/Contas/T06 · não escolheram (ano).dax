@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: #,0
+@descricao: Abstenções + brancos + nulos no ano do contexto (Brasil oficial ou soma dos municípios da UF): quem não escolheu nenhum candidato.
+@oraculo: paginas[6].serie[].nao_escolheram (2006 = 29.897.525; 2026 = 39.444.291)
+*/
+[T06 · abstenções (ano)] + [T06 · brancos (ano)] + [T06 · nulos (ano)]

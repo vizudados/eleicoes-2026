@@ -1,0 +1,13 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela dos pontos da curva da noite.
+*/
+VAR _n = [T18 · momento · atualizações da noite]
+RETURN
+    IF (
+        _n = 0,
+        "A curva da noite começa às 17h, com a primeira divulgação do TSE.",
+        "Uma faixa por atualização do TSE (" & _n & IF ( _n = 1, " atualização", " atualizações" )
+            & " até agora): passe o mouse para ver o que mudou; clique para ver o placar daquele momento."
+    )

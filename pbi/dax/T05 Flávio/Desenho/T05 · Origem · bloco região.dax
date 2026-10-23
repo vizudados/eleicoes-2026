@@ -1,0 +1,33 @@
+/*
+@pasta: T05 Flávio\Desenho
+@formato: texto
+@descricao: A região da linha na barra da origem (fatia proporcional aos votos, na ordem dos votos) e na lista (parte dos votos dele, votos e % dos válidos). O rótulo do bloco e a dica do clique ficam no modelo do visual (fora das entradas, não esmaecem com a seleção). Fatia e linha têm alvos de clique próprios, fixos (L012).
+*/
+-- 1 · Leituras
+VAR _reg = [T05 · região da linha]
+VAR _v = [T05 · votos (municípios)]
+VAR _p = [T05 · parte dos votos]
+VAR _pv = [T05 · % (municípios)]
+VAR _ord = [T05 · ordem da região]
+VAR _ini = [T05 · início da região]
+-- 2 · Textos
+VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtP = FORMAT ( _p, "0%" )
+VAR _o = MIN ( _ord, 5 )
+-- 3 · Geometria (barra de 620 px; linhas de 30 px a partir de y 92)
+VAR _w = _p * 620 -- geometria
+VAR _rot = IF ( _w >= 120, _txtNome & " " & _txtP, IF ( _w >= 44, _txtP, "" ) )
+VAR _x = FORMAT ( _ini * 620, "0.0##", "en-US" ) -- geometria
+VAR _wc = FORMAT ( _w, "0.0##", "en-US" ) -- geometria
+VAR _y = 92 + ( _ord - 1 ) * 30 -- geometria
+-- 4 · Marcação
+RETURN
+    "<div class='tela og'><div class='oc'>"
+        & "<div class='vis fa o" & _o & " barra-x d" & ( _ord + 4 ) & "' style='left:" & _x & "px;width:" & _wc
+        & "px'><span>" & _rot & "</span></div>"
+        & "<div class='hv' style='left:" & _x & "px;top:28px;width:" & _wc & "px;height:46px'></div>"
+        & "<div class='vis li sobe d" & ( _ord + 6 ) & "' style='top:" & _y & "px'><i class='sw o" & _o & "'></i>"
+        & "<span class='nm'>" & _txtNome & "</span><span class='a'>" & _txtP & " dos votos dele · " & SWITCH ( TRUE (), ABS ( _v ) >= 1000000, FORMAT ( _v / 1000000, "0.00" ) & " mi", ABS ( _v ) >= 1000, FORMAT ( _v / 1000, "0.0" ) & " mil", FORMAT ( _v, "#,0" ) )
+        & "</span><span class='b'>" & FORMAT ( _pv, "0.0%" ) & " dos válidos</span></div>"
+        & "<div class='hv' style='left:-10px;top:" & _y & "px;width:640px;height:30px'></div>"
+    & "</div></div>"

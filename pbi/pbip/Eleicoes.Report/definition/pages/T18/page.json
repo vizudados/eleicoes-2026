@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T18",
-  "displayName": "19 Apuração",
+  "displayName": "20 Apuração",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -63,6 +63,26 @@
     },
     {
       "source": "T18_Casca_Filtro",
+      "target": "T18_Mapa_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T18_Curva_Pontos",
+      "target": "T18_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T18_Curva_Pontos",
+      "target": "T18_Curva_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T18_Curva_Pontos",
+      "target": "T18_Mapa_Exterior",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T18_Curva_Pontos",
       "target": "T18_Mapa_Html",
       "type": "NoFilter"
     },

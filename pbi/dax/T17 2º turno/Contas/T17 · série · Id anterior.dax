@@ -1,0 +1,25 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Id da pesquisa anterior de 2º turno do MESMO instituto (pela divulgação e, no mesmo dia, pelo Id): o ponto de onde sai o traço da série do instituto; vazio na primeira dele.
+*/
+VAR _inst = [T17 · pesquisa · instituto]
+VAR _dia = [T17 · pesquisa · divulgação]
+VAR _id = SELECTEDVALUE ( Pesquisa[Id] )
+RETURN
+    IF (
+        NOT ISBLANK ( _dia ),
+        VAR _serie =
+            CALCULATETABLE (
+                SELECTCOLUMNS ( Pesquisa, "@id", Pesquisa[Id], "@d", Pesquisa[Divulgação] ),
+                REMOVEFILTERS ( Pesquisa ),
+                Pesquisa[Cenário] = "2º turno",
+                Pesquisa[Tipo] = "totais",
+                NOT ISBLANK ( Pesquisa[Lula] ),
+                NOT ISBLANK ( Pesquisa[Flavio] ),
+                Pesquisa[Instituto] = _inst
+            )
+        VAR _antes = FILTER ( _serie, [@d] < _dia || ( [@d] = _dia && [@id] < _id ) )
+        RETURN
+            MAXX ( TOPN ( 1, _antes, [@d], DESC, [@id], DESC ), [@id] )
+    )

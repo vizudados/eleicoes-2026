@@ -1,0 +1,14 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê da região.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _r = [T12 · região da unidade]
+VAR _vir = [T12 · municípios que viraram]
+VAR _mun = [T12 · municípios]
+-- 2 · Textos
+RETURN
+    _r & ": " & FORMAT ( _vir, "#,0" ) & IF ( _mun = 1, " do único município", " dos " & FORMAT ( _mun, "#,0" )
+        & " municípios" ) & IF ( _vir = 1, " trocou", " trocaram" ) & " Lula por Flávio."

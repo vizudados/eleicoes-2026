@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: 1 quando o recorte é de municípios (filtro de UF ou município marcado): as contas somam os municípios; 0 no Brasil inteiro, que usa o total oficial, com o exterior (como a tela 06).
+*/
+INT ( ISCROSSFILTERED ( 'Município' ) )

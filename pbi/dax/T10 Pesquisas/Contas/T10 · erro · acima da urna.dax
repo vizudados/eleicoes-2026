@@ -1,0 +1,19 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0
+@descricao: Quantos institutos com votos válidos deram ao candidato da linha meio ponto ou mais acima da urna.
+*/
+VAR _u = [T10 · erro · urna]
+VAR _lista =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@v", [T10 · instituto · valor válido]
+    )
+RETURN
+    IF ( NOT ISBLANK ( _u ), COUNTROWS ( FILTER ( _lista, NOT ISBLANK ( [@v] ) && [@v] - _u >= 0.5 ) ) + 0 )

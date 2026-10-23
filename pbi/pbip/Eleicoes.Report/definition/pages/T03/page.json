@@ -54,5 +54,57 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T03_Mapa_Pontos",
+      "target": "T03_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T03_Mapa_Pontos",
+      "target": "T03_Casca_FiltroPilula",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T03_Mapa_Pontos",
+      "target": "T03_Mapa_Legenda",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T03_Mapa_Pontos",
+      "target": "T03_Origem_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T03_Mapa_Pontos",
+      "target": "T03_Resumo_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T03_Origem_Html",
+      "target": "T03_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T03_Origem_Html",
+      "target": "T03_Casca_FiltroPilula",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T03_Origem_Html",
+      "target": "T03_Mapa_Legenda",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T03_Origem_Html",
+      "target": "T03_Mapa_Pontos",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T03_Origem_Html",
+      "target": "T03_Resumo_Html",
+      "type": "DataFilter"
+    }
+  ]
 }

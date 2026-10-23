@@ -1,0 +1,12 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Texto alternativo da lista das maiores que viraram (a camada clicável).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _vir = [T11 · viraram]
+-- 2 · Textos
+RETURN
+    "Lista das maiores cidades que trocaram de lado (" & FORMAT ( _vir, "#,0" ) & " no recorte): passe o mouse para a "
+        & "série de 2006 a 2026 de cada uma; clique para levar o mapa até ela."

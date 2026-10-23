@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0.0
+@descricao: Margem de Flávio na região da linha em 2026, em pontos (votos dele − votos de Lula) ÷ válidos × 100.
+*/
+[T05 · margem] * 100

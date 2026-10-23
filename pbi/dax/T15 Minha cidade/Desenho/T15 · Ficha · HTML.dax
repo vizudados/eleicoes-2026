@@ -1,7 +1,7 @@
 /*
 @pasta: T15 Minha cidade\Desenho
 @formato: texto
-@descricao: Ficha da cidade escolhida: quem venceu e com quanto, a manchete da mudança desde 2022, os dados da cidade e os votos de Lula e do PL em 2022 e 2026. Sem cidade escolhida, o convite para escolher. Só lê contas.
+@descricao: Ficha da cidade escolhida na eleição escolhida (sem clique, 2026 contra 2022): quem ficou à frente e com quanto, a manchete da mudança desde a eleição anterior, os dados da cidade, os votos do PT e do adversário nas duas eleições e a margem na cidade, no estado e no país. Sem cidade escolhida, o convite para escolher. Só lê contas.
 @gerado: pbi/scripts/desenho_t15.py
 */
 -- 1 · Leituras
@@ -12,46 +12,64 @@ VAR _pop = [T15 · população]
 VAR _renda = [T15 · renda per capita]
 VAR _porte = [T15 · porte]
 VAR _quinto = [T15 · quinto de renda]
-VAR _l26 = [T15 · Lula % 2026]
-VAR _p26 = [T15 · PL % 2026]
-VAR _m26 = [T15 · margem 2026]
+VAR _y = [T15 · ano escolhido]
+VAR _y0 = [T15 · ano anterior]
+VAR _pt = [T15 · PT % no ano escolhido]
+VAR _ad = [T15 · adversário % no ano escolhido]
+VAR _mB = [T15 · margem no ano escolhido]
+VAR _mA = [T15 · margem no ano anterior]
 VAR _var = [T15 · variação]
-VAR _vl22 = [T15 · votos de Lula 2022]
-VAR _vl26 = [T15 · votos de Lula 2026]
-VAR _vp22 = [T15 · votos do PL 2022]
-VAR _vp26 = [T15 · votos do PL 2026]
-VAR _dl = [T15 · variação de votos de Lula]
-VAR _dp = [T15 · variação de votos do PL]
-VAR _m22 = [T15 · margem 2022]
+VAR _vt0 = [T15 · votos do PT no ano anterior]
+VAR _vt1 = [T15 · votos do PT no ano escolhido]
+VAR _va0 = [T15 · votos do adversário no ano anterior]
+VAR _va1 = [T15 · votos do adversário no ano escolhido]
+VAR _dt = [T15 · variação de votos do PT]
+VAR _da = [T15 · variação de votos do adversário]
+VAR _cpt1 = [T15 · candidato do PT no ano escolhido]
+VAR _cpt0 = [T15 · candidato do PT no ano anterior]
+VAR _cad1 = [T15 · adversário no ano escolhido]
+VAR _cad0 = [T15 · adversário no ano anterior]
+VAR _pad1 = [T15 · partido do adversário no ano escolhido]
+VAR _pad0 = [T15 · partido do adversário no ano anterior]
 VAR _ufNome = [T15 · nome da UF]
-VAR _u22 = [T15 · margem 2022 na UF]
-VAR _u26 = [T15 · margem 2026 na UF]
-VAR _b22 = [T15 · margem do Brasil 2022]
-VAR _b26 = [T15 · margem do Brasil 2026]
+VAR _uA = [T15 · margem na UF no ano anterior]
+VAR _uB = [T15 · margem na UF no ano escolhido]
+VAR _bA = [T15 · margem do Brasil no ano anterior]
+VAR _bB = [T15 · margem do Brasil no ano escolhido]
 -- 2 · Textos
 VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cid, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
-VAR _flavio = _m26 < 0
-VAR _empate = _m26 = 0
-VAR _venc = IF ( _flavio, "Flávio", "Lula" )
-VAR _pVenc = IF ( _flavio, _p26, _l26 )
+VAR _clique = _y <> 2026
+VAR _tem0 = NOT ISBLANK ( _y0 )
+VAR _sPt = SWITCH ( _cpt1, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", "Flávio Bolsonaro", "Flávio", _cpt1 )
+VAR _sPt0 = SWITCH ( _cpt0, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", "Flávio Bolsonaro", "Flávio", _cpt0 )
+VAR _sAd = SWITCH ( _cad1, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", "Flávio Bolsonaro", "Flávio", _cad1 )
+VAR _sAd0 = SWITCH ( _cad0, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Bolsonaro", "Flávio Bolsonaro", "Flávio", _cad0 )
+VAR _flavio = _mB < 0
+VAR _empate = _mB = 0
+VAR _venc = IF ( _flavio, _sAd, _sPt )
+VAR _pVenc = IF ( _flavio, _ad, _pt )
 VAR _clsVenc = IF ( _flavio, "flavio", "lula" )
-VAR _txtVenc = IF ( _flavio, "para Flávio Bolsonaro", "para Lula" )
+VAR _txtVenc = "para " & IF ( _flavio, _cad1, _cpt1 )
 VAR _txtOutro =
-    IF ( _flavio, "<span class='lula'>Lula " & FORMAT ( _l26, "0.0%" ) & "</span>",
-        "<span class='flavio'>Flávio " & FORMAT ( _p26, "0.0%" ) & "</span>" )
+    IF ( _flavio, "<span class='lula'>" & _sPt & " " & FORMAT ( _pt, "0.0%" ) & "</span>",
+        "<span class='flavio'>" & _sAd & " " & FORMAT ( _ad, "0.0%" ) & "</span>" )
+VAR _dono = IF ( _tem0 && _cpt0 = _cpt1, "de " & _sPt, "do PT" )
 VAR _txtMuda =
     SWITCH (
         TRUE (),
-        ISBLANK ( _var ), "a cidade não votou em 2022",
-        _var < 0, "a margem de Lula caiu " & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p. desde 2022",
-        _var > 0, "a margem de Lula subiu " & FORMAT ( _var * 100, "0.0" ) & " p.p. desde 2022",
-        "a margem de Lula ficou igual à de 2022"
+        NOT _tem0, "é o começo da série",
+        ISBLANK ( _var ), "a cidade não votou em " & _y0,
+        _var < 0, "a margem " & _dono & " caiu " & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p. desde " & _y0,
+        _var > 0, "a margem " & _dono & " subiu " & FORMAT ( _var * 100, "0.0" ) & " p.p. desde " & _y0,
+        "a margem " & _dono & " ficou igual à de " & _y0
     )
+VAR _onde = IF ( _clique, "Em " & _y, "Em " & _nome )
 VAR _man =
-    IF (
-        _empate,
-        "Em " & _nome & ", Lula e Flávio empataram; " & _txtMuda,
-        "Em " & _nome & ", " & _venc & " venceu com " & FORMAT ( _pVenc, "0.0%" ) & "; " & _txtMuda
+    SWITCH (
+        TRUE (),
+        _empate, _onde & ", " & _sPt & " e " & _sAd & " empataram; " & _txtMuda,
+        _clique, _onde & ", " & _venc & " ficou à frente com " & FORMAT ( _pVenc, "0.0%" ) & "; " & _txtMuda,
+        _onde & ", " & _venc & " venceu com " & FORMAT ( _pVenc, "0.0%" ) & "; " & _txtMuda
     )
 VAR _txtQuinto =
     SWITCH ( _quinto, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres",
@@ -60,8 +78,29 @@ VAR _fatos =
     _nome & " (" & _uf & ") · " & FORMAT ( _pop, "#,0" ) & " habitantes · renda por pessoa de R$ "
         & FORMAT ( _renda, "#,0" ) & " por mês · porte " & _porte & " · " & _txtQuinto
 VAR _fmtD = "+#,0;−#,0;0"
+VAR _anos = IF ( _tem0, _y0 & " → " & _y, FORMAT ( _y, "0" ) )
+VAR _rotPt = IF ( _tem0 && _cpt0 <> _cpt1, _sPt0 & " → ", "" ) & _sPt & " · PT"
+VAR _rotAd =
+    SWITCH (
+        TRUE (),
+        NOT _tem0 || _cad0 = _cad1, _sAd & " · " & _pad1,
+        _pad0 = _pad1, _sAd0 & " → " & _sAd & " · " & _pad1,
+        _sAd0 & " · " & _pad0 & " → " & _sAd & " · " & _pad1
+    )
+VAR _txtVotosPt = IF ( _tem0, FORMAT ( _vt0, "#,0" ) & " → " & FORMAT ( _vt1, "#,0" ), "votos em " & _y )
+VAR _txtVotosAd = IF ( _tem0, FORMAT ( _va0, "#,0" ) & " → " & FORMAT ( _va1, "#,0" ), "votos em " & _y )
+VAR _numPt = IF ( _tem0, FORMAT ( _dt, _fmtD ), FORMAT ( _vt1, "#,0" ) )
+VAR _numAd = IF ( _tem0, FORMAT ( _da, _fmtD ), FORMAT ( _va1, "#,0" ) )
+VAR _notaVotos =
+    IF ( _tem0, "Votos na cidade; a diferença é de " & _y & " para " & _y0 & ".",
+        "Votos na cidade em " & _y & ", o começo da série." )
+VAR _mesmo = NOT _tem0 || _cpt0 = _cpt1
+VAR _quemMargem = IF ( _mesmo, UPPER ( "de " & _sPt ), "DO PT" )
+VAR _notaComp =
+    IF ( _tem0, "Círculo vazado: " & _y0 & "; cheio: " & _y & ".", "Cada círculo é " & _y & "." )
+        & " À direita do traço, " & IF ( _mesmo, _sPt, "o PT" ) & " à frente."
 -- 3 · Geometria (três mini setas num eixo de ±escala em 300 px, zero em x 150)
-VAR _esc = MAX ( 0.08, MAX ( MAX ( ABS ( _m22 ), ABS ( _m26 ) ), MAX ( MAX ( ABS ( _u22 ), ABS ( _u26 ) ), MAX ( ABS ( _b22 ), ABS ( _b26 ) ) ) ) * 1.15 ) /* geometria */
+VAR _esc = MAX ( 0.08, MAX ( MAX ( ABS ( _mA ), ABS ( _mB ) ), MAX ( MAX ( ABS ( _uA ), ABS ( _uB ) ), MAX ( ABS ( _bA ), ABS ( _bB ) ) ) ) * 1.15 ) /* geometria */
 VAR _comp =
     CONCATENATEX (
         DATATABLE (
@@ -73,21 +112,24 @@ VAR _comp =
         VAR _o = [o]
         VAR _rot = SWITCH ( _o, 1, _nome, 2, _ufNome, "Brasil" )
         VAR _sub = SWITCH ( _o, 1, "a cidade", 2, "o estado", "o país, com o exterior" )
-        VAR _a = SWITCH ( _o, 1, _m22, 2, _u22, _b22 )
-        VAR _b = SWITCH ( _o, 1, _m26, 2, _u26, _b26 )
+        VAR _a = SWITCH ( _o, 1, _mA, 2, _uA, _bA )
+        VAR _b = SWITCH ( _o, 1, _mB, 2, _uB, _bB )
         VAR _xa = 150 + 140 * _a / _esc
         VAR _xb = 150 + 140 * _b / _esc
         VAR _cor = IF ( _b < 0, "var(--azul)", "var(--vermelho)" )
         RETURN
             "<div class='cp sobe d" & ( 9 + _o ) & "'><div class='nm'><b>" & _rot & "</b><span>" & _sub & "</span></div>"
                 & "<svg width='300' height='24' viewBox='0 0 300 24'><line x1='150' x2='150' y1='0' y2='24' class='zero'/>"
-                & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 1300 + _o * 120 ) & "ms' x1='"
-                & FORMAT ( _xa, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xb, "0.0", "en-US" ) & "' y1='12' y2='12'/>"
-                & "<circle cx='" & FORMAT ( _xa, "0.0", "en-US" ) & "' cy='12' r='5' class='m22'/>"
+                & IF (
+                    _tem0,
+                    "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 1300 + _o * 120 ) & "ms' x1='"
+                        & FORMAT ( _xa, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xb, "0.0", "en-US" ) & "' y1='12' y2='12'/>"
+                        & "<circle cx='" & FORMAT ( _xa, "0.0", "en-US" ) & "' cy='12' r='5' class='m22'/>"
+                )
                 & "<circle class='brota' style='animation-delay:" & ( 1600 + _o * 120 ) & "ms' cx='"
                 & FORMAT ( _xb, "0.0", "en-US" ) & "' cy='12' r='6.5' fill='" & _cor & "'/></svg>"
-                & "<div class='vv'>" & FORMAT ( _a * 100, "+0.0;−0.0;0.0" ) & " → " & FORMAT ( _b * 100, "+0.0;−0.0;0.0" )
-                & "</div></div>",
+                & "<div class='vv'>" & IF ( _tem0, FORMAT ( _a * 100, "+0.0;−0.0;0.0" ) & " → ", "" )
+                & FORMAT ( _b * 100, "+0.0;−0.0;0.0" ) & "</div></div>",
         "",
         [o], ASC
     )
@@ -99,19 +141,18 @@ VAR _html =
         & "<div class='man m sobe d3'>" & _man & "</div>"
         & "<div class='nota fatos entra d5'>" & _fatos & "</div>"
         & "<div class='votos'>"
-            & "<div class='rot entra d6'>VOTOS NO 1º TURNO · 2022 → 2026</div>"
-            & "<div class='lv sobe d7'><i class='q lula-q'></i><div class='nm'><b>Lula · PT</b><span>"
-                & FORMAT ( _vl22, "#,0" ) & " → " & FORMAT ( _vl26, "#,0" ) & "</span></div><div class='num dv lula'>"
-                & FORMAT ( _dl, _fmtD ) & "</div></div>"
-            & "<div class='lv sobe d8'><i class='q flavio-q'></i><div class='nm'><b>Bolsonaro → Flávio · PL</b><span>"
-                & FORMAT ( _vp22, "#,0" ) & " → " & FORMAT ( _vp26, "#,0" ) & "</span></div><div class='num dv flavio'>"
-                & FORMAT ( _dp, _fmtD ) & "</div></div>"
-            & "<div class='nota entra d9'>Votos na cidade; a diferença é de 2026 para 2022.</div>"
+            & "<div class='rot entra d6'>VOTOS NO 1º TURNO · " & _anos & "</div>"
+            & "<div class='lv sobe d7'><i class='q lula-q'></i><div class='nm'><b>" & _rotPt & "</b><span>"
+                & _txtVotosPt & "</span></div><div class='num dv lula'>" & _numPt & "</div></div>"
+            & "<div class='lv sobe d8'><i class='q flavio-q'></i><div class='nm'><b>" & _rotAd & "</b><span>"
+                & _txtVotosAd & "</span></div><div class='num dv flavio'>" & _numAd & "</div></div>"
+            & "<div class='nota entra d9'>" & _notaVotos & "</div>"
         & "</div>"
         & "<div class='comp'>"
-            & "<div class='rot entra d9'>A CIDADE, O ESTADO E O PAÍS · MARGEM DE LULA 2022 → 2026</div>"
+            & "<div class='rot entra d9'>A CIDADE, O ESTADO E O PAÍS · MARGEM " & _quemMargem & " "
+                & IF ( _tem0, _anos, "EM " & _y ) & "</div>"
             & _comp
-            & "<div class='nota entra d13'>Círculo vazado: 2022; cheio: 2026. À direita do traço, Lula à frente.</div>"
+            & "<div class='nota entra d13'>" & _notaComp & "</div>"
         & "</div>"
     & "</div>"
 RETURN

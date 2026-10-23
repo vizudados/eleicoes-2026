@@ -5,7 +5,7 @@
     "x": 1180,
     "y": 124,
     "z": 4000,
-    "height": 780,
+    "height": 645,
     "width": 600,
     "tabOrder": 950
   },
@@ -91,7 +91,7 @@
             "bodyTemplate": {
               "expr": {
                 "Literal": {
-                  "Value": "'<style>.lt{background:#F1EBDF;color:#1C1915;padding:36px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.18);clip-path:polygon(0 0,calc(100% - 46px) 0,100% 46px,100% 100%,0 100%)}.lt .orelha{position:absolute;right:0;top:0;width:46px;height:46px;background:#E5DBC8;border-left:1.5px solid #CBBDA2;border-bottom:1.5px solid #CBBDA2}.lt .x{position:absolute;right:56px;top:16px;font-size:26px;line-height:1;color:var(--grafite)}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:60px}.lt .bl{margin-bottom:20px}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''lt tela''><div class=''orelha''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>Em que tipo de cidade Lula perdeu mais?</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>As linhas separam as cidades pelo tamanho; as colunas, pela renda por pessoa. O número de cada célula diz quanto a margem de Lula caiu de 2022 para 2026 naquele grupo; quanto mais escuro o azul, maior a queda. Passe o mouse numa célula para ver as maiores cidades dela.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>Votos do 1º turno de 2022 e de 2026 por município, do TSE. População e renda domiciliar por pessoa do Censo 2022, do IBGE. Os quintos de renda são nacionais: cada coluna tem 1.114 cidades do Brasil.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>A célula soma os votos de todas as suas cidades: as maiores pesam mais. Com o filtro de estado, a matriz mostra só as cidades dele, e grupos com poucas cidades aparecem esmaecidos.</div></div></div>{{content}}'"
+                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#F1EBDF;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>Em que tipo de cidade Lula perdeu mais?</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>As linhas separam as cidades pelo tamanho; as colunas, pela renda por pessoa. O número de cada célula diz quanto a margem de Lula caiu de 2022 para 2026 naquele grupo; quanto mais escuro o azul, maior a queda. Passe o mouse numa célula para o dossiê dela e clique para ver a célula na resposta, ao lado.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>Votos do 1º turno de 2022 e de 2026 por município, do TSE. População e renda domiciliar por pessoa do Censo 2022, do IBGE. Os quintos de renda são nacionais: cada coluna tem 1.114 cidades do Brasil.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>A célula soma os votos de todas as suas cidades: as maiores pesam mais. Com o filtro de estado, a matriz mostra só as cidades dele, e grupos com poucas cidades aparecem esmaecidos.</div></div></div></div>{{content}}'"
                 }
               }
             }
@@ -225,7 +225,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Como ler a tela 13 · Perfil'"
+                  "Value": "'Como ler a tela 14 · Perfil'"
                 }
               }
             }

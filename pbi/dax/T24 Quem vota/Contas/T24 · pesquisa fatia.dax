@@ -1,0 +1,14 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0%
+@descricao: Fatia do grupo (no contexto: a categoria) na amostra da pesquisa da lente; vazia quando o instituto não publicou.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+VAR _l = [T24 · lente]
+VAR _i = [T24 · instituto]
+RETURN
+    CALCULATE (
+        MAX ( 'Perfil pesquisa'[Fatia] ),
+        'Perfil pesquisa'[Lente] = _l,
+        'Perfil pesquisa'[Instituto] = _i
+    )

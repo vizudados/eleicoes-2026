@@ -1,0 +1,15 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: A data de um ponto do índice de popularidade digital (grão Monitoramento[Início] na camada de pontos e no dossiê ttT09Ipd); vazia nas datas sem índice.
+*/
+VAR _d = SELECTEDVALUE ( Monitoramento[Início] )
+VAR _n =
+    CALCULATE (
+        COUNTROWS ( Monitoramento ),
+        REMOVEFILTERS ( Monitoramento ),
+        Monitoramento[Início] = _d,
+        Monitoramento[Métrica] IN { "IPD", "IPD (patamar máximo)" }
+    )
+RETURN
+    IF ( HASONEVALUE ( Monitoramento[Início] ) && _n > 0, _d )

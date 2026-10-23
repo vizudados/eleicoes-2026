@@ -1,16 +1,34 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Abertura da tela das buscas: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias em que cada um foi mais buscado (consulta T2) e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Só lê contas 'T08 · …'.
+@descricao: Abertura da tela das buscas. Sem clique: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias em que cada um foi mais buscado (consulta T2) e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Com um dia clicado na curva (filtro cruzado de 'Trends tempo'[DataTexto]): a parte de cada um na soma dos dois índices daquele dia, quem foi mais buscado e se foi um dos dias de mais buscas. Com um estado clicado no mapa (filtro cruzado de UF[UF]): a parte de cada um nas buscas do estado no 2º turno e o aviso de que a curva segue sendo a do Brasil (o Trends não dá o dia a dia por estado). Só lê contas 'T08 · …'.
 */
 -- 1 · Leituras
+VAR _dia = [T08 · escolha · dia]
+VAR _ufEsc = [T08 · escolha · UF]
 VAR _cL = [T08 · Central · Lula]
 VAR _cF = [T08 · Central · Flávio]
 VAR _dias = [T08 · dias]
 VAR _dL = [T08 · dias com Lula à frente]
 VAR _dF = [T08 · dias com Flávio à frente]
 VAR _dFdep = [T08 · dias com Flávio à frente depois do debate]
+VAR _iL = [T08 · dia · Lula]
+VAR _iF = [T08 · dia · Flávio]
+VAR _pdL = [T08 · dia · parte Lula]
+VAR _pdF = [T08 · dia · parte Flávio]
+VAR _posL = [T08 · dia · posição Lula]
+VAR _posF = [T08 · dia · posição Flávio]
+VAR _marco = [T08 · dia · marco]
+VAR _pico = [T08 · pico · data]
+VAR _uNome = [T08 · UF · nome]
+VAR _uNo = [T08 · UF · no estado]
+VAR _ufL = [T08 · UF · Lula]
+VAR _ufF = [T08 · UF · Flávio]
+VAR _upL = [T08 · UF · parte Lula]
+VAR _upF = [T08 · UF · parte Flávio]
+VAR _nivel = [T08 · UF · nível de interesse]
 -- 2 · Textos
+VAR _modo = SWITCH ( TRUE (), NOT ISBLANK ( _dia ), "dia", NOT ISBLANK ( _ufEsc ), "uf", "brasil" )
 VAR _txtDep =
     SWITCH (
         _dFdep,
@@ -19,20 +37,64 @@ VAR _txtDep =
         2, ", dois deles depois do debate",
         ", " & _dFdep & " deles depois do debate"
     )
-VAR _txtMan =
+VAR _manBrasil =
     "Lula foi mais buscado que Flávio em " & _dL & " dos " & _dias & " dias da campanha; Flávio ficou na frente em "
         & _dF & IF ( _dF = 1, " dia", " dias" ) & _txtDep
+-- no dia: quem foi mais buscado e, se for o caso, a posição do dia para quem liderou
+VAR _lider = SWITCH ( TRUE (), _iL > _iF, "Lula", _iF > _iL, "Flávio", "" )
+VAR _outro = IF ( _lider = "Lula", "Flávio", "Lula" )
+VAR _pos = IF ( _lider = "Lula", _posL, _posF )
+VAR _txtPos =
+    SWITCH (
+        TRUE (),
+        _lider = "", "",
+        _pos = 1, ": o dia de mais buscas por " & _lider & " na campanha",
+        _pos <= 10, ": um dos 10 dias de mais buscas por " & _lider & " na campanha",
+        ""
+    )
+VAR _manDia =
+    "Em " & FORMAT ( _dia, "dd/MM" ) & ", "
+        & IF ( _lider = "", "os dois empataram nas buscas", _lider & " foi mais buscado que " & _outro ) & _txtPos
+VAR _manUf =
+    _uNo & ", " & IF ( _ufL >= _ufF, "Lula", "Flávio" ) & " foi mais buscado no 2º turno"
+        & SWITCH ( _nivel, "alto", ", num dos estados que mais buscaram os dois", "baixo", ", num dos estados que menos buscaram os dois", "" )
+VAR _sob =
+    SWITCH (
+        _modo,
+        "dia", FORMAT ( _dia, "dd/MM" ) & " · " & _marco & " · índice do dia",
+        "uf", _uNome & " · 2º turno, 05 a 22/10",
+        "Quem o Brasil mais buscou · Central Google Trends, últimos 30 dias"
+    )
+VAR _lado =
+    SWITCH (
+        _modo,
+        "dia", "da soma dos dois índices no dia (Lula " & _iL & ", Flávio " & _iF & ", de 0 a 100)",
+        "uf", "das buscas pelos dois no estado, de 05 a 22/10",
+        "do interesse nas buscas pelos dois, de 22/09 a 22/10"
+    )
+VAR _txt =
+    SWITCH (
+        _modo,
+        "dia", "O índice vai de 0 a 100 dentro da consulta: 100 é o dia de mais buscas por Lula, " & FORMAT ( _pico, "dd/MM" )
+            & ". Clique de novo no dia para voltar aos 30 dias.",
+        "uf", "O Google Trends não separa o dia a dia por estado: a curva abaixo segue sendo a do Brasil. Clique de novo "
+            & "no estado para voltar.",
+        "O Google não diz quantas buscas houve: o Trends dá um índice de 0 a 100 dentro de cada consulta, em que 100 é o "
+            & "momento de mais procura. Só se comparam números da mesma consulta."
+    )
+VAR _pL = SWITCH ( _modo, "dia", _pdL, "uf", _upL, _cL )
+VAR _pF = SWITCH ( _modo, "dia", _pdF, "uf", _upF, _cF )
+VAR _man = SWITCH ( _modo, "dia", _manDia, "uf", _manUf, _manBrasil )
 -- 4 · Marcação
 RETURN
     "<div class='tela t08a'>"
-        & "<div class='sob sobe'>Quem o Brasil mais buscou · Central Google Trends, últimos 30 dias</div>"
+        & "<div class='sob sobe'>" & _sob & "</div>"
         & "<div class='par'>"
-            & "<div class='cand l sobe d1'><div class='rot'>Lula</div><div class='num'>" & FORMAT ( _cL, "0%" ) & "</div></div>"
+            & "<div class='cand l sobe d1'><div class='rot'>Lula</div><div class='num'>" & FORMAT ( _pL, "0%" ) & "</div></div>"
             & "<div class='x entra d2'>×</div>"
-            & "<div class='cand f sobe d2'><div class='rot'>Flávio</div><div class='num'>" & FORMAT ( _cF, "0%" ) & "</div></div>"
-            & "<div class='lado sobe d3'>do interesse nas buscas pelos dois, de 22/09 a 22/10</div>"
+            & "<div class='cand f sobe d2'><div class='rot'>Flávio</div><div class='num'>" & FORMAT ( _pF, "0%" ) & "</div></div>"
+            & "<div class='lado sobe d3'>" & _lado & "</div>"
         & "</div>"
-        & "<div class='man sobe d4'>" & _txtMan & "</div>"
-        & "<div class='txt sobe d5'>O Google não diz quantas buscas houve: o Trends dá um índice de 0 a 100 dentro de cada "
-            & "consulta, em que 100 é o momento de mais procura. Só se comparam números da mesma consulta.</div>"
+        & "<div class='man sobe d4'>" & _man & "</div>"
+        & "<div class='txt sobe d5'>" & _txt & "</div>"
     & "</div>"

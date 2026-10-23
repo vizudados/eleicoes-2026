@@ -251,7 +251,8 @@ RETURN
     # --- resultado
     gravar("T22 · Resultado · HTML", "O 2º turno simulado no Brasil (com o exterior): Lula × Flávio em % dos "
            "válidos, em quantas UFs cada um fica à frente e a diferença em votos; o rótulo diz se a conta usa os "
-           "controles ou uma pesquisa.", rf"""
+           "controles ou uma pesquisa. Com uma UF clicada no mapa (filtro cruzado), o resultado daquela UF, com o "
+           "1º turno dela (só os dois) no lugar da contagem de UFs.", rf"""
 -- 1 · Leituras
 VAR _pesq = [T22 · pesquisa em uso]
 VAR _data = [T22 · pesquisa · data]
@@ -260,6 +261,9 @@ VAR _flavio = [T22 · cenário · Flávio %]
 VAR _ufL = [T22 · cenário · UFs com Lula à frente]
 VAR _ufF = [T22 · cenário · UFs com Flávio à frente]
 VAR _dif = [T22 · cenário · diferença]
+VAR _uf = [T22 · UF escolhida]
+VAR _lula1 = [T22 · Lula % no 1º turno]
+VAR _flavio1 = [T22 · Flávio % no 1º turno]
 -- 2 · Textos
 VAR _rotulo =
     IF (
@@ -267,21 +271,27 @@ VAR _rotulo =
         "Seus controles",
         "Pesquisa " & SUBSTITUTE ( _pesq, "<", "&lt;" ) & ", " & FORMAT ( _data, "dd/MM" )
     )
-VAR _txtUfL = "à frente em " & _ufL & IF ( _ufL = 1, " UF", " UFs" )
-VAR _txtUfF = "à frente em " & _ufF & IF ( _ufF = 1, " UF", " UFs" )
+VAR _ehUf = NOT ISBLANK ( _uf )
+VAR _escUf = SUBSTITUTE ( SUBSTITUTE ( _uf, "&", "&amp;" ), "<", "&lt;" )
+VAR _txtUfL =
+    IF ( _ehUf, "no 1º turno, " & FORMAT ( _lula1, "0.0%" ) & " (só os dois)", "à frente em " & _ufL & IF ( _ufL = 1, " UF", " UFs" ) )
+VAR _txtUfF =
+    IF ( _ehUf, "no 1º turno, " & FORMAT ( _flavio1, "0.0%" ) & " (só os dois)", "à frente em " & _ufF & IF ( _ufF = 1, " UF", " UFs" ) )
+VAR _limite = IF ( _ehUf, 5000, 50000 )
 VAR _nota =
-    SWITCH (
-        TRUE (),
-        ABS ( _dif ) < 50000, "praticamente empatados",
-        _dif > 0, "Lula vence por " & {mi("_dif", 1)} & " de votos",
-        "Flávio vence por " & {mi("- _dif", 1)} & " de votos"
-    )
+    IF ( _ehUf, _escUf & ": ", "" )
+        & SWITCH (
+            TRUE (),
+            ABS ( _dif ) < _limite, "praticamente empatados",
+            _dif > 0, "Lula vence por " & IF ( _dif >= 1000000, {mi("_dif", 1)}, FORMAT ( _dif, "#,0" ) ) & " de votos",
+            "Flávio vence por " & IF ( - _dif >= 1000000, {mi("- _dif", 1)}, FORMAT ( - _dif, "#,0" ) ) & " de votos"
+        )
 -- 3 · Geometria
 VAR _wl = _lula * 100 -- geometria
 -- 4 · Marcação
 RETURN
     "<div class='tela t22r'>"
-        & "<div class='rot sobe'>Resultado do 2º turno simulado · " & _rotulo & "</div>"
+        & "<div class='rot sobe'>Resultado do 2º turno simulado · " & IF ( _ehUf, _escUf & " · ", "" ) & _rotulo & "</div>"
         & "<div class='lado l sobe d1'><span class='q'>Lula</span><span class='num'>" & FORMAT ( _lula, "0.0%" )
             & "</span><span class='u'>" & _txtUfL & "</span></div>"
         & "<div class='lado f sobe d2'><span class='q'>Flávio</span><span class='num'>" & FORMAT ( _flavio, "0.0%" )
@@ -299,9 +309,14 @@ VAR _lula = [T22 · cenário · Lula %]
 VAR _flavio = [T22 · cenário · Flávio %]
 VAR _ufL = [T22 · cenário · UFs com Lula à frente]
 VAR _ufF = [T22 · cenário · UFs com Flávio à frente]
+VAR _uf = [T22 · UF escolhida]
 RETURN
-    "2º turno simulado: Lula " & FORMAT ( _lula, "0.0%" ) & ", Flávio " & FORMAT ( _flavio, "0.0%" ) & ". Lula à frente "
-        & "em " & _ufL & IF ( _ufL = 1, " UF", " UFs" ) & ", Flávio em " & _ufF & IF ( _ufF = 1, " UF.", " UFs." )
+    IF (
+        NOT ISBLANK ( _uf ),
+        "2º turno simulado em " & _uf & ": Lula " & FORMAT ( _lula, "0.0%" ) & ", Flávio " & FORMAT ( _flavio, "0.0%" ) & ".",
+        "2º turno simulado: Lula " & FORMAT ( _lula, "0.0%" ) & ", Flávio " & FORMAT ( _flavio, "0.0%" ) & ". Lula à frente "
+            & "em " & _ufL & IF ( _ufL = 1, " UF", " UFs" ) & ", Flávio em " & _ufF & IF ( _ufF = 1, " UF.", " UFs." )
+    )
 """)
     # --- quadrado da UF
     gravar("T22 · UF · HTML", "Um quadrado do mapa de quadrados (granularidade UF[UF], com o exterior): a cor de quem "
@@ -385,6 +400,100 @@ VAR _lula = [T22 · cenário · Lula %]
 RETURN
     IF ( NOT ISBLANK ( _nome ), _nome & " no cenário: Lula " & FORMAT ( _lula, "0.0%" ) & ", Flávio "
         & FORMAT ( 1 - _lula, "0.0%" ) & "." )
+""")
+
+
+    # --- dossiê de uma pesquisa da lista (ttT22Pesquisa, 23/10/2026)
+    gravar("T22 · Tooltip pesquisa · HTML", "Dossiê de uma pesquisa da lista (página de tooltip ttT22Pesquisa, grão "
+           "Transferência[Instituto]): para onde vão os eleitores de Cury, Renan, Caiado e dos demais segundo a última "
+           "pesquisa do instituto depois do 1º turno (barra Lula | Flávio | ninguém, com os votos de cada grupo no 1º "
+           "turno), quanto cada um ganha no total e como a pesquisa publicou os grupos.", rf"""
+-- 1 · Leituras
+VAR _inst0 = [T22 · pesquisa em uso]
+VAR _data = [T22 · pesquisa · data]
+VAR _outros = [T22 · votos dos outros]
+VAR _vCu = [T22 · votos de Cury]
+VAR _lCu = [T22 · pesquisa · Lula entre os eleitores de Cury]
+VAR _fCu = [T22 · pesquisa · Flávio entre os eleitores de Cury]
+VAR _vRe = [T22 · votos de Renan]
+VAR _lRe = [T22 · pesquisa · Lula entre os eleitores de Renan]
+VAR _fRe = [T22 · pesquisa · Flávio entre os eleitores de Renan]
+VAR _vCa = [T22 · votos de Caiado]
+VAR _lCa = [T22 · pesquisa · Lula entre os eleitores de Caiado]
+VAR _fCa = [T22 · pesquisa · Flávio entre os eleitores de Caiado]
+VAR _vde = [T22 · votos dos demais]
+VAR _lde = [T22 · pesquisa · Lula entre os eleitores de demais]
+VAR _fde = [T22 · pesquisa · Flávio entre os eleitores de demais]
+VAR _ganhaL = [T22 · cenário · votos que Lula ganha]
+VAR _ganhaF = [T22 · cenário · votos que Flávio ganha]
+VAR _ninguem = [T22 · pesquisa · votos para ninguém]
+VAR _junta = [T22 · pesquisa · terceira via junta]
+VAR _media = [T22 · pesquisa · demais pela média]
+-- 2 · Textos
+VAR _inst = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst0, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _txtSoma =
+    "No total, Lula ganha <b class='lula'>" & {mi("_ganhaL")} & "</b> e Flávio, <b class='flavio'>" & {mi("_ganhaF")}
+        & "</b>; " & {mi("_ninguem")} & " não vão para nenhum dos dois."
+VAR _nota =
+    SWITCH (
+        TRUE (),
+        _junta = "Sim", "Esta pesquisa publicou os eleitores da terceira via num grupo só: todos os grupos levam o mesmo número.",
+        _media = "Sim", "Sem o grupo dos demais candidatos nesta pesquisa, a conta usa a média de Cury, Renan e Caiado pelo peso dos votos.",
+        "Cada grupo tem poucos entrevistados (em geral menos de 100): é sinal, não medida."
+    )
+VAR _mao =
+    SWITCH ( TRUE (), _ganhaL > _ganhaF, "pendem para Lula", _ganhaF > _ganhaL, "pendem para Flávio", "meio a meio" )
+VAR _gCu =
+    "<div class='gr sobe d3'><span class='g'>Cury<small>" & {mi("_v" + "Cu")} & "</small></span>"
+        & "<span class='b'><i class='l barra-x' style='width:" & FORMAT ( _lCu * 200, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='f barra-x' style='width:" & FORMAT ( _fCu * 200, "0.0##", "en-US" ) & "px'></i></span>"
+        & "<span class='v'><b class='lula'>" & FORMAT ( _lCu, "0%" ) & "</b> · <b class='flavio'>"
+        & FORMAT ( _fCu, "0%" ) & "</b></span></div>"
+VAR _gRe =
+    "<div class='gr sobe d4'><span class='g'>Renan<small>" & {mi("_v" + "Re")} & "</small></span>"
+        & "<span class='b'><i class='l barra-x' style='width:" & FORMAT ( _lRe * 200, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='f barra-x' style='width:" & FORMAT ( _fRe * 200, "0.0##", "en-US" ) & "px'></i></span>"
+        & "<span class='v'><b class='lula'>" & FORMAT ( _lRe, "0%" ) & "</b> · <b class='flavio'>"
+        & FORMAT ( _fRe, "0%" ) & "</b></span></div>"
+VAR _gCa =
+    "<div class='gr sobe d5'><span class='g'>Caiado<small>" & {mi("_v" + "Ca")} & "</small></span>"
+        & "<span class='b'><i class='l barra-x' style='width:" & FORMAT ( _lCa * 200, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='f barra-x' style='width:" & FORMAT ( _fCa * 200, "0.0##", "en-US" ) & "px'></i></span>"
+        & "<span class='v'><b class='lula'>" & FORMAT ( _lCa, "0%" ) & "</b> · <b class='flavio'>"
+        & FORMAT ( _fCa, "0%" ) & "</b></span></div>"
+VAR _gde =
+    "<div class='gr sobe d6'><span class='g'>Demais<small>" & {mi("_v" + "de")} & "</small></span>"
+        & "<span class='b'><i class='l barra-x' style='width:" & FORMAT ( _lde * 200, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='f barra-x' style='width:" & FORMAT ( _fde * 200, "0.0##", "en-US" ) & "px'></i></span>"
+        & "<span class='v'><b class='lula'>" & FORMAT ( _lde, "0%" ) & "</b> · <b class='flavio'>"
+        & FORMAT ( _fde, "0%" ) & "</b></span></div>"
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        "<div class='tela tt22p'>"
+            & "<div class='nm sobe'>" & _inst & " · " & FORMAT ( _data, "dd/MM" ) & "</div>"
+            & "<div class='rot sobe d1'>Para onde vão os " & {mi("_outros")} & " de votos dos outros</div>"
+            & "<div class='leg sobe d2'><i class='l'></i>Lula <i class='f'></i>Flávio <i class='n'></i>nenhum dos dois</div>"
+            & _gCu & _gRe & _gCa & _gde
+            & "<div class='pe sobe d8'>" & _txtSoma & "</div>"
+            & "<div class='nota sobe d9'>" & _nota & "</div>"
+            & "<div class='mao" & IF ( _ganhaF > _ganhaL, " az", "" ) & " entra d10'>os outros " & _mao & "</div>"
+        & "</div>"
+    )
+""")
+    gravar("T22 · Tooltip pesquisa · ALT", "Texto alternativo do dossiê de uma pesquisa da lista.", r"""
+-- 1 · Leituras
+VAR _inst = [T22 · pesquisa em uso]
+VAR _data = [T22 · pesquisa · data]
+VAR _ganhaL = [T22 · cenário · votos que Lula ganha]
+VAR _ganhaF = [T22 · cenário · votos que Flávio ganha]
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        _inst & ", " & FORMAT ( _data, "dd/MM" ) & ": dos votos dos outros candidatos, Lula ganha "
+            & FORMAT ( _ganhaL / 1000000, "0.00" ) & " mi e Flávio " & FORMAT ( _ganhaF / 1000000, "0.00" ) & " mi."
+    )
 """)
 
 
@@ -557,6 +666,33 @@ CSS_TOOLTIP = (
 def corpo_tooltip() -> str:
     clipe = estilo.imagem_b64("docs/midia/arte/dossie/clipe-tinta.png", 50)
     return f"<style>{CSS_TOOLTIP}</style>{{{{content}}}}<img class='tt22c' alt='' src='{clipe}'/>"
+
+
+CSS_TOOLTIP_PESQUISA = (
+    ".tt22p{background:var(--branco);padding:22px 24px 14px 24px;border:1.5px solid var(--areia)}"
+    ".tt22p .nm{font-size:22px;font-weight:700;padding-right:44px}"
+    ".tt22p .rot{margin-top:6px;font-size:13px}"
+    ".tt22p .leg{margin-top:6px;font-size:13px;color:var(--grafite);display:flex;align-items:center;gap:6px}"
+    ".tt22p .leg i{display:inline-block;width:11px;height:11px;margin-left:8px}.tt22p .leg i:first-child{margin-left:0}"
+    ".tt22p .leg .l,.tt22p .b .l{background:var(--vermelho)}.tt22p .leg .f,.tt22p .b .f{background:var(--azul)}"
+    ".tt22p .leg .n{background:var(--creme);box-shadow:inset 0 0 0 1px var(--areia)}"
+    ".tt22p .gr{display:grid;grid-template-columns:112px 200px 1fr;column-gap:12px;align-items:center;height:30px;"
+    "margin-top:2px}"
+    ".tt22p .g{font-size:15px;font-weight:600;white-space:nowrap}"
+    ".tt22p .g small{font-size:13px;font-weight:400;color:var(--cinza);margin-left:6px}"
+    ".tt22p .b{display:flex;height:12px;background:var(--creme)}.tt22p .b i{display:block;height:12px}"
+    ".tt22p .v{font-size:14px;white-space:nowrap}"
+    ".tt22p .pe{margin-top:10px;font-size:15px;line-height:1.4;color:var(--tinta);padding-right:6px}"
+    ".tt22p .nota{margin-top:6px;font-size:13px;line-height:1.35;color:var(--grafite);padding-right:150px}"
+    ".tt22p .mao{position:absolute;right:20px;bottom:8px;font-size:25px;color:var(--vermelho-escuro);"
+    "transform:rotate(-2deg);white-space:nowrap}"
+    ".tt22p .mao.az{color:var(--azul-escuro)}"
+)
+
+
+def corpo_tooltip_pesquisa() -> str:
+    clipe = estilo.imagem_b64("docs/midia/arte/dossie/clipe-tinta.png", 50)
+    return f"<style>{CSS_TOOLTIP_PESQUISA}</style>{{{{content}}}}<img class='tt22c' alt='' src='{clipe}'/>"
 
 
 def main() -> int:

@@ -9,4 +9,4 @@ VAR _sel = [T14 · região do recorte]
 -- 2 · Textos
 RETURN
     "Cinco pequenos gráficos, um por região, com o PT e o adversário de 2006 a 2026 na mesma escala"
-        & IF ( ISBLANK ( _sel ), ".", "; em destaque, " & _sel & "." )
+        & IF ( ISBLANK ( _sel ), ".", "; em destaque, " & _sel & "." ) & " Clique numa região para ver a série dela."

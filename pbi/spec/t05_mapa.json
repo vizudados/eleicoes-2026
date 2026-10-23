@@ -1,6 +1,6 @@
 {
  "$schema": "https://vega.github.io/schema/vega/v6.json",
- "description": "Tela 05: um ponto por município (tamanho = votos de Flávio, cor = margem de Flávio); contorno das UFs em traço; pontos em onda a partir do centro dos votos.",
+ "description": "Tela 05: um ponto por município (tamanho = votos de Flávio, cor = margem de Flávio); contorno das UFs em traço; pontos em onda a partir do centro dos votos; clique num ponto marca o município e filtra o painel.",
  "width": {
   "signal": "pbiContainerWidth"
  },
@@ -28,8 +28,20 @@
    "value": 3600
   },
   {
+   "name": "chave",
+   "update": "(isArray(data('comLugar')) ? length(data('comLugar')) : 0) + '|' + (isArray(data('ufsDoRecorte')) ? join(pluck(data('ufsDoRecorte'), 'uf'), ',') : '')"
+  },
+  {
    "name": "t0",
-   "init": "now()"
+   "init": "now()",
+   "on": [
+    {
+     "events": {
+      "signal": "chave"
+     },
+     "update": "now()"
+    }
+   ]
   },
   {
    "name": "t",
@@ -615,6 +627,16 @@
      }
     }
    ]
+  },
+  {
+   "name": "marcados",
+   "source": "pontos",
+   "transform": [
+    {
+     "type": "filter",
+     "expr": "datum.__selected__ == 'on'"
+    }
+   ]
   }
  ],
  "scales": [
@@ -757,13 +779,13 @@
         "value": "#48423A"
        },
        "strokeWidth": {
-        "signal": "umaUF ? 1.6 : 0.9"
+        "signal": "indata('marcados', 'uf', datum.uf) ? 2.6 : (umaUF ? 1.6 : 0.9)"
        },
        "strokeJoin": {
         "value": "round"
        },
        "strokeOpacity": {
-        "value": 0.8
+        "signal": "indata('marcados', 'uf', datum.uf) ? 1 : 0.8"
        },
        "strokeDash": {
         "signal": "t >= fim ? [] : [datum.ld * k + 4, datum.ld * k + 4]"
@@ -798,7 +820,7 @@
         "signal": "datum.val > 0 ? scale('cor', datum.val) : '#BBAD91'"
        },
        "fillOpacity": {
-        "signal": "(datum.val > 0 ? 0.92 : 0.8) * clamp((t - datum.atraso) / 520, 0, 1)"
+        "signal": "(datum.val > 0 ? 0.92 : 0.8) * clamp((t - datum.atraso) / 520, 0, 1) * ((datum.__selected__ == 'off') ? 0.28 : 1)"
        },
        "stroke": {
         "value": "#F1EBDF"
@@ -808,6 +830,12 @@
        },
        "tooltip": {
         "signal": "datum"
+       },
+       "strokeOpacity": {
+        "signal": "(datum.__selected__ == 'off') ? 0.35 : 1"
+       },
+       "cursor": {
+        "value": "pointer"
        }
       },
       "hover": {
@@ -819,6 +847,50 @@
        },
        "fillOpacity": {
         "value": 1
+       },
+       "strokeOpacity": {
+        "value": 1
+       }
+      }
+     }
+    },
+    {
+     "type": "symbol",
+     "name": "marcados",
+     "from": {
+      "data": "marcados"
+     },
+     "encode": {
+      "update": {
+       "x": {
+        "signal": "ox + datum.x * k"
+       },
+       "y": {
+        "signal": "oy + datum.y * k"
+       },
+       "shape": {
+        "value": "circle"
+       },
+       "size": {
+        "signal": "pow(2 * max(5.5, 1.2 * rmax * sqrt(max(datum.tam, 0) / max(datum.tmax, 1))), 2)"
+       },
+       "fill": {
+        "signal": "datum.val > 0 ? scale('cor', datum.val) : '#BBAD91'"
+       },
+       "fillOpacity": {
+        "value": 1
+       },
+       "stroke": {
+        "value": "#1C1915"
+       },
+       "strokeWidth": {
+        "value": 2.6
+       },
+       "cursor": {
+        "value": "pointer"
+       },
+       "tooltip": {
+        "signal": "datum"
        }
       }
      }

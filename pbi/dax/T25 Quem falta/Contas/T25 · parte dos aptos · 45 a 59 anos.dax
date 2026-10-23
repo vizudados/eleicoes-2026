@@ -1,0 +1,9 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0%
+@descricao: Parcela dos eleitores aptos do lugar, no ano da linha, que tinha 45 a 59 anos (0–1), sem a faixa marcada.
+*/
+DIVIDE (
+    CALCULATE ( [T25 · aptos por idade (cru)], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Ordem] = 5 ),
+    CALCULATE ( [T25 · aptos por idade (cru)], REMOVEFILTERS ( 'T25 Faixa' ) )
+)

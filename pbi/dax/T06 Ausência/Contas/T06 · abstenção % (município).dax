@@ -1,6 +1,0 @@
-/*
-@pasta: T06 Ausência\Contas
-@formato: 0.0%
-@descricao: Abstenção de 2026 nos municípios do contexto (0–1). Cor do ponto no mapa.
-*/
-DIVIDE ( [T06 · abstenções (município)], [T06 · aptos (município)] )

@@ -3,9 +3,9 @@
   "name": "T23_Fecho_Ir07",
   "position": {
     "x": 140,
-    "y": 532,
+    "y": 563,
     "z": 1020,
-    "height": 40,
+    "height": 37,
     "width": 1020,
     "tabOrder": 207
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 07: O único frente a frente, na Band, não mexeu nas pesquisas.'"
+                  "Value": "'Voltar à tela 08: O único frente a frente, na Band, não mexeu nas pesquisas.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 07: O único frente a frente, na Band, não mexeu nas pesquisas.'"
+                  "Value": "'Voltar à tela 08: O único frente a frente, na Band, não mexeu nas pesquisas.'"
                 }
               }
             },

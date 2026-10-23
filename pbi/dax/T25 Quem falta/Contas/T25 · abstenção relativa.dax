@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.00
+@descricao: Abstenção do município da linha dividida pela média do recorte (1 = na média, 2 = o dobro, 0,5 = a metade). Cor do ponto no mapa.
+*/
+DIVIDE ( [T25 · abstenção %], [T25 · abstenção % do recorte] )

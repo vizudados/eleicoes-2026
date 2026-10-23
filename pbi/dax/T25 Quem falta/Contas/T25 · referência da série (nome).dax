@@ -1,0 +1,11 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: Nome da linha de referência do bloco de anos.
+*/
+SWITCH (
+    TRUE (),
+    [T25 · com município] = 1, IF ( [T25 · com UF] = 1, "média estadual", "média nacional" ),
+    [T25 · com faixa] = 1, "todas as idades",
+    ""
+)

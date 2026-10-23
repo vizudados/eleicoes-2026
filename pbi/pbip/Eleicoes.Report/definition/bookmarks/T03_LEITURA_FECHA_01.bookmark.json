@@ -7,6 +7,7 @@
     "targetVisualNames": [
       "T03_Casca_InfoAbre",
       "T03_Casca_InfoFecha",
+      "T03_Casca_InfoFora",
       "T03_Casca_Leitura"
     ],
     "suppressActiveSection": true,
@@ -22,6 +23,13 @@
             "singleVisual": {}
           },
           "T03_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T03_Casca_InfoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

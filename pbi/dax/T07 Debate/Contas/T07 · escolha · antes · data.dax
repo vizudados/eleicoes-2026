@@ -1,0 +1,22 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: dd/MM
+@descricao: Último dia de campo da última pesquisa do instituto clicado que terminou antes do debate (janela 'antes'); vazio se ele não fez nenhuma.
+*/
+VAR _inst = [T07 · escolha · instituto]
+VAR _d = [T07 · debate · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _inst ),
+        CALCULATE (
+            MAX ( Pesquisa[Campo fim] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            Pesquisa[Momento] = "apos_1turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _inst,
+            Pesquisa[Campo fim] < _d
+        )
+    )

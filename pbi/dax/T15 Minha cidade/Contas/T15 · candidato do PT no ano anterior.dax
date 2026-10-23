@@ -1,0 +1,9 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: texto
+@descricao: Candidato do PT na eleição anterior à escolhida (2022 sem clique).
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _a ), CALCULATE ( SELECTEDVALUE ( 'Ano'[Candidato do PT] ), 'Ano'[Ano] = _a ) )

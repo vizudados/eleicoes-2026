@@ -1,0 +1,9 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: #,0
+@descricao: Eleitores aptos no ano do recorte (o marcado ou 2026), no lugar e na faixa do contexto.
+@oraculo: Brasil 2026 = 158.745.502 (paginas[6].serie[2026].aptos_txt = 158,7 mi)
+*/
+VAR _ano = [T25 · ano]
+RETURN
+    CALCULATE ( [T25 · aptos (cru)], 'Ano'[Ano] = _ano )

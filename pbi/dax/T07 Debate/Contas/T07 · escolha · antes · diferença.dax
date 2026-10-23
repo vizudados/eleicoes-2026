@@ -1,0 +1,22 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0.0
+@descricao: Flávio − Lula, em pontos, na última pesquisa do instituto clicado antes do debate (média, se houver duas no mesmo dia).
+*/
+VAR _inst = [T07 · escolha · instituto]
+VAR _dt = [T07 · escolha · antes · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _dt ),
+        CALCULATE (
+            AVERAGEX ( Pesquisa, Pesquisa[Flavio] - Pesquisa[Lula] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            Pesquisa[Momento] = "apos_1turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _inst,
+            Pesquisa[Campo fim] = _dt
+        )
+    )

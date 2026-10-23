@@ -1,0 +1,8 @@
+/*
+@pasta: T04 Flávio · quem é\Contas
+@formato: 0
+@descricao: 1 quando o desenho do marco da linha é ilustração recriada da época (não há foto de licença aberta). Fonte: dados/bruto/trajetoria/desenhos.csv, coluna tipo.
+*/
+VAR _f = [T04 · Trajetória · foto]
+RETURN
+    IF ( _f IN { "lula-1975-sindicato", "lula-1980-fundacao-pt" }, 1, 0 )

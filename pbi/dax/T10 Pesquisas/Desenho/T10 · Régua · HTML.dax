@@ -1,7 +1,7 @@
 /*
 @pasta: T10 Pesquisas\Desenho
 @formato: texto
-@descricao: Fundo da régua da véspera: título, as duas metades (Lula à frente, Flávio à frente) que esmaecem, o empate, a urna como traço à mão com o laço do rótulo, os números do eixo, a legenda e a chave à mão nas linhas que chegaram perto da urna. As linhas dos institutos são outro visual (T10 · Institutos · HTML), na mesma caixa e escala.
+@descricao: Fundo da régua da véspera: título, as duas metades (Lula à frente, Flávio à frente) que esmaecem, o empate, a urna como traço à mão com o rótulo sublinhado à mão (nada de laço por cima do número), os números do eixo, a legenda e a chave à mão nas linhas que chegaram perto da urna. As linhas dos institutos são outro visual (T10 · Institutos · HTML), na mesma caixa e escala.
 */
 -- 1 · Leituras
 VAR _urna = [T10 · urna · diferença]
@@ -42,7 +42,7 @@ VAR _rotUrna =
     "<div class='uro entra d6' style='left:" & FORMAT ( _xu, _f, "en-US" ) & "px;top:50px;width:220px'>urna: "
         & _quem & "<span class='num'>" & _txtUrna & "</span>"
         & "<svg width='220' height='50' viewBox='0 0 220 50' style='position:absolute;inset:0;pointer-events:none'>"
-        & "<path d='M18,28 C4,5 154,-4 210,16 C233,30 136,51 66,47 C4,43 0,20 58,8 C88,2 132,2 158,5' pathLength='1' class='traco' "
+        & "<path d='M8,40 C52,45 118,44 168,41 C186,40 200,38 212,36' pathLength='1' class='traco' "
         & "style='fill:none;stroke:var(--tinta);stroke-width:3;stroke-linecap:round;animation-delay:1600ms' filter='url(#rbu10g)'/></svg>"
     & "</div>"
 VAR _chave =

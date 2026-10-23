@@ -1,0 +1,11 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: Quantas cidades do Brasil têm o mesmo porte do município marcado.
+*/
+VAR _p = [T03 · porte do município]
+RETURN
+    IF (
+        NOT ISBLANK ( _p ),
+        CALCULATE ( [T03 · municípios], REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'UF' ), 'Município'[Porte] = _p )
+    )

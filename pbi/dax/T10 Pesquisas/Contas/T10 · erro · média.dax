@@ -1,0 +1,6 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Média do candidato da linha nas últimas pesquisas com votos válidos (a mesma do quadro: Lula ou Flávio).
+*/
+SWITCH ( [T10 · erro · candidato], "Lula", [T10 · válidos · média Lula], "Flávio", [T10 · válidos · média Flávio] )

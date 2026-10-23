@@ -5,8 +5,12 @@
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
+      "T01_Casca_Filtro",
+      "T01_Casca_FiltroAbre",
+      "T01_Casca_FiltroFora",
       "T01_Casca_InfoAbre",
       "T01_Casca_InfoFecha",
+      "T01_Casca_InfoFora",
       "T01_Casca_Leitura"
     ],
     "suppressData": true
@@ -17,10 +21,34 @@
     "sections": {
       "T01": {
         "visualContainers": {
+          "T01_Casca_Filtro": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T01_Casca_FiltroAbre": {
+            "singleVisual": {}
+          },
+          "T01_Casca_FiltroFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "T01_Casca_InfoAbre": {
             "singleVisual": {}
           },
           "T01_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T01_Casca_InfoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

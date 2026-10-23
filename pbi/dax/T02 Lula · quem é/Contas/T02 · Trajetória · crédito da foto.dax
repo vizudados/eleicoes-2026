@@ -12,7 +12,10 @@ RETURN
         _f <> "",
         SWITCH (
             _f,
+        "lula-1975-sindicato", "Ilustração CC BY-SA 4.0 recriada de registros da época; rosto: CEDI/Câmara (CC BY 2.0)",
+        "lula-1980-fundacao-pt", "Ilustração CC BY-SA 4.0 recriada de registros da época; rosto: CEDI/Câmara (CC BY 2.0)",
         "lula-1986-constituinte", "Desenho CC BY-SA 4.0 a partir de foto de Senado Federal/Agência Senado (CC BY 2.0)",
+        "lula-1989-presidencia", "Desenho CC BY-SA 4.0 a partir de foto de CEDI/Câmara dos Deputados (CC BY 2.0)",
         "lula-2002-posse", "Desenho CC BY-SA 4.0 a partir de foto de Marcello Casal Jr./Agência Brasil (CC BY 3.0 BR)",
         "lula-2006-reeleicao", "Desenho CC BY-SA 4.0 a partir de foto de Marcello Casal Jr./Agência Brasil (CC BY 3.0 BR)",
         "lula-2018-prisao", "Desenho CC BY-SA 4.0 a partir de foto de Ricardo Stuckert/Lula Oficial (CC BY-SA 4.0)",

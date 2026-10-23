@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: texto
+@descricao: A região do painel (grão dos painéis das regiões e do dossiê da região), mesmo com uma UF de outra região no filtro.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+CALCULATE ( SELECTEDVALUE ( 'Município'[Região] ), REMOVEFILTERS ( 'UF' ) )

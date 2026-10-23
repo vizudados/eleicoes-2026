@@ -1,0 +1,18 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da origem dos votos.
+*/
+LEFT (
+    SWITCH (
+        TRUE (),
+        [T03 · com município] = 1,
+            [T03 · município] & ": " & FORMAT ( [T03 · parte do município no estado], "0.0%" ) & " dos votos de Lula em "
+                & [T03 · estado do município] & ".",
+        [T03 · com UF] = 1,
+            "As cidades que mais deram votos a Lula em " & [T03 · recorte] & ".",
+        "De onde vêm os votos de Lula, por região. Clique numa região para ver só ela no mapa; passe o mouse "
+            & "para ver os estados dela."
+    ),
+    250
+)

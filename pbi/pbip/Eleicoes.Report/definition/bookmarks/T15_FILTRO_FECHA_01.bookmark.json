@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T15_FILTRO_FECHA_01",
+  "displayName": "T15 · filtro fechado",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T15_Filtro_Abre",
+      "T15_Filtro_Fora",
+      "T15_Filtro_Municipio"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T15",
+    "sections": {
+      "T15": {
+        "visualContainers": {
+          "T15_Filtro_Abre": {
+            "singleVisual": {}
+          },
+          "T15_Filtro_Fora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T15_Filtro_Municipio": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

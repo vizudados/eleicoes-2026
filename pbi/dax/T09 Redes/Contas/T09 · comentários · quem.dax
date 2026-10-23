@@ -1,0 +1,16 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: texto
+@descricao: Quem ficou com a maior parte dos comentários nos perfis dos dois no dia do ponto do índice (Quaest); vazio quando não foi medido.
+*/
+VAR _d = [T09 · IPD dia · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        CALCULATE (
+            MAX ( Monitoramento[Candidato] ),
+            REMOVEFILTERS ( Monitoramento ),
+            Monitoramento[Métrica] = "participação nos comentários dos perfis dos dois candidatos",
+            Monitoramento[Início] = _d
+        )
+    )

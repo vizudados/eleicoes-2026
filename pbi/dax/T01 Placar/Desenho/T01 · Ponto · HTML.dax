@@ -1,0 +1,37 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Alvo do ponto da virada (uma entrada por ano × candidato, só PT e PL): um círculo transparente sobre a bolinha desenhada, com um anel no hover; abre o dossiê do ponto. A posição usa a mesma escala do bloco da virada.
+*/
+-- 1 · Leituras
+VAR _a = [T01 · ponto · ano]
+VAR _n = [T01 · ponto · número]
+VAR _pt22 = [T01 · PT 2022 votos]
+VAR _pl22 = [T01 · PL 2022 votos]
+VAR _pt26 = [T01 · Lula votos]
+VAR _pl26 = [T01 · Flávio votos]
+-- 2 · Textos
+VAR _cls = IF ( _n = 13, "lula", "flavio" )
+-- 3 · Geometria (a escala da virada; eixos em x 175 e 545; o gráfico começa em y 116 do visual)
+VAR _max = MAX ( MAX ( _pt22, _pl22 ), MAX ( _pt26, _pl26 ) ) -- geometria
+VAR _min = MIN ( MIN ( _pt22, _pl22 ), MIN ( _pt26, _pl26 ) ) -- geometria
+VAR _folga = MAX ( ( _max - _min ) * 0.18, _max * 0.02 ) -- geometria
+VAR _topo = _max + _folga -- geometria
+VAR _esc = DIVIDE ( 480, _topo - ( _min - _folga ) ) -- geometria
+VAR _v =
+    SWITCH (
+        TRUE (),
+        _a = 2022 && _n = 13, _pt22,
+        _a = 2022 && _n = 22, _pl22,
+        _a = 2026 && _n = 13, _pt26,
+        _a = 2026 && _n = 22, _pl26
+    ) -- geometria
+VAR _cx = IF ( _a = 2022, 175, 545 ) -- geometria
+VAR _cy = 116 + 40 + ( _topo - _v ) * _esc -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        _v > 0,
+        "<div class='tela vp'><div class='alvo " & _cls & "' style='left:" & FORMAT ( _cx - 24, "0.0##", "en-US" ) & "px;top:"
+            & FORMAT ( _cy - 24, "0.0##", "en-US" ) & "px'></div></div>"
+    )

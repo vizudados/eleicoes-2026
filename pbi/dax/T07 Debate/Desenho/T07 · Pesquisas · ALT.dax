@@ -1,9 +1,19 @@
 /*
 @pasta: T07 Debate\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do gráfico das pesquisas em volta do debate.
+@descricao: Texto para leitor de tela do gráfico das pesquisas em volta do debate: as médias de todos ou, com uma pesquisa clicada, o instituto dela antes e depois.
 */
-"Pesquisas do 2º turno em volta do debate, votos totais. Média antes: Lula " & FORMAT ( [T07 · antes · Lula], "0.0" )
-    & "% e Flávio " & FORMAT ( [T07 · antes · Flávio], "0.0" ) & "% (" & [T07 · antes · pesquisas]
-    & " pesquisas). Depois: " & FORMAT ( [T07 · depois · Lula], "0.0" ) & "% e " & FORMAT ( [T07 · depois · Flávio], "0.0" )
-    & "% (" & [T07 · depois · pesquisas] & ")."
+VAR _inst = [T07 · escolha · instituto]
+VAR _a = [T07 · escolha · antes · diferença]
+VAR _d = [T07 · escolha · depois · diferença]
+RETURN
+    IF (
+        ISBLANK ( _inst ),
+        "Pesquisas do 2º turno em volta do debate, votos totais. Média antes: Lula " & FORMAT ( [T07 · antes · Lula], "0.0" )
+            & "% e Flávio " & FORMAT ( [T07 · antes · Flávio], "0.0" ) & "% (" & [T07 · antes · pesquisas]
+            & " pesquisas). Depois: " & FORMAT ( [T07 · depois · Lula], "0.0" ) & "% e " & FORMAT ( [T07 · depois · Flávio], "0.0" )
+            & "% (" & [T07 · depois · pesquisas] & ").",
+        _inst & ", " & [T07 · escolha · pesquisas] & IF ( [T07 · escolha · pesquisas] = 1, " pesquisa", " pesquisas" )
+            & " do 2º turno. Flávio − Lula antes do debate: " & IF ( ISBLANK ( _a ), "sem pesquisa", FORMAT ( _a, "0.0" ) & " pontos" )
+            & "; depois: " & IF ( ISBLANK ( _d ), "sem pesquisa", FORMAT ( _d, "0.0" ) & " pontos" ) & "."
+    )

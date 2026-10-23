@@ -1,0 +1,70 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Dossiê de uma linha do quadro 'onde foi o erro' (ttT10Erro, grão 'Candidato ano'[Partido]): o que cada instituto com votos válidos deu ao candidato na véspera, um por linha (ponto na régua de 38% a 50%), contra a linha da urna; a manchete diz se a média escondia o espalhamento ou se todos erraram para o mesmo lado. O instituto clicado na régua fica em destaque. Só lê contas 'T10 · …'.
+*/
+-- 1 · Leituras
+VAR _c = [T10 · erro · candidato]
+VAR _u = [T10 · erro · urna]
+VAR _m = [T10 · erro · média]
+VAR _n = [T10 · institutos · com válidos]
+VAR _ab = [T10 · erro · abaixo da urna]
+VAR _ac = [T10 · erro · acima da urna]
+VAR _min = [T10 · erro · menor]
+VAR _max = [T10 · erro · maior]
+VAR _esc = [T10 · escolha · instituto]
+VAR _lista =
+    FILTER (
+        ADDCOLUMNS ( ALLNOBLANKROW ( Pesquisa[Instituto] ), "@v", [T10 · instituto · valor válido] ),
+        NOT ISBLANK ( [@v] )
+    ) /* lista */
+-- 2 · Textos
+VAR _cls = IF ( _c = "Lula", "lula", "flavio" )
+VAR _okM = ABS ( _m - _u ) < 0.5
+VAR _txtTt =
+    SWITCH (
+        TRUE (),
+        _ab = _n, "Os " & _n & " deram a " & _c & " menos do que a urna: de " & FORMAT ( _min, "0.0" ) & "% a "
+            & FORMAT ( _max, "0.0" ) & "%",
+        _ac = _n, "Os " & _n & " deram a " & _c & " mais do que a urna: de " & FORMAT ( _min, "0.0" ) & "% a "
+            & FORMAT ( _max, "0.0" ) & "%",
+        "Na média, " & IF ( _okM, "acertaram", "erraram" ) & "; um a um, foram de " & FORMAT ( _min, "0.0" ) & "% a "
+            & FORMAT ( _max, "0.0" ) & "%"
+    )
+VAR _mao =
+    SWITCH ( TRUE (), _ab = _n, "todos abaixo da urna", _ac = _n, "todos acima da urna", "a média esconde" )
+-- 3 · Geometria (régua de 38% a 50% em 220 px; linhas de 22 px)
+VAR _k = 220 / 12 -- geometria
+VAR _f = "0.0"
+VAR _xu = ( _u - 38 ) * _k -- geometria
+VAR _altura = COUNTROWS ( _lista ) * 22 -- geometria
+VAR _linhas =
+    CONCATENATEX (
+        _lista,
+        VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( Pesquisa[Instituto], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+        VAR _x = ( [@v] - 38 ) * _k
+        VAR _dest = Pesquisa[Instituto] = _esc
+        RETURN
+            "<div class='li" & IF ( _dest, " on", "" ) & "'><span class='in'>" & _nome & "</span><span class='tr'><i class='pt "
+                & _cls & "' style='left:" & FORMAT ( _x - 6, _f, "en-US" ) & "px'></i></span><span class='vv'>"
+                & FORMAT ( [@v], "0.0" ) & "</span></div>",
+        "",
+        [@v], DESC,
+        Pesquisa[Instituto], ASC
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _c ),
+        "<div class='tt10e'>"
+            & "<div class='sob sobe'>" & _c & " · os " & _n & " com votos válidos</div>"
+            & "<div class='tt sobe d2'>" & _txtTt & "</div>"
+            & "<div class='lista sobe d3'>"
+                & "<div class='urna' style='left:" & FORMAT ( 150 + _xu, _f, "en-US" ) & "px;height:" & _altura + 10
+                & "px'><b>urna " & FORMAT ( _u, "0.0" ) & "%</b></div>"
+                & _linhas
+            & "</div>"
+            & "<div class='nota sobe d4'>Última pesquisa de cada um antes do 1º turno. Urna: TSE.</div>"
+            & "<div class='mao" & IF ( _c = "Flávio", " az", "" ) & " entra d7'>" & _mao & "</div>"
+        & "</div>"
+    )

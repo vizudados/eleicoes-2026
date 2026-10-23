@@ -1,0 +1,43 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Uma cidade da lista 'As maiores que viraram' (granularidade Município[CodIBGE], Top 6 pela população entre as que trocaram de lado): a posição à mão, o nome e a UF, os habitantes e a margem 2022 → 2026 num mini gráfico com escala comum. Vazia fora das 6. Mouse: a série da cidade (ttT11Serie); clique: o mapa vai até ela. Só lê contas.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _pos = [T11 · posição entre as maiores que viraram]
+VAR _pop = [T11 · população]
+VAR _nome = [T11 · município · nome]
+VAR _uf = [T11 · município · UF]
+VAR _m22 = [T11 · margem 2022]
+VAR _m26 = [T11 · margem 2026]
+VAR _esc0 = [T11 · escala das maiores]
+-- 2 · Textos
+VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _cor = IF ( _m26 < 0, "var(--azul)", "var(--vermelho)" )
+-- 3 · Geometria (mini gráfico de 300 px: zero no meio; itens a cada 104 px a partir de y 96)
+VAR _esc = MAX ( 0.05, _esc0 )
+VAR _x22 = 156 + 132 * _m22 / _esc
+VAR _x26 = 156 + 132 * _m26 / _esc
+VAR _y = 96 + ( _pos - 1 ) * 104
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pos ) && _pos <= 6,
+        "<div class='tela t11l'><div class='it sobe d" & ( _pos + 1 ) & "' style='top:" & _y & "px'>"
+            & "<span class='pos mao'>" & _pos & "</span>"
+            & "<div class='nm'>" & _txtNome & " <span class='uf'>" & _uf & "</span></div>"
+            & "<div class='nota'>" & FORMAT ( _pop, "#,0" ) & " habitantes</div>"
+            & "<svg class='db' width='306' height='22' viewBox='0 0 306 22'>"
+                & "<line x1='156' x2='156' y1='1' y2='21' class='zero'/>"
+                & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 700 + _pos * 90 )
+                    & "ms' x1='" & FORMAT ( _x22, "0.0", "en-US" ) & "' x2='" & FORMAT ( _x26, "0.0", "en-US" )
+                    & "' y1='11' y2='11'/>"
+                & "<circle cx='" & FORMAT ( _x22, "0.0", "en-US" ) & "' cy='11' r='5' class='m22'/>"
+                & "<circle class='brota' style='animation-delay:" & ( 1100 + _pos * 90 ) & "ms' cx='"
+                    & FORMAT ( _x26, "0.0", "en-US" ) & "' cy='11' r='6' fill='" & _cor & "'/>"
+            & "</svg>"
+            & "<div class='mg'>" & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " → "
+                & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " p.p.</div>"
+        & "</div></div>"
+    )

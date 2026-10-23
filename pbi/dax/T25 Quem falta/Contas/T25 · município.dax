@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: Nome (UF) do município marcado ou da linha; vazio se não for um só.
+*/
+IF ( [T25 · municípios marcados] = 1, SELECTEDVALUE ( 'Município'[Rótulo] ) )

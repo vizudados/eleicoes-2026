@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: 1 quando há ano marcado no bloco de anos (ou na linha/dica de um ano).
+*/
+INT ( ISFILTERED ( 'Ano' ) )

@@ -1,0 +1,9 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: Instituto em destaque escolhido no clique de um quadrinho da rejeição (filtro cruzado em 'Rejeição'[Instituto]); vazio sem clique. Lido pelos pontos da curva e pelo placar (no quadrinho clicado, é o próprio).
+*/
+IF (
+    ISFILTERED ( 'Rejeição'[Instituto] ) && HASONEVALUE ( 'Rejeição'[Instituto] ),
+    VALUES ( 'Rejeição'[Instituto] )
+)

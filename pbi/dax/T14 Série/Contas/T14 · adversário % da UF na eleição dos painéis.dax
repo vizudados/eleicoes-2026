@@ -1,0 +1,9 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: adversário % na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _a = [T14 · ano dos painéis]
+RETURN
+    CALCULATE ( [T14 · adversário %], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )

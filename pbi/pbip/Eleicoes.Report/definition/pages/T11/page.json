@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T11",
-  "displayName": "11 Virada",
+  "displayName": "12 Virada",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,
@@ -54,5 +54,22 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T11_Maiores_Lista",
+      "target": "T11_Maiores_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T11_Maiores_Lista",
+      "target": "T11_Mapa_Pontos",
+      "type": "HighlightFilter"
+    },
+    {
+      "source": "T11_Maiores_Lista",
+      "target": "T11_Resposta_Html",
+      "type": "NoFilter"
+    }
+  ]
 }
