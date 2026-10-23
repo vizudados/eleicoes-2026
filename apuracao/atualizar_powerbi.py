@@ -22,16 +22,36 @@ def token():
         return json.load(r)["access_token"]
 
 
+# Só as quatro tabelas da apuração (atualização avançada, PPU/Premium/Fabric): segundos em vez de recarregar o painel
+# inteiro. Em Pro a atualização avançada não existe: cai para a atualização comum do modelo.
+TABELAS = ["Apuração Brasil", "Apuração UF", "Apuração histórico", "Apuração status"]
+
+
+def pedir(url, corpo, chave):
+    pedido = urllib.request.Request(url, data=json.dumps(corpo).encode(),
+                                    headers={"Authorization": f"Bearer {chave}", "Content-Type": "application/json"})
+    with urllib.request.urlopen(pedido, timeout=30) as r:
+        return r.status
+
+
 def atualizar():
     url = (f"https://api.powerbi.com/v1.0/myorg/groups/{os.environ['PBI_WORKSPACE_ID']}"
            f"/datasets/{os.environ['PBI_DATASET_ID']}/refreshes")
-    pedido = urllib.request.Request(url, data=json.dumps({"notifyOption": "NoNotification"}).encode(),
-                                    headers={"Authorization": f"Bearer {token()}", "Content-Type": "application/json"})
+    chave = token()
+    avancada = {"type": "full", "commitMode": "transactional", "retryCount": 1,
+                "objects": [{"table": t} for t in TABELAS]}
     try:
-        with urllib.request.urlopen(pedido, timeout=30) as r:
-            print(f"atualização pedida: HTTP {r.status}")
+        print(f"atualização das tabelas da apuração pedida: HTTP {pedir(url, avancada, chave)}")
+        return
     except urllib.error.HTTPError as e:
-        # 400 com "refresh already in progress" não é falha: a próxima coleta pede de novo.
+        msg = e.read().decode()[:300]
+        if e.code != 400 or "progress" in msg.lower():
+            # 400 com "refresh already in progress" não é falha: a próxima coleta pede de novo.
+            print(f"Power BI respondeu {e.code}: {msg}", file=sys.stderr)
+            return
+    try:
+        print(f"atualização comum pedida: HTTP {pedir(url, {'notifyOption': 'NoNotification'}, chave)}")
+    except urllib.error.HTTPError as e:
         print(f"Power BI respondeu {e.code}: {e.read().decode()[:300]}", file=sys.stderr)
 
 
