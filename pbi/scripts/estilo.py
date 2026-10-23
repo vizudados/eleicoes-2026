@@ -103,7 +103,10 @@ def css_base() -> str:
         "html,body{margin:0;padding:0;background:transparent;overflow:hidden}",
         "body,#htmlViewer,#htmlContent{font-family:var(--fonte);color:var(--tinta);-webkit-font-smoothing:antialiased;"
         "font-feature-settings:'kern' 1,'lnum' 1;text-rendering:geometricPrecision}",
-        "#htmlContent{will-change:transform}",                              # L115: texto em tons de cinza
+        # raiz de cada desenho: ocupa a caixa do visual (L037: fixed, nunca height:100%) e tem camada própria para o
+        # texto sair em tons de cinza (L115). A camada fica NA raiz fixa, nunca no #htmlContent: lá ela vira o bloco de
+        # contenção dos filhos fixed, que têm altura 0 e somem.
+        ".tela{position:fixed;inset:0;will-change:transform}",
         "*{box-sizing:border-box}",
         "svg{overflow:visible}",
         # tipografia (pisos de leitura a 61 %: corpo ≥ 15 px; eixo e rodapé 13)
@@ -172,7 +175,8 @@ def rabisco_circulo(largura: int, altura: int, cor: str = "var(--tinta)", espess
 def logo_vizu(cor: str) -> str:
     """Lockup Vizu (ícone + wordmark) em SVG inline numa cor só."""
     svg = (RAIZ / "arte" / "ref" / "vizu-dados-logo.svg").read_text(encoding="utf-8")
-    svg = svg.replace('fill="#111111"', f'fill="{cor}"').replace("\n", "")
+    svg = svg.replace('fill="#111111"', f'fill="{cor}"').replace('fill="#979898"', f'fill="{cor}"')
+    svg = svg.replace("\n", "")
     return svg.replace('<svg width="5514" height="586"', '<svg width="168" height="18" style="display:block"', 1)
 
 

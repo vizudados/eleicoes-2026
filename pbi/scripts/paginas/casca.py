@@ -60,7 +60,7 @@ def corpo_casca(t: roteiro.Tela) -> str:
     ant, prox = roteiro.anterior(t), roteiro.proxima(t)
     e = html.escape
     css = (
-        f".cs{{position:fixed;inset:0;color:{k['texto']}}}"
+        f".cs{{color:{k['texto']}}}"
         ".cs .urna{position:absolute;left:52px;top:50px;width:60px;opacity:.95}"
         ".cs .cab{position:absolute;left:150px;top:46px;right:660px}"
         f".cs .cab .sob{{color:{k['sob']}}}"
@@ -83,7 +83,7 @@ def corpo_casca(t: roteiro.Tela) -> str:
     if t.codigo not in ("T00", "T23"):          # capa e encerramento desenham o próprio título
         cab = (f"<div class='cab'><div class='sob sobe'>{e(t.numero)} · {e(t.nome)}</div>"
                f"<div class='tit sobe d2'>{e(t.pergunta)}</div></div>")
-    return (f"<style>{css}</style><div class='cs'>"
+    return (f"<style>{css}</style><div class='cs tela'>"
             f"<img class='urna entra' alt='' src='{estilo.imagem_b64(k['urna'], 120)}'/>{cab}{setas}"
             f"<div class='info'>i</div>"
             f"<div class='pe'><span class='logo'>{estilo.logo_vizu(k['logo'])}</span>"
@@ -101,7 +101,7 @@ def corpo_leitura(t: roteiro.Tela) -> str:
         for i, (r, p) in enumerate(texto["blocos"]))
     papel, tinta = (c["papel"], c["tinta"]) if not t.escura else (c["creme"], c["tinta"])
     css = (
-        f".lt{{position:fixed;inset:0;background:{papel};color:{tinta};padding:36px 40px 32px 40px;"
+        f".lt{{background:{papel};color:{tinta};padding:36px 40px 32px 40px;"
         f"border:1.5px solid {c['areia']};box-shadow:0 18px 40px rgba(28,25,21,.18);"
         "clip-path:polygon(0 0,calc(100% - 46px) 0,100% 46px,100% 100%,0 100%)}"
         f".lt .orelha{{position:absolute;right:0;top:0;width:46px;height:46px;background:{c['creme']};"
@@ -111,7 +111,7 @@ def corpo_leitura(t: roteiro.Tela) -> str:
         ".lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:60px}"
         ".lt .bl{margin-bottom:20px}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}"
     )
-    return (f"<style>{css}</style><div class='lt'><div class='orelha'></div><div class='x'>×</div>"
+    return (f"<style>{css}</style><div class='lt tela'><div class='orelha'></div><div class='x'>×</div>"
             f"<div class='tt sobe'><span class='ast'>*</span>{e(texto['titulo'])}</div>{blocos}</div>{{{{content}}}}")
 
 

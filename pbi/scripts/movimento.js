@@ -4,7 +4,7 @@ if(W.matchMedia&&W.matchMedia('(prefers-reduced-motion: reduce)').matches){retur
 if(W.__mvAgenda){W.__mvAgenda();return;}
 var M={n:{},b:{},nb:-1,t0:0};
 var RX=/(\d{1,3}(?:\.\d{3})+|\d+)(?:,(\d+))?/;
-var GX={uX:1,uCresceX:1,rkW:1},GY={uY:1,uCresceY:1,tcCol:1},GE={uEntra:1,uSobe:1,jAcende:1,tcIn:1};
+var GX={uX:1,uCresceX:1,rkW:1},GY={uY:1,uCresceY:1,tcCol:1},GE={uEntra:1,uSobe:1,jAcende:1,tcIn:1,eTraco:1,eCor:1,eCorEsc:1,eEscala:1};
 var fmt=function(x,dec,grp){var t=Math.abs(x).toFixed(dec).split('.'),i=t[0];if(grp){i=i.replace(/\B(?=(\d{3})+(?!\d))/g,'.');}return (x<0?'-':'')+(t.length>1?i+','+t[1]:i);};
 var processar=function(){
 var R=D.getElementById('htmlContent')||D.body;if(!R){return;}

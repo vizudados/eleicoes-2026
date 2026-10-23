@@ -1,10 +1,15 @@
 """leituras — o texto do cartão "i" de cada tela (Como ler · De onde vêm os números · Para lembrar).
 
-Linguagem de conversa, frases curtas, sem jargão (pedido do Alisson, 23/10/2026: "linguagem humanizada e de fácil
-entendimento"). Cada tela pode ter o seu em LEITURAS[código]; sem ele, padrao() monta um a partir do roteiro.
+Um arquivo por tela em pbi/scripts/leituras/<código>.json, escrito pelo dono da tela:
+    {"titulo": "…", "blocos": [["Como ler", "…"], ["De onde vêm os números", "…"], ["Para lembrar", "…"]]}
+Linguagem de conversa, frases curtas, sem jargão (pedido do Alisson, 23/10/2026). Sem arquivo, padrao() monta um texto
+genérico a partir do roteiro.
 """
+import json
+from pathlib import Path
 
-LEITURAS: dict[str, dict] = {}
+PASTA = Path(__file__).resolve().parent / "leituras"
+LEITURAS: dict[str, dict] = {p.stem: json.loads(p.read_text(encoding="utf-8")) for p in sorted(PASTA.glob("T*.json"))}
 
 
 def padrao(t) -> dict:

@@ -99,12 +99,15 @@ def m_csv(arquivo, colunas, separador=",", horas=(), filtro=None, passos=""):
     return "\n".join(linhas)
 
 
-def tabela(nome, descricao, colunas, m, oculta=False):
-    return {"nome": nome, "descricao": descricao, "colunas": colunas, "m": m, "oculta": oculta}
+def tabela(nome, descricao, colunas, m, oculta=False, renomeada=False):
+    """Tabela de M próprio. Sem `renomeada`, a coluna do modelo lê a coluna `origem` do M (sourceColumn); com ela, o M
+    já devolve os nomes do modelo (é o caso de m_csv)."""
+    return {"nome": nome, "descricao": descricao, "colunas": colunas, "m": m, "oculta": oculta,
+            "renomeada": renomeada}
 
 
 def tabela_csv(nome, descricao, arquivo, colunas, oculta=False, **kw):
-    return tabela(nome, descricao, colunas, m_csv(arquivo, colunas, **kw), oculta)
+    return tabela(nome, descricao, colunas, m_csv(arquivo, colunas, **kw), oculta, renomeada=True)
 
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -197,7 +200,8 @@ def tmdl_tabela(t):
         if c.get("categoria"):
             linhas.append(f"\t\tdataCategory: {c['categoria']}")
         linhas.append(f"\t\tsummarizeBy: {c['agregar']}")
-        linhas.append(f"\t\tsourceColumn: {c['nome']}")
+        fonte = c["nome"] if t.get("renomeada") or not c["origem"] else c["origem"]
+        linhas.append(f"\t\tsourceColumn: {fonte}")
         if c["ordenar_por"]:
             linhas.append(f"\t\tsortByColumn: {q(c['ordenar_por'])}")
         linhas += ["", "\t\tannotation SummarizationSetBy = Automatic", ""]
