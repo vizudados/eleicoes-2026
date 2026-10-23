@@ -284,6 +284,8 @@ def main():
         gravar(copiar(BRUTO / "transferencia" / f"{nome}.csv"), nome if nome != "apoios" else "apoio")
     locais = pd.read_csv(SAIDA_DADOS / "locais_contagem.csv")
     pos = pd.read_csv(SAIDA_DADOS / "escolas_posicao.csv")
+    # um local pode ter dois nomes no mesmo ano (zona 91, local 1350 em 2026): a posição é do local, uma linha por chave
+    pos = pos.drop_duplicates(["NR_ZONA", "NR_LOCAL_VOTACAO"])
     gravar(locais.merge(pos[["NR_ZONA", "NR_LOCAL_VOTACAO", "px", "py"]], on=["NR_ZONA", "NR_LOCAL_VOTACAO"], how="left"),
            "local_contagem")
 
