@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T11_LEITURA_FECHA_01",
+  "displayName": "T11 · leitura fechada",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T11_Casca_InfoAbre",
+      "T11_Casca_InfoFecha",
+      "T11_Casca_Leitura"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T11",
+    "sections": {
+      "T11": {
+        "visualContainers": {
+          "T11_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T11_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T11_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

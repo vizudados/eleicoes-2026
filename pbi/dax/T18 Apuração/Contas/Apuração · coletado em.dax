@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: dd/MM/yyyy HH:mm
+@descricao: Hora da última coleta gravada no repositório.
+*/
+MAX ( 'Apuração status'[ColetadoEm] )

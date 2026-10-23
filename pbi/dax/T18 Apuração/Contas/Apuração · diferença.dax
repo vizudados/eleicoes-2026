@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Diferença de votos entre os dois no escopo.
+*/
+ABS ( [Apuração · Lula votos] - [Apuração · Flávio votos] )

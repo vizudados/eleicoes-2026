@@ -1,0 +1,86 @@
+/// Rejeição de cada candidato por instituto e data (a pergunta muda entre institutos: não forma série única).
+table 'Rejeição'
+	isHidden
+	lineageTag: 0f8ca2e1-1c4a-5d28-b50f-d496571ccab8
+
+	/// Instituto.
+	column Instituto
+		dataType: string
+		lineageTag: bef3d75d-016f-5753-8d36-afee281fb938
+		summarizeBy: none
+		sourceColumn: Instituto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Data de divulgação.
+	column 'Divulgação'
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 5e6af299-472b-5d44-997d-87a594646b07
+		summarizeBy: none
+		sourceColumn: Divulgação
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Candidato.
+	column Candidato
+		dataType: string
+		lineageTag: df91563e-a9ab-56e4-95cf-d090002043fa
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % de rejeição.
+	column Rejeicao
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 5fa0070a-ad45-5dde-9797-74ebb8709176
+		summarizeBy: none
+		sourceColumn: Rejeicao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Segmento (total ou recorte).
+	column Segmento
+		dataType: string
+		isHidden
+		lineageTag: de74920d-b1a7-57b5-9dfb-1b61b17d9acc
+		summarizeBy: none
+		sourceColumn: Segmento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: fe5e789a-bd95-55ef-91ca-1edacdfd294f
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: 27753cf3-a3df-5e68-8adf-f9885c407388
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Rejeição' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/rejeicao.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"instituto", "divulgacao", "candidato", "rejeicao", "segmento", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"instituto", type text}, {"divulgacao", type date}, {"candidato", type text}, {"rejeicao", type number}, {"segmento", type text}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"instituto", "Instituto"}, {"divulgacao", "Divulgação"}, {"candidato", "Candidato"}, {"rejeicao", "Rejeicao"}, {"segmento", "Segmento"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

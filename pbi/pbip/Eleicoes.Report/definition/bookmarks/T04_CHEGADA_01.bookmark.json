@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T04_CHEGADA_01",
+  "displayName": "Chegada · 04 Flávio · quem é",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T04_Casca_InfoAbre",
+      "T04_Casca_InfoFecha",
+      "T04_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T04",
+    "sections": {
+      "T04": {
+        "visualContainers": {
+          "T04_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T04_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T04_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

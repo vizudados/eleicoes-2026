@@ -1,7 +1,7 @@
 {
  "eleicao": 6257,
  "turno": 1,
- "coletado_em": "23/10/2026 00:08:36",
+ "coletado_em": "23/10/2026 00:31:53",
  "atualizado_tse": "05/10/2026 12:51:05",
  "status": "encerrada",
  "brasil": {
@@ -21,6 +21,9 @@
   "flavio_pct": 47.03,
   "lider": "Flávio",
   "diferenca_votos": 2224965,
+  "secoes_total": 499248,
+  "secoes_totalizadas": 499248,
+  "eleitorado_apurado": 158745502,
   "candidatos": [
    {
     "numero": 22,
@@ -151,6 +154,9 @@
    "flavio_pct": 64.56,
    "lider": "Flávio",
    "diferenca_votos": 168037,
+   "secoes_total": 2270,
+   "secoes_totalizadas": 2270,
+   "eleitorado_apurado": 613742,
    "candidatos": [
     {
      "numero": 22,
@@ -280,6 +286,9 @@
    "flavio_pct": 40.45,
    "lider": "Lula",
    "diferenca_votos": 259741,
+   "secoes_total": 7101,
+   "secoes_totalizadas": 7101,
+   "eleitorado_apurado": 2442126,
    "candidatos": [
     {
      "numero": 13,
@@ -409,6 +418,9 @@
    "flavio_pct": 45.0,
    "lider": "Lula",
    "diferenca_votos": 70232,
+   "secoes_total": 8157,
+   "secoes_totalizadas": 8157,
+   "eleitorado_apurado": 2798611,
    "candidatos": [
     {
      "numero": 13,
@@ -538,6 +550,9 @@
    "flavio_pct": 45.67,
    "lider": "Lula",
    "diferenca_votos": 225,
+   "secoes_total": 1914,
+   "secoes_totalizadas": 1914,
+   "eleitorado_apurado": 576988,
    "candidatos": [
     {
      "numero": 13,
@@ -667,6 +682,9 @@
    "flavio_pct": 28.53,
    "lider": "Lula",
    "diferenca_votos": 3222186,
+   "secoes_total": 35476,
+   "secoes_totalizadas": 35476,
+   "eleitorado_apurado": 11312752,
    "candidatos": [
     {
      "numero": 13,
@@ -796,6 +814,9 @@
    "flavio_pct": 31.27,
    "lider": "Lula",
    "diferenca_votos": 1798413,
+   "secoes_total": 23765,
+   "secoes_totalizadas": 23765,
+   "eleitorado_apurado": 6996545,
    "candidatos": [
     {
      "numero": 13,
@@ -925,6 +946,9 @@
    "flavio_pct": 51.31,
    "lider": "Flávio",
    "diferenca_votos": 233989,
+   "secoes_total": 6969,
+   "secoes_totalizadas": 6969,
+   "eleitorado_apurado": 2258320,
    "candidatos": [
     {
      "numero": 22,
@@ -1054,6 +1078,9 @@
    "flavio_pct": 54.78,
    "lider": "Flávio",
    "diferenca_votos": 383166,
+   "secoes_total": 9844,
+   "secoes_totalizadas": 9844,
+   "eleitorado_apurado": 2991650,
    "candidatos": [
     {
      "numero": 22,
@@ -1183,6 +1210,9 @@
    "flavio_pct": 53.6,
    "lider": "Flávio",
    "diferenca_votos": 863008,
+   "secoes_total": 15686,
+   "secoes_totalizadas": 15686,
+   "eleitorado_apurado": 5080590,
    "candidatos": [
     {
      "numero": 22,
@@ -1312,6 +1342,9 @@
    "flavio_pct": 30.9,
    "lider": "Lula",
    "diferenca_votos": 1327261,
+   "secoes_total": 18093,
+   "secoes_totalizadas": 18093,
+   "eleitorado_apurado": 5183115,
    "candidatos": [
     {
      "numero": 13,
@@ -1441,6 +1474,9 @@
    "flavio_pct": 48.24,
    "lider": "Flávio",
    "diferenca_votos": 588612,
+   "secoes_total": 52062,
+   "secoes_totalizadas": 52062,
+   "eleitorado_apurado": 16372372,
    "candidatos": [
     {
      "numero": 22,
@@ -1570,6 +1606,9 @@
    "flavio_pct": 58.6,
    "lider": "Flávio",
    "diferenca_votos": 356496,
+   "secoes_total": 7106,
+   "secoes_totalizadas": 7106,
+   "eleitorado_apurado": 2024430,
    "candidatos": [
     {
      "numero": 22,
@@ -1699,6 +1738,9 @@
    "flavio_pct": 65.15,
    "lider": "Flávio",
    "diferenca_votos": 716900,
+   "secoes_total": 8287,
+   "secoes_totalizadas": 8287,
+   "eleitorado_apurado": 2637801,
    "candidatos": [
     {
      "numero": 22,
@@ -1828,6 +1870,9 @@
    "flavio_pct": 44.5,
    "lider": "Lula",
    "diferenca_votos": 263280,
+   "secoes_total": 20827,
+   "secoes_totalizadas": 20827,
+   "eleitorado_apurado": 6262397,
    "candidatos": [
     {
      "numero": 13,
@@ -1957,6 +2002,9 @@
    "flavio_pct": 33.07,
    "lider": "Lula",
    "diferenca_votos": 709750,
+   "secoes_total": 10712,
+   "secoes_totalizadas": 10712,
+   "eleitorado_apurado": 3248531,
    "candidatos": [
     {
      "numero": 13,
@@ -2086,6 +2134,9 @@
    "flavio_pct": 31.03,
    "lider": "Lula",
    "diferenca_votos": 1815928,
+   "secoes_total": 21418,
+   "secoes_totalizadas": 21418,
+   "eleitorado_apurado": 7223450,
    "candidatos": [
     {
      "numero": 13,
@@ -2215,6 +2266,9 @@
    "flavio_pct": 24.09,
    "lider": "Lula",
    "diferenca_votos": 1006682,
+   "secoes_total": 10225,
+   "secoes_totalizadas": 10225,
+   "eleitorado_apurado": 2704758,
    "candidatos": [
     {
      "numero": 13,
@@ -2344,6 +2398,9 @@
    "flavio_pct": 59.91,
    "lider": "Flávio",
    "diferenca_votos": 1890748,
+   "secoes_total": 27142,
+   "secoes_totalizadas": 27142,
+   "eleitorado_apurado": 8613657,
    "candidatos": [
     {
      "numero": 22,
@@ -2473,6 +2530,9 @@
    "flavio_pct": 53.01,
    "lider": "Flávio",
    "diferenca_votos": 1273823,
+   "secoes_total": 37675,
+   "secoes_totalizadas": 37675,
+   "eleitorado_apurado": 12857648,
    "candidatos": [
     {
      "numero": 22,
@@ -2602,6 +2662,9 @@
    "flavio_pct": 34.77,
    "lider": "Lula",
    "diferenca_votos": 517470,
+   "secoes_total": 8115,
+   "secoes_totalizadas": 8115,
+   "eleitorado_apurado": 2659825,
    "candidatos": [
     {
      "numero": 13,
@@ -2731,6 +2794,9 @@
    "flavio_pct": 67.45,
    "lider": "Flávio",
    "diferenca_votos": 402321,
+   "secoes_total": 4698,
+   "secoes_totalizadas": 4698,
+   "eleitorado_apurado": 1265893,
    "candidatos": [
     {
      "numero": 22,
@@ -2860,6 +2926,9 @@
    "flavio_pct": 71.06,
    "lider": "Flávio",
    "diferenca_votos": 156902,
+   "secoes_total": 1519,
+   "secoes_totalizadas": 1519,
+   "eleitorado_apurado": 401521,
    "candidatos": [
     {
      "numero": 22,
@@ -2989,6 +3058,9 @@
    "flavio_pct": 55.64,
    "lider": "Flávio",
    "diferenca_votos": 1279024,
+   "secoes_total": 27547,
+   "secoes_totalizadas": 27547,
+   "eleitorado_apurado": 8522545,
    "candidatos": [
     {
      "numero": 22,
@@ -3118,6 +3190,9 @@
    "flavio_pct": 66.65,
    "lider": "Flávio",
    "diferenca_votos": 1872852,
+   "secoes_total": 17326,
+   "secoes_totalizadas": 17326,
+   "eleitorado_apurado": 5734651,
    "candidatos": [
     {
      "numero": 22,
@@ -3247,6 +3322,9 @@
    "flavio_pct": 30.63,
    "lider": "Lula",
    "diferenca_votos": 438180,
+   "secoes_total": 5923,
+   "secoes_totalizadas": 5923,
+   "eleitorado_apurado": 1740135,
    "candidatos": [
     {
      "numero": 13,
@@ -3376,6 +3454,9 @@
    "flavio_pct": 51.93,
    "lider": "Flávio",
    "diferenca_votos": 3416610,
+   "secoes_total": 103656,
+   "secoes_totalizadas": 103656,
+   "eleitorado_apurado": 34122892,
    "candidatos": [
     {
      "numero": 22,
@@ -3505,6 +3586,9 @@
    "flavio_pct": 50.44,
    "lider": "Flávio",
    "diferenca_votos": 65312,
+   "secoes_total": 4384,
+   "secoes_totalizadas": 4384,
+   "eleitorado_apurado": 1182023,
    "candidatos": [
     {
      "numero": 22,
@@ -3634,6 +3718,9 @@
    "flavio_pct": 43.49,
    "lider": "Lula",
    "diferenca_votos": 13487,
+   "secoes_total": 1351,
+   "secoes_totalizadas": 1351,
+   "eleitorado_apurado": 916534,
    "candidatos": [
     {
      "numero": 13,

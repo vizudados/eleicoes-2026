@@ -1,0 +1,10 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Eleitores que votaram nas seções totalizadas do escopo.
+*/
+IF (
+    ISFILTERED ( 'UF' ),
+    SUM ( 'Apuração UF'[Comparecimento] ),
+    SUM ( 'Apuração Brasil'[Comparecimento] )
+)

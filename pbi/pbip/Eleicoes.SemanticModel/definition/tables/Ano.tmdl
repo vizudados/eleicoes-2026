@@ -1,0 +1,70 @@
+/// As seis eleições presidenciais de 2006 a 2026 (1º turno), com o candidato do PT e o principal adversário (o mais votado fora do PT) de cada uma.
+table Ano
+	lineageTag: cf24b66a-1038-5162-93af-57f6c3f26537
+
+	/// Ano da eleição.
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 61d4569d-1260-56ad-b204-011863ab119b
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ano como texto, para eixo e rótulo.
+	column 'Ano (texto)'
+		dataType: string
+		lineageTag: 88fda8b4-be10-5323-8758-c0b700844abf
+		summarizeBy: none
+		sourceColumn: Ano (texto)
+		sortByColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Candidato do PT no 1º turno.
+	column 'Candidato do PT'
+		dataType: string
+		lineageTag: 0b60a7af-fa77-55e2-a996-661e56eca440
+		summarizeBy: none
+		sourceColumn: Candidato do PT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mais votado fora do PT no 1º turno.
+	column 'Adversário'
+		dataType: string
+		lineageTag: 26501932-0498-510e-a6da-01c33fb5046f
+		summarizeBy: none
+		sourceColumn: Adversário
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Partido do adversário.
+	column 'Partido do adversário'
+		dataType: string
+		lineageTag: cbe78e5e-af8d-51d7-8cef-558a252f297a
+		summarizeBy: none
+		sourceColumn: Partido do adversário
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Ano = m
+		mode: import
+		source =
+				let
+				    Anos = #table(
+				        type table [Ano = Int64.Type, AnoTexto = text, CandidatoPT = text, Adversario = text, AdversarioPartido = text],
+				        {
+				        {2006, "2006", "Lula", "Geraldo Alckmin", "PSDB"},
+				        {2010, "2010", "Dilma Rousseff", "José Serra", "PSDB"},
+				        {2014, "2014", "Dilma Rousseff", "Aécio Neves", "PSDB"},
+				        {2018, "2018", "Fernando Haddad", "Jair Bolsonaro", "PSL"},
+				        {2022, "2022", "Lula", "Jair Bolsonaro", "PL"},
+				        {2026, "2026", "Lula", "Flávio Bolsonaro", "PL"}
+				        }
+				    )
+				in
+				    Anos
+
+	annotation PBI_ResultType = Table

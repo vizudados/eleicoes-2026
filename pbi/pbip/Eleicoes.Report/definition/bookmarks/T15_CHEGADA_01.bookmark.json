@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T15_CHEGADA_01",
+  "displayName": "Chegada · 15 Minha cidade",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T15_Casca_InfoAbre",
+      "T15_Casca_InfoFecha",
+      "T15_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T15",
+    "sections": {
+      "T15": {
+        "visualContainers": {
+          "T15_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T15_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T15_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

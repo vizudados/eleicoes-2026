@@ -1,0 +1,10 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: dd/MM/yyyy HH:mm
+@descricao: Hora de totalização do TSE no escopo (com várias UFs, a mais recente); vazio antes da primeira divulgação.
+*/
+IF (
+    ISFILTERED ( 'UF' ),
+    MAX ( 'Apuração UF'[AtualizadoTSE] ),
+    MAX ( 'Apuração Brasil'[AtualizadoTSE] )
+)

@@ -1,0 +1,75 @@
+/// Gasto com anúncios (Biblioteca de Anúncios da Meta e prestação de contas ao TSE).
+table 'Anúncios'
+	isHidden
+	lineageTag: e301433a-034c-5737-ab5e-8b1115e439c2
+
+	/// Página ou candidatura.
+	column Anunciante
+		dataType: string
+		lineageTag: 452093b4-1447-5c65-a3e8-e1fa6caae9d5
+		summarizeBy: none
+		sourceColumn: Anunciante
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Plataforma ou base.
+	column Plataforma
+		dataType: string
+		lineageTag: 8fa618e6-df5b-5540-bafb-c077c2fca2a3
+		summarizeBy: none
+		sourceColumn: Plataforma
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Período.
+	column 'Período'
+		dataType: string
+		lineageTag: 2aa94d91-3a14-5f56-ab09-ca82c08c9258
+		summarizeBy: none
+		sourceColumn: Período
+
+		annotation SummarizationSetBy = Automatic
+
+	/// R$.
+	column Valor
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: 1f549f10-9dea-57a0-a3be-6f47bd064628
+		summarizeBy: none
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 72e5da19-965a-584f-b70d-17fc8147f0b2
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: a76a3031-5a6a-56f3-b138-dd375941f9fa
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Anúncios' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/anuncios.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"candidato_ou_partido", "plataforma", "periodo", "valor_reais", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"candidato_ou_partido", type text}, {"plataforma", type text}, {"periodo", type text}, {"valor_reais", type number}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"candidato_ou_partido", "Anunciante"}, {"plataforma", "Plataforma"}, {"periodo", "Período"}, {"valor_reais", "Valor"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

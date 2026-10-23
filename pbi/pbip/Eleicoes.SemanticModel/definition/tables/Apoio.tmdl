@@ -1,0 +1,83 @@
+/// Apoios declarados no 2º turno: candidatos derrotados, partidos e governadores, com data e citação.
+table Apoio
+	isHidden
+	lineageTag: adc0fc16-c244-52f4-8c60-8c838a570211
+
+	/// Pessoa ou partido.
+	column Quem
+		dataType: string
+		lineageTag: ec0c6951-1691-5052-93dd-ec51a70c3e35
+		summarizeBy: none
+		sourceColumn: Quem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cargo ou partido.
+	column Cargo
+		dataType: string
+		lineageTag: 920c18f9-6da7-526f-88cf-3339d1bce939
+		summarizeBy: none
+		sourceColumn: Cargo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Lula, Flávio, neutro, liberou…
+	column 'Posição'
+		dataType: string
+		lineageTag: c02318b9-94f7-5068-9177-cdc84c6d24a5
+		summarizeBy: none
+		sourceColumn: Posição
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Data do anúncio.
+	column Data
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 41ede9cc-ec47-508d-bde1-7c20e64a6846
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Citação curta.
+	column 'Citação'
+		dataType: string
+		lineageTag: 9226a475-3e8a-522e-baaf-c021eba08f6c
+		summarizeBy: none
+		sourceColumn: Citação
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 2cd46130-a098-560c-b5aa-1ecf30f79745
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: 11373cb4-a68b-51ef-8384-3f69d8ab1c2c
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Apoio = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/apoio.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"quem", "cargo_ou_partido", "posicao", "data", "citacao_curta", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"quem", type text}, {"cargo_ou_partido", type text}, {"posicao", type text}, {"data", type date}, {"citacao_curta", type text}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"quem", "Quem"}, {"cargo_ou_partido", "Cargo"}, {"posicao", "Posição"}, {"data", "Data"}, {"citacao_curta", "Citação"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

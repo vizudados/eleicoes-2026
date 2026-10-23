@@ -1,0 +1,10 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Votos de Flávio Bolsonaro no escopo da apuração.
+*/
+IF (
+    ISFILTERED ( 'UF' ),
+    SUM ( 'Apuração UF'[FlavioVotos] ),
+    SUM ( 'Apuração Brasil'[FlavioVotos] )
+)

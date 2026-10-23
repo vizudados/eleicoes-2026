@@ -1,0 +1,6 @@
+/*
+@pasta: _Casca
+@formato: 0
+@descricao: Ordem da UF na lista do filtro (região, depois o nome; papel itemSort).
+*/
+MIN ( 'UF'[Ordem] )

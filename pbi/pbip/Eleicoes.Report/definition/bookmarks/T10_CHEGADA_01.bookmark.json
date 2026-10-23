@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T10_CHEGADA_01",
+  "displayName": "Chegada · 10 Pesquisas",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T10_Casca_InfoAbre",
+      "T10_Casca_InfoFecha",
+      "T10_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T10",
+    "sections": {
+      "T10": {
+        "visualContainers": {
+          "T10_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T10_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T10_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

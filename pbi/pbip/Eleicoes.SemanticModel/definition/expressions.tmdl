@@ -1,0 +1,47 @@
+/// Endereço raw do repositório público vizudados/eleicoes-2026 (branch main): todos os dados do painel e os arquivos que o coletor da apuração grava a cada coleta.
+expression pRepositorioRaw = "https://raw.githubusercontent.com/vizudados/eleicoes-2026/main" meta [IsParameterQuery = true, Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 91cec472-e025-5a80-8e23-828dea16c13f
+
+	annotation PBI_ResultType = Text
+
+/// Pasta da apuração no repositório: dados/apuracao é o 2º turno ao vivo; dados/apuracao/ensaio-1turno é o 1º turno encerrado, que serve para conferir as contas contra o resultado oficial.
+expression pPastaApuracao = "dados/apuracao" meta [IsParameterQuery = true, List = {"dados/apuracao", "dados/apuracao/ensaio-1turno"}, DefaultValue = "dados/apuracao", Type = "Text", IsParameterQueryRequired = true]
+	lineageTag: 4b149f90-c8ce-5837-b734-b3986cc3d080
+
+	annotation PBI_ResultType = Text
+
+/// Lê um CSV do repositório (caminho relativo a pRepositorioRaw) e promove o cabeçalho. A apuração passa um carimbo na consulta para furar o cache de 5 minutos do raw do GitHub; os demais arquivos mudam pouco.
+expression fxCsv =
+		(caminho as text, optional separador as nullable text) as table =>
+		    let
+		        Ao_vivo = Text.StartsWith(caminho, "dados/apuracao"),
+		        Opcoes = if Ao_vivo
+		            then [RelativePath = caminho,
+		                  Query = [t = DateTimeZone.ToText(DateTimeZone.UtcNow(), [Format = "yyyyMMddHHmmss", Culture = "en-US"])]]
+		            else [RelativePath = caminho],
+		        Bruto = Csv.Document(Web.Contents(pRepositorioRaw, Opcoes),
+		            [Delimiter = if separador = null then "," else separador, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+		        Cabecalho = Table.PromoteHeaders(Bruto, [PromoteAllScalars = true])
+		    in
+		        Cabecalho
+	lineageTag: 69bd68b4-f478-51e6-81bd-e210a0ad8472
+
+	annotation PBI_ResultType = Function
+
+/// Lê um JSON do repositório (caminho relativo a pRepositorioRaw), com carimbo para furar o cache do raw.
+expression fxJson =
+		(caminho as text) as any =>
+		    Json.Document(Web.Contents(pRepositorioRaw, [RelativePath = caminho,
+		        Query = [t = DateTimeZone.ToText(DateTimeZone.UtcNow(), [Format = "yyyyMMddHHmmss", Culture = "en-US"])]]))
+	lineageTag: 29e26cd6-18dc-5b05-a535-5ed0753244be
+
+	annotation PBI_ResultType = Function
+
+/// Converte a hora que o TSE e o coletor escrevem (dd/MM/aaaa HH:mm:ss, horário de Brasília) em data e hora; vazio vira nulo (antes da primeira divulgação).
+expression fxHora =
+		(texto as nullable text) as nullable datetime =>
+		    if texto = null or texto = "" then null
+		    else DateTime.FromText(texto, [Format = "dd/MM/yyyy HH:mm:ss", Culture = "pt-BR"])
+	lineageTag: f3d35328-1420-5a9a-85a7-da8ba46de582
+
+	annotation PBI_ResultType = Function

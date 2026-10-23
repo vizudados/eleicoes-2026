@@ -1,0 +1,107 @@
+/// Métricas de monitoramento digital: interações, ganho de seguidores, índice de popularidade digital (Quaest), canais, por estudo e período.
+table Monitoramento
+	isHidden
+	lineageTag: 102ba4bc-8612-5d8b-80d3-31d96413225b
+
+	/// Estudo e quem divulgou.
+	column Estudo
+		dataType: string
+		lineageTag: 853f40e2-70ae-5889-9b2f-b55f859cfde0
+		summarizeBy: none
+		sourceColumn: Estudo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Início do período.
+	column 'Início'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: 2d874d8c-15bb-56e0-ba30-2aa7aee2e79e
+		summarizeBy: none
+		sourceColumn: Início
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fim do período.
+	column Fim
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: ce7ef39b-8212-5b57-a3fa-49a9ded0f472
+		summarizeBy: none
+		sourceColumn: Fim
+
+		annotation SummarizationSetBy = Automatic
+
+	/// O que foi medido.
+	column 'Métrica'
+		dataType: string
+		lineageTag: bbd723d8-3c4f-52a7-ac75-63c6b83be5b0
+		summarizeBy: none
+		sourceColumn: Métrica
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Candidato.
+	column Candidato
+		dataType: string
+		lineageTag: 9cafa594-1d1a-5705-91f8-ed0c245c10bc
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Valor medido.
+	column Valor
+		dataType: double
+		isHidden
+		formatString: #,0.0
+		lineageTag: c56ac70d-0e2b-5f97-a9ab-4f30bb368141
+		summarizeBy: none
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Unidade do valor.
+	column Unidade
+		dataType: string
+		isHidden
+		lineageTag: 7243e9d2-d185-5355-9219-30f6b9674049
+		summarizeBy: none
+		sourceColumn: Unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 0e7aecbc-a307-5a01-b9cf-06ec26a3c592
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: 19bf959c-ff9f-548b-8d96-b37f4643401a
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Monitoramento = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/monitoramento.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"estudo", "periodo_inicio", "periodo_fim", "metrica", "candidato", "valor", "unidade", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"estudo", type text}, {"periodo_inicio", type date}, {"periodo_fim", type date}, {"metrica", type text}, {"candidato", type text}, {"valor", type number}, {"unidade", type text}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"estudo", "Estudo"}, {"periodo_inicio", "Início"}, {"periodo_fim", "Fim"}, {"metrica", "Métrica"}, {"candidato", "Candidato"}, {"valor", "Valor"}, {"unidade", "Unidade"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

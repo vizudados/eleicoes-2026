@@ -1,0 +1,122 @@
+/// Os marcos da trajetória política de Lula e de Flávio, com a foto histórica (redesenhada em traço) quando há foto de licença aberta.
+table 'Trajetória'
+	isHidden
+	lineageTag: df9b760c-91b9-5cde-9326-78f4fcfa0232
+
+	/// Lula ou Flávio.
+	column Candidato
+		dataType: string
+		lineageTag: c9b9ee13-4366-5565-a59a-d537b4a82236
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem cronológica do marco.
+	column Ordem
+		dataType: int64
+		formatString: 0
+		lineageTag: e55f47a2-9774-5d74-bfc2-49a6859c7438
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Data do marco (aaaa ou aaaa-mm-dd).
+	column Data
+		dataType: string
+		lineageTag: 0b5ce23b-039c-5317-b94d-7dc481d2632e
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ano do marco.
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 81a706f1-14b3-5848-9734-613caa6723c1
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Título curto do marco.
+	column 'Título'
+		dataType: string
+		lineageTag: 508f3f29-87c7-5bc7-92b0-98c1452c9eef
+		summarizeBy: none
+		sourceColumn: Título
+
+		annotation SummarizationSetBy = Automatic
+
+	/// O que aconteceu (até ~200 caracteres).
+	column Texto
+		dataType: string
+		lineageTag: 65a3f3aa-81e8-5d40-bdcd-ae809f96bee6
+		summarizeBy: none
+		sourceColumn: Texto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome da foto redesenhada (sem extensão); vazio quando não há foto livre.
+	column Foto
+		dataType: string
+		lineageTag: f58e06fb-5c84-51c1-b0b8-4ee2f7f8c39f
+		summarizeBy: none
+		sourceColumn: Foto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Autor da foto original.
+	column 'Autor da foto'
+		dataType: string
+		isHidden
+		lineageTag: f6b35297-5ec5-52fd-a24f-d41be250f6f5
+		summarizeBy: none
+		sourceColumn: Autor da foto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Licença da foto original.
+	column 'Licença da foto'
+		dataType: string
+		isHidden
+		lineageTag: cf322269-75cd-5a6a-9546-b0487b585c88
+		summarizeBy: none
+		sourceColumn: Licença da foto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quando a foto foi feita.
+	column 'Ano da foto'
+		dataType: string
+		isHidden
+		lineageTag: 9b01100a-671e-5e41-9b92-c59d7948408f
+		summarizeBy: none
+		sourceColumn: Ano da foto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 656d7ba6-7638-5af4-89aa-6ada0f28dc79
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Trajetória' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/trajetoria.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"candidato", "ordem", "data", "ano", "titulo", "texto", "foto", "foto_autor", "foto_licenca", "foto_ano", "fonte_url"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"candidato", type text}, {"ordem", Int64.Type}, {"data", type text}, {"ano", Int64.Type}, {"titulo", type text}, {"texto", type text}, {"foto", type text}, {"foto_autor", type text}, {"foto_licenca", type text}, {"foto_ano", type text}, {"fonte_url", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"candidato", "Candidato"}, {"ordem", "Ordem"}, {"data", "Data"}, {"ano", "Ano"}, {"titulo", "Título"}, {"texto", "Texto"}, {"foto", "Foto"}, {"foto_autor", "Autor da foto"}, {"foto_licenca", "Licença da foto"}, {"foto_ano", "Ano da foto"}, {"fonte_url", "Fonte"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

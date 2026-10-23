@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T08_CHEGADA_01",
+  "displayName": "Chegada · 08 Buscas",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T08_Casca_InfoAbre",
+      "T08_Casca_InfoFecha",
+      "T08_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T08",
+    "sections": {
+      "T08": {
+        "visualContainers": {
+          "T08_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T08_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T08_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

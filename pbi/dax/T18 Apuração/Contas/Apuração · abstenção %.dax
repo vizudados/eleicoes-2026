@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00%
+@descricao: Abstenção sobre o eleitorado das seções totalizadas (o pa do TSE).
+*/
+DIVIDE ( [Apuração · abstenção], [Apuração · eleitorado apurado] )

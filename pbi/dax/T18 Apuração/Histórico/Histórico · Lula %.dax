@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Histórico
+@formato: 0.00%
+@descricao: Lula sobre os válidos no Brasil em cada hora do TSE.
+*/
+DIVIDE ( SUM ( 'Apuração histórico'[LulaVotos] ), SUM ( 'Apuração histórico'[Validos] ) )

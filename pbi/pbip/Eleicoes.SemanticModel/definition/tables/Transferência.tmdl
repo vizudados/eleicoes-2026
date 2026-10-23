@@ -1,0 +1,162 @@
+/// Para onde vão, no 2º turno, os eleitores de cada candidato do 1º turno, segundo as pesquisas que publicaram o cruzamento (votos totais).
+table 'Transferência'
+	isHidden
+	lineageTag: ad35f578-b20e-568c-a086-de46f9afc33d
+
+	/// Instituto.
+	column Instituto
+		dataType: string
+		lineageTag: 5af39f9d-6a3c-5b15-b25a-f1ae2a3690a8
+		summarizeBy: none
+		sourceColumn: Instituto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Data de divulgação.
+	column 'Divulgação'
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: c67f8fa1-9e26-5612-b55a-4a1a2b598c91
+		summarizeBy: none
+		sourceColumn: Divulgação
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Início do campo.
+	column 'Campo início'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: 9568953d-513a-59d8-bea8-1864dc24b301
+		summarizeBy: none
+		sourceColumn: Campo início
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fim do campo.
+	column 'Campo fim'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: dabdc1e1-6eec-535a-a0d0-2350c82f40be
+		summarizeBy: none
+		sourceColumn: Campo fim
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Registro no TSE.
+	column Registro
+		dataType: string
+		isHidden
+		lineageTag: 6e19f007-1af8-53eb-80c9-746a550fd169
+		summarizeBy: none
+		sourceColumn: Registro
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Voto declarado no 1º turno (Cury, Renan, Caiado, …).
+	column Segmento
+		dataType: string
+		lineageTag: 0b0d1ad8-1e28-55de-9b57-59b50b8d6a64
+		summarizeBy: none
+		sourceColumn: Segmento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Entrevistas no segmento (quando publicado).
+	column N
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: b1a9cbc8-bc7b-526c-9ce7-03e9b21975e9
+		summarizeBy: none
+		sourceColumn: N
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % que vai para Lula.
+	column Lula
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: d393830e-e171-561d-af90-ea67b7741c30
+		summarizeBy: none
+		sourceColumn: Lula
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % que vai para Flávio.
+	column Flavio
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 4e5a4b94-4784-53d1-a75c-de1ba0790e97
+		summarizeBy: none
+		sourceColumn: Flavio
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % branco, nulo ou não vota.
+	column BrancoNulo
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 3195a686-a2b7-54c8-a59d-5b04cd3aa6a4
+		summarizeBy: none
+		sourceColumn: BrancoNulo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % não sabe.
+	column NaoSabe
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 4226b49d-8019-5912-ac9c-3d0d909dadb4
+		summarizeBy: none
+		sourceColumn: NaoSabe
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Base do percentual (totais).
+	column Base
+		dataType: string
+		isHidden
+		lineageTag: 54e32121-2f5f-5ca2-a360-c0a88ab9df93
+		summarizeBy: none
+		sourceColumn: Base
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 8ce77e77-91ea-5b96-bf7f-4aca630f051e
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: ed42929d-f0b1-5d28-ab11-252645f79221
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Transferência' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/transferencia.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"instituto", "divulgacao", "campo_inicio", "campo_fim", "registro_tse", "segmento_1turno", "n_segmento", "lula", "flavio", "branco_nulo_nao_vota", "nao_sabe", "base", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"instituto", type text}, {"divulgacao", type date}, {"campo_inicio", type date}, {"campo_fim", type date}, {"registro_tse", type text}, {"segmento_1turno", type text}, {"n_segmento", type number}, {"lula", type number}, {"flavio", type number}, {"branco_nulo_nao_vota", type number}, {"nao_sabe", type number}, {"base", type text}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"instituto", "Instituto"}, {"divulgacao", "Divulgação"}, {"campo_inicio", "Campo início"}, {"campo_fim", "Campo fim"}, {"registro_tse", "Registro"}, {"segmento_1turno", "Segmento"}, {"n_segmento", "N"}, {"lula", "Lula"}, {"flavio", "Flavio"}, {"branco_nulo_nao_vota", "BrancoNulo"}, {"nao_sabe", "NaoSabe"}, {"base", "Base"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,66 @@
+/// Google Trends por UF: índice 0–100 e participação % de cada candidato nas buscas, no período todo (01/08–22/10) e no 2º turno.
+table 'Trends UF'
+	isHidden
+	lineageTag: 5dd86630-850a-5440-959c-6452e818fd68
+
+	/// Sigla da UF.
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 5482f1dd-85af-52de-9d24-ea67d4414cbd
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Candidato, tipo de consulta e medida.
+	column 'Série'
+		dataType: string
+		lineageTag: 77ddfec3-0342-53c2-a83e-d4cd3f3db497
+		summarizeBy: none
+		sourceColumn: Série
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Índice ou participação (%).
+	column 'Índice'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c64cd58e-8571-5e9f-9b9b-fb1222023b02
+		summarizeBy: none
+		sourceColumn: Índice
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Período da consulta.
+	column 'Período'
+		dataType: string
+		lineageTag: 26196464-adb8-51c4-bf37-d074484771c4
+		summarizeBy: none
+		sourceColumn: Período
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: e7022b2c-63b1-5813-9bb9-51eba69fea9f
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Trends UF' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/trends_uf.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"uf", "termo", "indice", "periodo", "fonte_url"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"uf", type text}, {"termo", type text}, {"indice", Int64.Type}, {"periodo", type text}, {"fonte_url", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"uf", "UF"}, {"termo", "Série"}, {"indice", "Índice"}, {"periodo", "Período"}, {"fonte_url", "Fonte"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

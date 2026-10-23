@@ -1,0 +1,9 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: texto
+@descricao: Quem está à frente no escopo: Lula, Flávio ou — (empate ou nenhum voto apurado).
+*/
+VAR _lula = [Apuração · Lula votos]
+VAR _flavio = [Apuração · Flávio votos]
+RETURN
+    SWITCH ( TRUE (), _lula > _flavio, "Lula", _flavio > _lula, "Flávio", "—" )

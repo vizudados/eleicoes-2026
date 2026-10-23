@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Histórico
+@formato: 0
+@descricao: Quantas horas de totalização o histórico guardou.
+*/
+COUNTROWS ( 'Apuração histórico' ) + 0

@@ -1,0 +1,77 @@
+/// Votos de cada candidato por UF (e exterior, ZZ) nos 1º turnos de 2022 e 2026.
+table 'Candidato UF'
+	isHidden
+	lineageTag: 12c7eb6c-f8b3-5410-9848-91c72d9cfd34
+
+	/// Ano da eleição.
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 900050d8-8747-5a6a-a1d0-df62fb7a53ea
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla da UF (ZZ = exterior).
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 09383a25-d30d-54f8-a7e8-0e5fc5ebb058
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Número do candidato.
+	column 'Número'
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e96fac8-0123-50ac-82fd-6dc347c53827
+		summarizeBy: none
+		sourceColumn: Número
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome de urna, abreviado.
+	column Candidato
+		dataType: string
+		lineageTag: 1789832f-b5b5-539c-baf5-cac6338e421f
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla do partido.
+	column Partido
+		dataType: string
+		lineageTag: 1e103f06-ffa0-5b10-ad90-d0e482750c13
+		summarizeBy: none
+		sourceColumn: Partido
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos no 1º turno.
+	column Votos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 10a5463f-b9c5-57ba-a6aa-875b2e9aea54
+		summarizeBy: none
+		sourceColumn: Votos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Candidato UF' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/candidato_uf.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "uf", "numero", "nome", "partido", "votos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"uf", type text}, {"numero", Int64.Type}, {"nome", type text}, {"partido", type text}, {"votos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"uf", "UF"}, {"numero", "Número"}, {"nome", "Candidato"}, {"partido", "Partido"}, {"votos", "Votos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,137 @@
+/// Município × eleição (1º turno, 2006–2026): votos do PT, do principal adversário e dos demais, válidos, aptos, comparecimento, abstenção, brancos e nulos. Sem o exterior.
+table 'Município ano'
+	isHidden
+	lineageTag: fde076b2-2cbd-52db-80f0-8e00334f4379
+
+	/// Ano da eleição.
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0f1c2645-0f80-5449-88fd-3955aaa6a9a0
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Código IBGE do município.
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: d5a66804-62d9-53ed-a873-b13948d3e4b1
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do candidato do PT.
+	column VotosPT
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 84f88d41-db34-514a-8398-c14f7337b897
+		summarizeBy: none
+		sourceColumn: VotosPT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do principal adversário (o mais votado fora do PT; em 2026, Flávio Bolsonaro).
+	column VotosAdversario
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 140791e1-6953-5742-bae1-62b295ed8812
+		summarizeBy: none
+		sourceColumn: VotosAdversario
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos dos demais candidatos.
+	column VotosDemais
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 16dfa855-d458-5a61-9340-416837fea717
+		summarizeBy: none
+		sourceColumn: VotosDemais
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos.
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 48c3ff8c-e059-5517-8e2d-29804ccdcafb
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores aptos.
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: d630c847-5d3f-5d94-8a94-e0ee07fdde8d
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores que votaram.
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: fb243271-0608-5ab5-b9af-fa23542353fd
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores que faltaram.
+	column Abstencoes
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: f61db32c-4036-52de-9328-a479b34097af
+		summarizeBy: none
+		sourceColumn: Abstencoes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos em branco.
+	column Brancos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: fe61e995-5778-518d-997c-137ee7f5ea3c
+		summarizeBy: none
+		sourceColumn: Brancos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos nulos.
+	column Nulos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c812db5f-c92b-5ad6-b7fc-05dd4d4cca88
+		summarizeBy: none
+		sourceColumn: Nulos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Município ano' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/municipio_ano.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "cd_ibge", "pt", "adv", "demais", "validos", "aptos", "comparecimento", "abstencoes", "brancos", "nulos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"cd_ibge", type text}, {"pt", Int64.Type}, {"adv", Int64.Type}, {"demais", Int64.Type}, {"validos", Int64.Type}, {"aptos", Int64.Type}, {"comparecimento", Int64.Type}, {"abstencoes", Int64.Type}, {"brancos", Int64.Type}, {"nulos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"cd_ibge", "CodIBGE"}, {"pt", "VotosPT"}, {"adv", "VotosAdversario"}, {"demais", "VotosDemais"}, {"validos", "Validos"}, {"aptos", "Aptos"}, {"comparecimento", "Comparecimento"}, {"abstencoes", "Abstencoes"}, {"brancos", "Brancos"}, {"nulos", "Nulos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

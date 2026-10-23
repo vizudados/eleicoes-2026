@@ -1,0 +1,89 @@
+/// Google Trends: índice relativo (0–100) por dia ou hora de cada série (candidatos como tópico T2 ou termo T1, buscas de serviço S1/S2, termos gerais E1, Central C1, horas H1/H2).
+table 'Trends tempo'
+	isHidden
+	lineageTag: 7128ac4b-5078-5402-940a-057a76957546
+
+	/// Data (aaaa-mm-dd) ou data e hora (aaaa-mm-dd hh:mm).
+	column DataTexto
+		dataType: string
+		isHidden
+		lineageTag: 6c76350b-5f32-5112-aa71-81a3c4845c0d
+		summarizeBy: none
+		sourceColumn: DataTexto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Data e hora da observação.
+	column Momento
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy HH:mm
+		lineageTag: bef17b3e-6e9c-5dc7-9923-1ea0fc0a950f
+		summarizeBy: none
+		sourceColumn: Momento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Termo e consulta, ex.: 'Lula [tópico | T2]'.
+	column 'Série'
+		dataType: string
+		lineageTag: ee53aad3-420b-50d6-88b8-3f58337e69d9
+		summarizeBy: none
+		sourceColumn: Série
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Índice relativo 0–100 dentro da consulta.
+	column 'Índice'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 02b117cb-19e4-5df6-8377-50d439c4b5ee
+		summarizeBy: none
+		sourceColumn: Índice
+
+		annotation SummarizationSetBy = Automatic
+
+	/// diária ou hora.
+	column Granularidade
+		dataType: string
+		isHidden
+		lineageTag: 1c73a0ba-4283-5036-9da2-1bb5c8764662
+		summarizeBy: none
+		sourceColumn: Granularidade
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 17cf4bc6-defb-517c-9bf6-96ac6be41ff5
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: cf80f507-647a-5387-993d-1b370eaf77b8
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Trends tempo' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/trends_tempo.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"data", "termo", "indice", "granularidade", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"data", type text}, {"termo", type text}, {"indice", Int64.Type}, {"granularidade", type text}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"data", "DataTexto"}, {"termo", "Série"}, {"indice", "Índice"}, {"granularidade", "Granularidade"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}}),
+				    Final = Table.AddColumn(Nomes, "Momento", each DateTime.FromText(if Text.Length([DataTexto]) = 10 then [DataTexto] & " 00:00" else [DataTexto], [Format = "yyyy-MM-dd HH:mm", Culture = "en-US"]), type datetime)
+				in
+				    Final
+
+	annotation PBI_ResultType = Table

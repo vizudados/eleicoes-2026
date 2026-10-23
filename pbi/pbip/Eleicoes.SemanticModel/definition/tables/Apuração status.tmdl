@@ -1,0 +1,87 @@
+/// O estado da apuração na última coleta (ultimo.json): eleição, turno, fase, horas e as UFs que faltaram na coleta.
+table 'Apuração status'
+	isHidden
+	lineageTag: 678136ef-9c20-5bf9-9ae0-909624b76401
+
+	/// Código da eleição no TSE (6257 = 1º turno; 6258 = 2º).
+	column Eleicao
+		dataType: int64
+		formatString: 0
+		lineageTag: bc4e2486-9553-5691-a9cb-6136c8728bba
+		summarizeBy: none
+		sourceColumn: Eleicao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Turno (1 ou 2).
+	column Turno
+		dataType: int64
+		formatString: 0
+		lineageTag: 245bc952-bff1-5b8e-9b4f-192bf28ecce8
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// aguardando · apurando · definido (o TSE marcou o eleito) · encerrada (100%).
+	column Status
+		dataType: string
+		lineageTag: 1cca614a-937a-58e2-9375-e17351d195f3
+		summarizeBy: none
+		sourceColumn: Status
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora de totalização do Brasil no TSE.
+	column AtualizadoTSE
+		dataType: dateTime
+		formatString: dd/MM/yyyy HH:mm
+		lineageTag: 1ef585ac-d95c-590d-be14-e1ed312a9922
+		summarizeBy: none
+		sourceColumn: AtualizadoTSE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora da coleta (Brasília).
+	column ColetadoEm
+		dataType: dateTime
+		formatString: dd/MM/yyyy HH:mm
+		lineageTag: 7c13f704-31c7-5937-948b-850774e4dd1b
+		summarizeBy: none
+		sourceColumn: ColetadoEm
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fonte declarada pelo coletor.
+	column Fonte
+		dataType: string
+		lineageTag: a859c1a4-221b-520c-ad74-09115a2e4874
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// UFs cujo arquivo não veio na coleta (vazio = nenhuma).
+	column Faltaram
+		dataType: string
+		lineageTag: 64f583bf-d917-5c30-a19a-0e99f604fa6e
+		summarizeBy: none
+		sourceColumn: Faltaram
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Apuração status' = m
+		mode: import
+		source =
+				let
+				    Json = fxJson(pPastaApuracao & "/ultimo.json"),
+				    Linha = #table(
+				        type table [Eleicao = Int64.Type, Turno = Int64.Type, Status = text, AtualizadoTSE = nullable datetime,
+				                    ColetadoEm = nullable datetime, Fonte = text, Faltaram = text],
+				        {{Json[eleicao], Json[turno], Json[status], fxHora(Json[atualizado_tse]), fxHora(Json[coletado_em]),
+				          Json[fonte], Text.Combine(List.Transform(Json[faltaram], Text.From), ", ")}}
+				    )
+				in
+				    Linha
+
+	annotation PBI_ResultType = Table

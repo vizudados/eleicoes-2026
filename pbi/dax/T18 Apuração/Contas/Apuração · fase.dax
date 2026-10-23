@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: texto
+@descricao: aguardando · apurando · definido · encerrada, na última coleta.
+*/
+SELECTEDVALUE ( 'Apuração status'[Status] )

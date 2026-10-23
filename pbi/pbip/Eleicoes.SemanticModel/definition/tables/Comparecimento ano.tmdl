@@ -1,0 +1,83 @@
+/// Brasil × eleição: aptos, comparecimento, abstenção, brancos e nulos (1º turno, sem o exterior).
+table 'Comparecimento ano'
+	isHidden
+	lineageTag: 5b6f469f-7a00-5a9b-a011-b472af49b9b0
+
+	/// Ano da eleição.
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7dcac235-81f9-58a5-8cfb-99adda5b0d47
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores aptos.
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: d23e99a4-494b-5d4a-b6d7-0ee4b2497ddd
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores que votaram.
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4ed40be9-898d-57ed-ad0d-fb55054d2a66
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores que faltaram.
+	column Abstencoes
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c3be6a25-a9d3-5a0c-8cb9-f4a0b17e6609
+		summarizeBy: none
+		sourceColumn: Abstencoes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos em branco.
+	column Brancos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: d9967a46-b6a9-5d13-9e26-52c51a891a0a
+		summarizeBy: none
+		sourceColumn: Brancos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos nulos.
+	column Nulos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 76b80cad-2ee1-5801-9999-26b958c215dc
+		summarizeBy: none
+		sourceColumn: Nulos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Comparecimento ano' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/comparecimento_ano.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "aptos", "comparecimento", "abstencoes", "brancos", "nulos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"aptos", Int64.Type}, {"comparecimento", Int64.Type}, {"abstencoes", Int64.Type}, {"brancos", Int64.Type}, {"nulos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"aptos", "Aptos"}, {"comparecimento", "Comparecimento"}, {"abstencoes", "Abstencoes"}, {"brancos", "Brancos"}, {"nulos", "Nulos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

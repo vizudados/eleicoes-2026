@@ -1,0 +1,161 @@
+/// A curva da noite no Brasil: uma linha por nova hora de totalização do TSE (historico.csv); antes da primeira divulgação, só o cabeçalho.
+table 'Apuração histórico'
+	isHidden
+	lineageTag: df8d551d-12ac-51f1-887e-4f4858c1cd07
+
+	/// Hora da coleta que gravou a linha (Brasília).
+	column ColetadoEm
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy HH:mm
+		lineageTag: 2ecd85ab-2201-5381-a19e-683d77ab13e2
+		summarizeBy: none
+		sourceColumn: ColetadoEm
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora de totalização do TSE; uma linha por hora nova.
+	column AtualizadoTSE
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy HH:mm
+		lineageTag: e7fde01e-4db6-5ca2-998e-3530ee0058f7
+		summarizeBy: none
+		sourceColumn: AtualizadoTSE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % de seções totalizadas no Brasil.
+	column SecoesPct
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 4702fd0e-d507-54bd-9803-f428bc378d8a
+		summarizeBy: none
+		sourceColumn: SecoesPct
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Lula no Brasil.
+	column LulaVotos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 5cd444f4-64f9-5b75-97d0-e6a7b08f4fbe
+		summarizeBy: none
+		sourceColumn: LulaVotos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % dos válidos de Lula publicado pelo TSE.
+	column LulaPct
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: a5c6a1de-1504-51b3-9d3b-1b367f9baee3
+		summarizeBy: none
+		sourceColumn: LulaPct
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Flávio no Brasil.
+	column FlavioVotos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: e89551a8-603c-5399-a19d-d4ce2cc117c2
+		summarizeBy: none
+		sourceColumn: FlavioVotos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % dos válidos de Flávio publicado pelo TSE.
+	column FlavioPct
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 5df0cb29-c225-543a-8733-469169d96d7d
+		summarizeBy: none
+		sourceColumn: FlavioPct
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos em branco.
+	column Brancos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 445581ae-bc14-5336-acbd-12313ca638ab
+		summarizeBy: none
+		sourceColumn: Brancos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos nulos.
+	column Nulos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: f5d42c29-8460-54c5-8be2-342269717e4d
+		summarizeBy: none
+		sourceColumn: Nulos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Abstenção.
+	column Abstencao
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 25b6b5e3-662b-5adf-adba-bc29922805f2
+		summarizeBy: none
+		sourceColumn: Abstencao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos.
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4f747f31-5d4e-5f16-b9a5-5b5dbe48ba1c
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Seções totalizadas.
+	column SecoesTotalizadas
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4ab573f8-0ee7-54dd-8947-e6768f84cbc6
+		summarizeBy: none
+		sourceColumn: SecoesTotalizadas
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Seções eleitorais.
+	column SecoesTotal
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: d0c64ac0-f626-5016-94c5-8815eb4718e8
+		summarizeBy: none
+		sourceColumn: SecoesTotal
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Apuração histórico' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv(pPastaApuracao & "/historico.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"coletado_em", "atualizado_tse", "secoes_pct", "lula_votos", "lula_pct", "flavio_votos", "flavio_pct", "brancos", "nulos", "abstencao", "validos", "secoes_totalizadas", "secoes_total"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"coletado_em", type text}, {"atualizado_tse", type text}, {"secoes_pct", type number}, {"lula_votos", Int64.Type}, {"lula_pct", type number}, {"flavio_votos", Int64.Type}, {"flavio_pct", type number}, {"brancos", Int64.Type}, {"nulos", Int64.Type}, {"abstencao", Int64.Type}, {"validos", Int64.Type}, {"secoes_totalizadas", Int64.Type}, {"secoes_total", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"coletado_em", "ColetadoEm"}, {"atualizado_tse", "AtualizadoTSE"}, {"secoes_pct", "SecoesPct"}, {"lula_votos", "LulaVotos"}, {"lula_pct", "LulaPct"}, {"flavio_votos", "FlavioVotos"}, {"flavio_pct", "FlavioPct"}, {"brancos", "Brancos"}, {"nulos", "Nulos"}, {"abstencao", "Abstencao"}, {"validos", "Validos"}, {"secoes_totalizadas", "SecoesTotalizadas"}, {"secoes_total", "SecoesTotal"}}),
+				    Horas = Table.TransformColumns(Nomes, {{"ColetadoEm", fxHora, type nullable datetime}, {"AtualizadoTSE", fxHora, type nullable datetime}})
+				in
+				    Horas
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,38 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T01_LEITURA_ABRE_01",
+  "displayName": "T01 · leitura aberta",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T01_Casca_InfoAbre",
+      "T01_Casca_InfoFecha",
+      "T01_Casca_Leitura"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T01",
+    "sections": {
+      "T01": {
+        "visualContainers": {
+          "T01_Casca_InfoAbre": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T01_Casca_InfoFecha": {
+            "singleVisual": {}
+          },
+          "T01_Casca_Leitura": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

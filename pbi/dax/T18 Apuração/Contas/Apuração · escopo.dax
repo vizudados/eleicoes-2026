@@ -1,0 +1,13 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: texto
+@descricao: O que as contas mostram: Brasil, o nome da UF ou N UFs (filtro com várias).
+*/
+VAR _ufs = COUNTROWS ( VALUES ( 'UF'[UF] ) )
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT ISFILTERED ( 'UF' ), "Brasil",
+        _ufs = 1, SELECTEDVALUE ( 'UF'[Nome] ),
+        FORMAT ( _ufs, "0" ) & " UFs"
+    )

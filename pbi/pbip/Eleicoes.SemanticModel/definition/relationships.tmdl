@@ -1,0 +1,39 @@
+relationship 6d6f0063-29cb-5c81-91ba-d1462e5aeafb
+	fromColumn: 'Apuração UF'.UF
+	toColumn: UF.UF
+
+relationship 150e861f-8ab5-511f-aa52-ceebdc92dade
+	fromColumn: 'Município'.UF
+	toColumn: UF.UF
+
+relationship ab2f0a97-74b0-58e7-9e14-d078343e5655
+	fromColumn: 'Município ano'.CodIBGE
+	toColumn: 'Município'.CodIBGE
+
+relationship 63151749-1003-5900-8240-90a2c72ee3f4
+	fromColumn: 'Município ano'.Ano
+	toColumn: Ano.Ano
+
+relationship 9bcadbcf-fbd6-58f3-9c41-5b4c7890ab54
+	fromColumn: 'Candidato ano'.Ano
+	toColumn: Ano.Ano
+
+relationship ebe0a89d-efa4-5fc4-818b-4d9e52c1001b
+	fromColumn: 'Candidato UF'.UF
+	toColumn: UF.UF
+
+relationship 864c473d-211f-5fd7-ab4d-4997565ca6b6
+	fromColumn: 'Candidato UF'.Ano
+	toColumn: Ano.Ano
+
+relationship 9d1c18af-984a-5599-8cfb-08c0cd00ed59
+	fromColumn: 'Comparecimento ano'.Ano
+	toColumn: Ano.Ano
+
+relationship c79d3ee8-dc64-5c0f-beeb-3c945bd73fba
+	fromColumn: 'Abstenção perfil'.Ano
+	toColumn: Ano.Ano
+
+relationship 9a44cd5c-10f9-5635-8593-a0f9537b4765
+	fromColumn: 'Trends UF'.UF
+	toColumn: UF.UF

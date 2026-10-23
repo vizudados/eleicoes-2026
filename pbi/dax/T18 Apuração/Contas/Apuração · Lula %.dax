@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00%
+@descricao: Votos de Lula sobre os válidos do escopo.
+*/
+DIVIDE ( [Apuração · Lula votos], [Apuração · válidos] )

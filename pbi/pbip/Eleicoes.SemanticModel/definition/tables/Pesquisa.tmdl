@@ -1,0 +1,237 @@
+/// Pesquisas de intenção de voto registradas no TSE, 1º e 2º turno (cenário), em votos totais ou válidos, de agosto a outubro de 2026.
+table Pesquisa
+	isHidden
+	lineageTag: 328afba1-b566-55f0-98c2-95ac5ccd8c78
+
+	/// Identificador da linha.
+	column Id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6874a801-134c-5b5c-b564-98da0c02241e
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// 1º turno ou 2º turno (Lula × Flávio).
+	column 'Cenário'
+		dataType: string
+		lineageTag: 1042bbcd-d9ec-5ceb-ae3e-283609aaaad5
+		summarizeBy: none
+		sourceColumn: Cenário
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Instituto de pesquisa.
+	column Instituto
+		dataType: string
+		lineageTag: 6ef26870-a89c-5e1a-8712-25850ee0e7d4
+		summarizeBy: none
+		sourceColumn: Instituto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quem contratou.
+	column Contratante
+		dataType: string
+		isHidden
+		lineageTag: fb9c08d8-91c1-5ad8-b574-d1132d324a19
+		summarizeBy: none
+		sourceColumn: Contratante
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Início do campo.
+	column 'Campo início'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: 5abdc588-a110-5d14-be9d-b07e068729e8
+		summarizeBy: none
+		sourceColumn: Campo início
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fim do campo (a data da pesquisa no painel).
+	column 'Campo fim'
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: b0619929-80d1-5721-bd3d-64b38854e17f
+		summarizeBy: none
+		sourceColumn: Campo fim
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Data de divulgação.
+	column 'Divulgação'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: bf7e79f9-d374-5c66-af29-5c6fee69d6a4
+		summarizeBy: none
+		sourceColumn: Divulgação
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Registro no TSE.
+	column Registro
+		dataType: string
+		isHidden
+		lineageTag: d695c4bd-d250-59e9-81be-8dbc5b83ccaa
+		summarizeBy: none
+		sourceColumn: Registro
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Entrevistas.
+	column Amostra
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c33f1a54-a919-5e8c-a9f8-7ebc80d3bd0e
+		summarizeBy: none
+		sourceColumn: Amostra
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Margem de erro (p.p.).
+	column Margem
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 892fb8e3-01ba-511b-9547-d5e9209b65ec
+		summarizeBy: none
+		sourceColumn: Margem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Presencial, telefone, online.
+	column Modo
+		dataType: string
+		isHidden
+		lineageTag: 92e9e5eb-ed13-5411-95ea-c3d1d3410f2f
+		summarizeBy: none
+		sourceColumn: Modo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// totais ou validos.
+	column Tipo
+		dataType: string
+		isHidden
+		lineageTag: 12e65af0-bb7e-5b21-aa54-943c63797ba1
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % de Lula.
+	column Lula
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 89a6708d-a601-54d1-bf94-df4892bfd52d
+		summarizeBy: none
+		sourceColumn: Lula
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % de Flávio.
+	column Flavio
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 6fd16f08-3a0b-58a8-ba6a-c8cc5bb7c08d
+		summarizeBy: none
+		sourceColumn: Flavio
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % de Augusto Cury.
+	column Cury
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 984ae211-d667-5f44-a0fc-c7ea6b17ab42
+		summarizeBy: none
+		sourceColumn: Cury
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % de Renan Santos.
+	column Renan
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 9daac510-ebfb-5569-a68c-dad98e8b3344
+		summarizeBy: none
+		sourceColumn: Renan
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % dos demais candidatos.
+	column Outros
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 71191f4e-f2d4-5bf5-b6b9-37f5be4a2030
+		summarizeBy: none
+		sourceColumn: Outros
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % brancos e nulos.
+	column BrancosNulos
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: fca2ab15-8d69-520e-b0c0-3d454a6feca1
+		summarizeBy: none
+		sourceColumn: BrancosNulos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// % indecisos.
+	column Indecisos
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: 031bc695-f1d8-5710-813d-ba732aeb3691
+		summarizeBy: none
+		sourceColumn: Indecisos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// No 2º turno: antes_1turno ou apos_1turno.
+	column Momento
+		dataType: string
+		isHidden
+		lineageTag: 37ae0468-a414-5722-a799-88165e948456
+		summarizeBy: none
+		sourceColumn: Momento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 4bf7c9c5-f1ce-58f2-8b4b-b2651cfdea4b
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Pesquisa = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/pesquisa.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"id", "cenario", "instituto", "contratante", "campo_inicio", "campo_fim", "divulgacao", "registro_tse", "amostra", "margem_pp", "modo", "tipo", "lula", "flavio", "cury", "renan", "outros", "brancos_nulos", "indecisos", "momento", "fonte_url"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"id", Int64.Type}, {"cenario", type text}, {"instituto", type text}, {"contratante", type text}, {"campo_inicio", type date}, {"campo_fim", type date}, {"divulgacao", type date}, {"registro_tse", type text}, {"amostra", Int64.Type}, {"margem_pp", type number}, {"modo", type text}, {"tipo", type text}, {"lula", type number}, {"flavio", type number}, {"cury", type number}, {"renan", type number}, {"outros", type number}, {"brancos_nulos", type number}, {"indecisos", type number}, {"momento", type text}, {"fonte_url", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"id", "Id"}, {"cenario", "Cenário"}, {"instituto", "Instituto"}, {"contratante", "Contratante"}, {"campo_inicio", "Campo início"}, {"campo_fim", "Campo fim"}, {"divulgacao", "Divulgação"}, {"registro_tse", "Registro"}, {"amostra", "Amostra"}, {"margem_pp", "Margem"}, {"modo", "Modo"}, {"tipo", "Tipo"}, {"lula", "Lula"}, {"flavio", "Flavio"}, {"cury", "Cury"}, {"renan", "Renan"}, {"outros", "Outros"}, {"brancos_nulos", "BrancosNulos"}, {"indecisos", "Indecisos"}, {"momento", "Momento"}, {"fonte_url", "Fonte"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

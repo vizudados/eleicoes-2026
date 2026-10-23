@@ -1,0 +1,10 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Eleitorado total no escopo: o Brasil (linha BR do TSE) sem filtro de UF; com filtro, a soma das UFs (e do exterior) filtradas.
+*/
+IF (
+    ISFILTERED ( 'UF' ),
+    SUM ( 'Apuração UF'[Eleitorado] ),
+    SUM ( 'Apuração Brasil'[Eleitorado] )
+)

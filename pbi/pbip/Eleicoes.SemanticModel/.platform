@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "Eleições 2026"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "95d359e3-7e04-537d-9cd1-8a4484879186"
+  }
+}

@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00%
+@descricao: Brancos sobre os votos dados (o pvb do TSE).
+*/
+DIVIDE ( [Apuração · brancos], [Apuração · comparecimento] )

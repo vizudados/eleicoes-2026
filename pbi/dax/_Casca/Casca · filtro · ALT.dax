@@ -1,0 +1,8 @@
+/*
+@pasta: _Casca
+@formato: texto
+@descricao: Texto alternativo do filtro de UF: o recorte em uso.
+*/
+VAR _uf = SELECTEDVALUE ( 'UF'[Nome] )
+RETURN
+    IF ( ISBLANK ( _uf ), "Filtro de estado: todo o Brasil", "Filtro de estado: " & _uf )

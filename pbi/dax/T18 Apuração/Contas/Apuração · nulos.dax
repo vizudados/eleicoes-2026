@@ -1,0 +1,10 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Votos nulos no escopo.
+*/
+IF (
+    ISFILTERED ( 'UF' ),
+    SUM ( 'Apuração UF'[Nulos] ),
+    SUM ( 'Apuração Brasil'[Nulos] )
+)

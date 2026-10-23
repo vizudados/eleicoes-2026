@@ -1,0 +1,10 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Eleitorado das seções já totalizadas no escopo.
+*/
+IF (
+    ISFILTERED ( 'UF' ),
+    SUM ( 'Apuração UF'[EleitoradoApurado] ),
+    SUM ( 'Apuração Brasil'[EleitoradoApurado] )
+)

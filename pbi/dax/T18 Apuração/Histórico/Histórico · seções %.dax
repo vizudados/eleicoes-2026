@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Histórico
+@formato: 0.00%
+@descricao: Seções totalizadas no Brasil em cada hora do TSE.
+*/
+DIVIDE ( SUM ( 'Apuração histórico'[SecoesTotalizadas] ), SUM ( 'Apuração histórico'[SecoesTotal] ) )

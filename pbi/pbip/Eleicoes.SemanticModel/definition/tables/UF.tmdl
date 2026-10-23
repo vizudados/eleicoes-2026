@@ -1,0 +1,130 @@
+/// As 27 UFs e o exterior (ZZ): sigla, nome, região, ordem e a posição no mapa de quadrados. O filtro de UF das telas filtra esta tabela; sem filtro, as contas mostram o Brasil.
+table UF
+	lineageTag: 3fae2e28-45a2-5406-bb6a-864191142d41
+
+	/// Sigla da UF (ZZ = exterior).
+	column UF
+		dataType: string
+		lineageTag: e9ea573e-3555-5444-8914-1a73751911dd
+		summarizeBy: none
+		sourceColumn: UF
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome da UF.
+	column Nome
+		dataType: string
+		lineageTag: 44910180-5565-59c9-838c-9e37ad76f637
+		summarizeBy: none
+		sourceColumn: Nome
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Norte, Nordeste, Centro-Oeste, Sudeste, Sul; Exterior.
+	column 'Região'
+		dataType: string
+		lineageTag: 369718c4-3fa2-56b8-aa2f-66a6d669dfe0
+		summarizeBy: none
+		sourceColumn: Região
+		sortByColumn: RegiaoOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem das regiões, do Norte ao Sul.
+	column RegiaoOrdem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 945b213d-6ba3-5d13-bc26-c392861ca876
+		summarizeBy: none
+		sourceColumn: RegiaoOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem de exibição: região, depois o nome; o exterior por último.
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6ea0a98e-590f-539d-be71-d5b2320409d8
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// UF ou Exterior; as contagens de UFs só contam Tipo = UF.
+	column Tipo
+		dataType: string
+		isHidden
+		lineageTag: 324d8099-7842-53a1-b1da-125dbdb86f67
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Coluna no mapa de quadrados (0 = Acre).
+	column GradeColuna
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 632e2823-55bb-58bf-bf85-603aabce6353
+		summarizeBy: none
+		sourceColumn: GradeColuna
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Linha no mapa de quadrados (0 = Roraima, Amapá e exterior).
+	column GradeLinha
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 23102045-eb33-5482-8285-4b4f82e4981e
+		summarizeBy: none
+		sourceColumn: GradeLinha
+
+		annotation SummarizationSetBy = Automatic
+
+	partition UF = m
+		mode: import
+		source =
+				let
+				    UFs = #table(
+				        type table [UF = text, Nome = text, Regiao = text, RegiaoOrdem = Int64.Type, Ordem = Int64.Type, Tipo = text,
+				                    GradeColuna = Int64.Type, GradeLinha = Int64.Type],
+				        {
+				        {"AC", "Acre", "Norte", 1, 1, "UF", 0, 2},
+				        {"AP", "Amapá", "Norte", 1, 2, "UF", 3, 0},
+				        {"AM", "Amazonas", "Norte", 1, 3, "UF", 1, 1},
+				        {"PA", "Pará", "Norte", 1, 4, "UF", 2, 1},
+				        {"RO", "Rondônia", "Norte", 1, 5, "UF", 1, 2},
+				        {"RR", "Roraima", "Norte", 1, 6, "UF", 1, 0},
+				        {"TO", "Tocantins", "Norte", 1, 7, "UF", 2, 2},
+				        {"AL", "Alagoas", "Nordeste", 2, 8, "UF", 5, 3},
+				        {"BA", "Bahia", "Nordeste", 2, 9, "UF", 3, 3},
+				        {"CE", "Ceará", "Nordeste", 2, 10, "UF", 4, 1},
+				        {"MA", "Maranhão", "Nordeste", 2, 11, "UF", 3, 1},
+				        {"PB", "Paraíba", "Nordeste", 2, 12, "UF", 5, 2},
+				        {"PE", "Pernambuco", "Nordeste", 2, 13, "UF", 4, 2},
+				        {"PI", "Piauí", "Nordeste", 2, 14, "UF", 3, 2},
+				        {"RN", "Rio Grande do Norte", "Nordeste", 2, 15, "UF", 5, 1},
+				        {"SE", "Sergipe", "Nordeste", 2, 16, "UF", 4, 3},
+				        {"DF", "Distrito Federal", "Centro-Oeste", 3, 17, "UF", 2, 4},
+				        {"GO", "Goiás", "Centro-Oeste", 3, 18, "UF", 2, 3},
+				        {"MT", "Mato Grosso", "Centro-Oeste", 3, 19, "UF", 1, 3},
+				        {"MS", "Mato Grosso do Sul", "Centro-Oeste", 3, 20, "UF", 1, 4},
+				        {"ES", "Espírito Santo", "Sudeste", 4, 21, "UF", 4, 4},
+				        {"MG", "Minas Gerais", "Sudeste", 4, 22, "UF", 3, 4},
+				        {"RJ", "Rio de Janeiro", "Sudeste", 4, 23, "UF", 3, 5},
+				        {"SP", "São Paulo", "Sudeste", 4, 24, "UF", 2, 5},
+				        {"PR", "Paraná", "Sul", 5, 25, "UF", 1, 5},
+				        {"RS", "Rio Grande do Sul", "Sul", 5, 26, "UF", 1, 7},
+				        {"SC", "Santa Catarina", "Sul", 5, 27, "UF", 1, 6},
+				        {"ZZ", "Exterior", "Exterior", 6, 28, "Exterior", 5, 0}
+				        }
+				    )
+				in
+				    UFs
+
+	annotation PBI_ResultType = Table

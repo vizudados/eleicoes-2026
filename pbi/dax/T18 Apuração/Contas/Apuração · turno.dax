@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0
+@descricao: Turno da pasta lida (2 ao vivo; 1 no ensaio).
+*/
+MAX ( 'Apuração status'[Turno] )

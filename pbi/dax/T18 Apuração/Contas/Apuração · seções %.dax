@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00%
+@descricao: Seções totalizadas sobre as seções do escopo (o pst do TSE no Brasil e em cada UF).
+*/
+DIVIDE ( [Apuração · seções totalizadas], [Apuração · seções] )

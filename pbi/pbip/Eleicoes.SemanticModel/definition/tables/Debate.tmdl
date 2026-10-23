@@ -1,0 +1,138 @@
+/// Os debates presidenciais de 2026 marcados por emissoras: realizados, cancelados, quem foi e quem faltou, audiência.
+table Debate
+	isHidden
+	lineageTag: 1daedef4-8a22-53ad-8a55-a030db1bb212
+
+	/// Data do debate.
+	column Data
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 562bb391-b1a1-52c4-a97d-3a5c33979889
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Turno.
+	column Turno
+		dataType: int64
+		formatString: 0
+		lineageTag: e67836be-8468-5093-86cc-d28e05eb10aa
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Emissora ou pool.
+	column Emissora
+		dataType: string
+		lineageTag: 12bb5bc7-d8cf-5031-bf50-c889e2823792
+		summarizeBy: none
+		sourceColumn: Emissora
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Veículos do pool.
+	column Pool
+		dataType: string
+		isHidden
+		lineageTag: 140bf99b-3f9c-59ce-8e12-09db7dd11fea
+		summarizeBy: none
+		sourceColumn: Pool
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quem participou.
+	column Participantes
+		dataType: string
+		isHidden
+		lineageTag: 04e18659-354e-5ce0-a46e-884d9a192b4d
+		summarizeBy: none
+		sourceColumn: Participantes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quem faltou.
+	column Ausentes
+		dataType: string
+		isHidden
+		lineageTag: 0c0df6ce-9261-5295-abdf-a3cd671f0851
+		summarizeBy: none
+		sourceColumn: Ausentes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mediadores.
+	column 'Mediação'
+		dataType: string
+		isHidden
+		lineageTag: 33b22a11-a29d-5f42-8fa0-ab1cbac9b81a
+		summarizeBy: none
+		sourceColumn: Mediação
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Pontos de audiência na Grande SP.
+	column 'Audiência'
+		dataType: double
+		isHidden
+		formatString: 0.0
+		lineageTag: bbe69eaf-2054-56a9-89aa-673f807a793b
+		summarizeBy: none
+		sourceColumn: Audiência
+
+		annotation SummarizationSetBy = Automatic
+
+	/// De onde vem a audiência.
+	column 'Fonte da audiência'
+		dataType: string
+		isHidden
+		lineageTag: de86e9e1-6de2-538f-ace7-cf04bb68bd36
+		summarizeBy: none
+		sourceColumn: Fonte da audiência
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Pico simultâneo no YouTube.
+	column 'Pico no streaming'
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: f94ae7ad-d914-598b-a27c-905745191dc2
+		summarizeBy: none
+		sourceColumn: Pico no streaming
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 0ed14a6d-be06-57fb-a141-af5dc1a89c22
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: c64e0232-5f47-576b-89fa-bfc2b5c24dfa
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Debate = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/debate.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"data", "turno", "emissora", "pool", "participantes", "ausentes", "mediacao", "audiencia_pontos_gsp", "audiencia_fonte", "pico_streaming", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"data", type date}, {"turno", Int64.Type}, {"emissora", type text}, {"pool", type text}, {"participantes", type text}, {"ausentes", type text}, {"mediacao", type text}, {"audiencia_pontos_gsp", type number}, {"audiencia_fonte", type text}, {"pico_streaming", type number}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"data", "Data"}, {"turno", "Turno"}, {"emissora", "Emissora"}, {"pool", "Pool"}, {"participantes", "Participantes"}, {"ausentes", "Ausentes"}, {"mediacao", "Mediação"}, {"audiencia_pontos_gsp", "Audiência"}, {"audiencia_fonte", "Fonte da audiência"}, {"pico_streaming", "Pico no streaming"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

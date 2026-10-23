@@ -1,0 +1,44 @@
+/// Eleições 2026 · o que os números dizem (Vizu Dados). Dados lidos do repositório público vizudados/eleicoes-2026 no GitHub (dados/pbi e dados/apuracao). Gerado por pbi/scripts/gerar_modelo.py; medidas em pbi/dax.
+model Model
+	culture: pt-BR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: pt-BR
+	valueFilterBehavior: independent
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["pRepositorioRaw","pPastaApuracao","fxCsv","fxJson","fxHora","Apuração Brasil","Apuração UF","Apuração histórico","Apuração status","UF","Ano","Município","Município ano","Candidato ano","Candidato UF","Comparecimento ano","Abstenção perfil","Pesquisa","Debate","Trends tempo","Trends UF","Seguidores","Monitoramento","Anúncios","Trajetória","Transferência","Rejeição","Apoio","Local Contagem"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table 'Apuração Brasil'
+ref table 'Apuração UF'
+ref table 'Apuração histórico'
+ref table 'Apuração status'
+ref table UF
+ref table Ano
+ref table 'Município'
+ref table 'Município ano'
+ref table 'Candidato ano'
+ref table 'Candidato UF'
+ref table 'Comparecimento ano'
+ref table 'Abstenção perfil'
+ref table Pesquisa
+ref table Debate
+ref table 'Trends tempo'
+ref table 'Trends UF'
+ref table Seguidores
+ref table Monitoramento
+ref table 'Anúncios'
+ref table 'Trajetória'
+ref table 'Transferência'
+ref table 'Rejeição'
+ref table Apoio
+ref table 'Local Contagem'
+ref table _Medidas
+
+ref cultureInfo pt-BR

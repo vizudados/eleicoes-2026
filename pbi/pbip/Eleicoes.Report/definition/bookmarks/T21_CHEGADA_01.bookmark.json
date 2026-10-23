@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T21_CHEGADA_01",
+  "displayName": "Chegada · 21 20 anos",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T21_Casca_InfoAbre",
+      "T21_Casca_InfoFecha",
+      "T21_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T21",
+    "sections": {
+      "T21": {
+        "visualContainers": {
+          "T21_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T21_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T21_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

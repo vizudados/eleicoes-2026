@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T06_CHEGADA_01",
+  "displayName": "Chegada · 06 Ausência",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T06_Casca_InfoAbre",
+      "T06_Casca_InfoFecha",
+      "T06_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T06",
+    "sections": {
+      "T06": {
+        "visualContainers": {
+          "T06_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T06_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T06_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

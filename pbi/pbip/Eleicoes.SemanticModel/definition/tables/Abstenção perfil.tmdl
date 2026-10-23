@@ -1,0 +1,79 @@
+/// Abstenção por perfil do eleitor (faixa etária, escolaridade, gênero…) no Brasil, 2014–2026, do perfil de comparecimento e abstenção do TSE.
+table 'Abstenção perfil'
+	isHidden
+	lineageTag: 9299a943-799e-5d31-ac6c-589a25e2aa4e
+
+	/// Ano da eleição.
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 52822310-e4a7-5b08-af55-f437f0af8051
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Recorte: faixa etária, escolaridade, gênero, estado civil…
+	column 'Dimensão'
+		dataType: string
+		lineageTag: e42c9796-213f-51bf-bd38-82ee9fe36204
+		summarizeBy: none
+		sourceColumn: Dimensão
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Categoria do recorte, como o TSE escreve.
+	column Categoria
+		dataType: string
+		lineageTag: e9624939-3aed-5183-81ca-22897d643262
+		summarizeBy: none
+		sourceColumn: Categoria
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores aptos na categoria.
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: f785115f-b6be-59fa-90ac-5c6c3a636f20
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votaram.
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4a060bd7-13d0-5527-9562-7e526ca9a9ac
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Faltaram.
+	column Abstencao
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 55f333b7-8717-50bc-b7dd-ce0123a06744
+		summarizeBy: none
+		sourceColumn: Abstencao
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Abstenção perfil' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/abstencao_perfil.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "dimensao", "categoria", "aptos", "comparecimento", "abstencao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"dimensao", type text}, {"categoria", type text}, {"aptos", Int64.Type}, {"comparecimento", Int64.Type}, {"abstencao", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"dimensao", "Dimensão"}, {"categoria", "Categoria"}, {"aptos", "Aptos"}, {"comparecimento", "Comparecimento"}, {"abstencao", "Abstencao"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

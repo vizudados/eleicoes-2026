@@ -1,0 +1,76 @@
+/// Seguidores dos candidatos por rede e data (Social Blade, Datrix); brancos onde não há total publicado.
+table Seguidores
+	isHidden
+	lineageTag: b7b44a2a-9de7-5760-8262-62fdc3e2e990
+
+	/// Candidato.
+	column Candidato
+		dataType: string
+		lineageTag: 1f0dfc6e-94b0-50e0-aa8d-91869ffb28ff
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rede social.
+	column Plataforma
+		dataType: string
+		lineageTag: 62da9f23-0f32-5998-8af4-65476a0d8a83
+		summarizeBy: none
+		sourceColumn: Plataforma
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Data da contagem.
+	column Data
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 6a1e689a-e1bb-520a-9e5e-c7338dada358
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Seguidores.
+	column Seguidores
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: a2dec882-a7cd-5139-892d-715370f72a2e
+		summarizeBy: none
+		sourceColumn: Seguidores
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 5074ef7e-cd91-5a85-a6e7-c665bcf61af9
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: d9202dc1-f31a-5db0-930b-84cbcbb2ddf3
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Seguidores = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/seguidores.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"candidato", "plataforma", "data", "seguidores", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"candidato", type text}, {"plataforma", type text}, {"data", type date}, {"seguidores", type number}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"candidato", "Candidato"}, {"plataforma", "Plataforma"}, {"data", "Data"}, {"seguidores", "Seguidores"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

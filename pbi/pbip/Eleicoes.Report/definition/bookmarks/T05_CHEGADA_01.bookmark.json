@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T05_CHEGADA_01",
+  "displayName": "Chegada · 05 Flávio",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T05_Casca_InfoAbre",
+      "T05_Casca_InfoFecha",
+      "T05_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T05",
+    "sections": {
+      "T05": {
+        "visualContainers": {
+          "T05_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T05_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T05_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

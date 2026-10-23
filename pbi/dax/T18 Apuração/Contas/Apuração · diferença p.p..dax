@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00
+@descricao: Diferença em pontos percentuais dos válidos entre os dois no escopo.
+*/
+ABS ( [Apuração · Lula %] - [Apuração · Flávio %] ) * 100

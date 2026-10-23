@@ -30,7 +30,12 @@ UFS = ["br", "ac", "al", "am", "ap", "ba", "ce", "df", "es", "go", "ma", "mg", "
        "rj", "rn", "ro", "rr", "rs", "sc", "se", "sp", "to", "zz"]
 BRASILIA = timezone(timedelta(hours=-3))
 CAMPOS_UF = ["uf", "atualizado_tse", "secoes_pct", "eleitorado", "comparecimento", "abstencao", "abstencao_pct",
-             "brancos", "nulos", "validos", "lula_votos", "lula_pct", "flavio_votos", "flavio_pct", "lider", "diferenca_votos"]
+             "brancos", "nulos", "validos", "lula_votos", "lula_pct", "flavio_votos", "flavio_pct", "lider", "diferenca_votos",
+             "secoes_total", "secoes_totalizadas", "eleitorado_apurado"]
+# Seções e eleitorado das seções totalizadas vêm em número absoluto para que a soma de várias UFs (uma região, o filtro do
+# painel) dê o percentual certo; o pst e o pa do TSE só valem para a UF em que foram calculados.
+CAMPOS_HISTORICO = ["coletado_em", "atualizado_tse", "secoes_pct", "lula_votos", "lula_pct", "flavio_votos", "flavio_pct",
+                    "brancos", "nulos", "abstencao", "validos", "secoes_totalizadas", "secoes_total"]
 
 
 def numero(txt):
@@ -79,6 +84,8 @@ def resumo(bruto, uf):
         "lider": ("Lula" if lula.get("votos", 0) > flavio.get("votos", 0) else
                   "Flávio" if flavio.get("votos", 0) > lula.get("votos", 0) else "—"),
         "diferenca_votos": abs(lula.get("votos", 0) - flavio.get("votos", 0)),
+        "secoes_total": int(s.get("ts") or 0), "secoes_totalizadas": int(s.get("st") or 0),
+        "eleitorado_apurado": int(e.get("est") or 0),
         "candidatos": cands, "totalizacao_final": bruto.get("tf") == "s",
     }
 
@@ -112,21 +119,20 @@ def coletar(ciclo, eleicao, pasta):
         w = csv.DictWriter(f, fieldnames=CAMPOS_UF, extrasaction="ignore")
         w.writeheader()
         w.writerows(linhas)
+    # O histórico existe desde a primeira coleta (só o cabeçalho enquanto o TSE não divulga), para o Power BI nunca
+    # pedir um arquivo que ainda não está no repositório; ganha uma linha a cada nova hora de totalização.
     historico = pasta / "historico.csv"
-    novo = not historico.exists()
     ultima_hora = ""
-    if not novo:
+    if historico.exists():
         with open(historico, encoding="utf-8") as f:
             ultimas = list(csv.DictReader(f))
             ultima_hora = ultimas[-1]["atualizado_tse"] if ultimas else ""
+    else:
+        with open(historico, "w", newline="", encoding="utf-8") as f:
+            csv.writer(f).writerow(CAMPOS_HISTORICO)
     if br["atualizado_tse"] and br["atualizado_tse"] != ultima_hora:
         with open(historico, "a", newline="", encoding="utf-8") as f:
-            w = csv.writer(f)
-            if novo:
-                w.writerow(["coletado_em", "atualizado_tse", "secoes_pct", "lula_votos", "lula_pct", "flavio_votos",
-                            "flavio_pct", "brancos", "nulos", "abstencao"])
-            w.writerow([agora, br["atualizado_tse"], br["secoes_pct"], br["lula_votos"], br["lula_pct"],
-                        br["flavio_votos"], br["flavio_pct"], br["brancos"], br["nulos"], br["abstencao"]])
+            csv.DictWriter(f, fieldnames=CAMPOS_HISTORICO, extrasaction="ignore").writerow({**br, "coletado_em": agora})
     print(f"{agora} · eleição {eleicao} · {retrato['status']} · {br['secoes_pct']}% das seções · "
           f"Lula {br['lula_pct']}% × Flávio {br['flavio_pct']}% · UFs: {len(retrato['ufs'])} · faltaram: {retrato['faltaram']}")
     return True

@@ -1,0 +1,185 @@
+/// Os locais de votação de Contagem (MG) em 2018, 2022 e 2026: votos do PT e do principal adversário, válidos, seções, bairro, coordenadas e posição no mapa da tela da escola.
+table 'Local Contagem'
+	isHidden
+	lineageTag: 3b32feb4-9683-5306-8eea-211a14bff385
+
+	/// Ano da eleição.
+	column Ano
+		dataType: int64
+		formatString: 0
+		lineageTag: 1d05cb40-647b-5cdf-b2d4-853e47f20173
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Zona eleitoral.
+	column Zona
+		dataType: int64
+		formatString: 0
+		lineageTag: 8f47ed44-7d0e-55c6-bf71-5cdb6a2a5642
+		summarizeBy: none
+		sourceColumn: Zona
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Número do local de votação.
+	column Local
+		dataType: int64
+		formatString: 0
+		lineageTag: 06fcffb4-ab71-5f0f-95f2-b94b02d11b34
+		summarizeBy: none
+		sourceColumn: Local
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome do local como o TSE escreve no ano.
+	column 'Nome do local'
+		dataType: string
+		lineageTag: be12c87f-b2d9-5654-9a0e-0d00b71bfcdf
+		summarizeBy: none
+		sourceColumn: Nome do local
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Endereço.
+	column 'Endereço'
+		dataType: string
+		isHidden
+		lineageTag: 7928d405-3311-59c9-9bd9-44f7f3d880ba
+		summarizeBy: none
+		sourceColumn: Endereço
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do candidato do PT.
+	column VotosPT
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 5b132d6d-3d4f-5825-8c4c-27ff09e2cf90
+		summarizeBy: none
+		sourceColumn: VotosPT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do principal adversário.
+	column VotosAdversario
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: e0d7fdc5-41bd-5f7c-ac52-561b1a854891
+		summarizeBy: none
+		sourceColumn: VotosAdversario
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos.
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: ad2c18d2-f7fe-58ce-9fa0-ad1c9b4ef81c
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Seções no local.
+	column 'Seções'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4ad44a1a-c8da-5416-9f6d-25fa684e0219
+		summarizeBy: none
+		sourceColumn: Seções
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome do local em 2022 (chave visível entre os anos).
+	column Escola
+		dataType: string
+		lineageTag: 3c1730e0-2ed8-59ee-8b25-7c795027d894
+		summarizeBy: none
+		sourceColumn: Escola
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Bairro.
+	column Bairro
+		dataType: string
+		lineageTag: 5eadca44-152d-5713-9a24-2318d6a37370
+		summarizeBy: none
+		sourceColumn: Bairro
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Latitude.
+	column Latitude
+		dataType: double
+		isHidden
+		formatString: 0.00000
+		lineageTag: c945a4cd-94c8-5ecc-8820-be42144b1564
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Longitude.
+	column Longitude
+		dataType: double
+		isHidden
+		formatString: 0.00000
+		lineageTag: c5a52399-2013-5cde-931a-bfc7a6f87c7f
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores do local em 2022.
+	column 'Eleitores 2022'
+		dataType: double
+		isHidden
+		formatString: #,0
+		lineageTag: 980d8776-98ac-5aa2-ab69-e7ab8b0e0c7b
+		summarizeBy: none
+		sourceColumn: Eleitores 2022
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Posição horizontal no mapa da tela (% da largura).
+	column PX
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 68f1cf7b-78fb-5289-9acf-d302aaad8b8e
+		summarizeBy: none
+		sourceColumn: PX
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Posição vertical no mapa da tela (% da altura).
+	column PY
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: d22256e9-62ec-5d6b-8cb8-df303155c357
+		summarizeBy: none
+		sourceColumn: PY
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Local Contagem' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/local_contagem.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "NR_ZONA", "NR_LOCAL_VOTACAO", "NM_LOCAL_VOTACAO", "DS_LOCAL_VOTACAO_ENDERECO", "pt", "adv", "validos", "secoes", "nome_2022", "bairro", "lat", "lon", "eleitores_2022", "px", "py"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"NR_ZONA", Int64.Type}, {"NR_LOCAL_VOTACAO", Int64.Type}, {"NM_LOCAL_VOTACAO", type text}, {"DS_LOCAL_VOTACAO_ENDERECO", type text}, {"pt", Int64.Type}, {"adv", Int64.Type}, {"validos", Int64.Type}, {"secoes", Int64.Type}, {"nome_2022", type text}, {"bairro", type text}, {"lat", type number}, {"lon", type number}, {"eleitores_2022", type number}, {"px", type number}, {"py", type number}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"NR_ZONA", "Zona"}, {"NR_LOCAL_VOTACAO", "Local"}, {"NM_LOCAL_VOTACAO", "Nome do local"}, {"DS_LOCAL_VOTACAO_ENDERECO", "Endereço"}, {"pt", "VotosPT"}, {"adv", "VotosAdversario"}, {"validos", "Validos"}, {"secoes", "Seções"}, {"nome_2022", "Escola"}, {"bairro", "Bairro"}, {"lat", "Latitude"}, {"lon", "Longitude"}, {"eleitores_2022", "Eleitores 2022"}, {"px", "PX"}, {"py", "PY"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

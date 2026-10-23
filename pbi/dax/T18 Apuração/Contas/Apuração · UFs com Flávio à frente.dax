@@ -1,0 +1,11 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0
+@descricao: Quantas UFs do escopo têm Flávio à frente (o exterior não conta como UF).
+*/
+COUNTROWS (
+    FILTER (
+        CALCULATETABLE ( VALUES ( 'UF'[UF] ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) ),
+        [Apuração · Flávio votos] > [Apuração · Lula votos]
+    )
+) + 0

@@ -1,0 +1,10 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: #,0
+@descricao: Eleitores que faltaram nas seções totalizadas do escopo.
+*/
+IF (
+    ISFILTERED ( 'UF' ),
+    SUM ( 'Apuração UF'[Abstencao] ),
+    SUM ( 'Apuração Brasil'[Abstencao] )
+)

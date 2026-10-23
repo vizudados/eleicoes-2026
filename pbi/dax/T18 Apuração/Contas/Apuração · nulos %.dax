@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00%
+@descricao: Nulos sobre os votos dados (o ptvn do TSE).
+*/
+DIVIDE ( [Apuração · nulos], [Apuração · comparecimento] )

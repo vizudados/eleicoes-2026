@@ -1,0 +1,88 @@
+/// Resultado nacional de cada candidato nos 1º turnos de 2006 a 2026 (com o exterior), como o TSE totaliza.
+table 'Candidato ano'
+	isHidden
+	lineageTag: c698ec70-bd57-5a0c-931a-81568b4ff688
+
+	/// Ano da eleição.
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 85cd1105-1d27-558d-9c88-01abf518a29b
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Número do candidato.
+	column 'Número'
+		dataType: int64
+		formatString: 0
+		lineageTag: 9441f8cb-e63f-5126-8273-7dbbe8087a85
+		summarizeBy: none
+		sourceColumn: Número
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome de urna, abreviado.
+	column Candidato
+		dataType: string
+		lineageTag: 87f9622d-74bf-5c74-a2b0-f235fd792d90
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla do partido.
+	column Partido
+		dataType: string
+		lineageTag: fcc59fb1-ca77-5968-88dc-183a45cf8874
+		summarizeBy: none
+		sourceColumn: Partido
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos no 1º turno.
+	column Votos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 6a412e17-bd00-5239-8f6e-185125641119
+		summarizeBy: none
+		sourceColumn: Votos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos do ano (o mesmo em todas as linhas).
+	column ValidosAno
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 8f6a3729-3b5f-5394-8e89-cb6a7a455a45
+		summarizeBy: none
+		sourceColumn: ValidosAno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Colocação no 1º turno.
+	column 'Posição'
+		dataType: int64
+		formatString: 0
+		lineageTag: 6dddd2b0-0634-5a43-bf38-53e2070c9a14
+		summarizeBy: none
+		sourceColumn: Posição
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Candidato ano' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/candidato_ano.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "numero", "nome", "partido", "votos", "validos", "posicao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"numero", Int64.Type}, {"nome", type text}, {"partido", type text}, {"votos", Int64.Type}, {"validos", Int64.Type}, {"posicao", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"numero", "Número"}, {"nome", "Candidato"}, {"partido", "Partido"}, {"votos", "Votos"}, {"validos", "ValidosAno"}, {"posicao", "Posição"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

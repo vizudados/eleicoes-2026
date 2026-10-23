@@ -1,7 +1,7 @@
 {
  "eleicao": 6258,
  "turno": 2,
- "coletado_em": "23/10/2026 00:20:47",
+ "coletado_em": "23/10/2026 00:31:54",
  "atualizado_tse": "",
  "status": "aguardando",
  "brasil": {
@@ -21,6 +21,9 @@
   "flavio_pct": 0.0,
   "lider": "—",
   "diferenca_votos": 0,
+  "secoes_total": 499248,
+  "secoes_totalizadas": 0,
+  "eleitorado_apurado": 0,
   "candidatos": [
    {
     "numero": 22,
@@ -61,6 +64,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 2270,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -100,6 +106,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 7101,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -139,6 +148,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 8157,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -178,6 +190,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 1914,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -217,6 +232,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 35476,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -256,6 +274,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 23765,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -295,6 +316,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 6969,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -334,6 +358,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 9844,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -373,6 +400,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 15686,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -412,6 +442,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 18093,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -451,6 +484,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 52062,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -490,6 +526,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 7106,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -529,6 +568,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 8287,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -568,6 +610,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 20827,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -607,6 +652,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 10712,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -646,6 +694,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 21418,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -685,6 +736,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 10225,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -724,6 +778,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 27142,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -763,6 +820,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 37675,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -802,6 +862,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 8115,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -841,6 +904,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 4698,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -880,6 +946,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 1519,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -919,6 +988,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 27547,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -958,6 +1030,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 17326,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -997,6 +1072,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 5923,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -1036,6 +1114,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 103656,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -1075,6 +1156,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 4384,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,
@@ -1114,6 +1198,9 @@
    "flavio_pct": 0.0,
    "lider": "—",
    "diferenca_votos": 0,
+   "secoes_total": 1351,
+   "secoes_totalizadas": 0,
+   "eleitorado_apurado": 0,
    "candidatos": [
     {
      "numero": 22,

@@ -12,3 +12,12 @@ __pycache__/
 # Material interno: brief dos agentes (cita outro projeto da casa) e referência de estilo de outro projeto.
 docs/brief-visual.md
 arte/ref/estilo-traco.png
+# Power BI: backups, caches do Desktop, fotos de QA e dependências locais
+pbi/_backups/
+pbi/pbip/_backups/
+pbi/qa/
+pbi/tools/node_modules/
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+capa/remotion/node_modules/
+capa/remotion/out/

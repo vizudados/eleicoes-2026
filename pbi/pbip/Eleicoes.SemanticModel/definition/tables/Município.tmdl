@@ -1,0 +1,182 @@
+/// Os 5.571 municípios do IBGE com população e renda domiciliar per capita do Censo 2022, porte, quinto de renda e o centro do município projetado no quadro 1000 × 1000 dos mapas do painel.
+table 'Município'
+	lineageTag: f0e2fbb2-4eae-5e30-ad93-1fc052e8df27
+
+	/// Código IBGE de 7 dígitos (chave).
+	column CodIBGE
+		dataType: string
+		lineageTag: 8a426024-8117-5568-995b-e1cfc3bb8c1b
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Código do município no TSE.
+	column CodTSE
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: deb83887-a6b5-5047-8fd3-e985e3602c91
+		summarizeBy: none
+		sourceColumn: CodTSE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome do município.
+	column 'Município'
+		dataType: string
+		lineageTag: 506e58b7-2eb0-5105-ad57-cdd48b1e73d0
+		summarizeBy: none
+		sourceColumn: Município
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla da UF; liga com a dimensão UF.
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 532e8861-9eae-5bd3-9d0c-4154c6220d20
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Região do município.
+	column 'Região'
+		dataType: string
+		isHidden
+		lineageTag: 398ddb0a-d04c-5cf4-868d-6bee5fd01a56
+		summarizeBy: none
+		sourceColumn: Região
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome (UF), único: o que a busca e as listas mostram.
+	column 'Rótulo'
+		dataType: string
+		lineageTag: 0292f458-0d0f-5093-aa84-e4a4d692a165
+		summarizeBy: none
+		sourceColumn: Rótulo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// População residente, Censo 2022.
+	column 'População'
+		dataType: int64
+		formatString: #,0
+		lineageTag: 1c03054f-593c-5460-8f4d-dded0759a674
+		summarizeBy: sum
+		sourceColumn: População
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rendimento domiciliar per capita médio (R$/mês), Censo 2022.
+	column 'Renda per capita'
+		dataType: double
+		formatString: #,0
+		lineageTag: 6917e9e9-0246-5b39-8018-7b3eb4383797
+		summarizeBy: none
+		sourceColumn: Renda per capita
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Faixa de população (até 10 mil … mais de 1 milhão).
+	column Porte
+		dataType: string
+		lineageTag: 985a4d12-7b14-5b7c-86e7-e28166d1f297
+		summarizeBy: none
+		sourceColumn: Porte
+		sortByColumn: PorteOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem do porte.
+	column PorteOrdem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6bb1a911-680a-5f87-b70b-6128847641ad
+		summarizeBy: none
+		sourceColumn: PorteOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quinto dos municípios pela renda per capita (cada quinto tem 1.114 cidades).
+	column 'Quinto de renda'
+		dataType: string
+		lineageTag: 4f78dc95-85e6-5f73-97eb-b457155a4a87
+		summarizeBy: none
+		sourceColumn: Quinto de renda
+		sortByColumn: QuintoOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem do quinto (1 = mais pobres).
+	column QuintoOrdem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0b8d7149-ebd2-5cad-93b9-8b8cbacec27f
+		summarizeBy: none
+		sourceColumn: QuintoOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Longitude do centro do município.
+	column Longitude
+		dataType: double
+		isHidden
+		formatString: 0.00000
+		lineageTag: 3883c4d7-9e27-578c-b050-58d3e9b2f097
+		dataCategory: Longitude
+		summarizeBy: none
+		sourceColumn: Longitude
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Latitude do centro do município.
+	column Latitude
+		dataType: double
+		isHidden
+		formatString: 0.00000
+		lineageTag: f0b68890-502e-54c3-8938-4fb5a31c4313
+		dataCategory: Latitude
+		summarizeBy: none
+		sourceColumn: Latitude
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Centro projetado no quadro 1000 × 1000 dos mapas (x).
+	column X
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 0e7fb049-2856-55f2-94d4-7b132e0e9e45
+		summarizeBy: none
+		sourceColumn: X
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Centro projetado no quadro 1000 × 1000 dos mapas (y, para baixo).
+	column Y
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 568b1872-af5d-5a0c-865b-e29c41385ebe
+		summarizeBy: none
+		sourceColumn: Y
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Município' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/municipio.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"cd_ibge", "cd_tse", "nome", "uf", "regiao", "rotulo", "populacao", "renda_pc", "porte", "porte_ordem", "quinto", "quinto_ordem", "lon", "lat", "x", "y"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"cd_ibge", type text}, {"cd_tse", Int64.Type}, {"nome", type text}, {"uf", type text}, {"regiao", type text}, {"rotulo", type text}, {"populacao", Int64.Type}, {"renda_pc", type number}, {"porte", type text}, {"porte_ordem", Int64.Type}, {"quinto", type text}, {"quinto_ordem", Int64.Type}, {"lon", type number}, {"lat", type number}, {"x", type number}, {"y", type number}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"cd_ibge", "CodIBGE"}, {"cd_tse", "CodTSE"}, {"nome", "Município"}, {"uf", "UF"}, {"regiao", "Região"}, {"rotulo", "Rótulo"}, {"populacao", "População"}, {"renda_pc", "Renda per capita"}, {"porte", "Porte"}, {"porte_ordem", "PorteOrdem"}, {"quinto", "Quinto de renda"}, {"quinto_ordem", "QuintoOrdem"}, {"lon", "Longitude"}, {"lat", "Latitude"}, {"x", "X"}, {"y", "Y"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

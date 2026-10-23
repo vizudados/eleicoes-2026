@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T03_CHEGADA_01",
+  "displayName": "Chegada · 03 Lula",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T03_Casca_InfoAbre",
+      "T03_Casca_InfoFecha",
+      "T03_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T03",
+    "sections": {
+      "T03": {
+        "visualContainers": {
+          "T03_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T03_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T03_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

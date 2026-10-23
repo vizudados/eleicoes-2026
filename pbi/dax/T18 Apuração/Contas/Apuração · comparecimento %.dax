@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00%
+@descricao: Comparecimento sobre o eleitorado das seções totalizadas (o pc do TSE).
+*/
+DIVIDE ( [Apuração · comparecimento], [Apuração · eleitorado apurado] )
