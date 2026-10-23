@@ -1,112 +1,59 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "T19_Busca_Seletor",
+  "name": "T22_ReguaComp_Regua",
   "position": {
-    "x": 1360,
-    "y": 160,
-    "z": 5000,
-    "height": 40,
-    "width": 410,
-    "tabOrder": 25
+    "x": 607,
+    "y": 598,
+    "z": 1020,
+    "height": 80,
+    "width": 396,
+    "tabOrder": 131
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
     "query": {
       "queryState": {
-        "Values": {
+        "category": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Município"
+                      "Entity": "T22 Comparecimento"
                     }
                   },
-                  "Property": "Rótulo"
+                  "Property": "Comparecimento"
                 }
               },
-              "queryRef": "Município.Rótulo",
-              "nativeQueryRef": "Rótulo",
+              "queryRef": "T22 Comparecimento.Comparecimento",
+              "nativeQueryRef": "Comparecimento",
               "active": true,
-              "displayName": "Cidade"
+              "displayName": "Comparecimento"
             }
           ]
         }
       }
     },
     "objects": {
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Dropdown'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "header": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "selection": [
-        {
-          "properties": {
-            "strictSingleSelect": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "singleSelect": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "selectAllCheckboxEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "items": [
+      "style": [
         {
           "properties": {
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "'Sora Vizu, Segoe UI'"
                 }
               }
             },
-            "textSize": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "13D"
                 }
               }
             },
-            "fontColor": {
+            "textColor": {
               "solid": {
                 "color": {
                   "expr": {
@@ -116,76 +63,42 @@
                   }
                 }
               }
-            },
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FBF8F2'"
-                    }
-                  }
+            }
+          }
+        }
+      ],
+      "regua": [
+        {
+          "properties": {
+            "ativo": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
-            "outlineStyle": {
+            "valorPadrao": {
               "expr": {
                 "Literal": {
                   "Value": "0D"
                 }
               }
             },
-            "padding": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "selectionIcon": [
-        {
-          "properties": {
-            "color": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#1C1915'"
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "responsive": {
+            "trilhoVisivel": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
             },
-            "selfFilterEnabled": {
+            "espessuraTrilho": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "4D"
                 }
               }
-            }
-          }
-        }
-      ],
-      "dropdown": [
-        {
-          "properties": {
-            "borderColor": {
+            },
+            "corTrilho": {
               "solid": {
                 "color": {
                   "expr": {
@@ -196,14 +109,107 @@
                 }
               }
             },
-            "borderRadius": {
-              "expr": {
-                "Literal": {
-                  "Value": "12L"
+            "corPreenchimento": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1C1915'"
+                    }
+                  }
                 }
               }
             },
-            "iconColor": {
+            "diametroBotao": {
+              "expr": {
+                "Literal": {
+                  "Value": "22D"
+                }
+              }
+            },
+            "margemLateral": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "rotulosExtremos": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "corRotulos": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#6B6357'"
+                    }
+                  }
+                }
+              }
+            },
+            "tamanhoRotulos": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "bordaBotao": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "corBotao": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FBF8F2'"
+                    }
+                  }
+                }
+              }
+            },
+            "corBordaBotao": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1C1915'"
+                    }
+                  }
+                }
+              }
+            },
+            "valorNoArraste": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "preenchimento": {
+              "expr": {
+                "Literal": {
+                  "Value": "'padrao'"
+                }
+              }
+            },
+            "marcas": {
+              "expr": {
+                "Literal": {
+                  "Value": "'padrao'"
+                }
+              }
+            },
+            "corMarcas": {
               "solid": {
                 "color": {
                   "expr": {
@@ -214,63 +220,24 @@
                 }
               }
             },
-            "iconTransparency": {
+            "alturaMarcas": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "16D"
                 }
               }
             },
-            "accentBarColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#CBBDA2'"
-                    }
-                  }
-                }
-              }
-            },
-            "accentBarTransparency": {
+            "sinalMais": {
               "expr": {
                 "Literal": {
-                  "Value": "100D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "searchBox": [
-        {
-          "properties": {
-            "background": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#FBF8F2'"
-                    }
-                  }
+                  "Value": "true"
                 }
               }
             },
-            "borderColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#CBBDA2'"
-                    }
-                  }
-                }
-              }
-            },
-            "outlineStyle": {
+            "rotuloAcessivel": {
               "expr": {
                 "Literal": {
-                  "Value": "4D"
+                  "Value": "'Mudança no comparecimento, em pontos sobre o 1º turno'"
                 }
               }
             }
@@ -331,7 +298,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T19_Busca_Seletor'"
+                  "Value": "'T22_ReguaComp_Regua'"
                 }
               }
             }
@@ -370,28 +337,28 @@
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             },
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             }
@@ -404,7 +371,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Buscar uma ou mais cidades pelo nome'"
+                  "Value": "'Régua: arraste o botão (ou use as setas) para mudar o comparecimento, de 5 pontos a menos a 5 a mais'"
                 }
               }
             }
@@ -413,7 +380,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "t19busca",
+      "groupName": "t22reguacomp",
       "fieldChanges": true,
       "filterChanges": true
     },

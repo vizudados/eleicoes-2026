@@ -1,7 +1,7 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: Uma linha da lista das 5 maiores quedas da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local], Top 5 pela queda): posição, nome, bairro e seções, a queda e o selo.
+@descricao: Uma linha da lista de todos os locais, da maior queda à maior alta da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local], ordenada pela queda): posição, nome, bairro e seções, a variação e o selo. As linhas vêm em fluxo, na ordem do visual, e a lista rola dentro da caixa.
 */
 -- 1 · Leituras
 VAR _pos = [T20 · posição na queda]
@@ -16,16 +16,17 @@ VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
 VAR _txtVar = FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " p.p."
 VAR _sub = _bairro & " · " & _secoes & IF ( _secoes = 1, " seção", " seções" )
 VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
--- 3 · Geometria
-VAR _y = 70 + ( _pos - 1 ) * 88 -- geometria
+VAR _cor = IF ( _var < 0, "flavio", "lula" )
+-- 3 · Geometria (só a cascata de entrada das primeiras linhas; a posição vem da ordem do visual)
+VAR _d = MIN ( _pos + 2, 12 ) -- geometria
 -- 4 · Marcação
 RETURN
     IF (
-        NOT ISBLANK ( _pos ) && _pos <= 5,
-        "<div class='tela t20q'><div class='ln sobe d" & ( _pos + 2 ) & "' style='top:" & _y & "px'>"
+        NOT ISBLANK ( _pos ),
+        "<div class='t20q'><div class='ln sobe d" & _d & "' data-p='" & _pos & "'>"
             & "<span class='p'>" & _pos & "</span>"
             & "<span class='nm'>" & _nome & "</span>"
             & "<span class='sb'>" & _sub & "</span>"
-            & "<span class='v flavio tnum'>" & _txtVar & "</span>" & _selo
+            & "<span class='v " & _cor & " tnum'>" & _txtVar & "</span>" & _selo
         & "</div></div>"
     )

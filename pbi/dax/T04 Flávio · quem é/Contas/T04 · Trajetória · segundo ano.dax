@@ -1,0 +1,7 @@
+/*
+@pasta: T04 Flávio · quem é\Contas
+@formato: 0
+@descricao: Ano do segundo marco mais antigo de Flávio (onde a régua retoma quando o primeiro marco fica longe dos outros e a régua ganha um corte).
+@oraculo: Lula 1980 · Flávio 2016
+*/
+VAR _p = [T04 · Trajetória · primeiro ano] RETURN CALCULATE ( MIN ( 'Trajetória'[Ano] ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Flávio", 'Trajetória'[Ano] > _p )

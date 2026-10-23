@@ -58,37 +58,12 @@
   "visualInteractions": [
     {
       "source": "T19_Dispersao_Pontos",
-      "target": "T19_Busca_Seletor",
+      "target": "T19_Filtro_Pilula",
       "type": "NoFilter"
     },
     {
       "source": "T19_Dispersao_Pontos",
-      "target": "T19_Estado_Seletor",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Dispersao_Pontos",
-      "target": "T19_Porte_Seletor",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Dispersao_Pontos",
-      "target": "T19_Regiao_Seletor",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Dispersao_Pontos",
-      "target": "T19_Renda_Seletor",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Dispersao_Pontos",
-      "target": "T19_Virou_Seletor",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Lista_Html",
-      "target": "T19_Busca_Seletor",
+      "target": "T19_Filtro_Recorte",
       "type": "NoFilter"
     },
     {
@@ -103,32 +78,17 @@
     },
     {
       "source": "T19_Lista_Html",
-      "target": "T19_Estado_Seletor",
+      "target": "T19_Filtro_Pilula",
       "type": "NoFilter"
     },
     {
       "source": "T19_Lista_Html",
-      "target": "T19_Porte_Seletor",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Lista_Html",
-      "target": "T19_Regiao_Seletor",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Lista_Html",
-      "target": "T19_Renda_Seletor",
+      "target": "T19_Filtro_Recorte",
       "type": "NoFilter"
     },
     {
       "source": "T19_Lista_Html",
       "target": "T19_Resumo_Html",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Lista_Html",
-      "target": "T19_Virou_Seletor",
       "type": "NoFilter"
     }
   ]

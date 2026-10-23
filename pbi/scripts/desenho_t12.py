@@ -417,7 +417,7 @@ RETURN
         & "corrida.\"""")
 
 desenho("T12 · Corrida título · HTML",
-        "Título da corrida das unidades: a direção das setas e a legenda; com uma unidade ou região clicada, a manchete "
+        "Título da corrida das unidades: para onde as unidades andaram e a legenda; com uma unidade ou região clicada, a manchete "
         "diz o lugar e o que aconteceu com a margem nele.",
         f"""-- 1 · Leituras
 VAR _nSubiu = [T12 · unidades onde a margem subiu]
@@ -449,10 +449,10 @@ VAR _man =
             _lugar & ": a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" )
                 & IF ( _nUf = 1, " unidade", " unidades" ) & "; na região, de " & {_pp("_m22")} & " para "
                 & {_pp("_m26")} & " pontos",
-        _nSubiu = 0, "Todas as setas apontam para a esquerda, a direção do adversário",
-        _nSubiu = 1, "Quase todas as setas vão para a esquerda; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
+        _nSubiu = 0, "Todas andaram para a esquerda, a direção do adversário",
+        _nSubiu = 1, "Quase todas andaram para a esquerda; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
             & _subiu & " foi na direção de Lula",
-        "A maioria das setas vai para a esquerda; " & FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula"
+        "A maioria andou para a esquerda; " & FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula"
     )
 -- 4 · Marcação
 RETURN

@@ -139,7 +139,7 @@
       "on": [
         {
           "events": "window:mouseup",
-          "update": "ret == null ? estado : (length(data('laco')) > 2500 ? 'grande' : (length(data('laco')) == 0 ? 'vazio' : [pbiCrossFilterApply(event, '_{renda}_ >= ' + lr0 + ' && _{renda}_ <= ' + lr1 + ' && _{var}_ >= ' + lv0 + ' && _{var}_ <= ' + lv1, {limit: 2500}), 'laco'][1]))"
+          "update": "ret == null ? estado : (length(data('laco')) > 2500 ? 'grande' : (length(data('laco')) == 0 ? 'vazio' : [pbiCrossFilterApply(event, 'datum.renda >= ' + lr0 + ' && datum.renda <= ' + lr1 + ' && datum.var >= ' + lv0 + ' && datum.var <= ' + lv1, {limit: 2500}), 'laco'][1]))"
         },
         {
           "events": "@pontos:click",
@@ -242,10 +242,10 @@
       ],
       "range": [
         {
-          "signal": "676*height/778"
+          "signal": "758*height/860"
         },
         {
-          "signal": "112*height/778"
+          "signal": "112*height/860"
         }
       ],
       "clamp": true,
@@ -427,13 +427,13 @@
             "signal": "470.0*width/880"
           },
           "y": {
-            "signal": "130*height/778"
+            "signal": "130*height/860"
           },
           "align": {
             "value": "center"
           },
           "text": {
-            "signal": "estado == 'grande' ? 'Seleção grande demais (mais de 2.500 cidades): use as segmentações acima' : estado == 'vazio' ? 'Nenhum município nesse retângulo' : ''"
+            "signal": "estado == 'grande' ? 'Seleção grande demais (mais de 2.500 cidades): use o filtro no canto de cima' : estado == 'vazio' ? 'Nenhum município nesse retângulo' : ''"
           },
           "fill": {
             "value": "#8E2620"

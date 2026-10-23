@@ -1,0 +1,86 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: texto
+@descricao: O filtro do recorte em poucas palavras, para a pílula: um pedaço por grupo com escolha, na ordem do acordeão ('Nordeste · até 10 mil hab.'; 'Minas Gerais · Virou para Flávio'); com vários itens no mesmo grupo, a contagem ('3 estados', '2 faixas de renda'). Vazio sem filtro.
+*/
+-- 1 · Escolhas por grupo (RaizOrdem: 1 Região, 2 Estado, 3 Tamanho da cidade, 4 Renda, 5 Virou?, 6 Cidade)
+VAR _f = ISFILTERED ( 'T19 Filtro'[Caminho] )
+VAR _t1 =
+    CALCULATETABLE (
+        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+        'T19 Filtro'[RaizOrdem] = 1
+    )
+VAR _t2 =
+    CALCULATETABLE (
+        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+        'T19 Filtro'[RaizOrdem] = 2
+    )
+VAR _t3 =
+    CALCULATETABLE (
+        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+        'T19 Filtro'[RaizOrdem] = 3
+    )
+VAR _t4 =
+    CALCULATETABLE (
+        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+        'T19 Filtro'[RaizOrdem] = 4
+    )
+VAR _t5 =
+    CALCULATETABLE (
+        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+        'T19 Filtro'[RaizOrdem] = 5
+    )
+VAR _t6 =
+    CALCULATETABLE (
+        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+        'T19 Filtro'[RaizOrdem] = 6
+    )
+VAR _n1 = IF ( _f, COUNTROWS ( _t1 ), 0 )
+VAR _n2 = IF ( _f, COUNTROWS ( _t2 ), 0 )
+VAR _n3 = IF ( _f, COUNTROWS ( _t3 ), 0 )
+VAR _n4 = IF ( _f, COUNTROWS ( _t4 ), 0 )
+VAR _n5 = IF ( _f, COUNTROWS ( _t5 ), 0 )
+VAR _n6 = IF ( _f, COUNTROWS ( _t6 ), 0 )
+-- 2 · Um pedaço por grupo: o valor quando é um só; a contagem quando são vários
+VAR _p1 =
+    SWITCH (
+        TRUE (),
+        _n1 = 1, CONCATENATEX ( _t1, 'T19 Filtro'[Valor], ", " ),
+        _n1 > 1, _n1 & " regiões"
+    )
+VAR _p2 =
+    SWITCH (
+        TRUE (),
+        _n2 = 1, CONCATENATEX ( _t2, 'T19 Filtro'[Valor], ", " ),
+        _n2 > 1, _n2 & " estados"
+    )
+VAR _p3 =
+    SWITCH (
+        TRUE (),
+        _n3 = 1, CONCATENATEX ( _t3, 'T19 Filtro'[Valor], ", " ) & " hab.",
+        _n3 > 1, _n3 & " tamanhos de cidade"
+    )
+VAR _p4 =
+    SWITCH (
+        TRUE (),
+        _n4 = 1, "renda: " & CONCATENATEX ( _t4, 'T19 Filtro'[Curto], ", " ),
+        _n4 > 1, _n4 & " faixas de renda"
+    )
+VAR _p5 =
+    SWITCH (
+        TRUE (),
+        _n5 = 1, CONCATENATEX ( _t5, 'T19 Filtro'[Valor], ", " ),
+        _n5 > 1, _n5 & " situações"
+    )
+VAR _p6 =
+    SWITCH (
+        TRUE (),
+        _n6 = 1, CONCATENATEX ( _t6, 'T19 Filtro'[Valor], ", " ),
+        _n6 > 1, FORMAT ( _n6, "#,0" ) & " cidades"
+    )
+VAR _partes =
+    {
+        ( 1, _p1 ), ( 2, _p2 ), ( 3, _p3 ), ( 4, _p4 ), ( 5, _p5 ), ( 6, _p6 )
+    }
+RETURN
+    CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], " · ", [Value1], ASC )

@@ -38,7 +38,8 @@ FILTRO = (1282, 60, 424, 626)
 FILTRO_PILULA = (1282, 60, 424, 48)
 FILTRO_FORA = (0, 0, 1920, 1080)
 # telas com filtro próprio no mesmo padrão (pílula + VizuFilter alto + véu); cada módulo expõe NOMES_FILTRO
-FILTROS_PROPRIOS = {"T15": "t15_minha_cidade", "T20": "t20_escola"}
+# (T19: o filtro do recorte em acordeão, 23/10/2026)
+FILTROS_PROPRIOS = {"T15": "t15_minha_cidade", "T19": "t19_explorador", "T20": "t20_escola"}
 INFO = (1724, 62, 44, 44)
 SETA_ESQ = (36, 500, 80, 80)
 SETA_DIR = (1804, 500, 80, 80)

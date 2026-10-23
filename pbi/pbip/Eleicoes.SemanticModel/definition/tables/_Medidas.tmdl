@@ -478,8 +478,8 @@ table _Medidas
 			        & "<div class='bl dir sobe d7'><div class='rot'>LULA · PT</div><div class='num v lula-c'>"
 			        & FORMAT ( _l / 1e6, "0.00" ) & " mi</div><div class='p'>" & FORMAT ( _lp * 100, "0.0" ) & "% dos válidos</div></div>"
 			        & "<div class='pe-esq sobe d10'><span class='vir'><span class='num'>" & FORMAT ( _vir, "#,0" ) & "</span>"
-			        & "<span class='laco'></span></span> municípios mudaram de lado</div>"
-			        & "<div class='pe-dir sobe d11'><span class='num'>" & FORMAT ( _n, "#,0" ) & "</span> no mapa · cada ponto é um</div>"
+			        & "<span class='risco'></span></span> municípios mudaram de lado</div>"
+			        & "<div class='pe-dir sobe d11'><span class='num'>" & FORMAT ( _n, "#,0" ) & "</span> pontos no mapa: um por município</div>"
 		displayFolder: T00 Capa\Desenho
 		lineageTag: cadebdf1-e508-53eb-a59d-e62670da03cd
 
@@ -1632,6 +1632,13 @@ table _Medidas
 		displayFolder: T02 Lula · quem é\Contas
 		lineageTag: c394b9fa-5d8f-5cdd-af56-365f21542d9d
 
+	/// Ano do segundo marco mais antigo de Lula (onde a régua retoma quando o primeiro marco fica longe dos outros e a régua ganha um corte).
+	measure 'T02 · Trajetória · segundo ano' =
+			VAR _p = [T02 · Trajetória · primeiro ano] RETURN CALCULATE ( MIN ( 'Trajetória'[Ano] ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Lula", 'Trajetória'[Ano] > _p )
+		formatString: 0
+		displayFolder: T02 Lula · quem é\Contas
+		lineageTag: 4e7315b6-f238-5435-8e92-d876306f9372
+
 	/// 1 quando o marco da linha tem desenho: foto da época redesenhada ou, sem foto de licença aberta, ilustração recriada.
 	measure 'T02 · Trajetória · tem foto' =
 			IF ( SELECTEDVALUE ( 'Trajetória'[Foto] ) <> "", 1, 0 )
@@ -1839,21 +1846,45 @@ table _Medidas
 			    "<div class='cab'><span class='sob'>Trajetória política · " & _n & " marcos</span>"
 			        & "<span class='dica'>passe o mouse num marco para ver a foto da época, redesenhada em traço</span></div>"
 			-- 3 · Geometria (régua em y 296, de x 30 a 1590; vagas iguais para os cartões)
+			-- com o 1º marco a mais de 8 anos do 2º (Flávio: 2002 e depois 2016), a régua ganha um corte: um trecho curto
+			-- em volta do 1º marco, o sinal de corte e o resto da régua do 2º marco ao fim, para os fios não se cruzarem
+			VAR _seg = [T02 · Trajetória · segundo ano]
+			VAR _corte = _seg - _ini > 8 -- geometria
 			VAR _t0 = FLOOR ( _ini - 1, 5 ) -- geometria
 			VAR _t1 = CEILING ( _fim + 2, 5 ) -- geometria
 			VAR _escala = DIVIDE ( 1560, _t1 - _t0 ) -- geometria
-			VAR _xd = 30 + ( _tempo - _t0 ) * _escala -- geometria
+			VAR _wa = 200 -- geometria
+			VAR _vao = 44 -- geometria
+			VAR _a0 = _ini - 1.5 -- geometria
+			VAR _a1 = _ini + 1.5 -- geometria
+			VAR _b0 = _seg - 1 -- geometria
+			VAR _b1 = _fim + 1 -- geometria
+			VAR _xb = 30 + _wa + _vao -- geometria
+			VAR _eb = DIVIDE ( 1560 - _wa - _vao, _b1 - _b0 ) -- geometria
+			VAR _xd =
+			    IF (
+			        _corte,
+			        IF ( _tempo <= _a1, 30 + ( _tempo - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( _tempo - _b0 ) * _eb ),
+			        30 + ( _tempo - _t0 ) * _escala
+			    ) -- geometria
 			VAR _xs = ( _ordem - 0.5 ) * DIVIDE ( 1620, _n ) -- geometria
 			VAR _txd = FORMAT ( _xd, "0.0##", "en-US" ) -- geometria
 			VAR _txs = FORMAT ( _xs, "0.0##", "en-US" ) -- geometria
 			VAR _fio =
 			    "M" & _txs & ",176 L" & _txs & ",200 L" & _txd & ",262 L" & _txd & ",287" -- geometria
 			VAR _atraso = MIN ( _ordem + 4, 16 ) -- geometria
-			VAR _anos = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value] ) /* lista */
+			VAR _anosInteira = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value], "@c", 0 ) /* lista */
+			VAR _anosCorte =
+			    UNION (
+			        ROW ( "@a", _ini, "@c", 1 ),
+			        SELECTCOLUMNS ( GENERATESERIES ( CEILING ( _b0, 5 ), FLOOR ( _b1, 5 ), 5 ), "@a", [Value], "@c", 1 )
+			    ) /* lista */
+			VAR _anos = FILTER ( UNION ( _anosInteira, _anosCorte ), [@c] = IF ( _corte, 1, 0 ) ) /* lista */
 			VAR _marcas =
 			    CONCATENATEX (
 			        _anos,
-			        VAR _x = FORMAT ( 30 + ( [@a] - _t0 ) * _escala, "0.0##", "en-US" ) -- geometria
+			        VAR _x =
+			            FORMAT ( IF ( _corte, IF ( [@a] <= _a1, 30 + ( [@a] - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( [@a] - _b0 ) * _eb ), 30 + ( [@a] - _t0 ) * _escala ), "0.0##", "en-US" ) -- geometria
 			        RETURN
 			            "<line x1='" & _x & "' y1='290' x2='" & _x & "' y2='302'/>"
 			                & "<text x='" & _x & "' y='324'>" & [@a] & "</text>",
@@ -1866,7 +1897,14 @@ table _Medidas
 			        _ordem = 1,
 			        _cab
 			            & "<svg class='regua' width='1620' height='364' viewBox='0 0 1620 364'>"
-			            & "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='1590' y2='296'/>"
+			            & IF (
+			                _corte,
+			                "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='" & FORMAT ( 30 + _wa, "0.0##", "en-US" ) & "' y2='296'/>"
+			                    & "<line class='eixo traco' pathLength='1' x1='" & FORMAT ( _xb, "0.0##", "en-US" ) & "' y1='296' x2='1590' y2='296'/>"
+			                    & "<g class='corte'><line x1='" & FORMAT ( 30 + _wa + 12, "0.0##", "en-US" ) & "' y1='304' x2='" & FORMAT ( 30 + _wa + 20, "0.0##", "en-US" ) & "' y2='288'/>"
+			                    & "<line x1='" & FORMAT ( 30 + _wa + 24, "0.0##", "en-US" ) & "' y1='304' x2='" & FORMAT ( 30 + _wa + 32, "0.0##", "en-US" ) & "' y2='288'/></g>",
+			                "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='1590' y2='296'/>"
+			            )
 			            & "<g class='anos entra d4'>" & _marcas & "</g></svg>"
 			    )
 			VAR _html =
@@ -3147,6 +3185,13 @@ table _Medidas
 		displayFolder: T04 Flávio · quem é\Contas
 		lineageTag: 112d2c39-90a1-57fe-b5eb-5e09e2c04a48
 
+	/// Ano do segundo marco mais antigo de Flávio (onde a régua retoma quando o primeiro marco fica longe dos outros e a régua ganha um corte).
+	measure 'T04 · Trajetória · segundo ano' =
+			VAR _p = [T04 · Trajetória · primeiro ano] RETURN CALCULATE ( MIN ( 'Trajetória'[Ano] ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Flávio", 'Trajetória'[Ano] > _p )
+		formatString: 0
+		displayFolder: T04 Flávio · quem é\Contas
+		lineageTag: 85afd8bb-d92c-5853-a457-0e2d78adc32a
+
 	/// 1 quando o marco da linha tem desenho: foto da época redesenhada ou, sem foto de licença aberta, ilustração recriada.
 	measure 'T04 · Trajetória · tem foto' =
 			IF ( SELECTEDVALUE ( 'Trajetória'[Foto] ) <> "", 1, 0 )
@@ -3354,21 +3399,45 @@ table _Medidas
 			    "<div class='cab'><span class='sob'>Trajetória política · " & _n & " marcos</span>"
 			        & "<span class='dica'>passe o mouse num marco para ver a foto da época, redesenhada em traço</span></div>"
 			-- 3 · Geometria (régua em y 296, de x 30 a 1590; vagas iguais para os cartões)
+			-- com o 1º marco a mais de 8 anos do 2º (Flávio: 2002 e depois 2016), a régua ganha um corte: um trecho curto
+			-- em volta do 1º marco, o sinal de corte e o resto da régua do 2º marco ao fim, para os fios não se cruzarem
+			VAR _seg = [T04 · Trajetória · segundo ano]
+			VAR _corte = _seg - _ini > 8 -- geometria
 			VAR _t0 = FLOOR ( _ini - 1, 5 ) -- geometria
 			VAR _t1 = CEILING ( _fim + 2, 5 ) -- geometria
 			VAR _escala = DIVIDE ( 1560, _t1 - _t0 ) -- geometria
-			VAR _xd = 30 + ( _tempo - _t0 ) * _escala -- geometria
+			VAR _wa = 200 -- geometria
+			VAR _vao = 44 -- geometria
+			VAR _a0 = _ini - 1.5 -- geometria
+			VAR _a1 = _ini + 1.5 -- geometria
+			VAR _b0 = _seg - 1 -- geometria
+			VAR _b1 = _fim + 1 -- geometria
+			VAR _xb = 30 + _wa + _vao -- geometria
+			VAR _eb = DIVIDE ( 1560 - _wa - _vao, _b1 - _b0 ) -- geometria
+			VAR _xd =
+			    IF (
+			        _corte,
+			        IF ( _tempo <= _a1, 30 + ( _tempo - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( _tempo - _b0 ) * _eb ),
+			        30 + ( _tempo - _t0 ) * _escala
+			    ) -- geometria
 			VAR _xs = ( _ordem - 0.5 ) * DIVIDE ( 1620, _n ) -- geometria
 			VAR _txd = FORMAT ( _xd, "0.0##", "en-US" ) -- geometria
 			VAR _txs = FORMAT ( _xs, "0.0##", "en-US" ) -- geometria
 			VAR _fio =
 			    "M" & _txs & ",176 L" & _txs & ",200 L" & _txd & ",262 L" & _txd & ",287" -- geometria
 			VAR _atraso = MIN ( _ordem + 4, 16 ) -- geometria
-			VAR _anos = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value] ) /* lista */
+			VAR _anosInteira = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value], "@c", 0 ) /* lista */
+			VAR _anosCorte =
+			    UNION (
+			        ROW ( "@a", _ini, "@c", 1 ),
+			        SELECTCOLUMNS ( GENERATESERIES ( CEILING ( _b0, 5 ), FLOOR ( _b1, 5 ), 5 ), "@a", [Value], "@c", 1 )
+			    ) /* lista */
+			VAR _anos = FILTER ( UNION ( _anosInteira, _anosCorte ), [@c] = IF ( _corte, 1, 0 ) ) /* lista */
 			VAR _marcas =
 			    CONCATENATEX (
 			        _anos,
-			        VAR _x = FORMAT ( 30 + ( [@a] - _t0 ) * _escala, "0.0##", "en-US" ) -- geometria
+			        VAR _x =
+			            FORMAT ( IF ( _corte, IF ( [@a] <= _a1, 30 + ( [@a] - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( [@a] - _b0 ) * _eb ), 30 + ( [@a] - _t0 ) * _escala ), "0.0##", "en-US" ) -- geometria
 			        RETURN
 			            "<line x1='" & _x & "' y1='290' x2='" & _x & "' y2='302'/>"
 			                & "<text x='" & _x & "' y='324'>" & [@a] & "</text>",
@@ -3381,7 +3450,14 @@ table _Medidas
 			        _ordem = 1,
 			        _cab
 			            & "<svg class='regua' width='1620' height='364' viewBox='0 0 1620 364'>"
-			            & "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='1590' y2='296'/>"
+			            & IF (
+			                _corte,
+			                "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='" & FORMAT ( 30 + _wa, "0.0##", "en-US" ) & "' y2='296'/>"
+			                    & "<line class='eixo traco' pathLength='1' x1='" & FORMAT ( _xb, "0.0##", "en-US" ) & "' y1='296' x2='1590' y2='296'/>"
+			                    & "<g class='corte'><line x1='" & FORMAT ( 30 + _wa + 12, "0.0##", "en-US" ) & "' y1='304' x2='" & FORMAT ( 30 + _wa + 20, "0.0##", "en-US" ) & "' y2='288'/>"
+			                    & "<line x1='" & FORMAT ( 30 + _wa + 24, "0.0##", "en-US" ) & "' y1='304' x2='" & FORMAT ( 30 + _wa + 32, "0.0##", "en-US" ) & "' y2='288'/></g>",
+			                "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='1590' y2='296'/>"
+			            )
 			            & "<g class='anos entra d4'>" & _marcas & "</g></svg>"
 			    )
 			VAR _html =
@@ -8898,9 +8974,8 @@ table _Medidas
 			VAR _f2 = CALCULATE ( [T09 · interações por dia · 2º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" )
 			-- 2 · Textos
 			VAR _txtMan =
-			    "Por dia, Flávio passou de " & FORMAT ( _f1 / 1000000, "0.0" ) & " para " & FORMAT ( _f2 / 1000000, "0.0" )
-			        & " milhões de interações; Lula, de " & FORMAT ( _l1 / 1000000, "0.0" ) & " para " & FORMAT ( _l2 / 1000000, "0.0" )
-			        & " milhões"
+			    "Interações por dia: Flávio foi de " & FORMAT ( _f1 / 1000000, "0.0" ) & " a " & FORMAT ( _f2 / 1000000, "0.0" )
+			        & " mi; Lula, de " & FORMAT ( _l1 / 1000000, "0.0" ) & " a " & FORMAT ( _l2 / 1000000, "0.0" ) & " mi"
 			VAR _txtJan1 =
 			    "Campanha do 1º turno · " & FORMAT ( _ini1, "dd/MM" ) & " a " & FORMAT ( _fim1, "dd/MM" ) & " · " & _d1 & " dias"
 			VAR _txtJan2 =
@@ -9122,8 +9197,8 @@ table _Medidas
 			VAR _lider0 = IF ( _fI >= _lI, "Flávio", "Lula" )
 			VAR _lider1 = IF ( _lF >= _fF, "Lula", "Flávio" )
 			VAR _txtTodos =
-			    "No dia do 1º turno, " & _lider0 & " liderava; em " & FORMAT ( _fim, "dd/MM" ) & ", " & _lider1 & " estava "
-			        & FORMAT ( ABS ( _vantagemFim ), "0.0" ) & " pontos à frente"
+			    "No 1º turno, " & _lider0 & " liderava; em " & FORMAT ( _fim, "dd/MM" ) & ", " & _lider1 & " tinha "
+			        & FORMAT ( ABS ( _vantagemFim ), "0.0" ) & " pontos a mais"
 			-- com um candidato clicado: o caminho dele do primeiro ao último dia
 			VAR _cI = IF ( _foco = "Lula", _lI, _fI )
 			VAR _cF = IF ( _foco = "Lula", _lF, _fF )
@@ -12181,7 +12256,7 @@ table _Medidas
 		displayFolder: T12 Estados\Desenho
 		lineageTag: 5c14f233-0116-588e-a4b8-6a0c70ad8875
 
-	/// Título da corrida das unidades: a direção das setas e a legenda; com uma unidade ou região clicada, a manchete diz o lugar e o que aconteceu com a margem nele.
+	/// Título da corrida das unidades: para onde as unidades andaram e a legenda; com uma unidade ou região clicada, a manchete diz o lugar e o que aconteceu com a margem nele.
 	measure 'T12 · Corrida título · HTML' =
 			-- 1 · Leituras
 			VAR _nSubiu = [T12 · unidades onde a margem subiu]
@@ -12213,10 +12288,10 @@ table _Medidas
 			            _lugar & ": a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" )
 			                & IF ( _nUf = 1, " unidade", " unidades" ) & "; na região, de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para "
 			                & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos",
-			        _nSubiu = 0, "Todas as setas apontam para a esquerda, a direção do adversário",
-			        _nSubiu = 1, "Quase todas as setas vão para a esquerda; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
+			        _nSubiu = 0, "Todas andaram para a esquerda, a direção do adversário",
+			        _nSubiu = 1, "Quase todas andaram para a esquerda; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
 			            & _subiu & " foi na direção de Lula",
-			        "A maioria das setas vai para a esquerda; " & FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula"
+			        "A maioria andou para a esquerda; " & FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula"
 			    )
 			-- 4 · Marcação
 			RETURN
@@ -15476,7 +15551,7 @@ table _Medidas
 			        _nTrocas = 0 && _m26 > 0, "o PT ficou à frente em todas",
 			        _nTrocas = 0, "o adversário ficou à frente em todas",
 			        _paraPT = 1, _nome & " voltou para o PT em " & _troca,
-			        _nome & " virou para o adversário em " & _troca & IF ( _troca < 2026, ", não em 2026", "" )
+			        _nome & " virou para o adversário em " & _troca & IF ( _troca < 2026, " e não voltou mais", "" )
 			    )
 			VAR _man =
 			    "De " & FORMAT ( _m0 * 100, "+0.0;−0.0;0.0" ) & " p.p. em " & _a0 & " a " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " p.p. em 2026; " & _txtTroca
@@ -19171,19 +19246,21 @@ table _Medidas
 			VAR _momento = [T18 · momento escolhido]
 			-- 2 · Textos
 			VAR _aguarda = _fase = "aguardando"
-			VAR _lulaTxt = IF ( _aguarda, "0,00%", FORMAT ( _lulaP * 100, "0.00" ) & "%" )
-			VAR _flavioTxt = IF ( _aguarda, "0,00%", FORMAT ( _flavioP * 100, "0.00" ) & "%" )
+			VAR _lulaTxt = IF ( _aguarda, "—", FORMAT ( _lulaP * 100, "0.00" ) & "%" )
+			VAR _flavioTxt = IF ( _aguarda, "—", FORMAT ( _flavioP * 100, "0.00" ) & "%" )
+			-- antes da 1ª parcial, "0,00% · 0 votos" parecia resultado: o placar mostra o traço e diz que espera
+			VAR _votosLula = IF ( _aguarda, "aguardando a 1ª parcial", FORMAT ( _lula, "#,0" ) & IF ( _lula = 1, " voto", " votos" ) )
+			VAR _votosFlavio = IF ( _aguarda, "aguardando a 1ª parcial", FORMAT ( _flavio, "#,0" ) & IF ( _flavio = 1, " voto", " votos" ) )
 			VAR _secoesTxt = FORMAT ( _secoes * 100, "0.00" ) & "%"
 			VAR _difTxt = FORMAT ( _dif, "#,0" )
 			VAR _tseTxt = IF ( ISBLANK ( _tse ), "—", FORMAT ( _tse, "dd/MM/yyyy HH:mm" ) )
 			VAR _coletaTxt = IF ( ISBLANK ( _coleta ), "—", FORMAT ( _coleta, "dd/MM/yyyy HH:mm" ) )
 			VAR _blocoLula =
 			    "<div class='cand sobe d2'><div class='rot lula-esc'>LULA · PT · 13</div><div class='num pct lula'>" & _lulaTxt
-			        & "</div><div class='txt votos'>" & FORMAT ( _lula, "#,0" ) & IF ( _lula = 1, " voto", " votos" ) & "</div></div>"
+			        & "</div><div class='txt votos'>" & _votosLula & "</div></div>"
 			VAR _blocoFlavio =
 			    "<div class='cand sobe d3'><div class='rot flavio-esc'>FLÁVIO BOLSONARO · PL · 22</div><div class='num pct flavio'>"
-			        & _flavioTxt & "</div><div class='txt votos'>" & FORMAT ( _flavio, "#,0" ) & IF ( _flavio = 1, " voto", " votos" )
-			        & "</div></div>"
+			        & _flavioTxt & "</div><div class='txt votos'>" & _votosFlavio & "</div></div>"
 			VAR _par = IF ( _lider = "Flávio", _blocoFlavio & _blocoLula, _blocoLula & _blocoFlavio )
 			VAR _selo =
 			    SWITCH (
@@ -19433,6 +19510,110 @@ table _Medidas
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 88b744f2-9347-5372-8eee-a95516e14073
 
+	/// O filtro do recorte em poucas palavras, para a pílula: um pedaço por grupo com escolha, na ordem do acordeão ('Nordeste · até 10 mil hab.'; 'Minas Gerais · Virou para Flávio'); com vários itens no mesmo grupo, a contagem ('3 estados', '2 faixas de renda'). Vazio sem filtro.
+	measure 'T19 · filtro em uso' =
+			-- 1 · Escolhas por grupo (RaizOrdem: 1 Região, 2 Estado, 3 Tamanho da cidade, 4 Renda, 5 Virou?, 6 Cidade)
+			VAR _f = ISFILTERED ( 'T19 Filtro'[Caminho] )
+			VAR _t1 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        'T19 Filtro'[RaizOrdem] = 1
+			    )
+			VAR _t2 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        'T19 Filtro'[RaizOrdem] = 2
+			    )
+			VAR _t3 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        'T19 Filtro'[RaizOrdem] = 3
+			    )
+			VAR _t4 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        'T19 Filtro'[RaizOrdem] = 4
+			    )
+			VAR _t5 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        'T19 Filtro'[RaizOrdem] = 5
+			    )
+			VAR _t6 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        'T19 Filtro'[RaizOrdem] = 6
+			    )
+			VAR _n1 = IF ( _f, COUNTROWS ( _t1 ), 0 )
+			VAR _n2 = IF ( _f, COUNTROWS ( _t2 ), 0 )
+			VAR _n3 = IF ( _f, COUNTROWS ( _t3 ), 0 )
+			VAR _n4 = IF ( _f, COUNTROWS ( _t4 ), 0 )
+			VAR _n5 = IF ( _f, COUNTROWS ( _t5 ), 0 )
+			VAR _n6 = IF ( _f, COUNTROWS ( _t6 ), 0 )
+			-- 2 · Um pedaço por grupo: o valor quando é um só; a contagem quando são vários
+			VAR _p1 =
+			    SWITCH (
+			        TRUE (),
+			        _n1 = 1, CONCATENATEX ( _t1, 'T19 Filtro'[Valor], ", " ),
+			        _n1 > 1, _n1 & " regiões"
+			    )
+			VAR _p2 =
+			    SWITCH (
+			        TRUE (),
+			        _n2 = 1, CONCATENATEX ( _t2, 'T19 Filtro'[Valor], ", " ),
+			        _n2 > 1, _n2 & " estados"
+			    )
+			VAR _p3 =
+			    SWITCH (
+			        TRUE (),
+			        _n3 = 1, CONCATENATEX ( _t3, 'T19 Filtro'[Valor], ", " ) & " hab.",
+			        _n3 > 1, _n3 & " tamanhos de cidade"
+			    )
+			VAR _p4 =
+			    SWITCH (
+			        TRUE (),
+			        _n4 = 1, "renda: " & CONCATENATEX ( _t4, 'T19 Filtro'[Curto], ", " ),
+			        _n4 > 1, _n4 & " faixas de renda"
+			    )
+			VAR _p5 =
+			    SWITCH (
+			        TRUE (),
+			        _n5 = 1, CONCATENATEX ( _t5, 'T19 Filtro'[Valor], ", " ),
+			        _n5 > 1, _n5 & " situações"
+			    )
+			VAR _p6 =
+			    SWITCH (
+			        TRUE (),
+			        _n6 = 1, CONCATENATEX ( _t6, 'T19 Filtro'[Valor], ", " ),
+			        _n6 > 1, FORMAT ( _n6, "#,0" ) & " cidades"
+			    )
+			VAR _partes =
+			    {
+			        ( 1, _p1 ), ( 2, _p2 ), ( 3, _p3 ), ( 4, _p4 ), ( 5, _p5 ), ( 6, _p6 )
+			    }
+			RETURN
+			    CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], " · ", [Value1], ASC )
+		displayFolder: T19 Explorador\Contas
+		lineageTag: 116a0e0f-2cc5-5ceb-9bb3-858606a8e6fe
+
+	/// Quantos itens estão marcados no filtro do recorte (T19 Filtro[Caminho]), somando todos os grupos; 0 sem filtro. A pílula usa para o ponto vermelho e para "N filtros".
+	measure 'T19 · filtro · escolhas' =
+			IF (
+			    ISFILTERED ( 'T19 Filtro'[Caminho] ),
+			    COUNTROWS ( VALUES ( 'T19 Filtro'[Caminho] ) ),
+			    0
+			)
+		formatString: 0
+		displayFolder: T19 Explorador\Contas
+		lineageTag: a56f2bd9-2843-5299-9d95-bbae0e83b9fe
+
+	/// Ordem do caminho no acordeão do filtro (papel itemSort do VizuFilter: a raiz vai pela menor ordem das suas linhas, de Região a Cidade).
+	measure 'T19 · filtro · ordem' =
+			MIN ( 'T19 Filtro'[Ordem] )
+		formatString: 0
+		displayFolder: T19 Explorador\Contas
+		lineageTag: 1a2c95a4-004d-5f9d-8c5c-eccc3cff3580
+
 	/// Votos de Flávio Bolsonaro ÷ válidos, 1º turno de 2026, no contexto.
 	measure 'T19 · Flávio % 2026' =
 			DIVIDE (
@@ -19543,72 +19724,119 @@ table _Medidas
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 82661077-b542-57b3-9369-7fa486d378c1
 
-	/// Municípios do recorte com votos em 2022 e em 2026 (a base da variação; 5.570 sem filtro: Boa Esperança do Norte é de 2025).
+	/// Municípios do recorte (filtro da tela e seleção na dispersão) com votos em 2022 e em 2026 (a base da variação; 5.570 sem filtro: Boa Esperança do Norte é de 2025).
 	measure 'T19 · municípios com as duas eleições' =
 			COALESCE (
-			    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), NOT ISBLANK ( [T19 · variação da margem] ) ) ),
+			    COUNTROWS (
+			        FILTER (
+			            VALUES ( 'Município'[CodIBGE] ),
+			            [T19 · no recorte] = 1 && NOT ISBLANK ( [T19 · variação da margem] )
+			        )
+			    ),
 			    0
 			)
 		formatString: #,0
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 1c3bc667-1f97-56e7-ae6c-2cc4845fb22b
 
-	/// Municípios do recorte em que Flávio ficou à frente em 2026 (margem < 0).
+	/// Municípios do recorte (filtro da tela e seleção na dispersão) em que Flávio ficou à frente em 2026 (margem < 0).
 	measure 'T19 · municípios com Flávio à frente' =
 			COALESCE (
-			    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · margem 2026] < 0 ) ),
+			    COUNTROWS (
+			        FILTER (
+			            VALUES ( 'Município'[CodIBGE] ),
+			            [T19 · no recorte] = 1 && [T19 · margem 2026] < 0
+			        )
+			    ),
 			    0
 			)
 		formatString: #,0
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 28e9da67-d0a0-50d0-85f9-912252aacd9f
 
-	/// Municípios do recorte em que Lula ficou à frente em 2026 (margem > 0).
+	/// Municípios do recorte (filtro da tela e seleção na dispersão) em que Lula ficou à frente em 2026 (margem > 0).
 	measure 'T19 · municípios com Lula à frente' =
 			COALESCE (
-			    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · margem 2026] > 0 ) ),
+			    COUNTROWS (
+			        FILTER (
+			            VALUES ( 'Município'[CodIBGE] ),
+			            [T19 · no recorte] = 1 && [T19 · margem 2026] > 0
+			        )
+			    ),
 			    0
 			)
 		formatString: #,0
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 9543d45c-03b0-59b4-bed0-60ac2ef73901
 
-	/// Municípios do recorte em que a margem do PT caiu de 2022 para 2026 (variação < 0).
+	/// Municípios do recorte (filtro da tela e seleção na dispersão) em que a margem do PT caiu de 2022 para 2026 (variação < 0).
 	measure 'T19 · municípios em que Lula perdeu margem' =
 			COALESCE (
-			    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · variação da margem] < 0 ) ),
+			    COUNTROWS (
+			        FILTER (
+			            VALUES ( 'Município'[CodIBGE] ),
+			            [T19 · no recorte] = 1 && [T19 · variação da margem] < 0
+			        )
+			    ),
 			    0
 			)
 		formatString: #,0
 		displayFolder: T19 Explorador\Contas
 		lineageTag: e6d97851-a96f-5cc3-b9a5-a18e89b28be6
 
-	/// Quantos municípios a lista mostra: os 14 com mais votos válidos do recorte (ou todos, quando o recorte tem menos).
+	/// Quantos municípios a lista mostra: os 16 com mais votos válidos do recorte (ou todos, quando o recorte tem menos).
 	measure 'T19 · municípios na lista' =
-			MIN ( 14, [T19 · municípios no recorte] )
+			MIN ( 16, [T19 · municípios no recorte] )
 		formatString: 0
 		displayFolder: T19 Explorador\Contas
 		lineageTag: b8d8e605-d21a-5715-9b79-7cade493b626
 
-	/// Municípios no recorte da tela (segmentações e seleção na dispersão). Sem filtro, os 5.571.
+	/// Municípios no recorte da tela: os que passam no filtro do recorte ([T19 · no recorte] = 1: E entre os grupos, OU dentro do mesmo grupo) e na seleção da dispersão. Sem filtro, os 5.571.
 	measure 'T19 · municípios no recorte' =
 			COALESCE (
-			    COUNTROWS ( 'Município' ),
+			    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · no recorte] = 1 ) ),
 			    0
 			)
 		formatString: #,0
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 0354022b-3c84-5b10-993a-8159e279a49d
 
-	/// Municípios do recorte que trocaram Lula (2022) por Flávio (2026).
+	/// Municípios do recorte (filtro da tela e seleção na dispersão) que trocaram Lula (2022) por Flávio (2026).
 	measure 'T19 · municípios que viraram' =
 			COALESCE (
-			    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · virou] = 1 ) ),
+			    COUNTROWS (
+			        FILTER (
+			            VALUES ( 'Município'[CodIBGE] ),
+			            [T19 · no recorte] = 1 && [T19 · virou] = 1
+			        )
+			    ),
 			    0
 			)
 		formatString: #,0
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 9c259df3-26ef-5258-a915-4998bb57d152
+
+	/// 1 quando o município está no recorte do filtro da tela, 0 quando não está; vazio fora de um município. Regra: E entre os grupos, OU dentro do mesmo grupo (Nordeste + até 10 mil = cidades do Nordeste com até 10 mil; Nordeste + Norte = cidades de uma ou da outra). A relação T19 Filtro → Município é inativa e só vale aqui (USERELATIONSHIP): o município da linha filtra as linhas dele na T19 Filtro, e as escolhidas precisam cobrir todos os grupos com escolha. A lista e a dispersão filtram por = 1.
+	measure 'T19 · no recorte' =
+			VAR _raizes = [T19 · raízes escolhidas]
+			RETURN
+			    IF (
+			        HASONEVALUE ( 'Município'[CodIBGE] ),
+			        IF (
+			            _raizes = 0,
+			            1,
+			            VAR _cobertas =
+			                CALCULATE (
+			                    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ),
+			                    USERELATIONSHIP ( 'T19 Filtro'[CodIBGE], 'Município'[CodIBGE] )
+			                )
+			            RETURN
+			                IF ( _cobertas = _raizes, 1, 0 )
+			        )
+			    )
+		formatString: 0
+		displayFolder: T19 Explorador\Contas
+		lineageTag: 541f1427-8a60-50a2-ad3a-86b8430db93a
 
 	/// População residente (Censo 2022) no contexto.
 	measure 'T19 · população' =
@@ -19639,39 +19867,118 @@ table _Medidas
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 46c4f418-1ee9-502f-a66f-e44ffcb50ae8
 
-	/// Os filtros que formam o recorte, em palavras ('Sudeste · 10 a 50 mil hab. · seleção na dispersão'); 'Todo o Brasil' sem filtro.
+	/// Quantos grupos do filtro do recorte (Região, Estado, Tamanho da cidade, Renda, Virou?, Cidade) têm alguma escolha no VizuFilter da tela (T19 Filtro[Caminho]); 0 sem filtro. É o número de condições E de [T19 · no recorte].
+	measure 'T19 · raízes escolhidas' =
+			IF (
+			    ISFILTERED ( 'T19 Filtro'[Caminho] ),
+			    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ),
+			    0
+			)
+		formatString: 0
+		displayFolder: T19 Explorador\Contas
+		lineageTag: 21e522c6-54c0-5ae9-9724-834d2902b7d3
+
+	/// O recorte em palavras, para a faixa do resumo e os textos alternativos: um pedaço por grupo do filtro com escolha, na ordem do acordeão ('Sudeste · 10 a 50 mil hab. · seleção na dispersão'; 'MG, SP · renda: mais pobres'), com a contagem quando são muitos itens ('6 estados', '12 cidades escolhidas'); 'Todo o Brasil' sem filtro.
 	measure 'T19 · recorte em uso' =
+			-- 1 · Escolhas por grupo (RaizOrdem: 1 Região, 2 Estado, 3 Tamanho da cidade, 4 Renda, 5 Virou?, 6 Cidade)
+			VAR _f = ISFILTERED ( 'T19 Filtro'[Caminho] )
+			VAR _t1 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
+			        'T19 Filtro'[RaizOrdem] = 1
+			    )
+			VAR _t2 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
+			        'T19 Filtro'[RaizOrdem] = 2
+			    )
+			VAR _t3 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
+			        'T19 Filtro'[RaizOrdem] = 3
+			    )
+			VAR _t4 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
+			        'T19 Filtro'[RaizOrdem] = 4
+			    )
+			VAR _t5 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
+			        'T19 Filtro'[RaizOrdem] = 5
+			    )
+			VAR _t6 =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
+			        'T19 Filtro'[RaizOrdem] = 6
+			    )
+			VAR _n1 = IF ( _f, COUNTROWS ( _t1 ), 0 )
+			VAR _n2 = IF ( _f, COUNTROWS ( _t2 ), 0 )
+			VAR _n3 = IF ( _f, COUNTROWS ( _t3 ), 0 )
+			VAR _n4 = IF ( _f, COUNTROWS ( _t4 ), 0 )
+			VAR _n5 = IF ( _f, COUNTROWS ( _t5 ), 0 )
+			VAR _n6 = IF ( _f, COUNTROWS ( _t6 ), 0 )
+			-- 2 · Um pedaço por grupo: os itens (poucos) ou a contagem (muitos)
 			VAR _regiao =
-			    IF ( ISFILTERED ( 'UF'[Região] ), CONCATENATEX ( VALUES ( 'UF'[Região] ), 'UF'[Região], ", " ) )
+			    IF (
+			        _n1 > 0,
+			        IF (
+			            _n1 <= 3,
+			            CONCATENATEX ( _t1, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+			            _n1 & " regiões"
+			        )
+			    )
 			VAR _uf =
-			    IF ( ISFILTERED ( 'UF'[Nome] ), CONCATENATEX ( VALUES ( 'UF'[UF] ), 'UF'[UF], ", " ) )
+			    IF (
+			        _n2 > 0,
+			        IF (
+			            _n2 <= 4,
+			            CONCATENATEX ( _t2, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+			            _n2 & " estados"
+			        )
+			    )
 			VAR _porte =
 			    IF (
-			        ISFILTERED ( 'Município'[Porte] ),
-			        CONCATENATEX ( VALUES ( 'Município'[Porte] ), 'Município'[Porte], ", " ) & " hab."
+			        _n3 > 0,
+			        IF (
+			            _n3 <= 2,
+			            CONCATENATEX ( _t3, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ) & " hab.",
+			            _n3 & " tamanhos de cidade"
+			        )
 			    )
 			VAR _quinto =
 			    IF (
-			        ISFILTERED ( 'Município'[Quinto de renda] ),
-			        "renda: " & CONCATENATEX ( VALUES ( 'Município'[Quinto de renda] ), 'Município'[Quinto de renda], ", " )
-			    )
-			VAR _lado =
-			    IF ( ISFILTERED ( 'T19 Lado'[Lado] ), CONCATENATEX ( VALUES ( 'T19 Lado'[Lado] ), 'T19 Lado'[Lado], ", " ) )
-			VAR _nBusca = COUNTROWS ( VALUES ( 'Município'[Rótulo] ) )
-			VAR _busca =
-			    IF (
-			        ISFILTERED ( 'Município'[Rótulo] ),
+			        _n4 > 0,
 			        IF (
-			            _nBusca <= 3,
-			            CONCATENATEX ( VALUES ( 'Município'[Rótulo] ), 'Município'[Rótulo], ", " ),
-			            _nBusca & " cidades buscadas"
+			            _n4 <= 2,
+			            "renda: " & CONCATENATEX ( _t4, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+			            _n4 & " faixas de renda"
 			        )
 			    )
+			VAR _lado =
+			    IF (
+			        _n5 > 0,
+			        IF (
+			            _n5 <= 2,
+			            CONCATENATEX ( _t5, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+			            _n5 & " situações"
+			        )
+			    )
+			VAR _cidade =
+			    IF (
+			        _n6 > 0,
+			        IF (
+			            _n6 <= 3,
+			            CONCATENATEX ( _t6, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+			            FORMAT ( _n6, "#,0" ) & " cidades escolhidas"
+			        )
+			    )
+			-- 3 · A seleção por retângulo na dispersão (filtro cruzado no código do município)
 			VAR _laco =
 			    IF ( ISFILTERED ( 'Município'[CodIBGE] ), "seleção na dispersão" )
 			VAR _partes =
 			    {
-			        ( 1, _regiao ), ( 2, _uf ), ( 3, _porte ), ( 4, _quinto ), ( 5, _lado ), ( 6, _busca ), ( 7, _laco )
+			        ( 1, _regiao ), ( 2, _uf ), ( 3, _porte ), ( 4, _quinto ), ( 5, _lado ), ( 6, _cidade ), ( 7, _laco )
 			    }
 			VAR _texto =
 			    CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], " · ", [Value1], ASC )
@@ -19720,6 +20027,13 @@ table _Medidas
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 36e954a4-c2d3-5396-860d-aba8b6d71395
 
+	/// Votos válidos de 2026 do município quando ele está no recorte do filtro; vazio fora dele. É a medida do Top N da lista (os 16 maiores DO recorte: o Top N do visual não enxerga o filtro de medida do mesmo visual).
+	measure 'T19 · válidos no recorte' =
+			IF ( [T19 · no recorte] = 1, [T19 · válidos 2026] )
+		formatString: #,0
+		displayFolder: T19 Explorador\Contas
+		lineageTag: 2b1efe86-0a9e-592a-aa5c-a4a405a5c7c1
+
 	/// Texto alternativo da dispersão (renda × mudança da margem).
 	measure 'T19 · Dispersão · ALT' =
 			-- 1 · Leituras
@@ -19737,15 +20051,19 @@ table _Medidas
 	/// Manchete da dispersão, no fundo HTML atrás dos pontos: em quantos municípios do recorte Lula perdeu margem de 2022 para 2026.
 	measure 'T19 · Dispersão · HTML' =
 			-- 1 · Leituras
+			VAR _n = [T19 · municípios no recorte]
 			VAR _perdeu = [T19 · municípios em que Lula perdeu margem]
 			VAR _com = [T19 · municípios com as duas eleições]
 			-- 2 · Textos
 			VAR _txtPerdeu = FORMAT ( _perdeu, "#,0" )
 			VAR _txtCom = FORMAT ( _com, "#,0" )
 			VAR _frase =
-			    IF (
+			    SWITCH (
+			        TRUE (),
+			        _n = 0, "Nenhum município neste recorte: mude o filtro no canto de cima",
+			        _com = 0, "Sem 2022 para comparar neste recorte",
 			        _com = 1,
-			        IF ( _perdeu = 1, "Neste município, Lula perdeu margem", "Neste município, Lula não perdeu margem" ),
+			            IF ( _perdeu = 1, "Neste município, Lula perdeu margem", "Neste município, Lula não perdeu margem" ),
 			        "Lula perdeu margem em <b class='num'>" & _txtPerdeu & "</b> dos <b class='num'>" & _txtCom
 			            & "</b> municípios do recorte"
 			    )
@@ -19869,6 +20187,46 @@ table _Medidas
 		displayFolder: T19 Explorador\Desenho
 		lineageTag: 288bf525-b442-511b-9590-827b4de48f3a
 
+	/// Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o acordeão oferece.
+	measure 'T19 · Filtro · ALT' =
+			-- 1 · Leituras
+			VAR _n = [T19 · filtro · escolhas]
+			VAR _uso = [T19 · filtro em uso]
+			-- 2 · Textos
+			RETURN
+			    "Filtro do recorte: " & IF ( _n = 0, "todos os municípios", LEFT ( _uso, 150 ) )
+			        & ". Abre a lista de região, estado, tamanho, renda, virada e cidade."
+		displayFolder: T19 Explorador\Desenho
+		lineageTag: ecad9809-72a1-5da2-a558-ed54ed0283ab
+
+	/// O botão fechado do filtro do recorte (a pílula, na caixa do filtro da casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre o acordeão (VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não mexem nela).
+	measure 'T19 · Filtro · pílula · HTML' =
+			-- 1 · Leituras
+			VAR _n = [T19 · filtro · escolhas]
+			VAR _uso = [T19 · filtro em uso]
+			-- 2 · Textos
+			VAR _txt0 =
+			    SWITCH (
+			        TRUE (),
+			        _n = 0, "Todos os municípios",
+			        _n > 1 && LEN ( _uso ) > 40, FORMAT ( _n, "#,0" ) & " filtros",
+			        _uso
+			    )
+			VAR _txt1 = SUBSTITUTE ( SUBSTITUTE ( _txt0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _txt = SUBSTITUTE ( SUBSTITUTE ( _txt1, ">", "&gt;" ), "'", "&#39;" )
+			-- 4 · Marcação
+			RETURN
+			    "<div class='tela pl" & IF ( _n > 0, " ativo", "" ) & "'>"
+			        & "<span class='fu'><svg width='16' height='16' viewBox='0 0 16 16'><path d='M2 3h12l-4.6 "
+			        & "5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' stroke-width='1.4' "
+			        & "stroke-linejoin='round'/></svg><i></i></span>"
+			        & "<b>" & _txt & "</b>"
+			        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
+			        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg>"
+			    & "</div>"
+		displayFolder: T19 Explorador\Desenho
+		lineageTag: 6cb1d13d-5be9-5423-a7a3-d28e3c11d88b
+
 	/// Texto alternativo da lista do Explorador.
 	measure 'T19 · Lista · ALT' =
 			-- 1 · Leituras
@@ -19883,7 +20241,7 @@ table _Medidas
 		displayFolder: T19 Explorador\Desenho
 		lineageTag: 69c036fa-e590-5e67-8a4c-64e287e9d63b
 
-	/// Uma linha da lista do Explorador (granularidade: Município[Rótulo]; o visual mostra os 14 com mais votos válidos): nome, Lula e Flávio em 2026, a minilinha da margem 2006–2026, a mudança 2022 → 2026 e o selo de quem virou. Posição pela conta da posição na lista.
+	/// Uma linha da lista do Explorador (granularidade: Município[Rótulo]; o visual mostra os 16 com mais votos válidos do recorte): nome, Lula e Flávio em 2026, a minilinha da margem 2006–2026, a mudança 2022 → 2026 e o selo de quem virou. Posição pela conta da posição na lista.
 	measure 'T19 · Lista · HTML' =
 			-- 1 · Leituras
 			VAR _pos = [T19 · posição na lista]
@@ -19910,7 +20268,7 @@ table _Medidas
 			VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
 			VAR _atraso = "d" & MIN ( _pos, 16 )
 			-- 3 · Geometria
-			VAR _y = 36 + ( _pos - 1 ) * 45 -- geometria
+			VAR _y = 36 + ( _pos - 1 ) * 44 -- geometria
 			VAR _base = { ( 0, 4.0, _m06 ), ( 1, 29.6, _m10 ), ( 2, 55.2, _m14 ), ( 3, 80.8, _m18 ), ( 4, 106.4, _m22 ), ( 5, 132.0, _m26 ) } /* lista */
 			VAR _pts =
 			    FILTER ( /* lista */
@@ -20167,11 +20525,11 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: 8d1eedad-239a-5a3a-83ae-60526e4b20a9
 
-	/// Posição do local entre os da lista das maiores quedas (1 = maior queda).
+	/// Posição do local entre os da lista das maiores quedas (1 = maior queda). O Power BI põe a coluna de ordenação ('T20 Local'[Id]) no grão do visual: o RANKX percorre as duas colunas, senão cada linha só vê a si mesma e todas saem 1 (L-armadilha da coluna de ordenação, como na tela 13).
 	measure 'T20 · posição na queda' =
 			IF (
 			    HASONEVALUE ( 'T20 Local'[Local] ),
-			    RANKX ( ALLSELECTED ( 'T20 Local'[Local] ), [T20 · queda da margem], , DESC, SKIP )
+			    RANKX ( ALLSELECTED ( 'T20 Local'[Local], 'T20 Local'[Id] ), [T20 · queda da margem], , DESC, SKIP )
 			)
 		formatString: 0
 		displayFolder: T20 Escola\Contas
@@ -20191,7 +20549,7 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: beea18de-4eb4-5b22-b22c-facf922b02a3
 
-	/// A variação com o sinal trocado (quanto a margem de Lula caiu): ordena o Top 5 das maiores quedas.
+	/// A variação com o sinal trocado (quanto a margem de Lula caiu): ordena a lista dos locais, da maior queda à maior alta.
 	measure 'T20 · queda da margem' =
 			- [T20 · variação da margem]
 		formatString: 0.0%
@@ -20446,13 +20804,15 @@ table _Medidas
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 4b63704c-6bdd-5710-b0d6-7eaa640a9255
 
-	/// Texto alternativo da lista das maiores quedas.
+	/// Texto alternativo da lista dos locais pela queda.
 	measure 'T20 · Quedas · ALT' =
-			"As 5 escolas de Contagem onde a margem de Lula mais caiu de 2022 para 2026. Clique numa linha para pôr a escola na ficha."
+			VAR _n = COUNTROWS ( FILTER ( ALL ( 'T20 Local'[Local], 'T20 Local'[Id] ), NOT ISBLANK ( [T20 · queda da margem] ) ) )
+			RETURN
+			    "Os " & _n & " locais de votação de Contagem, da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a escola na ficha."
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 8d3a2f9d-5e51-5e84-ab67-c6e5da56f7f8
 
-	/// Uma linha da lista das 5 maiores quedas da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local], Top 5 pela queda): posição, nome, bairro e seções, a queda e o selo.
+	/// Uma linha da lista de todos os locais, da maior queda à maior alta da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local], ordenada pela queda): posição, nome, bairro e seções, a variação e o selo. As linhas vêm em fluxo, na ordem do visual, e a lista rola dentro da caixa.
 	measure 'T20 · Quedas · HTML' =
 			-- 1 · Leituras
 			VAR _pos = [T20 · posição na queda]
@@ -20467,17 +20827,18 @@ table _Medidas
 			VAR _txtVar = FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " p.p."
 			VAR _sub = _bairro & " · " & _secoes & IF ( _secoes = 1, " seção", " seções" )
 			VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
-			-- 3 · Geometria
-			VAR _y = 70 + ( _pos - 1 ) * 88 -- geometria
+			VAR _cor = IF ( _var < 0, "flavio", "lula" )
+			-- 3 · Geometria (só a cascata de entrada das primeiras linhas; a posição vem da ordem do visual)
+			VAR _d = MIN ( _pos + 2, 12 ) -- geometria
 			-- 4 · Marcação
 			RETURN
 			    IF (
-			        NOT ISBLANK ( _pos ) && _pos <= 5,
-			        "<div class='tela t20q'><div class='ln sobe d" & ( _pos + 2 ) & "' style='top:" & _y & "px'>"
+			        NOT ISBLANK ( _pos ),
+			        "<div class='t20q'><div class='ln sobe d" & _d & "' data-p='" & _pos & "'>"
 			            & "<span class='p'>" & _pos & "</span>"
 			            & "<span class='nm'>" & _nome & "</span>"
 			            & "<span class='sb'>" & _sub & "</span>"
-			            & "<span class='v flavio tnum'>" & _txtVar & "</span>" & _selo
+			            & "<span class='v " & _cor & " tnum'>" & _txtVar & "</span>" & _selo
 			        & "</div></div>"
 			    )
 		displayFolder: T20 Escola\Desenho
@@ -21426,7 +21787,7 @@ table _Medidas
 		displayFolder: T22 Simulador\Desenho
 		lineageTag: ef425fc7-e11d-5e99-b3ca-fdc114d563ec
 
-	/// Régua do controle de quem não escolhe ninguém (0 a 50%).
+	/// Título e subtítulo da régua de quem não escolhe ninguém (0 a 50%); o trilho e o botão são do VizuFilter no modo régua.
 	measure 'T22 · Régua abstenção · HTML' =
 			-- 1 · Leituras
 			VAR _b = [T22 · parte que não vota]
@@ -21434,16 +21795,11 @@ table _Medidas
 			-- 2 · Textos
 			VAR _txt =
 			    IF ( _b = 0, "ninguém: todos votam", FORMAT ( _b * 100, "0" ) & "% · " & FORMAT ( _outros * _b / 1000000, "0.00" ) & " mi" & " de votos a menos" )
-			-- 3 · Geometria
-			VAR _x = 20 + _b / 0.5 * 370 -- geometria
-			-- 4 · Marcação
+			-- 3 · Marcação (trilho, botão e os rótulos 0% e 50% são do VizuFilter no modo régua, por cima)
 			RETURN
 			    "<div class='tela t22c'>"
 			        & "<div class='pergunta sobe'>Quantos deles não vão escolher ninguém?</div>"
 			        & "<div class='valor sobe d1'>" & _txt & "</div>"
-			        & "<i class='trilho entra d2'></i><i class='cheio' style='width:" & FORMAT ( _x - 20, "0.0##", "en-US" )
-			        & "px'></i><i class='alca' style='left:" & FORMAT ( _x - 11, "0.0##", "en-US" ) & "px'></i>"
-			        & "<span class='ex' style='left:14px'>0%</span><span class='ex' style='left:370px'>50%</span>"
 			    & "</div>"
 		displayFolder: T22 Simulador\Desenho
 		lineageTag: ea231e4b-dab5-58db-90cb-f34c7c3d2bdf
@@ -21454,7 +21810,7 @@ table _Medidas
 		displayFolder: T22 Simulador\Desenho
 		lineageTag: bb5ccaba-6aee-5831-9547-2bdd7d1e3188
 
-	/// Régua do controle de comparecimento (−5 a +5 pontos), com os votos a mais ou a menos e a regra: metade para cada um.
+	/// Título e subtítulo da régua de comparecimento (−5 a +5 pontos), com os votos a mais ou a menos e a regra: metade para cada um; o trilho e o botão são do VizuFilter no modo régua.
 	measure 'T22 · Régua comparecimento · HTML' =
 			-- 1 · Leituras
 			VAR _c = [T22 · mudança no comparecimento]
@@ -21467,19 +21823,11 @@ table _Medidas
 			        FORMAT ( _c * 100, "+0;−0" ) & IF ( ABS ( _c ) = 0.01, " ponto · ", " pontos · " )
 			            & FORMAT ( ABS ( _novos ) / 1000000, "0.0" ) & " mi" & IF ( _c > 0, " a mais", " a menos" ) & ", metade para cada um"
 			    )
-			-- 3 · Geometria
-			VAR _x = 20 + ( _c + 0.05 ) / 0.1 * 370 -- geometria
-			VAR _xm = 20 + 370 / 2 -- geometria
-			-- 4 · Marcação
+			-- 3 · Marcação (trilho, marca do zero, botão e os rótulos −5 e +5 são do VizuFilter no modo régua, por cima)
 			RETURN
 			    "<div class='tela t22c'>"
 			        & "<div class='pergunta sobe'>E se o comparecimento mudar?</div>"
 			        & "<div class='valor sobe d1'>" & _txt & "</div>"
-			        & "<i class='trilho entra d2'></i><i class='cheio' style='left:" & FORMAT ( MIN ( _x, _xm ), "0.0##", "en-US" )
-			        & "px;width:" & FORMAT ( ABS ( _x - _xm ), "0.0##", "en-US" ) & "px'></i>"
-			        & "<i class='meio' style='left:" & FORMAT ( _xm - 1, "0.0##", "en-US" ) & "px'></i>"
-			        & "<i class='alca' style='left:" & FORMAT ( _x - 11, "0.0##", "en-US" ) & "px'></i>"
-			        & "<span class='ex' style='left:12px'>−5</span><span class='ex' style='left:378px'>+5</span>"
 			    & "</div>"
 		displayFolder: T22 Simulador\Desenho
 		lineageTag: 22f51ae9-ffa2-5c64-9c46-2b13ac8e57bc
@@ -21491,7 +21839,7 @@ table _Medidas
 			VAR _emp = [T22 · empate com a abstenção escolhida]
 			RETURN
 			    "Controle: " & FORMAT ( _a * 100, "0" ) & "% dos eleitores dos outros que votam escolhem Lula. Empate em "
-			        & FORMAT ( _emp * 100, "0" ) & "%. Clique na régua para mudar."
+			        & FORMAT ( _emp * 100, "0" ) & "%. Arraste o botão da régua (ou use as setas) para mudar."
 		displayFolder: T22 Simulador\Desenho
 		lineageTag: 18dcd982-a785-5dbb-94c1-f5584e291168
 
@@ -21538,7 +21886,6 @@ table _Medidas
 			            & "<span class='tl'>" & IF ( _a >= 0.12, _txtA, "" ) & "</span>"
 			            & "<span class='tf'>" & IF ( _a <= 0.88, _txtF, "" ) & "</span>"
 			        & "</div>"
-			        & "<i class='alca' style='left:" & FORMAT ( _xa - 16, "0.0##", "en-US" ) & "px'></i>"
 			        & "<i class='emp' style='left:" & FORMAT ( _xe - 1, "0.0##", "en-US" ) & "px'></i>"
 			        & "<span class='emp-t mao' style='left:" & FORMAT ( _xe - 4, "0.0##", "en-US" ) & "px'>" & _txtEmp & "</span>"
 			        & "<i class='faixa entra d4' style='left:" & FORMAT ( _x0, "0.0##", "en-US" ) & "px;width:"

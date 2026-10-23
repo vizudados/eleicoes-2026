@@ -7,7 +7,7 @@ presidencial de 2026 como o documentário da Spotniks: do placar ao porquê, do 
   ponta, como apresentação.
 - **Fio da narrativa:** a pergunta da capa — "Afinal, qual Brasil foi às urnas?" — se abre em quatro movimentos:
   **quem venceu e quem são** (o resultado e os dois candidatos), **quem não foi** (a ausência), **como se chegou lá** (a
-  campanha: debate, buscas, redes, pesquisas), **onde e em quem mudou** (o mapa, o perfil, 20 anos) e, no epílogo, **a
+  campanha: debate, buscas, redes, pesquisas), **onde e em quem mudou** (o mapa, o perfil, 20 anos) e, no capítulo IV (E agora), **a
   sua cidade e o que vem agora** (o 2º turno). Cada tela termina apontando a próxima pergunta (`proxima_pergunta` no
   JSON, encadeada automaticamente).
 - **Neutralidade:** as duas páginas de candidato têm os mesmos blocos, as mesmas contas e o mesmo tratamento de arte;
@@ -31,9 +31,9 @@ presidencial de 2026 como o documentário da Spotniks: do placar ao porquê, do 
 | 10 | III | Como cada estado se moveu? | Lula perdeu margem em 26 das 27 unidades; Minas Gerais e Tocantins mudaram de lado | TSE |
 | 11 | III | Em que tipo de cidade Lula perdeu mais? | Nas cidades de até 10 mil habitantes e de renda mais alta, a margem de Lula caiu 16,5 p.p. | TSE × IBGE |
 | 12 | III | Como o PT chegou até aqui, de 2006 a 2026? | Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo lugar | TSE |
-| 13 | Epílogo | Como votou a minha cidade? | Em Contagem, Flávio venceu com 50,3%; a margem de Lula caiu 5,4 p.p. desde 2022 | TSE + IBGE |
-| 14 | Epílogo | E agora, o que as pesquisas dizem do 2º turno? | Desde 05/10, Flávio lidera 34 de 39 pesquisas do 2º turno | pesquisas |
-| 15 | Epílogo | O que os números dizem, afinal? (encerramento) | os achados de cada ato + fontes + créditos das fotos | — |
+| 13 | IV · E agora | Como votou a minha cidade? | Em Contagem, Flávio venceu com 50,3%; a margem de Lula caiu 5,4 p.p. desde 2022 | TSE + IBGE |
+| 14 | IV · E agora | E agora, o que as pesquisas dizem do 2º turno? | Desde 05/10, Flávio lidera 34 de 39 pesquisas do 2º turno | pesquisas |
+| 15 | IV · E agora | O que os números dizem, afinal? (encerramento) | os achados de cada ato + fontes + créditos das fotos | — |
 
 Decisões do Alisson (22/10/2026): fazer tudo; arquivo novo no Figma; linguagem visual da casa (21/10) "mesmo traço, mas
 puxado um pouco mais pra desenho e rabisco", com liberdade criativa; paleta bege com pontos entre vermelho e azul; tela

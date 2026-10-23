@@ -1,6 +1,6 @@
 {"titulo": "Como explorar os 5.571 municípios",
  "blocos": [
-  ["Como ler", "Cada ponto da dispersão é uma cidade: quanto mais à direita, mais renda por pessoa; quanto mais abaixo, mais a margem de Lula caiu de 2022 para 2026. Arraste um retângulo sobre os pontos e a lista e os números passam a contar só essas cidades. Passe o mouse numa linha ou num ponto para abrir o dossiê da cidade."],
+  ["Como ler", "Cada ponto da dispersão é uma cidade: quanto mais à direita, mais renda por pessoa; quanto mais abaixo, mais a margem de Lula caiu de 2022 para 2026. No filtro do canto de cima, escolha região, estado, tamanho, renda, quem virou ou a cidade; arraste um retângulo sobre os pontos para recortar ainda mais. Passe o mouse numa linha ou num ponto para abrir o dossiê da cidade."],
   ["De onde vêm os números", "Votos do 1º turno de 2006 a 2026, por município, do TSE. Renda por pessoa e população do Censo 2022 (IBGE). Margem = votos do PT menos votos do principal adversário, divididos pelos votos válidos, em pontos."],
-  ["Para lembrar", "Boa Esperança do Norte (MT) foi criada em 2025: não tem 2022 nem dado do Censo, por isso não aparece na dispersão. A seleção por retângulo vale até 2.500 cidades de uma vez; para grupos maiores, use os filtros do topo."]
+  ["Para lembrar", "No filtro, itens do mesmo grupo somam (Nordeste ou Norte) e grupos diferentes se combinam (do Nordeste e com até 10 mil habitantes). Boa Esperança do Norte (MT) foi criada em 2025: não tem 2022 nem dado do Censo, por isso não aparece na dispersão. A seleção por retângulo vale até 2.500 cidades de uma vez; para grupos maiores, use o filtro."]
  ]}

@@ -52,7 +52,11 @@ def corpo() -> str:
         ".cp .comecar{position:absolute;left:1690px;top:585px;font-family:var(--mao);font-size:26px;"
         f"color:{C['areia']};transform:rotate(-6deg)}}"
     )
-    laco = estilo.rabisco_circulo(96, 54, cor=C["creme"], espessura=2.4, atraso_ms=2200)
+    # o traço à mão embaixo do número de municípios que viraram (o laço em volta cruzava os dígitos e o "m" de
+    # municípios; L128: rabisco nunca cruza número). O mesmo sublinhado da tela 01, na cor creme
+    import desenho_t01
+    risco = (desenho_t01.SUBLINHADO.replace("#1C1915", C["creme"]).replace("id='rbl'", "id='rbc'")
+             .replace("url(#rbl)", "url(#rbc)").replace("class='sub'", "class='sb'"))
     return (
         f"<style>{css}</style><div class='tela cp'>"
         f"<video autoplay muted playsinline preload='auto' poster='{MIDIA}/capa/capa-inicio.jpg' "
@@ -67,10 +71,11 @@ def corpo() -> str:
         "<div class='comecar entra d14'>começar</div>"
         "<div class='sumario entra d14'><span>☰</span> sumário</div>"
         "{{content}}"
-        # o laço à mão em volta do número de municípios que viraram (posição do span .vir no bloco do pé)
-        f"<style>.cp .vir .laco{{position:absolute;left:-14px;top:-10px;width:96px;height:54px}}</style>"
-        f"<script>(function(){{var l=document.querySelectorAll('.cp .vir .laco');for(var i=0;i<l.length;i++)"
-        f"{{if(!l[i].firstChild){{l[i].innerHTML={laco!r};}}}}}})();</script>"
+        # o traço à mão embaixo do número de municípios que viraram (span .risco dentro do .vir, no bloco do pé)
+        f"<style>.cp .vir .risco{{position:absolute;left:6px;right:6px;bottom:-9px;height:10px}}"
+        f".cp .vir .risco svg{{display:block;width:100%;height:100%}}</style>"
+        f"<script>(function(){{var l=document.querySelectorAll('.cp .vir .risco');for(var i=0;i<l.length;i++)"
+        f"{{if(!l[i].firstChild){{l[i].innerHTML={risco!r};}}}}}})();</script>"
         "</div>"
         # a casca da capa (lockup, fonte, "i", seta) por cima do vídeo, que cobre a página inteira; sem a urna (a capa é o
         # início)

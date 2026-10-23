@@ -820,7 +820,9 @@ def gerar_spec() -> dict:
     # tempo (ms): contorno 0–1900 (onda de oeste a leste); fundo creme 500–1600; pontos apagados 900–2300 (norte →
     # sul); os que viraram 2300–4400 (onda a partir do centro da virada); fim 4600
     # gesto (23/10/2026): clique num ponto filtra a tela por ele; arrastar desenha um retângulo que filtra pelos pontos
-    # de dentro (pbiCrossFilterApply avançado, até 2.500); clique no vazio limpa. Realce vindo da lista (sit__highlight
+    # de dentro (pbiCrossFilterApply avançado, até 2.500; o filtro lê cada linha por datum.campo: no Deneb 2.0,
+    # _{campo}_ vira o VALOR do item sob o evento, e no mouseup do arraste não há item, então o filtro não pegava
+    # nada e a seleção era limpa, 23/10/2026); clique no vazio limpa. Realce vindo da lista (sit__highlight
     # Status = 'on'): a câmera vai até a UF da cidade, que ganha um anel; os outros pontos esmaecem.
     st = "datum['sit__highlightStatus']"
     apaga = (f"(datum.__selected__ == 'off' || {st} == 'off' ? 0.3 : 1)")
@@ -882,8 +884,8 @@ def gerar_spec() -> dict:
                  {"events": "window:mouseup",
                   "update": "ret == null ? estado : (length(data('laco')) > 2500 ? 'grande' : "
                             "(length(data('laco')) == 0 ? 'vazio' : [pbiCrossFilterApply(event, "
-                            "'_{x}_ >= ' + mx0 + ' && _{x}_ <= ' + mx1 + ' && _{y}_ >= ' + my0 + "
-                            "' && _{y}_ <= ' + my1, {limit: 2500}), 'area'][1]))"},
+                            "'datum.x >= ' + mx0 + ' && datum.x <= ' + mx1 + ' && datum.y >= ' + my0 + "
+                            "' && datum.y <= ' + my1, {limit: 2500}), 'area'][1]))"},
                  {"events": "@pontosApagados:click", "filter": ["!event.ctrlKey"],
                   "update": "arrastou ? estado : [pbiCrossFilterApply(event), 'ponto'][1]"},
                  {"events": "@pontosViradas:click", "filter": ["!event.ctrlKey"],

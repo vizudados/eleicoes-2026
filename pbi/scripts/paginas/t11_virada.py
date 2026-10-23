@@ -48,7 +48,9 @@ LISTA = (1454, 140, 316, 860)      # a lista, 6 px à esquerda da moldura: folga
 ORDEM_TT = 100 + int(roteiro.numero(P)) * 10
 
 CSS_RESPOSTA = (
-    ".t11r .grande{position:absolute;left:-6px;top:-22px;font-size:150px;letter-spacing:-.045em;color:var(--tinta)}"
+    # o alto dos dígitos fica dentro do visual (o HTML Content recorta o que passa da caixa: com top -22 o 711 perdia
+    # 6 px do topo e da esquerda; medido por scripts/cortes.py)
+    ".t11r .grande{position:absolute;left:0;top:-14px;font-size:150px;letter-spacing:-.045em;color:var(--tinta)}"
     ".t11r .grande.palavra{font-size:92px;top:4px}"
     ".t11r .frase{position:absolute;left:0;top:146px;width:420px;font-size:25px;line-height:1.22}"
     ".t11r .inv{position:absolute;left:0;top:226px;font-size:20px;font-weight:500;color:var(--grafite)}"

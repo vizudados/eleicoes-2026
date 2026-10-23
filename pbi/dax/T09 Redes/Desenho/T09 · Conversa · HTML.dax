@@ -17,9 +17,8 @@ VAR _l2 = CALCULATE ( [T09 · interações por dia · 2º turno], Monitoramento[
 VAR _f2 = CALCULATE ( [T09 · interações por dia · 2º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" )
 -- 2 · Textos
 VAR _txtMan =
-    "Por dia, Flávio passou de " & FORMAT ( _f1 / 1000000, "0.0" ) & " para " & FORMAT ( _f2 / 1000000, "0.0" )
-        & " milhões de interações; Lula, de " & FORMAT ( _l1 / 1000000, "0.0" ) & " para " & FORMAT ( _l2 / 1000000, "0.0" )
-        & " milhões"
+    "Interações por dia: Flávio foi de " & FORMAT ( _f1 / 1000000, "0.0" ) & " a " & FORMAT ( _f2 / 1000000, "0.0" )
+        & " mi; Lula, de " & FORMAT ( _l1 / 1000000, "0.0" ) & " a " & FORMAT ( _l2 / 1000000, "0.0" ) & " mi"
 VAR _txtJan1 =
     "Campanha do 1º turno · " & FORMAT ( _ini1, "dd/MM" ) & " a " & FORMAT ( _fim1, "dd/MM" ) & " · " & _d1 & " dias"
 VAR _txtJan2 =

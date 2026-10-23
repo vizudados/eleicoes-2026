@@ -15,7 +15,8 @@ Escola Estadual Nova Contagem-I, onde o documentário começa, virou: Lula +10,3
   T20_Mapa_Html         o mapa de Contagem: o contorno se desenha em rabisco, o creme esmaece e os 110 pontos com
                         endereço brotam do oeste para o leste (granularidade T20 Local[Local]); tooltip: post-it
                         (ttT20Escola); clique leva a escola à ficha
-  T20_Quedas_Html       as 5 maiores quedas da margem de Lula 2022 → 2026 (Top 5, clicáveis)
+  T20_Quedas_Html       todos os locais, da maior queda à maior alta da margem de Lula 2022 → 2026 (a lista rola;
+                        clicáveis)
   T20_Como_Html         como explorar e a legenda (fixo)
 
 Medidas em pbi/dax/T20 Escola (desenho gerado por pbi/scripts/desenho_t20.py); contorno em pbi/spec/t20_contagem.json.
@@ -111,9 +112,7 @@ def declarar(ctx):
                                   modelo_corpo=D.corpo_quedas(), alt=lib.medida("T20 · Quedas · ALT"), z=Z + 20,
                                   tab=130, granularidade=("T20 Local", "Local"), filtro_cruzado=True,
                                   transparencia_nao_selecionados=True, tooltip_pagina=TT,
-                                  ordenacao=[lib.ordem_medida("T20 · queda da margem", "Descending")],
-                                  filtros=lib.filtro_visual_topn("t20Top5", "T20 Local", "Local",
-                                                                 "T20 · queda da margem", 5))),
+                                  ordenacao=[lib.ordem_medida("T20 · queda da margem", "Descending")])),
         Visual(P, lib.visual_html("T20_Como_Html", *COMO, VAZIO, folha_de_estilo=CSS, modelo_corpo=D.corpo_como(),
                                   alt="Como explorar a tela e a legenda do mapa", z=Z + 21, tab=140)),
         *pagina_lib.tooltip(TT, "Escola · post-it", 420, 270, "T20 · Tooltip escola · HTML", ordem=300,

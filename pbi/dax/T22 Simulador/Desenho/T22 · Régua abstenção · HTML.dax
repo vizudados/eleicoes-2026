@@ -1,7 +1,7 @@
 /*
 @pasta: T22 Simulador\Desenho
 @formato: texto
-@descricao: Régua do controle de quem não escolhe ninguém (0 a 50%).
+@descricao: Título e subtítulo da régua de quem não escolhe ninguém (0 a 50%); o trilho e o botão são do VizuFilter no modo régua.
 */
 -- 1 · Leituras
 VAR _b = [T22 · parte que não vota]
@@ -9,14 +9,9 @@ VAR _outros = [T22 · votos dos outros]
 -- 2 · Textos
 VAR _txt =
     IF ( _b = 0, "ninguém: todos votam", FORMAT ( _b * 100, "0" ) & "% · " & FORMAT ( _outros * _b / 1000000, "0.00" ) & " mi" & " de votos a menos" )
--- 3 · Geometria
-VAR _x = 20 + _b / 0.5 * 370 -- geometria
--- 4 · Marcação
+-- 3 · Marcação (trilho, botão e os rótulos 0% e 50% são do VizuFilter no modo régua, por cima)
 RETURN
     "<div class='tela t22c'>"
         & "<div class='pergunta sobe'>Quantos deles não vão escolher ninguém?</div>"
         & "<div class='valor sobe d1'>" & _txt & "</div>"
-        & "<i class='trilho entra d2'></i><i class='cheio' style='width:" & FORMAT ( _x - 20, "0.0##", "en-US" )
-        & "px'></i><i class='alca' style='left:" & FORMAT ( _x - 11, "0.0##", "en-US" ) & "px'></i>"
-        & "<span class='ex' style='left:14px'>0%</span><span class='ex' style='left:370px'>50%</span>"
     & "</div>"

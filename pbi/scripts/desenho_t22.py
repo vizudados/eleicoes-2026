@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
 """desenho_t22 — tela 22 · Simulador (dono: tela 22). Gera pbi/dax/T22 Simulador/Desenho/*.dax (só leem as contas de
-T22 Simulador\\Contas) e expõe para paginas/t22_simulador.py a geometria das réguas (as segmentações de botões
-invisíveis ficam exatamente sobre as réguas desenhadas) e os modelos fixos (bodyTemplate).
+T22 Simulador\\Contas) e expõe para paginas/t22_simulador.py a geometria das réguas e os modelos fixos (bodyTemplate).
+
+Réguas (23/10/2026, pedido do dono: "não está arrastando … uma versão do vizufilter com esse recurso"): cada controle é
+um VizuFilter 2.13 no modo régua (botão arrastável, filtro aplicado ao soltar) por cima do HTML. O HTML desenha títulos
+e o subtítulo dinâmico; na régua de Lula também a barra Lula | Flávio, a marca do empate e a faixa das pesquisas (lá o
+trilho do visual é transparente e só o botão aparece). Nas réguas B e C o visual desenha trilho, trecho, botão e os
+rótulos das pontas (0% e 50%; −5 e +5), que acompanham o arraste; o HTML não os repete. As caixas dos visuais
+(caixa_regua_a, caixa_regua_bc) põem o centro do botão no mínimo e no máximo exatamente nas pontas da barra e do trilho.
 
     python -I -X utf8 pbi/scripts/desenho_t22.py
 """
@@ -26,7 +32,7 @@ A_X0, A_W, A_Y = 30, 800, 44            # barra (dentro da caixa): x inicial, la
 A_H = 30
 REGUA_B = (150, 576, 410, 104)          # não votam: 0–50 em passos de 5
 REGUA_C = (600, 576, 410, 104)          # comparecimento: −5 a +5
-BC_X0, BC_W, BC_Y = 20, 370, 62         # trilho das réguas B e C (dentro de cada caixa)
+BC_X0, BC_W, BC_Y = 20, 370, 62         # trilho das réguas B e C (dentro de cada caixa; desenhado pelo VizuFilter)
 PESQUISAS = (150, 704, 860, 296)
 LIN_TOPO, LIN_H = 62, 28
 RESULTADO = (1060, 140, 710, 300)
@@ -36,17 +42,25 @@ PASSO = 66
 LEGENDA = (1484, 470, 286, 530)
 
 
-def tiles_a() -> tuple:
-    """Caixa da segmentação invisível da régua A: 51 botões centrados em 0, 2, …, 100."""
+# botão do VizuFilter (diâmetro) e margem lateral da caixa (distância da borda ao centro do botão no mínimo e no máximo)
+A_BOTAO, A_MARGEM = 32, 18
+BC_BOTAO, BC_MARGEM = 22, 13
+A_MEIA_ALTURA = 48                      # acima do centro: o valor durante o arraste; abaixo, o mesmo (caixa simétrica)
+BC_MEIA_ALTURA = 40                     # acima: o valor do arraste; abaixo: os rótulos das pontas
+
+
+def caixa_regua_a() -> tuple:
+    """Caixa do VizuFilter da régua A: o trilho (transparente) é a barra Lula | Flávio, de A_X0 a A_X0 + A_W."""
     x, y, _w, _h = REGUA_A
-    passo = A_W / 50
-    return (x + A_X0 - passo / 2, y + A_Y - 6, A_W + passo, A_H + 12)
+    centro = y + A_Y + A_H / 2
+    return (x + A_X0 - A_MARGEM, centro - A_MEIA_ALTURA, A_W + 2 * A_MARGEM, 2 * A_MEIA_ALTURA)
 
 
-def tiles_bc(caixa) -> tuple:
+def caixa_regua_bc(caixa) -> tuple:
+    """Caixa do VizuFilter das réguas B e C: trilho de BC_X0 a BC_X0 + BC_W, centrado em BC_Y."""
     x, y, _w, _h = caixa
-    passo = BC_W / 10
-    return (x + BC_X0 - passo / 2, y + BC_Y - 16, BC_W + passo, 32)
+    centro = y + BC_Y
+    return (x + BC_X0 - BC_MARGEM, centro - BC_MEIA_ALTURA, BC_W + 2 * BC_MARGEM, 2 * BC_MEIA_ALTURA)
 
 
 # ---------------------------------------------------------------------------------------------------- DAX
@@ -139,7 +153,6 @@ RETURN
             & "<span class='tl'>" & IF ( _a >= 0.12, _txtA, "" ) & "</span>"
             & "<span class='tf'>" & IF ( _a <= 0.88, _txtF, "" ) & "</span>"
         & "</div>"
-        & "<i class='alca' style='left:" & FORMAT ( _xa - 16, "0.0##", "en-US" ) & "px'></i>"
         & "<i class='emp' style='left:" & FORMAT ( _xe - 1, "0.0##", "en-US" ) & "px'></i>"
         & "<span class='emp-t mao' style='left:" & FORMAT ( _xe - 4, "0.0##", "en-US" ) & "px'>" & _txtEmp & "</span>"
         & "<i class='faixa entra d4' style='left:" & FORMAT ( _x0, "0.0##", "en-US" ) & "px;width:"
@@ -154,33 +167,30 @@ VAR _a = [T22 · parte para Lula]
 VAR _emp = [T22 · empate com a abstenção escolhida]
 RETURN
     "Controle: " & FORMAT ( _a * 100, "0" ) & "% dos eleitores dos outros que votam escolhem Lula. Empate em "
-        & FORMAT ( _emp * 100, "0" ) & "%. Clique na régua para mudar."
+        & FORMAT ( _emp * 100, "0" ) & "%. Arraste o botão da régua (ou use as setas) para mudar."
 """)
     # --- réguas B e C
-    gravar("T22 · Régua abstenção · HTML", "Régua do controle de quem não escolhe ninguém (0 a 50%).", rf"""
+    gravar("T22 · Régua abstenção · HTML", "Título e subtítulo da régua de quem não escolhe ninguém (0 a 50%); o "
+           "trilho e o botão são do VizuFilter no modo régua.", rf"""
 -- 1 · Leituras
 VAR _b = [T22 · parte que não vota]
 VAR _outros = [T22 · votos dos outros]
 -- 2 · Textos
 VAR _txt =
     IF ( _b = 0, "ninguém: todos votam", FORMAT ( _b * 100, "0" ) & "% · " & {mi("_outros * _b")} & " de votos a menos" )
--- 3 · Geometria
-VAR _x = {BC_X0} + _b / 0.5 * {BC_W} -- geometria
--- 4 · Marcação
+-- 3 · Marcação (trilho, botão e os rótulos 0% e 50% são do VizuFilter no modo régua, por cima)
 RETURN
     "<div class='tela t22c'>"
         & "<div class='pergunta sobe'>Quantos deles não vão escolher ninguém?</div>"
         & "<div class='valor sobe d1'>" & _txt & "</div>"
-        & "<i class='trilho entra d2'></i><i class='cheio' style='width:" & FORMAT ( _x - {BC_X0}, "0.0##", "en-US" )
-        & "px'></i><i class='alca' style='left:" & FORMAT ( _x - 11, "0.0##", "en-US" ) & "px'></i>"
-        & "<span class='ex' style='left:{BC_X0 - 6}px'>0%</span><span class='ex' style='left:{BC_X0 + BC_W - 20}px'>50%</span>"
     & "</div>"
 """)
     gravar("T22 · Régua abstenção · ALT", "Texto alternativo da régua de abstenção.", r"""
 "Controle: " & FORMAT ( [T22 · parte que não vota] * 100, "0" ) & "% dos eleitores dos outros não escolhem ninguém."
 """)
-    gravar("T22 · Régua comparecimento · HTML", "Régua do controle de comparecimento (−5 a +5 pontos), com os votos "
-           "a mais ou a menos e a regra: metade para cada um.", rf"""
+    gravar("T22 · Régua comparecimento · HTML", "Título e subtítulo da régua de comparecimento (−5 a +5 pontos), "
+           "com os votos a mais ou a menos e a regra: metade para cada um; o trilho e o botão são do VizuFilter no modo "
+           "régua.", rf"""
 -- 1 · Leituras
 VAR _c = [T22 · mudança no comparecimento]
 VAR _novos = [T22 · votos novos]
@@ -192,19 +202,11 @@ VAR _txt =
         FORMAT ( _c * 100, "+0;−0" ) & IF ( ABS ( _c ) = 0.01, " ponto · ", " pontos · " )
             & {mi("ABS ( _novos )", 1)} & IF ( _c > 0, " a mais", " a menos" ) & ", metade para cada um"
     )
--- 3 · Geometria
-VAR _x = {BC_X0} + ( _c + 0.05 ) / 0.1 * {BC_W} -- geometria
-VAR _xm = {BC_X0} + {BC_W} / 2 -- geometria
--- 4 · Marcação
+-- 3 · Marcação (trilho, marca do zero, botão e os rótulos −5 e +5 são do VizuFilter no modo régua, por cima)
 RETURN
     "<div class='tela t22c'>"
         & "<div class='pergunta sobe'>E se o comparecimento mudar?</div>"
         & "<div class='valor sobe d1'>" & _txt & "</div>"
-        & "<i class='trilho entra d2'></i><i class='cheio' style='left:" & FORMAT ( MIN ( _x, _xm ), "0.0##", "en-US" )
-        & "px;width:" & FORMAT ( ABS ( _x - _xm ), "0.0##", "en-US" ) & "px'></i>"
-        & "<i class='meio' style='left:" & FORMAT ( _xm - 1, "0.0##", "en-US" ) & "px'></i>"
-        & "<i class='alca' style='left:" & FORMAT ( _x - 11, "0.0##", "en-US" ) & "px'></i>"
-        & "<span class='ex' style='left:{BC_X0 - 8}px'>−5</span><span class='ex' style='left:{BC_X0 + BC_W - 12}px'>+5</span>"
     & "</div>"
 """)
     gravar("T22 · Régua comparecimento · ALT", "Texto alternativo da régua de comparecimento.", r"""
@@ -501,7 +503,7 @@ RETURN
 def corpo_heroi() -> str:
     balanca = estilo.imagem_b64("docs/midia/arte/icones/balanca-tinta.png", 90)
     css = (
-        ".t22h .grande{position:absolute;left:-4px;top:-4px;font-size:112px;font-weight:700;letter-spacing:-.045em;"
+        ".t22h .grande{position:absolute;left:0;top:-4px;font-size:112px;font-weight:700;letter-spacing:-.045em;"
         "line-height:1}"
         ".t22h .grande .num{font-size:112px}"
         ".t22h .lado{position:absolute;left:250px;top:14px;width:560px;font-size:22px;font-weight:600;line-height:1.3;"
@@ -527,9 +529,6 @@ def corpo_regua_a() -> str:
         f".t22a .barra .f{{background:var(--azul)}}"
         ".t22a .barra span{position:absolute;top:6px;font-size:14px;font-weight:700;color:var(--branco)}"
         ".t22a .barra .tl{left:12px}.t22a .barra .tf{right:12px}"
-        f".t22a .alca{{position:absolute;top:{A_Y + A_H / 2 - 16}px;width:32px;height:32px;border-radius:50%;"
-        "background:var(--branco);border:2px solid var(--tinta);box-shadow:0 2px 6px rgba(28,25,21,.25);"
-        "transition:left .5s}"
         f".t22a .emp{{position:absolute;top:{A_Y - 10}px;height:{A_H + 22}px;width:0;border-left:2px dashed "
         "var(--tinta)}"
         f".t22a .emp-t{{position:absolute;top:{A_Y + A_H + 14}px;font-size:24px;color:var(--tinta);white-space:nowrap}}"
@@ -548,14 +547,6 @@ def corpo_regua_bc() -> str:
         ".t22c{pointer-events:none}"
         ".t22c .pergunta{position:absolute;left:0;top:0;font-size:16px;font-weight:600}"
         ".t22c .valor{position:absolute;left:0;top:24px;font-size:14px;color:var(--grafite);white-space:nowrap}"
-        f".t22c .trilho{{position:absolute;left:{BC_X0}px;top:{BC_Y - 2}px;width:{BC_W}px;height:4px;"
-        "background:var(--areia);border-radius:2px}"
-        f".t22c .cheio{{position:absolute;left:{BC_X0}px;top:{BC_Y - 2}px;height:4px;background:var(--tinta);"
-        "transition:width .4s,left .4s}"
-        f".t22c .meio{{position:absolute;top:{BC_Y - 8}px;height:16px;width:2px;background:var(--grafite)}}"
-        f".t22c .alca{{position:absolute;top:{BC_Y - 11}px;width:22px;height:22px;border-radius:50%;"
-        "background:var(--branco);border:2px solid var(--tinta);transition:left .4s}"
-        f".t22c .ex{{position:absolute;top:{BC_Y + 16}px;font-size:13px;color:var(--cinza)}}"
     )
     return f"<style>{css}</style>{{{{content}}}}"
 

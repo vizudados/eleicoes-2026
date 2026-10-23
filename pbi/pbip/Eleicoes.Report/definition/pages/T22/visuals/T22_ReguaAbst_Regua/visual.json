@@ -1,112 +1,115 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "T19_Virou_Seletor",
+  "name": "T22_ReguaAbst_Regua",
   "position": {
-    "x": 1108,
-    "y": 160,
-    "z": 5000,
-    "height": 40,
-    "width": 240,
-    "tabOrder": 24
+    "x": 157,
+    "y": 598,
+    "z": 1020,
+    "height": 80,
+    "width": 396,
+    "tabOrder": 121
   },
   "visual": {
-    "visualType": "slicer",
+    "visualType": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
     "query": {
       "queryState": {
-        "Values": {
+        "category": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "T19 Lado"
+                      "Entity": "T22 Não votam"
                     }
                   },
-                  "Property": "Lado"
+                  "Property": "Não votam"
                 }
               },
-              "queryRef": "T19 Lado.Lado",
-              "nativeQueryRef": "Lado",
+              "queryRef": "T22 Não votam.Não votam",
+              "nativeQueryRef": "Não votam",
               "active": true,
-              "displayName": "Virou?"
+              "displayName": "Não votam"
             }
           ]
         }
       }
     },
     "objects": {
-      "data": [
-        {
-          "properties": {
-            "mode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Dropdown'"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "header": [
-        {
-          "properties": {
-            "show": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "selection": [
-        {
-          "properties": {
-            "strictSingleSelect": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "singleSelect": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            },
-            "selectAllCheckboxEnabled": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "items": [
+      "style": [
         {
           "properties": {
             "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'''Segoe UI'', wf_segoe-ui_normal, helvetica, arial, sans-serif'"
+                  "Value": "'Sora Vizu, Segoe UI'"
                 }
               }
             },
-            "textSize": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "12D"
+                  "Value": "13D"
                 }
               }
             },
-            "fontColor": {
+            "textColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1C1915'"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ],
+      "regua": [
+        {
+          "properties": {
+            "ativo": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "valorPadrao": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "trilhoVisivel": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "espessuraTrilho": {
+              "expr": {
+                "Literal": {
+                  "Value": "4D"
+                }
+              }
+            },
+            "corTrilho": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#CBBDA2'"
+                    }
+                  }
+                }
+              }
+            },
+            "corPreenchimento": {
               "solid": {
                 "color": {
                   "expr": {
@@ -117,7 +120,53 @@
                 }
               }
             },
-            "background": {
+            "diametroBotao": {
+              "expr": {
+                "Literal": {
+                  "Value": "22D"
+                }
+              }
+            },
+            "margemLateral": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "rotulosExtremos": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "corRotulos": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#6B6357'"
+                    }
+                  }
+                }
+              }
+            },
+            "tamanhoRotulos": {
+              "expr": {
+                "Literal": {
+                  "Value": "13D"
+                }
+              }
+            },
+            "bordaBotao": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "corBotao": {
               "solid": {
                 "color": {
                   "expr": {
@@ -128,27 +177,7 @@
                 }
               }
             },
-            "outlineStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "0D"
-                }
-              }
-            },
-            "padding": {
-              "expr": {
-                "Literal": {
-                  "Value": "8D"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "selectionIcon": [
-        {
-          "properties": {
-            "color": {
+            "corBordaBotao": {
               "solid": {
                 "color": {
                   "expr": {
@@ -158,77 +187,39 @@
                   }
                 }
               }
-            }
-          }
-        }
-      ],
-      "general": [
-        {
-          "properties": {
-            "responsive": {
+            },
+            "valorNoArraste": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
-            }
-          }
-        }
-      ],
-      "dropdown": [
-        {
-          "properties": {
-            "borderColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#CBBDA2'"
-                    }
-                  }
-                }
-              }
             },
-            "borderRadius": {
+            "preenchimento": {
               "expr": {
                 "Literal": {
-                  "Value": "12L"
+                  "Value": "'inicio'"
                 }
               }
             },
-            "iconColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#48423A'"
-                    }
-                  }
-                }
-              }
-            },
-            "iconTransparency": {
+            "marcas": {
               "expr": {
                 "Literal": {
-                  "Value": "0D"
+                  "Value": "'nenhuma'"
                 }
               }
             },
-            "accentBarColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#CBBDA2'"
-                    }
-                  }
-                }
-              }
-            },
-            "accentBarTransparency": {
+            "sufixo": {
               "expr": {
                 "Literal": {
-                  "Value": "100D"
+                  "Value": "'%'"
+                }
+              }
+            },
+            "rotuloAcessivel": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dos eleitores dos outros candidatos, porcentagem que não escolhe ninguém'"
                 }
               }
             }
@@ -289,7 +280,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T19_Virou_Seletor'"
+                  "Value": "'T22_ReguaAbst_Regua'"
                 }
               }
             }
@@ -328,28 +319,28 @@
             "top": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             },
             "bottom": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             },
             "left": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             },
             "right": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "0D"
                 }
               }
             }
@@ -362,7 +353,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Filtro de quem virou: de Lula para Flávio, Lula nas duas, Bolsonaro nas duas'"
+                  "Value": "'Régua: arraste o botão (ou use as setas) para escolher quantos eleitores dos outros não escolhem ninguém, de 0 a 50%'"
                 }
               }
             }
@@ -371,7 +362,7 @@
       ]
     },
     "syncGroup": {
-      "groupName": "t19virou",
+      "groupName": "t22reguaabst",
       "fieldChanges": true,
       "filterChanges": true
     },

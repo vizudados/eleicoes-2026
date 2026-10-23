@@ -34,7 +34,8 @@ ANOS = [2006, 2010, 2014, 2018, 2022, 2026]
 W, H = 1620, 860                      # caixa do Deneb e do fundo (x 150, y 140)
 MAPA_X, MAPA_Y, MAPA_K = 730, 0, 0.86  # quadro 1000 × 1000 → 860 × 860
 # painel da esquerda (px dentro da caixa)
-TXT = {"ano": (0, 318, 150), "cont": (0, 452, 78), "marg": (0, 590, 60)}   # x, linha de base, corpo (px)
+TXT = {"ano": (0, 300, 150), "cont": (0, 430, 78), "marg": (0, 556, 60)}   # x, linha de base, corpo (px); o
+# rótulo da margem termina ~40 px acima do título das barras (antes encostava nele, 23/10/2026)
 BARRAS_BASE, BARRAS_H = 750, 74        # barras dos municípios com o PT à frente (base e altura máxima)
 REGUA_Y = 770                          # linha dos pontos da régua
 PLAY = (40, 770, 30)                   # centro x, y e raio do botão
@@ -358,7 +359,7 @@ def corpo_fundo() -> str:
         ".t21b .regua .ano span{display:block;font-size:12px;color:var(--cinza);white-space:nowrap;margin-top:2px}"
         ".t21b .barras{position:absolute;left:" + str(REGUA_X[0] - 52) + "px;top:" + str(BARRAS_BASE - BARRAS_H - 28)
         + "px;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--cinza)}"
-        ".t21b .mao{position:absolute;left:0;top:" + str(PLAY[1] - 104) + "px;font-size:24px;transform:rotate(-6deg)}"
+        ".t21b .mao{position:absolute;left:4px;top:" + str(PLAY[1] - 104) + "px;font-size:24px;transform:rotate(-6deg)}"
         ".t21b .seta{position:absolute;left:30px;top:" + str(PLAY[1] - 76) + "px}"
         ".t21b .seta path{fill:none;stroke:var(--tinta);stroke-width:1.8;stroke-linecap:round;animation-delay:2.2s}"
         f".t21b .leg{{position:absolute;left:{leg_x}px;top:{leg_y}px;width:300px}}"

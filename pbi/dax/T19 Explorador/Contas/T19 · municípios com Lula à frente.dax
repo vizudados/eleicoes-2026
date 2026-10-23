@@ -1,10 +1,15 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: #,0
-@descricao: Municípios do recorte em que Lula ficou à frente em 2026 (margem > 0).
+@descricao: Municípios do recorte (filtro da tela e seleção na dispersão) em que Lula ficou à frente em 2026 (margem > 0).
 @oraculo: 2.663 (Virada › lula_venceu, 2026)
 */
 COALESCE (
-    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · margem 2026] > 0 ) ),
+    COUNTROWS (
+        FILTER (
+            VALUES ( 'Município'[CodIBGE] ),
+            [T19 · no recorte] = 1 && [T19 · margem 2026] > 0
+        )
+    ),
     0
 )

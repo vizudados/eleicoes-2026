@@ -8,4 +8,4 @@ VAR _a = [T22 · parte para Lula]
 VAR _emp = [T22 · empate com a abstenção escolhida]
 RETURN
     "Controle: " & FORMAT ( _a * 100, "0" ) & "% dos eleitores dos outros que votam escolhem Lula. Empate em "
-        & FORMAT ( _emp * 100, "0" ) & "%. Clique na régua para mudar."
+        & FORMAT ( _emp * 100, "0" ) & "%. Arraste o botão da régua (ou use as setas) para mudar."

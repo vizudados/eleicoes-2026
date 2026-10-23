@@ -25,8 +25,8 @@ COLUNAS = [
     ("ABERTURA · I · O RESULTADO", ["T00", "T01", "T02", "T03", "T04", "T05", "T06", "T25"]),
     ("II · A CAMPANHA", ["T07", "T08", "T09", "T10"]),
     ("III · O MAPA", ["T11", "T12", "T13", "T24", "T14"]),
-    ("EPÍLOGO", ["T15", "T16", "T17", "T18"]),
-    ("IV · EXPLORE VOCÊ MESMO · FIM", ["T19", "T20", "T21", "T22", "T23"]),
+    ("IV · E AGORA", ["T15", "T16", "T17", "T18"]),
+    ("V · EXPLORE VOCÊ MESMO · FIM", ["T19", "T20", "T21", "T22", "T23"]),
 ]
 X0, Y0, LARGURA_COL, VAO, ALTURA_ITEM = 150, 172, 304, 25, 94
 
@@ -71,13 +71,13 @@ def corpo() -> str:
         classe = " ao" if cod == "T18" else ""
         partes.append(f"<div class='it{classe} sobe d{min(16, 2 + k // 2)}' style='left:{x}px;top:{y}px'>"
                       f"<div><b>{t.numero}</b><span class='nm'>{e(t.nome)}</span></div>"
-                      f"<div class='pg'>{e(t.pergunta)}</div></div>")
+                      f"<div class='pg'>{e(t.pergunta).replace('º turno', 'º&nbsp;turno')}</div></div>")
     urna = estilo.imagem_b64("arte/limpos/urna.png", 120)
     return (
         f"<style>{css}</style><div class='tela sm'>"
         f"<img alt='' src='{urna}' style='position:absolute;left:52px;top:50px;width:60px'/>"
         f"<div class='cab'><div class='sob sobe'>SUMÁRIO</div><div class='tit sobe d1'>{len(roteiro.TELAS)} telas, "
-        "quatro atos e um epílogo: escolha por onde começar</div></div>"
+        "cinco atos: escolha por onde começar</div></div>"
         + "".join(partes)
         + f"<div class='nota entra d14'>↑ a {roteiro.numero('T18')} fica ao vivo no domingo, 25/10, a partir das "
         "17h</div>"

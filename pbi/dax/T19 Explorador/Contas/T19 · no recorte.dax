@@ -1,0 +1,21 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0
+@descricao: 1 quando o município está no recorte do filtro da tela, 0 quando não está; vazio fora de um município. Regra: E entre os grupos, OU dentro do mesmo grupo (Nordeste + até 10 mil = cidades do Nordeste com até 10 mil; Nordeste + Norte = cidades de uma ou da outra). A relação T19 Filtro → Município é inativa e só vale aqui (USERELATIONSHIP): o município da linha filtra as linhas dele na T19 Filtro, e as escolhidas precisam cobrir todos os grupos com escolha. A lista e a dispersão filtram por = 1.
+*/
+VAR _raizes = [T19 · raízes escolhidas]
+RETURN
+    IF (
+        HASONEVALUE ( 'Município'[CodIBGE] ),
+        IF (
+            _raizes = 0,
+            1,
+            VAR _cobertas =
+                CALCULATE (
+                    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ),
+                    USERELATIONSHIP ( 'T19 Filtro'[CodIBGE], 'Município'[CodIBGE] )
+                )
+            RETURN
+                IF ( _cobertas = _raizes, 1, 0 )
+        )
+    )

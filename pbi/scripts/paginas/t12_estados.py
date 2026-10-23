@@ -56,7 +56,7 @@ def _caixa_exterior() -> tuple:
 
 
 CSS_RESPOSTA = (
-    ".t12r .topo{position:absolute;left:-4px;top:-22px;display:flex;align-items:baseline;gap:16px}"
+    ".t12r .topo{position:absolute;left:0;top:-8px;display:flex;align-items:baseline;gap:16px}"
     ".t12r .topo .g{font-size:128px;letter-spacing:-.045em}"
     ".t12r .topo .de{font-size:46px;font-weight:600;color:var(--grafite)}"
     ".t12r .t1{position:absolute;left:0;top:126px;width:540px;font-size:24px}"

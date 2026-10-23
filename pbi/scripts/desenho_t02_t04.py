@@ -93,6 +93,10 @@ def contas(P: str, L: dict, G: Gravador) -> None:
       f"CALCULATE ( MIN ( {TR}[Ano] ), {filtro} )", "0", "Lula 1975 · Flávio 2002")
     c(f"{P} · Trajetória · último ano", f"Ano do último marco de {L['cand']}.",
       f"CALCULATE ( MAX ( {TR}[Ano] ), {filtro} )", "0", "2026")
+    c(f"{P} · Trajetória · segundo ano", f"Ano do segundo marco mais antigo de {L['cand']} (onde a régua retoma "
+      "quando o primeiro marco fica longe dos outros e a régua ganha um corte).",
+      f"VAR _p = [{P} · Trajetória · primeiro ano] RETURN CALCULATE ( MIN ( {TR}[Ano] ), {filtro}, {TR}[Ano] > _p )",
+      "0", "Lula 1980 · Flávio 2016")
     c(f"{P} · anos de vida pública", "Anos do primeiro marco até a eleição de 2026.",
       f"2026 - [{P} · Trajetória · primeiro ano]", "0", "Lula 51 · Flávio 24")
     # do marco da linha (item: 'Trajetória'[Título])
@@ -257,21 +261,45 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
             "<div class='cab'><span class='sob'>Trajetória política · " & _n & " marcos</span>"
                 & "<span class='dica'>passe o mouse num marco para ver a foto da época, redesenhada em traço</span></div>"
         -- 3 · Geometria (régua em y {REGUA_Y}, de x {REGUA_X0} a {REGUA_X0 + REGUA_W}; vagas iguais para os cartões)
+        -- com o 1º marco a mais de 8 anos do 2º (Flávio: 2002 e depois 2016), a régua ganha um corte: um trecho curto
+        -- em volta do 1º marco, o sinal de corte e o resto da régua do 2º marco ao fim, para os fios não se cruzarem
+        VAR _seg = [{P} · Trajetória · segundo ano]
+        VAR _corte = _seg - _ini > 8 -- geometria
         VAR _t0 = FLOOR ( _ini - 1, 5 ) -- geometria
         VAR _t1 = CEILING ( _fim + 2, 5 ) -- geometria
         VAR _escala = DIVIDE ( {REGUA_W}, _t1 - _t0 ) -- geometria
-        VAR _xd = {REGUA_X0} + ( _tempo - _t0 ) * _escala -- geometria
+        VAR _wa = 200 -- geometria
+        VAR _vao = 44 -- geometria
+        VAR _a0 = _ini - 1.5 -- geometria
+        VAR _a1 = _ini + 1.5 -- geometria
+        VAR _b0 = _seg - 1 -- geometria
+        VAR _b1 = _fim + 1 -- geometria
+        VAR _xb = {REGUA_X0} + _wa + _vao -- geometria
+        VAR _eb = DIVIDE ( {REGUA_W} - _wa - _vao, _b1 - _b0 ) -- geometria
+        VAR _xd =
+            IF (
+                _corte,
+                IF ( _tempo <= _a1, {REGUA_X0} + ( _tempo - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( _tempo - _b0 ) * _eb ),
+                {REGUA_X0} + ( _tempo - _t0 ) * _escala
+            ) -- geometria
         VAR _xs = ( _ordem - 0.5 ) * DIVIDE ( 1620, _n ) -- geometria
         VAR _txd = @CSS(_xd)@ -- geometria
         VAR _txs = @CSS(_xs)@ -- geometria
         VAR _fio =
             "M" & _txs & ",176 L" & _txs & ",200 L" & _txd & ",262 L" & _txd & ",{REGUA_Y - 9}" -- geometria
         VAR _atraso = MIN ( _ordem + 4, 16 ) -- geometria
-        VAR _anos = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value] ) /* lista */
+        VAR _anosInteira = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value], "@c", 0 ) /* lista */
+        VAR _anosCorte =
+            UNION (
+                ROW ( "@a", _ini, "@c", 1 ),
+                SELECTCOLUMNS ( GENERATESERIES ( CEILING ( _b0, 5 ), FLOOR ( _b1, 5 ), 5 ), "@a", [Value], "@c", 1 )
+            ) /* lista */
+        VAR _anos = FILTER ( UNION ( _anosInteira, _anosCorte ), [@c] = IF ( _corte, 1, 0 ) ) /* lista */
         VAR _marcas =
             CONCATENATEX (
                 _anos,
-                VAR _x = @CSS({REGUA_X0} + ( [@a] - _t0 ) * _escala)@ -- geometria
+                VAR _x =
+                    @CSS(IF ( _corte, IF ( [@a] <= _a1, {REGUA_X0} + ( [@a] - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( [@a] - _b0 ) * _eb ), {REGUA_X0} + ( [@a] - _t0 ) * _escala ))@ -- geometria
                 RETURN
                     "<line x1='" & _x & "' y1='{REGUA_Y - 6}' x2='" & _x & "' y2='{REGUA_Y + 6}'/>"
                         & "<text x='" & _x & "' y='{REGUA_Y + 28}'>" & [@a] & "</text>",
@@ -284,7 +312,14 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
                 _ordem = 1,
                 _cab
                     & "<svg class='regua' width='1620' height='364' viewBox='0 0 1620 364'>"
-                    & "<line class='eixo traco' pathLength='1' x1='{REGUA_X0}' y1='{REGUA_Y}' x2='{REGUA_X0 + REGUA_W}' y2='{REGUA_Y}'/>"
+                    & IF (
+                        _corte,
+                        "<line class='eixo traco' pathLength='1' x1='{REGUA_X0}' y1='{REGUA_Y}' x2='" & @CSS({REGUA_X0} + _wa)@ & "' y2='{REGUA_Y}'/>"
+                            & "<line class='eixo traco' pathLength='1' x1='" & @CSS(_xb)@ & "' y1='{REGUA_Y}' x2='{REGUA_X0 + REGUA_W}' y2='{REGUA_Y}'/>"
+                            & "<g class='corte'><line x1='" & @CSS({REGUA_X0} + _wa + 12)@ & "' y1='{REGUA_Y + 8}' x2='" & @CSS({REGUA_X0} + _wa + 20)@ & "' y2='{REGUA_Y - 8}'/>"
+                            & "<line x1='" & @CSS({REGUA_X0} + _wa + 24)@ & "' y1='{REGUA_Y + 8}' x2='" & @CSS({REGUA_X0} + _wa + 32)@ & "' y2='{REGUA_Y - 8}'/></g>",
+                        "<line class='eixo traco' pathLength='1' x1='{REGUA_X0}' y1='{REGUA_Y}' x2='{REGUA_X0 + REGUA_W}' y2='{REGUA_Y}'/>"
+                    )
                     & "<g class='anos entra d4'>" & _marcas & "</g></svg>"
             )
         VAR _html =
@@ -424,6 +459,7 @@ def _css_traj(L: dict) -> str:
         ".m .cab .dica{font-size:15px;color:var(--cinza)}"
         ".m>svg{position:absolute;left:0;top:0;pointer-events:none}"
         ".m .regua .eixo{stroke:var(--tinta);stroke-width:1.6}"
+        ".m .regua .corte line{stroke:var(--tinta);stroke-width:1.6;stroke-linecap:round}"
         ".m .regua .anos line{stroke:var(--grafite);stroke-width:1.2}"
         ".m .regua .anos text{font-family:var(--fonte);font-size:13px;fill:var(--cinza);text-anchor:middle}"
         f".m .fio{{fill:none;stroke:var(--areia);stroke-width:1.4;stroke-linejoin:round;transition:stroke .15s}}"
@@ -487,7 +523,7 @@ def declarar_quem_e(P: str) -> list:
         f"src='{novo}' data-reserva='{antigo}'/></div>"
         f"<img class='fita' alt='' src='{URL_MIDIA}/arte/dossie/fita-tinta.png'/>"
         f"<div class='leg'><div class='mao'>{leg_cena}</div><div class='nota'>{cred_cena}</div></div></div>"
-        f"<div class='nota cred'>{L['cred_retrato']}</div></div>"
+        f"<div class='nota cred'>{L['cred_retrato'].replace('CC BY ', 'CC&nbsp;BY&nbsp;')}</div></div>"
         "{{content}}" + JS_RESERVA)
     ficha = (f"<style>{_css_ficha(L)}</style>" + "{{content}}")
     traj = (f"<style>{_css_traj(L)}</style>" + "{{content}}")

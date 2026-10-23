@@ -1,6 +1,7 @@
 """Parâmetros da tela 22 · Simulador (dono: tela 22): três tabelas desconectadas de M estático, uma por controle. A
-tela as lê com SELECTEDVALUE (valor padrão quando nada está marcado) e as escolhe por segmentações de botões invisíveis
-sobre as réguas desenhadas em HTML (um botão por valor).
+tela as lê com SELECTEDVALUE (valor padrão quando nada está marcado) e as escolhe por réguas arrastáveis: um VizuFilter
+2.13 no modo régua sobre cada coluna, por cima do desenho em HTML; o botão encaixa nos valores abaixo e o filtro (um
+valor) é aplicado ao soltar. O valor padrão do cartão Régua de cada visual é o mesmo do SELECTEDVALUE.
 
   T22 Para Lula       0, 2, …, 100   % dos eleitores dos outros candidatos que votarem que escolhem Lula (padrão 50)
   T22 Não votam       0, 5, …, 50    % dos 9,32 mi que não escolhem ninguém: branco, nulo ou falta (padrão 0)

@@ -23,19 +23,21 @@ VAR _coleta = [Apuração · coletado em]
 VAR _momento = [T18 · momento escolhido]
 -- 2 · Textos
 VAR _aguarda = _fase = "aguardando"
-VAR _lulaTxt = IF ( _aguarda, "0,00%", FORMAT ( _lulaP * 100, "0.00" ) & "%" )
-VAR _flavioTxt = IF ( _aguarda, "0,00%", FORMAT ( _flavioP * 100, "0.00" ) & "%" )
+VAR _lulaTxt = IF ( _aguarda, "—", FORMAT ( _lulaP * 100, "0.00" ) & "%" )
+VAR _flavioTxt = IF ( _aguarda, "—", FORMAT ( _flavioP * 100, "0.00" ) & "%" )
+-- antes da 1ª parcial, "0,00% · 0 votos" parecia resultado: o placar mostra o traço e diz que espera
+VAR _votosLula = IF ( _aguarda, "aguardando a 1ª parcial", FORMAT ( _lula, "#,0" ) & IF ( _lula = 1, " voto", " votos" ) )
+VAR _votosFlavio = IF ( _aguarda, "aguardando a 1ª parcial", FORMAT ( _flavio, "#,0" ) & IF ( _flavio = 1, " voto", " votos" ) )
 VAR _secoesTxt = FORMAT ( _secoes * 100, "0.00" ) & "%"
 VAR _difTxt = FORMAT ( _dif, "#,0" )
 VAR _tseTxt = IF ( ISBLANK ( _tse ), "—", FORMAT ( _tse, "dd/MM/yyyy HH:mm" ) )
 VAR _coletaTxt = IF ( ISBLANK ( _coleta ), "—", FORMAT ( _coleta, "dd/MM/yyyy HH:mm" ) )
 VAR _blocoLula =
     "<div class='cand sobe d2'><div class='rot lula-esc'>LULA · PT · 13</div><div class='num pct lula'>" & _lulaTxt
-        & "</div><div class='txt votos'>" & FORMAT ( _lula, "#,0" ) & IF ( _lula = 1, " voto", " votos" ) & "</div></div>"
+        & "</div><div class='txt votos'>" & _votosLula & "</div></div>"
 VAR _blocoFlavio =
     "<div class='cand sobe d3'><div class='rot flavio-esc'>FLÁVIO BOLSONARO · PL · 22</div><div class='num pct flavio'>"
-        & _flavioTxt & "</div><div class='txt votos'>" & FORMAT ( _flavio, "#,0" ) & IF ( _flavio = 1, " voto", " votos" )
-        & "</div></div>"
+        & _flavioTxt & "</div><div class='txt votos'>" & _votosFlavio & "</div></div>"
 VAR _par = IF ( _lider = "Flávio", _blocoFlavio & _blocoLula, _blocoLula & _blocoFlavio )
 VAR _selo =
     SWITCH (

@@ -1,0 +1,6 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0
+@descricao: Ordem do caminho no acordeão do filtro (papel itemSort do VizuFilter: a raiz vai pela menor ordem das suas linhas, de Região a Cidade).
+*/
+MIN ( 'T19 Filtro'[Ordem] )

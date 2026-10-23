@@ -1,10 +1,15 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: #,0
-@descricao: Municípios do recorte em que a margem do PT caiu de 2022 para 2026 (variação < 0).
+@descricao: Municípios do recorte (filtro da tela e seleção na dispersão) em que a margem do PT caiu de 2022 para 2026 (variação < 0).
 @oraculo: manchete da dispersão
 */
 COALESCE (
-    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · variação da margem] < 0 ) ),
+    COUNTROWS (
+        FILTER (
+            VALUES ( 'Município'[CodIBGE] ),
+            [T19 · no recorte] = 1 && [T19 · variação da margem] < 0
+        )
+    ),
     0
 )

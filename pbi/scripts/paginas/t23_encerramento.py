@@ -32,7 +32,7 @@ ACHADOS = [
                       ("T13", "Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno."),
                       ("T24", "Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%."),
                       ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
-    ("EPÍLOGO", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.")]),
+    ("IV · E AGORA", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.")]),
 ]
 X0, Y_ACHADOS, LINHA, GRUPO = 150, 384, 37, 34           # geometria da lista (o botão de cada linha segue a mesma)
 

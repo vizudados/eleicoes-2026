@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""_campanha — peças comuns às telas da campanha e do epílogo do mesmo dono (T07 Debate, T08 Buscas, T09 Redes,
+"""_campanha — peças comuns às telas da campanha (II) e do E agora (IV) do mesmo dono (T07 Debate, T08 Buscas, T09 Redes,
 T10 Pesquisas, T16 Os outros, T17 2º turno). O "_" no nome tira o módulo da montagem (não declara nada sozinho).
 
 - img(caminho, largura): arte em traço (PNG transparente de arte/limpos) reduzida e embutida como WebP (base64), para

@@ -551,7 +551,7 @@ VAR _txtTroca =
         _nTrocas = 0 && _m26 > 0, "o PT ficou à frente em todas",
         _nTrocas = 0, "o adversário ficou à frente em todas",
         _paraPT = 1, _nome & " voltou para o PT em " & _troca,
-        _nome & " virou para o adversário em " & _troca & IF ( _troca < 2026, ", não em 2026", "" )
+        _nome & " virou para o adversário em " & _troca & IF ( _troca < 2026, " e não voltou mais", "" )
     )
 VAR _man =
     "De " & {_pp("_m0")} & " p.p. em " & _a0 & " a " & {_pp("_m26")} & " p.p. em 2026; " & _txtTroca

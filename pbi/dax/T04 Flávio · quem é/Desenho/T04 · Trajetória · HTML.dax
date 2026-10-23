@@ -28,21 +28,45 @@ VAR _cab =
     "<div class='cab'><span class='sob'>Trajetória política · " & _n & " marcos</span>"
         & "<span class='dica'>passe o mouse num marco para ver a foto da época, redesenhada em traço</span></div>"
 -- 3 · Geometria (régua em y 296, de x 30 a 1590; vagas iguais para os cartões)
+-- com o 1º marco a mais de 8 anos do 2º (Flávio: 2002 e depois 2016), a régua ganha um corte: um trecho curto
+-- em volta do 1º marco, o sinal de corte e o resto da régua do 2º marco ao fim, para os fios não se cruzarem
+VAR _seg = [T04 · Trajetória · segundo ano]
+VAR _corte = _seg - _ini > 8 -- geometria
 VAR _t0 = FLOOR ( _ini - 1, 5 ) -- geometria
 VAR _t1 = CEILING ( _fim + 2, 5 ) -- geometria
 VAR _escala = DIVIDE ( 1560, _t1 - _t0 ) -- geometria
-VAR _xd = 30 + ( _tempo - _t0 ) * _escala -- geometria
+VAR _wa = 200 -- geometria
+VAR _vao = 44 -- geometria
+VAR _a0 = _ini - 1.5 -- geometria
+VAR _a1 = _ini + 1.5 -- geometria
+VAR _b0 = _seg - 1 -- geometria
+VAR _b1 = _fim + 1 -- geometria
+VAR _xb = 30 + _wa + _vao -- geometria
+VAR _eb = DIVIDE ( 1560 - _wa - _vao, _b1 - _b0 ) -- geometria
+VAR _xd =
+    IF (
+        _corte,
+        IF ( _tempo <= _a1, 30 + ( _tempo - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( _tempo - _b0 ) * _eb ),
+        30 + ( _tempo - _t0 ) * _escala
+    ) -- geometria
 VAR _xs = ( _ordem - 0.5 ) * DIVIDE ( 1620, _n ) -- geometria
 VAR _txd = FORMAT ( _xd, "0.0##", "en-US" ) -- geometria
 VAR _txs = FORMAT ( _xs, "0.0##", "en-US" ) -- geometria
 VAR _fio =
     "M" & _txs & ",176 L" & _txs & ",200 L" & _txd & ",262 L" & _txd & ",287" -- geometria
 VAR _atraso = MIN ( _ordem + 4, 16 ) -- geometria
-VAR _anos = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value] ) /* lista */
+VAR _anosInteira = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value], "@c", 0 ) /* lista */
+VAR _anosCorte =
+    UNION (
+        ROW ( "@a", _ini, "@c", 1 ),
+        SELECTCOLUMNS ( GENERATESERIES ( CEILING ( _b0, 5 ), FLOOR ( _b1, 5 ), 5 ), "@a", [Value], "@c", 1 )
+    ) /* lista */
+VAR _anos = FILTER ( UNION ( _anosInteira, _anosCorte ), [@c] = IF ( _corte, 1, 0 ) ) /* lista */
 VAR _marcas =
     CONCATENATEX (
         _anos,
-        VAR _x = FORMAT ( 30 + ( [@a] - _t0 ) * _escala, "0.0##", "en-US" ) -- geometria
+        VAR _x =
+            FORMAT ( IF ( _corte, IF ( [@a] <= _a1, 30 + ( [@a] - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( [@a] - _b0 ) * _eb ), 30 + ( [@a] - _t0 ) * _escala ), "0.0##", "en-US" ) -- geometria
         RETURN
             "<line x1='" & _x & "' y1='290' x2='" & _x & "' y2='302'/>"
                 & "<text x='" & _x & "' y='324'>" & [@a] & "</text>",
@@ -55,7 +79,14 @@ VAR _regua =
         _ordem = 1,
         _cab
             & "<svg class='regua' width='1620' height='364' viewBox='0 0 1620 364'>"
-            & "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='1590' y2='296'/>"
+            & IF (
+                _corte,
+                "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='" & FORMAT ( 30 + _wa, "0.0##", "en-US" ) & "' y2='296'/>"
+                    & "<line class='eixo traco' pathLength='1' x1='" & FORMAT ( _xb, "0.0##", "en-US" ) & "' y1='296' x2='1590' y2='296'/>"
+                    & "<g class='corte'><line x1='" & FORMAT ( 30 + _wa + 12, "0.0##", "en-US" ) & "' y1='304' x2='" & FORMAT ( 30 + _wa + 20, "0.0##", "en-US" ) & "' y2='288'/>"
+                    & "<line x1='" & FORMAT ( 30 + _wa + 24, "0.0##", "en-US" ) & "' y1='304' x2='" & FORMAT ( 30 + _wa + 32, "0.0##", "en-US" ) & "' y2='288'/></g>",
+                "<line class='eixo traco' pathLength='1' x1='30' y1='296' x2='1590' y2='296'/>"
+            )
             & "<g class='anos entra d4'>" & _marcas & "</g></svg>"
     )
 VAR _html =

@@ -220,8 +220,9 @@ RETURN
         & FORMAT ( _m26 * 100, {PP} ) & "."
 """)
     # --- lista das maiores quedas
-    gravar("T20 · Quedas · HTML", "Uma linha da lista das 5 maiores quedas da margem de Lula, 2022 → 2026 "
-           "(granularidade T20 Local[Local], Top 5 pela queda): posição, nome, bairro e seções, a queda e o selo.", rf"""
+    gravar("T20 · Quedas · HTML", "Uma linha da lista de todos os locais, da maior queda à maior alta da margem de "
+           "Lula, 2022 → 2026 (granularidade T20 Local[Local], ordenada pela queda): posição, nome, bairro e seções, a "
+           "variação e o selo. As linhas vêm em fluxo, na ordem do visual, e a lista rola dentro da caixa.", rf"""
 -- 1 · Leituras
 VAR _pos = [T20 · posição na queda]
 VAR _bairro = [T20 · bairro]
@@ -233,22 +234,25 @@ VAR _virou = [T20 · virou]
 VAR _txtVar = FORMAT ( _var * 100, {PP} ) & " p.p."
 VAR _sub = _bairro & " · " & _secoes & IF ( _secoes = 1, " seção", " seções" )
 VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
--- 3 · Geometria
-VAR _y = {QUEDAS_TOPO} + ( _pos - 1 ) * {QUEDAS_H} -- geometria
+VAR _cor = IF ( _var < 0, "flavio", "lula" )
+-- 3 · Geometria (só a cascata de entrada das primeiras linhas; a posição vem da ordem do visual)
+VAR _d = MIN ( _pos + 2, 12 ) -- geometria
 -- 4 · Marcação
 RETURN
     IF (
-        NOT ISBLANK ( _pos ) && _pos <= 5,
-        "<div class='tela t20q'><div class='ln sobe d" & ( _pos + 2 ) & "' style='top:" & _y & "px'>"
+        NOT ISBLANK ( _pos ),
+        "<div class='t20q'><div class='ln sobe d" & _d & "' data-p='" & _pos & "'>"
             & "<span class='p'>" & _pos & "</span>"
             & "<span class='nm'>" & _nome & "</span>"
             & "<span class='sb'>" & _sub & "</span>"
-            & "<span class='v flavio tnum'>" & _txtVar & "</span>" & _selo
+            & "<span class='v " & _cor & " tnum'>" & _txtVar & "</span>" & _selo
         & "</div></div>"
     )
 """)
-    gravar("T20 · Quedas · ALT", "Texto alternativo da lista das maiores quedas.", r"""
-"As 5 escolas de Contagem onde a margem de Lula mais caiu de 2022 para 2026. Clique numa linha para pôr a escola na ficha."
+    gravar("T20 · Quedas · ALT", "Texto alternativo da lista dos locais pela queda.", r"""
+VAR _n = COUNTROWS ( FILTER ( ALL ( 'T20 Local'[Local], 'T20 Local'[Id] ), NOT ISBLANK ( [T20 · queda da margem] ) ) )
+RETURN
+    "Os " & _n & " locais de votação de Contagem, da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a escola na ficha."
 """)
     # --- tooltip (post-it do hover)
     gravar("T20 · Tooltip escola · HTML", "Post-it do local sob o mouse (página de tooltip ttT20Escola): bairro, "
@@ -411,7 +415,7 @@ RETURN
 
 # ---------------------------------------------------------------------------------------------------- modelos fixos
 CSS_RESPOSTA = (
-    ".t20r .grande{position:absolute;left:-4px;top:6px;font-size:96px;font-weight:700;letter-spacing:-.045em;"
+    ".t20r .grande{position:absolute;left:0;top:6px;font-size:96px;font-weight:700;letter-spacing:-.045em;"
     "line-height:1;white-space:nowrap}"
     ".t20r .grande .num{font-size:96px}"
     ".t20r .rotulo{position:absolute;left:0;top:108px;font-size:18px;font-weight:600;color:var(--grafite)}"
@@ -510,26 +514,41 @@ def corpo_ficha() -> str:
 
 
 def corpo_quedas() -> str:
+    """A lista de todos os locais, da maior queda à maior alta (23/10/2026, pedido do Alisson: "dá pra expandir essa
+    parte das escolas?"; antes só as 5 maiores, e o RANKX da posição dava 1 a todas e as cinco saíam empilhadas). As
+    linhas vêm em fluxo, na ordem do visual (ordenado pela queda), e a caixa rola (o HTML Content usa OverlayScrollbars);
+    o cabeçalho fica fixo por cima, no papel, e as linhas passam por baixo dele."""
+    # a ordem das linhas vem da posição (data-p), não da ordem em que o visual entrega as linhas (a prévia e o Desktop
+    # não garantem a mesma): #htmlContent em coluna flexível e uma regra de order por posição
+    ordem = "".join(f".htmlViewerEntry:has([data-p='{i}']){{order:{i}}}" for i in range(1, 131))
     css = (
+        "#htmlContent{display:flex;flex-direction:column;padding-top:" + str(QUEDAS_TOPO) + "px;padding-bottom:40px}"
+        + ordem +
+        ".t20h{z-index:3;pointer-events:none}"
+        ".t20h .cab{position:absolute;left:0;top:0;width:318px;height:" + str(QUEDAS_TOPO - 6) + "px;"
+        "background:var(--papel)}"
         ".t20h .rot{position:absolute;left:0;top:0;width:318px;line-height:1.5}"
         ".t20h .linha{position:absolute;left:0;right:0;top:" + str(QUEDAS_TOPO - 8) + "px;"
         "border-top:1.5px solid var(--grafite)}"
-        ".t20q{pointer-events:none}"
-        ".t20q .ln{position:absolute;left:0;width:318px;height:" + str(QUEDAS_H - 4) + "px;pointer-events:auto;"
+        ".t20h .fim{position:absolute;left:0;right:0;bottom:0;height:44px;"
+        "background:linear-gradient(rgba(241,235,223,0),var(--papel))}"
+        ".t20q .ln{position:relative;width:318px;height:" + str(QUEDAS_H - 4) + "px;margin-bottom:4px;"
         "cursor:pointer;border-bottom:1px solid var(--creme);transition:background .15s,opacity .15s}"
         ".t20q .ln:hover{background:var(--creme)}"
         "#htmlContent:has(.ln:hover) .ln:not(:hover){opacity:.55}"
-        ".t20q .p{position:absolute;left:2px;top:4px;font-size:22px;font-weight:700;color:var(--cinza)}"
-        ".t20q .nm{position:absolute;left:30px;top:6px;right:4px;font-size:15px;font-weight:600;line-height:1.25;"
+        ".t20q .p{position:absolute;left:2px;top:4px;width:28px;font-size:17px;font-weight:700;color:var(--cinza);"
+        "font-variant-numeric:tabular-nums}"
+        ".t20q .nm{position:absolute;left:34px;top:6px;right:96px;font-size:15px;font-weight:600;line-height:1.25;"
         "display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}"
-        ".t20q .sb{position:absolute;left:30px;top:50px;font-size:13px;color:var(--cinza);white-space:nowrap;"
-        "max-width:132px;overflow:hidden;text-overflow:ellipsis}"
-        ".t20q .v{position:absolute;right:58px;top:47px;font-size:17px;font-weight:700}"
-        ".t20q .selo{position:absolute;right:2px;top:49px;font-size:11px;font-weight:700;letter-spacing:.1em;"
+        ".t20q .v{position:absolute;right:2px;top:5px;font-size:17px;font-weight:700;white-space:nowrap}"
+        ".t20q .selo{position:absolute;right:4px;top:32px;font-size:11px;font-weight:700;letter-spacing:.1em;"
         "text-transform:uppercase;border:1.5px solid var(--tinta);padding:1px 4px;transform:rotate(-4deg)}"
+        ".t20q .sb{position:absolute;left:34px;right:2px;top:56px;font-size:13px;color:var(--cinza);"
+        "white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
     )
-    return (f"<style>{css}</style><div class='tela t20h'><div class='rot sobe'>As 5 maiores quedas da margem de Lula, "
-            f"2022 → 2026</div><div class='linha entra'></div></div>{{{{content}}}}")
+    return (f"<style>{css}</style><div class='tela t20h'><div class='cab'></div><div class='rot sobe'>Da maior queda à maior alta "
+            f"da margem de Lula, 2022 → 2026</div><div class='linha entra'></div><div class='fim'></div></div>"
+            f"{{{{content}}}}")
 
 
 def corpo_como() -> str:

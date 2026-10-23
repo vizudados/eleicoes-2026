@@ -52,11 +52,12 @@ PACOTES = {
     "deneb": {"guid": "STANDALONEdeneb7E15AEF80B9E4D4F8E12924291ECE89A", "versao": "2.0.0.20260908#0dfe02de",
               "arquivo": "visuais/deneb.standalone.2.0.0.0.pbiviz",
               "sha256": "5d4c0ef87b2c29f6888b21423da5547e8b2552bec4778d45a7309e70783ccc5d", "tamanho": 1955983},
-    # VizuFilter 2.12.2.0 (23/10/2026): a 2.12.1.0 da casa com a Sora do painel embutida (família "Sora Vizu",
-    # woff2 de pbi/assets/fontes/sora-eleicoes.woff2); visual.js e capabilities iguais.
-    "vizufilter": {"guid": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A", "versao": "2.12.2.0",
-                   "arquivo": "visuais/vizufilter/smartFilterFixed9B35E14F08BD474496777B2253A30D3A.2.12.2.0.pbiviz",
-                   "sha256": "5d1c83a7ba8cac232dac748fcb1ab228ae1ecd642c80a0420b414590cdd7dcf3", "tamanho": 1086950},
+    # VizuFilter 2.13.0.0 (23/10/2026): a 2.12.1.0 da casa + o modo régua (cartão "regua": botão arrastável sobre uma
+    # coluna numérica, tela 24 · Simulador) + a Sora do painel embutida (família "Sora Vizu", como na 2.12.2.0). Com
+    # regua.ativo desligado desenha e grava o mesmo que a 2.12. Fonte fora do repositório (pbi/visuais_src/, ignorado).
+    "vizufilter": {"guid": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A", "versao": "2.13.0.0",
+                   "arquivo": "visuais/vizufilter/smartFilterFixed9B35E14F08BD474496777B2253A30D3A.2.13.0.0.pbiviz",
+                   "sha256": "bde3a8800b76b57474ee732a61a128cfb5db1c8c504db30ff1c8a8323949d9eb", "tamanho": 1094613},
 }
 GUID_HTML = PACOTES["html"]["guid"]
 GUID_DENEB = PACOTES["deneb"]["guid"]
@@ -614,10 +615,12 @@ def segmentacao_botoes(nome: str, x, y, w, h, *, tabela: str, coluna: str, padra
 def visual_vizufilter(nome: str, x, y, w, h, *, categoria: tuple, geral: dict, layout: dict, estilo: dict, alt,
                       z: int = CAMADAS["drawer"], tab: int | None = None, oculto: bool = False,
                       sincronia: dict | None = None, filtros: dict | None = None,
-                      medidas: dict | None = None, extras: dict | None = None) -> dict:
+                      medidas: dict | None = None, extras: dict | None = None, regua: dict | None = None) -> dict:
     """VizuFilter num campo só (`categoria` = (tabela, coluna, rótulo); no modo caminho, dFiltro[Caminho]). `geral`,
     `layout` e `estilo` vão aos objetos general/layout/style, conferidos propriedade a propriedade e enum a enum contra
-    as capabilities do pacote em PACOTES. `sincronia` = grupo_sincronia(...) grava `visual.syncGroup`."""
+    as capabilities do pacote em PACOTES (objeto vazio = não gravado). `sincronia` = grupo_sincronia(...) grava
+    `visual.syncGroup`. `regua` (2.13.0.0) = o cartão Régua (objeto regua: ativo, valorPadrao, cores, diâmetro…), o modo
+    do botão arrastável sobre uma coluna numérica."""
     cap = capacidades("vizufilter")
     if "category" not in cap["papeis"]:
         raise ErroDeclaracao(f"{nome}: papel category ausente no VizuFilter")
@@ -628,13 +631,12 @@ def visual_vizufilter(nome: str, x, y, w, h, *, categoria: tuple, geral: dict, l
         if papel not in cap["papeis"]:
             raise ErroDeclaracao(f"{nome}: papel {papel!r} ausente no VizuFilter {PACOTES['vizufilter']['versao']}")
         estado[papel] = {"projections": [proj_medida(medida)]}
-    objetos = {
-        "general": _objeto_vizufilter("general", geral, cap, nome),
-        "layout": _objeto_vizufilter("layout", layout, cap, nome),
-        "style": _objeto_vizufilter("style", estilo, cap, nome),
-    }
+    objetos = {objeto: _objeto_vizufilter(objeto, valores, cap, nome)
+               for objeto, valores in (("general", geral), ("layout", layout), ("style", estilo)) if valores}
     if extras:
         objetos["itemExtras"] = _objeto_vizufilter("itemExtras", extras, cap, nome)
+    if regua:
+        objetos["regua"] = _objeto_vizufilter("regua", regua, cap, nome)
     doc = _visual(nome, x, y, w, h, z=z, tab=tab, tipo=GUID_VIZUFILTER, alt=alt, query={"queryState": estado},
                   objetos=objetos, cruzar_filtro=True, filtros=filtros, oculto=oculto)
     if sincronia is not None:

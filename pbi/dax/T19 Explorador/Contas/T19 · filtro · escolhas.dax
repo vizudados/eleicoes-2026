@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0
+@descricao: Quantos itens estão marcados no filtro do recorte (T19 Filtro[Caminho]), somando todos os grupos; 0 sem filtro. A pílula usa para o ponto vermelho e para "N filtros".
+*/
+IF (
+    ISFILTERED ( 'T19 Filtro'[Caminho] ),
+    COUNTROWS ( VALUES ( 'T19 Filtro'[Caminho] ) ),
+    0
+)

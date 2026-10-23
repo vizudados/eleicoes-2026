@@ -39,7 +39,7 @@ REGIOES = (150, 816, 1620, 184)
 ORDEM_TT = 100 + int(roteiro.numero(P)) * 10
 
 CSS_RESPOSTA = (
-    ".t14r .g{position:absolute;left:-4px;top:-8px;font-size:104px;letter-spacing:-.04em}"
+    ".t14r .g{position:absolute;left:0;top:-8px;font-size:104px;letter-spacing:-.04em}"
     ".t14r .m{position:absolute;left:0;top:112px;width:900px;font-size:26px}"
     ".t14r .s{position:absolute;left:0;top:184px;width:900px;font-size:15px;color:var(--grafite)}"
     ".t14r .ur{position:absolute;left:1086px;top:4px}"

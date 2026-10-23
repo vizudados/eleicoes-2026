@@ -1,7 +1,7 @@
 /*
 @pasta: T19 Explorador\Desenho
 @formato: texto
-@descricao: Uma linha da lista do Explorador (granularidade: Município[Rótulo]; o visual mostra os 14 com mais votos válidos): nome, Lula e Flávio em 2026, a minilinha da margem 2006–2026, a mudança 2022 → 2026 e o selo de quem virou. Posição pela conta da posição na lista.
+@descricao: Uma linha da lista do Explorador (granularidade: Município[Rótulo]; o visual mostra os 16 com mais votos válidos do recorte): nome, Lula e Flávio em 2026, a minilinha da margem 2006–2026, a mudança 2022 → 2026 e o selo de quem virou. Posição pela conta da posição na lista.
 */
 -- 1 · Leituras
 VAR _pos = [T19 · posição na lista]
@@ -28,7 +28,7 @@ VAR _clsFim = IF ( _m26 < 0, "f", "l" )
 VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
 VAR _atraso = "d" & MIN ( _pos, 16 )
 -- 3 · Geometria
-VAR _y = 36 + ( _pos - 1 ) * 45 -- geometria
+VAR _y = 36 + ( _pos - 1 ) * 44 -- geometria
 VAR _base = { ( 0, 4.0, _m06 ), ( 1, 29.6, _m10 ), ( 2, 55.2, _m14 ), ( 3, 80.8, _m18 ), ( 4, 106.4, _m22 ), ( 5, 132.0, _m26 ) } /* lista */
 VAR _pts =
     FILTER ( /* lista */

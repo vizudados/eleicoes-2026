@@ -24,8 +24,8 @@ VAR _pts = FILTER ( _todos, NOT ISBLANK ( [@l] ) || NOT ISBLANK ( [@f] ) ) /* li
 VAR _lider0 = IF ( _fI >= _lI, "Flávio", "Lula" )
 VAR _lider1 = IF ( _lF >= _fF, "Lula", "Flávio" )
 VAR _txtTodos =
-    "No dia do 1º turno, " & _lider0 & " liderava; em " & FORMAT ( _fim, "dd/MM" ) & ", " & _lider1 & " estava "
-        & FORMAT ( ABS ( _vantagemFim ), "0.0" ) & " pontos à frente"
+    "No 1º turno, " & _lider0 & " liderava; em " & FORMAT ( _fim, "dd/MM" ) & ", " & _lider1 & " tinha "
+        & FORMAT ( ABS ( _vantagemFim ), "0.0" ) & " pontos a mais"
 -- com um candidato clicado: o caminho dele do primeiro ao último dia
 VAR _cI = IF ( _foco = "Lula", _lI, _fI )
 VAR _cF = IF ( _foco = "Lula", _lF, _fF )

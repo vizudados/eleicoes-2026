@@ -136,7 +136,7 @@ CSS_SEGUIR = (
     ".t16s .leg{position:absolute;left:0;top:212px;width:520px;font-size:15px;color:var(--grafite);line-height:1.45}"
     ".t16s .leg b{color:var(--tinta)}"
     ".t16s .nota{position:absolute;left:0;top:262px;width:520px}"
-    f".t16s .mao{{position:absolute;right:4px;top:6px;font-size:28px;color:{C['vermelho_escuro']};transform:rotate(-5deg)}}"
+    f".t16s .mao{{position:absolute;right:4px;top:10px;font-size:28px;color:{C['vermelho_escuro']};transform:rotate(-5deg)}}"
 )
 
 CSS_TT_SEG = (

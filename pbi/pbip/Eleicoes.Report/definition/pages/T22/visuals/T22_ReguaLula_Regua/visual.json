@@ -1,97 +1,171 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "T19_Filtros_Rotulos",
+  "name": "T22_ReguaLula_Regua",
   "position": {
-    "x": 150,
-    "y": 140,
-    "z": 300,
-    "height": 18,
-    "width": 1620,
-    "tabOrder": 10
+    "x": 162,
+    "y": 421.0,
+    "z": 1020,
+    "height": 96,
+    "width": 836,
+    "tabOrder": 111
   },
   "visual": {
-    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "visualType": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
     "query": {
       "queryState": {
-        "content": {
+        "category": {
           "projections": [
             {
               "field": {
-                "Measure": {
+                "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "_Medidas"
+                      "Entity": "T22 Para Lula"
                     }
                   },
-                  "Property": "Casca · vazio"
+                  "Property": "Para Lula"
                 }
               },
-              "queryRef": "_Medidas.Casca · vazio",
-              "nativeQueryRef": "Casca · vazio"
+              "queryRef": "T22 Para Lula.Para Lula",
+              "nativeQueryRef": "Para Lula",
+              "active": true,
+              "displayName": "Para Lula"
             }
           ]
         }
       }
     },
     "objects": {
-      "contentFormatting": [
+      "style": [
         {
           "properties": {
-            "renderMode": {
+            "fontFamily": {
               "expr": {
                 "Literal": {
-                  "Value": "'rebuild'"
+                  "Value": "'Sora Vizu, Segoe UI'"
                 }
               }
             },
-            "noDataMessage": {
+            "fontSize": {
               "expr": {
                 "Literal": {
-                  "Value": "' '"
+                  "Value": "13D"
+                }
+              }
+            },
+            "textColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1C1915'"
+                    }
+                  }
                 }
               }
             }
           }
         }
       ],
-      "compatibility": [
+      "regua": [
         {
           "properties": {
-            "legacyRendering": {
+            "ativo": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "valorPadrao": {
+              "expr": {
+                "Literal": {
+                  "Value": "50D"
+                }
+              }
+            },
+            "trilhoVisivel": {
               "expr": {
                 "Literal": {
                   "Value": "false"
                 }
               }
-            }
-          }
-        }
-      ],
-      "stylesheet": [
-        {
-          "properties": {
-            "stylesheet": {
-              "expr": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Medidas"
-                    }
-                  },
-                  "Property": "Estilo · CSS"
-                }
-              }
-            }
-          }
-        }
-      ],
-      "templates": [
-        {
-          "properties": {
-            "bodyTemplate": {
+            },
+            "preenchimento": {
               "expr": {
                 "Literal": {
-                  "Value": "'<style>.t19f .r{position:absolute;top:0;font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cinza)}</style><div class=''tela t19f''><span class=''r entra'' style=''left:0px''>Região</span><span class=''r entra'' style=''left:222px''>Estado</span><span class=''r entra'' style=''left:464px''>Tamanho da cidade</span><span class=''r entra'' style=''left:726px''>Renda (quinto)</span><span class=''r entra'' style=''left:958px''>Virou?</span><span class=''r entra'' style=''left:1210px''>Buscar cidade</span></div>{{content}}'"
+                  "Value": "'nenhum'"
+                }
+              }
+            },
+            "marcas": {
+              "expr": {
+                "Literal": {
+                  "Value": "'nenhuma'"
+                }
+              }
+            },
+            "diametroBotao": {
+              "expr": {
+                "Literal": {
+                  "Value": "32D"
+                }
+              }
+            },
+            "margemLateral": {
+              "expr": {
+                "Literal": {
+                  "Value": "18D"
+                }
+              }
+            },
+            "sufixo": {
+              "expr": {
+                "Literal": {
+                  "Value": "'%'"
+                }
+              }
+            },
+            "bordaBotao": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "corBotao": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#FBF8F2'"
+                    }
+                  }
+                }
+              }
+            },
+            "corBordaBotao": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#1C1915'"
+                    }
+                  }
+                }
+              }
+            },
+            "valorNoArraste": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "rotuloAcessivel": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Dos eleitores dos outros candidatos que forem votar, porcentagem que escolhe Lula'"
                 }
               }
             }
@@ -152,7 +226,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T19_Filtros_Rotulos'"
+                  "Value": "'T22_ReguaLula_Regua'"
                 }
               }
             }
@@ -225,13 +299,19 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Rótulos dos filtros da tela'"
+                  "Value": "'Régua: arraste o botão (ou use as setas) para escolher quantos eleitores dos outros escolhem Lula, de 0 a 100%'"
                 }
               }
             }
           }
         }
       ]
-    }
+    },
+    "syncGroup": {
+      "groupName": "t22regualula",
+      "fieldChanges": true,
+      "filterChanges": true
+    },
+    "drillFilterOtherVisuals": true
   }
 }

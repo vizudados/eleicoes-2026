@@ -1,10 +1,10 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: #,0
-@descricao: Municípios no recorte da tela (segmentações e seleção na dispersão). Sem filtro, os 5.571.
+@descricao: Municípios no recorte da tela: os que passam no filtro do recorte ([T19 · no recorte] = 1: E entre os grupos, OU dentro do mesmo grupo) e na seleção da dispersão. Sem filtro, os 5.571.
 @oraculo: 5.571 (Explorador › padrao.recorte_txt)
 */
 COALESCE (
-    COUNTROWS ( 'Município' ),
+    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · no recorte] = 1 ) ),
     0
 )

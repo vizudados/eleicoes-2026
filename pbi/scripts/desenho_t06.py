@@ -517,7 +517,7 @@ def _css_composicao_topo() -> str:
         ".ct .leg span{display:inline-flex;align-items:center;gap:7px}"
         ".ct .leg i{display:inline-block;width:14px;height:14px}"
         ".ct .leg .f{background:var(--grafite)}.ct .leg .n{background:var(--marrom)}.ct .leg .b{background:var(--areia)}"
-        ".ct .leg .mao{margin-left:auto;font-size:26px;color:var(--tinta);transform:rotate(-2deg)}"
+        ".ct .leg .mao{margin-left:auto;margin-bottom:4px;font-size:26px;color:var(--tinta);transform:rotate(-2deg)}"
     )
 
 

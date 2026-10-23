@@ -19,7 +19,10 @@ arte/ref/estilo-traco.png
 pbi/_backups/
 pbi/pbip/_backups/
 pbi/qa/
+pbi/tmp/
 pbi/tools/node_modules/
+# Fonte dos visuais personalizados da casa (só o .pbiviz empacotado entra no repositório)
+pbi/visuais_src/
 **/.pbi/localSettings.json
 **/.pbi/cache.abf
 capa/remotion/node_modules/

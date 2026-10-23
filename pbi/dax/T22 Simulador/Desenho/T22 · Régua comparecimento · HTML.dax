@@ -1,7 +1,7 @@
 /*
 @pasta: T22 Simulador\Desenho
 @formato: texto
-@descricao: Régua do controle de comparecimento (−5 a +5 pontos), com os votos a mais ou a menos e a regra: metade para cada um.
+@descricao: Título e subtítulo da régua de comparecimento (−5 a +5 pontos), com os votos a mais ou a menos e a regra: metade para cada um; o trilho e o botão são do VizuFilter no modo régua.
 */
 -- 1 · Leituras
 VAR _c = [T22 · mudança no comparecimento]
@@ -14,17 +14,9 @@ VAR _txt =
         FORMAT ( _c * 100, "+0;−0" ) & IF ( ABS ( _c ) = 0.01, " ponto · ", " pontos · " )
             & FORMAT ( ABS ( _novos ) / 1000000, "0.0" ) & " mi" & IF ( _c > 0, " a mais", " a menos" ) & ", metade para cada um"
     )
--- 3 · Geometria
-VAR _x = 20 + ( _c + 0.05 ) / 0.1 * 370 -- geometria
-VAR _xm = 20 + 370 / 2 -- geometria
--- 4 · Marcação
+-- 3 · Marcação (trilho, marca do zero, botão e os rótulos −5 e +5 são do VizuFilter no modo régua, por cima)
 RETURN
     "<div class='tela t22c'>"
         & "<div class='pergunta sobe'>E se o comparecimento mudar?</div>"
         & "<div class='valor sobe d1'>" & _txt & "</div>"
-        & "<i class='trilho entra d2'></i><i class='cheio' style='left:" & FORMAT ( MIN ( _x, _xm ), "0.0##", "en-US" )
-        & "px;width:" & FORMAT ( ABS ( _x - _xm ), "0.0##", "en-US" ) & "px'></i>"
-        & "<i class='meio' style='left:" & FORMAT ( _xm - 1, "0.0##", "en-US" ) & "px'></i>"
-        & "<i class='alca' style='left:" & FORMAT ( _x - 11, "0.0##", "en-US" ) & "px'></i>"
-        & "<span class='ex' style='left:12px'>−5</span><span class='ex' style='left:378px'>+5</span>"
     & "</div>"

@@ -44,7 +44,6 @@ RETURN
             & "<span class='tl'>" & IF ( _a >= 0.12, _txtA, "" ) & "</span>"
             & "<span class='tf'>" & IF ( _a <= 0.88, _txtF, "" ) & "</span>"
         & "</div>"
-        & "<i class='alca' style='left:" & FORMAT ( _xa - 16, "0.0##", "en-US" ) & "px'></i>"
         & "<i class='emp' style='left:" & FORMAT ( _xe - 1, "0.0##", "en-US" ) & "px'></i>"
         & "<span class='emp-t mao' style='left:" & FORMAT ( _xe - 4, "0.0##", "en-US" ) & "px'>" & _txtEmp & "</span>"
         & "<i class='faixa entra d4' style='left:" & FORMAT ( _x0, "0.0##", "en-US" ) & "px;width:"

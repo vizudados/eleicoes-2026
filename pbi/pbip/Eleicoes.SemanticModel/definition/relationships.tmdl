@@ -42,9 +42,10 @@ relationship 922afb0a-a8df-5a0f-a70a-9bd35488330f
 	fromColumn: 'Município'.CodIBGE
 	toColumn: 'T13 Célula'.CodIBGE
 
-relationship 5483d1e2-decd-5334-903b-9382c3b9fe3c
-	fromColumn: 'Município'.CodIBGE
-	toColumn: 'T19 Lado'.CodIBGE
+relationship f44d7124-117e-5716-b9ba-f8db9a85c519
+	isActive: false
+	fromColumn: 'T19 Filtro'.CodIBGE
+	toColumn: 'Município'.CodIBGE
 
 relationship 6209f28c-9c07-517f-b93b-a1a68ff7e668
 	fromColumn: 'T25 Abstenção faixa'.CodIBGE

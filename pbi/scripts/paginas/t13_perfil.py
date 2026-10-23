@@ -130,7 +130,7 @@ def _corpo_tt(css: str) -> str:
 
 
 CSS_RESPOSTA = (
-    ".t13r .g{position:absolute;left:-4px;top:-4px;font-size:108px;letter-spacing:-.045em}"
+    ".t13r .g{position:absolute;left:0;top:-4px;font-size:108px;letter-spacing:-.045em}"
     ".t13r .g small{font-size:46px;letter-spacing:0}"
     ".t13r .m1{position:absolute;left:0;top:118px;width:500px;font-size:24px}"
     ".t13r .ex{position:absolute;left:0;top:236px;width:490px;font-size:16px}"

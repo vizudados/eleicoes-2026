@@ -41,13 +41,13 @@ PESQ = (150, 468, 1620, 384)
 DEBATES = (150, 872, 1620, 132)
 
 CSS_AUDIENCIA = (
-    ".t07a .linha{position:absolute;left:0;top:34px;display:flex;align-items:flex-end;gap:40px}"
+    ".t07a .linha{position:absolute;left:0;top:34px;display:flex;align-items:flex-end;gap:32px}"
     ".t07a .hero{display:flex;align-items:baseline;gap:14px}"
     ".t07a .hero .num{font-size:120px;letter-spacing:-.04em}"
     ".t07a .hero .u{font-size:34px;font-weight:600;letter-spacing:-.01em}"
-    ".t07a .tri{display:flex;gap:30px;padding-bottom:16px}"
+    ".t07a .tri{display:flex;gap:26px;padding-bottom:16px}"
     ".t07a .tri .num{font-size:34px}"
-    ".t07a .tri .rot{margin-top:6px;font-size:13px;letter-spacing:.1em;line-height:1.35}"
+    ".t07a .tri .rot{margin-top:6px;font-size:13px;letter-spacing:.1em;line-height:1.35;white-space:nowrap}"
     ".t07a .man{position:absolute;left:0;top:192px;width:820px}"
     ".t07a .txt{position:absolute;left:0;top:236px;width:820px}"
 )

@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0
+@descricao: Quantos grupos do filtro do recorte (Região, Estado, Tamanho da cidade, Renda, Virou?, Cidade) têm alguma escolha no VizuFilter da tela (T19 Filtro[Caminho]); 0 sem filtro. É o número de condições E de [T19 · no recorte].
+*/
+IF (
+    ISFILTERED ( 'T19 Filtro'[Caminho] ),
+    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ),
+    0
+)

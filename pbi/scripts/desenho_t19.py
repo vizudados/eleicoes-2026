@@ -5,9 +5,9 @@
   pbi/spec/t19_dispersao.json            Deneb (Vega 6, canvas): os pontos da dispersão, o retângulo de seleção e o
                                          filtro cruzado (pbiCrossFilterApply)
 
-e expõe para paginas/t19_explorador.py os modelos fixos (bodyTemplate): os rótulos das segmentações, o cabeçalho da
-lista, o fundo da dispersão (eixos, grade, legendas e dicas em Sora, desenhados em HTML atrás do Deneb, com a MESMA
-geometria do spec) e o papel do dossiê.
+e expõe para paginas/t19_explorador.py os modelos fixos (bodyTemplate): o cabeçalho da lista, o fundo da dispersão
+(eixos, grade, legendas e dicas em Sora, desenhados em HTML atrás do Deneb, com a MESMA geometria do spec) e o papel do
+dossiê. A pílula do filtro do recorte (T19 · Filtro · pílula · HTML) usa a folha da pílula da casca (CSS_PILULA).
 
     python -I -X utf8 pbi/scripts/desenho_t19.py
 """
@@ -28,15 +28,17 @@ SPEC = PBI / "spec" / "t19_dispersao.json"
 PASTA = r"T19 Explorador\Desenho"
 
 # ---------------------------------------------------------------------------------------------------- geometria
-LISTA_LINHAS = 14
+# sem a faixa de seis segmentações (23/10/2026: o filtro virou um acordeão na pílula do canto), a lista e a dispersão
+# sobem 80 px e crescem: 16 linhas em vez de 14 e a dispersão 82 px mais alta
+LISTA_LINHAS = 16
 LISTA_CAB = 36            # altura do cabeçalho da lista
-LISTA_H = 45              # altura de cada linha
+LISTA_H = 44              # altura de cada linha
 # colunas da lista (x da esquerda de cada coluna, em px dentro do visual de 700)
 COL = {"nome": 14, "lula": 262, "flavio": 334, "serie": 430, "var": 584, "virou": 648}
 SERIE_W, SERIE_H = 136, 30
 
-DISP_W, DISP_H = 880, 778
-PL, PR, PT, PB = 84, 856, 112, 676           # caixa do gráfico dentro do visual
+DISP_W, DISP_H = 880, 860
+PL, PR, PT, PB = 84, 856, 112, 758           # caixa do gráfico dentro do visual
 RENDA = (250.0, 5000.0)                       # eixo x, escala log (R$/mês)
 VAR = (-0.48, 0.16)                           # eixo y, variação da margem (fração)
 TICKS_X = [(300, "R$ 300"), (500, "R$ 500"), (1000, "R$ 1 mil"), (2000, "R$ 2 mil"), (4000, "R$ 4 mil")]
@@ -74,8 +76,65 @@ VAR _nome2 = SUBSTITUTE ( SUBSTITUTE ( _nome1, "<", "&lt;" ), ">", "&gt;" )
 VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome2, \"\"\"\", "&quot;" ), "'", "&#39;" )"""
 
 
+PILULA_MAX = 40          # caracteres que cabem na pílula (424 px, Sora 16 semibold: ~8 px por letra); acima, "N filtros"
+FUNIL = ("<span class='fu'><svg width='16' height='16' viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' "
+         "fill='none' stroke='currentColor' stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span>")
+SETA = ("<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
+        "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg>")
+
+
+def _quebrado(texto: str, largura: int = 96) -> str:
+    """Literal DAX longo em pedaços de até `largura` (cortados num espaço), unidos por & em linhas próprias."""
+    pedacos, atual = [], ""
+    for palavra in texto.split(" "):
+        if atual and len(atual) + 1 + len(palavra) > largura:
+            pedacos.append(atual + " ")
+            atual = palavra
+        else:
+            atual = f"{atual} {palavra}" if atual else palavra
+    pedacos.append(atual)
+    return '"\n        & "'.join(pedacos)
+
+
 def medidas() -> None:
     cor_css = {"lula": "var(--vermelho)", "flavio": "var(--azul)"}
+    # --- pílula do filtro do recorte (o mesmo desenho da pílula de UF da casca: Casca · filtro · pílula · HTML)
+    gravar("T19 · Filtro · pílula · HTML", "O botão fechado do filtro do recorte (a pílula, na caixa do filtro da "
+           "casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 "
+           "mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre o acordeão "
+           "(VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não "
+           "mexem nela).", f"""
+-- 1 · Leituras
+VAR _n = [T19 · filtro · escolhas]
+VAR _uso = [T19 · filtro em uso]
+-- 2 · Textos
+VAR _txt0 =
+    SWITCH (
+        TRUE (),
+        _n = 0, "Todos os municípios",
+        _n > 1 && LEN ( _uso ) > {PILULA_MAX}, FORMAT ( _n, "#,0" ) & " filtros",
+        _uso
+    )
+VAR _txt1 = SUBSTITUTE ( SUBSTITUTE ( _txt0, "&", "&amp;" ), "<", "&lt;" )
+VAR _txt = SUBSTITUTE ( SUBSTITUTE ( _txt1, ">", "&gt;" ), "'", "&#39;" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela pl" & IF ( _n > 0, " ativo", "" ) & "'>"
+        & "{_quebrado(FUNIL)}"
+        & "<b>" & _txt & "</b>"
+        & "{_quebrado(SETA)}"
+    & "</div>"
+""")
+    gravar("T19 · Filtro · ALT", "Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o "
+           "acordeão oferece.", r"""
+-- 1 · Leituras
+VAR _n = [T19 · filtro · escolhas]
+VAR _uso = [T19 · filtro em uso]
+-- 2 · Textos
+RETURN
+    "Filtro do recorte: " & IF ( _n = 0, "todos os municípios", LEFT ( _uso, 150 ) )
+        & ". Abre a lista de região, estado, tamanho, renda, virada e cidade."
+""")
     # --- resumo do recorte (contadores)
     gravar("T19 · Resumo · HTML", "Faixa do recorte acima da lista: os filtros em uso e quantos municípios, com Lula à "
            "frente, com Flávio à frente e que viraram, com a barra da proporção. Só lê as contas de T19.", r"""
@@ -128,7 +187,8 @@ RETURN
     pontos = ", ".join(f"( {i}, {x}, _m{a} )" for i, (x, a) in enumerate(zip(xs, ("06", "10", "14", "18", "22", "26"))))
     meio = SERIE_H / 2
     gravar("T19 · Lista · HTML", "Uma linha da lista do Explorador (granularidade: Município[Rótulo]; o visual mostra "
-           "os 14 com mais votos válidos): nome, Lula e Flávio em 2026, a minilinha da margem 2006–2026, a mudança "
+           f"os {LISTA_LINHAS} com mais votos válidos do recorte): nome, Lula e Flávio em 2026, a minilinha da margem "
+           "2006–2026, a mudança "
            "2022 → 2026 e o selo de quem virou. Posição pela conta da posição na lista.", f"""
 -- 1 · Leituras
 VAR _pos = [T19 · posição na lista]
@@ -210,15 +270,19 @@ RETURN
     gravar("T19 · Dispersão · HTML", "Manchete da dispersão, no fundo HTML atrás dos pontos: em quantos municípios do "
            "recorte Lula perdeu margem de 2022 para 2026.", r"""
 -- 1 · Leituras
+VAR _n = [T19 · municípios no recorte]
 VAR _perdeu = [T19 · municípios em que Lula perdeu margem]
 VAR _com = [T19 · municípios com as duas eleições]
 -- 2 · Textos
 VAR _txtPerdeu = FORMAT ( _perdeu, "#,0" )
 VAR _txtCom = FORMAT ( _com, "#,0" )
 VAR _frase =
-    IF (
+    SWITCH (
+        TRUE (),
+        _n = 0, "Nenhum município neste recorte: mude o filtro no canto de cima",
+        _com = 0, "Sem 2022 para comparar neste recorte",
         _com = 1,
-        IF ( _perdeu = 1, "Neste município, Lula perdeu margem", "Neste município, Lula não perdeu margem" ),
+            IF ( _perdeu = 1, "Neste município, Lula perdeu margem", "Neste município, Lula não perdeu margem" ),
         "Lula perdeu margem em <b class='num'>" & _txtPerdeu & "</b> dos <b class='num'>" & _txtCom
             & "</b> municípios do recorte"
     )
@@ -394,8 +458,8 @@ def spec() -> dict:
                  {"events": "window:mouseup",
                   "update": "ret == null ? estado : (length(data('laco')) > 2500 ? 'grande' : "
                             "(length(data('laco')) == 0 ? 'vazio' : [pbiCrossFilterApply(event, "
-                            "'_{renda}_ >= ' + lr0 + ' && _{renda}_ <= ' + lr1 + ' && _{var}_ >= ' + lv0 + "
-                            "' && _{var}_ <= ' + lv1, {limit: 2500}), 'laco'][1]))"},
+                            "'datum.renda >= ' + lr0 + ' && datum.renda <= ' + lr1 + ' && datum.var >= ' + lv0 + "
+                            "' && datum.var <= ' + lv1, {limit: 2500}), 'laco'][1]))"},
                  {"events": "@pontos:click", "filter": ["!event.ctrlKey"],
                   "update": "arrastou ? estado : [pbiCrossFilterApply(event), 'ponto'][1]"},
                  {"events": "click",
@@ -461,8 +525,9 @@ def spec() -> dict:
             {"type": "text", "name": "aviso", "interactive": False,
              "encode": {"update": {
                  "x": {"signal": f"{(PL + PR) / 2}*width/{w}"}, "y": fy(PT + 18), "align": {"value": "center"},
-                 "text": {"signal": "estado == 'grande' ? 'Seleção grande demais (mais de 2.500 cidades): use as "
-                                    "segmentações acima' : estado == 'vazio' ? 'Nenhum município nesse retângulo' : ''"},
+                 "text": {"signal": "estado == 'grande' ? 'Seleção grande demais (mais de 2.500 cidades): use o "
+                                    "filtro no canto de cima' : estado == 'vazio' ? 'Nenhum município nesse "
+                                    "retângulo' : ''"},
                  "fill": {"value": c["vermelho_escuro"]}, "font": {"value": "Sora Eleicoes, Segoe UI, sans-serif"},
                  "fontSize": {"value": 15}, "fontWeight": {"value": 600}}}},
         ],
@@ -470,17 +535,6 @@ def spec() -> dict:
 
 
 # ---------------------------------------------------------------------------------------------------- modelos fixos
-CSS_ROTULOS = (".t19f .r{position:absolute;top:0;font-size:13px;font-weight:600;letter-spacing:.14em;"
-               "text-transform:uppercase;color:var(--cinza)}")
-ROTULOS = [(150, "Região"), (372, "Estado"), (614, "Tamanho da cidade"), (876, "Renda (quinto)"), (1108, "Virou?"),
-           (1360, "Buscar cidade")]
-
-
-def corpo_rotulos() -> str:
-    itens = "".join(f"<span class='r entra' style='left:{x - 150}px'>{t}</span>" for x, t in ROTULOS)
-    return f"<style>{CSS_ROTULOS}</style><div class='tela t19f'>{itens}</div>{{{{content}}}}"
-
-
 CSS_RESUMO = (
     ".t19r .sob{position:absolute;left:0;top:0;right:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
     ".t19r .st{position:absolute;top:26px;display:flex;flex-direction:column}"
@@ -553,8 +607,10 @@ def corpo_dispersao() -> str:
     y0 = px_y(0)
     svg = (f"<svg class='eixos' width='{DISP_W}' height='{DISP_H}' viewBox='0 0 {DISP_W} {DISP_H}'>"
            f"{estilo.defs_rabisco('rb19', 1.4)}{''.join(linhas)}"
-           f"<text class='lado' x='{PL + 10}' y='{y0 - 10:.1f}'>↑ Lula ganhou margem</text>"
-           f"<text class='lado' x='{PL + 10}' y='{y0 + 22:.1f}'>↓ Lula perdeu margem</text>"
+           # os sentidos nos cantos vazios do alto e de baixo, à esquerda: junto da linha do zero, o rótulo ficava
+           # embaixo da nuvem de pontos (o Deneb desenha por cima do fundo)
+           f"<text class='lado' x='{PL + 10}' y='{px_y(0.13):.1f}'>↑ Lula ganhou margem</text>"
+           f"<text class='lado' x='{PL + 10}' y='{px_y(-0.36):.1f}'>↓ Lula perdeu margem</text>"
            f"<text class='tit-x' x='{(PL + PR) / 2:.0f}' y='{PB + 48}'>renda por pessoa da cidade (R$ por mês, "
            f"Censo 2022 · escala que dobra a cada passo)</text>"
 
@@ -573,12 +629,14 @@ def corpo_dispersao() -> str:
         ".t19d .lado{text-anchor:start;font-size:14px;font-weight:600;fill:var(--grafite)}"
         ".t19d .tit-x{text-anchor:middle;font-size:13px}"
         ".t19d .seta{fill:none;stroke:var(--tinta);stroke-width:1.8;stroke-linecap:round;animation-delay:1.6s}"
-        ".t19d .mao{position:absolute;left:110px;top:628px;font-size:26px;color:var(--tinta);transform:rotate(-3deg)}"
+        f".t19d .mao{{position:absolute;left:110px;top:{PB - 48}px;font-size:26px;color:var(--tinta);"
+        "transform:rotate(-3deg)}"
         ".t19d .leg{position:absolute;left:0;top:62px;display:flex;gap:22px;font-size:15px;color:var(--grafite)}"
         ".t19d .leg i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:-1px}"
         f".t19d .c-l{{background:{c['vermelho']}}}.t19d .c-f{{background:{c['azul']}}}"
         f".t19d .c-t{{background:none;border:1.5px solid {c['grafite']};width:14px;height:14px}}"
-        ".t19d .dica{position:absolute;left:0;right:0;top:748px;text-align:center;font-size:15px;color:var(--grafite)}"
+        f".t19d .dica{{position:absolute;left:0;right:0;top:{DISP_H - 30}px;text-align:center;font-size:15px;"
+        "color:var(--grafite)}"
         ".t19m .man{position:absolute;left:0;top:22px;right:0;font-size:24px}"
         ".t19m .man b{font-weight:700}"
     )

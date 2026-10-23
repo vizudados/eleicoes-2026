@@ -13,7 +13,9 @@ Ctrl) · {"clicar_html": ".mq .q", "texto": "MG"} (primeiro elemento com o selet
 {"pairar_html": ".ax"} ou {"pairar": [x, y]} (mouse sobre o elemento ou a coordenada da página; abre o tooltip) ·
 {"ler": ".t18p"} (texto do primeiro quadro que tem o seletor) · {"esperar": 2} · {"foto": "arquivo.png"} (a página;
 com "janela": true, a janela inteira, para o tooltip que passa da borda) ·
-{"conferir": ".t18p", "contem": "MINAS GERAIS"} (falha se o texto não contiver).
+{"conferir": ".t18p", "contem": "MINAS GERAIS"} (falha se o texto não contiver) · {"clicar_texto": "Minas Gerais",
+"em": ".sff-option"} (clique de mouse no item com esse texto, dentro do seletor) · {"medir": "Escolher um estado",
+"altura": 48} (caixa do visual na página; falha se a altura for outra).
 """
 from __future__ import annotations
 
@@ -83,6 +85,19 @@ def quadro_com(pg, seletor, texto=None):
     return None, None
 
 
+def _clique_escalado(pg, f, el):
+    """Clique de mouse de verdade no centro de um elemento dentro do quadro de um visual. O bounding_box do Playwright
+    soma o deslocamento do quadro mas ignora a escala com que o Power BI encolhe o visual na tela (o clique caía fora
+    da lista do VizuFilter): o centro vem do retângulo interno vezes a escala do quadro."""
+    el.scroll_into_view_if_needed()
+    time.sleep(0.6)
+    fb = f.frame_element().bounding_box()
+    r = el.evaluate("e => { const r = e.getBoundingClientRect();"
+                    " return [r.x + r.width / 2, r.y + r.height / 2, window.innerWidth]; }")
+    esc = fb["width"] / r[2]
+    pg.mouse.click(fb["x"] + r[0] * esc, fb["y"] + r[1] * esc)
+
+
 def executar(pg, passos, pasta: Path) -> int:
     falhas = 0
     for i, p in enumerate(passos, 1):
@@ -104,7 +119,7 @@ def executar(pg, passos, pasta: Path) -> int:
                 print(f"{i:02d} FALHA: não achei {p['clicar_html']} {p.get('texto', '')}")
                 falhas += 1
                 continue
-            el.click()
+            _clique_escalado(pg, f, el)
             time.sleep(p.get("espera", 4))
             print(f"{i:02d} clique em {p['clicar_html']} {p.get('texto', '')}")
         elif "pairar_html" in p:
@@ -121,6 +136,47 @@ def executar(pg, passos, pasta: Path) -> int:
             pg.mouse.click(x0 + x * k, y0 + y * k)
             time.sleep(p.get("espera", 4))
             print(f"{i:02d} clique em ({x}, {y})")
+        elif "clicar_texto" in p:
+            # clique de mouse de verdade no centro do primeiro elemento visível com exatamente esse texto (ex.: uma UF
+            # na lista aberta do VizuFilter), rolando a lista até ele
+            # (a gaveta do filtro pode levar mais de 10 s para abrir: tenta por até 20 s)
+            alvo, el, fim = p["clicar_texto"], None, time.time() + p.get("ate", 20)
+            while el is None and time.time() < fim:
+                for f in pg.frames:
+                    try:
+                        if not f.frame_element().is_visible():
+                            continue
+                        # "em" restringe a busca a um seletor (ex.: ".sff-option", o item da lista do VizuFilter, e
+                        # não a pílula que repete o nome do estado escolhido)
+                        loc = (f.locator(p["em"]) if "em" in p else f).get_by_text(alvo, exact=True)
+                        for k in range(loc.count()):
+                            if loc.nth(k).is_visible():
+                                el = loc.nth(k)
+                                break
+                    except Exception:  # noqa: BLE001
+                        continue
+                    if el:
+                        break
+                if el is None:
+                    time.sleep(1)
+            if el:
+                _clique_escalado(pg, f, el)
+                time.sleep(p.get("espera", 5))
+            falhas += 0 if el else 1
+            print(f"{i:02d} {'clique em' if el else 'FALHA: não achei'} texto {alvo!r}")
+        elif "arrastar" in p:
+            x0, y0, k = area_da_pagina(pg)
+            (xa, ya), (xb, yb) = p["arrastar"]
+            pg.mouse.move(x0 + xa * k, y0 + ya * k)
+            pg.mouse.down()
+            pg.mouse.move(x0 + xb * k, y0 + yb * k, steps=12)
+            pg.mouse.up()
+            time.sleep(p.get("espera", 6))
+            print(f"{i:02d} arrastou de ({xa}, {ya}) a ({xb}, {yb})")
+        elif "digitar" in p:
+            pg.keyboard.type(p["digitar"], delay=60)
+            time.sleep(p.get("espera", 3))
+            print(f"{i:02d} digitou {p['digitar']!r}")
         elif "pairar" in p:
             x0, y0, k = area_da_pagina(pg)
             x, y = p["pairar"]
@@ -159,6 +215,19 @@ def executar(pg, passos, pasta: Path) -> int:
                     time.sleep(1)
             falhas += 0 if ok else 1
             print(f"{i:02d} {'ok   ' if ok else 'FALHA'} achar {alvo!r}")
+        elif "medir" in p:
+            # caixa (coordenadas da página 1920×1080) dos visuais cujo rótulo acessível contém o texto; com "altura",
+            # falha se algum tiver outra altura (ex.: o botão da pílula do filtro, 48)
+            caixas = pg.evaluate("""t => { const h = document.querySelector('.visualContainerHost').getBoundingClientRect();
+                const k = h.width / 1920;
+                return Array.from(document.querySelectorAll('.visualContainer'))
+                  .filter(v => (v.getAttribute('aria-label') || '').includes(t))
+                  .map(v => { const r = v.getBoundingClientRect();
+                              return [(r.x - h.x) / k, (r.y - h.y) / k, r.width / k, r.height / k].map(Math.round); }); }""",
+                                 p["medir"])
+            ok = bool(caixas) and all(abs(c[3] - p["altura"]) <= 2 for c in caixas) if "altura" in p else bool(caixas)
+            falhas += 0 if ok else 1
+            print(f"{i:02d} {'ok   ' if ok else 'FALHA'} medir {p['medir']!r}: {caixas}")
         elif "esperar" in p:
             time.sleep(p["esperar"])
         elif "foto" in p:
