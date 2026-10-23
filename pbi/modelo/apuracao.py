@@ -39,6 +39,19 @@ CAMPOS_HIST = [
     ("secoes_totalizadas", "SecoesTotalizadas", "int", "Seções totalizadas."),
     ("secoes_total", "SecoesTotal", "int", "Seções eleitorais."),
 ]
+CAMPOS_EXT = [
+    ("cd", "CodTSE", "text", "Código TSE da cidade no exterior."),
+    ("cidade", "Cidade", "text", "Cidade com seção no exterior."),
+    ("pais", "País", "text", "País da cidade (dados/bruto/exterior/cidade_pais.csv)."),
+    ("continente", "Continente", "text", "Continente ou região do mundo."),
+    ("atualizado_tse", "AtualizadoTSE", "text", "Hora de totalização da cidade no TSE."),
+    ("secoes_pct", "SecoesPct", "number", "% de seções totalizadas na cidade."),
+    ("secoes_total", "SecoesTotal", "int", "Seções da cidade."),
+    ("secoes_totalizadas", "SecoesTotalizadas", "int", "Seções totalizadas na cidade."),
+    ("validos", "Validos", "int", "Votos válidos na cidade."),
+    ("lula_votos", "LulaVotos", "int", "Votos de Lula na cidade."),
+    ("flavio_votos", "FlavioVotos", "int", "Votos de Flávio na cidade."),
+]
 TIPO_M = {"text": "type text", "number": "type number", "int": "Int64.Type"}
 HORAS = {"AtualizadoTSE", "ColetadoEm"}
 
@@ -79,6 +92,9 @@ TABELAS = [
     tabela("Apuração histórico", "A curva da noite no Brasil: uma linha por nova hora de totalização do TSE "
                                  "(historico.csv); antes da primeira divulgação, só o cabeçalho.",
            colunas(CAMPOS_HIST), m_arquivo("historico.csv", CAMPOS_HIST), oculta=True),
+    tabela("Apuração exterior", "As cidades do exterior na última coleta (exterior.csv), cada uma com o seu país: base "
+                                "do tooltip do exterior país a país na apuração.",
+           colunas(CAMPOS_EXT), m_arquivo("exterior.csv", CAMPOS_EXT), oculta=True),
     tabela("Apuração status", "O estado da apuração na última coleta (ultimo.json): eleição, turno, fase, horas e "
                               "as UFs que faltaram na coleta.",
            [col("Eleicao", tipo="int", descricao="Código da eleição no TSE (6257 = 1º turno; 6258 = 2º).", formato="0"),

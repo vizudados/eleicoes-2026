@@ -1,0 +1,6 @@
+/*
+@pasta: _Exterior\Contas
+@formato: 0.0%
+@descricao: Lula sobre os válidos do exterior no 1º turno de 2026 (no contexto: o país).
+*/
+DIVIDE ( CALCULATE ( SUM ( 'Exterior país'[VotosPT] ), 'Exterior país'[Ano] = 2026 ), [Exterior · válidos] )

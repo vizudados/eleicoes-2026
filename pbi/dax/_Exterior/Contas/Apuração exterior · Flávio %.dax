@@ -1,0 +1,6 @@
+/*
+@pasta: _Exterior\Contas
+@formato: 0.0%
+@descricao: Flávio sobre os válidos apurados no exterior (no contexto: o país).
+*/
+DIVIDE ( SUM ( 'Apuração exterior'[FlavioVotos] ), [Apuração exterior · válidos] )

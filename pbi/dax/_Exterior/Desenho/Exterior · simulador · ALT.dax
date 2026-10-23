@@ -1,0 +1,7 @@
+/*
+@pasta: _Exterior\Desenho
+@formato: texto
+@descricao: Texto alternativo do tooltip do exterior no simulador.
+*/
+"Exterior no cenário: Lula " & FORMAT ( [T22 · cenário · Lula %], "0.0%" ) & ", Flávio " & FORMAT ( [T22 · cenário · Flávio %], "0.0%" )
+    & "; no 1º turno, Lula " & FORMAT ( [Exterior · Lula %], "0.0%" ) & " e Flávio " & FORMAT ( [Exterior · Flávio %], "0.0%" ) & "."

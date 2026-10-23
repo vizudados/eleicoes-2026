@@ -1,0 +1,61 @@
+/*
+@pasta: _Exterior\Desenho
+@formato: texto
+@descricao: Tooltip rico do exterior na apuração do 2º turno: Lula × Flávio por país, com a % de seções; antes dos primeiros votos, o 1º turno com o aviso de que a apuração ainda não começou.
+*/
+IF (
+    [Apuração exterior · válidos] = 0,
+    SUBSTITUTE (
+        [Exterior · 1º turno · HTML],
+        "<div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026",
+        "<div class='aviso'>a apuração do exterior começa às 17h de 25/10 · por enquanto, como o exterior votou no 1º turno</div><div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026"
+    ),
+-- 1 · Leituras: os países com mais votos válidos (os 12 maiores) e o resto somado
+VAR _paises = VALUES ( 'Apuração exterior'[País] )
+VAR _t =
+    ADDCOLUMNS ( _paises, "@v", [Apuração exterior · válidos], "@l", [Apuração exterior · Lula %], "@f", [Apuração exterior · Flávio %], "@s", [Apuração exterior · seções %] )
+VAR _top = TOPN ( 12, FILTER ( _t, [@v] > 0 ), [@v], DESC, 'Apuração exterior'[País], ASC )
+VAR _topR = ADDCOLUMNS ( _top, "@i", RANKX ( _top, [@v],, DESC, DENSE ) )
+VAR _resto = EXCEPT ( _paises, SELECTCOLUMNS ( _top, "País", 'Apuração exterior'[País] ) )
+VAR _nResto = COUNTROWS ( _resto ) + 0
+VAR _rv = CALCULATE ( SUM ( 'Apuração exterior'[Validos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) )
+VAR _rl = DIVIDE ( CALCULATE ( SUM ( 'Apuração exterior'[LulaVotos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) ), _rv )
+VAR _rf = DIVIDE ( CALCULATE ( SUM ( 'Apuração exterior'[FlavioVotos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) ), _rv )
+VAR _tl = [Apuração exterior · Lula %]
+VAR _tf = [Apuração exterior · Flávio %]
+-- 2 · Desenho
+VAR _linhas =
+    CONCATENATEX (
+        _topR,
+        "<div class='lp sobe d" & MIN ( 16, [@i] + 3 ) & "'><span class='pn'><b>" & 'Apuração exterior'[País] & "</b><i>"
+            & FORMAT ( [@v], "#,0" ) & IF ( [@v] = 1, " voto", " votos" ) & "</i></span>"
+            & "<span class='vl'>" & FORMAT ( [@l] * 100, "0" ) & "%</span>"
+            & "<span class='br'><i class='bl barra-x' style='width:" & FORMAT ( [@l] * 100, "0.0##", "en-US" )
+            & "%'></i><i class='bf barra-x-dir' style='width:" & FORMAT ( [@f] * 100, "0.0##", "en-US" ) & "%'></i></span>"
+            & "<span class='vf'>" & FORMAT ( [@f] * 100, "0" ) & "%</span>"
+            & "<span class='dv'>" & FORMAT ( [@s] * 100, "0" ) & "%</span>" & "</div>",
+        "", [@v], DESC
+    )
+VAR _outros =
+    IF (
+        _nResto > 0,
+        "<div class='outros sobe d16'>Outros " & _nResto & IF ( _nResto = 1, " país", " países" ) & " · "
+            & FORMAT ( _rv, "#,0" ) & " votos · Lula " & FORMAT ( _rl * 100, "0" ) & "% × Flávio "
+            & FORMAT ( _rf * 100, "0" ) & "%</div>"
+    )
+VAR _nl = [Apuração exterior · países com Lula à frente]
+VAR _nf = [Apuração exterior · países com Flávio à frente]
+RETURN
+    "<div class='tela tx'><div class='fita'></div>"
+        & "<div class='rot topo-rot'>" & "EXTERIOR · APURAÇÃO DO 2º TURNO · " & FORMAT ( [Apuração exterior · seções %] * 100, "0" ) & "% DAS SEÇÕES EM " & [Apuração exterior · países] & " PAÍSES" & "</div>"
+        & "<div class='topo'><div class='c'><span class='num lula'>" & FORMAT ( _tl * 100, "0.0" ) & "%</span>"
+        & "<span class='rot lula-esc'>LULA</span></div><div class='c'><span class='num flavio'>"
+        & FORMAT ( _tf * 100, "0.0" ) & "%</span><span class='rot flavio-esc'>FLÁVIO</span></div>"
+        & "<div class='c tot'><span class='num'>" & FORMAT ( [Apuração exterior · válidos], "#,0" ) & "</span>"
+        & "<span class='rot'>VOTOS VÁLIDOS</span></div></div>"
+        & "<div class='mao'>Lula na frente em " & _nl & IF ( _nl = 1, " país", " países" ) & ", Flávio em " & _nf
+        & "</div>"
+        & "<div class='cab rot'><span>PAÍS</span><span>LULA</span><span></span><span>FLÁVIO</span><span>SEÇÕES</span></div>"
+        & "<div class='lista'>" & _linhas & "</div>" & _outros
+        & "<div class='pe nota'>" & "países ordenados pelos votos válidos já apurados; a soma de Lula e Flávio dá 100% no 2º turno" & "</div></div>"
+)

@@ -1,0 +1,6 @@
+/*
+@pasta: _Exterior\Contas
+@formato: 0
+@descricao: Países com seção no exterior na apuração.
+*/
+DISTINCTCOUNT ( 'Apuração exterior'[País] )

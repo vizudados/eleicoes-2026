@@ -264,6 +264,43 @@ def trajetoria():
     return pd.DataFrame(linhas)
 
 
+def exterior():
+    """Votos do 1º turno no exterior por país (2022 e 2026): as 186 cidades com seção do TSE ligadas ao país pela tabela
+    dados/bruto/exterior/cidade_pais.csv (o TSE não publica o país). PT = Lula; adversário = Bolsonaro (2022) e Flávio
+    (2026), os dois com o número 22."""
+    mapa = pd.read_csv(BRUTO / "exterior" / "cidade_pais.csv", sep=";")
+    por_cod = dict(zip(mapa.cd_tse, zip(mapa.pais, mapa.continente)))
+    por_nome = dict(zip(mapa.cidade, zip(mapa.pais, mapa.continente)))
+    partes = []
+    for ano in (2022, 2026):
+        arq = BRUTO / "tse" / f"presidente_{ano}_BR.csv"
+        if not arq.exists():
+            continue
+        b = pd.read_csv(arq, sep=";", encoding="latin-1",
+                        usecols=["NR_TURNO", "SG_UF", "CD_MUNICIPIO", "NM_MUNICIPIO", "NR_CANDIDATO",
+                                 "QT_VOTOS_NOMINAIS_VALIDOS"])
+        b = b[(b.NR_TURNO == 1) & (b.SG_UF == "ZZ")]
+        g = b.groupby(["CD_MUNICIPIO", "NM_MUNICIPIO"]).apply(
+            lambda x: pd.Series({"pt": x.loc[x.NR_CANDIDATO == 13, "QT_VOTOS_NOMINAIS_VALIDOS"].sum(),
+                                 "adv": x.loc[x.NR_CANDIDATO == 22, "QT_VOTOS_NOMINAIS_VALIDOS"].sum(),
+                                 "validos": x.QT_VOTOS_NOMINAIS_VALIDOS.sum()}), include_groups=False).reset_index()
+        def pais(r):
+            return por_cod.get(r.CD_MUNICIPIO) or por_nome.get(r.NM_MUNICIPIO) or ("?", "?")
+        g[["pais", "continente"]] = g.apply(lambda r: pd.Series(pais(r)), axis=1)
+        faltam = g[g.pais == "?"]
+        if len(faltam):
+            print(f"aviso {ano}: cidades do exterior sem país: {', '.join(faltam.NM_MUNICIPIO)}")
+        c = g.groupby(["pais", "continente"], as_index=False).agg(cidades=("NM_MUNICIPIO", "nunique"),
+                                                                  pt=("pt", "sum"), adv=("adv", "sum"),
+                                                                  validos=("validos", "sum"))
+        c.insert(0, "ano", ano)
+        partes.append(c)
+    d = pd.concat(partes)
+    for col in ("pt", "adv", "validos"):
+        d[col] = d[col].astype(int)
+    return d.sort_values(["ano", "validos"], ascending=[True, False])
+
+
 def main():
     m = municipios()
     gravar(m, "municipio")
@@ -280,6 +317,7 @@ def main():
     gravar(copiar(BRUTO / "digital" / "monitoramento.csv"), "monitoramento")
     gravar(copiar(BRUTO / "digital" / "anuncios.csv"), "anuncios")
     gravar(trajetoria(), "trajetoria")
+    gravar(exterior(), "exterior_pais")
     for nome in ("transferencia", "rejeicao", "apoios"):
         gravar(copiar(BRUTO / "transferencia" / f"{nome}.csv"), nome if nome != "apoios" else "apoio")
     locais = pd.read_csv(SAIDA_DADOS / "locais_contagem.csv")

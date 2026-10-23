@@ -1,0 +1,11 @@
+/*
+@pasta: _Exterior\Contas
+@formato: 0
+@descricao: Países em que Flávio tem mais votos apurados.
+*/
+COUNTROWS (
+    FILTER (
+        VALUES ( 'Apuração exterior'[País] ),
+        [Apuração exterior · Lula %] < [Apuração exterior · Flávio %]
+    )
+) + 0

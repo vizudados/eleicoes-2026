@@ -1,0 +1,266 @@
+ano,pais,continente,cidades,pt,adv,validos
+2022,Estados Unidos,América do Norte,10,20541,37848,65339
+2022,Portugal,Europa,3,21839,11218,36165
+2022,Japão,Ásia,3,4297,23007,31860
+2022,Canadá,América do Norte,4,11821,6859,21694
+2022,Alemanha,Europa,3,11875,3170,17101
+2022,Reino Unido,Europa,1,8165,5170,14796
+2022,Itália,Europa,2,5418,3884,10415
+2022,Suíça,Europa,2,4664,4173,10183
+2022,França,Europa,1,7809,1384,10063
+2022,Espanha,Europa,2,5912,2905,9810
+2022,Irlanda,Europa,1,5951,1038,7594
+2022,Argentina,América do Sul,5,4634,2125,7293
+2022,Austrália,Oceania,2,3485,1826,6352
+2022,Países Baixos,Europa,1,4094,961,5770
+2022,Paraguai,América do Sul,6,634,4244,5112
+2022,Bélgica,Europa,1,1984,1271,3646
+2022,Líbano,Ásia,1,1601,947,2850
+2022,Suécia,Europa,1,1632,421,2433
+2022,Chile,América do Sul,1,869,796,1937
+2022,Bolívia,América do Sul,5,347,1277,1731
+2022,Uruguai,América do Sul,5,813,686,1725
+2022,México,América do Norte,1,614,595,1389
+2022,Áustria,Europa,1,864,313,1386
+2022,Guiana Francesa,América do Sul,2,584,666,1371
+2022,Dinamarca,Europa,1,936,147,1222
+2022,Emirados Árabes Unidos,Ásia,1,352,464,955
+2022,Noruega,Europa,1,549,161,830
+2022,Peru,América do Sul,2,273,384,788
+2022,Palestina,Ásia,1,592,52,698
+2022,Israel,Ásia,1,274,320,696
+2022,Colômbia,América do Sul,1,365,242,691
+2022,Panamá,América Central e Caribe,1,214,349,678
+2022,Finlândia,Europa,1,390,127,625
+2022,Hungria,Europa,1,491,72,607
+2022,Jordânia,Ásia,1,338,107,552
+2022,China,Ásia,4,221,207,520
+2022,Suriname,América do Sul,1,125,311,471
+2022,África do Sul,África,2,155,242,458
+2022,Nova Zelândia,Oceania,1,329,71,451
+2022,Grécia,Europa,1,164,205,437
+2022,Singapura,Ásia,1,182,97,390
+2022,Equador,América do Sul,1,110,231,383
+2022,Costa Rica,América Central e Caribe,1,136,169,367
+2022,Tchéquia,Europa,1,253,58,367
+2022,Catar,Ásia,1,132,192,360
+2022,Polônia,Europa,1,213,55,311
+2022,Moçambique,África,1,117,150,291
+2022,Angola,África,1,124,93,236
+2022,Taiwan,Ásia,1,79,100,223
+2022,República Dominicana,América Central e Caribe,1,65,117,209
+2022,Coreia do Sul,Ásia,1,130,53,207
+2022,Estônia,Europa,1,148,16,186
+2022,Turquia,Ásia,2,91,51,153
+2022,Guatemala,América Central e Caribe,1,32,90,147
+2022,Tailândia,Ásia,1,46,42,105
+2022,Honduras,América Central e Caribe,1,35,47,88
+2022,Rússia,Europa,1,45,28,84
+2022,Nicarágua,América Central e Caribe,1,34,32,79
+2022,Eslovênia,Europa,1,50,15,76
+2022,El Salvador,América Central e Caribe,1,22,41,74
+2022,Egito,África,1,42,21,70
+2022,Guiana,América do Sul,1,7,55,70
+2022,Eslováquia,Europa,1,24,14,66
+2022,Cabo Verde,África,1,38,22,65
+2022,Timor-Leste,Ásia,1,18,37,65
+2022,Filipinas,Ásia,1,20,35,63
+2022,Malásia,Ásia,1,27,24,57
+2022,Senegal,África,1,26,23,55
+2022,Arábia Saudita,Ásia,1,26,18,54
+2022,Romênia,Europa,1,29,12,54
+2022,Marrocos,África,1,34,8,53
+2022,Índia,Ásia,2,36,14,53
+2022,Quênia,África,1,25,23,51
+2022,Indonésia,Ásia,1,16,30,50
+2022,Sérvia,Europa,1,30,8,49
+2022,Costa do Marfim,África,1,21,18,46
+2022,Croácia,Europa,1,25,14,46
+2022,Guiné-Bissau,África,1,23,21,44
+2022,Kuwait,Ásia,1,9,27,43
+2022,Omã,Ásia,1,11,25,41
+2022,Namíbia,África,1,4,33,39
+2022,Bahrein,Ásia,1,10,22,38
+2022,Trinidad e Tobago,América Central e Caribe,1,17,16,34
+2022,Bulgária,Europa,1,22,6,33
+2022,Cuba,América Central e Caribe,1,28,1,31
+2022,Nigéria,África,2,16,7,28
+2022,Bahamas,América Central e Caribe,1,8,15,25
+2022,Chipre,Europa,1,13,7,25
+2022,Gana,África,1,12,9,22
+2022,Vietnã,Ásia,1,13,4,20
+2022,Irã,Ásia,1,7,9,17
+2022,República Democrática do Congo,África,1,2,14,17
+2022,Nepal,Ásia,1,1,14,15
+2022,Tunísia,África,1,8,6,14
+2022,Zâmbia,África,1,11,2,14
+2022,Jamaica,América Central e Caribe,1,7,6,13
+2022,Tanzânia,África,1,6,2,8
+2022,Haiti,América Central e Caribe,1,2,4,7
+2022,Albânia,Europa,1,0,0,0
+2022,Antígua e Barbuda,América Central e Caribe,1,0,0,0
+2022,Argélia,África,1,0,0,0
+2022,Armênia,Ásia,1,0,0,0
+2022,Azerbaijão,Ásia,1,0,0,0
+2022,Barbados,América Central e Caribe,1,0,0,0
+2022,Belize,América Central e Caribe,1,0,0,0
+2022,Benin,África,1,0,0,0
+2022,Botsuana,África,1,0,0,0
+2022,Burkina Faso,África,1,0,0,0
+2022,Bósnia e Herzegovina,Europa,1,0,0,0
+2022,Camarões,África,1,0,0,0
+2022,Cazaquistão,Ásia,1,0,0,0
+2022,Etiópia,África,1,0,0,0
+2022,Gabão,África,1,0,0,0
+2022,Geórgia,Ásia,1,0,0,0
+2022,Guiné,África,1,0,0,0
+2022,Guiné Equatorial,África,1,0,0,0
+2022,Iraque,Ásia,1,0,0,0
+2022,Líbia,África,1,0,0,0
+2022,Malaui,África,1,0,0,0
+2022,Mali,África,1,0,0,0
+2022,Mianmar,Ásia,1,0,0,0
+2022,Paquistão,Ásia,1,0,0,0
+2022,República do Congo,África,1,0,0,0
+2022,Santa Lúcia,América Central e Caribe,1,0,0,0
+2022,Sri Lanka,Ásia,1,0,0,0
+2022,São Tomé e Príncipe,África,1,0,0,0
+2022,Síria,Ásia,1,0,0,0
+2022,Togo,África,1,0,0,0
+2022,Ucrânia,Europa,1,0,0,0
+2022,Vaticano,Europa,1,0,0,0
+2022,Venezuela,América do Sul,2,0,0,0
+2022,Zimbábue,África,1,0,0,0
+2026,Estados Unidos,América do Norte,11,23335,45004,73661
+2026,Portugal,Europa,3,26401,19412,50334
+2026,Japão,Ásia,3,5234,24601,34281
+2026,Canadá,América do Norte,4,12508,7043,21658
+2026,Alemanha,Europa,3,13525,3532,18802
+2026,Reino Unido,Europa,2,8640,5366,15149
+2026,Espanha,Europa,2,7263,3338,11597
+2026,Itália,Europa,2,6148,4386,11595
+2026,França,Europa,2,8769,1758,11209
+2026,Suíça,Europa,2,5194,4525,10853
+2026,Irlanda,Europa,1,6025,1559,8299
+2026,Austrália,Oceania,2,4562,2579,8129
+2026,Países Baixos,Europa,1,4624,1081,6274
+2026,Argentina,América do Sul,5,3747,1681,5815
+2026,Bélgica,Europa,1,2516,1959,4975
+2026,Paraguai,América do Sul,6,546,3848,4560
+2026,Líbano,Ásia,1,2538,1138,3883
+2026,Suécia,Europa,1,1770,505,2540
+2026,Chile,América do Sul,1,928,809,1971
+2026,Bolívia,América do Sul,5,349,1387,1837
+2026,Uruguai,América do Sul,5,797,701,1651
+2026,Dinamarca,Europa,1,1166,195,1476
+2026,Áustria,Europa,1,979,311,1471
+2026,Emirados Árabes Unidos,Ásia,1,512,659,1355
+2026,México,América do Norte,1,585,589,1285
+2026,Palestina,Ásia,1,1078,46,1157
+2026,Guiana Francesa,América do Sul,2,484,518,1084
+2026,Noruega,Europa,1,592,198,884
+2026,Jordânia,Ásia,1,675,59,783
+2026,Peru,América do Sul,2,248,380,730
+2026,Israel,Ásia,1,92,523,704
+2026,Finlândia,Europa,1,475,155,693
+2026,Panamá,América Central e Caribe,1,236,336,658
+2026,China,Ásia,4,367,203,651
+2026,Suriname,América do Sul,1,121,366,540
+2026,Colômbia,América do Sul,1,245,252,527
+2026,Grécia,Europa,1,196,230,494
+2026,Hungria,Europa,1,331,93,464
+2026,África do Sul,África,2,152,230,419
+2026,Tchéquia,Europa,1,279,70,397
+2026,Costa Rica,América Central e Caribe,1,173,159,370
+2026,Catar,Ásia,1,147,173,357
+2026,Singapura,Ásia,1,190,92,348
+2026,Nova Zelândia,Oceania,1,234,64,332
+2026,Equador,América do Sul,1,130,171,328
+2026,Polônia,Europa,1,183,65,282
+2026,Angola,África,1,147,101,264
+2026,Venezuela,América do Sul,3,128,125,262
+2026,Taiwan,Ásia,1,77,107,218
+2026,Coreia do Sul,Ásia,1,123,72,216
+2026,Moçambique,África,1,89,113,214
+2026,Estônia,Europa,1,142,19,190
+2026,República Dominicana,América Central e Caribe,1,65,106,188
+2026,Turquia,Ásia,2,114,37,164
+2026,Guatemala,América Central e Caribe,1,33,67,118
+2026,Síria,Ásia,1,97,7,108
+2026,Tailândia,Ásia,1,40,51,99
+2026,Eslovênia,Europa,1,61,25,98
+2026,Arábia Saudita,Ásia,1,52,22,83
+2026,Malásia,Ásia,1,44,27,82
+2026,Rússia,Europa,1,49,25,81
+2026,Senegal,África,1,51,24,79
+2026,El Salvador,América Central e Caribe,1,23,48,77
+2026,Kuwait,Ásia,1,54,12,73
+2026,Cabo Verde,África,1,39,20,70
+2026,Nicarágua,América Central e Caribe,1,33,35,69
+2026,Egito,África,1,46,12,64
+2026,Filipinas,Ásia,1,26,33,62
+2026,Romênia,Europa,1,31,22,62
+2026,Índia,Ásia,2,29,27,61
+2026,Honduras,América Central e Caribe,1,17,34,59
+2026,Eslováquia,Europa,1,35,13,58
+2026,Chipre,Europa,1,24,20,57
+2026,Guiana,América do Sul,1,7,43,53
+2026,Croácia,Europa,1,29,17,48
+2026,Sérvia,Europa,1,30,13,48
+2026,Bahrein,Ásia,1,17,27,47
+2026,Bulgária,Europa,1,34,8,47
+2026,Quênia,África,1,26,17,46
+2026,Timor-Leste,Ásia,1,16,27,46
+2026,Costa do Marfim,África,1,24,13,44
+2026,Marrocos,África,1,30,6,42
+2026,Cuba,América Central e Caribe,1,36,1,38
+2026,Guiné-Bissau,África,1,17,17,37
+2026,Omã,Ásia,1,12,20,36
+2026,Nigéria,África,2,26,6,32
+2026,Argélia,África,1,27,3,31
+2026,Indonésia,Ásia,1,8,19,31
+2026,Vietnã,Ásia,1,13,14,29
+2026,Irã,Ásia,1,14,11,25
+2026,Ucrânia,Europa,1,4,19,23
+2026,Tunísia,África,1,12,9,22
+2026,Bahamas,América Central e Caribe,1,6,10,19
+2026,Jamaica,América Central e Caribe,1,4,14,19
+2026,Trinidad e Tobago,América Central e Caribe,1,4,10,19
+2026,Tanzânia,África,1,11,5,16
+2026,Gana,África,1,8,2,13
+2026,Namíbia,África,1,6,5,13
+2026,Nepal,Ásia,1,1,11,13
+2026,Haiti,América Central e Caribe,1,5,0,5
+2026,Líbia,África,1,2,0,2
+2026,Albânia,Europa,1,0,0,0
+2026,Antígua e Barbuda,América Central e Caribe,1,0,0,0
+2026,Armênia,Ásia,1,0,0,0
+2026,Azerbaijão,Ásia,1,0,0,0
+2026,Bangladesh,Ásia,1,0,0,0
+2026,Barbados,América Central e Caribe,1,0,0,0
+2026,Belize,América Central e Caribe,1,0,0,0
+2026,Benin,África,1,0,0,0
+2026,Botsuana,África,1,0,0,0
+2026,Burkina Faso,África,1,0,0,0
+2026,Bósnia e Herzegovina,Europa,1,0,0,0
+2026,Camarões,África,1,0,0,0
+2026,Cazaquistão,Ásia,1,0,0,0
+2026,Coreia do Norte,Ásia,1,0,0,0
+2026,Etiópia,África,1,0,0,0
+2026,Gabão,África,1,0,0,0
+2026,Geórgia,Ásia,1,0,0,0
+2026,Guiné,África,1,0,0,0
+2026,Guiné Equatorial,África,1,0,0,0
+2026,Iraque,Ásia,1,0,0,0
+2026,Malaui,África,1,0,0,0
+2026,Mali,África,1,0,0,0
+2026,Mianmar,Ásia,1,0,0,0
+2026,Paquistão,Ásia,1,0,0,0
+2026,República Democrática do Congo,África,1,0,0,0
+2026,República do Congo,África,1,0,0,0
+2026,Santa Lúcia,América Central e Caribe,1,0,0,0
+2026,Sri Lanka,Ásia,1,0,0,0
+2026,São Tomé e Príncipe,África,1,0,0,0
+2026,Togo,África,1,0,0,0
+2026,Zimbábue,África,1,0,0,0
+2026,Zâmbia,África,1,0,0,0

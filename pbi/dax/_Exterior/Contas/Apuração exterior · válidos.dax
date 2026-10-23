@@ -1,0 +1,6 @@
+/*
+@pasta: _Exterior\Contas
+@formato: #,0
+@descricao: Votos válidos apurados no exterior na última coleta (no contexto: o país).
+*/
+SUM ( 'Apuração exterior'[Validos] )

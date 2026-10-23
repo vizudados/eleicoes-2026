@@ -1,0 +1,15 @@
+/*
+@pasta: _Exterior\Desenho
+@formato: texto
+@descricao: Tooltip rico do exterior na tela 22: o 2º turno do exterior no cenário escolhido e, abaixo, o 1º turno país a país.
+*/
+VAR _l = [T22 · cenário · Lula %]
+VAR _f = [T22 · cenário · Flávio %]
+RETURN
+    SUBSTITUTE (
+        [Exterior · 1º turno · HTML],
+        "<div class='rot topo-rot'>",
+        "<div class='cen'><span class='rot'>NO SEU CENÁRIO, O EXTERIOR DARIA</span><b class='lula-esc'>Lula "
+            & FORMAT ( _l, "0.0%" ) & "</b><b class='flavio-esc'>Flávio " & FORMAT ( _f, "0.0%" ) & "</b></div>"
+            & "<div class='rot topo-rot'>"
+    )

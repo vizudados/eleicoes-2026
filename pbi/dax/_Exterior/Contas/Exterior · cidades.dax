@@ -1,0 +1,6 @@
+/*
+@pasta: _Exterior\Contas
+@formato: 0
+@descricao: Cidades com seção no exterior em 2026.
+*/
+CALCULATE ( SUM ( 'Exterior país'[Cidades] ), 'Exterior país'[Ano] = 2026 )

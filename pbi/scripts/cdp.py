@@ -135,8 +135,17 @@ def executar(pg, passos, pasta: Path) -> int:
             x0, y0, k = area_da_pagina(pg)
             destino = pasta / p["foto"]
             destino.parent.mkdir(parents=True, exist_ok=True)
-            pg.screenshot(path=str(destino), clip={"x": x0, "y": y0, "width": 1920 * k, "height": 1080 * k})
-            print(f"{i:02d} foto {destino}")
+            for tentativa in (1, 2):
+                try:
+                    pg.screenshot(path=str(destino), clip={"x": x0, "y": y0, "width": 1920 * k, "height": 1080 * k},
+                                  timeout=90000)
+                    print(f"{i:02d} foto {destino}")
+                    break
+                except Exception as e:  # noqa: BLE001 (página pesada ainda desenhando: tenta de novo, depois segue)
+                    if tentativa == 2:
+                        print(f"{i:02d} FALHA foto {destino}: {str(e)[:80]}")
+                        falhas += 1
+                    time.sleep(5)
         elif "tecla" in p:
             pg.keyboard.press(p["tecla"])
             time.sleep(p.get("espera", 2))

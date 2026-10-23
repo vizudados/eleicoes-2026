@@ -98,6 +98,47 @@ def status(br):
     return "encerrada" if br["secoes_pct"] >= 100 else "apurando"
 
 
+CONFIG_MUN = "https://resultados.tse.jus.br/oficial/{ciclo}/{eleicao}/config/mun-e{eleicao:06d}-cm.json"
+BASE_MUN = "https://resultados.tse.jus.br/oficial/{ciclo}/{eleicao}/dados/zz/zz{cd}-c0001-e{eleicao:06d}-u.json"
+CAMPOS_EXT = ["cd", "cidade", "pais", "continente", "atualizado_tse", "secoes_pct", "secoes_total", "secoes_totalizadas",
+              "validos", "lula_votos", "flavio_votos"]
+
+
+def coletar_exterior(ciclo, eleicao, pasta):
+    """As 186 cidades do exterior, uma por arquivo da API, ligadas ao país (o TSE não publica o país; a tabela é
+    dados/bruto/exterior/cidade_pais.csv). Grava exterior.csv; o painel agrega por país no tooltip do exterior."""
+    config = baixar(CONFIG_MUN.format(ciclo=ciclo, eleicao=eleicao))
+    if not config:
+        print("exterior: sem a lista de cidades do TSE; exterior.csv mantido", file=sys.stderr)
+        return
+    cidades = next((a["mu"] for a in config["abr"] if a["cd"].lower() == "zz"), [])
+    mapa = {}
+    with open(RAIZ / "dados" / "bruto" / "exterior" / "cidade_pais.csv", encoding="utf-8") as f:
+        for r in csv.DictReader(f, delimiter=";"):
+            mapa[r["cd_tse"]] = mapa[r["cidade"]] = (r["pais"], r["continente"])
+    urls = [BASE_MUN.format(ciclo=ciclo, eleicao=eleicao, cd=m["cd"]) for m in cidades]
+    with ThreadPoolExecutor(12) as ex:
+        brutos = list(ex.map(baixar, urls))
+    linhas = []
+    for m, b in zip(cidades, brutos):
+        if not b:
+            continue
+        s_, v = b["s"], b["v"]
+        por_numero = {c["numero"]: c for c in candidatos(b)}
+        pais, continente = mapa.get(m["cd"]) or mapa.get(m["nm"]) or ("?", "?")
+        linhas.append({"cd": m["cd"], "cidade": m["nm"].title(), "pais": pais, "continente": continente,
+                       "atualizado_tse": f"{b.get('dt', '')} {b.get('ht', '')}".strip(),
+                       "secoes_pct": numero(s_.get("pst")) or 0.0, "secoes_total": int(s_.get("ts") or 0),
+                       "secoes_totalizadas": int(s_.get("st") or 0), "validos": int(v.get("vv") or 0),
+                       "lula_votos": por_numero.get(13, {}).get("votos", 0),
+                       "flavio_votos": por_numero.get(22, {}).get("votos", 0)})
+    with open(pasta / "exterior.csv", "w", newline="", encoding="utf-8") as f:
+        w = csv.DictWriter(f, fieldnames=CAMPOS_EXT)
+        w.writeheader()
+        w.writerows(sorted(linhas, key=lambda l: (l["pais"], l["cidade"])))
+    print(f"exterior: {len(linhas)} de {len(cidades)} cidades")
+
+
 def coletar(ciclo, eleicao, pasta):
     urls = {uf: BASE.format(ciclo=ciclo, eleicao=eleicao, uf=uf) for uf in UFS}
     with ThreadPoolExecutor(8) as ex:
@@ -133,6 +174,7 @@ def coletar(ciclo, eleicao, pasta):
     if br["atualizado_tse"] and br["atualizado_tse"] != ultima_hora:
         with open(historico, "a", newline="", encoding="utf-8") as f:
             csv.DictWriter(f, fieldnames=CAMPOS_HISTORICO, extrasaction="ignore").writerow({**br, "coletado_em": agora})
+    coletar_exterior(ciclo, eleicao, pasta)
     print(f"{agora} · eleição {eleicao} · {retrato['status']} · {br['secoes_pct']}% das seções · "
           f"Lula {br['lula_pct']}% × Flávio {br['flavio_pct']}% · UFs: {len(retrato['ufs'])} · faltaram: {retrato['faltaram']}")
     return True

@@ -7,10 +7,13 @@
   T18_Curva_Html    a curva da noite (Brasil): as linhas se desenham a cada hora nova do TSE
   T18_Mapa_Html     mapa de quadrados (granularidade UF): cor de quem lidera; clique filtra o placar; dossiê da UF no
                     tooltip ttT18Uf. Não recebe o filtro de UF da casca (mostra sempre as 27 + exterior)
+  T18_Mapa_Exterior alvo transparente sobre o EX do mapa: abre o tooltip do exterior país a país (ttT18Exterior) e,
+                    no clique, filtra o placar pelo exterior como o quadrado de baixo
 """
 from __future__ import annotations
 
 import estilo
+import exterior
 import pagina_lib
 import pbip_lib as lib
 from pbip_lib import Interacao, Visual
@@ -22,6 +25,8 @@ C = estilo.COR
 PLACAR = (150, 140, 900, 470)
 CURVA = (150, 640, 900, 340)
 MAPA = (1110, 140, 660, 860)
+# o EX do mapa (coluna 5, linha 0 da grade: left 22 + 5 × 104, top 52), com 4 px de folga para o realce do mouse
+EX_ALVO = (MAPA[0] + 22 + 5 * 104 - 4, MAPA[1] + 52 - 4, 96 + 8, 84 + 8)
 
 CSS_PLACAR = (
     ".t18p .topo{position:absolute;left:0;top:30px}"
@@ -127,4 +132,12 @@ def declarar(ctx):
                             folha_de_estilo=CSS, modelo_corpo=f"<style>{CSS_TT}</style>{{{{content}}}}"),
         # o mapa mostra sempre todas as unidades: o filtro de UF da casca não chega nele
         Interacao(P, "T18_Casca_Filtro", "T18_Mapa_Html", "NoFilter"),
+        # o exterior país a país (pedido do Alisson, 23/10/2026): o alvo fica sobre o EX e não recebe filtro do mapa
+        # nem da casca (some se recebesse); o mapa também não recebe o clique do alvo
+        *exterior.declarar(P, "T18_Mapa_Exterior", EX_ALVO, "Exterior · ao vivo · HTML", ordem=181, cruzar=True,
+                           css_alvo=".ax{cursor:pointer;border-radius:5px}.ax:hover{box-shadow:inset 0 0 0 2px "
+                                    + C["tinta"] + "}"),
+        Interacao(P, "T18_Casca_Filtro", "T18_Mapa_Exterior", "NoFilter"),
+        Interacao(P, "T18_Mapa_Html", "T18_Mapa_Exterior", "NoFilter"),
+        Interacao(P, "T18_Mapa_Exterior", "T18_Mapa_Html", "NoFilter"),
     ]

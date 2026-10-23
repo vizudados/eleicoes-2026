@@ -1,0 +1,6 @@
+/*
+@pasta: _Exterior\Desenho
+@formato: texto
+@descricao: Alvo transparente sobre a linha ou o quadrado do exterior: abre o tooltip rico do exterior (o desenho de baixo continua o do visual da tela).
+*/
+IF ( SELECTEDVALUE ( 'UF'[UF] ) = "ZZ", "<div class='tela ax'></div>" )

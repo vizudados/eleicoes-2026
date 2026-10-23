@@ -1,0 +1,7 @@
+/*
+@pasta: _Exterior\Desenho
+@formato: texto
+@descricao: Texto alternativo do tooltip do exterior no 1º turno.
+*/
+"Exterior, 1º turno de 2026: Lula " & FORMAT ( [Exterior · Lula %], "0.0%" ) & ", Flávio " & FORMAT ( [Exterior · Flávio %], "0.0%" )
+    & ", em " & [Exterior · países] & " países; Lula à frente em " & [Exterior · países com Lula à frente] & "."

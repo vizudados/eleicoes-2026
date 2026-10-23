@@ -1,0 +1,10 @@
+/*
+@pasta: _Exterior\Desenho
+@formato: texto
+@descricao: Texto alternativo do tooltip do exterior na apuração.
+*/
+IF (
+    [Apuração exterior · válidos] = 0,
+    "Exterior: a apuração começa às 17h de 25/10; no 1º turno, Lula " & FORMAT ( [Exterior · Lula %], "0.0%" ) & " e Flávio " & FORMAT ( [Exterior · Flávio %], "0.0%" ) & ".",
+    "Exterior, apuração do 2º turno: Lula " & FORMAT ( [Apuração exterior · Lula %], "0.0%" ) & ", Flávio " & FORMAT ( [Apuração exterior · Flávio %], "0.0%" ) & "."
+)

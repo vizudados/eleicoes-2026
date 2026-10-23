@@ -1,0 +1,6 @@
+/*
+@pasta: _Exterior\Contas
+@formato: 0.0%
+@descricao: Margem do PT no exterior no 1º turno de 2026: (Lula − adversário) ÷ válidos.
+*/
+DIVIDE ( CALCULATE ( SUM ( 'Exterior país'[VotosPT] ) - SUM ( 'Exterior país'[VotosAdversario] ), 'Exterior país'[Ano] = 2026 ), CALCULATE ( SUM ( 'Exterior país'[Validos] ), 'Exterior país'[Ano] = 2026 ) )

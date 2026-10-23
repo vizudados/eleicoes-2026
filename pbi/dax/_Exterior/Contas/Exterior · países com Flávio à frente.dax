@@ -1,0 +1,11 @@
+/*
+@pasta: _Exterior\Contas
+@formato: 0
+@descricao: Países em que Flávio teve mais votos no 1º turno de 2026.
+*/
+COUNTROWS (
+    FILTER (
+        CALCULATETABLE ( VALUES ( 'Exterior país'[País] ), 'Exterior país'[Ano] = 2026 ),
+        [Exterior · Lula %] < [Exterior · Flávio %]
+    )
+) + 0

@@ -1,0 +1,53 @@
+/*
+@pasta: _Exterior\Desenho
+@formato: texto
+@descricao: Tooltip rico do exterior no 1º turno de 2026: Lula × Flávio no exterior, os 12 países com mais votos (barra dos dois e variação da margem desde 2022) e o resto somado.
+*/
+-- 1 · Leituras: os países com mais votos válidos (os 12 maiores) e o resto somado
+VAR _paises = CALCULATETABLE ( VALUES ( 'Exterior país'[País] ), 'Exterior país'[Ano] = 2026 )
+VAR _t =
+    ADDCOLUMNS ( _paises, "@v", [Exterior · válidos], "@l", [Exterior · Lula %], "@f", [Exterior · Flávio %], "@d", [Exterior · variação da margem] )
+VAR _top = TOPN ( 12, FILTER ( _t, [@v] > 0 ), [@v], DESC, 'Exterior país'[País], ASC )
+VAR _topR = ADDCOLUMNS ( _top, "@i", RANKX ( _top, [@v],, DESC, DENSE ) )
+VAR _resto = EXCEPT ( _paises, SELECTCOLUMNS ( _top, "País", 'Exterior país'[País] ) )
+VAR _nResto = COUNTROWS ( _resto ) + 0
+VAR _rv = CALCULATE ( SUM ( 'Exterior país'[Validos] ), 'Exterior país'[Ano] = 2026, TREATAS ( _resto, 'Exterior país'[País] ) )
+VAR _rl = DIVIDE ( CALCULATE ( SUM ( 'Exterior país'[VotosPT] ), 'Exterior país'[Ano] = 2026, TREATAS ( _resto, 'Exterior país'[País] ) ), _rv )
+VAR _rf = DIVIDE ( CALCULATE ( SUM ( 'Exterior país'[VotosAdversario] ), 'Exterior país'[Ano] = 2026, TREATAS ( _resto, 'Exterior país'[País] ) ), _rv )
+VAR _tl = [Exterior · Lula %]
+VAR _tf = [Exterior · Flávio %]
+-- 2 · Desenho
+VAR _linhas =
+    CONCATENATEX (
+        _topR,
+        "<div class='lp sobe d" & MIN ( 16, [@i] + 3 ) & "'><span class='pn'><b>" & 'Exterior país'[País] & "</b><i>"
+            & FORMAT ( [@v], "#,0" ) & IF ( [@v] = 1, " voto", " votos" ) & "</i></span>"
+            & "<span class='vl'>" & FORMAT ( [@l] * 100, "0" ) & "%</span>"
+            & "<span class='br'><i class='bl barra-x' style='width:" & FORMAT ( [@l] * 100, "0.0##", "en-US" )
+            & "%'></i><i class='bf barra-x-dir' style='width:" & FORMAT ( [@f] * 100, "0.0##", "en-US" ) & "%'></i></span>"
+            & "<span class='vf'>" & FORMAT ( [@f] * 100, "0" ) & "%</span>"
+            & "<span class='dv " & IF ( [@d] < 0, "neg", "pos" ) & "'>" & IF ( ISBLANK ( [@d] ), "novo", FORMAT ( [@d], "+0.0;−0.0;0.0" ) ) & "</span>" & "</div>",
+        "", [@v], DESC
+    )
+VAR _outros =
+    IF (
+        _nResto > 0,
+        "<div class='outros sobe d16'>Outros " & _nResto & IF ( _nResto = 1, " país", " países" ) & " · "
+            & FORMAT ( _rv, "#,0" ) & " votos · Lula " & FORMAT ( _rl * 100, "0" ) & "% × Flávio "
+            & FORMAT ( _rf * 100, "0" ) & "%</div>"
+    )
+VAR _nl = [Exterior · países com Lula à frente]
+VAR _nf = [Exterior · países com Flávio à frente]
+RETURN
+    "<div class='tela tx'><div class='fita'></div>"
+        & "<div class='rot topo-rot'>" & "EXTERIOR · 1º TURNO DE 2026 · " & [Exterior · cidades] & " CIDADES EM " & [Exterior · países] & " PAÍSES" & "</div>"
+        & "<div class='topo'><div class='c'><span class='num lula'>" & FORMAT ( _tl * 100, "0.0" ) & "%</span>"
+        & "<span class='rot lula-esc'>LULA</span></div><div class='c'><span class='num flavio'>"
+        & FORMAT ( _tf * 100, "0.0" ) & "%</span><span class='rot flavio-esc'>FLÁVIO</span></div>"
+        & "<div class='c tot'><span class='num'>" & FORMAT ( [Exterior · válidos], "#,0" ) & "</span>"
+        & "<span class='rot'>VOTOS VÁLIDOS</span></div></div>"
+        & "<div class='mao'>Lula na frente em " & _nl & IF ( _nl = 1, " país", " países" ) & ", Flávio em " & _nf
+        & "</div>"
+        & "<div class='cab rot'><span>PAÍS</span><span>LULA</span><span></span><span>FLÁVIO</span><span>2022→26</span></div>"
+        & "<div class='lista'>" & _linhas & "</div>" & _outros
+        & "<div class='pe nota'>" & "variação da margem do PT de 2022 (Lula × Bolsonaro) para 2026 (Lula × Flávio), em pontos; negativa: na direção do adversário" & "</div></div>"

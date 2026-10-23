@@ -1,0 +1,6 @@
+/*
+@pasta: _Exterior\Contas
+@formato: #,0
+@descricao: Votos válidos no exterior no 1º turno de 2026 (no contexto: o país).
+*/
+CALCULATE ( SUM ( 'Exterior país'[Validos] ), 'Exterior país'[Ano] = 2026 )

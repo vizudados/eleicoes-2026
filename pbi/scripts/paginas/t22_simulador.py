@@ -13,6 +13,7 @@ Para empatar, Lula precisaria de 62% dos 9,32 mi de votos dos outros candidatos.
                           2º turno que isso daria; clique leva o cenário da pesquisa ao resultado e ao mapa
   T22_Resultado_Html      o 2º turno simulado (Brasil com o exterior): Lula × Flávio, UFs à frente, diferença
   T22_Grade_Html          o mapa de quadrados das UFs (granularidade UF[UF]); tooltip: dossiê da UF (ttT22UF)
+  T22_Exterior_Alvo       alvo transparente sobre o EX: o exterior no cenário e o 1º turno país a país (ttT22Exterior)
   T22_Legenda_Html        legenda e dica (fixo)
 
 Medidas em pbi/dax/T22 Simulador (desenho gerado por pbi/scripts/desenho_t22.py); parâmetros em
@@ -21,6 +22,7 @@ pbi/modelo/t22_parametros.py.
 from __future__ import annotations
 
 import desenho_t22 as D
+import exterior
 import pagina_lib
 import pbip_lib as lib
 from pbip_lib import Interacao, Visual
@@ -74,6 +76,9 @@ def declarar(ctx):
                                   z=Z + 7, tab=220)),
         *pagina_lib.tooltip(TT, "UF · cenário", 420, 250, "T22 · Tooltip UF · HTML", ordem=320,
                             folha_de_estilo=CSS, modelo_corpo=D.corpo_tooltip()),
+        # o EX da grade (coluna 5, linha 0) abre o tooltip do exterior país a país, com o cenário no topo
+        *exterior.declarar(P, "T22_Exterior_Alvo", (D.GRADE[0] + 5 * D.PASSO, D.GRADE[1], D.LADO, D.LADO),
+                           "Exterior · simulador · HTML", ordem=321, altura=exterior.ALTURA + 50),
     ]
     # a lista das pesquisas escolhe o cenário do resultado e do mapa; a régua segue mostrando todas as pesquisas
     for alvo in ("T22_ReguaLula_Html", "T22_Heroi_Html", "T22_ReguaAbst_Html", "T22_ReguaComp_Html",

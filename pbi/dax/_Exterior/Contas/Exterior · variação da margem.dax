@@ -1,0 +1,9 @@
+/*
+@pasta: _Exterior\Contas
+@formato: +0.0;-0.0;0.0
+@descricao: Variação da margem do PT de 2022 para 2026, em pontos (negativa: na direção do adversário); vazia onde não houve seção em 2022.
+*/
+VAR _a = [Exterior · margem 2022]
+VAR _b = [Exterior · margem 2026]
+RETURN
+    IF ( NOT ISBLANK ( _a ) && NOT ISBLANK ( _b ), ( _b - _a ) * 100 )

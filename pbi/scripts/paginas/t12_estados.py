@@ -9,12 +9,17 @@ Lula perdeu margem em 26 das 27 unidades; Minas Gerais e Tocantins mudaram de la
   T12_Corrida_Html    a corrida das unidades (granularidade UF, 27 + exterior): da maior queda à alta, o ponto vazado de
                       2022 e o cheio de 2026, que desliza até o lugar na entrada; eixo de −60 a +60 p.p. no bodyTemplate.
                       Tooltip: dossiê da UF (ttT12Uf)
+  T12_Exterior_Alvo   alvo transparente sobre a linha do exterior: abre o tooltip do exterior país a país (ttT12Exterior)
 
 Medidas em pbi/dax/T12 Estados (geradas por pbi/scripts/desenho_t12.py).
 """
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import estilo
+import exterior
 import pagina_lib
 import pbip_lib as lib
 from pbip_lib import Visual
@@ -26,6 +31,17 @@ Z = lib.CAMADAS["conteudo"]
 RESPOSTA = (150, 140, 560, 860)
 TITULO = (760, 140, 1010, 96)
 CORRIDA = (760, 236, 1010, 764)
+ORACULO = Path(__file__).resolve().parents[3] / "mockup" / "data" / "eleicoes.json"
+
+
+def _caixa_exterior() -> tuple:
+    """A linha do exterior na corrida: a ordem é a da conta 'T12 · posição' (da maior queda à alta, a mesma do oráculo)
+    e a linha fica em y = 18 + (posição − 1) × 25,4 dentro da corrida, com o alvo de 24 px a partir de y − 12."""
+    paginas = json.loads(ORACULO.read_text(encoding="utf-8"))["paginas"]
+    ufs = next(p for p in paginas if p.get("tela") == 12)["ufs"]
+    pos = next(i for i, u in enumerate(ufs) if u["uf"] == "EX") + 1
+    return (CORRIDA[0], round(CORRIDA[1] + 18 + (pos - 1) * 25.4 - 12, 1), CORRIDA[2], 24)
+
 
 CSS_RESPOSTA = (
     ".t12r .topo{position:absolute;left:-4px;top:-22px;display:flex;align-items:baseline;gap:16px}"
@@ -163,4 +179,7 @@ def declarar(ctx):
                                   alt=lib.medida("T12 · Corrida · ALT"), z=Z + 2, tab=120)),
         *pagina_lib.tooltip("ttT12Uf", "Estados · UF", 440, 300, "T12 · Tooltip UF · HTML", ordem=220,
                             folha_de_estilo=CSS, modelo_corpo=_corpo_tt(CSS_TOOLTIP)),
+        # o exterior ganha o tooltip país a país (pedido do Alisson, 23/10/2026)
+        *exterior.declarar(P, "T12_Exterior_Alvo", _caixa_exterior(), "Exterior · 1º turno · HTML", ordem=221,
+                           css_alvo=".ax{cursor:default;border-radius:2px}.ax:hover{background:rgba(28,25,21,.07)}"),
     ]

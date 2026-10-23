@@ -657,19 +657,29 @@ def visual_vizufilter(nome: str, x, y, w, h, *, categoria: tuple, geral: dict, l
 # entrada (1,5 s depois da 1ª renderização) os números de 20 px ou mais (sem ano, data nem ordinal) contam do zero e as barras usam o crescimento do
 # CSS; nas renderizações seguintes (filtro, clique) os números contam do valor anterior, as barras deslizam do tamanho
 # anterior (scale → 1, 0,7 s) e as entradas por opacidade não piscam de novo. O texto final é sempre o do DAX; sem JS,
-# com erro ou com movimento reduzido, nada muda. Fora: alvos de clique, leituras, cabeçalho, casca, dicas e tooltips.
-RE_SEM_MOVIMENTO = re.compile(r"(_Alvos|_Leitura|Cab_Pergunta|_Casca_|_Dica\d|_Onde_Obras|_Abas$|^TT_|^tt)")
+# com erro ou com movimento reduzido, nada muda. Fora: alvos de clique, leituras, cabeçalho, casca e dicas.
+# Tooltips (TT_…, pedido do Alisson, 23/10/2026: "animação dos elementos dos tooltips"): cada ponto sob o mouse é uma
+# entrada — os filhos do cartão sobem em cascata curta (CSS_ENTRADA_TT, especificidade zero: quem já tem animação
+# própria fica com a sua), as barras crescem de novo e os números contam do valor do ponto anterior (do zero no 1º).
+RE_SEM_MOVIMENTO = re.compile(r"(_Alvos|_Leitura|Cab_Pergunta|_Casca_|_Dica\d|_Onde_Obras|_Abas$|^tt)")
+CSS_ENTRADA_TT = (
+    "@keyframes ttSobe{from{opacity:0;transform:translateY(10px)}}"
+    ":where(.htmlViewerEntry>*>*){animation:ttSobe .42s cubic-bezier(.2,.7,.2,1) both}"
+    + "".join(f":where(.htmlViewerEntry>*>:nth-child({i})){{animation-delay:{(i - 1) * 45}ms}}" for i in range(2, 15))
+    + ":where(.htmlViewerEntry>*>:nth-child(n+15)){animation-delay:630ms}"
+)
 _SCRIPT_MOVIMENTO: str | None = None
 
 
-def script_movimento() -> str:
+def script_movimento(tooltip: bool = False) -> str:
+    """O movimento.js numa tag; `tooltip` liga o modo de tooltip (window.__mvTT antes do kit)."""
     global _SCRIPT_MOVIMENTO
     if _SCRIPT_MOVIMENTO is None:
         js = "".join(l.strip() for l in (AQUI / "movimento.js").read_text(encoding="utf-8").splitlines())
         if "</script" in js.lower() or "//" in js.replace("://", ""):
             raise ErroDeclaracao("movimento.js: </script> ou comentário de linha (as linhas são juntadas)")
-        _SCRIPT_MOVIMENTO = "<script>" + js + "</script>"
-    return _SCRIPT_MOVIMENTO
+        _SCRIPT_MOVIMENTO = js
+    return "<script>" + ("window.__mvTT=1;" if tooltip else "") + _SCRIPT_MOVIMENTO + "</script>"
 
 
 def visual_html(nome: str, x, y, w, h, medida_conteudo: str, *, alt, z: int = CAMADAS["conteudo"],
@@ -714,8 +724,11 @@ def visual_html(nome: str, x, y, w, h, medida_conteudo: str, *, alt, z: int = CA
     # todo visual de conteúdo, fora das camadas de clique, leituras, cabeçalhos, casca e tooltips (movimento=None)
     if movimento is None:
         movimento = not RE_SEM_MOVIMENTO.search(nome)
+    tooltip = nome.startswith("TT_")
     if movimento:
-        modelo_corpo = (modelo_corpo if modelo_corpo is not None else "{{content}}") + script_movimento()
+        modelo_corpo = (modelo_corpo if modelo_corpo is not None else "{{content}}") + script_movimento(tooltip)
+        if tooltip:
+            modelo_corpo = f"<style>{CSS_ENTRADA_TT}</style>" + modelo_corpo
     if modelo_corpo is not None:
         # templates.bodyTemplate do 2.0: texto fixo do visual com {{content}} no lugar da medida (fora do limite de
         # 32.760 caracteres das medidas de texto, L048)
