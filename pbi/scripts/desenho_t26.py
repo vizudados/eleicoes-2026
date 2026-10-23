@@ -10,7 +10,7 @@ com a hora e a fonte esperadas; com valor = o número (contador); nao_divulgado 
 do arquivo: cancelar o debate ou registrar uma ausência não exige mexer no relatório.
 
   T26_Ficha_Html      a ficha da noite: o selo da situação, a hora, onde passa, a mediação, a manchete (responde à
-                      pergunta com o que já se sabe) e as regras em quatro blocos
+                      pergunta com o que já se sabe) (as regras em blocos e a checagem saíram da tela em 23/10/2026)
   T26_Palco_Html      os dois púlpitos em traço (grão 'T26 Debate Globo'[Chave], só as linhas de presença): o nome, o
                       púlpito na cor do candidato (vazio e tracejado se ele faltar) e a situação; dossiê ttT26Presenca
   T26_Noite_Html      fundo da faixa de baixo: o título, a fita do tempo da sexta 21h20 ao domingo da eleição
@@ -351,7 +351,6 @@ VAR _motivo = [T26 · debate · motivo]
 VAR _trans = [T26 · transmissão]
 VAR _med = [T26 · mediação]
 VAR _local = [T26 · local]
-VAR _chec = [T26 · checagem]
 VAR _aus = [T26 · ausentes]
 VAR _n = [T26 · cartões · chegaram]
 VAR _tot = [T26 · cartões · total]
@@ -366,7 +365,6 @@ VAR _pF = [T26 · pesquisas · depois · Flávio]
 VAR _aL = [T26 · pesquisas · antes · Lula]
 VAR _aF = [T26 · pesquisas · antes · Flávio]
 VAR _aN = [T26 · pesquisas · antes · n]
-VAR _blocos = [T26 · regras · blocos]
 -- 2 · Textos
 VAR _sitEf = IF ( _sit IN { "marcado", "no_ar" } && _n > 0, "realizado", _sit )
 VAR _selo =
@@ -414,21 +412,8 @@ VAR _sub =
             & IF ( _nd > 0, " · " & FORMAT ( _nd, "0" ) & IF ( _nd = 1, " não divulgado", " não divulgados" ), "" )
             & " · situação em " & _atu
     )
-VAR _regras =
-    CONCATENATEX (
-        FILTER ( ALL ( 'T26 Debate Globo'[Chave] ), [T26 · linha · grupo] = "regra" && NOT ISBLANK ( [T26 · linha · valor] ) ),
-        VAR _u = [T26 · linha · unidade]
-        RETURN
-            "<div class='bl sobe'><div class='rot'>" & #ESC([T26 · linha · rótulo])# & "</div><div class='bt'>"
-                & #ESC([T26 · linha · texto])# & "</div><div class='bm'><b>" & FORMAT ( [T26 · linha · valor], "0" )
-                & " min</b> " & #ESC(SUBSTITUTE ( _u, "min ", "" ))# & "</div></div>",
-        "",
-        [T26 · linha · ordem], ASC
-    )
--- 3 · Geometria
-VAR _larg = 880 -- geometria
-VAR _bl = IF ( _blocos > 0, ( _larg - 10 * ( _blocos - 1 ) ) / _blocos, 0 ) -- geometria
--- 4 · Marcação
+-- 4 · Marcação (as regras em blocos e a checagem saíram da tela em 23/10/2026, pedido do dono: "achei um pouco
+-- poluída… essa questão dos blocos não precisa"; seguem em dados/pbi/debate_globo.csv)
 RETURN
     IF (
         [T26 · arquivo · linhas] = 0,
@@ -441,11 +426,9 @@ RETURN
         & "<div class='dia rot entra d1'>" & _dia & "O ÚLTIMO DEBATE ANTES DO 2º TURNO</div>"
         & "<div class='hora sobe d2'><span class='num" & IF ( _sit IN { "cancelado", "adiado" }, " riscado", "" ) & "'>" & _hora & "</span></div>"
         & "<div class='onde sobe d3'><div class='txt'><b>" & #ESC(_trans)# & "</b></div>"
-            & "<div class='txt'>mediação de " & #ESC(_med)# & " · " & #ESC(_local)# & "</div>"
-            & "<div class='nota'>checagem: " & #ESC(_chec)# & "</div></div>"
+            & "<div class='txt'>mediação de " & #ESC(_med)# & " · " & #ESC(_local)# & "</div></div>"
         & "<div class='man sobe d4'>" & #ESC(_man)# & "</div>"
         & "<div class='situ nota entra d2'>" & #ESC(_sub)# & "</div>"
-        & "<div class='regras' style='--bl:" & FORMAT ( _bl, "0.0##", "en-US" ) & "px'>" & _regras & "</div>"
     & "</div>"
     )'''
 
@@ -537,7 +520,7 @@ VAR _iniTxt = IF ( ISBLANK ( _ini ), "", UPPER ( FORMAT ( _ini, "ddd dd/MM" ) ) 
 RETURN
     "<div class='tela t26n'>"
         & "<div class='cab'><div class='sob sobe'>A NOITE EM NÚMEROS · E A RÉGUA DA BAND, 18/10</div>"
-        & "<div class='txt sobe d1'>" & _txt & "</div></div>"
+        & IF ( [T26 · arquivo · linhas] = 0 || _sit IN { "cancelado", "adiado" }, "<div class='txt sobe d1'>" & _txt & "</div>", "" ) & "</div>"
         & "<div class='ini rot entra d3'>" & _iniTxt & "</div>"
         & "<div class='fimr rot entra d6'>DOM 25/10 · A ELEIÇÃO</div>"
         & "<svg class='fita' width='1620' height='24' viewBox='0 0 1620 24'><path class='traco' pathLength='1' "
@@ -597,7 +580,6 @@ VAR _chaveTxt =
         "pesquisas", "pesquisas_depois"
     )
 VAR _esp = CALCULATE ( [T26 · linha · esperado], 'T26 Debate Globo'[Chave] = _chaveTxt )
-VAR _fEsp = CALCULATE ( [T26 · linha · fonte esperada], 'T26 Debate Globo'[Chave] = _chaveTxt )
 VAR _chaveFonte = IF ( _c = "audiencia", IF ( _est = "consolidado", "audiencia_consolidado", "audiencia_previa" ), _chaveTxt )
 VAR _fonte = CALCULATE ( [T26 · linha · fonte], 'T26 Debate Globo'[Chave] = _chaveFonte )
 VAR _atu = CALCULATE ( [T26 · linha · atualizado], 'T26 Debate Globo'[Chave] = _chaveFonte )
@@ -685,7 +667,7 @@ VAR _fonteTxt =
         _c = "pesquisas" && _pN > 0,
             "Fonte: " & #ESC(_pInst)# & " · campo de " & FORMAT ( _pIni, "dd/MM" ) & " a " & FORMAT ( _pFim, "dd/MM" ) & ", registro no TSE",
         _chegou || _est = "parcial", "Fonte: " & #ESC(_fonte)#,
-        "Fonte esperada: " & #ESC(_fEsp)#
+        "" -- sem número, a fonte esperada fica só no dossiê do cartão (tela mais limpa, 23/10/2026)
     )
 -- a régua da Band (a mesma medida) ou, nas pesquisas, o antes
 VAR _refAud = IF ( _est = "previa", _bandP, _bandC )
@@ -749,7 +731,7 @@ RETURN
                 & "<div class='ti'>" & #ESC(_rot)# & "</div>"
                 & "<div class='me'>" & #ESC(_med)# & "</div>"
                 & _valor & _notaP
-                & "<div class='fo'>" & _fonteTxt & "</div>"
+                & IF ( _fonteTxt = "", "", "<div class='fo'>" & _fonteTxt & "</div>" )
                 & "<div class='ref'>" & _ref & "</div>"
             & "</div>"
         & "</div>"
@@ -915,7 +897,7 @@ def expandir(texto: str) -> str:
 DESENHOS = [
     ("T26 · Ficha · HTML", "A ficha da noite: selo da situação, a hora, onde passa, mediação, local e checagem, a manchete "
      "(responde à pergunta com o que já se sabe: ausência, pesquisas depois do debate, audiência contra a Band ou a "
-     "espera), a linha dos números que chegaram e as regras em blocos (CONCATENATEX das linhas do grupo regra).", FICHA),
+     "espera), a linha dos números que chegaram (as regras em blocos e a checagem saíram em 23/10/2026).", FICHA),
     ("T26 · Ficha · ALT", "Texto puro da ficha para leitor de tela.", FICHA_ALT),
     ("T26 · Palco · HTML", "Um púlpito por candidato (grão 'T26 Debate Globo'[Chave]; só as linhas de presença): o nome na "
      "cor dele, o púlpito em traço (vazio e tracejado se faltar ou se o debate cair) e a situação. Alvo do dossiê "

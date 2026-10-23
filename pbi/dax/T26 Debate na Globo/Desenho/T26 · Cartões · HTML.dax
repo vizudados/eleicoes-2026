@@ -48,7 +48,6 @@ VAR _chaveTxt =
         "pesquisas", "pesquisas_depois"
     )
 VAR _esp = CALCULATE ( [T26 · linha · esperado], 'T26 Debate Globo'[Chave] = _chaveTxt )
-VAR _fEsp = CALCULATE ( [T26 · linha · fonte esperada], 'T26 Debate Globo'[Chave] = _chaveTxt )
 VAR _chaveFonte = IF ( _c = "audiencia", IF ( _est = "consolidado", "audiencia_consolidado", "audiencia_previa" ), _chaveTxt )
 VAR _fonte = CALCULATE ( [T26 · linha · fonte], 'T26 Debate Globo'[Chave] = _chaveFonte )
 VAR _atu = CALCULATE ( [T26 · linha · atualizado], 'T26 Debate Globo'[Chave] = _chaveFonte )
@@ -136,7 +135,7 @@ VAR _fonteTxt =
         _c = "pesquisas" && _pN > 0,
             "Fonte: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _pInst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · campo de " & FORMAT ( _pIni, "dd/MM" ) & " a " & FORMAT ( _pFim, "dd/MM" ) & ", registro no TSE",
         _chegou || _est = "parcial", "Fonte: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fonte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ),
-        "Fonte esperada: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fEsp, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+        "" -- sem número, a fonte esperada fica só no dossiê do cartão (tela mais limpa, 23/10/2026)
     )
 -- a régua da Band (a mesma medida) ou, nas pesquisas, o antes
 VAR _refAud = IF ( _est = "previa", _bandP, _bandC )
@@ -200,7 +199,7 @@ RETURN
                 & "<div class='ti'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rot, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
                 & "<div class='me'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
                 & _valor & _notaP
-                & "<div class='fo'>" & _fonteTxt & "</div>"
+                & IF ( _fonteTxt = "", "", "<div class='fo'>" & _fonteTxt & "</div>" )
                 & "<div class='ref'>" & _ref & "</div>"
             & "</div>"
         & "</div>"

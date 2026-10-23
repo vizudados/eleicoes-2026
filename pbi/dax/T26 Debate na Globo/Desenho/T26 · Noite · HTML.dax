@@ -22,7 +22,7 @@ VAR _iniTxt = IF ( ISBLANK ( _ini ), "", UPPER ( FORMAT ( _ini, "ddd dd/MM" ) ) 
 RETURN
     "<div class='tela t26n'>"
         & "<div class='cab'><div class='sob sobe'>A NOITE EM NÚMEROS · E A RÉGUA DA BAND, 18/10</div>"
-        & "<div class='txt sobe d1'>" & _txt & "</div></div>"
+        & IF ( [T26 · arquivo · linhas] = 0 || _sit IN { "cancelado", "adiado" }, "<div class='txt sobe d1'>" & _txt & "</div>", "" ) & "</div>"
         & "<div class='ini rot entra d3'>" & _iniTxt & "</div>"
         & "<div class='fimr rot entra d6'>DOM 25/10 · A ELEIÇÃO</div>"
         & "<svg class='fita' width='1620' height='24' viewBox='0 0 1620 24'><path class='traco' pathLength='1' "

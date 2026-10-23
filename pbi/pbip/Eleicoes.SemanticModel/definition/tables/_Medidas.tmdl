@@ -25471,7 +25471,6 @@ table _Medidas
 			        "pesquisas", "pesquisas_depois"
 			    )
 			VAR _esp = CALCULATE ( [T26 · linha · esperado], 'T26 Debate Globo'[Chave] = _chaveTxt )
-			VAR _fEsp = CALCULATE ( [T26 · linha · fonte esperada], 'T26 Debate Globo'[Chave] = _chaveTxt )
 			VAR _chaveFonte = IF ( _c = "audiencia", IF ( _est = "consolidado", "audiencia_consolidado", "audiencia_previa" ), _chaveTxt )
 			VAR _fonte = CALCULATE ( [T26 · linha · fonte], 'T26 Debate Globo'[Chave] = _chaveFonte )
 			VAR _atu = CALCULATE ( [T26 · linha · atualizado], 'T26 Debate Globo'[Chave] = _chaveFonte )
@@ -25559,7 +25558,7 @@ table _Medidas
 			        _c = "pesquisas" && _pN > 0,
 			            "Fonte: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _pInst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · campo de " & FORMAT ( _pIni, "dd/MM" ) & " a " & FORMAT ( _pFim, "dd/MM" ) & ", registro no TSE",
 			        _chegou || _est = "parcial", "Fonte: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fonte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ),
-			        "Fonte esperada: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fEsp, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+			        "" -- sem número, a fonte esperada fica só no dossiê do cartão (tela mais limpa, 23/10/2026)
 			    )
 			-- a régua da Band (a mesma medida) ou, nas pesquisas, o antes
 			VAR _refAud = IF ( _est = "previa", _bandP, _bandC )
@@ -25623,7 +25622,7 @@ table _Medidas
 			                & "<div class='ti'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rot, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
 			                & "<div class='me'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
 			                & _valor & _notaP
-			                & "<div class='fo'>" & _fonteTxt & "</div>"
+			                & IF ( _fonteTxt = "", "", "<div class='fo'>" & _fonteTxt & "</div>" )
 			                & "<div class='ref'>" & _ref & "</div>"
 			            & "</div>"
 			        & "</div>"
@@ -25647,7 +25646,7 @@ table _Medidas
 		displayFolder: T26 Debate na Globo\Desenho
 		lineageTag: 8cb5959b-b8f7-5cb4-af83-9b8cad2e8130
 
-	/// A ficha da noite: selo da situação, a hora, onde passa, mediação, local e checagem, a manchete (responde à pergunta com o que já se sabe: ausência, pesquisas depois do debate, audiência contra a Band ou a espera), a linha dos números que chegaram e as regras em blocos (CONCATENATEX das linhas do grupo regra).
+	/// A ficha da noite: selo da situação, a hora, onde passa, mediação, local e checagem, a manchete (responde à pergunta com o que já se sabe: ausência, pesquisas depois do debate, audiência contra a Band ou a espera), a linha dos números que chegaram (as regras em blocos e a checagem saíram em 23/10/2026).
 	measure 'T26 · Ficha · HTML' =
 			-- 1 · Leituras (contas de T26 Debate na Globo\Contas)
 			VAR _sit = [T26 · debate · situação]
@@ -25657,7 +25656,6 @@ table _Medidas
 			VAR _trans = [T26 · transmissão]
 			VAR _med = [T26 · mediação]
 			VAR _local = [T26 · local]
-			VAR _chec = [T26 · checagem]
 			VAR _aus = [T26 · ausentes]
 			VAR _n = [T26 · cartões · chegaram]
 			VAR _tot = [T26 · cartões · total]
@@ -25672,7 +25670,6 @@ table _Medidas
 			VAR _aL = [T26 · pesquisas · antes · Lula]
 			VAR _aF = [T26 · pesquisas · antes · Flávio]
 			VAR _aN = [T26 · pesquisas · antes · n]
-			VAR _blocos = [T26 · regras · blocos]
 			-- 2 · Textos
 			VAR _sitEf = IF ( _sit IN { "marcado", "no_ar" } && _n > 0, "realizado", _sit )
 			VAR _selo =
@@ -25720,21 +25717,8 @@ table _Medidas
 			            & IF ( _nd > 0, " · " & FORMAT ( _nd, "0" ) & IF ( _nd = 1, " não divulgado", " não divulgados" ), "" )
 			            & " · situação em " & _atu
 			    )
-			VAR _regras =
-			    CONCATENATEX (
-			        FILTER ( ALL ( 'T26 Debate Globo'[Chave] ), [T26 · linha · grupo] = "regra" && NOT ISBLANK ( [T26 · linha · valor] ) ),
-			        VAR _u = [T26 · linha · unidade]
-			        RETURN
-			            "<div class='bl sobe'><div class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · linha · rótulo], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div><div class='bt'>"
-			                & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · linha · texto], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div><div class='bm'><b>" & FORMAT ( [T26 · linha · valor], "0" )
-			                & " min</b> " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _u, "min ", "" ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>",
-			        "",
-			        [T26 · linha · ordem], ASC
-			    )
-			-- 3 · Geometria
-			VAR _larg = 880 -- geometria
-			VAR _bl = IF ( _blocos > 0, ( _larg - 10 * ( _blocos - 1 ) ) / _blocos, 0 ) -- geometria
-			-- 4 · Marcação
+			-- 4 · Marcação (as regras em blocos e a checagem saíram da tela em 23/10/2026, pedido do dono: "achei um pouco
+			-- poluída… essa questão dos blocos não precisa"; seguem em dados/pbi/debate_globo.csv)
 			RETURN
 			    IF (
 			        [T26 · arquivo · linhas] = 0,
@@ -25747,11 +25731,9 @@ table _Medidas
 			        & "<div class='dia rot entra d1'>" & _dia & "O ÚLTIMO DEBATE ANTES DO 2º TURNO</div>"
 			        & "<div class='hora sobe d2'><span class='num" & IF ( _sit IN { "cancelado", "adiado" }, " riscado", "" ) & "'>" & _hora & "</span></div>"
 			        & "<div class='onde sobe d3'><div class='txt'><b>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _trans, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</b></div>"
-			            & "<div class='txt'>mediação de " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _local, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
-			            & "<div class='nota'>checagem: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _chec, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
+			            & "<div class='txt'>mediação de " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _local, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
 			        & "<div class='man sobe d4'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _man, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
 			        & "<div class='situ nota entra d2'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _sub, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
-			        & "<div class='regras' style='--bl:" & FORMAT ( _bl, "0.0##", "en-US" ) & "px'>" & _regras & "</div>"
 			    & "</div>"
 			    )
 		displayFolder: T26 Debate na Globo\Desenho
@@ -25786,7 +25768,7 @@ table _Medidas
 			RETURN
 			    "<div class='tela t26n'>"
 			        & "<div class='cab'><div class='sob sobe'>A NOITE EM NÚMEROS · E A RÉGUA DA BAND, 18/10</div>"
-			        & "<div class='txt sobe d1'>" & _txt & "</div></div>"
+			        & IF ( [T26 · arquivo · linhas] = 0 || _sit IN { "cancelado", "adiado" }, "<div class='txt sobe d1'>" & _txt & "</div>", "" ) & "</div>"
 			        & "<div class='ini rot entra d3'>" & _iniTxt & "</div>"
 			        & "<div class='fimr rot entra d6'>DOM 25/10 · A ELEIÇÃO</div>"
 			        & "<svg class='fita' width='1620' height='24' viewBox='0 0 1620 24'><path class='traco' pathLength='1' "

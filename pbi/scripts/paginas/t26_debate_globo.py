@@ -7,7 +7,8 @@ documentário: em vez de "o número da noite + o palco + o gráfico", uma ficha 
 uma fita do tempo com os cinco números que vão chegar, cada um com o seu lugar marcado até chegar.
 
   T26_Ficha_Html     a ficha: o selo da situação (marcado, no ar, realizado, adiado, cancelado), a hora, onde passa,
-                     mediação e checagem, a manchete (o que já dá para dizer) e as regras em blocos
+                     mediação e local e a manchete (o que já dá para dizer). As regras em blocos e a checagem
+                     saíram em 23/10/2026 ("achei um pouco poluída… essa questão dos blocos não precisa")
   T26_Palco_Html     os dois púlpitos em traço (grão 'T26 Debate Globo'[Chave], só as linhas de presença): nome, púlpito
                      na cor do candidato (tracejado e vazio se ele faltar ou se o debate cair) e a situação; o palco, a
                      mesa da mediação e as luzes ficam no bodyTemplate. Dossiê ttT26Presenca (histórico e fonte)
@@ -32,7 +33,7 @@ CSS = "Estilo · CSS"
 C = estilo.COR
 Z = lib.CAMADAS["conteudo"]
 
-FICHA = (150, 140, 880, 340)
+FICHA = (150, 140, 880, 250)
 PALCO = (1060, 140, 710, 330)
 NOITE = (150, 490, 1620, 510)
 
@@ -51,11 +52,6 @@ CSS_FICHA = (
     ".t26f .onde b{font-weight:600;color:var(--tinta)}"
     ".t26f .onde .nota{margin-top:4px}"
     ".t26f .man{position:absolute;left:0;top:156px;width:870px;font-size:23px}"
-    ".t26f .regras{position:absolute;left:0;top:246px;width:880px;display:flex;gap:10px}"
-    f".t26f .bl{{width:var(--bl);border-top:2px solid {C['tinta']};padding-top:6px}}"
-    ".t26f .bl .bt{font-size:15px;line-height:1.25;margin-top:3px;color:var(--tinta);min-height:38px}"
-    ".t26f .bl .bm{font-size:15px;color:var(--grafite);margin-top:2px;white-space:nowrap}"
-    ".t26f .bl .bm b{font-weight:700;color:var(--tinta)}"
 )
 
 

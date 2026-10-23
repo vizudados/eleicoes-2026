@@ -10,6 +10,7 @@ Número que não foi confirmado ficou **em branco**, com a razão na coluna `obs
 |---|---|---|
 | `trends_tempo.csv` | 3.092 | Séries do Google Trends (diárias e por hora), coletadas direto no Trends e na Central Google Trends Eleições 2026 |
 | `trends_uf.csv` | 648 | Índice por UF (0-100) e participação % das buscas por UF, 1º e 2º turno |
+| `trends_uf_tempo.csv` | 4.704 | Série diária Lula x Flávio (tópicos) em cada uma das 27 UFs e no Brasil, 01/08 a 23/10 (consulta U2, coletada em 23/10) |
 | `trends_consultas.csv` | 844 | Consultas principais e em ascensão, perguntas mais buscadas divulgadas pelo Google e pela imprensa |
 | `seguidores.csv` | 118 | Seguidores por candidato e rede: base de junho, Social Blade (22/09 a 23/10), imprensa (19 a 22/10), canais de WhatsApp |
 | `monitoramento.csv` | 115 | Quaest IPD, Bites, DSC Lab, Datrix, FGV/EAESP, Palver, VigIA (deepfakes), processos e denúncias no TSE |
@@ -36,6 +37,7 @@ séries da mesma consulta. Por isso cada série leva o código da consulta no no
 | H1 | Lula x Flávio (tópicos) | 01/10 00h a 08/10 00h, por hora (BRT) | Dia do 1º turno |
 | H2 | Lula x Flávio (tópicos) | 15/10 00h a 22/10 00h, por hora (BRT) | Inclui o debate da Band (18/10) |
 | G2 | Lula x Flávio (tópicos), mapa por UF | 05/10 a 22/10 | Só em `trends_uf.csv` |
+| U2 | Lula x Flávio (tópicos), uma consulta por UF (geo=BR-UF) e uma nacional | 01/08 a 23/10, diária | Só em `trends_uf_tempo.csv`. Ver a seção "Consulta U2" abaixo |
 | C1 | Central Google Trends Eleições 2026 | 22/09 a 22/10, diária | Página oficial do Google. Resumo da página: **Lula 56% x Flávio 44%** do interesse em 30 dias |
 
 Cuidados:
@@ -46,6 +48,69 @@ Cuidados:
 - "Aumento repentino", nas consultas em ascensão, significa alta acima de 5.000%.
 - As consultas relacionadas trazem buscas sobre acusações ("bolsonaro mandou matar lula", "flávio bolsonaro caso ana clara", "flaviorachadinha") porque são o que as pessoas digitaram. Mostram curiosidade, não fato.
 - Algumas consultas em ascensão de "título de eleitor" são questões de treinamento de mesário e estão marcadas.
+
+## Consulta U2: Lula x Flávio por UF, dia a dia (coletada em 23/10/2026)
+
+Para a tela de buscas trocar a curva do Brasil pela do estado clicado e para o filtro de período em volta dos dois
+debates do 2º turno (Band em 18/10, Globo em 23/10).
+
+**Método.** Mesmo caminho das demais consultas: Google Trends no navegador, Brasil, pt-BR, fuso de Brasília (`tz=180`),
+sem login, sem baixar arquivo e sem aceitar cookies (o banner era informativo e ficou sem clique). Foram 28 consultas,
+todas com os mesmos dois tópicos (Lula /m/0pc9q e Flávio /g/122pdhqd), de 01/08 a 23/10, resolução diária:
+
+- uma nacional (`geo=BR`), para a curva do Brasil ter a mesma régua das UFs;
+- uma por UF (`geo=BR-AC` ... `geo=BR-TO`), as 27.
+
+Em cada página, o gráfico "Interesse ao longo do tempo" monta uma tabela de dados acessível (dia, Lula, Flávio), e foi
+ela que li com JavaScript na própria página. Em AC e AL, também li a resposta bruta do widget (`widgetdata/multiline`)
+para conferir que os zeros vêm com `hasData=false`. A URL exata de cada consulta está na coluna `fonte_url`.
+
+**Data e hora.** 23/10/2026, das 20h32 (Brasil) às 20h44 (TO), horário de Brasília, uma consulta a cada 20 a 30
+segundos. Não houve 429 nem CAPTCHA, e nenhuma UF ficou de fora.
+
+**Formato.** As colunas de `trends_tempo.csv` mais `uf` no fim (`BR` para a nacional). Termos `Lula [tópico | U2]` e
+`Flávio Bolsonaro [tópico | U2]`. São 28 consultas x 84 dias x 2 termos = 4.704 linhas.
+
+**Cuidados.**
+- **O índice é relativo dentro de cada consulta.** Em cada UF, 100 é o dia de maior interesse *naquela UF* (quase
+  sempre Lula em 04/10). A fatia Lula/(Lula+Flávio) vale dentro da UF, mas o índice de uma UF não se compara com o de
+  outra: 30 no AC e 30 em SP não são o mesmo volume. Para comparar o tamanho do interesse entre UFs, use o índice por
+  UF de `trends_uf.csv`.
+- **Picos diferentes.** Em RO o pico 100 é de Flávio em 04/10 (Lula 99), e em RR os dois empatam em 100 nesse dia. Nas
+  outras 25 UFs e no Brasil, o 100 é de Lula em 04/10.
+- **Zeros nas UFs pequenas.** Quando o volume do dia fica abaixo do mínimo da amostra, o Trends devolve 0
+  (`hasData=false`); foi gravado 0, com nota. Acontece muito em RR (41 dias com Lula zerado e 47 com Flávio), AC (33 e
+  52) e AP (24 e 48), e menos em RO (5 e 18), TO (5 e 15) e SE (3 e 11). O último zero é de 27/09 (Flávio em RR); de
+  23/09 em diante só AC, AP, RR e RO ainda têm algum dia zerado. O 2º turno (05 a 22/10) está completo nas 27 UFs, sem
+  nenhum zero. Não apareceu nenhum "<1".
+- **Lacuna de 19 a 21/09.** Fora AC, AP e RR, há 12 UFs em que os dois candidatos aparecem zerados em pelo menos um
+  desses dias (AM, MS, RO, SE e TO nos três; PI em 20 e 21; DF, MA, PA e RN em 20; AL e ES em 21), mesmo com volume
+  normal na véspera. Em outras, só Flávio zera (por exemplo PB nos três dias, GO em 20 e 21). É o mesmo trecho em que S1
+  veio zerada: provável lacuna de coleta do Google, marcada na observação. Em AC, AP e RR não dá para separar a lacuna
+  do volume baixo, e a nota diz isso. A série nacional não zera nesses dias.
+- **23/10 é parcial.** Era o dia em curso, lido antes do debate da Globo (21h20). Está marcado e deve ser refeito
+  depois do debate. Os números de 23/10 não pegam o debate.
+- **Amostra.** A nacional U2 repete T2 em 130 dos 166 pontos de 01/08 a 22/10, com diferença máxima de 2 pontos
+  (Lula 37 x 35 em 21/10; Flávio 81 x 79 em 04/10). É a variação de amostra já citada acima.
+
+**Conferência com G2.** Somando a série diária de 05 a 22/10 em cada UF, a fatia de Lula fica a 0,8 ponto percentual
+de G2, em média, e a no máximo 1,9 ponto (DF). Lula tem mais da metade em todas as 27 UFs, de 53,1% (DF) a 57,5% (MA e
+RN). No Brasil, a U2 dá 55,7%. G2 vem arredondado a inteiro.
+
+| UF | Lula U2 | G2 | Dif. | UF | Lula U2 | G2 | Dif. | UF | Lula U2 | G2 | Dif. |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| AC | 56,4 | 56 | +0,4 | GO | 54,9 | 55 | −0,1 | RJ | 54,3 | 55 | −0,7 |
+| AL | 57,2 | 57 | +0,2 | MA | 57,5 | 58 | −0,5 | RN | 57,5 | 58 | −0,5 |
+| AP | 56,4 | 55 | +1,4 | MT | 56,0 | 57 | −1,0 | RS | 55,1 | 54 | +1,1 |
+| AM | 56,8 | 57 | −0,2 | MS | 55,4 | 56 | −0,6 | RO | 55,2 | 57 | −1,8 |
+| BA | 55,6 | 55 | +0,6 | MG | 55,4 | 56 | −0,6 | RR | 53,9 | 55 | −1,1 |
+| CE | 56,1 | 55 | +1,1 | PA | 55,5 | 56 | −0,5 | SC | 55,6 | 56 | −0,4 |
+| DF | 53,1 | 55 | −1,9 | PB | 56,5 | 56 | +0,5 | SP | 55,5 | 56 | −0,5 |
+| ES | 55,3 | 55 | +0,3 | PR | 55,8 | 55 | +0,8 | SE | 56,7 | 56 | +0,7 |
+| BR | 55,7 | – | – | PE | 56,7 | 55 | +1,7 | TO | 55,8 | 55 | +0,8 |
+|  |  |  |  | PI | 56,4 | 58 | −1,6 |  |  |  |  |
+
+Nenhuma página consultada nesta coleta trazia instruções dirigidas ao agente.
 
 ## Achados principais (com fonte)
 
