@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Índice por hora (0–100 dentro da semana da consulta H1 ou H2) de Lula na hora da linha ('Trends tempo'[DataTexto] = 'aaaa-mm-dd hh:mm').
+*/
+CALCULATE (
+    MAX ( 'Trends tempo'[Índice] ),
+    'Trends tempo'[Série] IN { "Lula [tópico | H1]", "Lula [tópico | H2]" }
+)

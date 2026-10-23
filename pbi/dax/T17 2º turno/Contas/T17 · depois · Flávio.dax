@@ -1,0 +1,15 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0.0
+@descricao: Média simples de Flávio (votos totais, %) nas 39 pesquisas de 2º turno feitas depois do 1º turno.
+@oraculo: medias_depois.totais.Flávio = 47,8%
+*/
+CALCULATE (
+    AVERAGE ( Pesquisa[Flavio] ),
+    REMOVEFILTERS ( Pesquisa ),
+    Pesquisa[Cenário] = "2º turno",
+    Pesquisa[Tipo] = "totais",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] ),
+    Pesquisa[Momento] = "apos_1turno"
+)

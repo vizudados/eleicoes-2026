@@ -1,0 +1,28 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: O eleitor segue o apoio? O 17,2% da Vox Brasil (contador), a barra das três respostas e a nota à mão. Só lê as contas 'T16 · Vox · …'.
+*/
+-- 1 · Leituras
+VAR _s = [T16 · Vox · seguiriam o candidato]
+VAR _m = [T16 · Vox · manteriam a própria escolha]
+VAR _d = [T16 · Vox · depende de quem recebe o apoio]
+-- 2 · Textos
+VAR _txtS = FORMAT ( _s, "0.0%" )
+-- 3 · Geometria (barra de 520 px)
+VAR _ws = FORMAT ( _s * 520, "0.0", "en-US" ) -- geometria
+VAR _wd = FORMAT ( _d * 520, "0.0", "en-US" ) -- geometria
+VAR _wm = FORMAT ( _m * 520, "0.0", "en-US" ) -- geometria
+-- 4 · Marcação
+RETURN
+    "<div class='tela t16s'>"
+        & "<div class='sob sobe'>O eleitor segue o apoio?</div>"
+        & "<div class='hero sobe d2'><span class='num'>" & _txtS & "</span></div>"
+        & "<div class='frase sobe d3'>dizem que vão seguir a orientação do candidato em quem votaram no 1º turno.</div>"
+        & "<div class='bar'><i class='s' style='width:" & _ws & "px;animation-delay:.6s'></i><i class='d' style='width:" & _wd
+            & "px;animation-delay:.8s'></i><i class='m' style='width:" & _wm & "px;animation-delay:1s'></i></div>"
+        & "<div class='leg sobe d8'><b>" & FORMAT ( _m, "0.0%" ) & "</b> mantêm a própria escolha · <b>" & FORMAT ( _d, "0.0%" )
+            & "</b> dizem que depende de quem recebe o apoio</div>"
+        & "<div class='nota entra d10'>Vox Brasil, 09/10 · pergunta feita a todos os entrevistados</div>"
+        & "<div class='mao entra d14'>apoio não é voto</div>"
+    & "</div>"

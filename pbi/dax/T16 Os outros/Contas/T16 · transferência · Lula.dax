@@ -1,0 +1,24 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0.0
+@descricao: No grupo de eleitores do filtro (Transferência[Segmento]: Cury, Renan, Caiado, nao_votou…), média simples do % que diz Lula no 2º turno, usando só a medição mais recente de cada instituto depois do 1º turno (voto declarado). Votos totais; média de percentuais publicados, sem ponderar amostra.
+@oraculo: Cury 45,8 · Renan 27,0 · Caiado 27,9 · não votou 47,9 (FONTES.md, Retrato rápido, 'última')
+*/
+VAR _seg = SELECTEDVALUE ( 'Transferência'[Segmento] )
+VAR _apos =
+    CALCULATETABLE (
+        'Transferência',
+        REMOVEFILTERS ( 'Transferência' ),
+        'Transferência'[Segmento] = _seg,
+        LEFT ( 'Transferência'[Observação], 19 ) = "momento=apos_1turno"
+    )
+VAR _ult =
+    FILTER (
+        _apos,
+        VAR _i = 'Transferência'[Instituto]
+        RETURN
+            'Transferência'[Divulgação]
+                = MAXX ( FILTER ( _apos, 'Transferência'[Instituto] = _i ), 'Transferência'[Divulgação] )
+    )
+RETURN
+    AVERAGEX ( _ult, 'Transferência'[Lula] )

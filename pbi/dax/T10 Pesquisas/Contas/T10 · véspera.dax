@@ -1,0 +1,13 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: dd/MM
+@descricao: Data da pesquisa mais recente entre as últimas de cada instituto (a véspera do 1º turno, 03/10).
+@oraculo: paginas[10].antes.institutos[].divulgacao máx = 2026-10-03
+*/
+CALCULATE (
+    MAX ( Pesquisa[Divulgação] ),
+    REMOVEFILTERS ( Pesquisa ),
+    Pesquisa[Cenário] = "1º turno",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] )
+)

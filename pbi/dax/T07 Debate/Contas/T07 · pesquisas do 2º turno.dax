@@ -1,0 +1,15 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Pesquisas do 2º turno (votos totais) divulgadas depois do 1º turno, com Lula e Flávio publicados.
+@oraculo: 24 + 10 + 5 = 39
+*/
+CALCULATE (
+    COUNTROWS ( Pesquisa ),
+    REMOVEFILTERS ( Pesquisa ),
+    Pesquisa[Cenário] = "2º turno",
+    Pesquisa[Tipo] = "totais",
+    Pesquisa[Momento] = "apos_1turno",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] )
+) + 0

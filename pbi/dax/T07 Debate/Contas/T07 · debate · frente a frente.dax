@@ -1,0 +1,11 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: Sim quando Lula e Flávio participaram do debate da linha; Não nos outros.
+*/
+VAR _p = SELECTEDVALUE ( Debate[Participantes] )
+RETURN
+    IF (
+        HASONEVALUE ( Debate[Data] ),
+        IF ( CONTAINSSTRING ( _p, "Lula" ) && CONTAINSSTRING ( _p, "Flávio" ), "Sim", "Não" )
+    )

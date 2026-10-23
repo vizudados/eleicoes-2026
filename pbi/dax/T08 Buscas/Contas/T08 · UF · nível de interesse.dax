@@ -1,0 +1,19 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: Alto nas 5 UFs de maior interesse médio pelos dois no 2º turno (média dos índices 0–100 de Lula e de Flávio), baixo nas 5 de menor, médio nas outras; vazio fora de uma UF.
+*/
+VAR _uf = SELECTEDVALUE ( UF[UF] )
+VAR _t =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( UF[UF] ), REMOVEFILTERS ( UF ), UF[Tipo] = "UF" ),
+        "@m", ( [T08 · UF · interesse Lula] + [T08 · UF · interesse Flávio] ) / 2
+    )
+VAR _m = MAXX ( FILTER ( _t, UF[UF] = _uf ), [@m] )
+VAR _acima = COUNTROWS ( FILTER ( _t, [@m] > _m ) )
+VAR _abaixo = COUNTROWS ( FILTER ( _t, [@m] < _m ) )
+RETURN
+    IF (
+        HASONEVALUE ( UF[UF] ) && NOT ISBLANK ( _m ),
+        SWITCH ( TRUE (), _acima < 5, "alto", _abaixo < 5, "baixo", "médio" )
+    )

@@ -1,0 +1,16 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: Siglas das UFs onde Lula teve a menor parte das buscas no 2º turno (em ordem alfabética, 'e' antes da última).
+*/
+VAR _v = [T08 · UF · menor parte · Lula]
+VAR _ufs = FILTER ( ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( UF[UF] ), REMOVEFILTERS ( UF ), UF[Tipo] = "UF" ),
+        "@l", [T08 · UF · Lula],
+        "@f", [T08 · UF · Flávio]
+    ), [@l] = _v )
+VAR _n = COUNTROWS ( _ufs )
+VAR _lista = CONCATENATEX ( _ufs, UF[UF], ", ", UF[UF], ASC )
+VAR _ultima = MAXX ( _ufs, UF[UF] )
+RETURN
+    IF ( _n <= 1, _lista, LEFT ( _lista, LEN ( _lista ) - 4 ) & " e " & _ultima )

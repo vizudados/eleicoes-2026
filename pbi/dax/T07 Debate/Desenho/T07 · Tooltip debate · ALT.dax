@@ -1,0 +1,13 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de um debate (grão Debate[Data]).
+*/
+IF (
+    NOT ISBLANK ( [T07 · debate · situação] ),
+    LEFT (
+        FORMAT ( [T07 · debate · dia], "dd/MM" ) & ", " & [T07 · debate · emissora] & ": " & [T07 · debate · situação]
+            & IF ( [T07 · debate · frente a frente] = "Sim", ", com Lula e Flávio frente a frente", ", sem Lula e Flávio" ) & ".",
+        250
+    )
+)

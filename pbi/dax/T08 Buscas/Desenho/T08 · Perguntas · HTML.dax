@@ -1,0 +1,37 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: A caixa de busca desenhada: o que se digita e, na lista, as perguntas e termos de serviço na ordem do tempo (a semana antes do 1º turno, o dia da votação, os dias depois), cada um com o seu número (contador) e a fonte no pé. Só lê contas 'T08 · …'.
+*/
+-- 1 · Leituras
+VAR _alta = [T08 · pergunta · que horas começa a votação · alta]
+VAR _local = [T08 · serviço · local de votação · pico]
+VAR _diaLocal = [T08 · serviço · local de votação · dia do pico]
+VAR _titulo = [T08 · serviço · título de eleitor · no pico]
+VAR _p1 = [T08 · pergunta · quem ganhou a eleição · posição]
+VAR _p2 = [T08 · pergunta · quando vai ser o segundo turno · posição]
+-- 2 · Textos
+VAR _txtAlta = FORMAT ( _alta, "+0%" )
+VAR _txtDia = FORMAT ( _diaLocal, "dd/MM" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t08q'>"
+        & "<div class='sob sobe'>O que o Brasil perguntou ao Google</div>"
+        & "<div class='busca sobe d1'><i class='lupa'></i><span class='dig'>quem ganhou a eleição?</span><b class='cursor'></b></div>"
+        & "<div class='lista entra d3'>"
+            & "<div class='it sobe d4'><span class='qd'>semana até 01/10</span><i class='lp'></i>"
+                & "<span class='q'>Que horas começa a votação?</span>"
+                & "<span class='v'><span class='num'>" & _txtAlta & "</span><small>na semana</small></span></div>"
+            & "<div class='it sobe d5'><span class='qd'>" & _txtDia & " · eleição</span><i class='lp'></i>"
+                & "<span class='q'>local de votação · título de eleitor</span>"
+                & "<span class='v'><span class='num'>" & _local & "</span><small>e " & _titulo & " no índice</small></span></div>"
+            & "<div class='it sobe d6'><span class='qd'>05 a 08/10</span><i class='lp'></i>"
+                & "<span class='q'>Quem ganhou a eleição?</span>"
+                & "<span class='v'><span class='ord'>" & _p1 & "ª</span><small>mais buscada</small></span></div>"
+            & "<div class='it sobe d7'><span class='qd'>05 a 08/10</span><i class='lp'></i>"
+                & "<span class='q'>Quando vai ser o segundo turno?</span>"
+                & "<span class='v'><span class='ord'>" & _p2 & "ª</span><small>mais buscada</small></span></div>"
+        & "</div>"
+        & "<div class='nota entra d9'>Fontes: Google ao UOL (alta contra a semana anterior); Google Trends, termos de serviço "
+            & "(0 a 100, 01/08 a 22/10); lista do Google obtida pelo Estadão</div>"
+    & "</div>"

@@ -1,0 +1,44 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Uma linha por instituto na régua da véspera (grão Pesquisa[Instituto]): nome, haste que cresce a partir do empate, marca (círculo = votos válidos, quadrado = totais) na cor de quem estava à frente e a vantagem em pontos. A linha inteira é o alvo do dossiê ttT10Instituto. Vazio para institutos sem pesquisa de 1º turno.
+*/
+-- 1 · Leituras
+VAR _nome = [T10 · instituto · nome]
+VAR _o = [T10 · instituto · ordem]
+VAR _dif = [T10 · instituto · diferença]
+VAR _b = [T10 · instituto · base]
+-- 2 · Textos
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _lado = IF ( _dif < 0, "l", "f" )
+VAR _forma = IF ( _b = "validos", "v", "t" )
+VAR _txtV = FORMAT ( ABS ( _dif ), "0.0" )
+-- 3 · Geometria (mesma escala do fundo: x = 240 + (diferença + 8) × 56; empate em 688; linha de 38 px a partir de y 112)
+VAR _f = "0.0"
+VAR _y = 112 + ( _o - 1 ) * 38 -- geometria
+VAR _xm = 240 + ( _dif + 8 ) * 56 -- geometria
+VAR _meia = IF ( _forma = "v", 8.5, 7.5 ) -- geometria
+VAR _hasteX = MIN ( _xm, 688 ) -- geometria
+VAR _hasteW = ABS ( _xm - 688 ) -- geometria
+VAR _atraso = 500 + _o * 70 -- geometria
+VAR _valor =
+    IF (
+        _dif < 0,
+        "right:" & FORMAT ( 1030 - _xm + 16, _f, "en-US" ) & "px",
+        "left:" & FORMAT ( _xm + 16, _f, "en-US" ) & "px"
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _o ),
+        "<div class='tela t10i'><div class='ln' style='top:" & FORMAT ( _y, _f, "en-US" ) & "px'>"
+            & "<div class='nome entra' style='animation-delay:" & _atraso - 200 & "ms'>" & _esc & "</div>"
+            & "<div class='haste " & _lado & IF ( _dif < 0, " barra-x-dir", " barra-x" ) & "' style='left:"
+                & FORMAT ( _hasteX, _f, "en-US" ) & "px;width:" & FORMAT ( _hasteW, _f, "en-US" ) & "px;animation-delay:"
+                & _atraso & "ms'></div>"
+            & "<div class='mk " & _forma & " " & _lado & "' style='left:" & FORMAT ( _xm - _meia, _f, "en-US" )
+                & "px;animation-delay:" & _atraso + 450 & "ms'></div>"
+            & "<div class='vl " & _lado & " entra' style='" & _valor & ";animation-delay:" & _atraso + 550 & "ms'>"
+                & _txtV & "</div>"
+        & "</div></div>"
+    )

@@ -1,0 +1,8 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: dd/MM
+@descricao: Primeiro dia de campo da última pesquisa do instituto.
+*/
+VAR _id = [T10 · instituto · pesquisa]
+RETURN
+    IF ( NOT ISBLANK ( _id ), CALCULATE ( MAX ( Pesquisa[Campo início] ), REMOVEFILTERS ( Pesquisa ), Pesquisa[Id] = _id ) )

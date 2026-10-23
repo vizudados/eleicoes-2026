@@ -1,0 +1,24 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0.0
+@descricao: No grupo do filtro, o maior % de Lula entre as medições mais recentes de cada instituto depois do 1º turno.
+@oraculo: Cury 52,1 · Renan 39 · Caiado 44
+*/
+VAR _seg = SELECTEDVALUE ( 'Transferência'[Segmento] )
+VAR _apos =
+    CALCULATETABLE (
+        'Transferência',
+        REMOVEFILTERS ( 'Transferência' ),
+        'Transferência'[Segmento] = _seg,
+        LEFT ( 'Transferência'[Observação], 19 ) = "momento=apos_1turno"
+    )
+VAR _ult =
+    FILTER (
+        _apos,
+        VAR _i = 'Transferência'[Instituto]
+        RETURN
+            'Transferência'[Divulgação]
+                = MAXX ( FILTER ( _apos, 'Transferência'[Instituto] = _i ), 'Transferência'[Divulgação] )
+    )
+RETURN
+    MAXX ( _ult, 'Transferência'[Lula] )

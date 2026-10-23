@@ -1,0 +1,20 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Posição mais recente de quem está no filtro (Apoio[Quem]) no 2º turno: Lula, Flávio, liberou, neutro ou voto nulo (o PCO orienta voto nulo, gravado como neutro com a nota na Observação).
+@oraculo: Cury Flávio · Caiado Flávio · Renan liberou · Zema Flávio · PSTU/PCB/UP Lula · PCO voto nulo
+*/
+VAR _q = SELECTEDVALUE ( Apoio[Quem] )
+VAR _dia = CALCULATE ( MAX ( Apoio[Data] ), REMOVEFILTERS ( Apoio ), Apoio[Quem] = _q )
+VAR _linha =
+    FILTER (
+        CALCULATETABLE ( Apoio, REMOVEFILTERS ( Apoio ), Apoio[Quem] = _q ),
+        ISBLANK ( _dia ) || Apoio[Data] = _dia
+    )
+VAR _pos = MAXX ( _linha, Apoio[Posição] )
+VAR _obs = UPPER ( MAXX ( _linha, Apoio[Observação] ) )
+RETURN
+    IF (
+        HASONEVALUE ( Apoio[Quem] ),
+        IF ( CONTAINSSTRING ( _obs, "VOTO NULO" ), "voto nulo", _pos )
+    )

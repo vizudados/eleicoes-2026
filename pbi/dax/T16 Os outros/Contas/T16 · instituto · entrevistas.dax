@@ -1,0 +1,27 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: #,0
+@descricao: Na medição mais recente do instituto do filtro para o grupo do filtro (depois do 1º turno): entrevistas no grupo (só quando o instituto publicou).
+*/
+VAR _seg = SELECTEDVALUE ( 'Transferência'[Segmento] )
+VAR _i = SELECTEDVALUE ( 'Transferência'[Instituto] )
+VAR _dia =
+    CALCULATE (
+        MAX ( 'Transferência'[Divulgação] ),
+        REMOVEFILTERS ( 'Transferência' ),
+        'Transferência'[Segmento] = _seg,
+        'Transferência'[Instituto] = _i,
+        LEFT ( 'Transferência'[Observação], 19 ) = "momento=apos_1turno"
+    )
+RETURN
+    IF (
+        NOT ISBLANK ( _dia ),
+        CALCULATE (
+            MAX ( 'Transferência'[N] ),
+            REMOVEFILTERS ( 'Transferência' ),
+            'Transferência'[Segmento] = _seg,
+            'Transferência'[Instituto] = _i,
+            'Transferência'[Divulgação] = _dia,
+            LEFT ( 'Transferência'[Observação], 19 ) = "momento=apos_1turno"
+        )
+    )

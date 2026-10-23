@@ -1,0 +1,11 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Posição do debate da linha na ordem das datas (1 = o primeiro marcado, 23/08).
+*/
+VAR _dia = SELECTEDVALUE ( Debate[Data] )
+RETURN
+    IF (
+        HASONEVALUE ( Debate[Data] ),
+        CALCULATE ( COUNTROWS ( Debate ), REMOVEFILTERS ( Debate ), Debate[Data] <= _dia )
+    )

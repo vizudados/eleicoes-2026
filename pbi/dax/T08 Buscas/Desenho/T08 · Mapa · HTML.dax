@@ -1,0 +1,30 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Cabeçalho do mapa de quadrados das buscas no 2º turno: 'N de 27' estados com Lula à frente (contadores), a faixa de cada um entre as UFs e a legenda (barra = parte das buscas; fundo = interesse). Os quadrados são outro visual (T08 · UFs · HTML), na mesma caixa.
+*/
+-- 1 · Leituras
+VAR _n = [T08 · UFs com Lula à frente]
+VAR _nF = [T08 · UFs com Flávio à frente]
+VAR _t = [T08 · UFs]
+VAR _lMin = [T08 · UF · menor parte · Lula]
+VAR _lMax = [T08 · UF · maior parte · Lula]
+VAR _fMin = [T08 · UF · menor parte · Flávio]
+VAR _fMax = [T08 · UF · maior parte · Flávio]
+-- 2 · Textos
+VAR _quem = IF ( _n >= _nF, "Lula", "Flávio" )
+VAR _num = MAX ( _n, _nF )
+VAR _txt =
+    "Lula teve de " & _lMin & "% a " & _lMax & "% das buscas entre os dois; Flávio, de " & _fMin & "% a " & _fMax & "%."
+-- 4 · Marcação
+RETURN
+    "<div class='tela t08m'>"
+        & "<div class='sob sobe'>Nos estados · 2º turno, 05 a 22/10</div>"
+        & "<div class='linha sobe d2'><span class='num " & IF ( _quem = "Lula", "lula", "flavio" ) & "'>" & _num
+        & "</span><span class='de'>de</span><span class='num'>" & _t & "</span><span class='man'>com " & _quem & " na frente</span></div>"
+        & "<div class='txt sobe d3'>" & _txt & "</div>"
+        & "<div class='leg entra d14'><div class='bar'><i class='l'></i><i class='f'></i></div>"
+            & "barra: as buscas entre os dois"
+            & "<div class='fundo'><i style='background:rgba(203,189,162,.18)'></i><i style='background:rgba(203,189,162,.55)'></i>"
+            & "<i style='background:rgba(203,189,162,1)'></i></div>fundo escuro: mais interesse</div>"
+    & "</div>"

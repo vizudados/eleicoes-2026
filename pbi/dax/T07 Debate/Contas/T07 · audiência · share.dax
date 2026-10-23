@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0%
+@descricao: Share do debate de 18/10 na Grande SP: parte das TVs ligadas que estavam na Band (0–1). Constante do levantamento: debate_band.json › audiencia.tv[0].share_pct.
+@oraculo: share_txt = 24% de share
+*/
+0.24

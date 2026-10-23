@@ -1,0 +1,20 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Média simples de Lula (votos válidos, %) na última pesquisa dos institutos que divulgaram válidos.
+@oraculo: paginas[10].antes.media_validos.lula = 45,205
+*/
+VAR _lista =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@b", [T10 · instituto · base],
+        "@v", [T10 · instituto · Lula]
+    )
+RETURN
+    AVERAGEX ( FILTER ( _lista, [@b] = "validos" ), [@v] )

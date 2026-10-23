@@ -1,0 +1,12 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Debates do 1º turno cancelados ou não realizados.
+@oraculo: primeiro_turno.cancelados = 3
+*/
+CALCULATE (
+    COUNTROWS ( Debate ),
+    REMOVEFILTERS ( Debate ),
+    Debate[Turno] = 1,
+    LEFT ( UPPER ( Debate[Observação] ), 9 ) <> "REALIZADO"
+) + 0

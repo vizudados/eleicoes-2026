@@ -1,0 +1,7 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do cabeçalho do mapa das buscas por estado.
+*/
+"No 2º turno, Lula teve a maior parte das buscas entre os dois em " & [T08 · UFs com Lula à frente] & " de " & [T08 · UFs]
+    & " estados: de " & [T08 · UF · menor parte · Lula] & "% a " & [T08 · UF · maior parte · Lula] & "%."

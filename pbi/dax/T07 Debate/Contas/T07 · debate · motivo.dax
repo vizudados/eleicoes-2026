@@ -1,0 +1,9 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: Por que o debate da linha não aconteceu: primeira nota da Observação do levantamento; vazio quando aconteceu.
+*/
+VAR _obs = SELECTEDVALUE ( Debate[Observação] )
+VAR _cab = TRIM ( IF ( CONTAINSSTRING ( _obs, "|" ), LEFT ( _obs, SEARCH ( "|", _obs ) - 1 ), _obs ) )
+RETURN
+    IF ( [T07 · debate · situação] <> "realizado", _cab )

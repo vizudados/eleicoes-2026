@@ -1,0 +1,67 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Fundo da régua da véspera: título, as duas metades (Lula à frente, Flávio à frente) que esmaecem, o empate, a urna como traço à mão com o laço do rótulo, os números do eixo, a legenda e a chave à mão nas linhas que chegaram perto da urna. As linhas dos institutos são outro visual (T10 · Institutos · HTML), na mesma caixa e escala.
+*/
+-- 1 · Leituras
+VAR _urna = [T10 · urna · diferença]
+VAR _n = [T10 · institutos]
+VAR _perto = [T10 · institutos · perto da urna]
+VAR _p0 = [T10 · perto da urna · primeira linha]
+VAR _p1 = [T10 · perto da urna · última linha]
+-- 2 · Textos
+VAR _quem = IF ( _urna >= 0, "Flávio", "Lula" )
+VAR _txtUrna = "+" & FORMAT ( ABS ( _urna ), "0.0" )
+VAR _txtPerto = IF ( _perto = 1, "1 chegou<br>perto", _perto & " chegaram<br>perto" )
+-- 3 · Geometria (x = 240 + (diferença + 8) × 56: empate em 688; linhas de 38 px a partir de y 112)
+VAR _f = "0.0"
+VAR _x0 = 688
+VAR _xu = 240 + ( _urna + 8 ) * 56 -- geometria
+VAR _yFim = 112 + _n * 38 -- geometria
+VAR _ticks =
+    CONCATENATEX (
+        { -8, -6, -4, -2, 2, 4 },
+        "<line x1='" & FORMAT ( 240 + ( [Value] + 8 ) * 56, _f, "en-US" ) & "' x2='" & FORMAT ( 240 + ( [Value] + 8 ) * 56, _f, "en-US" )
+            & "' y1='104' y2='" & FORMAT ( _yFim + 4, _f, "en-US" ) & "' class='tk'/>"
+            & "<text x='" & FORMAT ( 240 + ( [Value] + 8 ) * 56, _f, "en-US" ) & "' y='" & FORMAT ( _yFim + 24, _f, "en-US" )
+            & "' class='ex' text-anchor='middle'>" & ABS ( [Value] ) & "</text>",
+        ""
+    )
+VAR _yChave = 112 + ( _p0 - 1 ) * 38 + 4 -- geometria
+VAR _hChave = ( _p1 - _p0 + 1 ) * 38 - 8 -- geometria
+-- 4 · Marcação
+VAR _svg =
+    "<svg width='1030' height='860' viewBox='0 0 1030 860'>"
+        & _ticks
+        & "<line x1='" & _x0 & "' x2='" & _x0 & "' y1='100' y2='" & FORMAT ( _yFim + 8, _f, "en-US" ) & "' class='emp'/>"
+        & "<text x='" & _x0 & "' y='" & FORMAT ( _yFim + 24, _f, "en-US" ) & "' class='ex' text-anchor='middle' font-weight='700'>empate</text>"
+        & "<path d='M" & FORMAT ( _xu, _f, "en-US" ) & " 100 L" & FORMAT ( _xu, _f, "en-US" ) & " " & FORMAT ( _yFim + 8, _f, "en-US" )
+            & "' pathLength='1' class='urna traco' filter='url(#rbu10g)' style='animation-delay:.6s'/>"
+    & "</svg>"
+VAR _rotUrna =
+    "<div class='uro entra d6' style='left:" & FORMAT ( _xu, _f, "en-US" ) & "px;top:50px;width:220px'>urna: "
+        & _quem & "<span class='num'>" & _txtUrna & "</span>"
+        & "<svg width='220' height='50' viewBox='0 0 220 50' style='position:absolute;inset:0;pointer-events:none'>"
+        & "<path d='M18,28 C4,5 154,-4 210,16 C233,30 136,51 66,47 C4,43 0,20 58,8 C88,2 132,2 158,5' pathLength='1' class='traco' "
+        & "style='fill:none;stroke:var(--tinta);stroke-width:3;stroke-linecap:round;animation-delay:1600ms' filter='url(#rbu10g)'/></svg>"
+    & "</div>"
+VAR _chave =
+    IF (
+        _perto > 0,
+        "<div class='chave entra d16' style='left:" & FORMAT ( _xu + 80, _f, "en-US" ) & "px;top:" & FORMAT ( _yChave, _f, "en-US" )
+            & "px;width:22px;height:" & FORMAT ( _hChave, _f, "en-US" ) & "px'></div>"
+            & "<div class='mao entra d16' style='left:" & FORMAT ( _xu + 108, _f, "en-US" ) & "px;top:"
+            & FORMAT ( _yChave + _hChave / 2 - 27, _f, "en-US" ) & "px;line-height:.95'>" & _txtPerto & "</div>"
+    )
+RETURN
+    "<div class='tela t10g'>"
+        & _svg
+        & "<div class='cab'><div class='sob sobe'>A última pesquisa de cada instituto antes do 1º turno</div>"
+            & "<div class='txt sobe d2'>Diferença entre os dois, em pontos.</div></div>"
+        & _rotUrna
+        & "<div class='lado lula-esc entra d8' style='left:240px;top:" & FORMAT ( _yFim + 40, _f, "en-US" ) & "px'>← Lula à frente</div>"
+        & "<div class='lado flavio-esc entra d8' style='right:90px;top:" & FORMAT ( _yFim + 40, _f, "en-US" ) & "px'>Flávio à frente →</div>"
+        & "<div class='leg entra d10' style='top:" & FORMAT ( _yFim + 42, _f, "en-US" ) & "px'><span><i class='c'></i>votos válidos</span>"
+            & "<span><i class='q'></i>votos totais</span></div>"
+        & _chave
+    & "</div>"

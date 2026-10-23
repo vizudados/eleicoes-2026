@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0.0
+@descricao: Média dos índices de interesse (0–100) de Lula e de Flávio na UF da linha, no 2º turno; dá o tom do fundo do quadrado no mapa.
+*/
+IF (
+    HASONEVALUE ( UF[UF] ),
+    ( [T08 · UF · interesse Lula] + [T08 · UF · interesse Flávio] ) / 2
+)

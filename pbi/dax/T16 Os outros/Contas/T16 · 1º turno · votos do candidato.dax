@@ -1,0 +1,7 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: #,0
+@descricao: Votos no 1º turno de 2026 do candidato do filtro ('Candidato ano'[Candidato]).
+@oraculo: Cury 3.448.569 · Renan 2.675.887 · Caiado 2.605.148
+*/
+CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Ano] = 2026 )

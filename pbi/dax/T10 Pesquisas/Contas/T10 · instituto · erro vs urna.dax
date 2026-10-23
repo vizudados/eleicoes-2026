@@ -1,0 +1,9 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Diferença da pesquisa menos a diferença da urna, em pontos (negativo = errou a favor de Lula). Só para quem divulgou votos válidos: em votos totais não se compara com a urna.
+@oraculo: paginas[10].antes.institutos[].erro_vs_resultado (MDA −7,6 … Futura +0,3)
+*/
+VAR _b = [T10 · instituto · base]
+RETURN
+    IF ( _b = "validos", [T10 · instituto · diferença] - [T10 · urna · diferença] )

@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0.0
+@descricao: Audiência do debate da Band de 23/08 (1º turno, sem Lula e Flávio), prévia em pontos na Grande SP.
+@oraculo: debates.csv 23/08 = 2,2
+*/
+CALCULATE ( MAX ( Debate[Audiência] ), REMOVEFILTERS ( Debate ), Debate[Data] = DATE ( 2026, 8, 23 ) )

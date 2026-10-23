@@ -1,0 +1,31 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Um quadrado por UF (grão UF[UF]) no mapa de quadrados das buscas do 2º turno: a sigla, a parte de cada um nas buscas entre os dois (números e barra que cresce dos dois lados) e o fundo mais escuro onde o interesse pelos dois foi maior. Cada quadrado abre o dossiê ttT08Uf. Vazio no exterior e sem dado.
+*/
+-- 1 · Leituras
+VAR _uf = [T08 · UF · sigla]
+VAR _l = [T08 · UF · Lula]
+VAR _f = [T08 · UF · Flávio]
+VAR _int = [T08 · UF · interesse médio]
+VAR _col = [T08 · UF · coluna]
+VAR _lin = [T08 · UF · linha]
+-- 3 · Geometria (quadrado 68 × 44, passo 74 × 46, a grade começa em y 150)
+VAR _x = 4 + _col * 74 -- geometria
+VAR _y = 150 + _lin * 46 -- geometria
+VAR _alfa = MIN ( 1, MAX ( 0.12, 0.12 + ( _int - 45 ) / 55 * 0.88 ) ) -- geometria
+VAR _atraso = 500 + ( _col + _lin ) * 70 -- geometria
+VAR _larL = _l / ( _l + _f ) * 100 -- geometria
+VAR _larF = 100 - _larL -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _l ),
+        "<div class='tela t08u'><div class='q' style='left:" & _x & "px;top:" & _y & "px;background:rgba(203,189,162,"
+            & FORMAT ( _alfa, "0.00", "en-US" ) & ");animation-delay:" & _atraso & "ms'>"
+            & "<b>" & _uf & "</b><span class='vl'>" & _l & "</span><span class='vf'>" & _f & "</span>"
+            & "<div class='br'><i class='l barra-x' style='width:" & FORMAT ( _larL, "0.0", "en-US" ) & "%;animation-delay:"
+            & _atraso + 300 & "ms'></i><i class='f barra-x-dir' style='width:" & FORMAT ( _larF, "0.0", "en-US" )
+            & "%;animation-delay:" & _atraso + 300 & "ms'></i></div>"
+        & "</div></div>"
+    )

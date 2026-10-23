@@ -1,0 +1,8 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da abertura das buscas (≤ 250 caracteres).
+*/
+"Central do Google, últimos 30 dias: Lula " & FORMAT ( [T08 · Central · Lula], "0%" ) & " e Flávio "
+    & FORMAT ( [T08 · Central · Flávio], "0%" ) & " do interesse. Lula foi mais buscado em " & [T08 · dias com Lula à frente]
+    & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & "."

@@ -1,0 +1,12 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Dia do pico da série T2 (o dia em que Lula chegou a 100, o máximo da consulta).
+@oraculo: FONTES: pico 04/10
+*/
+CALCULATE (
+    MAX ( 'Trends tempo'[Momento] ),
+    REMOVEFILTERS ( 'Trends tempo' ),
+    'Trends tempo'[Série] = "Lula [tópico | T2]",
+    'Trends tempo'[Índice] = 100
+)

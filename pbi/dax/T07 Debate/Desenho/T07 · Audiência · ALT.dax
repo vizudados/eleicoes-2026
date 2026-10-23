@@ -1,0 +1,8 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do número da noite do debate (≤ 250 caracteres).
+*/
+"Debate de " & FORMAT ( [T07 · debate · data], "dd/MM" ) & " na Band: " & FORMAT ( [T07 · audiência], "0" )
+    & " pontos de audiência na Grande SP, " & FORMAT ( [T07 · audiência · pico], "0.0" ) & " no pico e "
+    & FORMAT ( [T07 · audiência · share], "0%" ) & " das TVs ligadas. O debate parou a TV, mas não mexeu nas pesquisas."

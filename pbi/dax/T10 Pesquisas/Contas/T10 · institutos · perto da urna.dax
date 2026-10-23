@@ -1,0 +1,19 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0
+@descricao: Institutos com válidos cuja diferença ficou a menos de 0,5 ponto da diferença da urna.
+@oraculo: Gerp +0,1 e Futura +0,3 = 2
+*/
+VAR _lista =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@e", [T10 · instituto · erro vs urna]
+    )
+RETURN
+    COUNTROWS ( FILTER ( _lista, NOT ISBLANK ( [@e] ) && ABS ( [@e] ) < 0.5 ) ) + 0

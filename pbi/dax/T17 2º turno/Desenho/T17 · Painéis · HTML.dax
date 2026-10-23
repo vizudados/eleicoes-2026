@@ -1,0 +1,60 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Um quadrinho por instituto comparável (grão 'Rejeição'[Instituto]): a rejeição de Lula e de Flávio na última medição antes do 1º turno (ponto vazado e valor à esquerda) e na última depois (ponto cheio e valor à direita), na mesma escala (40% a 58%), e as datas. Valores afastados quando ficariam um sobre o outro. Cinco por linha, em ordem alfabética. Alvo do dossiê ttT17Rejeicao; vazio nos institutos sem as duas medições ou com pergunta trocada.
+*/
+-- 1 · Leituras
+VAR _ok = [T17 · rejeição · comparável]
+VAR _ord = [T17 · rejeição · ordem]
+VAR _inst = [T17 · rejeição · instituto]
+VAR _al = [T17 · rejeição · antes · Lula]
+VAR _af = [T17 · rejeição · antes · Flávio]
+VAR _dl = [T17 · rejeição · depois · Lula]
+VAR _df = [T17 · rejeição · depois · Flávio]
+VAR _da = [T17 · rejeição · antes · data]
+VAR _dd = [T17 · rejeição · depois · data]
+-- 2 · Textos
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtDatas = FORMAT ( _da, "dd/MM" ) & " → " & FORMAT ( _dd, "dd/MM" )
+VAR _tAl = IF ( INT ( _al ) = _al, FORMAT ( _al, "0" ), FORMAT ( _al, "0.0" ) )
+VAR _tAf = IF ( INT ( _af ) = _af, FORMAT ( _af, "0" ), FORMAT ( _af, "0.0" ) )
+VAR _tDl = IF ( INT ( _dl ) = _dl, FORMAT ( _dl, "0" ), FORMAT ( _dl, "0.0" ) )
+VAR _tDf = IF ( INT ( _df ) = _df, FORMAT ( _df, "0" ), FORMAT ( _df, "0.0" ) )
+-- 3 · Geometria (quadrinho 144 × 104, cinco por linha a cada 154 px, linhas a cada 114 px a partir de y 122;
+--   svg 144 × 62: linhas de x 36 a 104, escala 58% em y 6 e 40% em y 56; valores a 13 px de distância no mínimo)
+VAR _col = MOD ( _ord - 1, 5 ) -- geometria
+VAR _lin = INT ( ( _ord - 1 ) / 5 ) -- geometria
+VAR _yAl = 6 + ( 58 - MAX ( MIN ( _al, 58 ), 40 ) ) / 18 * 50 -- geometria
+VAR _yAf = 6 + ( 58 - MAX ( MIN ( _af, 58 ), 40 ) ) / 18 * 50 -- geometria
+VAR _yDl = 6 + ( 58 - MAX ( MIN ( _dl, 58 ), 40 ) ) / 18 * 50 -- geometria
+VAR _yDf = 6 + ( 58 - MAX ( MIN ( _df, 58 ), 40 ) ) / 18 * 50 -- geometria
+VAR _mA = ( _yAl + _yAf ) / 2 -- geometria
+VAR _mD = ( _yDl + _yDf ) / 2 -- geometria
+VAR _perto = 13 -- geometria
+VAR _tyAl = IF ( ABS ( _yAl - _yAf ) < _perto, _mA + IF ( _al >= _af, -_perto / 2, _perto / 2 ), _yAl ) + 4.5 -- geometria
+VAR _tyAf = IF ( ABS ( _yAl - _yAf ) < _perto, _mA + IF ( _al >= _af, _perto / 2, -_perto / 2 ), _yAf ) + 4.5 -- geometria
+VAR _tyDl = IF ( ABS ( _yDl - _yDf ) < _perto, _mD + IF ( _dl >= _df, -_perto / 2, _perto / 2 ), _yDl ) + 4.5 -- geometria
+VAR _tyDf = IF ( ABS ( _yDl - _yDf ) < _perto, _mD + IF ( _dl >= _df, _perto / 2, -_perto / 2 ), _yDf ) + 4.5 -- geometria
+VAR _f = "0.0"
+VAR _atraso = 600 + _ord * 120 -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        _ok = "Sim",
+        "<div class='tela t17q'><div class='pn entra' style='left:" & _col * 154 & "px;top:" & 122 + _lin * 114
+            & "px;animation-delay:" & _atraso & "ms'><b>" & _esc & "</b>"
+            & "<svg width='144' height='62' viewBox='0 0 144 62'>"
+                & "<line x1='36' x2='104' y1='" & FORMAT ( _yAl, _f, "en-US" ) & "' y2='" & FORMAT ( _yDl, _f, "en-US" )
+                & "' class='ll traco' pathLength='1' style='animation-delay:" & _atraso + 150 & "ms'/>"
+                & "<line x1='36' x2='104' y1='" & FORMAT ( _yAf, _f, "en-US" ) & "' y2='" & FORMAT ( _yDf, _f, "en-US" )
+                & "' class='lf traco' pathLength='1' style='animation-delay:" & _atraso + 250 & "ms'/>"
+                & "<circle cx='36' cy='" & FORMAT ( _yAl, _f, "en-US" ) & "' r='3.6' class='al'/>"
+                & "<circle cx='36' cy='" & FORMAT ( _yAf, _f, "en-US" ) & "' r='3.6' class='af'/>"
+                & "<circle cx='104' cy='" & FORMAT ( _yDl, _f, "en-US" ) & "' r='4.2' class='dl'/>"
+                & "<circle cx='104' cy='" & FORMAT ( _yDf, _f, "en-US" ) & "' r='4.2' class='df'/>"
+                & "<text x='30' y='" & FORMAT ( _tyAl, _f, "en-US" ) & "' text-anchor='end' class='vl va'>" & _tAl & "</text>"
+                & "<text x='30' y='" & FORMAT ( _tyAf, _f, "en-US" ) & "' text-anchor='end' class='vf va'>" & _tAf & "</text>"
+                & "<text x='110' y='" & FORMAT ( _tyDl, _f, "en-US" ) & "' class='vl'>" & _tDl & "</text>"
+                & "<text x='110' y='" & FORMAT ( _tyDf, _f, "en-US" ) & "' class='vf'>" & _tDf & "</text>"
+            & "</svg><span>" & _txtDatas & "</span></div></div>"
+    )

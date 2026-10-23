@@ -1,0 +1,6 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: Instituto do contexto (um instituto da tabela Rejeição).
+*/
+IF ( HASONEVALUE ( 'Rejeição'[Instituto] ), SELECTEDVALUE ( 'Rejeição'[Instituto] ) )

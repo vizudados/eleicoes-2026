@@ -1,0 +1,8 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: % de Lula na última pesquisa do instituto (na base escolhida).
+*/
+VAR _id = [T10 · instituto · pesquisa]
+RETURN
+    IF ( NOT ISBLANK ( _id ), CALCULATE ( MAX ( Pesquisa[Lula] ), REMOVEFILTERS ( Pesquisa ), Pesquisa[Id] = _id ) )

@@ -1,0 +1,9 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Flávio − Lula, em pontos, na última pesquisa do instituto (positivo = Flávio à frente).
+@oraculo: paginas[10].antes.institutos[].diferenca (Alfa −7,0 … Palver +4,0)
+*/
+VAR _id = [T10 · instituto · pesquisa]
+RETURN
+    IF ( NOT ISBLANK ( _id ), [T10 · instituto · Flávio] - [T10 · instituto · Lula] )

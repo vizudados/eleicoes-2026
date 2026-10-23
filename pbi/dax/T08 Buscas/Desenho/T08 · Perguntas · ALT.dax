@@ -1,0 +1,7 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da caixa de busca com as perguntas.
+*/
+"O que o Brasil perguntou: Que horas começa a votação (" & FORMAT ( [T08 · pergunta · que horas começa a votação · alta], "+0%" )
+    & " na semana até 01/10), local de votação (pico no dia da eleição), Quem ganhou a eleição e Quando vai ser o segundo turno (as mais buscadas depois)."

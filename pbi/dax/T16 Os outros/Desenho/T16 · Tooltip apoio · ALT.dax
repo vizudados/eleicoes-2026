@@ -1,0 +1,9 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de um apoio.
+*/
+IF (
+    NOT ISBLANK ( [T16 · apoio · posição] ),
+    LEFT ( SELECTEDVALUE ( Apoio[Quem] ) & ": " & [T16 · apoio · posição] & ". " & [T16 · apoio · citação], 250 )
+)

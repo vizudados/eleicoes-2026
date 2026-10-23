@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Nota média (0–100) dada a Flávio nos 30 grupos qualitativos da Quaest durante o debate de 18/10. Constante: debate_band.json › quem_venceu.pesquisas_qualitativas[0].
+@oraculo: qualitativa.flavio = 82
+*/
+82

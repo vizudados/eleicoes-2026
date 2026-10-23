@@ -1,0 +1,14 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0
+@descricao: Governadores eleitos ou reeleitos no 1º turno com posição 'neutro' no 2º turno (levantamento do O Povo, 16/10).
+@oraculo: 4
+*/
+COUNTROWS (
+    FILTER (
+        ALL ( Apoio ),
+        ( CONTAINSSTRING ( Apoio[Cargo], "governador eleito" ) || CONTAINSSTRING ( Apoio[Cargo], "governador reeleito" )
+            || CONTAINSSTRING ( Apoio[Cargo], "governadora eleita" ) || CONTAINSSTRING ( Apoio[Cargo], "governadora reeleita" ) )
+            && Apoio[Posição] = "neutro"
+    )
+) + 0

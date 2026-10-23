@@ -150,7 +150,9 @@ def css_base() -> str:
 
 def defs_rabisco(ident: str = "rb", escala: float = 2.2, frequencia: float = 0.035, semente: int = 7) -> str:
     """<defs> com o filtro de traço tremido de caneta (turbulência + deslocamento) para usar em filter="url(#rb)"."""
-    return (f"<defs><filter id='{ident}' x='-5%' y='-5%' width='110%' height='110%'>"
+    # userSpaceOnUse: com a região em fração da caixa (o padrão), uma linha reta horizontal ou vertical tem caixa de
+    # altura (ou largura) 0 e some com o filtro
+    return (f"<defs><filter id='{ident}' filterUnits='userSpaceOnUse' x='-10%' y='-10%' width='120%' height='120%'>"
             f"<feTurbulence type='fractalNoise' baseFrequency='{frequencia}' numOctaves='2' seed='{semente}' result='r'/>"
             f"<feDisplacementMap in='SourceGraphic' in2='r' scale='{escala}' xChannelSelector='R' "
             f"yChannelSelector='G'/></filter></defs>")

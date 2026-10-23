@@ -1,0 +1,14 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: dd/MM
+@descricao: Data do anúncio mais recente de quem está no filtro (vazia quando a fonte não informa).
+*/
+VAR _q = SELECTEDVALUE ( Apoio[Quem] )
+VAR _dia = CALCULATE ( MAX ( Apoio[Data] ), REMOVEFILTERS ( Apoio ), Apoio[Quem] = _q )
+VAR _linha =
+    FILTER (
+        CALCULATETABLE ( Apoio, REMOVEFILTERS ( Apoio ), Apoio[Quem] = _q ),
+        ISBLANK ( _dia ) || Apoio[Data] = _dia
+    )
+RETURN
+    IF ( HASONEVALUE ( Apoio[Quem] ), _dia )

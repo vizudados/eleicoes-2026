@@ -1,0 +1,7 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: dd/MM
+@descricao: Dia do 1º turno (04/10/2026), o corte entre as simulações de 2º turno feitas antes da eleição e as pesquisas de 2º turno de verdade. Constante do calendário do TSE.
+@oraculo: dia_da_eleicao = 2026-10-04
+*/
+DATE ( 2026, 10, 4 )

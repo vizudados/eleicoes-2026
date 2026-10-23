@@ -1,0 +1,18 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Quantas pesquisas de 2º turno feitas depois do 1º turno divulgaram votos válidos (sem a Veritá retirada do ar).
+@oraculo: medias_depois.validos.pesquisas = 35
+*/
+VAR _d1 = [T17 · 1º turno · data]
+RETURN
+    CALCULATE (
+        COUNTROWS ( Pesquisa ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "validos",
+        Pesquisa[Momento] = "apos_1turno",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Campo fim] >= _d1
+    ) + 0

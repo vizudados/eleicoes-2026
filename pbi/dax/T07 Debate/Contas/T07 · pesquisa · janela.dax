@@ -1,0 +1,20 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: Em que janela a pesquisa da linha cai em relação ao debate: antes, depois ou atravessa; vazio quando a linha não é pesquisa do 2º turno (votos totais, depois do 1º turno).
+*/
+VAR _d = [T07 · debate · data]
+VAR _ok =
+    HASONEVALUE ( Pesquisa[Id] )
+        && SELECTEDVALUE ( Pesquisa[Cenário] ) = "2º turno"
+        && SELECTEDVALUE ( Pesquisa[Tipo] ) = "totais"
+        && SELECTEDVALUE ( Pesquisa[Momento] ) = "apos_1turno"
+        && NOT ISBLANK ( SELECTEDVALUE ( Pesquisa[Lula] ) )
+        && NOT ISBLANK ( SELECTEDVALUE ( Pesquisa[Flavio] ) )
+VAR _ini = SELECTEDVALUE ( Pesquisa[Campo início] )
+VAR _fim = SELECTEDVALUE ( Pesquisa[Campo fim] )
+RETURN
+    IF (
+        _ok,
+        SWITCH ( TRUE (), _fim < _d, "antes", _ini > _d, "depois", "atravessa" )
+    )

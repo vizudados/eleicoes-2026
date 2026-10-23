@@ -1,0 +1,20 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: dd/MM
+@descricao: Dia da última rejeição de Lula publicada pelo instituto do contexto depois do 1º turno. Regra das linhas: eleitorado total; sem a rejeição exclusiva do Datafolha (fica 'não votará de jeito nenhum'); na Ideia, a escala 'poderia votar' (a mesma antes e depois), sem a linha de resposta múltipla.
+*/
+VAR _d1 = [T17 · 1º turno · data]
+RETURN
+IF (
+    HASONEVALUE ( 'Rejeição'[Instituto] ),
+    CALCULATE (
+        MAX ( 'Rejeição'[Divulgação] ),
+        REMOVEFILTERS ( 'Rejeição'[Divulgação], 'Rejeição'[Candidato], 'Rejeição'[Rejeicao], 'Rejeição'[Segmento], 'Rejeição'[Observação] ),
+        'Rejeição'[Segmento] = "total",
+        NOT ISBLANK ( 'Rejeição'[Rejeicao] ),
+        NOT CONTAINSSTRING ( 'Rejeição'[Observação], "rejeicao_exclusiva" ),
+        NOT CONTAINSSTRING ( 'Rejeição'[Observação], "mesma pergunta de resposta múltipla" ),
+        'Rejeição'[Candidato] = "Lula",
+        'Rejeição'[Divulgação] > _d1
+    )
+)

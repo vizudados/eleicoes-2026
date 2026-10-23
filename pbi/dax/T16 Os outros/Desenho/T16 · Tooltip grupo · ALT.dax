@@ -1,0 +1,11 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de um grupo.
+*/
+IF (
+    [T16 · transferência · institutos] > 0,
+    "Última pesquisa de cada instituto: Lula de " & FORMAT ( [T16 · transferência · Lula mínimo], "0" ) & "% a "
+        & FORMAT ( [T16 · transferência · Lula máximo], "0" ) & "%, Flávio de " & FORMAT ( [T16 · transferência · Flávio mínimo], "0" )
+        & "% a " & FORMAT ( [T16 · transferência · Flávio máximo], "0" ) & "%."
+)

@@ -1,0 +1,19 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: Sim quando o instituto do contexto mediu a rejeição de Lula e de Flávio antes e depois do 1º turno com uma pergunta comparável. Ficam fora Vox Brasil e Real Time Big Data: depois do 1º turno a pergunta passou a ter só os dois nomes ou a opção 'rejeito ambos', e a queda vem da troca de pergunta (FONTES.md da transferência).
+*/
+VAR _inst = [T17 · rejeição · instituto]
+RETURN
+    IF (
+        NOT ISBLANK ( _inst ),
+        IF (
+            NOT ( _inst IN { "Vox Brasil", "Real Time Big Data" } )
+                && NOT ISBLANK ( [T17 · rejeição · antes · Lula] )
+                && NOT ISBLANK ( [T17 · rejeição · antes · Flávio] )
+                && NOT ISBLANK ( [T17 · rejeição · depois · Lula] )
+                && NOT ISBLANK ( [T17 · rejeição · depois · Flávio] ),
+            "Sim",
+            "Não"
+        )
+    )

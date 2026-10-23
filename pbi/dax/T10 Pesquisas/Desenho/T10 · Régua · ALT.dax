@@ -1,0 +1,7 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da régua da véspera.
+*/
+"Régua da diferença entre Flávio e Lula na última pesquisa de cada instituto, de Lula à frente a Flávio à frente, com o empate e a urna (Flávio "
+    & FORMAT ( [T10 · urna · diferença], "0.0" ) & ") marcados."

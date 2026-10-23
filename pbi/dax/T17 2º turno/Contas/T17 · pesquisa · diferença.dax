@@ -1,0 +1,9 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: +0.0;-0.0;0.0
+@descricao: Flávio − Lula, em pontos, na pesquisa da linha (positivo = Flávio à frente).
+*/
+IF (
+    NOT ISBLANK ( [T17 · pesquisa · momento] ),
+    [T17 · pesquisa · Flávio] - [T17 · pesquisa · Lula]
+)

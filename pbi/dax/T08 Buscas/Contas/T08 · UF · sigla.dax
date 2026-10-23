@@ -1,0 +1,6 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: Sigla da UF da linha.
+*/
+IF ( HASONEVALUE ( UF[UF] ), SELECTEDVALUE ( UF[UF] ) )

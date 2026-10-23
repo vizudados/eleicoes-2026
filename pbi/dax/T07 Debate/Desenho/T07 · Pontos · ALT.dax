@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela dos pontos das pesquisas (um par por pesquisa).
+*/
+"Um par de pontos por pesquisa do 2º turno (" & [T07 · pesquisas do 2º turno]
+    & "): Lula em vermelho e Flávio em azul, no último dia de entrevistas. Passe o mouse para ver o instituto."

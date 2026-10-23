@@ -1,0 +1,6 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: texto
+@descricao: Nome do instituto da linha, quando ele tem pesquisa de 1º turno com Lula e Flávio (vazio nos outros).
+*/
+IF ( NOT ISBLANK ( [T10 · instituto · pesquisa] ), SELECTEDVALUE ( Pesquisa[Instituto] ) )

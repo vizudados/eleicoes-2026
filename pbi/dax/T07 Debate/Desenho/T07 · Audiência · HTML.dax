@@ -1,0 +1,35 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: O número da noite do debate de 18/10: a audiência na Grande SP (contador), o pico, o share e os aparelhos no YouTube, e a manchete da tela. Só lê as contas 'T07 · audiência…', 'T07 · YouTube · aparelhos' e 'T07 · debate · data'.
+*/
+-- 1 · Leituras
+VAR _aud = [T07 · audiência]
+VAR _pico = [T07 · audiência · pico]
+VAR _share = [T07 · audiência · share]
+VAR _pessoas = [T07 · audiência · pessoas]
+VAR _yt = [T07 · YouTube · aparelhos]
+VAR _dia = [T07 · debate · data]
+-- 2 · Textos
+VAR _txtAud = FORMAT ( _aud, "0" )
+VAR _txtPico = FORMAT ( _pico, "0.0" )
+VAR _txtShare = FORMAT ( _share, "0%" )
+VAR _txtYt = FORMAT ( _yt / 1000000, "0.00" ) & " mi"
+VAR _txtPessoas = FORMAT ( _pessoas / 1000000, "0.0" ) & " milhões de pessoas"
+VAR _txtDia = FORMAT ( _dia, "dd/MM" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t07a'>"
+        & "<div class='sob sobe'>" & _txtDia & " · Band · o único frente a frente</div>"
+        & "<div class='linha'>"
+            & "<div class='hero sobe d1'><span class='num'>" & _txtAud & "</span><span class='u'>pontos</span></div>"
+            & "<div class='tri'>"
+                & "<div class='sobe d3'><div class='num'>" & _txtPico & "</div><div class='rot'>pontos<br>no pico</div></div>"
+                & "<div class='sobe d4'><div class='num'>" & _txtShare & "</div><div class='rot'>das TVs ligadas<br>estavam no debate</div></div>"
+                & "<div class='sobe d5'><div class='num'>" & _txtYt & "</div><div class='rot'>de aparelhos ao mesmo<br>tempo no YouTube</div></div>"
+            & "</div>"
+        & "</div>"
+        & "<div class='man sobe d6'>O debate parou a TV, mas não mexeu nas pesquisas</div>"
+        & "<div class='txt sobe d7'>Audiência na Grande SP: cerca de " & _txtPessoas
+            & " assistiram. Segundo a Band, foi o debate mais visto em 20 anos.</div>"
+    & "</div>"

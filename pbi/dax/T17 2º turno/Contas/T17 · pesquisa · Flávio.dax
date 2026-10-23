@@ -1,0 +1,6 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0.0
+@descricao: % de Flávio (votos totais) na pesquisa da linha; vazio fora das pesquisas de 2º turno (votos totais).
+*/
+IF ( NOT ISBLANK ( [T17 · pesquisa · momento] ), SELECTEDVALUE ( Pesquisa[Flavio] ) )

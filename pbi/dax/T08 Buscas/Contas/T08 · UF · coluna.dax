@@ -1,0 +1,6 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Coluna da UF no mapa de quadrados (UF[GradeColuna]).
+*/
+IF ( HASONEVALUE ( UF[UF] ), SELECTEDVALUE ( UF[GradeColuna] ) )

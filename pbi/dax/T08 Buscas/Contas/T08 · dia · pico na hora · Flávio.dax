@@ -1,0 +1,13 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Maior índice por hora de Flávio no dia da linha (consultas H1/H2); vazio quando o dia não tem série por hora.
+*/
+VAR _dia = SELECTEDVALUE ( 'Trends tempo'[DataTexto] )
+RETURN
+    CALCULATE (
+        MAX ( 'Trends tempo'[Índice] ),
+        REMOVEFILTERS ( 'Trends tempo' ),
+        LEFT ( 'Trends tempo'[DataTexto], 10 ) = _dia,
+        'Trends tempo'[Série] IN { "Flávio Bolsonaro [tópico | H1]", "Flávio Bolsonaro [tópico | H2]" }
+    )

@@ -1,0 +1,14 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Índice T2 de Flávio no dia em que Flávio passou Lula depois do debate.
+@oraculo: FONTES: 19/10 Flávio 49 × Lula 48 → 49
+*/
+VAR _d = [T08 · virada · data]
+RETURN
+    CALCULATE (
+        MAX ( 'Trends tempo'[Índice] ),
+        REMOVEFILTERS ( 'Trends tempo' ),
+        'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]",
+        'Trends tempo'[Momento] = _d
+    )

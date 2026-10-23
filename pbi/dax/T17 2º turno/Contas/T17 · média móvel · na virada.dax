@@ -1,0 +1,9 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: +0.0;-0.0;0.0
+@descricao: Média móvel no dia da virada.
+@oraculo: +0,58
+*/
+VAR _d = [T17 · média móvel · virada]
+RETURN
+    CALCULATE ( [T17 · média móvel], REMOVEFILTERS ( Pesquisa ), Pesquisa[Divulgação] = _d )

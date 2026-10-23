@@ -1,0 +1,32 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Um par de pontos por pesquisa do 2º turno feita depois do 1º turno (grão Pesquisa[Id]): Lula e Flávio no último dia de entrevistas, na escala do fundo (T07 · Pesquisas · HTML). Claros quando o campo pegou o dia do debate. Cada ponto é alvo do dossiê ttT07Pesquisa; vazio fora do conjunto.
+*/
+-- 1 · Leituras
+VAR _jan = [T07 · pesquisa · janela]
+VAR _l = [T07 · pesquisa · Lula]
+VAR _f = [T07 · pesquisa · Flávio]
+VAR _fim = [T07 · pesquisa · campo fim]
+VAR _ord = [T07 · pesquisa · ordem no dia]
+VAR _n = [T07 · pesquisa · no mesmo dia]
+-- 2 · Textos
+VAR _cls = IF ( _jan = "atravessa", " atr", "" )
+-- 3 · Geometria (mesma escala do fundo; o svg do fundo começa em y 76; ponto de 15 px)
+VAR _dias = DATEDIFF ( DATE ( 2026, 10, 6 ), _fim, DAY )
+VAR _x = 210 + _dias / 16 * 1190 + ( _ord - ( _n - 1 ) / 2 ) * 16 - 7.5 -- geometria
+VAR _yl = 76 + 250 - ( _l - 38 ) / 16 * 230 - 7.5 -- geometria
+VAR _yf = 76 + 250 - ( _f - 38 ) / 16 * 230 - 7.5 -- geometria
+VAR _atraso = 700 + _dias * 70 + _ord * 40 -- geometria
+VAR _fx = FORMAT ( _x, "0.0", "en-US" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _jan ),
+        "<div class='tela t07p'>"
+            & "<i class='pt l" & _cls & "' style='left:" & _fx & "px;top:" & FORMAT ( _yl, "0.0", "en-US" )
+            & "px;animation-delay:" & _atraso & "ms'></i>"
+            & "<i class='pt f" & _cls & "' style='left:" & _fx & "px;top:" & FORMAT ( _yf, "0.0", "en-US" )
+            & "px;animation-delay:" & _atraso + 60 & "ms'></i>"
+        & "</div>"
+    )

@@ -1,0 +1,21 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Entre os institutos comparáveis, em quantos a rejeição de Flávio ficou igual ou abaixo da de Lula na última medição depois do 1º turno.
+@oraculo: 8 (exceções: Quaest 52 × 47 e Indexa 51 × 50)
+*/
+CALCULATE (
+    VAR _inst =
+        ADDCOLUMNS (
+            VALUES ( 'Rejeição'[Instituto] ),
+            "@ok", [T17 · rejeição · comparável],
+            "@al", [T17 · rejeição · antes · Lula],
+            "@af", [T17 · rejeição · antes · Flávio],
+            "@dl", [T17 · rejeição · depois · Lula],
+            "@df", [T17 · rejeição · depois · Flávio]
+        )
+    VAR _comp = FILTER ( _inst, [@ok] = "Sim" )
+    RETURN
+        COUNTROWS ( FILTER ( _comp, [@df] <= [@dl] ) ),
+    REMOVEFILTERS ( 'Rejeição' )
+) + 0

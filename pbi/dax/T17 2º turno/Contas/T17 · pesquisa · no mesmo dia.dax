@@ -1,0 +1,19 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Quantas pesquisas de 2º turno (votos totais) foram divulgadas no mesmo dia que a da linha (ela inclusa).
+*/
+VAR _dia = [T17 · pesquisa · divulgação]
+RETURN
+    IF (
+        NOT ISBLANK ( _dia ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Divulgação] = _dia
+        )
+    )

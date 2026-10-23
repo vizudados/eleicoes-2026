@@ -1,0 +1,6 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: Quem faltou ao debate da linha.
+*/
+IF ( HASONEVALUE ( Debate[Data] ), SELECTEDVALUE ( Debate[Ausentes] ) )

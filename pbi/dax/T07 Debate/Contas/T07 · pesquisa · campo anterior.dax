@@ -1,0 +1,22 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: dd/MM
+@descricao: Último dia de campo da pesquisa anterior do mesmo instituto (2º turno, votos totais, depois do 1º turno); vazio quando é a primeira dele.
+*/
+VAR _inst = [T07 · pesquisa · instituto]
+VAR _fim = [T07 · pesquisa · campo fim]
+RETURN
+    IF (
+        NOT ISBLANK ( _fim ),
+        CALCULATE (
+            MAX ( Pesquisa[Campo fim] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            Pesquisa[Momento] = "apos_1turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _inst,
+            Pesquisa[Campo fim] < _fim
+        )
+    )

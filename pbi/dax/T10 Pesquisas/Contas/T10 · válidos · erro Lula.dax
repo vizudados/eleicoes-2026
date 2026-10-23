@@ -1,0 +1,7 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Urna menos a média das pesquisas com válidos para Lula, em pontos (positivo = a urna deu mais do que as pesquisas).
+@oraculo: 45,16 − 45,21 = −0,05
+*/
+[T10 · urna · Lula] - [T10 · válidos · média Lula]

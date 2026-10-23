@@ -1,0 +1,25 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Posição do instituto do contexto na lista dos comparáveis, em ordem alfabética (1 = o primeiro).
+*/
+VAR _eu = [T17 · rejeição · instituto]
+RETURN
+    IF (
+        [T17 · rejeição · comparável] = "Sim",
+        CALCULATE (
+            VAR _inst =
+                ADDCOLUMNS (
+                    VALUES ( 'Rejeição'[Instituto] ),
+                    "@ok", [T17 · rejeição · comparável],
+                    "@al", [T17 · rejeição · antes · Lula],
+                    "@af", [T17 · rejeição · antes · Flávio],
+                    "@dl", [T17 · rejeição · depois · Lula],
+                    "@df", [T17 · rejeição · depois · Flávio]
+                )
+            VAR _comp = FILTER ( _inst, [@ok] = "Sim" )
+            RETURN
+                COUNTROWS ( FILTER ( _comp, 'Rejeição'[Instituto] <= _eu ) ),
+            REMOVEFILTERS ( 'Rejeição' )
+        )
+    )

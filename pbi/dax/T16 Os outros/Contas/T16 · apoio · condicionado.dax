@@ -1,0 +1,18 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Sim quando o apoio mais recente de quem está no filtro foi declarado com condições (a Observação diz 'condicionado').
+@oraculo: Cury Sim · Clariana Barão Sim · Wilson Grassi Sim
+*/
+VAR _q = SELECTEDVALUE ( Apoio[Quem] )
+VAR _dia = CALCULATE ( MAX ( Apoio[Data] ), REMOVEFILTERS ( Apoio ), Apoio[Quem] = _q )
+VAR _linha =
+    FILTER (
+        CALCULATETABLE ( Apoio, REMOVEFILTERS ( Apoio ), Apoio[Quem] = _q ),
+        ISBLANK ( _dia ) || Apoio[Data] = _dia
+    )
+RETURN
+    IF (
+        HASONEVALUE ( Apoio[Quem] ),
+        IF ( CONTAINSSTRING ( UPPER ( MAXX ( _linha, Apoio[Observação] ) ), "CONDICIONADO" ), "Sim", "Não" )
+    )

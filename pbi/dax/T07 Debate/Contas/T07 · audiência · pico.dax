@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0.0
+@descricao: Pico de audiência do debate de 18/10 na Grande SP, em pontos. Constante do levantamento: dados/bruto/debate/debate_band.json › audiencia.tv[0].pico_pontos (balanço da Band; está também no texto de Debate[Fonte da audiência]).
+@oraculo: pico_txt = 16,5 de pico
+*/
+16.5

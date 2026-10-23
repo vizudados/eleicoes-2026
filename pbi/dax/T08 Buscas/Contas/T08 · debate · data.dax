@@ -1,0 +1,12 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Data do debate de Lula e Flávio na Band (linha da tabela Debate em que os dois participaram).
+@oraculo: 18/10
+*/
+CALCULATE (
+    MAX ( Debate[Data] ),
+    REMOVEFILTERS ( Debate ),
+    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+)

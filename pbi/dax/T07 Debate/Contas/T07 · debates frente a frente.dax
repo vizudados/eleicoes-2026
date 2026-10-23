@@ -1,0 +1,12 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Debates marcados na campanha que reuniram Lula e Flávio no mesmo palco.
+@oraculo: 1 (18/10)
+*/
+CALCULATE (
+    COUNTROWS ( Debate ),
+    REMOVEFILTERS ( Debate ),
+    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+) + 0

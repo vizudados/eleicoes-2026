@@ -1,0 +1,8 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da curva do 2º turno.
+*/
+"Diferença entre Flávio e Lula em " & [T17 · pesquisas] & " pesquisas do 2º turno, de agosto a "
+    & FORMAT ( [T17 · média móvel · último dia], "dd/MM" ) & ". A média dos 10 dias virou para Flávio em "
+    & FORMAT ( [T17 · média móvel · virada], "dd/MM" ) & " e hoje está em Flávio +" & FORMAT ( [T17 · média móvel · agora], "0.0" ) & "."

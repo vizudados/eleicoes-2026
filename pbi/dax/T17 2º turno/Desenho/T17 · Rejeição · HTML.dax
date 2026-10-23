@@ -1,0 +1,24 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Cabeçalho da rejeição: em quantos institutos a rejeição de Flávio ficou igual ou abaixo da de Lula depois do 1º turno e como ler os quadrinhos (um por instituto, outro visual: T17 · Painéis · HTML). Só lê contas 'T17 · rejeição · …'.
+*/
+-- 1 · Leituras
+VAR _n = [T17 · rejeição · institutos comparáveis]
+VAR _abaixo = [T17 · rejeição · Flávio igual ou abaixo]
+VAR _caiu = [T17 · rejeição · Flávio caiu]
+-- 2 · Textos
+VAR _txtMan =
+    "Depois do 1º turno, a rejeição de Flávio ficou igual ou abaixo da de Lula em " & _abaixo & " de " & _n
+        & IF ( _n = 1, " instituto", " institutos" )
+VAR _txtNota =
+    "Cada instituto pergunta de um jeito: compare só dentro do quadrinho. À esquerda, a última medição antes do 1º turno; "
+        & "à direita, a última depois. A de Flávio caiu em " & _caiu & " deles."
+-- 4 · Marcação
+RETURN
+    "<div class='tela t17r'>"
+        & "<div class='sob sobe'>Rejeição: quem não votaria de jeito nenhum</div>"
+        & "<div class='man sobe d2'>" & _txtMan & "</div>"
+        & "<div class='nota sobe d3'><i style='background:var(--vermelho)'></i>Lula <i style='background:var(--azul);margin-left:12px'></i>Flávio · "
+        & _txtNota & "</div>"
+    & "</div>"

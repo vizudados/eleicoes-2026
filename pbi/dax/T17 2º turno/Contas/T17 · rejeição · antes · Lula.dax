@@ -1,0 +1,21 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0.0
+@descricao: Rejeição (%) de Lula na última medição do instituto do contexto antes do 1º turno (o dia de 'T17 · rejeição · antes · data'). Regra das linhas: eleitorado total; sem a rejeição exclusiva do Datafolha (fica 'não votará de jeito nenhum'); na Ideia, a escala 'poderia votar' (a mesma antes e depois), sem a linha de resposta múltipla.
+@oraculo: FONTES.md (transferência) › Rejeição › resumo
+*/
+VAR _dia = [T17 · rejeição · antes · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _dia ),
+        CALCULATE (
+            AVERAGE ( 'Rejeição'[Rejeicao] ),
+            REMOVEFILTERS ( 'Rejeição'[Divulgação], 'Rejeição'[Candidato], 'Rejeição'[Rejeicao], 'Rejeição'[Segmento], 'Rejeição'[Observação] ),
+            'Rejeição'[Segmento] = "total",
+            NOT ISBLANK ( 'Rejeição'[Rejeicao] ),
+            NOT CONTAINSSTRING ( 'Rejeição'[Observação], "rejeicao_exclusiva" ),
+            NOT CONTAINSSTRING ( 'Rejeição'[Observação], "mesma pergunta de resposta múltipla" ),
+            'Rejeição'[Candidato] = "Lula",
+            'Rejeição'[Divulgação] = _dia
+        )
+    )

@@ -1,0 +1,8 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da resposta da tela (≤ 250 caracteres).
+*/
+"Na véspera do 1º turno, " & [T10 · institutos · Lula à frente] & " de " & [T10 · institutos]
+    & " institutos davam Lula à frente. A urna deu " & IF ( [T10 · urna · diferença] >= 0, "Flávio", "Lula" ) & " por "
+    & FORMAT ( ABS ( [T10 · urna · diferença] ), "0.0" ) & " ponto dos votos válidos."

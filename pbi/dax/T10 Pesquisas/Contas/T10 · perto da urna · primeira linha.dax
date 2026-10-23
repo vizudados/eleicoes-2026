@@ -1,0 +1,20 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0
+@descricao: Primeira posição na régua (T10 · instituto · ordem) entre os institutos que ficaram a menos de 0,5 ponto da urna: onde a chave à mão abraça as linhas.
+@oraculo: Gerp 16, Futura 17
+*/
+VAR _lista =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@e", [T10 · instituto · erro vs urna],
+        "@o", [T10 · instituto · ordem]
+    )
+RETURN
+    MINX ( FILTER ( _lista, NOT ISBLANK ( [@e] ) && ABS ( [@e] ) < 0.5 ), [@o] )

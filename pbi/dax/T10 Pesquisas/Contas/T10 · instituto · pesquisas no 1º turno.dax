@@ -1,0 +1,19 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0
+@descricao: Quantas pesquisas de 1º turno (votos totais, com Lula e Flávio) o instituto da linha divulgou: os pontos da trajetória no dossiê.
+*/
+VAR _i = SELECTEDVALUE ( Pesquisa[Instituto] )
+RETURN
+    IF (
+        NOT ISBLANK ( _i ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _i,
+            Pesquisa[Tipo] = "totais"
+        ) + 0
+    )

@@ -1,0 +1,7 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela das linhas dos institutos (uma por instituto).
+*/
+"Uma linha por instituto (" & [T10 · institutos]
+    & "), do que dava mais vantagem a Lula ao que dava mais a Flávio. Círculo: votos válidos; quadrado: votos totais. Passe o mouse para ver a trajetória."

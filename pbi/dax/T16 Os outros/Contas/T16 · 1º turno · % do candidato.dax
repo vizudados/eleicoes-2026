@@ -1,0 +1,10 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0.00%
+@descricao: Parte dos votos válidos do 1º turno de 2026 do candidato do filtro.
+@oraculo: Cury 2,89% · Renan 2,24% · Caiado 2,18%
+*/
+DIVIDE (
+    [T16 · 1º turno · votos do candidato],
+    CALCULATE ( MAX ( 'Candidato ano'[ValidosAno] ), 'Candidato ano'[Ano] = 2026 )
+)

@@ -1,0 +1,17 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: dd/MM
+@descricao: Último último-dia-de-campo entre as pesquisas da janela 'depois' (a extensão da linha da média no gráfico).
+*/
+VAR _d = [T07 · debate · data]
+RETURN
+    CALCULATE (
+        MAX ( Pesquisa[Campo fim] ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "totais",
+        Pesquisa[Momento] = "apos_1turno",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Campo início] > _d
+    )

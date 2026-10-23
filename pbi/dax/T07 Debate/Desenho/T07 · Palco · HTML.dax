@@ -1,0 +1,28 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Legenda do palco em traço (a arte fica no bodyTemplate) e o alvo do mouse que abre o dossiê ttT07Palco. Uma entrada só: a linha do debate em que Lula e Flávio estiveram frente a frente (grão Debate[Data]).
+*/
+-- 1 · Leituras
+VAR _ff = [T07 · debate · frente a frente]
+VAR _dia = [T07 · debate · dia]
+VAR _emi = [T07 · debate · emissora]
+VAR _med = [T07 · debate · mediação]
+-- 2 · Textos
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _emi, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escMed = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtDia = FORMAT ( _dia, "dd/MM" )
+-- 4 · Marcação
+RETURN
+    IF (
+        _ff = "Sim",
+        "<div class='tela t07s'>"
+            & "<div class='leg'>"
+                & "<div class='sob sobe d2'>" & _txtDia & " · " & _esc & "</div>"
+                & "<div class='txt sobe d3'>Pela primeira e única vez na campanha, Lula e Flávio no mesmo palco.</div>"
+                & "<div class='nota sobe d4'>Mediação de " & _escMed & "</div>"
+            & "</div>"
+            & "<div class='dica entra d10'>passe o mouse no palco</div>"
+            & "<div class='alvo' title=''></div>"
+        & "</div>"
+    )

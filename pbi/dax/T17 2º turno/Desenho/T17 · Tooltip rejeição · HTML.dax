@@ -1,0 +1,72 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Dossiê de um instituto na rejeição (ttT17Rejeicao, grão 'Rejeição'[Instituto]): a última medição depois do 1º turno (Lula × Flávio), a última antes, a série inteira do instituto desde agosto (duas linhas, corte no 1º turno) e a nota à mão (quem tem a rejeição menor agora). Só lê contas 'T17 · rejeição · …'.
+*/
+-- 1 · Leituras
+VAR _ok = [T17 · rejeição · comparável]
+VAR _inst = [T17 · rejeição · instituto]
+VAR _al = [T17 · rejeição · antes · Lula]
+VAR _af = [T17 · rejeição · antes · Flávio]
+VAR _dl = [T17 · rejeição · depois · Lula]
+VAR _df = [T17 · rejeição · depois · Flávio]
+VAR _da = [T17 · rejeição · antes · data]
+VAR _dd = [T17 · rejeição · depois · data]
+VAR _d1 = [T17 · 1º turno · data]
+VAR _serie =
+    ADDCOLUMNS (
+        VALUES ( 'Rejeição'[Divulgação] ),
+        "@l", [T17 · rejeição · no dia · Lula],
+        "@f", [T17 · rejeição · no dia · Flávio]
+    )
+-- 2 · Textos
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtAntes =
+    "Na última antes do 1º turno (" & FORMAT ( _da, "dd/MM" ) & "): Lula " & FORMAT ( _al, "0.0" ) & "% e Flávio "
+        & FORMAT ( _af, "0.0" ) & "%."
+VAR _txtMao = SWITCH ( TRUE (), _df < _dl, "Flávio abaixo de Lula", _df > _dl, "Flávio acima de Lula", "empatados" )
+-- 3 · Geometria (série: 01/08 a 25/10 em x 30–410; 40% a 58% em y 70–6)
+VAR _ini = DATE ( 2026, 8, 1 )
+VAR _f = "0.0"
+VAR _pts =
+    ADDCOLUMNS (
+        FILTER ( _serie, NOT ISBLANK ( [@l] ) && NOT ISBLANK ( [@f] ) ), /* lista */
+        "@x", 30 + DATEDIFF ( _ini, 'Rejeição'[Divulgação], DAY ) / 85 * 380,
+        "@yl", 70 - ( MAX ( MIN ( [@l], 58 ), 40 ) - 40 ) / 18 * 64,
+        "@yf", 70 - ( MAX ( MIN ( [@f], 58 ), 40 ) - 40 ) / 18 * 64
+    )
+VAR _linhaL = CONCATENATEX ( _pts, FORMAT ( [@x], _f, "en-US" ) & "," & FORMAT ( [@yl], _f, "en-US" ), " ", 'Rejeição'[Divulgação], ASC )
+VAR _linhaF = CONCATENATEX ( _pts, FORMAT ( [@x], _f, "en-US" ) & "," & FORMAT ( [@yf], _f, "en-US" ), " ", 'Rejeição'[Divulgação], ASC )
+VAR _bolas =
+    CONCATENATEX (
+        _pts,
+        "<circle cx='" & FORMAT ( [@x], _f, "en-US" ) & "' cy='" & FORMAT ( [@yl], _f, "en-US" ) & "' r='3' class='pl'/>"
+            & "<circle cx='" & FORMAT ( [@x], _f, "en-US" ) & "' cy='" & FORMAT ( [@yf], _f, "en-US" ) & "' r='3' class='pf'/>",
+        ""
+    )
+VAR _x1 = 30 + DATEDIFF ( _ini, _d1, DAY ) / 85 * 380 -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        _ok = "Sim",
+        "<div class='tt17r'>"
+            & "<div class='sob sobe'>" & _esc & " · rejeição no eleitorado todo</div>"
+            & "<div class='par sobe d2'>"
+                & "<div class='lula'><small>Lula · " & FORMAT ( _dd, "dd/MM" ) & "</small><span class='num'>" & FORMAT ( _dl, "0.0" )
+                & "%</span></div>"
+                & "<div class='flavio'><small>Flávio · " & FORMAT ( _dd, "dd/MM" ) & "</small><span class='num'>" & FORMAT ( _df, "0.0" )
+                & "%</span></div>"
+            & "</div>"
+            & "<div class='txt sobe d3'>" & _txtAntes & "</div>"
+            & "<div class='nota sobe d3'>A pergunta muda de um instituto para outro: compare só dentro deste.</div>"
+            & "<svg width='420' height='92' viewBox='0 0 420 92' class='entra d4'>"
+                & "<line x1='30' x2='410' y1='70' y2='70' class='g'/><line x1='30' x2='410' y1='34.4' y2='34.4' class='g'/>"
+                & "<text x='24' y='74' class='ex' text-anchor='end'>40</text><text x='24' y='38' class='ex' text-anchor='end'>50</text>"
+                & "<line x1='" & FORMAT ( _x1, _f, "en-US" ) & "' x2='" & FORMAT ( _x1, _f, "en-US" ) & "' y1='2' y2='76' class='mk'/>"
+                & "<text x='" & FORMAT ( _x1, _f, "en-US" ) & "' y='90' class='ex' text-anchor='middle'>1º turno</text>"
+                & "<text x='30' y='90' class='ex'>ago</text>"
+                & "<polyline points='" & _linhaL & "' class='ll'/><polyline points='" & _linhaF & "' class='lf'/>" & _bolas
+            & "</svg>"
+            & "<div class='mao" & IF ( _df < _dl, " az", IF ( _df > _dl, "", " ti" ) ) & " entra d6'>" & _txtMao & "</div>"
+        & "</div>"
+    )

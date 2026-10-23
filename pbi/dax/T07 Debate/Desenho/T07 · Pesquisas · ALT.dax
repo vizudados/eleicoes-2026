@@ -1,0 +1,9 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do gráfico das pesquisas em volta do debate.
+*/
+"Pesquisas do 2º turno em volta do debate, votos totais. Média antes: Lula " & FORMAT ( [T07 · antes · Lula], "0.0" )
+    & "% e Flávio " & FORMAT ( [T07 · antes · Flávio], "0.0" ) & "% (" & [T07 · antes · pesquisas]
+    & " pesquisas). Depois: " & FORMAT ( [T07 · depois · Lula], "0.0" ) & "% e " & FORMAT ( [T07 · depois · Flávio], "0.0" )
+    & "% (" & [T07 · depois · pesquisas] & ")."

@@ -1,0 +1,13 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: antes_1turno ou apos_1turno quando a linha é pesquisa de 2º turno (votos totais, Lula e Flávio publicados); vazio nas outras.
+*/
+VAR _ok =
+    HASONEVALUE ( Pesquisa[Id] )
+        && SELECTEDVALUE ( Pesquisa[Cenário] ) = "2º turno"
+        && SELECTEDVALUE ( Pesquisa[Tipo] ) = "totais"
+        && NOT ISBLANK ( SELECTEDVALUE ( Pesquisa[Lula] ) )
+        && NOT ISBLANK ( SELECTEDVALUE ( Pesquisa[Flavio] ) )
+RETURN
+    IF ( _ok, SELECTEDVALUE ( Pesquisa[Momento] ) )

@@ -1,0 +1,18 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0.0
+@descricao: Média simples de Flávio em votos válidos (%) nas pesquisas de 2º turno feitas depois do 1º turno que divulgaram válidos. Fica fora a Veritá de campo 26/09–02/10, divulgada em 05/10 e retirada do ar (campo antes da eleição).
+@oraculo: medias_depois.validos.Flávio = 51,3%
+*/
+VAR _d1 = [T17 · 1º turno · data]
+RETURN
+    CALCULATE (
+        AVERAGE ( Pesquisa[Flavio] ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "validos",
+        Pesquisa[Momento] = "apos_1turno",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Campo fim] >= _d1
+    )

@@ -1,0 +1,11 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: UFs em que Flávio teve a maior parte das buscas entre os dois no 2º turno.
+@oraculo: 0
+*/
+COUNTROWS ( FILTER ( ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( UF[UF] ), REMOVEFILTERS ( UF ), UF[Tipo] = "UF" ),
+        "@l", [T08 · UF · Lula],
+        "@f", [T08 · UF · Flávio]
+    ), [@f] > [@l] ) ) + 0

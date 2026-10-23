@@ -1,0 +1,7 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Posição de 'Quando vai ser o segundo turno?' na lista das perguntas mais buscadas de 05 a 08/10 (Google Trends obtido pelo Estadão). Constante: trends_consultas.csv (fora do modelo).
+@oraculo: FONTES: 2ª
+*/
+2

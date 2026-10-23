@@ -1,0 +1,8 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do cabeçalho da rejeição.
+*/
+"Rejeição por instituto: depois do 1º turno, a de Flávio ficou igual ou abaixo da de Lula em "
+    & [T17 · rejeição · Flávio igual ou abaixo] & " de " & [T17 · rejeição · institutos comparáveis]
+    & " institutos. Cada instituto pergunta de um jeito."

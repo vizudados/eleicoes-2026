@@ -1,0 +1,8 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: texto
+@descricao: Quem a última pesquisa do instituto dava à frente: Lula, Flávio ou empate.
+*/
+VAR _d = [T10 · instituto · diferença]
+RETURN
+    IF ( NOT ISBLANK ( _d ), SWITCH ( TRUE (), _d > 0, "Flávio", _d < 0, "Lula", "empate" ) )

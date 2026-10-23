@@ -1,0 +1,9 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do placar das pesquisas do 2º turno (≤ 250 caracteres).
+*/
+"Depois do 1º turno, Flávio lidera " & [T17 · depois · Flávio à frente] & " de " & [T17 · depois · pesquisas]
+    & " pesquisas do 2º turno; Lula, " & [T17 · depois · Lula à frente] & ". Antes, nas " & [T17 · antes · pesquisas]
+    & " simulações: Lula " & [T17 · antes · Lula à frente] & ", Flávio " & [T17 · antes · Flávio à frente] & ", "
+    & [T17 · antes · empates] & " empates."

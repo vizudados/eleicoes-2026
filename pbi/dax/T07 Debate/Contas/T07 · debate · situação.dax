@@ -1,0 +1,14 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: Situação do debate da linha: realizado, cancelado ou não realizado (começo da Observação do levantamento).
+*/
+VAR _obs = UPPER ( SELECTEDVALUE ( Debate[Observação] ) )
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT HASONEVALUE ( Debate[Data] ), BLANK (),
+        LEFT ( _obs, 9 ) = "CANCELADO", "cancelado",
+        LEFT ( _obs, 13 ) = "NÃO REALIZADO", "não realizado",
+        "realizado"
+    )

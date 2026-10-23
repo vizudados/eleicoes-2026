@@ -1,0 +1,11 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Menor parte (%) de Lula nas buscas entre os dois, entre as UFs, no 2º turno.
+@oraculo: 54 (RS)
+*/
+MINX ( FILTER ( ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( UF[UF] ), REMOVEFILTERS ( UF ), UF[Tipo] = "UF" ),
+        "@l", [T08 · UF · Lula],
+        "@f", [T08 · UF · Flávio]
+    ), NOT ISBLANK ( [@l] ) ), [@l] )

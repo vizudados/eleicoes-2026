@@ -1,0 +1,14 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Debates do 1º turno que aconteceram sem Lula e sem Flávio.
+@oraculo: primeiro_turno.sem_os_dois = 5
+*/
+CALCULATE (
+    COUNTROWS ( Debate ),
+    REMOVEFILTERS ( Debate ),
+    Debate[Turno] = 1,
+    LEFT ( UPPER ( Debate[Observação] ), 9 ) = "REALIZADO",
+    NOT CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+    NOT CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+) + 0

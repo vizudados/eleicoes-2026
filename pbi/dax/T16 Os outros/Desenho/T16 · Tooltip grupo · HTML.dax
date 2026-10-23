@@ -1,0 +1,61 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: Dossiê de um grupo de eleitores (ttT16Segmento, grão Transferência[Segmento]): a medição mais recente de cada instituto depois do 1º turno, com a barra de 100% (Lula, Flávio, branco/nulo), os números e o n quando publicado, e a faixa de variação entre institutos. A distribuição que a média da tela esconde.
+*/
+-- 1 · Leituras
+VAR _seg = SELECTEDVALUE ( 'Transferência'[Segmento] )
+VAR _n = [T16 · transferência · institutos]
+VAR _lMin = [T16 · transferência · Lula mínimo]
+VAR _lMax = [T16 · transferência · Lula máximo]
+VAR _fMin = [T16 · transferência · Flávio mínimo]
+VAR _fMax = [T16 · transferência · Flávio máximo]
+VAR _lista =
+    ADDCOLUMNS (
+        VALUES ( 'Transferência'[Instituto] ),
+        "@d", [T16 · instituto · divulgação],
+        "@l", [T16 · instituto · Lula],
+        "@f", [T16 · instituto · Flávio],
+        "@b", [T16 · instituto · branco ou nulo],
+        "@n", [T16 · instituto · entrevistas]
+    )
+-- 2 · Textos
+VAR _titulo =
+    SWITCH (
+        _seg,
+        "Cury", "Quem votou em Augusto Cury",
+        "Renan", "Quem votou em Renan Santos",
+        "Caiado", "Quem votou em Ronaldo Caiado",
+        "nao_votou", "Quem não votou no 1º turno"
+    )
+VAR _txtFaixa =
+    "Entre os institutos, Lula vai de " & FORMAT ( _lMin, "0" ) & "% a " & FORMAT ( _lMax, "0" ) & "% e Flávio, de "
+        & FORMAT ( _fMin, "0" ) & "% a " & FORMAT ( _fMax, "0" ) & "%."
+        & IF ( _seg = "nao_votou", " Na Quaest, o grupo inclui quem votou branco ou nulo.", " Com tão pouca gente por grupo, cada instituto vê um retrato um pouco diferente." )
+-- 3 · Geometria (barra de 100% com 210 px)
+VAR _linhas =
+    CONCATENATEX (
+        FILTER ( _lista, NOT ISBLANK ( [@d] ) ), /* lista */
+        VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( 'Transferência'[Instituto], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+        RETURN
+            "<div class='ins entra'><span>" & _esc & "</span><div class='b100'>"
+                & "<i class='l' style='width:" & FORMAT ( [@l] / 100 * 210, "0.0", "en-US" ) & "px'></i>"
+                & "<i class='f' style='width:" & FORMAT ( [@f] / 100 * 210, "0.0", "en-US" ) & "px'></i>"
+                & "<i class='b' style='width:" & FORMAT ( [@b] / 100 * 210, "0.0", "en-US" ) & "px'></i></div>"
+                & "<em><span class='lula'>" & FORMAT ( [@l], "0" ) & "</span> · <span class='flavio'>" & FORMAT ( [@f], "0" )
+                & "</span>" & IF ( ISBLANK ( [@b] ), "", " · " & FORMAT ( [@b], "0" ) )
+                & IF ( ISBLANK ( [@n] ), "", " · n=" & FORMAT ( [@n], "0" ) ) & "</em></div>",
+        "",
+        [@d], DESC
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        _n > 0,
+        "<div class='tt16'>"
+            & "<div class='sob sobe'>A última de cada instituto · " & _n & IF ( _n = 1, " instituto", " institutos" ) & "</div>"
+            & "<div class='tt sobe d2'>" & _titulo & "</div>"
+            & _linhas
+            & "<div class='txt sobe d6'>" & _txtFaixa & "</div>"
+        & "</div>"
+    )

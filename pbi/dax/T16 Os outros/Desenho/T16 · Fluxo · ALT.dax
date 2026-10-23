@@ -1,0 +1,15 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do diagrama de fluxo (≤ 250 caracteres).
+*/
+VAR _t = "Para onde vão, no 2º turno: eleitor de Cury, Lula " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Cury" ), "0" )
+    & "% e Flávio " & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "Cury" ), "0" )
+    & "%; de Renan, " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Renan" ), "0" ) & "% e "
+    & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "Renan" ), "0" )
+    & "%; de Caiado, " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Caiado" ), "0" ) & "% e "
+    & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "Caiado" ), "0" )
+    & "%; quem não votou, " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "nao_votou" ), "0" ) & "% e "
+    & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "nao_votou" ), "0" ) & "%. Amostras pequenas."
+RETURN
+    LEFT ( _t, 250 )

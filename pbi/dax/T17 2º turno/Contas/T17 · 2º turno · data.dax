@@ -1,0 +1,7 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: dd/MM
+@descricao: Dia do 2º turno (25/10/2026). Constante do calendário do TSE.
+@oraculo: segundo_turno = 2026-10-25
+*/
+DATE ( 2026, 10, 25 )

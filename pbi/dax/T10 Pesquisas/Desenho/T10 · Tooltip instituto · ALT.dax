@@ -1,0 +1,11 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de um instituto (grão Pesquisa[Instituto]).
+*/
+IF (
+    NOT ISBLANK ( [T10 · instituto · nome] ),
+    [T10 · instituto · nome] & ", última pesquisa antes da urna em " & FORMAT ( [T10 · instituto · última divulgação], "dd/MM" )
+        & ": Lula " & FORMAT ( [T10 · instituto · Lula], "0.0" ) & "% e Flávio " & FORMAT ( [T10 · instituto · Flávio], "0.0" )
+        & "% (" & IF ( [T10 · instituto · base] = "validos", "votos válidos", "votos totais" ) & ")."
+)

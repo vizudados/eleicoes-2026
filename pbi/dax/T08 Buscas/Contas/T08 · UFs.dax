@@ -1,0 +1,11 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Unidades da federação com a parte das buscas do 2º turno publicada (27).
+@oraculo: 27
+*/
+COUNTROWS ( FILTER ( ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( UF[UF] ), REMOVEFILTERS ( UF ), UF[Tipo] = "UF" ),
+        "@l", [T08 · UF · Lula],
+        "@f", [T08 · UF · Flávio]
+    ), NOT ISBLANK ( [@l] ) ) ) + 0

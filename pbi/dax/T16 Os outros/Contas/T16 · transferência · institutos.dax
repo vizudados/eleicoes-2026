@@ -1,0 +1,14 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0
+@descricao: Quantos institutos publicaram, depois do 1º turno, o cruzamento do grupo do filtro (Transferência[Segmento]).
+@oraculo: Cury 7 · Renan 7 · Caiado 7 · não votou 3
+*/
+VAR _seg = SELECTEDVALUE ( 'Transferência'[Segmento] )
+RETURN
+    CALCULATE (
+        DISTINCTCOUNT ( 'Transferência'[Instituto] ),
+        REMOVEFILTERS ( 'Transferência' ),
+        'Transferência'[Segmento] = _seg,
+        LEFT ( 'Transferência'[Observação], 19 ) = "momento=apos_1turno"
+    ) + 0

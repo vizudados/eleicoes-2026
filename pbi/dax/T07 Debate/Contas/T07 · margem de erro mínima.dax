@@ -1,0 +1,15 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0.0
+@descricao: Margem de erro mínima (pontos) entre as pesquisas do 2º turno feitas depois do 1º turno (votos totais).
+@oraculo: 1,0
+*/
+CALCULATE (
+    MIN ( Pesquisa[Margem] ),
+    REMOVEFILTERS ( Pesquisa ),
+    Pesquisa[Cenário] = "2º turno",
+    Pesquisa[Tipo] = "totais",
+    Pesquisa[Momento] = "apos_1turno",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] )
+)

@@ -1,0 +1,12 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: No dia de divulgação do contexto: antes_1turno ou apos_1turno, conforme as pesquisas de 2º turno (votos totais) divulgadas nesse dia; vazio se não houve nenhuma.
+*/
+CALCULATE (
+    MAX ( Pesquisa[Momento] ),
+    Pesquisa[Cenário] = "2º turno",
+    Pesquisa[Tipo] = "totais",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] )
+)

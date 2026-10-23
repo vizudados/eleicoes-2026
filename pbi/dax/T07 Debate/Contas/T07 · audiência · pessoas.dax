@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: #,0
+@descricao: Pessoas que assistiram ao debate de 18/10 na Grande SP, segundo o balanço da Band (Kantar IBOPE). Constante: debate_band.json › audiencia.tv[0].pessoas = '2,7 milhões'.
+@oraculo: pessoas_txt = 2,7 milhões de pessoas na Grande SP
+*/
+2700000

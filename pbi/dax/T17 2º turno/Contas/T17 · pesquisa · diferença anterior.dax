@@ -1,0 +1,21 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: +0.0;-0.0;0.0
+@descricao: Flávio − Lula, em pontos, na pesquisa anterior de 2º turno do MESMO instituto (a comparação mais limpa: mesmo método); vazio quando é a primeira dele.
+*/
+VAR _inst = [T17 · pesquisa · instituto]
+VAR _ant = [T17 · pesquisa · divulgação anterior]
+RETURN
+    IF (
+        NOT ISBLANK ( _ant ),
+        CALCULATE (
+            AVERAGEX ( Pesquisa, Pesquisa[Flavio] - Pesquisa[Lula] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _inst,
+            Pesquisa[Divulgação] = _ant
+        )
+    )

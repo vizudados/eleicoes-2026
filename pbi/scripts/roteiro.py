@@ -55,7 +55,7 @@ TELAS = [
     Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "Epílogo",
          fonte="Fontes: pesquisas registradas no TSE que publicaram o cruzamento · imprensa (apoios)"),
     Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "Epílogo",
-         fonte="Fonte: pesquisas registradas no TSE (levantamento de 22/10/2026)"),
+         fonte="Fonte: pesquisas registradas no TSE e relatórios dos institutos (rejeição) · levantamento de 22/10/2026"),
     Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "Epílogo", filtro="UF",
          fonte="Fonte: TSE · API pública de divulgação dos resultados, coletada a cada minuto"),
     Tela("T19", "Explorador", "Onde está a minha pergunta? Explore os 5.571 municípios", "IV · Explore você mesmo"),

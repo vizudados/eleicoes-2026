@@ -1,0 +1,15 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0.0
+@descricao: Média simples de Lula (votos totais, %) nas 39 pesquisas de 2º turno feitas depois do 1º turno.
+@oraculo: medias_depois.totais.Lula = 45,6%
+*/
+CALCULATE (
+    AVERAGE ( Pesquisa[Lula] ),
+    REMOVEFILTERS ( Pesquisa ),
+    Pesquisa[Cenário] = "2º turno",
+    Pesquisa[Tipo] = "totais",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] ),
+    Pesquisa[Momento] = "apos_1turno"
+)

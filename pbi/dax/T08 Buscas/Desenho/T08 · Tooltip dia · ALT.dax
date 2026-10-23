@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de um dia.
+*/
+IF (
+    NOT ISBLANK ( [T08 · dia · Lula] ),
+    FORMAT ( [T08 · dia · data], "dd/MM" ) & ": índice de Lula " & [T08 · dia · Lula] & " e de Flávio " & [T08 · dia · Flávio] & "."
+)

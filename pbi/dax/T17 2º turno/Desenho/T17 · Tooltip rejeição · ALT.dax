@@ -1,0 +1,12 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de um instituto na rejeição (grão 'Rejeição'[Instituto]).
+*/
+IF (
+    [T17 · rejeição · comparável] = "Sim",
+    [T17 · rejeição · instituto] & ": rejeição de Lula " & FORMAT ( [T17 · rejeição · depois · Lula], "0.0" )
+        & "% e de Flávio " & FORMAT ( [T17 · rejeição · depois · Flávio], "0.0" ) & "% em "
+        & FORMAT ( [T17 · rejeição · depois · data], "dd/MM" ) & "; antes do 1º turno, " & FORMAT ( [T17 · rejeição · antes · Lula], "0.0" )
+        & "% e " & FORMAT ( [T17 · rejeição · antes · Flávio], "0.0" ) & "%."
+)

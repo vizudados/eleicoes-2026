@@ -1,0 +1,14 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Pesquisas de 2º turno (Lula × Flávio, votos totais) com os dois números publicados, de agosto a 22/10.
+@oraculo: serie: 118
+*/
+CALCULATE (
+    COUNTROWS ( Pesquisa ),
+    REMOVEFILTERS ( Pesquisa ),
+    Pesquisa[Cenário] = "2º turno",
+    Pesquisa[Tipo] = "totais",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] )
+) + 0

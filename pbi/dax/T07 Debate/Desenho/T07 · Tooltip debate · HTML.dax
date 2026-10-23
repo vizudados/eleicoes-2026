@@ -1,0 +1,39 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Dossiê de um debate marcado na campanha (ttT07Debate, grão Debate[Data]): data, turno e situação, a emissora, quem foi (ou por que caiu) e a nota à mão. Foco em Lula e Flávio: nos debates sem os dois, só a lista de quem foi.
+*/
+-- 1 · Leituras
+VAR _sit = [T07 · debate · situação]
+VAR _ff = [T07 · debate · frente a frente]
+VAR _dia = [T07 · debate · dia]
+VAR _turno = [T07 · debate · turno]
+VAR _emi = [T07 · debate · emissora]
+VAR _part = [T07 · debate · participantes]
+VAR _med = [T07 · debate · mediação]
+VAR _motivo = [T07 · debate · motivo]
+-- 2 · Textos
+VAR _escEmi = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _emi, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escPart = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _part, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escMed = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _mot1 = SUBSTITUTE ( SUBSTITUTE ( _motivo, "NÃO REALIZADO:", "Não realizado:" ), "CANCELADO", "Cancelado" )
+VAR _escMot = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mot1, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txt =
+    SWITCH (
+        TRUE (),
+        _ff = "Sim", "Lula e Flávio frente a frente, com mediação de " & _escMed & ".",
+        _sit = "realizado", "Aconteceu sem Lula e sem Flávio. Foram: " & _escPart & ".",
+        _escMot & "."
+    )
+VAR _mao = SWITCH ( TRUE (), _ff = "Sim", "o único frente a frente", _sit = "realizado", "os dois faltaram", "não aconteceu" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _sit ),
+        "<div>"
+            & "<div class='sob sobe'>" & FORMAT ( _dia, "dd/MM" ) & " · " & _turno & "º turno · " & _sit & "</div>"
+            & "<div class='tt sobe d2'>" & _escEmi & "</div>"
+            & "<div class='txt sobe d3'>" & _txt & "</div>"
+            & "<div class='mao" & IF ( _ff = "Sim", "", " ti" ) & " entra d6'>" & _mao & "</div>"
+        & "</div>"
+    )

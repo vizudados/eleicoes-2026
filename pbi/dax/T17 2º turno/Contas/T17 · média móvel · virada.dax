@@ -1,0 +1,22 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: dd/MM
+@descricao: Primeiro dia em que a média móvel passou a dar Flávio à frente (> 0) e não voltou mais para Lula até o último dia.
+@oraculo: media_movel: troca de sinal em 2026-09-09 (+0,58)
+*/
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Divulgação] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@mm", [T17 · média móvel]
+    )
+VAR _comMM = FILTER ( _dias, NOT ISBLANK ( [@mm] ) )
+VAR _ultimoLula = MAXX ( FILTER ( _comMM, [@mm] <= 0 ), Pesquisa[Divulgação] )
+RETURN
+    MINX ( FILTER ( _comMM, [@mm] > 0 && Pesquisa[Divulgação] > _ultimoLula ), Pesquisa[Divulgação] )

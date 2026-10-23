@@ -1,0 +1,20 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: dd/MM
+@descricao: Último dia de divulgação com média móvel.
+@oraculo: media_movel[-1].data = 22/10
+*/
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Divulgação] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@mm", [T17 · média móvel]
+    )
+RETURN
+    MAXX ( FILTER ( _dias, NOT ISBLANK ( [@mm] ) ), Pesquisa[Divulgação] )

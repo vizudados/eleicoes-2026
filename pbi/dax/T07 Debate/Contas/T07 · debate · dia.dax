@@ -1,0 +1,6 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: dd/MM
+@descricao: Data do debate da linha.
+*/
+IF ( HASONEVALUE ( Debate[Data] ), SELECTEDVALUE ( Debate[Data] ) )

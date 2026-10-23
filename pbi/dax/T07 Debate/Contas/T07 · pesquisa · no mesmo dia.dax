@@ -1,0 +1,20 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Quantas pesquisas terminaram o campo no mesmo dia que a da linha (ela inclusa).
+*/
+VAR _fim = [T07 · pesquisa · campo fim]
+RETURN
+    IF (
+        NOT ISBLANK ( _fim ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            Pesquisa[Momento] = "apos_1turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo fim] = _fim
+        )
+    )

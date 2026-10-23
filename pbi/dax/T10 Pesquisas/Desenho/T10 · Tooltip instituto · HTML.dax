@@ -1,0 +1,95 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Dossiê de um instituto na régua da véspera (ttT10Instituto, grão Pesquisa[Instituto]): a última pesquisa antes da urna (Lula × Flávio, base), quem ela dava à frente e o erro contra a urna (só em válidos), a trajetória de todas as pesquisas do instituto no 1º turno em votos totais (as linhas se desenham) e entrevistas, margem e registro. Só lê contas 'T10 · …'.
+*/
+-- 1 · Leituras
+VAR _nome = [T10 · instituto · nome]
+VAR _d = [T10 · instituto · última divulgação]
+VAR _b = [T10 · instituto · base]
+VAR _l = [T10 · instituto · Lula]
+VAR _f = [T10 · instituto · Flávio]
+VAR _dif = [T10 · instituto · diferença]
+VAR _e = [T10 · instituto · erro vs urna]
+VAR _urna = [T10 · urna · diferença]
+VAR _n = [T10 · instituto · entrevistas]
+VAR _m = [T10 · instituto · margem de erro]
+VAR _reg = [T10 · instituto · registro]
+VAR _np = [T10 · instituto · pesquisas no 1º turno]
+VAR _serie =
+    ADDCOLUMNS (
+        VALUES ( Pesquisa[Id] ),
+        "@d", [T10 · série · divulgação],
+        "@l", [T10 · série · Lula],
+        "@f", [T10 · série · Flávio]
+    )
+-- 2 · Textos
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escReg = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _quem = IF ( _dif > 0, "Flávio", IF ( _dif < 0, "Lula", "" ) )
+VAR _pts = IF ( ROUND ( ABS ( _dif ), 1 ) < 2, " ponto", " pontos" )
+VAR _txtDif =
+    IF ( _quem = "", "Dava empate.", "Dava " & _quem & " " & FORMAT ( ABS ( _dif ), "0.0" ) & _pts & " à frente." )
+VAR _txtUrna = "A urna deu " & IF ( _urna >= 0, "Flávio", "Lula" ) & " " & FORMAT ( ABS ( _urna ), "0.0" ) & " à frente"
+VAR _txtErro =
+    SWITCH (
+        TRUE (),
+        _b <> "validos", " Era em votos totais (com brancos, nulos e indecisos): não se compara direto com a urna.",
+        ABS ( _e ) < 0.5, " " & _txtUrna & ": ficou a " & FORMAT ( ABS ( _e ), "0.0" ) & " ponto do resultado.",
+        " " & _txtUrna & ": errou " & FORMAT ( ABS ( _e ), "0.0" ) & IF ( ROUND ( ABS ( _e ), 1 ) < 2, " ponto", " pontos" )
+            & " a favor de " & IF ( _e < 0, "Lula", "Flávio" ) & "."
+    )
+VAR _txtBase = IF ( _b = "validos", "votos válidos", "votos totais" )
+VAR _txtNp = IF ( _np = 1, "1 pesquisa", _np & " pesquisas" )
+VAR _txtReg = IF ( LEN ( _reg ) = 0, "", " · <span style='white-space:nowrap'>" & _escReg & "</span>" )
+VAR _mao = IF ( _quem = "", "empate", _quem & " à frente" )
+VAR _clsMao = IF ( _quem = "Flávio", " az", "" )
+-- 3 · Geometria (01/08 a 03/10 em x 34–404; 25% a 50% em y 96–10)
+VAR _pontos = FILTER ( _serie, NOT ISBLANK ( [@l] ) && NOT ISBLANK ( [@f] ) ) /* lista */
+VAR _xy =
+    ADDCOLUMNS (
+        _pontos,
+        "@x", 34 + DATEDIFF ( DATE ( 2026, 8, 1 ), [@d], DAY ) / 63 * 370,
+        "@yl", 96 - ( [@l] - 25 ) / 25 * 86,
+        "@yf", 96 - ( [@f] - 25 ) / 25 * 86
+    ) /* geometria */
+VAR _fm = "0.0"
+VAR _linL = CONCATENATEX ( _xy, FORMAT ( [@x], _fm, "en-US" ) & "," & FORMAT ( [@yl], _fm, "en-US" ), " ", [@d], ASC )
+VAR _linF = CONCATENATEX ( _xy, FORMAT ( [@x], _fm, "en-US" ) & "," & FORMAT ( [@yf], _fm, "en-US" ), " ", [@d], ASC )
+VAR _bolas =
+    CONCATENATEX (
+        _xy,
+        "<circle cx='" & FORMAT ( [@x], _fm, "en-US" ) & "' cy='" & FORMAT ( [@yl], _fm, "en-US" ) & "' r='3.5' class='pl'/>"
+            & "<circle cx='" & FORMAT ( [@x], _fm, "en-US" ) & "' cy='" & FORMAT ( [@yf], _fm, "en-US" ) & "' r='3.5' class='pf'/>",
+        ""
+    )
+VAR _y40 = FORMAT ( 96 - 15 / 25 * 86, _fm, "en-US" )
+-- 4 · Marcação
+VAR _svg =
+    "<svg width='420' height='116' viewBox='0 0 420 116'>"
+        & "<line x1='34' x2='404' y1='" & _y40 & "' y2='" & _y40 & "' class='g'/>"
+        & "<text x='0' y='" & FORMAT ( 96 - 15 / 25 * 86 + 4, _fm, "en-US" ) & "' class='ex'>40%</text>"
+        & "<line x1='34' x2='404' y1='96' y2='96' class='g'/>"
+        & "<text x='34' y='112' class='ex'>01/08</text><text x='210' y='112' class='ex' text-anchor='middle'>01/09</text>"
+        & "<text x='404' y='112' class='ex' text-anchor='end'>03/10</text>"
+        & IF ( COUNTROWS ( _xy ) > 1 /* lista */, "<polyline points='" & _linL & "' class='ll traco' pathLength='1'/>"
+            & "<polyline points='" & _linF & "' class='lf traco' pathLength='1'/>" )
+        & _bolas
+    & "</svg>"
+RETURN
+    IF (
+        NOT ISBLANK ( _nome ),
+        "<div class='tt10'>"
+            & "<div class='sob sobe'>" & _esc & " · " & FORMAT ( _d, "dd/MM" ) & " · " & _txtBase & "</div>"
+            & "<div class='par sobe d2'>"
+                & "<div class='lula'><small>Lula</small><span class='num'>" & FORMAT ( _l, "0.0" ) & "%</span></div>"
+                & "<div class='flavio'><small>Flávio</small><span class='num'>" & FORMAT ( _f, "0.0" ) & "%</span></div>"
+                & "<div class='mao" & _clsMao & " entra d7'>" & _mao & "</div>"
+                & "</div>"
+            & "<div class='txt sobe d3'><b>" & _txtDif & "</b>" & _txtErro & "</div>"
+            & "<div class='tj sobe d4'>Trajetória · votos totais · " & _txtNp & "</div>"
+            & "<div class='sobe d4'>" & _svg & "</div>"
+            & "<div class='nota sobe d5'>Última pesquisa: " & FORMAT ( _n, "#,0" ) & " entrevistas"
+                & IF ( ISBLANK ( _m ), "", " · margem de erro de " & FORMAT ( _m, "0.0" ) & " pontos" ) & _txtReg & "</div>"
+        & "</div>"
+    )

@@ -1,0 +1,65 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Dossiê de uma pesquisa do gráfico do debate (ttT07Pesquisa, grão Pesquisa[Id]): instituto e campo, Lula × Flávio, quem estava à frente e por quanto, a pesquisa anterior do MESMO instituto (a comparação mais limpa), entrevistas, margem e registro, e a nota à mão com a janela (antes, depois, pegou o dia do debate).
+*/
+-- 1 · Leituras
+VAR _jan = [T07 · pesquisa · janela]
+VAR _inst = [T07 · pesquisa · instituto]
+VAR _ini = [T07 · pesquisa · campo início]
+VAR _fim = [T07 · pesquisa · campo fim]
+VAR _l = [T07 · pesquisa · Lula]
+VAR _f = [T07 · pesquisa · Flávio]
+VAR _dif = [T07 · pesquisa · diferença]
+VAR _difAnt = [T07 · pesquisa · diferença anterior]
+VAR _campoAnt = [T07 · pesquisa · campo anterior]
+VAR _n = [T07 · pesquisa · entrevistas]
+VAR _m = [T07 · pesquisa · margem de erro]
+VAR _reg = [T07 · pesquisa · registro]
+-- 2 · Textos
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escReg = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _txtDif =
+    SWITCH (
+        TRUE (),
+        _dif > 0, "Flávio " & FORMAT ( _dif, "0.0" ) & IF ( ROUND ( _dif, 1 ) = 1, " ponto", " pontos" ) & " à frente",
+        _dif < 0, "Lula " & FORMAT ( -_dif, "0.0" ) & IF ( ROUND ( -_dif, 1 ) = 1, " ponto", " pontos" ) & " à frente",
+        "Empate"
+    )
+VAR _txtAnt =
+    IF (
+        ISBLANK ( _difAnt ),
+        "É a primeira pesquisa deste instituto depois do 1º turno.",
+        "Na anterior do mesmo instituto (campo até " & FORMAT ( _campoAnt, "dd/MM" ) & "): "
+            & SWITCH (
+                TRUE (),
+                _difAnt > 0, "Flávio " & FORMAT ( _difAnt, "0.0" ) & " à frente",
+                _difAnt < 0, "Lula " & FORMAT ( -_difAnt, "0.0" ) & " à frente",
+                "empate"
+            ) & "."
+    )
+VAR _txtJan =
+    SWITCH (
+        _jan,
+        "antes", "antes do debate",
+        "depois", "depois do debate",
+        "pegou o dia do debate"
+    )
+VAR _txtFora = IF ( _jan = "atravessa", " O campo pegou o dia do debate: fica fora das médias.", "" )
+VAR _txtReg = IF ( ISBLANK ( _reg ), "", " · <span style='white-space:nowrap'>" & _escReg & "</span>" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _jan ),
+        "<div class='tt7p'>"
+            & "<div class='sob sobe'>" & _esc & " · campo de " & FORMAT ( _ini, "dd/MM" ) & " a " & FORMAT ( _fim, "dd/MM" ) & "</div>"
+            & "<div class='par sobe d2'>"
+                & "<div class='lula'><small>Lula</small><span class='num'>" & FORMAT ( _l, "0.0" ) & "%</span></div>"
+                & "<div class='flavio'><small>Flávio</small><span class='num'>" & FORMAT ( _f, "0.0" ) & "%</span></div>"
+            & "</div>"
+            & "<div class='txt sobe d3'><b>" & _txtDif & ".</b> " & _txtAnt & _txtFora & "</div>"
+            & "<div class='nota sobe d4'>" & FORMAT ( _n, "#,0" ) & " entrevistas · margem de erro de " & FORMAT ( _m, "0.0" )
+            & " pontos" & _txtReg & "</div>"
+            & "<div class='mao" & IF ( _jan = "atravessa", " ti", "" ) & " entra d6'>" & _txtJan & "</div>"
+        & "</div>"
+    )

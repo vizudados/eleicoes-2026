@@ -1,0 +1,12 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: dd/MM
+@descricao: Data do único debate com Lula e Flávio frente a frente (linha da tabela Debate em que os dois participaram).
+@oraculo: eleicoes.json › paginas[7].frente_a_frente.data_txt = 18/10
+*/
+CALCULATE (
+    MAX ( Debate[Data] ),
+    REMOVEFILTERS ( Debate ),
+    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+)

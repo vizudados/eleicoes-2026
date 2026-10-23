@@ -1,0 +1,7 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: #,0
+@descricao: Eleitores que não votaram no 1º turno de 2026 (abstenção, TSE).
+@oraculo: 33.469.244
+*/
+CALCULATE ( SUM ( 'Comparecimento ano'[Abstencoes] ), REMOVEFILTERS ( 'Comparecimento ano' ), 'Comparecimento ano'[Ano] = 2026 )

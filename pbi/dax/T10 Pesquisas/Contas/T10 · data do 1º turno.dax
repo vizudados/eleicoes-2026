@@ -1,0 +1,6 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: dd/MM
+@descricao: Dia do 1º turno de 2026 (calendário do TSE).
+*/
+DATE ( 2026, 10, 4 )

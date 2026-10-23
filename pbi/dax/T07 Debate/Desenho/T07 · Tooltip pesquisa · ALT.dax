@@ -1,0 +1,11 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de uma pesquisa (grão Pesquisa[Id]).
+*/
+IF (
+    NOT ISBLANK ( [T07 · pesquisa · janela] ),
+    [T07 · pesquisa · instituto] & ", campo até " & FORMAT ( [T07 · pesquisa · campo fim], "dd/MM" ) & ": Lula "
+        & FORMAT ( [T07 · pesquisa · Lula], "0.0" ) & "% e Flávio " & FORMAT ( [T07 · pesquisa · Flávio], "0.0" )
+        & "%, margem de erro de " & FORMAT ( [T07 · pesquisa · margem de erro], "0.0" ) & " pontos."
+)

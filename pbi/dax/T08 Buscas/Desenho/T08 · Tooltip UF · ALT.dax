@@ -1,0 +1,10 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de uma UF.
+*/
+IF (
+    NOT ISBLANK ( [T08 · UF · Lula] ),
+    [T08 · UF · nome] & ", 2º turno: interesse de " & [T08 · UF · interesse Lula] & " por Lula e " & [T08 · UF · interesse Flávio]
+        & " por Flávio; buscas entre os dois: Lula " & [T08 · UF · Lula] & "%, Flávio " & [T08 · UF · Flávio] & "%."
+)

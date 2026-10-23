@@ -1,0 +1,8 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da curva diária das buscas.
+*/
+"Curva diária das buscas, 01/08 a 22/10, índice 0 a 100. Pico em " & FORMAT ( [T08 · pico · data], "dd/MM" ) & ": Lula "
+    & [T08 · pico · Lula] & " e Flávio " & [T08 · pico · Flávio] & ". Em " & FORMAT ( [T08 · virada · data], "dd/MM" )
+    & ", depois do debate, Flávio " & [T08 · virada · Flávio] & " e Lula " & [T08 · virada · Lula] & "."

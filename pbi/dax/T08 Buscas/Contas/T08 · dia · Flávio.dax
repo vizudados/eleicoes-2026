@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Índice do Google Trends (0–100, consulta T2: os 5 candidatos como tópico) de Flávio no dia da linha (grão 'Trends tempo'[DataTexto]); vazio nas linhas por hora.
+*/
+IF (
+    HASONEVALUE ( 'Trends tempo'[DataTexto] ),
+    CALCULATE ( MAX ( 'Trends tempo'[Índice] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+)

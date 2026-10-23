@@ -1,0 +1,37 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Uma marca por debate marcado (grão Debate[Data]) no eixo de T07 · Debates · HTML: círculo vazio = aconteceu sem Lula e Flávio; × = cancelado ou não realizado; círculo vermelho e azul = frente a frente. Data acima ou abaixo, alternando para não encostar. Alvo do dossiê ttT07Debate.
+*/
+-- 1 · Leituras
+VAR _sit = [T07 · debate · situação]
+VAR _ff = [T07 · debate · frente a frente]
+VAR _dia = [T07 · debate · dia]
+VAR _ord = [T07 · debate · ordem]
+-- 2 · Textos
+VAR _cls = SWITCH ( TRUE (), _ff = "Sim", "ff", _sit = "realizado", "re", "ca" )
+VAR _marca =
+    IF (
+        _cls = "ca",
+        "<svg width='18' height='18' viewBox='0 0 18 18'><path d='M3.5 3 L15 15.5 M15 3.5 L3 15' fill='none' "
+            & "stroke='var(--grafite)' stroke-width='2.6' stroke-linecap='round'/></svg>",
+        ""
+    )
+VAR _txtDia = FORMAT ( _dia, "dd/MM" )
+-- 3 · Geometria (eixo: 22/08 a 19/10 em x 600–1600, linha em y 58)
+VAR _x = 600 + DATEDIFF ( DATE ( 2026, 8, 22 ), _dia, DAY ) / 58 * 1000 -- geometria
+VAR _tam = SWITCH ( _cls, "ff", 24, "ca", 18, 16 ) -- geometria
+VAR _yDia = IF ( _cls = "ff" || MOD ( _ord, 2 ) = 1, 76, 26 ) -- geometria
+VAR _atraso = 900 + _ord * 120 -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _sit ),
+        "<div class='tela t07m'>"
+            & "<div class='mc " & _cls & "' style='left:" & FORMAT ( _x - _tam / 2, "0.0", "en-US" ) & "px;top:"
+            & FORMAT ( 58 - _tam / 2, "0.0", "en-US" ) & "px;animation-delay:" & _atraso & "ms'>" & _marca & "</div>"
+            & "<div class='dt" & IF ( _cls = "ff", " b", "" ) & " entra' style='left:" & FORMAT ( _x, "0.0", "en-US" )
+            & "px;top:" & FORMAT ( _yDia + IF ( _cls = "ff", 4, 0 ), "0.0", "en-US" ) & "px;animation-delay:" & _atraso + 200 & "ms'>"
+            & _txtDia & "</div>"
+        & "</div>"
+    )

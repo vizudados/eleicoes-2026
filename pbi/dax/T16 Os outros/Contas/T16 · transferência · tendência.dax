@@ -1,0 +1,13 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Para onde pende o grupo do filtro (Transferência[Segmento]): Lula ou Flávio quando a média de um passa a do outro por 8 pontos ou mais; 'divide' abaixo disso. Regra da tela (os grupos são pequenos: a diferença precisa ser grande para virar frase).
+@oraculo: Cury divide (45,8 × 41,4) · Renan Flávio · Caiado Flávio · não votou Lula (47,9 × 38,4)
+*/
+VAR _l = [T16 · transferência · Lula]
+VAR _f = [T16 · transferência · Flávio]
+RETURN
+    IF (
+        NOT ISBLANK ( _l ) && NOT ISBLANK ( _f ),
+        SWITCH ( TRUE (), _f - _l >= 8, "Flávio", _l - _f >= 8, "Lula", "divide" )
+    )

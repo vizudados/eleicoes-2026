@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Data do dia da linha na série diária T2 (vazio nas linhas por hora e fora da série).
+*/
+IF (
+    HASONEVALUE ( 'Trends tempo'[DataTexto] ),
+    CALCULATE ( MAX ( 'Trends tempo'[Momento] ), 'Trends tempo'[Série] = "Lula [tópico | T2]" )
+)

@@ -1,0 +1,99 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Dossiê de um dia da curva das buscas (ttT08Dia, grão 'Trends tempo'[DataTexto]): o índice de cada um no dia, quem foi mais buscado e, nos dias que têm série por hora (01 a 07/10 e 15 a 21/10), a curva hora a hora com a hora do pico de cada um; nota à mão nos dias marcantes. Só lê contas 'T08 · …'; a curva por hora lê 'T08 · hora · …' em cada hora do dia (igualdade na coluna do item).
+*/
+-- 1 · Leituras
+VAR _d = [T08 · dia · data]
+VAR _l = [T08 · dia · Lula]
+VAR _f = [T08 · dia · Flávio]
+VAR _dif = [T08 · dia · diferença]
+VAR _h = [T08 · dia · horas]
+VAR _pl = [T08 · dia · pico na hora · Lula]
+VAR _pf = [T08 · dia · pico na hora · Flávio]
+VAR _hl = [T08 · dia · hora do pico · Lula]
+VAR _hf = [T08 · dia · hora do pico · Flávio]
+VAR _horas =
+    ADDCOLUMNS (
+        GENERATESERIES ( 0, 23, 1 ),
+        "@k", FORMAT ( _d, "yyyy-MM-dd" ) & " " & FORMAT ( [Value], "00" ) & ":00"
+    )
+VAR _serie =
+    ADDCOLUMNS (
+        _horas,
+        "@l",
+            VAR _k = [@k]
+            RETURN
+                CALCULATE ( [T08 · hora · Lula], 'Trends tempo'[DataTexto] = _k ),
+        "@f",
+            VAR _k = [@k]
+            RETURN
+                CALCULATE ( [T08 · hora · Flávio], 'Trends tempo'[DataTexto] = _k )
+    )
+-- 2 · Textos
+VAR _txtQuem =
+    SWITCH (
+        TRUE (),
+        _dif > 0, "Lula foi mais buscado no dia.",
+        _dif < 0, "Flávio foi mais buscado no dia.",
+        "Os dois empataram no dia."
+    )
+VAR _evento =
+    SWITCH (
+        _d,
+        DATE ( 2026, 8, 16 ), "começa a campanha",
+        DATE ( 2026, 10, 4 ), "o dia da eleição",
+        DATE ( 2026, 10, 18 ), "a noite do debate",
+        DATE ( 2026, 10, 19 ), "o dia seguinte ao debate",
+        DATE ( 2026, 10, 22 ), "dia em curso na coleta",
+        ""
+    )
+VAR _txtPico =
+    "Pico: Lula às " & _hl & "h (" & _pl & "), Flávio às " & _hf & "h (" & _pf & ")"
+-- 3 · Geometria (curva por hora: 400 × 92; índice 0–100)
+VAR _f2 = "0.0"
+VAR _pts =
+    ADDCOLUMNS (
+        FILTER ( _serie, NOT ISBLANK ( [@l] ) ), /* lista */
+        "@x", 34 + [Value] / 23 * 380, -- geometria
+        "@yl", 86 - [@l] * 0.8, -- geometria
+        "@yf", 86 - [@f] * 0.8 -- geometria
+    )
+VAR _linhaL = CONCATENATEX ( _pts, FORMAT ( [@x], _f2, "en-US" ) & "," & FORMAT ( [@yl], _f2, "en-US" ), " ", [Value], ASC )
+VAR _linhaF = CONCATENATEX ( _pts, FORMAT ( [@x], _f2, "en-US" ) & "," & FORMAT ( [@yf], _f2, "en-US" ), " ", [Value], ASC )
+VAR _eixo =
+    CONCATENATEX (
+        { 0, 6, 12, 18, 23 },
+        "<text x='" & FORMAT ( 34 + [Value] / 23 * 380, _f2, "en-US" ) & "' y='106' class='ex' text-anchor='middle'>"
+            & [Value] & "h</text>",
+        ""
+    )
+VAR _grafico =
+    IF (
+        _h > 0,
+        "<div class='sob sobe d4' style='margin-top:6px'>Hora a hora · 0 a 100 na semana</div>"
+            & "<svg width='420' height='112' viewBox='0 0 420 112'>"
+                & "<line x1='34' x2='414' y1='86' y2='86' class='g'/><line x1='34' x2='414' y1='6' y2='6' class='g'/>"
+                & "<text x='26' y='90' class='ex' text-anchor='end'>0</text><text x='26' y='10' class='ex' text-anchor='end'>100</text>"
+                & _eixo
+                & "<polyline points='" & _linhaF & "' class='hf traco-rapido' pathLength='1'/>"
+                & "<polyline points='" & _linhaL & "' class='hl traco-rapido' pathLength='1'/>"
+            & "</svg>"
+            & "<div class='nota entra d6'>" & _txtPico & "</div>",
+        "<div class='nota sobe d4'>A curva hora a hora só existe de 01 a 07/10 e de 15 a 21/10.</div>"
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _l ),
+        "<div class='tt8d'>"
+            & "<div class='sob sobe'>" & FORMAT ( _d, "dd/MM" ) & " · Google Trends, tópicos</div>"
+            & "<div class='par sobe d2'>"
+                & "<div class='lula'><small>Lula</small><span class='num'>" & _l & "</span></div>"
+                & "<div class='flavio'><small>Flávio</small><span class='num'>" & _f & "</span></div>"
+                & IF ( _evento <> "", "<div class='mao entra d6' style='position:static;margin-left:auto;align-self:center'>" & _evento & "</div>" )
+            & "</div>"
+            & "<div class='txt sobe d3'>" & _txtQuem & "</div>"
+            & _grafico
+        & "</div>"
+    )

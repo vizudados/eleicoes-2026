@@ -1,0 +1,11 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de uma pesquisa (grão Pesquisa[Id]).
+*/
+IF (
+    NOT ISBLANK ( [T17 · pesquisa · momento] ),
+    [T17 · pesquisa · instituto] & ", divulgada em " & FORMAT ( [T17 · pesquisa · divulgação], "dd/MM" ) & ": Lula "
+        & FORMAT ( [T17 · pesquisa · Lula], "0.0" ) & "% e Flávio " & FORMAT ( [T17 · pesquisa · Flávio], "0.0" )
+        & "%, margem de erro de " & FORMAT ( [T17 · pesquisa · margem de erro], "0.0" ) & " pontos."
+)

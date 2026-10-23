@@ -1,0 +1,20 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: texto
+@descricao: Base da última pesquisa do instituto: 'validos' quando ele divulgou votos válidos naquela data; senão 'totais' (a regra do mockup).
+*/
+VAR _i = SELECTEDVALUE ( Pesquisa[Instituto] )
+VAR _d = [T10 · instituto · última divulgação]
+VAR _nv =
+    CALCULATE (
+        COUNTROWS ( Pesquisa ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "1º turno",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Instituto] = _i,
+        Pesquisa[Divulgação] = _d,
+        Pesquisa[Tipo] = "validos"
+    )
+RETURN
+    IF ( NOT ISBLANK ( _d ), IF ( _nv > 0, "validos", "totais" ) )

@@ -1,0 +1,8 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da linha dos debates da campanha.
+*/
+[T07 · debates marcados] & " debates marcados na campanha; " & [T07 · debates frente a frente]
+    & " reuniu Lula e Flávio. No 1º turno, " & [T07 · 1º turno · sem os dois] & " aconteceram sem os dois e "
+    & [T07 · 1º turno · cancelados] & " foram cancelados."

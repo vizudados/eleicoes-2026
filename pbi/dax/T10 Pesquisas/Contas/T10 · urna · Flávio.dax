@@ -1,0 +1,12 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.00
+@descricao: % dos votos válidos de Flávio no 1º turno de 2026 (TSE), em pontos de 0 a 100, na mesma unidade das pesquisas.
+@oraculo: paginas[10].antes.resultado.flavio = 47,03
+*/
+CALCULATE (
+    DIVIDE ( SUM ( 'Candidato ano'[Votos] ), MAX ( 'Candidato ano'[ValidosAno] ) ) * 100,
+    REMOVEFILTERS ( 'Candidato ano' ),
+    'Candidato ano'[Ano] = 2026,
+    'Candidato ano'[Partido] = "PL"
+)

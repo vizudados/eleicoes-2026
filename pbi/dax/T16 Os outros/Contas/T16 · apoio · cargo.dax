@@ -1,0 +1,8 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: texto
+@descricao: Cargo ou partido de quem está no filtro (Apoio[Quem]), como o levantamento escreve.
+*/
+VAR _q = SELECTEDVALUE ( Apoio[Quem] )
+RETURN
+    IF ( HASONEVALUE ( Apoio[Quem] ), CALCULATE ( MAX ( Apoio[Cargo] ), REMOVEFILTERS ( Apoio ), Apoio[Quem] = _q ) )

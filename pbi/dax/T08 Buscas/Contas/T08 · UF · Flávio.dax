@@ -1,0 +1,12 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Parte (%) das buscas de Flávio entre os dois na UF da linha, no 2º turno (05 a 22/10, consulta G2, tópicos).
+*/
+IF (
+    HASONEVALUE ( UF[UF] ),
+    CALCULATE (
+        MAX ( 'Trends UF'[Índice] ),
+        'Trends UF'[Série] = "Flávio Bolsonaro [tópico] % das buscas entre os 2 comparados"
+    )
+)

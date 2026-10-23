@@ -1,0 +1,104 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Fundo do gráfico das pesquisas em volta do debate: título, grade, datas, a linha do debate, as médias antes e depois (traço que se desenha, rótulos com contador), a média de antes prolongada em tracejado e a nota à mão. Os pontos são outro visual (T07 · Pontos · HTML), na mesma caixa e na mesma escala.
+*/
+-- 1 · Leituras
+VAR _d = [T07 · debate · data]
+VAR _aL = [T07 · antes · Lula]
+VAR _aF = [T07 · antes · Flávio]
+VAR _dL = [T07 · depois · Lula]
+VAR _dF = [T07 · depois · Flávio]
+VAR _aDif = [T07 · antes · diferença]
+VAR _dDif = [T07 · depois · diferença]
+VAR _nX = [T07 · atravessa · pesquisas]
+VAR _nT = [T07 · pesquisas do 2º turno]
+VAR _a0 = [T07 · antes · primeiro campo]
+VAR _a1 = [T07 · antes · último campo]
+VAR _d0 = [T07 · depois · primeiro campo]
+VAR _d1 = [T07 · depois · último campo]
+-- 2 · Textos
+VAR _quemA = IF ( _aDif >= 0, "Flávio", "Lula" )
+VAR _quemD = IF ( _dDif >= 0, "Flávio", "Lula" )
+VAR _txtMan =
+    "Antes do debate, " & _quemA & " tinha " & FORMAT ( ABS ( _aDif ), "0.0" ) & " pontos de vantagem na média; depois, "
+        & IF ( _quemD = _quemA, "", _quemD & " passou a ter " ) & FORMAT ( ABS ( _dDif ), "0.0" ) & "."
+VAR _txtAL = "Lula " & FORMAT ( _aL, "0.0" ) & "%"
+VAR _txtAF = "Flávio " & FORMAT ( _aF, "0.0" ) & "%"
+VAR _txtDL = "Lula " & FORMAT ( _dL, "0.0" ) & "%"
+VAR _txtDF = "Flávio " & FORMAT ( _dF, "0.0" ) & "%"
+-- 3 · Geometria (eixo x: 06/10 a 22/10 em x 210–1400; eixo y: 38% a 54% em y 250–20; o svg começa em y 76)
+VAR _ini = DATE ( 2026, 10, 6 )
+VAR _xD = 210 + DATEDIFF ( _ini, _d, DAY ) / 16 * 1190 -- geometria
+VAR _xA0 = 210 + DATEDIFF ( _ini, _a0, DAY ) / 16 * 1190 -- geometria
+VAR _xA1 = 210 + DATEDIFF ( _ini, _a1, DAY ) / 16 * 1190 -- geometria
+VAR _xD0 = 210 + DATEDIFF ( _ini, _d0, DAY ) / 16 * 1190 - 14 -- geometria
+VAR _xD1 = 210 + DATEDIFF ( _ini, _d1, DAY ) / 16 * 1190 + 14 -- geometria
+VAR _yAL = 250 - ( _aL - 38 ) / 16 * 230 -- geometria
+VAR _yAF = 250 - ( _aF - 38 ) / 16 * 230 -- geometria
+VAR _yDL = 250 - ( _dL - 38 ) / 16 * 230 -- geometria
+VAR _yDF = 250 - ( _dF - 38 ) / 16 * 230 -- geometria
+VAR _f = "0.0"
+VAR _grade =
+    CONCATENATEX (
+        { 40, 45, 50 },
+        "<line x1='50' x2='1400' y1='" & FORMAT ( 250 - ( [Value] - 38 ) / 16 * 230, _f, "en-US" ) & "' y2='"
+            & FORMAT ( 250 - ( [Value] - 38 ) / 16 * 230, _f, "en-US" ) & "' class='g'/><text x='36' y='"
+            & FORMAT ( 255 - ( [Value] - 38 ) / 16 * 230, _f, "en-US" ) & "' class='ex' text-anchor='end'>" & [Value] & "%</text>",
+        ""
+    )
+VAR _datas =
+    CONCATENATEX (
+        { DATE ( 2026, 10, 7 ), DATE ( 2026, 10, 10 ), DATE ( 2026, 10, 13 ), DATE ( 2026, 10, 16 ), DATE ( 2026, 10, 22 ) },
+        "<text x='" & FORMAT ( 210 + DATEDIFF ( _ini, [Value], DAY ) / 16 * 1190, _f, "en-US" )
+            & "' y='276' class='ex' text-anchor='middle'>" & FORMAT ( [Value], "dd/MM" ) & "</text>",
+        ""
+    )
+-- 4 · Marcação
+VAR _svg =
+    "<svg width='1620' height='290' viewBox='0 0 1620 290'>"
+        & _grade
+        & _datas
+        & "<line x1='" & FORMAT ( _xD, _f, "en-US" ) & "' x2='" & FORMAT ( _xD, _f, "en-US" )
+            & "' y1='58' y2='256' class='deb'/>"
+        & "<text x='" & FORMAT ( _xD, _f, "en-US" ) & "' y='276' class='ex b' text-anchor='middle'>debate · "
+            & FORMAT ( _d, "dd/MM" ) & "</text>"
+        & "<path d='M" & FORMAT ( _xA1, _f, "en-US" ) & " " & FORMAT ( _yAL, _f, "en-US" ) & " H1400' class='fl esmaece'/>"
+        & "<path d='M" & FORMAT ( _xA1, _f, "en-US" ) & " " & FORMAT ( _yAF, _f, "en-US" ) & " H1400' class='ff esmaece'/>"
+        & "<path d='M" & FORMAT ( _xA0, _f, "en-US" ) & " " & FORMAT ( _yAL, _f, "en-US" ) & " H" & FORMAT ( _xA1, _f, "en-US" )
+            & "' pathLength='1' class='ml traco' filter='url(#rbu)' style='animation-delay:.5s'/>"
+        & "<path d='M" & FORMAT ( _xA0, _f, "en-US" ) & " " & FORMAT ( _yAF, _f, "en-US" ) & " H" & FORMAT ( _xA1, _f, "en-US" )
+            & "' pathLength='1' class='mf traco' filter='url(#rbu)' style='animation-delay:.5s'/>"
+        & "<path d='M" & FORMAT ( _xD0, _f, "en-US" ) & " " & FORMAT ( _yDL, _f, "en-US" ) & " H" & FORMAT ( _xD1, _f, "en-US" )
+            & "' pathLength='1' class='ml traco-rapido' filter='url(#rbu)' style='animation-delay:2.2s'/>"
+        & "<path d='M" & FORMAT ( _xD0, _f, "en-US" ) & " " & FORMAT ( _yDF, _f, "en-US" ) & " H" & FORMAT ( _xD1, _f, "en-US" )
+            & "' pathLength='1' class='mf traco-rapido' filter='url(#rbu)' style='animation-delay:2.2s'/>"
+    & "</svg>"
+VAR _afasta = IF ( _yAL - _yAF < 30, 10, 0 ) -- geometria
+VAR _afastaD = IF ( _yDL - _yDF < 30, 10, 0 ) -- geometria
+VAR _rotulos =
+    "<div class='rotulo e flavio-esc entra d8' style='right:" & FORMAT ( 1620 - _xA0 + 30, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 76 + _yAF - 14 - _afasta, _f, "en-US" ) & "px'>" & _txtAF & "</div>"
+        & "<div class='rotulo e lula-esc entra d8' style='right:" & FORMAT ( 1620 - _xA0 + 30, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 76 + _yAL - 14 + _afasta, _f, "en-US" ) & "px'>" & _txtAL & "</div>"
+        & "<div class='rotulo flavio-esc entra d16' style='left:" & FORMAT ( _xD1 + 14, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 76 + _yDF - 14 - _afastaD, _f, "en-US" ) & "px'>" & _txtDF & "</div>"
+        & "<div class='rotulo lula-esc entra d16' style='left:" & FORMAT ( _xD1 + 14, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 76 + _yDL - 14 + _afastaD, _f, "en-US" ) & "px'>" & _txtDL & "</div>"
+VAR _tv =
+    "<div class='tv entra d4' style='left:" & FORMAT ( _xD - 29, _f, "en-US" ) & "px;top:84px;width:58px'></div>"
+VAR _nota =
+    "<div class='mao entra d16' style='left:" & FORMAT ( _xD1 - 6, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 76 + _yDF - 88, _f, "en-US" ) & "px'>quase nada mudou</div>"
+        & "<div class='seta entra d16' style='left:" & FORMAT ( _xD1 - 84, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 76 + _yDF - 66, _f, "en-US" ) & "px;width:74px'></div>"
+RETURN
+    "<div class='tela t07g'>"
+        & "<div class='cab'><div class='sob sobe'>As " & _nT & " pesquisas do 2º turno em volta do debate · votos totais</div>"
+        & "<div class='man sobe d2'>" & _txtMan & "</div></div>"
+        & _svg & _tv & _rotulos & _nota
+        & "<div class='leg entra d12'><b><i style='background:var(--vermelho)'></i>Lula</b>"
+        & "<b><i style='background:var(--azul)'></i>Flávio</b>"
+        & "Cada par de pontos é uma pesquisa, no último dia de entrevistas · pontos claros: o campo pegou o dia do debate ("
+        & _nX & " pesquisas, fora das médias) · traço: a média de cada lado; tracejado: a média de antes, prolongada</div>"
+    & "</div>"

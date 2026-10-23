@@ -1,0 +1,7 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.00
+@descricao: Flávio − Lula na urna do 1º turno, em pontos dos votos válidos (positivo = Flávio à frente).
+@oraculo: paginas[10].antes.resultado.diferenca = 1,87 ('+1,9')
+*/
+[T10 · urna · Flávio] - [T10 · urna · Lula]

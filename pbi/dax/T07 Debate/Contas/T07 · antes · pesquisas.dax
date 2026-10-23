@@ -1,0 +1,18 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) tiveram campo terminado antes do dia do debate.
+@oraculo: 24
+*/
+VAR _d = [T07 · debate · data]
+RETURN
+    CALCULATE (
+        COUNTROWS ( Pesquisa ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "totais",
+        Pesquisa[Momento] = "apos_1turno",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Campo fim] < _d
+    ) + 0

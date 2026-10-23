@@ -1,0 +1,15 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Quantas simulações de 2º turno feitas antes do 1º turno (votos totais).
+@oraculo: segundo_turno.antes.pesquisas = 79
+*/
+CALCULATE (
+    COUNTROWS ( Pesquisa ),
+    REMOVEFILTERS ( Pesquisa ),
+    Pesquisa[Cenário] = "2º turno",
+    Pesquisa[Tipo] = "totais",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] ),
+    Pesquisa[Momento] = "antes_1turno"
+) + 0

@@ -1,0 +1,21 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Posição (0, 1, 2…) da pesquisa entre as divulgadas no mesmo dia, pela ordem do Id; afasta os pontos que cairiam um sobre o outro.
+*/
+VAR _id = SELECTEDVALUE ( Pesquisa[Id] )
+VAR _dia = [T17 · pesquisa · divulgação]
+RETURN
+    IF (
+        NOT ISBLANK ( _dia ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Divulgação] = _dia,
+            Pesquisa[Id] < _id
+        ) + 0
+    )

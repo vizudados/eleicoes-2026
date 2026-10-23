@@ -1,0 +1,11 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Maior índice de 'local de votação' na consulta S1 (serviço ao eleitor, 01/08 a 22/10).
+@oraculo: FONTES: 100
+*/
+CALCULATE (
+    MAX ( 'Trends tempo'[Índice] ),
+    REMOVEFILTERS ( 'Trends tempo' ),
+    'Trends tempo'[Série] = "local de votação [termo | S1]"
+)

@@ -1,0 +1,16 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Dias em que Flávio teve índice maior que Lula na série T2 (05/08, 13/08, 19/10 e 22/10).
+@oraculo: 4
+*/
+COUNTROWS (
+    FILTER (
+        ADDCOLUMNS (
+            CALCULATETABLE ( VALUES ( 'Trends tempo'[DataTexto] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
+            "@l", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
+            "@f", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+        ),
+        [@f] > [@l]
+    )
+) + 0

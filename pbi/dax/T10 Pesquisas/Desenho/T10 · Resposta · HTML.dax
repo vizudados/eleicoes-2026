@@ -1,0 +1,30 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: A resposta da tela: quantos institutos davam Lula à frente na véspera (contadores), a manchete com o resultado da urna e o como ler da régua. Só lê as contas 'T10 · …'.
+*/
+-- 1 · Leituras
+VAR _nL = [T10 · institutos · Lula à frente]
+VAR _nF = [T10 · institutos · Flávio à frente]
+VAR _n = [T10 · institutos]
+VAR _urna = [T10 · urna · diferença]
+VAR _vesp = [T10 · véspera]
+-- 2 · Textos
+VAR _quemUrna = IF ( _urna >= 0, "Flávio", "Lula" )
+VAR _clsUrna = IF ( _urna >= 0, "flavio", "lula" )
+VAR _txtUrna = FORMAT ( ABS ( _urna ), "0.0" )
+VAR _txtPonto = IF ( ROUND ( ABS ( _urna ), 1 ) < 2, " ponto", " pontos" )
+VAR _txtOutros =
+    IF ( _nF = 1, "Só 1 já dava Flávio.", "Outros " & _nF & " já davam Flávio." )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t10r'>"
+        & "<div class='sob sobe'>Na véspera do 1º turno · até " & FORMAT ( _vesp, "dd/MM" ) & "</div>"
+        & "<div class='hero sobe d1'><span class='num lula'>" & _nL & "</span><span class='de'>de</span><span class='num'>"
+            & _n & "</span></div>"
+        & "<div class='sub sobe d3'>" & IF ( _n = 1, "instituto dava", "institutos davam" ) & " Lula à frente</div>"
+        & "<div class='tit sobe d5'>A urna deu <span class='" & _clsUrna & "'>" & _quemUrna & "</span> por "
+            & _txtUrna & _txtPonto & ".</div>"
+        & "<div class='txt sobe d7'>" & _txtOutros
+            & " Na régua ao lado, cada linha é a última pesquisa de um instituto antes da eleição, e a linha preta é o resultado da urna.</div>"
+    & "</div>"

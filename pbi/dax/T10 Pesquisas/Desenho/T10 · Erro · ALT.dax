@@ -1,0 +1,9 @@
+/*
+@pasta: T10 Pesquisas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do quadro 'onde foi o erro'.
+*/
+"Média de " & [T10 · institutos · com válidos] & " institutos com votos válidos contra a urna: Lula "
+    & FORMAT ( [T10 · válidos · média Lula], "0.0" ) & "% nas pesquisas e " & FORMAT ( [T10 · urna · Lula], "0.0" )
+    & "% na urna; Flávio " & FORMAT ( [T10 · válidos · média Flávio], "0.0" ) & "% e " & FORMAT ( [T10 · urna · Flávio], "0.0" )
+    & "%. Erro médio de " & FORMAT ( ABS ( [T10 · válidos · erro médio] ), "0.0" ) & " pontos a favor de Lula."

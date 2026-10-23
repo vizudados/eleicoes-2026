@@ -1,0 +1,117 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Fundo da curva do 2º turno: zonas 'Flávio à frente' (em cima) e 'Lula à frente' (embaixo), grade, datas, o 1º turno, o debate e o 2º turno (urna), a média móvel de 10 dias em dois trechos (antes e depois do 1º turno, traço que se desenha), o valor de hoje (contador) e a nota à mão na virada. Os pontos são outro visual (T17 · Pontos · HTML), na mesma caixa e escala.
+*/
+-- 1 · Leituras
+VAR _n = [T17 · pesquisas]
+VAR _d1 = [T17 · 1º turno · data]
+VAR _d2 = [T17 · 2º turno · data]
+VAR _deb = [T17 · debate · data]
+VAR _mmIni = [T17 · média móvel · no começo]
+VAR _mmFim = [T17 · média móvel · agora]
+VAR _diaFim = [T17 · média móvel · último dia]
+VAR _vir = [T17 · média móvel · virada]
+VAR _mmVir = [T17 · média móvel · na virada]
+VAR _dias =
+    ADDCOLUMNS (
+        VALUES ( Pesquisa[Divulgação] ),
+        "@mm", [T17 · média móvel],
+        "@mom", [T17 · dia · momento]
+    )
+-- 2 · Textos
+VAR _quemIni = IF ( _mmIni < 0, "Lula", "Flávio" )
+VAR _quemFim = IF ( _mmFim < 0, "Lula", "Flávio" )
+VAR _txtMan =
+    "Em agosto, a média dava " & _quemIni & " " & FORMAT ( ABS ( _mmIni ), "0.0" ) & " pontos à frente; virou em "
+        & FORMAT ( _vir, "dd/MM" ) & " e, desde então, " & _quemFim & " segue à frente na média."
+VAR _txtFim = _quemFim & " +" & FORMAT ( ABS ( _mmFim ), "0.0" )
+-- 3 · Geometria (x: 01/08 a 27/10 em x 70–1440; y: diferença −10 a +10 pontos em y 360–20, empate em 190)
+VAR _ini = DATE ( 2026, 8, 1 )
+VAR _f = "0.0"
+VAR _pts =
+    ADDCOLUMNS (
+        FILTER ( _dias, NOT ISBLANK ( [@mm] ) ), /* lista */
+        "@x", 70 + DATEDIFF ( _ini, Pesquisa[Divulgação], DAY ) / 87 * 1370,
+        "@y", 190 - MAX ( MIN ( [@mm], 10 ), -10 ) / 10 * 170
+    )
+VAR _linhaA =
+    CONCATENATEX (
+        FILTER ( _pts, [@mom] = "antes_1turno" ), /* lista */
+        FORMAT ( [@x], _f, "en-US" ) & "," & FORMAT ( [@y], _f, "en-US" ),
+        " ",
+        Pesquisa[Divulgação], ASC
+    )
+VAR _linhaD =
+    CONCATENATEX (
+        FILTER ( _pts, [@mom] = "apos_1turno" ), /* lista */
+        FORMAT ( [@x], _f, "en-US" ) & "," & FORMAT ( [@y], _f, "en-US" ),
+        " ",
+        Pesquisa[Divulgação], ASC
+    )
+VAR _x1 = 70 + DATEDIFF ( _ini, _d1, DAY ) / 87 * 1370 -- geometria
+VAR _xDeb = 70 + DATEDIFF ( _ini, _deb, DAY ) / 87 * 1370 -- geometria
+VAR _x2 = 70 + DATEDIFF ( _ini, _d2, DAY ) / 87 * 1370 -- geometria
+VAR _xVir = 70 + DATEDIFF ( _ini, _vir, DAY ) / 87 * 1370 -- geometria
+VAR _yVir = 190 - _mmVir / 10 * 170 -- geometria
+VAR _xFim = 70 + DATEDIFF ( _ini, _diaFim, DAY ) / 87 * 1370 -- geometria
+VAR _yFim = 190 - _mmFim / 10 * 170 -- geometria
+VAR _grade =
+    CONCATENATEX (
+        { -8, -4, 4, 8 },
+        "<line x1='70' x2='1440' y1='" & FORMAT ( 190 - [Value] / 10 * 170, _f, "en-US" ) & "' y2='"
+            & FORMAT ( 190 - [Value] / 10 * 170, _f, "en-US" ) & "' class='g'/><text x='60' y='"
+            & FORMAT ( 195 - [Value] / 10 * 170, _f, "en-US" ) & "' class='ex' text-anchor='end'>" & ABS ( [Value] ) & "</text>",
+        ""
+    )
+VAR _datas =
+    CONCATENATEX (
+        { DATE ( 2026, 8, 1 ), DATE ( 2026, 8, 15 ), DATE ( 2026, 9, 1 ), DATE ( 2026, 9, 15 ) },
+        "<text x='" & FORMAT ( 70 + DATEDIFF ( _ini, [Value], DAY ) / 87 * 1370, _f, "en-US" )
+            & "' y='384' class='ex' text-anchor='middle'>" & FORMAT ( [Value], "dd/MM" ) & "</text>",
+        ""
+    )
+-- 4 · Marcação
+VAR _svg =
+    "<svg class='pl' width='1620' height='395' viewBox='0 0 1620 395'>"
+        & "<rect x='70' y='20' width='1370' height='170' class='zf esmaece'/>"
+        & "<rect x='70' y='190' width='1370' height='170' class='zl esmaece'/>"
+        & _grade
+        & "<line x1='70' x2='1440' y1='190' y2='190' class='g0'/>"
+        & "<text x='60' y='195' class='ex' text-anchor='end'>0</text>"
+        & "<text x='80' y='40' class='zt f entra d3'>Flávio à frente ↑</text>"
+        & "<text x='80' y='350' class='zt l entra d3'>Lula à frente ↓</text>"
+        & _datas
+        & "<line x1='" & FORMAT ( _x1, _f, "en-US" ) & "' x2='" & FORMAT ( _x1, _f, "en-US" ) & "' y1='14' y2='366' class='mk'/>"
+        & "<text x='" & FORMAT ( _x1, _f, "en-US" ) & "' y='384' class='ex b' text-anchor='middle'>1º turno · "
+            & FORMAT ( _d1, "dd/MM" ) & "</text>"
+        & "<line x1='" & FORMAT ( _xDeb, _f, "en-US" ) & "' x2='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y1='14' y2='366' class='mk s'/>"
+        & "<text x='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y='10' class='ex' text-anchor='middle'>debate</text>"
+        & "<line x1='" & FORMAT ( _x2, _f, "en-US" ) & "' x2='" & FORMAT ( _x2, _f, "en-US" ) & "' y1='70' y2='366' class='mk'/>"
+        & "<text x='" & FORMAT ( _x2, _f, "en-US" ) & "' y='384' class='ex b' text-anchor='middle'>2º turno · "
+            & FORMAT ( _d2, "dd/MM" ) & "</text>"
+        & "<polyline points='" & _linhaA & "' pathLength='1' class='mm traco' filter='url(#rbu)' style='animation-delay:.6s'/>"
+        & "<polyline points='" & _linhaD & "' pathLength='1' class='mm traco-rapido' filter='url(#rbu)' style='animation-delay:2.4s'/>"
+    & "</svg>"
+VAR _urna =
+    "<div class='urna entra d10' style='left:" & FORMAT ( _x2 - 24, _f, "en-US" ) & "px;top:" & FORMAT ( 72 + 20, _f, "en-US" )
+        & "px'></div>"
+VAR _fim =
+    "<div class='fim entra d16' style='left:1452px;top:" & FORMAT ( 72 + _yFim - 26, _f, "en-US" ) & "px'>"
+        & "<div class='rot'>média hoje</div><div class='num " & IF ( _quemFim = "Lula", "lula", "flavio" ) & "'>" & _txtFim
+        & "</div></div>"
+VAR _nota =
+    "<div class='seta entra d14' style='left:" & FORMAT ( _xVir + 2, _f, "en-US" ) & "px;top:" & FORMAT ( 72 + _yVir + 6, _f, "en-US" )
+        & "px;transform:scale(1,-1)'></div>"
+        & "<div class='mao entra d14' style='left:" & FORMAT ( _xVir + 58, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 72 + _yVir + 52, _f, "en-US" ) & "px'>a média virou aqui</div>"
+RETURN
+    "<div class='tela t17g'>"
+        & "<div class='cab'><div class='sob sobe'>Lula × Flávio no 2º turno, pesquisa a pesquisa · " & _n
+        & " pesquisas · votos totais</div><div class='man sobe d2'>" & _txtMan & "</div></div>"
+        & _svg & _urna & _fim & _nota
+        & "<div class='leg entra d12'><b><i style='background:var(--azul)'></i>Flávio à frente</b>"
+        & "<b><i style='background:var(--vermelho)'></i>Lula à frente</b>"
+        & "Cada ponto é uma pesquisa; a distância até o empate é a vantagem, em pontos · vazado: simulação antes do 1º turno"
+        & " · traço: média dos 10 dias anteriores, com 3 pesquisas ou mais</div>"
+    & "</div>"

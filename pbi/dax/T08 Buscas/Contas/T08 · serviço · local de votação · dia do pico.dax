@@ -1,0 +1,14 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Dia do pico de 'local de votação' na consulta S1.
+@oraculo: FONTES: 04/10
+*/
+VAR _p = [T08 · serviço · local de votação · pico]
+RETURN
+    CALCULATE (
+        MAX ( 'Trends tempo'[Momento] ),
+        REMOVEFILTERS ( 'Trends tempo' ),
+        'Trends tempo'[Série] = "local de votação [termo | S1]",
+        'Trends tempo'[Índice] = _p
+    )

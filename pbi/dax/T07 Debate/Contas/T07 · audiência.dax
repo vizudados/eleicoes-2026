@@ -1,0 +1,9 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0.0
+@descricao: Pontos de audiência do debate Lula × Flávio na Grande SP (Kantar IBOPE, consolidado divulgado pela Band).
+@oraculo: audiencia_txt = 15 pontos
+*/
+VAR _d = [T07 · debate · data]
+RETURN
+    CALCULATE ( MAX ( Debate[Audiência] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )

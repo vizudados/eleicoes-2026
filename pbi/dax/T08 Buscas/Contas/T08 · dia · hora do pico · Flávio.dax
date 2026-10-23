@@ -1,0 +1,18 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Hora (0–23) em que Flávio teve o maior índice por hora no dia da linha (a primeira, se empatar).
+*/
+VAR _dia = SELECTEDVALUE ( 'Trends tempo'[DataTexto] )
+VAR _pico = [T08 · dia · pico na hora · Flávio]
+RETURN
+    IF (
+        NOT ISBLANK ( _pico ),
+        CALCULATE (
+            MINX ( 'Trends tempo', VALUE ( MID ( 'Trends tempo'[DataTexto], 12, 2 ) ) ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            LEFT ( 'Trends tempo'[DataTexto], 10 ) = _dia,
+            'Trends tempo'[Série] IN { "Flávio Bolsonaro [tópico | H1]", "Flávio Bolsonaro [tópico | H2]" },
+            'Trends tempo'[Índice] = _pico
+        )
+    )

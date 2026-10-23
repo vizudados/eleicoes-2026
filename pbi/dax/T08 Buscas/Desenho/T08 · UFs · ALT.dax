@@ -1,0 +1,6 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela dos quadrados do mapa (um por UF).
+*/
+"Mapa de quadrados com as " & [T08 · UFs] & " unidades da federação: a barra divide as buscas entre Lula e Flávio; o fundo mais escuro marca mais interesse. Passe o mouse num estado."

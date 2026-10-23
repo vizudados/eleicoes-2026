@@ -1,0 +1,34 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: Dossiê de um apoio declarado (ttT16Apoio, grão Apoio[Quem]): quem, cargo ou partido, a data, a frase literal (≤ 15 palavras) e a posição, com a condição quando houve.
+*/
+-- 1 · Leituras
+VAR _q = SELECTEDVALUE ( Apoio[Quem] )
+VAR _pos = [T16 · apoio · posição]
+VAR _cond = [T16 · apoio · condicionado]
+VAR _dia = [T16 · apoio · data]
+VAR _cit = [T16 · apoio · citação]
+VAR _cargo = [T16 · apoio · cargo]
+-- 2 · Textos
+VAR _escQ = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _q, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escCargo = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cargo, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escCit = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cit, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtPos =
+    SWITCH ( _pos, "Flávio", "Apoia Flávio", "Lula", "Apoia Lula", "liberou", "Liberou o eleitor", "voto nulo", "Orienta voto nulo", "Neutro" )
+        & IF ( _cond = "Sim", ", com condições", "" )
+VAR _mao = SWITCH ( _pos, "Flávio", "com Flávio", "Lula", "com Lula", "liberou", "cada um decide", "voto nulo", "voto nulo", "neutro" )
+VAR _clsMao = SWITCH ( _pos, "Flávio", " az", "Lula", "", " ti" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pos ),
+        "<div class='tt16a'>"
+            & "<div class='sob sobe'>" & IF ( ISBLANK ( _dia ), "Data não informada", FORMAT ( _dia, "dd/MM" ) ) & " · 2º turno</div>"
+            & "<div class='tt sobe d2'>" & _escQ & "</div>"
+            & "<div class='nota sobe d2' style='margin-top:-6px'>" & _escCargo & "</div>"
+            & IF ( ISBLANK ( _cit ) || _cit = "", "", "<div class='cit sobe d3'>“" & _escCit & "”</div>" )
+            & "<div class='txt sobe d4'><b>" & _txtPos & ".</b></div>"
+            & "<div class='mao" & _clsMao & " entra d6'>" & _mao & "</div>"
+        & "</div>"
+    )

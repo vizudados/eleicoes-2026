@@ -1,0 +1,9 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0.0
+@descricao: Flávio − Lula, em pontos, na pesquisa da linha.
+*/
+IF (
+    NOT ISBLANK ( [T07 · pesquisa · janela] ),
+    [T07 · pesquisa · Flávio] - [T07 · pesquisa · Lula]
+)

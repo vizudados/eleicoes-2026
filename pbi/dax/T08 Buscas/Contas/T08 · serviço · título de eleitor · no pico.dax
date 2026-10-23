@@ -1,0 +1,14 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Índice de 'título de eleitor' (mesma consulta S1) no dia do pico de 'local de votação'.
+@oraculo: FONTES: 84
+*/
+VAR _d = [T08 · serviço · local de votação · dia do pico]
+RETURN
+    CALCULATE (
+        MAX ( 'Trends tempo'[Índice] ),
+        REMOVEFILTERS ( 'Trends tempo' ),
+        'Trends tempo'[Série] = "título de eleitor [termo | S1]",
+        'Trends tempo'[Momento] = _d
+    )

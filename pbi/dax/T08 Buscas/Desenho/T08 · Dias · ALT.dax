@@ -1,0 +1,6 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela das faixas de cada dia da curva.
+*/
+"Uma faixa por dia da curva (" & [T08 · dias] & " dias): passe o mouse para ver o índice de cada um no dia e, em outubro, a curva hora a hora."

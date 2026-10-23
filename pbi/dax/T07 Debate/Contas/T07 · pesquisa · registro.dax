@@ -1,0 +1,6 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: Registro no TSE da pesquisa da linha; vazio fora das pesquisas do 2º turno depois do 1º turno.
+*/
+IF ( NOT ISBLANK ( [T07 · pesquisa · janela] ), SELECTEDVALUE ( Pesquisa[Registro] ) )

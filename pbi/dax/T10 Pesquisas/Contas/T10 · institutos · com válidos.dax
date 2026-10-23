@@ -1,0 +1,20 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0
+@descricao: Institutos cuja última pesquisa de 1º turno divulgou votos válidos (os únicos comparáveis com a urna).
+@oraculo: paginas[10].antes.com_validos = 10
+*/
+VAR _lista =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@d", [T10 · instituto · diferença],
+        "@b", [T10 · instituto · base]
+    )
+RETURN
+    COUNTROWS ( FILTER ( _lista, [@b] = "validos" ) ) + 0

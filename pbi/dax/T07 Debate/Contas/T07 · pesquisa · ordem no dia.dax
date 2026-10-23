@@ -1,0 +1,22 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Posição (0, 1, 2…) da pesquisa entre as que terminaram o campo no mesmo dia, pela ordem do Id; afasta os pontos que cairiam um sobre o outro.
+*/
+VAR _id = SELECTEDVALUE ( Pesquisa[Id] )
+VAR _fim = [T07 · pesquisa · campo fim]
+RETURN
+    IF (
+        NOT ISBLANK ( _fim ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            Pesquisa[Momento] = "apos_1turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo fim] = _fim,
+            Pesquisa[Id] < _id
+        ) + 0
+    )

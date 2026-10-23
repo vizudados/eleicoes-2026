@@ -1,0 +1,18 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: dd/MM
+@descricao: Data da última pesquisa de 1º turno do instituto da linha com Lula e Flávio publicados (grão Pesquisa[Instituto]).
+*/
+VAR _i = SELECTEDVALUE ( Pesquisa[Instituto] )
+RETURN
+    IF (
+        NOT ISBLANK ( _i ),
+        CALCULATE (
+            MAX ( Pesquisa[Divulgação] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _i
+        )
+    )

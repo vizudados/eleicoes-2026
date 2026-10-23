@@ -1,0 +1,9 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: +0.0;-0.0;0.0
+@descricao: Média móvel no primeiro dia em que ela existe (Flávio − Lula; negativo = Lula à frente).
+@oraculo: media_movel[0] = −3,83 (Lula +3,8)
+*/
+VAR _d = [T17 · média móvel · primeiro dia]
+RETURN
+    CALCULATE ( [T17 · média móvel], REMOVEFILTERS ( Pesquisa ), Pesquisa[Divulgação] = _d )

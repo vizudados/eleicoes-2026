@@ -1,0 +1,22 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: +0.0;-0.0;0.0
+@descricao: Média de Flávio − Lula (pontos, votos totais) nas pesquisas de 2º turno divulgadas nos 10 dias até o dia do contexto (d−10, d], só do mesmo momento (não atravessa o 1º turno) e só com 3 pesquisas ou mais na janela.
+@oraculo: media_movel (dias com pesquisa); 22/10 = +1,89
+*/
+VAR _d = MAX ( Pesquisa[Divulgação] )
+VAR _m = [T17 · dia · momento]
+VAR _t =
+    CALCULATETABLE (
+        Pesquisa,
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "totais",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Momento] = _m,
+        Pesquisa[Divulgação] > _d - 10,
+        Pesquisa[Divulgação] <= _d
+    )
+RETURN
+    IF ( NOT ISBLANK ( _m ) && COUNTROWS ( _t ) >= 3, AVERAGEX ( _t, Pesquisa[Flavio] - Pesquisa[Lula] ) )

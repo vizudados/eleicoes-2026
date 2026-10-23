@@ -1,0 +1,10 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0.0%
+@descricao: Abstenção do 1º turno de 2026 sobre os eleitores aptos.
+@oraculo: 21,1%
+*/
+DIVIDE (
+    [T16 · 1º turno · abstenções],
+    CALCULATE ( SUM ( 'Comparecimento ano'[Aptos] ), REMOVEFILTERS ( 'Comparecimento ano' ), 'Comparecimento ano'[Ano] = 2026 )
+)

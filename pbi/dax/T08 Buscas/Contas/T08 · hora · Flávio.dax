@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Índice por hora (0–100 dentro da semana da consulta H1 ou H2) de Flávio na hora da linha ('Trends tempo'[DataTexto] = 'aaaa-mm-dd hh:mm').
+*/
+CALCULATE (
+    MAX ( 'Trends tempo'[Índice] ),
+    'Trends tempo'[Série] IN { "Flávio Bolsonaro [tópico | H1]", "Flávio Bolsonaro [tópico | H2]" }
+)

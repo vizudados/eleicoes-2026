@@ -1,0 +1,17 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Quantas horas do dia da linha têm índice por hora (consultas H1, 01 a 07/10, e H2, 15 a 21/10); 0 nos outros dias.
+*/
+VAR _dia = SELECTEDVALUE ( 'Trends tempo'[DataTexto] )
+RETURN
+    IF (
+        HASONEVALUE ( 'Trends tempo'[DataTexto] ),
+        CALCULATE (
+            COUNTROWS ( 'Trends tempo' ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            LEFT ( 'Trends tempo'[DataTexto], 10 ) = _dia,
+            LEN ( 'Trends tempo'[DataTexto] ) > 10,
+            CONTAINSSTRING ( 'Trends tempo'[Série], "Lula [tópico | H" )
+        ) + 0
+    )

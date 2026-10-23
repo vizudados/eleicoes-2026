@@ -1,0 +1,9 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: #,0
+@descricao: Pico de aparelhos conectados ao mesmo tempo no YouTube da Band durante o debate de 18/10 (21h30, Poder360).
+@oraculo: youtube_pico_txt = 5,39 mi
+*/
+VAR _d = [T07 · debate · data]
+RETURN
+    CALCULATE ( MAX ( Debate[Pico no streaming] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )

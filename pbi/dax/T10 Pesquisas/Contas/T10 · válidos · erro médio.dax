@@ -1,0 +1,19 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Erro médio da diferença Flávio − Lula contra a urna, em pontos, entre os institutos com válidos (negativo = a favor de Lula).
+@oraculo: paginas[10].antes.erro_medio_diferenca = −3,856 ('3,9 pontos a favor de Lula')
+*/
+VAR _lista =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@e", [T10 · instituto · erro vs urna]
+    )
+RETURN
+    AVERAGEX ( FILTER ( _lista, NOT ISBLANK ( [@e] ) ), [@e] )

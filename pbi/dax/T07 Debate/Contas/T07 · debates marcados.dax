@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0
+@descricao: Debates presidenciais marcados por emissoras de 23/08 a 22/10, inclusive os cancelados.
+@oraculo: 11
+*/
+CALCULATE ( COUNTROWS ( Debate ), REMOVEFILTERS ( Debate ) ) + 0

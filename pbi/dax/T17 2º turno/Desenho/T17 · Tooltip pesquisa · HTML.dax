@@ -1,0 +1,67 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: Dossiê de uma pesquisa da curva do 2º turno (ttT17Pesquisa, grão Pesquisa[Id]): instituto e divulgação, Lula × Flávio, quem estava à frente e por quanto, a pesquisa anterior do MESMO instituto, a média dos 10 dias até aquele dia, campo, entrevistas, margem e registro, e a nota à mão (simulação antes do 1º turno ou pesquisa depois).
+*/
+-- 1 · Leituras
+VAR _mom = [T17 · pesquisa · momento]
+VAR _inst = [T17 · pesquisa · instituto]
+VAR _dia = [T17 · pesquisa · divulgação]
+VAR _ini = [T17 · pesquisa · campo início]
+VAR _fim = [T17 · pesquisa · campo fim]
+VAR _l = [T17 · pesquisa · Lula]
+VAR _f = [T17 · pesquisa · Flávio]
+VAR _dif = [T17 · pesquisa · diferença]
+VAR _difAnt = [T17 · pesquisa · diferença anterior]
+VAR _diaAnt = [T17 · pesquisa · divulgação anterior]
+VAR _mm = [T17 · média móvel]
+VAR _n = [T17 · pesquisa · entrevistas]
+VAR _m = [T17 · pesquisa · margem de erro]
+VAR _reg = [T17 · pesquisa · registro]
+-- 2 · Textos
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escReg = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _txtDif =
+    SWITCH (
+        TRUE (),
+        _dif > 0, "Flávio " & FORMAT ( _dif, "0.0" ) & IF ( ROUND ( _dif, 1 ) = 1, " ponto", " pontos" ) & " à frente",
+        _dif < 0, "Lula " & FORMAT ( -_dif, "0.0" ) & IF ( ROUND ( -_dif, 1 ) = 1, " ponto", " pontos" ) & " à frente",
+        "Empate"
+    )
+VAR _txtAnt =
+    IF (
+        ISBLANK ( _difAnt ),
+        " É a primeira simulação de 2º turno deste instituto na base.",
+        " Na anterior do mesmo instituto (" & FORMAT ( _diaAnt, "dd/MM" ) & "): "
+            & SWITCH (
+                TRUE (),
+                _difAnt > 0, "Flávio " & FORMAT ( _difAnt, "0.0" ) & " à frente",
+                _difAnt < 0, "Lula " & FORMAT ( -_difAnt, "0.0" ) & " à frente",
+                "empate"
+            ) & "."
+    )
+VAR _txtMM =
+    IF (
+        ISBLANK ( _mm ),
+        "",
+        " A média dos 10 dias até aqui: "
+            & SWITCH ( TRUE (), _mm > 0, "Flávio +" & FORMAT ( _mm, "0.0" ), _mm < 0, "Lula +" & FORMAT ( -_mm, "0.0" ), "empate" ) & "."
+    )
+VAR _txtMao = IF ( _mom = "antes_1turno", "simulação, antes do 1º turno", "depois do 1º turno" )
+VAR _txtReg = IF ( ISBLANK ( _reg ), "", " · <span style='white-space:nowrap'>" & _escReg & "</span>" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _mom ),
+        "<div class='tt17p'>"
+            & "<div class='sob sobe'>" & _esc & " · divulgada em " & FORMAT ( _dia, "dd/MM" ) & "</div>"
+            & "<div class='par sobe d2'>"
+                & "<div class='lula'><small>Lula</small><span class='num'>" & FORMAT ( _l, "0.0" ) & "%</span></div>"
+                & "<div class='flavio'><small>Flávio</small><span class='num'>" & FORMAT ( _f, "0.0" ) & "%</span></div>"
+            & "</div>"
+            & "<div class='txt sobe d3'><b>" & _txtDif & ".</b>" & _txtAnt & _txtMM & "</div>"
+            & "<div class='nota sobe d4'>Campo de " & FORMAT ( _ini, "dd/MM" ) & " a " & FORMAT ( _fim, "dd/MM" ) & " · "
+            & FORMAT ( _n, "#,0" ) & " entrevistas · margem de erro de " & FORMAT ( _m, "0.0" ) & " pontos" & _txtReg & "</div>"
+            & "<div class='mao" & IF ( _mom = "antes_1turno", " ti", "" ) & " entra d6'>" & _txtMao & "</div>"
+        & "</div>"
+    )

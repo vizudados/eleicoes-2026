@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do palco em traço.
+*/
+"Desenho do palco do debate da Band de " & FORMAT ( [T07 · debate · data], "dd/MM" )
+    & ", com Lula e Flávio nos púlpitos. Passe o mouse para ver uma frase de cada um, a nota da Quaest e a audiência de outros debates."

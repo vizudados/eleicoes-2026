@@ -1,0 +1,64 @@
+/*
+@pasta: T17 2º turno\Desenho
+@formato: texto
+@descricao: O placar das pesquisas do 2º turno: quantas das feitas depois do 1º turno dão Flávio à frente (contadores), as médias em votos totais e válidos, a manchete e dois quadriculados (um quadradinho por pesquisa na cor de quem liderava): as simulações antes do 1º turno e as pesquisas depois. Só lê contas 'T17 · …'.
+*/
+-- 1 · Leituras
+VAR _nD = [T17 · depois · pesquisas]
+VAR _fD = [T17 · depois · Flávio à frente]
+VAR _lD = [T17 · depois · Lula à frente]
+VAR _eD = [T17 · depois · empates]
+VAR _nA = [T17 · antes · pesquisas]
+VAR _fA = [T17 · antes · Flávio à frente]
+VAR _lA = [T17 · antes · Lula à frente]
+VAR _eA = [T17 · antes · empates]
+VAR _mL = [T17 · depois · Lula]
+VAR _mF = [T17 · depois · Flávio]
+VAR _vL = [T17 · depois · válidos · Lula]
+VAR _vF = [T17 · depois · válidos · Flávio]
+VAR _vN = [T17 · depois · válidos · pesquisas]
+-- 2 · Textos
+VAR _txtLado =
+    IF ( _nD = 1, "pesquisa feita", "pesquisas feitas" ) & " depois do 1º turno "
+        & IF ( _fD = 1, "dá", "dão" ) & " Flávio à frente de Lula"
+VAR _txtMedias =
+    "Média: Flávio " & FORMAT ( _mF, "0.0" ) & "% × Lula " & FORMAT ( _mL, "0.0" ) & "% dos votos totais ("
+        & FORMAT ( _vF, "0.0" ) & "% × " & FORMAT ( _vL, "0.0" ) & "% dos válidos, em " & _vN
+        & IF ( _vN = 1, " pesquisa", " pesquisas" ) & ")."
+VAR _txtCont = "<span><b class='lula-esc'>" & _lA & "</b> Lula</span><span><b>" & _eA & "</b> "
+    & IF ( _eA = 1, "empate", "empates" ) & "</span><span><b class='flavio-esc'>" & _fA & "</b> Flávio</span>"
+VAR _txtContD = "<span><b class='lula-esc'>" & _lD & "</b> Lula</span><span><b>" & _eD & "</b> "
+    & IF ( _eD = 1, "empate", "empates" ) & "</span><span><b class='flavio-esc'>" & _fD & "</b> Flávio</span>"
+-- 3 · Geometria (um quadradinho por pesquisa: Lula, empates, Flávio; o atraso faz a cor esmaecer em onda)
+VAR _gradeA =
+    CONCATENATEX (
+        GENERATESERIES ( 1, _nA, 1 ),
+        "<i class='" & IF ( [Value] <= _lA, "l", IF ( [Value] <= _lA + _eA, "e", "f" ) ) & "' style='animation-delay:"
+            & ( 400 + [Value] * 14 ) & "ms," & ( 400 + [Value] * 14 ) & "ms'></i>",
+        "",
+        [Value], ASC
+    )
+VAR _gradeD =
+    CONCATENATEX (
+        GENERATESERIES ( 1, _nD, 1 ),
+        "<i class='" & IF ( [Value] <= _lD, "l", IF ( [Value] <= _lD + _eD, "e", "f" ) ) & "' style='animation-delay:"
+            & ( 1200 + [Value] * 22 ) & "ms," & ( 1200 + [Value] * 22 ) & "ms'></i>",
+        "",
+        [Value], ASC
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t17a'>"
+        & "<div class='sob sobe'>Depois do 1º turno · pesquisas do 2º turno</div>"
+        & "<div class='linha'>"
+            & "<div class='hero sobe d1'><span class='num flavio'>" & _fD & "</span><span class='de'>de</span>"
+                & "<span class='num'>" & _nD & "</span></div>"
+            & "<div class='lado sobe d3'><div class='man'>" & _txtLado & "</div>"
+                & "<div class='txt'>" & _txtMedias & "</div></div>"
+        & "</div>"
+        & "<div class='man manchete sobe d5'>Antes do 1º turno, a disputa estava dividida; depois, Flávio passou a liderar quase todas</div>"
+        & "<div class='waf sobe d6' style='left:0'><div class='rot'>Antes do 1º turno · " & _nA & " simulações</div>"
+            & "<div class='grade'>" & _gradeA & "</div><div class='cont'>" & _txtCont & "</div></div>"
+        & "<div class='waf sobe d8' style='left:400px'><div class='rot'>Depois · " & _nD & " pesquisas</div>"
+            & "<div class='grade'>" & _gradeD & "</div><div class='cont'>" & _txtContD & "</div></div>"
+    & "</div>"

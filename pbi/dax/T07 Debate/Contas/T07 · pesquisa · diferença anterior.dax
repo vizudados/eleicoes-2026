@@ -1,0 +1,22 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: 0.0
+@descricao: Flávio − Lula, em pontos, na pesquisa anterior do MESMO instituto; vazio quando é a primeira dele.
+*/
+VAR _inst = [T07 · pesquisa · instituto]
+VAR _ant = [T07 · pesquisa · campo anterior]
+RETURN
+    IF (
+        NOT ISBLANK ( _ant ),
+        CALCULATE (
+            AVERAGEX ( Pesquisa, Pesquisa[Flavio] - Pesquisa[Lula] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            Pesquisa[Momento] = "apos_1turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _inst,
+            Pesquisa[Campo fim] = _ant
+        )
+    )

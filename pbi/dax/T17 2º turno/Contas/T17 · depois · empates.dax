@@ -1,0 +1,16 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Entre as pesquisas de 2º turno feitas depois do 1º turno, quantas deram empate.
+@oraculo: segundo_turno.depois.empates = 1
+*/
+CALCULATE (
+    COUNTROWS ( Pesquisa ),
+    REMOVEFILTERS ( Pesquisa ),
+    Pesquisa[Cenário] = "2º turno",
+    Pesquisa[Tipo] = "totais",
+    NOT ISBLANK ( Pesquisa[Lula] ),
+    NOT ISBLANK ( Pesquisa[Flavio] ),
+    Pesquisa[Momento] = "apos_1turno",
+    FILTER ( ALL ( Pesquisa[Lula], Pesquisa[Flavio] ), Pesquisa[Flavio] = Pesquisa[Lula] )
+) + 0

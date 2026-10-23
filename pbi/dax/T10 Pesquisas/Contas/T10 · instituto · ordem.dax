@@ -1,0 +1,23 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0
+@descricao: Posição do instituto na régua, da maior vantagem de Lula (1) à maior de Flávio; empate na diferença desempata pelo nome (a ordem do mockup).
+*/
+VAR _i = SELECTEDVALUE ( Pesquisa[Instituto] )
+VAR _dif = ROUND ( [T10 · instituto · diferença], 6 )
+VAR _todos =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] )
+        ),
+        "@d", ROUND ( [T10 · instituto · diferença], 6 )
+    )
+RETURN
+    IF (
+        NOT ISBLANK ( _dif ),
+        COUNTROWS ( FILTER ( _todos, [@d] < _dif || ( [@d] = _dif && Pesquisa[Instituto] < _i ) ) ) + 1
+    )

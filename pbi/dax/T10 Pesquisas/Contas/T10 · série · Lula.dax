@@ -1,0 +1,13 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0.0
+@descricao: Lula na pesquisa da linha (grão Pesquisa[Id]) quando ela é de 1º turno em votos totais, com Lula e Flávio publicados; vazio nas outras. Os pontos da trajetória do instituto no dossiê.
+*/
+VAR _ok =
+    HASONEVALUE ( Pesquisa[Id] )
+        && SELECTEDVALUE ( Pesquisa[Cenário] ) = "1º turno"
+        && SELECTEDVALUE ( Pesquisa[Tipo] ) = "totais"
+        && NOT ISBLANK ( SELECTEDVALUE ( Pesquisa[Lula] ) )
+        && NOT ISBLANK ( SELECTEDVALUE ( Pesquisa[Flavio] ) )
+RETURN
+    IF ( _ok, SELECTEDVALUE ( Pesquisa[Lula] ) )

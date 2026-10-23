@@ -1,0 +1,22 @@
+/*
+@pasta: T10 Pesquisas\Contas
+@formato: 0
+@descricao: Id da linha de Pesquisa que vale como a última do instituto (a da data mais recente, na base escolhida; a de menor Id se houver duas).
+*/
+VAR _i = SELECTEDVALUE ( Pesquisa[Instituto] )
+VAR _d = [T10 · instituto · última divulgação]
+VAR _b = [T10 · instituto · base]
+RETURN
+    IF (
+        NOT ISBLANK ( _d ),
+        CALCULATE (
+            MIN ( Pesquisa[Id] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "1º turno",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Instituto] = _i,
+            Pesquisa[Divulgação] = _d,
+            Pesquisa[Tipo] = _b
+        )
+    )

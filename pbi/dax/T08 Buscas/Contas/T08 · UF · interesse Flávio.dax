@@ -1,0 +1,13 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Índice de interesse (0–100; 100 = a UF de maior interesse) por Flávio na UF da linha, no 2º turno (consulta G2).
+*/
+IF (
+    HASONEVALUE ( UF[UF] ),
+    CALCULATE (
+        MAX ( 'Trends UF'[Índice] ),
+        'Trends UF'[Série] = "Flávio Bolsonaro [tópico] índice 0-100 por UF",
+        CONTAINSSTRING ( 'Trends UF'[Período], "2º turno" )
+    )
+)

@@ -1,0 +1,12 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Parte (%) das buscas de Lula entre os 5 candidatos na UF da linha, no período todo (01/08 a 22/10, consulta T2).
+*/
+IF (
+    HASONEVALUE ( UF[UF] ),
+    CALCULATE (
+        MAX ( 'Trends UF'[Índice] ),
+        'Trends UF'[Série] = "Lula [tópico] % das buscas entre os 5 comparados"
+    )
+)

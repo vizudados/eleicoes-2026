@@ -1,0 +1,38 @@
+/*
+@pasta: T08 Buscas\Desenho
+@formato: texto
+@descricao: Abertura da tela das buscas: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias em que cada um foi mais buscado (consulta T2) e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Só lê contas 'T08 · …'.
+*/
+-- 1 · Leituras
+VAR _cL = [T08 · Central · Lula]
+VAR _cF = [T08 · Central · Flávio]
+VAR _dias = [T08 · dias]
+VAR _dL = [T08 · dias com Lula à frente]
+VAR _dF = [T08 · dias com Flávio à frente]
+VAR _dFdep = [T08 · dias com Flávio à frente depois do debate]
+-- 2 · Textos
+VAR _txtDep =
+    SWITCH (
+        _dFdep,
+        0, "",
+        1, ", um deles depois do debate",
+        2, ", dois deles depois do debate",
+        ", " & _dFdep & " deles depois do debate"
+    )
+VAR _txtMan =
+    "Lula foi mais buscado que Flávio em " & _dL & " dos " & _dias & " dias da campanha; Flávio ficou na frente em "
+        & _dF & IF ( _dF = 1, " dia", " dias" ) & _txtDep
+-- 4 · Marcação
+RETURN
+    "<div class='tela t08a'>"
+        & "<div class='sob sobe'>Quem o Brasil mais buscou · Central Google Trends, últimos 30 dias</div>"
+        & "<div class='par'>"
+            & "<div class='cand l sobe d1'><div class='rot'>Lula</div><div class='num'>" & FORMAT ( _cL, "0%" ) & "</div></div>"
+            & "<div class='x entra d2'>×</div>"
+            & "<div class='cand f sobe d2'><div class='rot'>Flávio</div><div class='num'>" & FORMAT ( _cF, "0%" ) & "</div></div>"
+            & "<div class='lado sobe d3'>do interesse nas buscas pelos dois, de 22/09 a 22/10</div>"
+        & "</div>"
+        & "<div class='man sobe d4'>" & _txtMan & "</div>"
+        & "<div class='txt sobe d5'>O Google não diz quantas buscas houve: o Trends dá um índice de 0 a 100 dentro de cada "
+            & "consulta, em que 100 é o momento de mais procura. Só se comparam números da mesma consulta.</div>"
+    & "</div>"
