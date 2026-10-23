@@ -17,7 +17,7 @@ table Ano
 		dataType: string
 		lineageTag: 88fda8b4-be10-5323-8758-c0b700844abf
 		summarizeBy: none
-		sourceColumn: Ano (texto)
+		sourceColumn: AnoTexto
 		sortByColumn: Ano
 
 		annotation SummarizationSetBy = Automatic
@@ -27,7 +27,7 @@ table Ano
 		dataType: string
 		lineageTag: 0b60a7af-fa77-55e2-a996-661e56eca440
 		summarizeBy: none
-		sourceColumn: Candidato do PT
+		sourceColumn: CandidatoPT
 
 		annotation SummarizationSetBy = Automatic
 
@@ -36,7 +36,7 @@ table Ano
 		dataType: string
 		lineageTag: 26501932-0498-510e-a6da-01c33fb5046f
 		summarizeBy: none
-		sourceColumn: Adversário
+		sourceColumn: Adversario
 
 		annotation SummarizationSetBy = Automatic
 
@@ -45,7 +45,7 @@ table Ano
 		dataType: string
 		lineageTag: cbe78e5e-af8d-51d7-8cef-558a252f297a
 		summarizeBy: none
-		sourceColumn: Partido do adversário
+		sourceColumn: AdversarioPartido
 
 		annotation SummarizationSetBy = Automatic
 

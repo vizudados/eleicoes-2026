@@ -2,38 +2,38 @@
  "arte/comicio-flavio-azul_escuro.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-flavio-azul_escuro.png",
   "largura": 1460,
-  "altura": 880,
-  "bytes": 343908
+  "altura": 973,
+  "bytes": 483781
  },
  "arte/comicio-flavio-creme.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-flavio-creme.png",
   "largura": 1460,
-  "altura": 880,
-  "bytes": 377557
+  "altura": 973,
+  "bytes": 519959
  },
  "arte/comicio-flavio-tinta.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-flavio-tinta.png",
   "largura": 1460,
-  "altura": 880,
-  "bytes": 278348
+  "altura": 973,
+  "bytes": 385339
  },
  "arte/comicio-lula-creme.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-lula-creme.png",
   "largura": 1460,
-  "altura": 779,
-  "bytes": 351701
+  "altura": 973,
+  "bytes": 562018
  },
  "arte/comicio-lula-tinta.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-lula-tinta.png",
   "largura": 1460,
-  "altura": 779,
-  "bytes": 247022
+  "altura": 973,
+  "bytes": 408826
  },
  "arte/comicio-lula-vermelho_escuro.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-lula-vermelho_escuro.png",
   "largura": 1460,
-  "altura": 779,
-  "bytes": 350203
+  "altura": 973,
+  "bytes": 588853
  },
  "arte/debate-frente-creme.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/arte/debate-frente-creme.png",
@@ -1048,5 +1048,109 @@
   "largura": 1400,
   "altura": 1360,
   "bytes": 154890
+ },
+ "capa/capa-final.jpg": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/capa/capa-final.jpg",
+  "bytes": 203958
+ },
+ "capa/capa-inicio.jpg": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/capa/capa-inicio.jpg",
+  "bytes": 40079
+ },
+ "capa/capa.mp4": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/capa/capa.mp4",
+  "bytes": 2940746
+ },
+ "capa/capa.webm": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/capa/capa.webm",
+  "bytes": 4494511
+ },
+ "comicio/comicio-flavio-azul_escuro.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-flavio-azul_escuro.png",
+  "bytes": 367342
+ },
+ "comicio/comicio-flavio-creme.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-flavio-creme.png",
+  "bytes": 367342
+ },
+ "comicio/comicio-flavio-tinta.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-flavio-tinta.png",
+  "bytes": 367342
+ },
+ "comicio/comicio-lula-creme.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-lula-creme.png",
+  "bytes": 377932
+ },
+ "comicio/comicio-lula-tinta.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-lula-tinta.png",
+  "bytes": 377932
+ },
+ "comicio/comicio-lula-vermelho_escuro.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-lula-vermelho_escuro.png",
+  "bytes": 377932
+ },
+ "trajetoria/flavio-2002-alerj.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2002-alerj.png",
+  "bytes": 74592
+ },
+ "trajetoria/flavio-2016-prefeitura.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2016-prefeitura.png",
+  "bytes": 80265
+ },
+ "trajetoria/flavio-2018-senado.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2018-senado.png",
+  "bytes": 74841
+ },
+ "trajetoria/flavio-2019-posse.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2019-posse.png",
+  "bytes": 93021
+ },
+ "trajetoria/flavio-2020-denuncia.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2020-denuncia.png",
+  "bytes": 83962
+ },
+ "trajetoria/flavio-2022-arquivamento.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2022-arquivamento.png",
+  "bytes": 71585
+ },
+ "trajetoria/flavio-2025-csp.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2025-csp.png",
+  "bytes": 74122
+ },
+ "trajetoria/flavio-2025-precandidatura.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2025-precandidatura.png",
+  "bytes": 87048
+ },
+ "trajetoria/flavio-2026-primeiro-turno.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2026-primeiro-turno.png",
+  "bytes": 73134
+ },
+ "trajetoria/lula-1986-constituinte.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-1986-constituinte.png",
+  "bytes": 87020
+ },
+ "trajetoria/lula-2002-posse.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-2002-posse.png",
+  "bytes": 80850
+ },
+ "trajetoria/lula-2006-reeleicao.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-2006-reeleicao.png",
+  "bytes": 64613
+ },
+ "trajetoria/lula-2018-prisao.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-2018-prisao.png",
+  "bytes": 110851
+ },
+ "trajetoria/lula-2021-anulacao.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-2021-anulacao.png",
+  "bytes": 58513
+ },
+ "trajetoria/lula-2022-eleicao.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-2022-eleicao.png",
+  "bytes": 109350
+ },
+ "trajetoria/lula-2026-primeiro-turno.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-2026-primeiro-turno.png",
+  "bytes": 81548
  }
 }

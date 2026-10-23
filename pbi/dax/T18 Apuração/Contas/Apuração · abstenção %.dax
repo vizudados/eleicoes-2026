@@ -1,6 +1,6 @@
 /*
 @pasta: T18 Apuração\Contas
 @formato: 0.00%
-@descricao: Abstenção sobre o eleitorado das seções totalizadas (o pa do TSE).
+@descricao: Abstenção sobre os eleitores das seções instaladas (comparecimento + abstenção), como o pa do TSE; no exterior há seções não instaladas e o eleitorado total não serve de base.
 */
-DIVIDE ( [Apuração · abstenção], [Apuração · eleitorado apurado] )
+DIVIDE ( [Apuração · abstenção], [Apuração · comparecimento] + [Apuração · abstenção] )

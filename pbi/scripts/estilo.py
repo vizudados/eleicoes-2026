@@ -175,7 +175,8 @@ def rabisco_circulo(largura: int, altura: int, cor: str = "var(--tinta)", espess
 def logo_vizu(cor: str) -> str:
     """Lockup Vizu (ícone + wordmark) em SVG inline numa cor só."""
     svg = (RAIZ / "arte" / "ref" / "vizu-dados-logo.svg").read_text(encoding="utf-8")
-    svg = svg.replace('fill="#111111"', f'fill="{cor}"').replace('fill="#979898"', f'fill="{cor}"')
+    for tom in ("#111111", "#979898", "#9B9B9B"):          # o lockup da casa é bicolor; no painel, uma cor (Figma)
+        svg = svg.replace(f'fill="{tom}"', f'fill="{cor}"')
     svg = svg.replace("\n", "")
     return svg.replace('<svg width="5514" height="586"', '<svg width="168" height="18" style="display:block"', 1)
 

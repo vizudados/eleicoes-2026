@@ -1,0 +1,5 @@
+# Dependências e saídas temporárias do Remotion (o vídeo final fica em docs/midia/capa/).
+remotion/node_modules/
+remotion/out/
+remotion/.remotion/
+*.log

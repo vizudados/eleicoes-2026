@@ -1,0 +1,19 @@
+/*
+@pasta: T00 Capa\Desenho
+@formato: texto
+@descricao: Os números da capa (o vídeo, o título e a composição fixa estão no bodyTemplate do visual): os dois candidatos em blocos simétricos, os municípios que mudaram de lado e os do mapa. Os números contam na entrada.
+*/
+VAR _f = [T00 · Flávio votos]
+VAR _l = [T00 · Lula votos]
+VAR _fp = [T00 · Flávio %]
+VAR _lp = [T00 · Lula %]
+VAR _vir = [T00 · municípios que viraram]
+VAR _n = [T00 · municípios no mapa]
+RETURN
+    "<div class='bl esq sobe d6'><div class='rot'>FLÁVIO BOLSONARO · PL</div><div class='num v flavio-c'>"
+        & FORMAT ( _f / 1e6, "0.00" ) & " mi</div><div class='p'>" & FORMAT ( _fp * 100, "0.0" ) & "% dos válidos</div></div>"
+        & "<div class='bl dir sobe d7'><div class='rot'>LULA · PT</div><div class='num v lula-c'>"
+        & FORMAT ( _l / 1e6, "0.00" ) & " mi</div><div class='p'>" & FORMAT ( _lp * 100, "0.0" ) & "% dos válidos</div></div>"
+        & "<div class='pe-esq sobe d10'><span class='vir'><span class='num'>" & FORMAT ( _vir, "#,0" ) & "</span>"
+        & "<span class='laco'></span></span> municípios mudaram de lado</div>"
+        & "<div class='pe-dir sobe d11'><span class='num'>" & FORMAT ( _n, "#,0" ) & "</span> no mapa · cada ponto é um</div>"

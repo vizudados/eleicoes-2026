@@ -1,0 +1,78 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: Placar da apuração: horas do TSE e da coleta, os dois candidatos (o líder à esquerda; zerados, a ordem da urna), o selo do estado, a frase do momento, o relógio até as 17h (aguardando, contado no navegador) e a barra de seções.
+*/
+-- 1 · Leituras (contas de T18 Apuração\Contas)
+VAR _fase = [Apuração · fase]
+VAR _turno = [Apuração · turno]
+VAR _escopo = [Apuração · escopo]
+VAR _lula = [Apuração · Lula votos]
+VAR _flavio = [Apuração · Flávio votos]
+VAR _lulaP = [Apuração · Lula %]
+VAR _flavioP = [Apuração · Flávio %]
+VAR _secoes = [Apuração · seções %]
+VAR _dif = [Apuração · diferença]
+VAR _lider = [Apuração · líder]
+VAR _eleitorado = [Apuração · eleitorado]
+VAR _abst = [Apuração · abstenção %]
+VAR _brancos = [Apuração · brancos]
+VAR _nulos = [Apuração · nulos]
+VAR _tse = [Apuração · atualizado no TSE]
+VAR _coleta = [Apuração · coletado em]
+-- 2 · Textos
+VAR _aguarda = _fase = "aguardando"
+VAR _lulaTxt = IF ( _aguarda, "0,00%", FORMAT ( _lulaP * 100, "0.00" ) & "%" )
+VAR _flavioTxt = IF ( _aguarda, "0,00%", FORMAT ( _flavioP * 100, "0.00" ) & "%" )
+VAR _secoesTxt = FORMAT ( _secoes * 100, "0.00" ) & "%"
+VAR _difTxt = FORMAT ( _dif, "#,0" )
+VAR _tseTxt = IF ( ISBLANK ( _tse ), "—", FORMAT ( _tse, "dd/MM/yyyy HH:mm" ) )
+VAR _coletaTxt = IF ( ISBLANK ( _coleta ), "—", FORMAT ( _coleta, "dd/MM/yyyy HH:mm" ) )
+VAR _blocoLula =
+    "<div class='cand sobe d2'><div class='rot lula-esc'>LULA · PT · 13</div><div class='num pct lula'>" & _lulaTxt
+        & "</div><div class='txt votos'>" & FORMAT ( _lula, "#,0" ) & IF ( _lula = 1, " voto", " votos" ) & "</div></div>"
+VAR _blocoFlavio =
+    "<div class='cand sobe d3'><div class='rot flavio-esc'>FLÁVIO BOLSONARO · PL · 22</div><div class='num pct flavio'>"
+        & _flavioTxt & "</div><div class='txt votos'>" & FORMAT ( _flavio, "#,0" ) & IF ( _flavio = 1, " voto", " votos" )
+        & "</div></div>"
+VAR _par = IF ( _lider = "Flávio", _blocoFlavio & _blocoLula, _blocoLula & _blocoFlavio )
+VAR _selo =
+    SWITCH (
+        TRUE (),
+        _turno = 1, "<div class='selo entra d6'>ENSAIO · 1º TURNO</div>",
+        _fase = "definido", "<div class='selo entra d6'>MATEMATICAMENTE DEFINIDO</div>",
+        _fase = "encerrada", "<div class='selo entra d6'>APURAÇÃO ENCERRADA</div>",
+        ""
+    )
+VAR _frase =
+    SWITCH (
+        TRUE (),
+        _aguarda, "As urnas fecham às 17h de domingo, 25/10.",
+        _lider = "—", "Empate exato com " & _secoesTxt & " das seções apuradas.",
+        _fase = "apurando", _lider & " está à frente por " & _difTxt & " votos, com " & _secoesTxt & " das seções apuradas.",
+        _fase = "definido", _lider & " está matematicamente eleito: a diferença de " & _difTxt
+            & " votos já não pode ser revertida.",
+        _lider & " lidera · apuração encerrada · diferença de " & _difTxt & " votos"
+    )
+VAR _relogio =
+    IF (
+        _aguarda,
+        "<div class='relogio sobe d4'><span class='rot'>FALTAM</span><span class='num' id='t18rel'>—</span></div>"
+            & "<div class='txt sobe d5'>" & FORMAT ( _eleitorado, "#,0" ) & " eleitores podem votar"
+            & IF ( _escopo = "Brasil", "", " em " & _escopo ) & ".</div>"
+    )
+VAR _barra =
+    "<div class='secoes sobe d5'><div class='rot'>SEÇÕES APURADAS" & IF ( _escopo = "Brasil", "", " · " & UPPER ( _escopo ) )
+        & "</div><div class='trilho'><div class='enche barra-x' style='width:"
+        & FORMAT ( _secoes * 100, "0.0##", "en-US" ) & "%'></div><span class='num'>" & _secoesTxt
+        & "</span></div><div class='nota'>Abstenção " & FORMAT ( _abst * 100, "0.00" ) & "% · brancos "
+        & FORMAT ( _brancos, "#,0" ) & " · nulos " & FORMAT ( _nulos, "#,0" ) & "</div></div>"
+VAR _topo =
+    "<div class='rot topo entra'>"
+        & IF ( ISBLANK ( _tse ), "AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE", "ATUALIZADO PELO TSE · " & _tseTxt )
+        & " · COLETADO EM " & _coletaTxt & IF ( _escopo = "Brasil", "", " · " & UPPER ( _escopo ) ) & "</div>"
+VAR _marca = IF ( _aguarda || _lider = "—", "", "<span class='visto'>✓</span>" )
+RETURN
+    "<div class='tela t18p'>" & _topo & "<div class='par'>" & _par & _selo & "</div>"
+        & "<div class='man frase sobe d4'>" & _marca & _frase & "</div>" & _relogio
+        & IF ( _aguarda, "", _barra ) & "</div>"

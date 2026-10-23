@@ -1,0 +1,14 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: Texto alternativo do placar da apuração.
+*/
+VAR _fase = [Apuração · fase]
+RETURN
+    "Apuração (" & [Apuração · escopo] & "): "
+        & IF (
+            _fase = "aguardando",
+            "aguardando o fechamento das urnas às 17h de 25/10.",
+            "Lula " & FORMAT ( [Apuração · Lula %], "0.00%" ) & ", Flávio Bolsonaro " & FORMAT ( [Apuração · Flávio %], "0.00%" )
+                & ", " & FORMAT ( [Apuração · seções %], "0.00%" ) & " das seções apuradas; " & [Apuração · líder] & " à frente."
+        )

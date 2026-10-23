@@ -1,0 +1,6 @@
+/*
+@pasta: T00 Capa\Contas
+@formato: #,0
+@descricao: Municípios do IBGE no painel (5.571).
+*/
+CALCULATE ( COUNTROWS ( 'Município' ), REMOVEFILTERS ( 'UF' ) )

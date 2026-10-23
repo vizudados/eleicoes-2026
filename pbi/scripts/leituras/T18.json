@@ -1,0 +1,4 @@
+{"titulo": "Como acompanhar a apuração",
+ "blocos": [["Como ler", "O número grande é a porcentagem dos votos válidos de cada um. Quem está na frente fica à esquerda. A barra mostra quanto das seções já foi contado: até ela encher, a ordem ainda pode mudar."],
+            ["De onde vêm os números", "Da API pública de resultados do TSE. Um robô no GitHub copia os números a cada minuto e o painel lê essa cópia. A hora do TSE, no alto, é a hora em que o próprio TSE fechou aquela conta."],
+            ["Para lembrar", "Clique num estado para ver só ele; o filtro do alto faz o mesmo. A curva da noite é sempre do Brasil. Antes das 17h de domingo, a tela mostra o relógio e os zeros."]]}

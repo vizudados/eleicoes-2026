@@ -27,7 +27,7 @@ table UF
 		dataType: string
 		lineageTag: 369718c4-3fa2-56b8-aa2f-66a6d669dfe0
 		summarizeBy: none
-		sourceColumn: Região
+		sourceColumn: Regiao
 		sortByColumn: RegiaoOrdem
 
 		annotation SummarizationSetBy = Automatic

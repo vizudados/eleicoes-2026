@@ -1,0 +1,6 @@
+/*
+@pasta: T00 Capa\Contas
+@formato: 0.0%
+@descricao: Flávio sobre os válidos de 2026.
+*/
+DIVIDE ( [T00 · Flávio votos], [T00 · válidos] )

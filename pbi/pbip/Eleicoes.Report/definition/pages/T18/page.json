@@ -54,5 +54,12 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T18_Casca_Filtro",
+      "target": "T18_Mapa_Html",
+      "type": "NoFilter"
+    }
+  ]
 }

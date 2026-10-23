@@ -1,0 +1,13 @@
+/*
+@pasta: T00 Capa\Contas
+@formato: #,0
+@descricao: O caminho inverso: municípios com o adversário do PT à frente em 2022 e Lula à frente em 2026.
+*/
+VAR _m =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'Município'[CodIBGE] ), REMOVEFILTERS ( 'UF' ) ),
+        "@m22", CALCULATE ( SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ), 'Ano'[Ano] = 2022 ),
+        "@m26", CALCULATE ( SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ), 'Ano'[Ano] = 2026 )
+    )
+RETURN
+    COUNTROWS ( FILTER ( _m, [@m22] < 0 && [@m26] > 0 ) ) + 0

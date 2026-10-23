@@ -46,6 +46,12 @@ def main():
             rel = f"{sub}/{nome}.png"
             info = web(p, DESTINO / rel, largura)
             catalogo[rel] = {"url": f"{URL}/{rel}", **info}
+    # o que outros scripts já gravam prontos em docs/midia (capa em Remotion, comícios e polaroides do redesenho)
+    for sub in ("capa", "comicio", "trajetoria"):
+        for p in sorted((DESTINO / sub).glob("*.*")) if (DESTINO / sub).exists() else []:
+            if p.suffix.lower() in (".png", ".jpg", ".mp4", ".webm"):
+                rel = f"{sub}/{p.name}"
+                catalogo[rel] = {"url": f"{URL}/{rel}", "bytes": p.stat().st_size}
     (DESTINO / "catalogo.json").write_text(json.dumps(catalogo, ensure_ascii=False, indent=1), encoding="utf-8")
     total = sum(v["bytes"] for v in catalogo.values())
     print(f"{len(catalogo)} imagens · {total / 1e6:.1f} MB em docs/midia")

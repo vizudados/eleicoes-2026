@@ -1,6 +1,6 @@
 /*
 @pasta: T18 Apuração\Contas
 @formato: 0.00%
-@descricao: Comparecimento sobre o eleitorado das seções totalizadas (o pc do TSE).
+@descricao: Comparecimento sobre os eleitores das seções instaladas (comparecimento + abstenção), como o pc do TSE.
 */
-DIVIDE ( [Apuração · comparecimento], [Apuração · eleitorado apurado] )
+DIVIDE ( [Apuração · comparecimento], [Apuração · comparecimento] + [Apuração · abstenção] )

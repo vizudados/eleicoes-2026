@@ -1,0 +1,71 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: A curva da noite: % dos válidos de cada um a cada hora nova de totalização do TSE, das 17h à 0h (Brasil; o histórico só guarda o Brasil). As linhas se desenham; o último ponto brota com o rótulo.
+*/
+-- 1 · Leituras
+VAR _n = [Histórico · atualizações]
+VAR _min = 0.40
+VAR _max = 0.60
+VAR _pts =
+    ADDCOLUMNS (
+        CALCULATETABLE ( 'Apuração histórico', REMOVEFILTERS ( 'UF' ) ),
+        "@x", 70 + ( MIN ( MAX ( HOUR ( 'Apuração histórico'[AtualizadoTSE] ) + MINUTE ( 'Apuração histórico'[AtualizadoTSE] ) / 60, 17 ), 24 ) - 17 ) / 7 * 770,
+        "@l", DIVIDE ( 'Apuração histórico'[LulaVotos], 'Apuração histórico'[Validos] ),
+        "@f", DIVIDE ( 'Apuração histórico'[FlavioVotos], 'Apuração histórico'[Validos] )
+    )
+VAR _pts2 =
+    ADDCOLUMNS (
+        _pts,
+        "@yl", 20 + ( 1 - ( MIN ( MAX ( [@l], _min ), _max ) - _min ) / ( _max - _min ) ) * 230,
+        "@yf", 20 + ( 1 - ( MIN ( MAX ( [@f], _min ), _max ) - _min ) / ( _max - _min ) ) * 230
+    )
+VAR _linhaL = CONCATENATEX ( _pts2, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yl], "0.0", "en-US" ), " ", [@x], ASC )
+VAR _linhaF = CONCATENATEX ( _pts2, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yf], "0.0", "en-US" ), " ", [@x], ASC )
+VAR _ultimo = TOPN ( 1, _pts2, [@x], DESC )
+VAR _xu = MAXX ( _ultimo, [@x] )
+VAR _lu = MAXX ( _ultimo, [@l] )
+VAR _fu = MAXX ( _ultimo, [@f] )
+VAR _ylu = MAXX ( _ultimo, [@yl] )
+VAR _yfu = MAXX ( _ultimo, [@yf] )
+-- 2 · Desenho
+VAR _grade =
+    CONCATENATEX (
+        ADDCOLUMNS ( { 0.40, 0.45, 0.50, 0.55, 0.60 }, "@y", 20 + ( 1 - ( [Value] - _min ) / ( _max - _min ) ) * 230 ),
+        "<line x1='70' x2='840' y1='" & FORMAT ( [@y], "0.0", "en-US" ) & "' y2='" & FORMAT ( [@y], "0.0", "en-US" )
+            & "' class='g" & IF ( [Value] = 0.5, " meio", "" ) & "'/><text x='58' y='" & FORMAT ( [@y] + 5, "0.0", "en-US" )
+            & "' class='ex' text-anchor='end'>" & FORMAT ( [Value] * 100, "0" ) & "%</text>",
+        "", [Value], ASC
+    )
+VAR _horas =
+    CONCATENATEX (
+        GENERATESERIES ( 17, 24, 1 ),
+        "<text x='" & FORMAT ( 70 + ( [Value] - 17 ) / 7 * 770, "0.0", "en-US" ) & "' y='282' class='ex' text-anchor='middle'>"
+            & IF ( [Value] = 24, "0h", [Value] & "h" ) & "</text>",
+        "", [Value], ASC
+    )
+VAR _series =
+    IF (
+        _n >= 2,
+        "<polyline points='" & _linhaF & "' class='lf traco' pathLength='1' fill='none'/>"
+            & "<polyline points='" & _linhaL & "' class='ll traco' pathLength='1' fill='none'/>"
+    )
+VAR _xr = FORMAT ( _xu, "0.0", "en-US" )
+VAR _esq = _xu < 455
+VAR _xt = FORMAT ( IF ( _esq, _xu + 14, _xu - 14 ), "0.0", "en-US" )
+VAR _ancora = IF ( _esq, "start", "end" )
+VAR _rotulos =
+    IF (
+        _n >= 1,
+        "<circle cx='" & _xr & "' cy='" & FORMAT ( _yfu, "0.0", "en-US" ) & "' r='6' class='pf brota d8'/>"
+            & "<circle cx='" & _xr & "' cy='" & FORMAT ( _ylu, "0.0", "en-US" ) & "' r='6' class='pl brota d8'/>"
+            & "<text x='" & _xt & "' y='" & FORMAT ( _yfu + IF ( _fu >= _lu, -14, 26 ), "0.0", "en-US" )
+            & "' text-anchor='" & _ancora & "' class='rf entra d9'>Flávio " & FORMAT ( _fu * 100, "0.00" ) & "%</text>"
+            & "<text x='" & _xt & "' y='" & FORMAT ( _ylu + IF ( _lu > _fu, -14, 26 ), "0.0", "en-US" )
+            & "' text-anchor='" & _ancora & "' class='rl entra d9'>Lula " & FORMAT ( _lu * 100, "0.00" ) & "%</text>"
+    )
+VAR _vazio = IF ( _n = 0, "<text x='455' y='96' text-anchor='middle' class='vz'>a curva começa às 17h</text>" )
+RETURN
+    "<div class='tela t18c'><div class='rot entra'>A CURVA DA NOITE · % DOS VÁLIDOS A CADA ATUALIZAÇÃO DO TSE · BRASIL</div>"
+        & "<svg viewBox='0 0 900 290' width='900' height='290'>" & _grade & _horas & _series & _rotulos & _vazio
+        & "</svg></div>"

@@ -77,9 +77,13 @@ def chegada(tela: str, ocultos: list[str], visiveis: list[str] | None = None) ->
 
 
 def tooltip(nome: str, titulo: str, largura: int, altura: int, medida_html: str, *, ordem: int,
-            folha_de_estilo: str | None = None) -> list:
-    """Página de tooltip tt<T0X><Assunto> com um HTML do tamanho da página (cantos retos, L078) e o ALT da medida."""
-    return [Pagina(lib.pagina_tooltip(nome, titulo, altura=altura, largura=largura), ordem=ordem),
+            folha_de_estilo: str | None = None, modelo_corpo: str | None = None,
+            cor_fundo: str = "#F1EBDF") -> list:
+    """Página de tooltip tt<TNN><Assunto> com um HTML do tamanho da página (cantos retos, L078) e o ALT da medida.
+    `modelo_corpo` = bodyTemplate do visual (CSS e desenho fixos do cartão, com {{content}}); `cor_fundo` = fundo da
+    página de tooltip (papel por padrão: o cartão dossiê desenha o próprio papel por cima)."""
+    return [Pagina(lib.pagina_tooltip(nome, titulo, altura=altura, largura=largura, cor_fundo=cor_fundo), ordem=ordem),
             Visual(nome, lib.visual_html(f"TT_{nome[2:]}_Conteudo", 0, 0, largura, altura, medida_html,
                                          alt=lib.medida(medida_html.replace("· HTML", "· ALT")),
-                                         pagina_wh=(largura, altura), folha_de_estilo=folha_de_estilo))]
+                                         pagina_wh=(largura, altura), folha_de_estilo=folha_de_estilo,
+                                         modelo_corpo=modelo_corpo))]

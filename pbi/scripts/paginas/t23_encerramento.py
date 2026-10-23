@@ -1,0 +1,117 @@
+# -*- coding: utf-8 -*-
+"""23 · Encerramento — o que os números dizem, afinal? (dono: main). Tela escura, sem filtro.
+
+  T23_Fecho_Html    o título que se sublinha à mão, os achados de cada ato (cada linha leva à tela de onde veio), a
+                    urna em traço que se revela, o convite para a apuração ao vivo, fontes e créditos
+  T23_Fecho_Ir<NN>  um botão transparente por achado: vai à tela (marcador de chegada)
+  T23_Fecho_IrApur  o convite "domingo, 17h" vai à tela 18
+
+Os achados repetem as manchetes do 1º turno (números finais do TSE de 22/10/2026), escritos aqui como texto da
+apresentação: não mudam com filtro e o movimento conta cada número na entrada.
+"""
+from __future__ import annotations
+
+import html
+
+import estilo
+import pbip_lib as lib
+from pbip_lib import Visual
+
+P = "T23"
+CSS = "Estilo · CSS"
+C = estilo.COR
+
+ACHADOS = [
+    ("I · O RESULTADO", [("T01", "Flávio terminou 2,22 mi de votos à frente de Lula."),
+                         ("T06", "33,5 milhões não foram votar: 15 vezes a diferença entre os dois.")]),
+    ("II · A CAMPANHA", [("T07", "O único frente a frente, na Band, não mexeu nas pesquisas."),
+                         ("T10", "Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.")]),
+    ("III · O MAPA", [("T11", "711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso."),
+                      ("T13", "Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno."),
+                      ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
+    ("EPÍLOGO", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.")]),
+]
+X0, Y_ACHADOS, LINHA, GRUPO = 150, 384, 40, 34           # geometria da lista (o botão de cada linha segue a mesma)
+
+
+def _linhas():
+    """[(código da tela, texto, y do topo da linha)] na ordem do desenho."""
+    saida, y = [], Y_ACHADOS
+    for _, itens in ACHADOS:
+        y += GRUPO
+        for cod, texto in itens:
+            saida.append((cod, texto, y))
+            y += LINHA
+    return saida
+
+
+def corpo() -> str:
+    e = html.escape
+    css = (
+        ".fx{color:var(--creme)}"
+        ".fx .tg{position:absolute;left:0;top:0;width:1000px;font-size:88px;font-weight:700;letter-spacing:-.035em;line-height:.98}"
+        ".fx .tg .sub{position:relative;display:inline-block}"
+        ".fx .tg svg{position:absolute;left:-6px;bottom:-16px}"
+        f".fx .ach{{position:absolute;left:0;top:{Y_ACHADOS - 150}px;width:1000px}}"
+        f".fx .ach > .rot:first-child{{position:absolute;top:-30px;left:0;color:{C['areia']}}}"
+        f".fx .grupo{{height:{GRUPO}px;display:flex;align-items:flex-end;padding-bottom:6px;border-bottom:1px solid "
+        "rgba(203,189,162,.35)}"
+        f".fx .linha{{height:{LINHA}px;display:flex;align-items:center;gap:20px;font-size:19px;font-weight:500}}"
+        f".fx .linha b{{width:34px;font-size:16px;font-weight:700;color:{C['areia']}}}"
+        ".fx .linha .seta{margin-left:auto;opacity:0;transition:opacity .2s}"
+        f".fx .urna{{position:absolute;left:1110px;top:20px;width:470px;"
+        "-webkit-mask-image:linear-gradient(100deg,#000 45%,transparent 55%);-webkit-mask-size:260% 100%;"
+        "-webkit-mask-position:0 0;animation:revela 2.6s cubic-bezier(.4,0,.2,1) .4s both}"
+        "@keyframes revela{from{-webkit-mask-position:100% 0}}"
+        f".fx .convite{{position:absolute;left:1110px;top:560px;width:470px;border:1.5px solid {C['areia']};"
+        "padding:22px 26px}"
+        ".fx .convite .mao{font-size:30px;color:var(--rosa)}"
+        ".fx .convite .txt{color:var(--creme);margin-top:6px}"
+        ".fx .convite .ir{margin-top:14px;font-size:15px;font-weight:600;letter-spacing:.12em;color:var(--areia)}"
+        f".fx .fontes{{position:absolute;left:0;top:720px;width:1000px;font-size:13px;line-height:1.55;"
+        f"color:{C['areia']}}}"
+        ".fx .fontes b{color:var(--creme);font-weight:600}"
+    )
+    sublinhado = ("<svg width='300' height='30' viewBox='0 0 300 30'>" + estilo.defs_rabisco("rbt", 1.4)
+                  + "<path d='M6 18 C 70 8, 160 6, 292 14 M30 24 C 110 16, 200 16, 270 21' pathLength='1' "
+                  f"class='traco' fill='none' stroke='{C['creme']}' stroke-width='5' stroke-linecap='round' "
+                  "filter='url(#rbt)' style='animation-delay:1.1s'/></svg>")
+    lista = []
+    i = 0
+    for rotulo, itens in ACHADOS:
+        lista.append(f"<div class='grupo rot sobe d{min(16, i + 3)}'>{e(rotulo)}</div>")
+        for cod, texto in itens:
+            i += 1
+            lista.append(f"<div class='linha sobe d{min(16, i + 3)}'><b>{cod[1:]}</b><span>{e(texto)}</span></div>")
+    urna = estilo.imagem_b64("arte/limpos/urna-creme.png", 940)
+    return (
+        f"<style>{css}</style><div class='tela fx' style='left:{X0}px;top:150px;right:150px;bottom:80px'>"
+        "<div class='tg sobe'>O que os números <span class='sub'>dizem." + sublinhado + "</span></div>"
+        f"<div class='ach'><div class='rot entra d2'>OS ACHADOS, POR ATO · CLIQUE PARA VOLTAR À TELA</div>{''.join(lista)}</div>"
+        f"<img class='urna' alt='' src='{urna}'/>"
+        "<div class='convite sobe d12'><div class='mao'>domingo, 25/10, 17h</div>"
+        "<div class='txt'>A apuração do 2º turno passa ao vivo na tela 18: o placar se atualiza sozinho, a cada "
+        "minuto, direto da API do TSE.</div><div class='ir'>IR PARA A APURAÇÃO →</div></div>"
+        "<div class='fontes entra d14'><b>Fontes</b> · TSE (votação, comparecimento, perfil do eleitor e API de "
+        "resultados), IBGE (Censo 2022 e malhas), pesquisas registradas no TSE, Google Trends, Bites, Quaest, Social "
+        "Blade, Datrix, Biblioteca de Anúncios da Meta, emissoras e imprensa. <b>Desenhos</b> · em traço, a partir de "
+        "fotos de licença aberta; os créditos estão em cada cartão.</div>"
+        "</div>{{content}}"
+    )
+
+
+def declarar(ctx):
+    itens = [Visual(P, lib.visual_html(
+        "T23_Fecho_Html", 0, 0, lib.LARGURA, lib.ALTURA, "Casca · vazio", folha_de_estilo=CSS, modelo_corpo=corpo(),
+        alt="O que os números dizem: os achados de cada ato, as fontes e o convite para a apuração ao vivo.",
+        z=lib.CAMADAS["conteudo"], tab=100))]
+    for cod, texto, y in _linhas():
+        itens.append(Visual(P, lib.visual_botao(
+            f"T23_Fecho_Ir{cod[1:]}", X0 - 10, 150 + y - 150, 1020, LINHA, lib.acao_bookmark(f"{cod}_CHEGADA_01"),
+            dica=f"Voltar à tela {cod[1:]}: {texto}", z=lib.CAMADAS["acao"], tab=200 + int(cod[1:]),
+            realce=C["creme"], realce_transp=(92, 86))))
+    itens.append(Visual(P, lib.visual_botao(
+        "T23_Fecho_IrApur", 1260, 710, 470, 150, lib.acao_bookmark("T18_CHEGADA_01"),
+        dica="Ir para a apuração ao vivo (tela 18)", z=lib.CAMADAS["acao"], tab=300, realce=C["creme"],
+        realce_transp=(92, 86))))
+    return itens

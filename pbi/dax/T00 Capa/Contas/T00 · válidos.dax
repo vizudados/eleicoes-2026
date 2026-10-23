@@ -1,0 +1,6 @@
+/*
+@pasta: T00 Capa\Contas
+@formato: #,0
+@descricao: Votos válidos do 1º turno de 2026, Brasil com o exterior.
+*/
+CALCULATE ( MAX ( 'Candidato ano'[ValidosAno] ), 'Candidato ano'[Ano] = 2026, REMOVEFILTERS ( 'UF' ) )

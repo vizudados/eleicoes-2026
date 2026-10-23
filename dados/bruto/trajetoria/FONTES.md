@@ -97,7 +97,7 @@ Pedido extra do coordenador. Os registros estão na chave `comicios` do JSON.
   - `lula-comicio-2026-2.jpg`: ato de 11/10/2026 na Avenida Paulista. Lula está de perfil, ao microfone, no carro de som, com a multidão à frente.
 - **Flávio:** não foi achada nenhuma foto livre dele discursando para uma multidão, de 2026 ou de antes.
   - A única foto livre dele num ato com multidão é `flavio-comicio-2021-1.jpg`: ato de 7 de Setembro de 2021 na Avenida Paulista, foto de Isac Nóbrega/PR (Planalto, CC BY 2.0). Ele posa no carro de som com a multidão ao fundo. Não está discursando, e o ato era de Jair Bolsonaro.
-  - **Ficou registrada como candidata, para decisão com o Alisson.**
+  - **Decisão (23/10/2026): usar essa foto**, com legenda honesta ("Ato de 7 de Setembro de 2021, Av. Paulista, São Paulo") e o mesmo enquadramento e peso visual do desenho de Lula, que usa `lula-comicio-2026-2.jpg` (ato de 11/10/2026, também na Av. Paulista). No desenho, o outro participante da foto ficou de fora. Créditos dos desenhos: `desenhos.csv`.
 - **Onde mais se procurou para Flávio, sem sucesso:**
   - Categorias do Commons: Flávio em 2018–2026, "with people", atos pró-Bolsonaro, motociatas e a série do Planalto de 7/9/2021 (89 fotos, só uma com ele).
   - Flickr: o oficial dele e perfis que marcaram "flaviobolsonaro" em 2026, como o de uma motocarreata em São Gonçalo em 10/10/2026. Todos são "All Rights Reserved".

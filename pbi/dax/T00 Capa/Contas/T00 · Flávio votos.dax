@@ -1,0 +1,6 @@
+/*
+@pasta: T00 Capa\Contas
+@formato: #,0
+@descricao: Votos de Flávio Bolsonaro (22) no 1º turno de 2026, Brasil com o exterior (TSE).
+*/
+CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Ano] = 2026, 'Candidato ano'[Número] = 22, REMOVEFILTERS ( 'UF' ) )

@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê da UF.
+*/
+SELECTEDVALUE ( 'UF'[Nome] ) & ": Lula " & FORMAT ( [Apuração · Lula %], "0.00%" ) & ", Flávio " & FORMAT ( [Apuração · Flávio %], "0.00%" )

@@ -1,0 +1,21 @@
+/*
+@pasta: T18 Apuração\Desenho
+@formato: texto
+@descricao: Um quadrado por UF (granularidade UF[UF]), na posição da grade do mapa: cor de quem lidera, % do líder e % de seções no canto. A raiz da entrada não pega o mouse; o quadrado pega (L114).
+*/
+VAR _uf = SELECTEDVALUE ( 'UF'[UF] )
+VAR _col = SELECTEDVALUE ( 'UF'[GradeColuna] )
+VAR _lin = SELECTEDVALUE ( 'UF'[GradeLinha] )
+VAR _lider = [Apuração · líder]
+VAR _secoes = [Apuração · seções %]
+VAR _pct = SWITCH ( _lider, "Lula", [Apuração · Lula %], "Flávio", [Apuração · Flávio %] )
+VAR _classe = SWITCH ( _lider, "Lula", "ql", "Flávio", "qf", "qz" )
+VAR _sigla = IF ( _uf = "ZZ", "EX", _uf )
+RETURN
+    IF (
+        NOT ISBLANK ( _uf ),
+        "<div class='tela mq'><div class='q " & _classe & IF ( _uf = "ZZ", " ex", "" ) & " brota d" & ( _lin + 1 )
+            & "' style='left:" & ( 22 + _col * 104 ) & "px;top:" & ( 52 + _lin * 92 ) & "px'>"
+            & "<b>" & _sigla & "</b><i>" & FORMAT ( _secoes * 100, "0" ) & "%</i>"
+            & "<span>" & IF ( ISBLANK ( _pct ), "—", FORMAT ( _pct * 100, "0.0" ) & "%" ) & "</span></div></div>"
+    )
