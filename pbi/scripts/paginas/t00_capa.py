@@ -15,6 +15,8 @@ from __future__ import annotations
 
 import estilo
 import pbip_lib as lib
+import roteiro
+from paginas.casca import corpo_casca
 from pbip_lib import Visual
 
 P = "T00"
@@ -66,7 +68,16 @@ def corpo() -> str:
         f"<script>(function(){{var l=document.querySelectorAll('.cp .vir .laco');for(var i=0;i<l.length;i++)"
         f"{{if(!l[i].firstChild){{l[i].innerHTML={laco!r};}}}}}})();</script>"
         "</div>"
+        # a casca da capa (lockup, fonte, "i", seta) por cima do vídeo, que cobre a página inteira; sem a urna (a capa é o
+        # início)
+        + _casca_por_cima()
     )
+
+
+def _casca_por_cima() -> str:
+    c = corpo_casca(roteiro.POR_CODIGO[P]).replace("{{content}}", "")
+    i = c.index("<img class='urna"); j = c.index("/>", i) + 2
+    return c[:i] + c[j:]
 
 
 def declarar(ctx):

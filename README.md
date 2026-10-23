@@ -17,7 +17,10 @@ números dizem" (Spotniks). Mockup no Figma: arquivo `f6nFM7Go5USMK1tXc46uxP` ("
 | `dados/apuracao/` | o que o coletor grava: `ultimo.json`, `ufs.csv`, `historico.csv` (e `ensaio-1turno/`) |
 | `mockup/data/eleicoes.json` | tudo o que as telas mostram, já calculado e formatado |
 | `arte/` | desenhos em traço (Codex local), mapas de dado e créditos das fotos (`arte/ref/fotos/CREDITOS.md`) |
-| `pbi/m/` | Power Query das tabelas que vêm de fora (apuração) |
+| `dados/pbi/` | as tabelas que o Power BI lê pelo GitHub (`pipeline/exportar_pbi.py`) |
+| `pbi/` | o projeto Power BI (PBIP gerado por script, ver abaixo) |
+| `capa/remotion/` | a capa animada em Remotion; o vídeo sai em `docs/midia/capa/` |
+| `docs/midia/` | imagens e vídeo que o painel carrega pelo GitHub Pages (`https://vizudados.github.io/eleicoes-2026/midia/`) |
 
 ## Regerar tudo
 
@@ -44,6 +47,46 @@ python -I -X utf8 pipeline/mapas.py
 ```bash
 python -I -X utf8 pipeline/montar_dados_mockup.py
 ```
+
+## O painel no Power BI (`pbi/`)
+
+24 telas a 1920 × 1080 (00 Capa … 23 Encerramento, `pbi/scripts/roteiro.py`), em quatro atos e um epílogo. Abra
+`pbi/pbip/Eleicoes.pbip` no Power BI Desktop; o modelo lê os CSV de `dados/pbi` e de `dados/apuracao` pelo endereço raw
+deste repositório (parâmetro `pRepositorioRaw`), então funciona em qualquer máquina e no Service sem gateway.
+
+O PBIP é **gerado por script**; não edite à mão (o Desktop sobrescreve o que o gerador escreveu quando salva):
+
+| Peça | Onde |
+|---|---|
+| tabelas, parâmetros e relações | `pbi/modelo/*.py` → `pbi/scripts/gerar_modelo.py` |
+| medidas (uma por arquivo, contas × desenho) | `pbi/dax/**/*.dax` |
+| páginas, visuais, tooltips, marcadores | `pbi/scripts/paginas/*.py` → `pbi/scripts/montar_pbip.py` |
+| estilo (Sora e Caveat embutidas, cores, movimento) | `pbi/scripts/estilo.py`, `pbi/scripts/movimento.js` |
+| casca (cabeçalho, rodapé, setas, leitura "i", filtro de UF) | `pbi/scripts/paginas/casca.py` |
+| visuais próprios (HTML Content e Deneb Standalone, VizuFilter) | `pbi/visuais/` |
+| contrato das telas | `pbi/CONTRATO-PBI.md` |
+
+Ciclo (com o Desktop deste projeto fechado):
+
+```bash
+python -I -X utf8 pbi/scripts/estilo.py
+```
+
+```bash
+python -I -X utf8 pbi/scripts/gerar_modelo.py
+```
+
+```bash
+python -X utf8 pbi/scripts/montar_pbip.py --aplicar
+```
+
+```bash
+pwsh -NoProfile -File pbi/scripts/desktop.ps1 -Acao abrir
+```
+
+Provas: `pbi/scripts/previa.py <TELA>` (foto fora do Power BI), `pbi/scripts/cdp.py roteiro <arquivo>` (gesto dentro
+do Desktop aberto com `-Cdp 9347`), `pbi/scripts/conferir_apuracao.py` (apuração contra o TSE),
+`pbi/scripts/smoke_medidas.py` e `pbi/scripts/desempenho.py` (tempo de cada consulta e peso de cada página).
 
 ## Apuração ao vivo (2º turno, 25/10/2026)
 
