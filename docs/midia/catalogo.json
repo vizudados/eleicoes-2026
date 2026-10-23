@@ -1113,6 +1113,10 @@
   "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2022-arquivamento.png",
   "bytes": 71585
  },
+ "trajetoria/flavio-2022-campanha.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2022-campanha.png",
+  "bytes": 82198
+ },
  "trajetoria/flavio-2025-csp.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2025-csp.png",
   "bytes": 74122
@@ -1125,9 +1129,21 @@
   "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2026-primeiro-turno.png",
   "bytes": 73134
  },
+ "trajetoria/lula-1975-sindicato.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-1975-sindicato.png",
+  "bytes": 66374
+ },
+ "trajetoria/lula-1980-fundacao-pt.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-1980-fundacao-pt.png",
+  "bytes": 68995
+ },
  "trajetoria/lula-1986-constituinte.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-1986-constituinte.png",
   "bytes": 87020
+ },
+ "trajetoria/lula-1989-presidencia.png": {
+  "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-1989-presidencia.png",
+  "bytes": 61628
  },
  "trajetoria/lula-2002-posse.png": {
   "url": "https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-2002-posse.png",

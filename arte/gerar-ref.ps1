@@ -10,6 +10,10 @@
 # - Não nomear a pessoa; descrever idade, cabelo, roupa e gesto. Pedir "no dense cross-hatching on the skin" (sem isso
 #   os retratos em close saem com o rosto carregado) e "the jersey/mask/megaphone has no text" (o modelo escreve KN95 etc.).
 # - No máximo ~6 gerações simultâneas na máquina: com 10 o codex.exe travou (erro 1450 do Windows, sem PNG).
+# - Foto com luz escura ou colorida no rosto (CRE, 22/11/2022): pedir 'draw the face as if lit evenly from the front';
+#   sem isso a sombra vira pontilhado denso no rosto, mesmo com 'no dense cross-hatching'.
+# - Marco SEM foto de licença aberta (Lula 1975 e 1980): ILUSTRAÇÃO recriada, não redesenho. -Refs leva só um recorte
+#   do rosto (outra ocasião, licença aberta) e o prompt diz 'it is not a copy of any photograph'; crédito em desenhos.csv.
 param([Parameter(Mandatory)][string]$Nome, [int]$Vez = 1, [Parameter(Mandatory)][string]$Refs)
 $ErrorActionPreference = 'Stop'
 $t = $PSScriptRoot

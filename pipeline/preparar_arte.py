@@ -141,12 +141,25 @@ RECORTES_45 = {
     "flavio-2025-csp": (260, 700, 1540, 2300),
     "flavio-2025-precandidatura": (0, 0, 993, 1241),
     "flavio-2026-primeiro-turno": (0, 0, 872, 1090),
+    # 23/10/2026, busca melhor para os marcos sem foto: arquivo CEDI/Câmara de out/1988 (Lula, 2º da esquerda) e
+    # Agência Senado de 22/11/2022 (Flávio: a foto livre mais próxima do 2º turno de 2022). Ver FONTES.md.
+    "lula-1989-presidencia": (452, 196, 852, 696),
+    "flavio-2022-campanha": (276, 0, 1368, 1365),
 }
 
-# Desenho aprovado de cada foto (arquivo em arte/candidatas). Ao refazer (Vez 2, 3...), troque aqui.
-ESCOLHIDAS = {nome: f"{nome}-1-1.png" for nome in RECORTES_45}
+# Marcos SEM foto de licença aberta (Lula 1975 e 1980): cena da época RECRIADA como ilustração em traço, no mesmo estilo.
+# Não redesenham foto nenhuma; o recorte de lula-1989-presidencia (1988) vai ao Codex só para a semelhança do rosto.
+# O crédito diz "ilustração recriada" (desenhos.csv, coluna tipo = ilustração). Prompts em arte/prompts-fotos/.
+ILUSTRACOES = ["lula-1975-sindicato", "lula-1980-fundacao-pt"]
+
+# Desenho aprovado de cada foto ou ilustração (arquivo em arte/candidatas). Ao refazer (Vez 2, 3...), troque aqui.
+ESCOLHIDAS = {nome: f"{nome}-1-1.png" for nome in [*RECORTES_45, *ILUSTRACOES]}
 # Vez 2 com o prompt de hachura mais leve no rosto (a Vez 1 saiu com o rosto mais carregado que os demais).
 ESCOLHIDAS["flavio-2025-precandidatura"] = "flavio-2025-precandidatura-2-1.png"
+# 23/10/2026: Flávio 2022 na Vez 3 (prompt pedindo luz uniforme no rosto; nas Vezes 1 e 2 a luz roxa e escura da foto
+# virou pontilhado denso no rosto). Lula 1975, 1980 e 1989 ficam na Vez 1: a Vez 2, com barba mais leve no prompt, não
+# clareou a barba e carregou o fundo (1975) ou perdeu semelhança (1989).
+ESCOLHIDAS["flavio-2022-campanha"] = "flavio-2022-campanha-3-1.png"
 # Comício do Flávio: Vez 2, com a figura no mesmo tamanho da de Lula (na Vez 1 ele saiu menor, com a cabeça a 1/3 da altura).
 COMICIOS = {"lula": "comicio-foto-lula-1-1.png", "flavio": "comicio-foto-flavio-2-1.png"}
 

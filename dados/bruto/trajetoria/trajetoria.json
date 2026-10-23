@@ -6,7 +6,23 @@
       "texto": "Foi eleito presidente do Sindicato dos Metalúrgicos de São Bernardo do Campo e Diadema (SP) com 92% dos votos; reeleito em 1978, liderou as greves do ABC de 1979 e 1980.",
       "fonte_url": "https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/luiz-inacio-lula-da-silva/biografia-completa",
       "foto": null,
-      "motivo_sem_foto": "Nenhuma foto de licença aberta verificável de Lula entre 1975 e 1979 no Commons. As que existem dos anos 1970 (ex.: família em 1978, de Bob Wolfenson) têm alegação de domínio público sem base, e o acervo CSBH/FPA proíbe reprodução sem autorização."
+      "motivo_sem_foto": "Nenhuma foto de licença aberta verificável de Lula entre 1975 e 1979 no Commons. As que existem dos anos 1970 (ex.: família em 1978, de Bob Wolfenson) têm alegação de domínio público sem base, e o acervo CSBH/FPA proíbe reprodução sem autorização. Busca refeita em 23/10/2026: categorias do Commons por ano (1978, 1980, 1982, 1989) e de fotos em preto e branco de Lula, busca por tema (greves do ABC, Vila Euclides, fundação do PT, Colégio Sion), Flickr da Agência Senado (arquivo CEDI/Câmara da Constituinte), Arquivo Nacional no Commons e acervos CSBH/FPA e AEL-Unicamp. Nada com licença aberta verificável: 'Lula discursando para metalúrgicos em 1979.jpg' é foto da Folha de S.Paulo marcada como domínio público sem base, e os acervos de 1975–1980 (CSBH/FPA, AEL, Instituto Lula, jornais) exigem autorização. Por isso o marco usa uma ilustração em traço que recria a cena da época.",
+      "ilustracao": {
+        "arquivo": "lula-1975-sindicato.png",
+        "tipo": "ilustração recriada",
+        "autor": "Vizu Dados (ilustração em traço, Codex CLI local), recriada a partir de registros da época",
+        "licenca": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)",
+        "ano_foto": "cena do fim dos anos 1970, recriada",
+        "cena": "Assembleia de metalúrgicos num estádio do ABC paulista no fim dos anos 1970 (as greves de 1979 e 1980 citadas no texto): Lula, de barba escura, discursa ao microfone num palanque simples; a multidão é só sugerida. Não reproduz nenhuma foto específica.",
+        "referencia_rosto": {
+          "arquivo": "lula-1989-presidencia.jpg",
+          "titulo_commons": "File:Paim diap.jpg",
+          "autor": "CEDI/Câmara dos Deputados (foto de arquivo, publicada pela Agência Senado)",
+          "licenca": "CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/)",
+          "url_pagina": "https://commons.wikimedia.org/wiki/File:Paim_diap.jpg",
+          "uso": "só a semelhança do rosto (Lula em out/1988); a cena não vem desta foto"
+        }
+      }
     },
     {
       "data": "1980-02-10",
@@ -14,7 +30,23 @@
       "texto": "Fundou o Partido dos Trabalhadores (PT) com sindicalistas, intelectuais e militantes sociais em 10/2/1980; no mesmo ano, durante nova greve, ficou preso 31 dias com base na Lei de Segurança Nacional.",
       "fonte_url": "https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/luiz-inacio-lula-da-silva/biografia-completa",
       "foto": null,
-      "motivo_sem_foto": "Sem foto livre do ato de fundação nem de Lula em 1980. A ficha do DOPS de 1980 no Commons (autor desconhecido, fonte Instituto Lula) não tem licença verificável e trata da prisão, não da fundação; a foto com Fidel Castro (Agência F4) é de agência comercial."
+      "motivo_sem_foto": "Sem foto livre do ato de fundação nem de Lula em 1980. A ficha do DOPS de 1980 no Commons (autor desconhecido, fonte Instituto Lula) não tem licença verificável e trata da prisão, não da fundação; a foto com Fidel Castro (Agência F4) é de agência comercial. Busca refeita em 23/10/2026: categorias do Commons por ano (1978, 1980, 1982, 1989) e de fotos em preto e branco de Lula, busca por tema (greves do ABC, Vila Euclides, fundação do PT, Colégio Sion), Flickr da Agência Senado (arquivo CEDI/Câmara da Constituinte), Arquivo Nacional no Commons e acervos CSBH/FPA e AEL-Unicamp. Nada com licença aberta verificável: 'Lula discursando para metalúrgicos em 1979.jpg' é foto da Folha de S.Paulo marcada como domínio público sem base, e os acervos de 1975–1980 (CSBH/FPA, AEL, Instituto Lula, jornais) exigem autorização. Por isso o marco usa uma ilustração em traço que recria a cena da época.",
+      "ilustracao": {
+        "arquivo": "lula-1980-fundacao-pt.png",
+        "tipo": "ilustração recriada",
+        "autor": "Vizu Dados (ilustração em traço, Codex CLI local), recriada a partir de registros da época",
+        "licenca": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0/)",
+        "ano_foto": "cena de 10/2/1980, recriada",
+        "cena": "Ato de fundação do PT no Colégio Sion, em São Paulo, em 10/2/1980: Lula, de barba escura, fala ao microfone sentado à mesa; os demais são só contornos. Sem estrela, bandeira ou texto. Não reproduz nenhuma foto específica.",
+        "referencia_rosto": {
+          "arquivo": "lula-1989-presidencia.jpg",
+          "titulo_commons": "File:Paim diap.jpg",
+          "autor": "CEDI/Câmara dos Deputados (foto de arquivo, publicada pela Agência Senado)",
+          "licenca": "CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/)",
+          "url_pagina": "https://commons.wikimedia.org/wiki/File:Paim_diap.jpg",
+          "uso": "só a semelhança do rosto (Lula em out/1988); a cena não vem desta foto"
+        }
+      }
     },
     {
       "data": "1986-11-15",
@@ -38,8 +70,19 @@
       "titulo": "Disputa a Presidência pela 1ª vez",
       "texto": "Na primeira eleição direta para presidente desde 1960, perdeu o 2º turno para Fernando Collor (PRN), com 46,97% dos votos válidos; perdeu também em 1994 e em 1998.",
       "fonte_url": "https://www.tse.jus.br/comunicacao/noticias/2022/Fevereiro/90-anos-da-justica-eleitoral-12-eleicoes-presidenciais-ja-foram-realizadas-no-brasil-desde-1945",
-      "foto": null,
-      "motivo_sem_foto": "Sem foto livre e verificável da campanha de 1989. Candidatas descartadas: 'Lula em sua campanha presidencial, 1989.jpg' (344 px, alegação de obra própria duvidosa) e 'Dep. lula.jpg' (476 px, foto da ABr de 2003 que reproduz uma foto de arquivo exposta, sem autor nem licença da original)."
+      "foto": {
+        "arquivo": "lula-1989-presidencia.jpg",
+        "titulo_commons": "File:Paim diap.jpg",
+        "autor": "CEDI/Câmara dos Deputados (foto de arquivo, fotógrafo não identificado; publicada pela Agência Senado na série Projeto História Oral – 30 anos da Constituinte)",
+        "licenca": "CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/)",
+        "url_pagina": "https://commons.wikimedia.org/wiki/File:Paim_diap.jpg",
+        "url_flickr": "https://www.flickr.com/photos/agenciasenado/44275404900/",
+        "ano_foto": "1988 (out/1988, pela data do diploma)",
+        "descricao_curta_da_cena": "Out/1988, Brasília: Lula, de barba, paletó claro e camisa branca, entre Paulo Paim e Olívio Dutra, na entrega do diploma 'Palavra de Honra' do Diap pela atuação na Constituinte, um ano antes da campanha de 1989.",
+        "resolucao_salva": "1544x1024",
+        "resolucao_original": "1544x1024"
+      },
+      "nota_foto": "Sem foto livre da campanha de 1989 (busca refeita em 23/10/2026; ver FONTES.md). Usada a foto livre mais próxima do marco: arquivo CEDI/Câmara de outubro de 1988, CC BY 2.0. 'Lula da Silva em 1989.jpg' (Commons, VPR 2023) foi descartada: é foto de uma tela que exibia imagem de TV de 1989, de outro autor."
     },
     {
       "data": "2002-10-27",
@@ -252,8 +295,18 @@
       "titulo": "Coordena a campanha do pai",
       "texto": "Coordenou a campanha de reeleição de Jair Bolsonaro (PL), que perdeu o 2º turno para Lula, com 49,10% dos votos válidos, em 30/10/2022.",
       "fonte_url": "https://agenciabrasil.ebc.com.br/politica/noticia/2022-10/flavio-bolsonaro-agradece-pelos-votos-dados-ao-pai-nas-eleicoes",
-      "foto": null,
-      "motivo_sem_foto": "Nenhuma foto livre de Flávio na campanha de 2022: o Commons não tem; o Flickr oficial dele é 'Todos os direitos reservados'; as da Agência Brasil posteriores a 23/2/2017 não têm licença aberta verificável; o Planalto não cobre campanha."
+      "foto": {
+        "arquivo": "flavio-2022-campanha.jpg",
+        "titulo_flickr": "CRE - Comissão de Relações Exteriores e Defesa Nacional",
+        "autor": "Geraldo Magela/Agência Senado",
+        "licenca": "CC BY 2.0 (https://creativecommons.org/licenses/by/2.0/)",
+        "url_pagina": "https://www.flickr.com/photos/agenciasenado/52517218230/",
+        "ano_foto": "2022",
+        "descricao_curta_da_cena": "22/11/2022, Senado, sabatina de diplomatas na CRE: Flávio, de óculos, terno escuro e gravata amarela, sorri (busto). Três semanas depois do 2º turno.",
+        "resolucao_salva": "2048x1365",
+        "resolucao_original": "2048x1365 (tamanho K do Flickr; o original não foi baixado)"
+      },
+      "nota_foto": "Sem foto livre de Flávio na campanha de 2022: o Flickr dele é 'Todos os direitos reservados', e as fotos de 2022 do Flickr de Jair Bolsonaro (fotosbolsonaro) conferidas também; a Agência Brasil pós-2017 não tem licença aberta; o Planalto não cobre campanha. Usada a foto livre mais próxima do 2º turno, achada no Flickr da Agência Senado (busca de 1º/10 a 3/12/2022): 22/11/2022, CC BY 2.0, licença conferida no oEmbed e na página."
     },
     {
       "data": "2025-02-19",

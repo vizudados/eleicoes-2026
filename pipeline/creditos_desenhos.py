@@ -1,11 +1,13 @@
-"""Escreve dados/bruto/trajetoria/desenhos.csv: crédito e licença de cada desenho em traço feito a partir de foto real.
+"""Escreve dados/bruto/trajetoria/desenhos.csv: crédito e licença de cada desenho em traço feito a partir de foto real
+e de cada ILUSTRAÇÃO RECRIADA (marco sem foto de licença aberta: a cena da época desenhada sem copiar foto nenhuma).
 
 Os desenhos (comícios e marcos da linha do tempo) são obra derivada das fotos. Os derivados de fotos CC BY-SA 4.0
 TÊM de sair sob CC BY-SA 4.0; para tratar os dois candidatos igual, todos os desenhos saem sob CC BY-SA 4.0
 (permitido também para os derivados de CC BY e de domínio público), sempre com o crédito da foto.
 
 Autor, licença e endereço da foto vêm de dados/bruto/trajetoria/trajetoria.json; a legenda traz a data e o local
-reais da FOTO (que às vezes não é o dia do marco: ver FONTES.md).
+reais da FOTO (que às vezes não é o dia do marco: ver FONTES.md). Coluna `tipo`: "foto" (desenho a partir de foto real)
+ou "ilustração" (chave `ilustracao` do JSON; foto_original/autor/licenca_foto são os da foto usada SÓ para o rosto).
 
 Uso: python -I -X utf8 pipeline/creditos_desenhos.py
 """
@@ -35,6 +37,8 @@ CURTO = {
     "flavio-2025-csp": ("Edilson Rodrigues/Agência Senado", "CC BY-SA 4.0"),
     "flavio-2025-precandidatura": ("Andressa Anholete/Agência Senado", "CC BY-SA 4.0"),
     "flavio-2026-primeiro-turno": ("Carlos Moura/Agência Senado", "CC BY-SA 4.0"),
+    "lula-1989-presidencia": ("CEDI/Câmara dos Deputados", "CC BY 2.0"),
+    "flavio-2022-campanha": ("Geraldo Magela/Agência Senado", "CC BY 2.0"),
     "lula-comicio-2026-2": ("Ricardo Stuckert/Lula Oficial", "CC BY-SA 4.0"),
     "flavio-comicio-2021-1": ("Isac Nóbrega/PR", "CC BY 2.0"),
 }
@@ -57,6 +61,11 @@ LEGENDA = {
     "flavio-2025-csp": "Reunião da Comissão de Segurança Pública do Senado, Brasília, 19 de agosto de 2025",
     "flavio-2025-precandidatura": "Comissão do Senado, Brasília, 3 de setembro de 2025",
     "flavio-2026-primeiro-turno": "Discurso no plenário do Senado, Brasília, 1º de setembro de 2026",
+    "lula-1989-presidencia": "Homenagem do Diap a constituintes, Brasília, outubro de 1988",
+    "flavio-2022-campanha": "Sabatina na Comissão de Relações Exteriores do Senado, Brasília, 22 de novembro de 2022",
+    # ilustrações recriadas: a cena desenhada (não há foto)
+    "lula-1975-sindicato": "Assembleia de metalúrgicos num estádio do ABC paulista, fim dos anos 1970 (cena recriada)",
+    "lula-1980-fundacao-pt": "Fundação do PT no Colégio Sion, São Paulo, 10 de fevereiro de 1980 (cena recriada)",
     "lula-comicio-2026-2": "Ato na Av. Paulista, São Paulo, 11 de outubro de 2026",
     "flavio-comicio-2021-1": "Ato de 7 de Setembro de 2021, Av. Paulista, São Paulo",
 }
@@ -66,15 +75,26 @@ FOTO_COMICIO = {"lula": "lula-comicio-2026-2", "flavio": "flavio-comicio-2021-1"
 CANDIDATO = {"lula": "Lula", "flavio": "Flávio Bolsonaro"}
 
 
+# Ilustrações recriadas: o rosto vem de uma foto de outra ocasião (crédito obrigatório, CC BY), a cena não.
+ROSTO = {
+    "lula-1975-sindicato": ("CEDI/Câmara", "CC BY 2.0"),
+    "lula-1980-fundacao-pt": ("CEDI/Câmara", "CC BY 2.0"),
+}
+
+
 def credito(nome):
-    autor, licenca = CURTO[nome]
-    de = "do" if autor.startswith("Consulado") else "de"
-    texto = f"Desenho {LICENCA_DESENHO} a partir de foto {de} {autor} ({licenca})"
+    if nome in ROSTO:
+        autor, licenca = ROSTO[nome]
+        texto = f"Ilustração {LICENCA_DESENHO} recriada de registros da época; rosto: {autor} ({licenca})"
+    else:
+        autor, licenca = CURTO[nome]
+        de = "do" if autor.startswith("Consulado") else "de"
+        texto = f"Desenho {LICENCA_DESENHO} a partir de foto {de} {autor} ({licenca})"
     assert len(texto) <= 90, (nome, len(texto), texto)
     return texto
 
 
-def linha(arquivo_web, quem, data, foto, nome):
+def linha(arquivo_web, quem, data, foto, nome, tipo="foto"):
     return {
         "arquivo_web": arquivo_web,
         "candidato": CANDIDATO[quem],
@@ -85,6 +105,7 @@ def linha(arquivo_web, quem, data, foto, nome):
         "licenca_desenho": f"{LICENCA_DESENHO} (https://creativecommons.org/licenses/by-sa/4.0/)",
         "credito_curto": credito(nome),
         "legenda": LEGENDA[nome],
+        "tipo": tipo,
     }
 
 
@@ -93,11 +114,16 @@ def main():
     linhas = []
     for quem in ("lula", "flavio"):
         for marco in dados[quem]:
-            foto = marco.get("foto")
-            if not foto:
-                continue
-            nome = foto["arquivo"].removesuffix(".jpg")
-            linhas.append(linha(f"midia/trajetoria/{nome}.png", quem, marco["data"], foto, nome))
+            foto, ilus = marco.get("foto"), marco.get("ilustracao")
+            if foto:
+                nome = foto["arquivo"].removesuffix(".jpg")
+                linhas.append(linha(f"midia/trajetoria/{nome}.png", quem, marco["data"], foto, nome))
+            elif ilus:
+                nome = Path(ilus["arquivo"]).stem
+                ref = ilus["referencia_rosto"]
+                origem = {"url_pagina": ref["url_pagina"], "licenca": ref["licenca"],
+                          "autor": f"{ilus['autor']}; rosto a partir de foto de {ref['autor']}"}
+                linhas.append(linha(f"midia/trajetoria/{nome}.png", quem, marco["data"], origem, nome, "ilustração"))
     for quem in ("lula", "flavio"):
         nome = FOTO_COMICIO[quem]
         foto = next(f for f in dados["comicios"][quem] if f["arquivo"] == f"{nome}.jpg")

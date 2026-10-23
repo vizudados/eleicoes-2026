@@ -257,7 +257,8 @@ def trajetoria():
         for i, m in enumerate(t[lado], 1):
             data = str(m["data"])
             ano = int(data[:4]) if data[:4].isdigit() else int(data[-4:])
-            foto = m.get("foto") or {}
+            # marco sem foto livre: a ilustração recriada ocupa a coluna foto (o desenho do cartão); ver desenhos.csv, tipo
+            foto = m.get("foto") or m.get("ilustracao") or {}
             linhas.append({"candidato": nome, "ordem": i, "data": data, "ano": ano, "titulo": m["titulo"],
                            "texto": m["texto"], "foto": Path(foto["arquivo"]).stem if foto else "",
                            "foto_autor": foto.get("autor", ""), "foto_licenca": foto.get("licenca", "").split(" (")[0],
@@ -370,6 +371,22 @@ def perfil_pesquisa():
               "fatia", "fonte_url"]]
 
 
+def abstencao_faixa():
+    """Município × faixa de idade × ano (1º turno, 2014–2026) da tela 07 · Quem falta (código T25), de
+    dados/saida/abstencao_municipio_faixa.csv (pipeline/extrair_abstencao_municipio.py, perfil do eleitor do TSE): aptos
+    e abstenções nas sete faixas da tela (a idade não informada fica de fora). O exterior vem numa linha por faixa e
+    ano, com uf = ZZ e cd_ibge vazio; o modelo (pbi/modelo/t25_ausencia.py) separa os municípios ('T25 Abstenção
+    faixa') do exterior ('T25 Abstenção exterior')."""
+    d = pd.read_csv(SAIDA_DADOS / "abstencao_municipio_faixa.csv", dtype={"cd_ibge": str})
+    d = d[d.faixa_ordem.between(1, 7)]
+    d = d.groupby(["ano", "uf", "cd_ibge", "faixa_ordem"], as_index=False, dropna=False)[["aptos", "abstencao"]].sum()
+    d = d.rename(columns={"abstencao": "abstencoes"})
+    for c in ("aptos", "abstencoes"):
+        d[c] = d[c].astype("int64")
+    return d.sort_values(["ano", "uf", "cd_ibge", "faixa_ordem"], na_position="last")[
+        ["ano", "uf", "cd_ibge", "faixa_ordem", "aptos", "abstencoes"]]
+
+
 def main():
     m = municipios()
     gravar(m, "municipio")
@@ -397,6 +414,7 @@ def main():
     pos = pos.drop_duplicates(["NR_ZONA", "NR_LOCAL_VOTACAO"])
     gravar(locais.merge(pos[["NR_ZONA", "NR_LOCAL_VOTACAO", "px", "py"]], on=["NR_ZONA", "NR_LOCAL_VOTACAO"], how="left"),
            "local_contagem")
+    gravar(abstencao_faixa(), "abstencao_faixa_municipio")
 
 
 if __name__ == "__main__":

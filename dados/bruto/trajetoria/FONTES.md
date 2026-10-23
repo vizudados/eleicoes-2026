@@ -11,10 +11,10 @@ Levantamento feito em 22 e 23/10/2026 para as páginas de apresentação dos can
 
 | Data | Marco | Fonte do texto | Foto (arquivo · autor · licença) |
 |---|---|---|---|
-| 1975 | Preside o sindicato do ABC | [Biografia completa, Biblioteca da PR](https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/luiz-inacio-lula-da-silva/biografia-completa) e [biografia na Câmara](https://www.camara.leg.br/deputados/139289/biografia) | **sem foto** (ver lacunas) |
-| 10/02/1980 | Participa da fundação do PT | Biografia completa da Biblioteca da PR: data, fundadores e prisão de 31 dias pela LSN | **sem foto** |
+| 1975 | Preside o sindicato do ABC | [Biografia completa, Biblioteca da PR](https://www.gov.br/secretariageral/pt-br/centrais-de-conteudo/biblioteca-da-pr/galeria-dos-ex-presidentes/luiz-inacio-lula-da-silva/biografia-completa) e [biografia na Câmara](https://www.camara.leg.br/deputados/139289/biografia) | sem foto livre (ver lacunas) → **ilustração recriada** `lula-1975-sindicato.png` (cena da época desenhada em traço, sem copiar foto; rosto a partir de `lula-1989-presidencia.jpg`, CEDI/Câmara, CC BY 2.0) · ver "Ilustrações recriadas" |
+| 10/02/1980 | Participa da fundação do PT | Biografia completa da Biblioteca da PR: data, fundadores e prisão de 31 dias pela LSN | sem foto livre → **ilustração recriada** `lula-1980-fundacao-pt.png` (cena da época desenhada em traço, sem copiar foto; rosto a partir de `lula-1989-presidencia.jpg`, CEDI/Câmara, CC BY 2.0) · ver "Ilustrações recriadas" |
 | 15/11/1986 | Eleito deputado federal constituinte | [Senado Notícias, 30/12/2002](https://www12.senado.leg.br/noticias/materias/2002/12/30/do-agreste-ao-planalto-central-a-trajetoria-do-novo-presidente-da-republica) | `lula-1986-constituinte.jpg` · Senado Federal/Agência Senado (foto de arquivo) · CC BY 2.0 · [Commons](https://commons.wikimedia.org/wiki/File:Serra,_Lula_e_outros_na_constituinte.jpg) |
-| 17/12/1989 | Disputa a Presidência pela 1ª vez | [TSE, 90 anos da Justiça Eleitoral](https://www.tse.jus.br/comunicacao/noticias/2022/Fevereiro/90-anos-da-justica-eleitoral-12-eleicoes-presidenciais-ja-foram-realizadas-no-brasil-desde-1945) | **sem foto** |
+| 17/12/1989 | Disputa a Presidência pela 1ª vez | [TSE, 90 anos da Justiça Eleitoral](https://www.tse.jus.br/comunicacao/noticias/2022/Fevereiro/90-anos-da-justica-eleitoral-12-eleicoes-presidenciais-ja-foram-realizadas-no-brasil-desde-1945) | `lula-1989-presidencia.jpg` · CEDI/Câmara dos Deputados (arquivo, publicada pela Agência Senado) · CC BY 2.0 · **foto de out/1988** · [Commons](https://commons.wikimedia.org/wiki/File:Paim_diap.jpg) · [Flickr](https://www.flickr.com/photos/agenciasenado/44275404900/) |
 | 27/10/2002 | Eleito presidente da República | [Senado Notícias, 31/12/2002](https://www12.senado.leg.br/noticias/materias/2002/12/31/congresso-nacional-dara-posse-ao-37-presidente-da-republica-do-brasil-501666600): 61,27% e 52.793.364 votos | `lula-2002-posse.jpg` · Marcello Casal Jr./Agência Brasil · uso livre com atribuição (Commons: CC BY 3.0 BR) · [Commons](https://commons.wikimedia.org/wiki/File:Lula_de_m%C3%A3os_dadas_com_FHC.jpg) |
 | 29/10/2006 | Reeleito presidente da República | [Senado Notícias, 30/10/2006](https://www12.senado.leg.br/noticias/materias/2006/10/30/presidente-lula-e-reeleito-com-mais-de-58-milhoes-de-votos): 60,83% e 58.295.042 votos | `lula-2006-reeleicao.jpg` · Marcello Casal Jr./Agência Brasil · idem · [Commons](https://commons.wikimedia.org/wiki/File:Lula_vota_em_S%C3%A3o_Bernardo_do_Campo.jpg) |
 | 07/04/2018 | Preso no caso do triplex | [Agência Brasil, 07/04/2018](https://agenciabrasil.ebc.com.br/politica/noticia/2018-04/lula-chega-policia-federal-em-curitiba-para-comecar-cumprir-pena) e [soltura, 08/11/2019](https://agenciabrasil.ebc.com.br/justica/noticia/2019-11/lula-deixa-carceragem-da-pf-em-curitiba) | `lula-2018-prisao.jpg` · Ricardo Stuckert/Lula Oficial · CC BY-SA 4.0 · [Commons](https://commons.wikimedia.org/wiki/File:Lula_carregado_por_multid%C3%A3o_no_dia_de_sua_pris%C3%A3o_(2018-04-07).jpg) |
@@ -32,19 +32,19 @@ Levantamento feito em 22 e 23/10/2026 para as páginas de apresentação dos can
 | 01/02/2019 | Toma posse no Senado | [Perfil no Senado](https://www25.senado.leg.br/web/senadores/senador/-/perfil/5894) | `flavio-2019-posse.jpg` · Edilson Rodrigues/Agência Senado · CC BY 2.0 · [Commons](https://commons.wikimedia.org/wiki/File:Posse_Senadores_2019_(46038615415).jpg) |
 | 19/10/2020 | Denunciado no caso das rachadinhas | [Agência Brasil/Radioagência, 04/11/2020](https://agenciabrasil.ebc.com.br/radioagencia-nacional/justica/audio/2020-11/flavio-bolsonaro-e-denunciado-pelo-ministerio-publico-do-rio) | `flavio-2020-denuncia.jpg` · Pedro França/Agência Senado · CC BY 2.0 · **foto de 30/11/2021** · [Commons](https://commons.wikimedia.org/wiki/File:Entrevistas_-_Senador_Fl%C3%A1vio_Bolsonaro_(Republicanos-RJ)_e_advogado_Frederick_Wassef.jpg) |
 | 16/05/2022 | TJ-RJ arquiva a denúncia | [Agência Brasil, 16/05/2022](https://agenciabrasil.ebc.com.br/politica/noticia/2022-05/justica-do-rio-arquiva-processo-de-caso-de-supostas-rachadinhas) e [STJ anula decisões, 09/11/2021](https://agenciabrasil.ebc.com.br/justica/noticia/2021-11/stj-anula-decisoes-de-juiz-sobre-rachadinha-na-alerj) | `flavio-2022-arquivamento.jpg` · Edilson Rodrigues/Agência Senado · CC BY 2.0 · [Commons](https://commons.wikimedia.org/wiki/File:Entrevistas_Diversas_(52068540141).jpg) |
-| 30/10/2022 | Coordena a campanha do pai | [Agência Brasil, 31/10/2022](https://agenciabrasil.ebc.com.br/politica/noticia/2022-10/flavio-bolsonaro-agradece-pelos-votos-dados-ao-pai-nas-eleicoes): coordenador da campanha; Lula 50,90% e Jair 49,10% | **sem foto** |
+| 30/10/2022 | Coordena a campanha do pai | [Agência Brasil, 31/10/2022](https://agenciabrasil.ebc.com.br/politica/noticia/2022-10/flavio-bolsonaro-agradece-pelos-votos-dados-ao-pai-nas-eleicoes): coordenador da campanha; Lula 50,90% e Jair 49,10% | `flavio-2022-campanha.jpg` · Geraldo Magela/Agência Senado · CC BY 2.0 · **foto de 22/11/2022** · [Flickr](https://www.flickr.com/photos/agenciasenado/52517218230/) |
 | 19/02/2025 | Preside a Comissão de Segurança Pública | [Senado Notícias, 19/02/2025](https://www12.senado.leg.br/noticias/materias/2025/02/19/flavio-bolsonaro-e-eleito-presidente-da-csp) | `flavio-2025-csp.jpg` · Edilson Rodrigues/Agência Senado · CC BY-SA 4.0 · foto de 19/08/2025 · [Commons](https://commons.wikimedia.org/wiki/File:CSP_-_Comiss%C3%A3o_de_Seguran%C3%A7a_P%C3%BAblica_(54730450422).jpg) |
 | 05/12/2025 | Lança pré-candidatura à Presidência | [O Globo, 05/12/2025](https://oglobo.globo.com/politica/noticia/2025/12/05/flavio-bolsonaro-confirma-pre-candidatura-a-presidencia-em-2026-bolsonaro-me-conferiu-a-missao.ghtml), fonte primária achada pela Wikipédia usada só como índice (ver divergências) | `flavio-2025-precandidatura.jpg` · Andressa Anholete/Agência Senado · CC BY-SA 4.0 · **foto de 03/09/2025** · [Commons](https://commons.wikimedia.org/wiki/File:Fl%C3%A1vio_Bolsonaro_2025_(cropped).jpg) |
 | 04/10/2026 | Candidato à Presidência pelo PL | [TSE, 2º turno 2026](https://www.tse.jus.br/comunicacao/noticias/2026/Outubro/flavio-bolsonaro-e-lula-vao-disputar-o-2o-turno-para-a-presidencia-da-republica) e [convenção do PL, Agência Brasil, 25/07/2026](https://agenciabrasil.ebc.com.br/politica/noticia/2026-07/pl-oficializa-candidatura-de-flavio-bolsonaro-presidencia) | `flavio-2026-primeiro-turno.jpg` · Carlos Moura/Agência Senado · CC BY-SA 4.0 · foto de 01/09/2026 · [Commons](https://commons.wikimedia.org/wiki/File:Fl%C3%A1vio_Bolsonaro_01.09.26.jpg) |
 
 ## Contagem e licenças
 
-- **Lula:** 7 de 10 marcos têm foto.
+- **Lula:** 8 de 10 marcos têm foto; os outros 2 (1975 e 1980) têm ilustração recriada (ver abaixo).
   - CC BY-SA 4.0: 4 fotos (Flickr Lula Oficial, de Ricardo Stuckert).
   - Agência Brasil, atribuição: 2 fotos, de 2003 e 2006.
-  - CC BY 2.0: 1 foto (Agência Senado).
-- **Flávio:** 9 de 10 marcos têm foto.
-  - CC BY 2.0: 3 fotos (Agência Senado).
+  - CC BY 2.0: 2 fotos de arquivo publicadas pela Agência Senado (1987–88 e out/1988, esta do CEDI/Câmara).
+- **Flávio:** 10 de 10 marcos têm foto.
+  - CC BY 2.0: 4 fotos (Agência Senado).
   - CC BY-SA 4.0: 3 fotos (Agência Senado).
   - CC BY 2.0 BR: 1 foto (Governo do RJ).
   - Domínio público: 2 fotos (governo dos EUA e Public Domain Mark do autor).
@@ -56,6 +56,28 @@ Os desenhos em traço são obra derivada, e isso tem consequências de licença.
 - **Domínio público:** não exige crédito, mas é boa prática dar.
 
 ## Marcos sem foto e por quê
+
+**Atualização de 23/10/2026 (busca melhor, pedido do Alisson):** dos 4 marcos sem foto, 2 ganharam foto livre de
+época próxima e 2 ganharam ilustração recriada. O que está abaixo desta nota é o levantamento de 22/10, mantido como
+registro.
+
+- **Lula, 1989 → `lula-1989-presidencia.jpg`.** Foto de arquivo do CEDI/Câmara dos Deputados, publicada pela Agência
+  Senado no Flickr (série "Projeto História Oral – 30 anos da Constituinte"), CC BY 2.0 conferida no Flickr e no
+  FlickreviewR do Commons. Mostra Lula, de barba, entre Paulo Paim e Olívio Dutra, na entrega do diploma "Palavra de
+  Honra" do Diap pela atuação na Constituinte; a data impressa no diploma é de outubro de 1988, um ano antes da
+  campanha. Não há foto livre da campanha de 1989. Descartada: "Lula da Silva em 1989.jpg" (Commons, VPR 2023, CC BY
+  2.0), que é a foto de uma tela que exibia imagem de TV de 1989, de outro autor.
+- **Flávio, 2022 → `flavio-2022-campanha.jpg`.** Geraldo Magela/Agência Senado, 22/11/2022, CC BY 2.0 (oEmbed e
+  página do Flickr): sabatina de diplomatas na CRE, três semanas depois do 2º turno. A busca no Flickr da Agência
+  Senado entre 1º/10 e 3/12/2022 achou 23 fotos com ele, e as mais antigas são de 22/11; não há foto livre dele na
+  campanha. As fotos de 2022 do Flickr de Jair Bolsonaro (fotosbolsonaro) conferidas são "Todos os direitos
+  reservados".
+- **Lula, 1975 e 1980 → ilustrações recriadas.** A busca foi refeita: categorias do Commons por ano (1978, 1980, 1982,
+  1989) e de fotos em preto e branco de Lula, busca por tema (greves do ABC, Vila Euclides, fundação do PT, Colégio
+  Sion), Flickr da Agência Senado (arquivo CEDI/Câmara, só Constituinte), Arquivo Nacional no Commons e acervos
+  CSBH/FPA e AEL-Unicamp. Nada com licença aberta verificável. "Lula discursando para metalúrgicos em 1979.jpg" é foto
+  da Folha de S.Paulo marcada como domínio público sem base (foto de 1979 ainda está protegida no Brasil). Os acervos
+  da época (CSBH/FPA, AEL, Instituto Lula, jornais) exigem autorização.
 
 - **Lula, 1975 (sindicato), 1980 (PT) e 1989 (1ª candidatura):** não há foto de licença aberta verificável dessa época.
   - "Lula e sua família… 1978" (Bob Wolfenson, tirada da Veja SP) tem uma marca de domínio público sem base.
@@ -73,6 +95,10 @@ Os desenhos em traço são obra derivada, e isso tem consequências de licença.
 
 ## Fotos com ressalva (época aproximada ou baixa resolução)
 
+- **`lula-1989-presidencia.jpg`:** é de outubro de 1988, 14 meses antes do 2º turno de 1989, e tem 1.544×1.024 px
+  (Lula ocupa um recorte de 400×500 px). A legenda do cartão diz a data e o lugar reais.
+- **`flavio-2022-campanha.jpg`:** é de 22/11/2022, 23 dias depois do 2º turno, no Senado, não na campanha.
+
 - **`flavio-2002-alerj.jpg`:** tem 400×600 px, abaixo dos 800 px pedidos, e é de 2014, 3º mandato na Alerj. Não há foto livre de 2002–2003.
 - **`flavio-2016-prefeitura.jpg`:** tem 550×381 px e é um retrato de 2015, de antes da campanha. A outra opção, a foto de candidato do TSE de 2016, tem 161×225 px. "Bolsonaro e seus filhos" (2017) foi descartada porque usa o template PD-Brazil-URAA, que não se aplica a uma foto de 2017.
 - **`flavio-2020-denuncia.jpg`:** é de 30/11/2021. Não há foto livre de Flávio em 2020, porque o Senado funcionou em sessões remotas. A cena é do mesmo caso: entrevista com o advogado no dia em que a 2ª Turma do STF manteve o foro do senador.
@@ -87,6 +113,23 @@ Os desenhos em traço são obra derivada, e isso tem consequências de licença.
 Lula tem um Flickr oficial com licença CC BY-SA 4.0, com fotos de atos, multidões e celebrações. O Flickr oficial de Flávio é "Todos os direitos reservados". Por isso, as fotos livres de Flávio são quase todas da Agência Senado: retratos e plenário.
 
 Se os desenhos reproduzirem as cenas como estão, Lula aparecerá mais em cenas de massa. **Sugestão:** padronizar o enquadramento dos desenhos dos marcos (busto ou meio corpo) para os dois, usando as fotos só como referência de fisionomia, roupa e época.
+
+## Ilustrações recriadas (marcos sem foto de licença aberta)
+
+Lula em 1975 (sindicato) e em 1980 (fundação do PT) não têm foto livre. Para o cartão não ficar vazio, a cena da época
+foi **recriada como ilustração em traço**, no mesmo estilo dos desenhos de foto, pelo Codex CLI local (prompts em
+`arte/prompts-fotos/`). Não é foto e não copia foto nenhuma: é desenho a caneta, para não haver imagem falsa de
+político num painel público.
+
+- **`lula-1975-sindicato.png`:** assembleia de metalúrgicos num estádio do ABC paulista, no fim dos anos 1970 (as greves
+  de 1979 e 1980 citadas no texto). Lula discursa ao microfone, e a multidão é só sugerida.
+- **`lula-1980-fundacao-pt.png`:** fundação do PT no Colégio Sion, São Paulo, em 10/2/1980. Lula fala ao microfone
+  sentado à mesa, e os demais são só contornos, sem estrela, bandeira ou texto.
+- **Rosto:** vem de `lula-1989-presidencia.jpg` (CEDI/Câmara, out/1988, CC BY 2.0), usado só como referência de
+  semelhança e rejuvenescido no prompt (8 a 10 anos). Por isso o crédito cita essa foto.
+- **No painel:** o cartão mostra um lápis no lugar da câmera; o dossiê diz "Na ilustração:" e o crédito é
+  "Ilustração CC BY-SA 4.0 recriada de registros da época; rosto: CEDI/Câmara (CC BY 2.0)". Em `desenhos.csv`, a
+  coluna `tipo` vale `ilustração`; no `trajetoria.json`, o marco tem `"foto": null` e a chave `ilustracao`.
 
 ## Comícios ("falando com o povo")
 
@@ -158,6 +201,7 @@ Por isso nenhuma foto da Agência Brasil posterior a 2017 foi usada, nem as de 2
 Fotos de marcos:
 
 - lula-1986-constituinte: Senado Federal/Agência Senado (arquivo), CC BY 2.0
+- lula-1989-presidencia: CEDI/Câmara dos Deputados (arquivo, publicada pela Agência Senado), CC BY 2.0
 - lula-2002-posse e lula-2006-reeleicao: Marcello Casal Jr./Agência Brasil
 - lula-2018-prisao, lula-2021-anulacao, lula-2022-eleicao e lula-2026-primeiro-turno: Ricardo Stuckert/Lula Oficial, CC BY-SA 4.0
 - flavio-2002-alerj: Governo do Estado do RJ, CC BY 2.0 BR
@@ -165,9 +209,15 @@ Fotos de marcos:
 - flavio-2018-senado: Consulado dos EUA no Rio, domínio público
 - flavio-2019-posse e flavio-2022-arquivamento: Edilson Rodrigues/Agência Senado, CC BY 2.0
 - flavio-2020-denuncia: Pedro França/Agência Senado, CC BY 2.0
+- flavio-2022-campanha: Geraldo Magela/Agência Senado, CC BY 2.0
 - flavio-2025-csp: Edilson Rodrigues/Agência Senado, CC BY-SA 4.0
 - flavio-2025-precandidatura: Andressa Anholete/Agência Senado, CC BY-SA 4.0
 - flavio-2026-primeiro-turno: Carlos Moura/Agência Senado, CC BY-SA 4.0
+
+Ilustrações recriadas (sem foto de licença aberta):
+
+- lula-1975-sindicato e lula-1980-fundacao-pt: ilustração Vizu Dados, CC BY-SA 4.0, recriada de registros da época;
+  rosto a partir de foto do CEDI/Câmara dos Deputados, CC BY 2.0
 
 Fotos de comício:
 
