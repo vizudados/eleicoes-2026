@@ -1,7 +1,7 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: O botão fechado do filtro da tela (a pílula, na caixa do filtro da casca): a cidade em uso ('Contagem (MG)' sem escolha); com uma escola marcada, ' · escola'; com várias da mesma cidade (não todas), ' · N escolas'; com o funil (ponto vermelho quando o filtro está em uso) e a seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01). Recebe só o filtro (o clique no mapa e na lista não mexe nela).
+@descricao: O botão fechado do filtro da tela (a pílula, na caixa do filtro da casca): a cidade em uso ('Rio de Janeiro (RJ)' sem escolha); com uma escola marcada, ' · escola'; com várias da mesma cidade (não todas), ' · N escolas'; com o funil (ponto vermelho quando o filtro está em uso) e a seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01). Recebe só o filtro (o clique no mapa e na lista não mexe nela).
 */
 -- 1 · Leituras
 VAR _uso = [T20 · filtro em uso]

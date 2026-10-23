@@ -1,8 +1,8 @@
 /*
 @pasta: T20 Escola\Contas
 @formato: 0
-@descricao: Id do local da ficha quando nada foi escolhido: em Contagem, a Escola Estadual Nova Contagem-I (onde o documentário começa); nas outras cidades, a escola que virou com mais votos válidos (ou, se nenhuma virou, a de maior queda da margem de Lula).
-@oraculo: mockup/data/eleicoes.json › Escola › exemplo_tooltip
+@descricao: Id do local da ficha quando nada foi escolhido: em cada cidade, a escola que virou com mais votos válidos (ou, se nenhuma virou, a de maior queda da margem de Lula); vem de T20 Cidade[IdExemplo] (pipeline/exportar_t20.py).
+@oraculo: dados/pbi/t20_cidades.csv › id_exemplo (Rio de Janeiro: 815)
 */
 VAR _cod = [T20 · cidade (código)]
 RETURN

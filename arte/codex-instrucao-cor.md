@@ -1,0 +1,4 @@
+Use your built-in image generation tool to create exactly ONE new image. Do not write or run any code, do not create or edit files. Use the attached images only as described in the REFERENCES line. Do not change the wording of the image prompt below. After the image is generated, reply only with the absolute file path of the generated PNG.
+
+IMAGE PROMPT:
+STYLE: Hand-drawn reportage illustration, like a journalist's illustrated field notebook: the same loose, lively fine-liner ink lines as Image 1 (keep every line of the drawing), now with color added as soft, slightly muted watercolor-like washes laid inside the lines, with gentle variation and a few lighter areas where the paper shows through, never glossy, never 3D-rendered, no airbrush gradients, no glow. The ink lines stay dark and visible on top of the color. Plain pure white background (#FFFFFF) everywhere around the figure, with no paper texture, no shadow on the floor, ideal for cutting out.

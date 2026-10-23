@@ -1,0 +1,5 @@
+FORMAT: portrait orientation, 4:5.
+SUBJECT: The exact same drawing as Image 1 (a young woman presenter standing, full body, one hand open in a welcoming gesture), now colored. Keep the composition, pose, face, hair and every ink line of Image 1; only add color.
+COLORS: Use the character's own colors from Image 2: warm light-brown skin with a touch of rosy warmth on the cheeks; long wavy dark-brown hair with soft caramel highlights toward the ends; brown eyes; natural rosy-brown lips. Her short-sleeved crew-neck t-shirt is plain white with a slightly warm off-white shading in the folds; straight jeans in a muted indigo blue; white sneakers. Colors are natural and calm, a little desaturated, so they sit well next to a beige paper page with muted red and blue accents.
+REFERENCES: Image 1 is the line drawing to color: keep it exactly (pose, proportions, lines). Image 2 is ONLY the color reference for skin, hair, eyes and clothes of the same character; do not copy its 3D rendering style.
+CONSTRAINTS: No text, no letters, no numbers, no logos on the clothes (plain t-shirt), no watermark, no signature, no border or frame. Pure white background around the figure.

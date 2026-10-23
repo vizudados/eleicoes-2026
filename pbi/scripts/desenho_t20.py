@@ -274,7 +274,7 @@ RETURN
     # --- ficha (post-it)
     gravar("T20 · Ficha · HTML", "A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × "
            "Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo "
-           "da cidade: em Contagem, a Escola Estadual Nova Contagem-I (onde o documentário começa); nas outras, a "
+           "da cidade: em todas, a "
            "escola que virou com mais votos válidos (ou a de maior queda).", ficha())
     gravar("T20 · Ficha · ALT", "Texto alternativo da ficha do local.", rf"""
 -- 1 · Leituras
@@ -376,7 +376,7 @@ RETURN
 """)
     # --- a pílula do filtro (o mesmo padrão do filtro de UF da casca, pílula + painel)
     gravar("T20 · Filtro · pílula · HTML", "O botão fechado do filtro da tela (a pílula, na caixa do filtro da casca): "
-           "a cidade em uso ('Contagem (MG)' sem escolha); com uma escola marcada, ' · escola'; com várias da "
+           "a cidade em uso ('Rio de Janeiro (RJ)' sem escolha); com uma escola marcada, ' · escola'; com várias da "
            "mesma cidade (não todas), ' · N escolas'; com o funil (ponto vermelho quando o filtro está em uso) e a "
            "seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01). Recebe só o filtro (o "
            "clique no mapa e na lista não mexe nela).", rf"""
@@ -456,7 +456,6 @@ VAR _c26 = IF ( _m26 > 0, "lula", IF ( _m26 < 0, "flavio", "" ) )
 VAR _nota =
     SWITCH (
         TRUE (),
-        _ha = 0 && _exemplo = "começo", "onde o documentário começa",
         _ha = 0 && _exemplo = "virou", "a maior escola que virou",
         _ha = 0, "a maior queda da cidade",
         _virou = 1, "virou para Flávio",

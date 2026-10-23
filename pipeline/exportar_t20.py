@@ -1,5 +1,6 @@
 """Exporta os dados da tela Escola (código T20; dono: tela 20) para 34 cidades: as 27 capitais, as 6 maiores que
-trocaram Lula por Flávio de 2022 para 2026 e Contagem (MG), onde o documentário começa (pedido do dono, 23/10/2026).
+trocaram Lula por Flávio de 2022 para 2026 e Contagem (MG) (pedido do dono, 23/10/2026). A tela abre no Rio de
+Janeiro: a margem da cidade quase não mexeu, mas por dentro locais viraram para os dois lados.
 
 - `dados/pbi/t20_locais.csv`: um local de votação do 1º turno de 2026 por linha, com os votos de 2026 e os de 2022 e
   2018 do mesmo local (soma das seções do mesmo zona + número) e a posição no mapa da própria cidade.
@@ -53,8 +54,9 @@ DESTINO_CIDADES = RAIZ / "dados" / "pbi" / "t20_cidades.csv"
 MAPA_W, MAPA_H = 692, 860            # a caixa do mapa da tela (pbi/scripts/desenho_t20.py)
 FOLGA = 0.06                          # folga da caixa do contorno (a de antes)
 LONGE = 3.0                           # km do contorno a partir dos quais a coordenada é tida como errada
-CONTAGEM = "3118601"
-EXEMPLO_CONTAGEM = "ESCOLA ESTADUAL NOVA CONTAGEM-I"     # onde o documentário começa
+# a cidade em que a tela abre (primeira no filtro e nos ids). Não é Contagem: abrir onde o documentário de referência
+# começa seria copiar o roteiro dele (pedido do dono, 23/10/2026)
+CIDADE_INICIAL = "3304557"     # Rio de Janeiro
 
 SIGLAS = {
     # da Contagem de antes
@@ -475,13 +477,11 @@ def _cidade(uf, cd_tse, cod_ibge, nome, loc_c, arcos, geo):
     a26.loc[ordem, "pos_queda"] = range(1, len(a26) + 1)
     ordem = a26.sort_values("_nome").index
     a26.loc[ordem, "ordem_nome"] = range(1, len(a26) + 1)
-    # exemplo da ficha: Contagem, a escola onde o documentário começa; nas outras, a que virou com mais votos válidos
+    # exemplo da ficha: em todas as cidades, a escola que virou com mais votos válidos
     # ou, se nenhuma virou, a de maior queda — entre as que estão no mapa (o anel aparece), se houver
     virou = (m22 > 0) & (m26 < 0)
     no_mapa = a26.fora_mapa == ""
-    if cod_ibge == CONTAGEM:
-        i_ex, tipo = a26.index[a26.NM_LOCAL_VOTACAO == EXEMPLO_CONTAGEM][0], "começo"
-    elif virou.any():
+    if virou.any():
         i_ex, tipo = a26[virou & no_mapa if (virou & no_mapa).any() else virou].validos_2026.idxmax(), "virou"
     else:
         i_ex, tipo = a26[no_mapa if (no_mapa & a26._var.notna()).any() else a26._var.notna()]._var.idxmin(), "queda"
@@ -521,8 +521,8 @@ def prova(loc, cidades):
 def main():
     bruto = pd.read_csv(BRUTO / "tse" / "locais_t20.csv", dtype={"cd_ibge": str})
     arcos, geo = _malha()
-    # ordem das cidades no filtro e nos ids: Contagem (onde o documentário começa) e as outras em ordem alfabética
-    ordem = sorted(CIDADES_T20, key=lambda c: (c[2] != CONTAGEM, _chave_pt(c[3])))
+    # ordem das cidades no filtro e nos ids: a cidade inicial e as outras em ordem alfabética
+    ordem = sorted(CIDADES_T20, key=lambda c: (c[2] != CIDADE_INICIAL, _chave_pt(c[3])))
     partes, regs = [], []
     for k, (uf, cd_tse, cod_ibge, nome) in enumerate(ordem, start=1):
         t, r = _cidade(uf, cd_tse, cod_ibge, nome, bruto[bruto.cd_ibge == cod_ibge], arcos, geo)

@@ -27,3 +27,6 @@ pbi/visuais_src/
 **/.pbi/cache.abf
 capa/remotion/node_modules/
 capa/remotion/out/
+
+# Claude Code: ajustes locais desta máquina
+.claude/settings.local.json

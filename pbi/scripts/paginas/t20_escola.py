@@ -2,11 +2,11 @@
 """20 · Escola — como votou cada escola da cidade? (dono: tela 20)
 
 Do país à escola, em 34 cidades (23/10/2026, pedido do dono: "eu não queria esse painel focado em contagem, não dá pra
-variar ele mais?"): as 27 capitais, as 6 maiores que trocaram Lula por Flávio de 2022 para 2026 e Contagem, onde o
-documentário começa e onde a tela abre. Em Contagem, Lula ficou à frente em 12 dos 112 locais de votação em 2026 (eram
-27 em 2022); a Escola Estadual Nova Contagem-I virou: Lula +10,3 p.p. em 2022 → Flávio +0,7 em 2026.
+variar ele mais?"): as 27 capitais, as 6 maiores que trocaram Lula por Flávio de 2022 para 2026 e Contagem. A tela
+abre no Rio de Janeiro, não em Contagem (abrir onde o documentário de referência começa seria copiar o roteiro dele):
+a margem da cidade quase não mexeu (−3,6 → −4,0 pontos), mas por dentro 31 locais viraram para Flávio e 35 para Lula.
 
-  T20_Filtro_Pilula     a pílula do filtro (HTML, na caixa do filtro da casca): "Contagem (MG)", "São Paulo (SP) ·
+  T20_Filtro_Pilula     a pílula do filtro (HTML, na caixa do filtro da casca): "Rio de Janeiro (RJ)", "São Paulo (SP) ·
                         escola" ou "São Paulo (SP) · 3 escolas", com o funil e o ponto vermelho quando o filtro está em
                         uso
   T20_Filtro_Abre/Fora  botão sobre a pílula (abre o filtro, T20_FILTRO_ABRE_01) e o véu que fecha (T20_FILTRO_FECHA_01)
@@ -92,7 +92,7 @@ def _filtro() -> list:
              "startOpen": True, "alwaysOpen": True, "showSearch": True, "searchScope": "list",
              "searchPlaceholder": "Buscar cidade ou escola", "categoryHeaderStyle": "natural",
              "showSelectAll": False, "showReset": True, "showSelectedCount": False, "showSelectedValue": False,
-             "triggerMode": "count", "triggerCountStyle": "text", "triggerLabel": "Contagem (MG)",
+             "triggerMode": "count", "triggerCountStyle": "text", "triggerLabel": "Rio de Janeiro (RJ)",
              "triggerCountFormat": "Cidade e escola em uso", "syncSelectionWithHost": True}
     layout = {"controlWidth": w, "controlHeight": hp, "dropdownWidth": w, "dropdownHeight": h - hp - 6, "gap": 6,
               "optionHeight": 36, "searchHeight": 40, "triggerIconGap": 12, "borderRadius": 6, "checkboxSize": 16,

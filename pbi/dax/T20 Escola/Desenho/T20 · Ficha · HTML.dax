@@ -1,7 +1,7 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo da cidade: em Contagem, a Escola Estadual Nova Contagem-I (onde o documentário começa); nas outras, a escola que virou com mais votos válidos (ou a de maior queda).
+@descricao: A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo da cidade: em todas, a escola que virou com mais votos válidos (ou a de maior queda).
 */
 -- 1 · Leituras
 VAR _id = [T20 · id escolhido]
@@ -40,7 +40,6 @@ VAR _c26 = IF ( _m26 > 0, "lula", IF ( _m26 < 0, "flavio", "" ) )
 VAR _nota =
     SWITCH (
         TRUE (),
-        _ha = 0 && _exemplo = "começo", "onde o documentário começa",
         _ha = 0 && _exemplo = "virou", "a maior escola que virou",
         _ha = 0, "a maior queda da cidade",
         _virou = 1, "virou para Flávio",

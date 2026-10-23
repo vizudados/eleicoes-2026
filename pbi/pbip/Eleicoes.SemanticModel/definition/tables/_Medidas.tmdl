@@ -20367,14 +20367,14 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: a2136f1a-2919-5a6c-b4ae-addb4e0b6926
 
-	/// Código IBGE da cidade da tela: a cidade das escolas marcadas no filtro (uma cidade por vez, pelo exclusiveRoots do VizuFilter; marcar a cidade marca todas as escolas dela); sem escolha, Contagem (3118601), onde o documentário começa.
+	/// Código IBGE da cidade da tela: a cidade das escolas marcadas no filtro (uma cidade por vez, pelo exclusiveRoots do VizuFilter; marcar a cidade marca todas as escolas dela); sem escolha, o Rio de Janeiro (3304557), onde a tela abre.
 	measure 'T20 · cidade (código)' =
 			VAR _codigos = VALUES ( 'T20 Filtro'[CodIBGE] )
 			RETURN
 			    IF (
 			        ISFILTERED ( 'T20 Filtro' ) && COUNTROWS ( _codigos ) = 1,
 			        MAXX ( _codigos, 'T20 Filtro'[CodIBGE] ),
-			        "3118601"
+			        "3304557"
 			    )
 		displayFolder: T20 Escola\Contas
 		lineageTag: d5d0ef2a-b7b1-5b8e-9514-8d3371d8e08c
@@ -20517,7 +20517,7 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: c9a30977-7657-594f-82ff-a43640b15bc0
 
-	/// Id do local da ficha quando nada foi escolhido: em Contagem, a Escola Estadual Nova Contagem-I (onde o documentário começa); nas outras cidades, a escola que virou com mais votos válidos (ou, se nenhuma virou, a de maior queda da margem de Lula).
+	/// Id do local da ficha quando nada foi escolhido: em cada cidade, a escola que virou com mais votos válidos (ou, se nenhuma virou, a de maior queda da margem de Lula); vem de T20 Cidade[IdExemplo] (pipeline/exportar_t20.py).
 	measure 'T20 · id do exemplo' =
 			VAR _cod = [T20 · cidade (código)]
 			RETURN
@@ -20960,7 +20960,7 @@ table _Medidas
 		displayFolder: T20 Escola\Desenho
 		lineageTag: d7e95492-c879-524c-be08-21c5b5ddc05c
 
-	/// A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo da cidade: em Contagem, a Escola Estadual Nova Contagem-I (onde o documentário começa); nas outras, a escola que virou com mais votos válidos (ou a de maior queda).
+	/// A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo da cidade: em todas, a escola que virou com mais votos válidos (ou a de maior queda).
 	measure 'T20 · Ficha · HTML' =
 			-- 1 · Leituras
 			VAR _id = [T20 · id escolhido]
@@ -20999,7 +20999,6 @@ table _Medidas
 			VAR _nota =
 			    SWITCH (
 			        TRUE (),
-			        _ha = 0 && _exemplo = "começo", "onde o documentário começa",
 			        _ha = 0 && _exemplo = "virou", "a maior escola que virou",
 			        _ha = 0, "a maior queda da cidade",
 			        _virou = 1, "virou para Flávio",
@@ -21073,7 +21072,7 @@ table _Medidas
 		displayFolder: T20 Escola\Desenho
 		lineageTag: a4a2825d-700a-526f-a110-2f7eaa2152a9
 
-	/// O botão fechado do filtro da tela (a pílula, na caixa do filtro da casca): a cidade em uso ('Contagem (MG)' sem escolha); com uma escola marcada, ' · escola'; com várias da mesma cidade (não todas), ' · N escolas'; com o funil (ponto vermelho quando o filtro está em uso) e a seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01). Recebe só o filtro (o clique no mapa e na lista não mexe nela).
+	/// O botão fechado do filtro da tela (a pílula, na caixa do filtro da casca): a cidade em uso ('Rio de Janeiro (RJ)' sem escolha); com uma escola marcada, ' · escola'; com várias da mesma cidade (não todas), ' · N escolas'; com o funil (ponto vermelho quando o filtro está em uso) e a seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01). Recebe só o filtro (o clique no mapa e na lista não mexe nela).
 	measure 'T20 · Filtro · pílula · HTML' =
 			-- 1 · Leituras
 			VAR _uso = [T20 · filtro em uso]
