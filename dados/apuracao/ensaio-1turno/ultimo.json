@@ -1,0 +1,3752 @@
+{
+ "eleicao": 6257,
+ "turno": 1,
+ "coletado_em": "23/10/2026 00:08:36",
+ "atualizado_tse": "05/10/2026 12:51:05",
+ "status": "encerrada",
+ "brasil": {
+  "uf": "BR",
+  "atualizado_tse": "05/10/2026 12:51:05",
+  "secoes_pct": 100.0,
+  "eleitorado": 158745502,
+  "comparecimento": 125275835,
+  "abstencao": 33469244,
+  "abstencao_pct": 21.08,
+  "brancos": 2300798,
+  "nulos": 3674249,
+  "validos": 119300788,
+  "lula_votos": 53879538,
+  "lula_pct": 45.16,
+  "flavio_votos": 56104503,
+  "flavio_pct": 47.03,
+  "lider": "Flávio",
+  "diferenca_votos": 2224965,
+  "candidatos": [
+   {
+    "numero": 22,
+    "nome": "Flavio Bolsonaro",
+    "partido": "PL",
+    "votos": 56104503,
+    "pct": 47.03,
+    "eleito": true,
+    "situacao": "2º turno"
+   },
+   {
+    "numero": 13,
+    "nome": "Lula",
+    "partido": "PT",
+    "votos": 53879538,
+    "pct": 45.16,
+    "eleito": true,
+    "situacao": "2º turno"
+   },
+   {
+    "numero": 70,
+    "nome": "Escritor Augusto Cury",
+    "partido": "AVANTE",
+    "votos": 3448569,
+    "pct": 2.89,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 14,
+    "nome": "Renan Santos",
+    "partido": "MISSÃO",
+    "votos": 2675887,
+    "pct": 2.24,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 55,
+    "nome": "Ronaldo Caiado",
+    "partido": "PSD",
+    "votos": 2605148,
+    "pct": 2.18,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 30,
+    "nome": "Zema",
+    "partido": "NOVO",
+    "votos": 326488,
+    "pct": 0.27,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 80,
+    "nome": "Samara",
+    "partido": "UP",
+    "votos": 122911,
+    "pct": 0.1,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 16,
+    "nome": "Hertz Dias",
+    "partido": "PSTU",
+    "votos": 43103,
+    "pct": 0.04,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 27,
+    "nome": "Clariana Barao",
+    "partido": "DC",
+    "votos": 40043,
+    "pct": 0.03,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 21,
+    "nome": "Edmilson Costa",
+    "partido": "PCB",
+    "votos": 22693,
+    "pct": 0.02,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 35,
+    "nome": "Veterinário Wilson Grassi",
+    "partido": "DEMOCRATA",
+    "votos": 16881,
+    "pct": 0.01,
+    "eleito": false,
+    "situacao": "Não eleito"
+   },
+   {
+    "numero": 29,
+    "nome": "Rui Costa Pimenta",
+    "partido": "PCO",
+    "votos": 15024,
+    "pct": 0.01,
+    "eleito": false,
+    "situacao": "Não eleito"
+   }
+  ],
+  "totalizacao_final": true
+ },
+ "ufs": [
+  {
+   "uf": "AC",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 613742,
+   "comparecimento": 488330,
+   "abstencao": 125412,
+   "abstencao_pct": 20.43,
+   "brancos": 5579,
+   "nulos": 13685,
+   "validos": 469066,
+   "lula_votos": 134770,
+   "lula_pct": 28.73,
+   "flavio_votos": 302807,
+   "flavio_pct": 64.56,
+   "lider": "Flávio",
+   "diferenca_votos": 168037,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 302807,
+     "pct": 64.56,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 134770,
+     "pct": 28.73,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 13523,
+     "pct": 2.88,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 8594,
+     "pct": 1.83,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 7980,
+     "pct": 1.7,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 573,
+     "pct": 0.12,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 314,
+     "pct": 0.07,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 215,
+     "pct": 0.05,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 140,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 71,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 40,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 39,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "AL",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 2442126,
+   "comparecimento": 1938428,
+   "abstencao": 503698,
+   "abstencao_pct": 20.63,
+   "brancos": 33712,
+   "nulos": 85860,
+   "validos": 1818856,
+   "lula_votos": 995459,
+   "lula_pct": 54.73,
+   "flavio_votos": 735718,
+   "flavio_pct": 40.45,
+   "lider": "Lula",
+   "diferenca_votos": 259741,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 995459,
+     "pct": 54.73,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 735718,
+     "pct": 40.45,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 42427,
+     "pct": 2.33,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 26851,
+     "pct": 1.48,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 14198,
+     "pct": 0.78,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1345,
+     "pct": 0.07,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 1168,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 636,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 431,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 267,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 246,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 110,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "AM",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 2798611,
+   "comparecimento": 2234549,
+   "abstencao": 564062,
+   "abstencao_pct": 20.16,
+   "brancos": 24402,
+   "nulos": 39384,
+   "validos": 2170763,
+   "lula_votos": 1046996,
+   "lula_pct": 48.23,
+   "flavio_votos": 976764,
+   "flavio_pct": 45.0,
+   "lider": "Lula",
+   "diferenca_votos": 70232,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 1046996,
+     "pct": 48.23,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 976764,
+     "pct": 45.0,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 77531,
+     "pct": 3.57,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 35411,
+     "pct": 1.63,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 28310,
+     "pct": 1.3,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1867,
+     "pct": 0.09,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 1781,
+     "pct": 0.08,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 929,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 457,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 291,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 265,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 161,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "AP",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 576988,
+   "comparecimento": 476562,
+   "abstencao": 100426,
+   "abstencao_pct": 17.41,
+   "brancos": 4415,
+   "nulos": 7289,
+   "validos": 464858,
+   "lula_votos": 212503,
+   "lula_pct": 45.71,
+   "flavio_votos": 212278,
+   "flavio_pct": 45.67,
+   "lider": "Lula",
+   "diferenca_votos": 225,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 212503,
+     "pct": 45.71,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 212278,
+     "pct": 45.67,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 19057,
+     "pct": 4.1,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 11342,
+     "pct": 2.44,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 8304,
+     "pct": 1.79,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 508,
+     "pct": 0.11,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 341,
+     "pct": 0.07,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 229,
+     "pct": 0.05,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 132,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 62,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 53,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 49,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "BA",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 11312752,
+   "comparecimento": 9053601,
+   "abstencao": 2259151,
+   "abstencao_pct": 19.97,
+   "brancos": 154936,
+   "nulos": 338374,
+   "validos": 8560291,
+   "lula_votos": 5664771,
+   "lula_pct": 66.17,
+   "flavio_votos": 2442585,
+   "flavio_pct": 28.53,
+   "lider": "Lula",
+   "diferenca_votos": 3222186,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 5664771,
+     "pct": 66.17,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 2442585,
+     "pct": 28.53,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 195451,
+     "pct": 2.28,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 122705,
+     "pct": 1.43,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 117518,
+     "pct": 1.37,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 6497,
+     "pct": 0.08,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 4649,
+     "pct": 0.05,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 1791,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 1676,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 1299,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 724,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 625,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "CE",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 6996545,
+   "comparecimento": 5910471,
+   "abstencao": 1086074,
+   "abstencao_pct": 15.52,
+   "brancos": 103295,
+   "nulos": 189362,
+   "validos": 5617814,
+   "lula_votos": 3555263,
+   "lula_pct": 63.29,
+   "flavio_votos": 1756850,
+   "flavio_pct": 31.27,
+   "lider": "Lula",
+   "diferenca_votos": 1798413,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 3555263,
+     "pct": 63.29,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 1756850,
+     "pct": 31.27,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 140524,
+     "pct": 2.5,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 107587,
+     "pct": 1.92,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 45604,
+     "pct": 0.81,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 4310,
+     "pct": 0.08,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 3352,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 1491,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 1071,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 783,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 498,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 481,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "DF",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 2258320,
+   "comparecimento": 1831396,
+   "abstencao": 426924,
+   "abstencao_pct": 18.9,
+   "brancos": 25362,
+   "nulos": 33226,
+   "validos": 1772808,
+   "lula_votos": 675627,
+   "lula_pct": 38.11,
+   "flavio_votos": 909616,
+   "flavio_pct": 51.31,
+   "lider": "Flávio",
+   "diferenca_votos": 233989,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 909616,
+     "pct": 51.31,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 675627,
+     "pct": 38.11,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 85076,
+     "pct": 4.8,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 46714,
+     "pct": 2.64,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 45979,
+     "pct": 2.59,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 4915,
+     "pct": 0.28,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 2297,
+     "pct": 0.13,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 828,
+     "pct": 0.05,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 716,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 382,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 334,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 324,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "ES",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 2991650,
+   "comparecimento": 2352282,
+   "abstencao": 639368,
+   "abstencao_pct": 21.37,
+   "brancos": 43211,
+   "nulos": 57993,
+   "validos": 2251078,
+   "lula_votos": 850028,
+   "lula_pct": 37.76,
+   "flavio_votos": 1233194,
+   "flavio_pct": 54.78,
+   "lider": "Flávio",
+   "diferenca_votos": 383166,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 1233194,
+     "pct": 54.78,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 850028,
+     "pct": 37.76,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 65121,
+     "pct": 2.89,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 53236,
+     "pct": 2.36,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 39097,
+     "pct": 1.74,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 5873,
+     "pct": 0.26,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1973,
+     "pct": 0.09,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 974,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 638,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 388,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 311,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 245,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "GO",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 5080590,
+   "comparecimento": 3971587,
+   "abstencao": 1109003,
+   "abstencao_pct": 21.83,
+   "brancos": 45643,
+   "nulos": 98121,
+   "validos": 3827823,
+   "lula_votos": 1188880,
+   "lula_pct": 31.06,
+   "flavio_votos": 2051888,
+   "flavio_pct": 53.6,
+   "lider": "Flávio",
+   "diferenca_votos": 863008,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 2051888,
+     "pct": 53.6,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 1188880,
+     "pct": 31.06,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 472041,
+     "pct": 12.33,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 54105,
+     "pct": 1.41,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 53849,
+     "pct": 1.41,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 2672,
+     "pct": 0.07,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 2087,
+     "pct": 0.05,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 668,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 559,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 468,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 346,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 260,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "MA",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 5183115,
+   "comparecimento": 4160343,
+   "abstencao": 1022772,
+   "abstencao_pct": 19.73,
+   "brancos": 46315,
+   "nulos": 103589,
+   "validos": 4010439,
+   "lula_votos": 2566301,
+   "lula_pct": 63.99,
+   "flavio_votos": 1239040,
+   "flavio_pct": 30.9,
+   "lider": "Lula",
+   "diferenca_votos": 1327261,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 2566301,
+     "pct": 63.99,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 1239040,
+     "pct": 30.9,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 84830,
+     "pct": 2.12,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 60387,
+     "pct": 1.51,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 50155,
+     "pct": 1.25,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 4584,
+     "pct": 0.11,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1795,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 1459,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 895,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 475,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 307,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 211,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "MG",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 16372372,
+   "comparecimento": 12637274,
+   "abstencao": 3735098,
+   "abstencao_pct": 22.81,
+   "brancos": 268302,
+   "nulos": 392737,
+   "validos": 11976235,
+   "lula_votos": 5188936,
+   "lula_pct": 43.33,
+   "flavio_votos": 5777548,
+   "flavio_pct": 48.24,
+   "lider": "Flávio",
+   "diferenca_votos": 588612,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 5777548,
+     "pct": 48.24,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 5188936,
+     "pct": 43.33,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 409737,
+     "pct": 3.42,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 247209,
+     "pct": 2.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 230423,
+     "pct": 1.92,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 98407,
+     "pct": 0.82,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 11026,
+     "pct": 0.09,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 4085,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 3411,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 2300,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 1732,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 1421,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "MS",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 2024430,
+   "comparecimento": 1541220,
+   "abstencao": 483210,
+   "abstencao_pct": 23.87,
+   "brancos": 21270,
+   "nulos": 29672,
+   "validos": 1490278,
+   "lula_votos": 516855,
+   "lula_pct": 34.68,
+   "flavio_votos": 873351,
+   "flavio_pct": 58.6,
+   "lider": "Flávio",
+   "diferenca_votos": 356496,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 873351,
+     "pct": 58.6,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 516855,
+     "pct": 34.68,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 39148,
+     "pct": 2.63,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 31847,
+     "pct": 2.14,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 23291,
+     "pct": 1.56,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 2792,
+     "pct": 0.19,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1291,
+     "pct": 0.09,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 626,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 353,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 332,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 209,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 183,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "MT",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 2637801,
+   "comparecimento": 2052133,
+   "abstencao": 585668,
+   "abstencao_pct": 22.2,
+   "brancos": 20756,
+   "nulos": 38089,
+   "validos": 1993288,
+   "lula_votos": 581681,
+   "lula_pct": 29.18,
+   "flavio_votos": 1298581,
+   "flavio_pct": 65.15,
+   "lider": "Flávio",
+   "diferenca_votos": 716900,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 1298581,
+     "pct": 65.15,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 581681,
+     "pct": 29.18,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 40019,
+     "pct": 2.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 33170,
+     "pct": 1.66,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 33079,
+     "pct": 1.66,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 2424,
+     "pct": 0.12,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 1869,
+     "pct": 0.09,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1584,
+     "pct": 0.08,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 340,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 239,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 172,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 130,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "PA",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 6262397,
+   "comparecimento": 5066504,
+   "abstencao": 1195893,
+   "abstencao_pct": 19.1,
+   "brancos": 54203,
+   "nulos": 149129,
+   "validos": 4863172,
+   "lula_votos": 2427237,
+   "lula_pct": 49.91,
+   "flavio_votos": 2163957,
+   "flavio_pct": 44.5,
+   "lider": "Lula",
+   "diferenca_votos": 263280,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 2427237,
+     "pct": 49.91,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 2163957,
+     "pct": 44.5,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 125172,
+     "pct": 2.57,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 84165,
+     "pct": 1.73,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 51991,
+     "pct": 1.07,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 3824,
+     "pct": 0.08,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 3064,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 1293,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 1045,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 674,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 442,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 308,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "PB",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 3248531,
+   "comparecimento": 2683988,
+   "abstencao": 564543,
+   "abstencao_pct": 17.38,
+   "brancos": 52297,
+   "nulos": 117944,
+   "validos": 2513747,
+   "lula_votos": 1541127,
+   "lula_pct": 61.31,
+   "flavio_votos": 831377,
+   "flavio_pct": 33.07,
+   "lider": "Lula",
+   "diferenca_votos": 709750,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 1541127,
+     "pct": 61.31,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 831377,
+     "pct": 33.07,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 73831,
+     "pct": 2.94,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 42247,
+     "pct": 1.68,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 19511,
+     "pct": 0.78,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 1988,
+     "pct": 0.08,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1593,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 627,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 604,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 347,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 274,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 221,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "PE",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 7223450,
+   "comparecimento": 5911062,
+   "abstencao": 1312388,
+   "abstencao_pct": 18.17,
+   "brancos": 109491,
+   "nulos": 200554,
+   "validos": 5601017,
+   "lula_votos": 3553971,
+   "lula_pct": 63.45,
+   "flavio_votos": 1738043,
+   "flavio_pct": 31.03,
+   "lider": "Lula",
+   "diferenca_votos": 1815928,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 3553971,
+     "pct": 63.45,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 1738043,
+     "pct": 31.03,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 137960,
+     "pct": 2.46,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 85865,
+     "pct": 1.53,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 73176,
+     "pct": 1.31,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 6060,
+     "pct": 0.11,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 2387,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 1114,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 869,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 705,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 457,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 410,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "PI",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 2704758,
+   "comparecimento": 2240883,
+   "abstencao": 463875,
+   "abstencao_pct": 17.15,
+   "brancos": 28329,
+   "nulos": 66160,
+   "validos": 2146394,
+   "lula_votos": 1523710,
+   "lula_pct": 70.99,
+   "flavio_votos": 517028,
+   "flavio_pct": 24.09,
+   "lider": "Lula",
+   "diferenca_votos": 1006682,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 1523710,
+     "pct": 70.99,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 517028,
+     "pct": 24.09,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 47692,
+     "pct": 2.22,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 32274,
+     "pct": 1.5,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 21629,
+     "pct": 1.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 1357,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1099,
+     "pct": 0.05,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 504,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 443,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 319,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 193,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 146,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "PR",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 8613657,
+   "comparecimento": 6841457,
+   "abstencao": 1772200,
+   "abstencao_pct": 20.57,
+   "brancos": 122499,
+   "nulos": 133715,
+   "validos": 6585243,
+   "lula_votos": 2054597,
+   "lula_pct": 31.2,
+   "flavio_votos": 3945345,
+   "flavio_pct": 59.91,
+   "lider": "Flávio",
+   "diferenca_votos": 1890748,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 3945345,
+     "pct": 59.91,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 2054597,
+     "pct": 31.2,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 205095,
+     "pct": 3.11,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 177434,
+     "pct": 2.69,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 171294,
+     "pct": 2.6,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 17172,
+     "pct": 0.26,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 6731,
+     "pct": 0.1,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 2445,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 2056,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 1195,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 962,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 917,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "RJ",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 12857648,
+   "comparecimento": 9859802,
+   "abstencao": 2997846,
+   "abstencao_pct": 23.32,
+   "brancos": 201979,
+   "nulos": 288123,
+   "validos": 9369700,
+   "lula_votos": 3693021,
+   "lula_pct": 39.41,
+   "flavio_votos": 4966844,
+   "flavio_pct": 53.01,
+   "lider": "Flávio",
+   "diferenca_votos": 1273823,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 4966844,
+     "pct": 53.01,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 3693021,
+     "pct": 39.41,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 247397,
+     "pct": 2.64,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 211843,
+     "pct": 2.26,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 199844,
+     "pct": 2.13,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 21907,
+     "pct": 0.23,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 14186,
+     "pct": 0.15,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 4082,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 3999,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 2854,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 1930,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 1793,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "RN",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 2659825,
+   "comparecimento": 2171013,
+   "abstencao": 488812,
+   "abstencao_pct": 18.38,
+   "brancos": 33172,
+   "nulos": 65943,
+   "validos": 2071898,
+   "lula_votos": 1237963,
+   "lula_pct": 59.75,
+   "flavio_votos": 720493,
+   "flavio_pct": 34.77,
+   "lider": "Lula",
+   "diferenca_votos": 517470,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 1237963,
+     "pct": 59.75,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 720493,
+     "pct": 34.77,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 57367,
+     "pct": 2.77,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 35261,
+     "pct": 1.7,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 16407,
+     "pct": 0.79,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 1525,
+     "pct": 0.07,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1228,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 572,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 405,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 315,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 185,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 177,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "RO",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 1265893,
+   "comparecimento": 991080,
+   "abstencao": 274813,
+   "abstencao_pct": 21.71,
+   "brancos": 9846,
+   "nulos": 13175,
+   "validos": 968059,
+   "lula_votos": 250667,
+   "lula_pct": 25.89,
+   "flavio_votos": 652988,
+   "flavio_pct": 67.45,
+   "lider": "Flávio",
+   "diferenca_votos": 402321,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 652988,
+     "pct": 67.45,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 250667,
+     "pct": 25.89,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 25280,
+     "pct": 2.61,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 19187,
+     "pct": 1.98,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 16929,
+     "pct": 1.75,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 1318,
+     "pct": 0.14,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 843,
+     "pct": 0.09,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 356,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 174,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 160,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 97,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 60,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "RR",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 401521,
+   "comparecimento": 332772,
+   "abstencao": 68749,
+   "abstencao_pct": 17.12,
+   "brancos": 2618,
+   "nulos": 4609,
+   "validos": 325545,
+   "lula_votos": 74420,
+   "lula_pct": 22.86,
+   "flavio_votos": 231322,
+   "flavio_pct": 71.06,
+   "lider": "Flávio",
+   "diferenca_votos": 156902,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 231322,
+     "pct": 71.06,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 74420,
+     "pct": 22.86,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 8579,
+     "pct": 2.64,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 6623,
+     "pct": 2.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 3639,
+     "pct": 1.12,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 337,
+     "pct": 0.1,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 280,
+     "pct": 0.09,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 168,
+     "pct": 0.05,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 60,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 42,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 41,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 34,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "RS",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 8522545,
+   "comparecimento": 6702903,
+   "abstencao": 1819642,
+   "abstencao_pct": 21.35,
+   "brancos": 148339,
+   "nulos": 131518,
+   "validos": 6423046,
+   "lula_votos": 2294759,
+   "lula_pct": 35.73,
+   "flavio_votos": 3573783,
+   "flavio_pct": 55.64,
+   "lider": "Flávio",
+   "diferenca_votos": 1279024,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 3573783,
+     "pct": 55.64,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 2294759,
+     "pct": 35.73,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 195296,
+     "pct": 3.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 167558,
+     "pct": 2.61,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 158821,
+     "pct": 2.47,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 18988,
+     "pct": 0.3,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 6632,
+     "pct": 0.1,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 2146,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 2066,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 1043,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 1031,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 923,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "SC",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 5734651,
+   "comparecimento": 4648159,
+   "abstencao": 1086492,
+   "abstencao_pct": 18.95,
+   "brancos": 69007,
+   "nulos": 78255,
+   "validos": 4500897,
+   "lula_votos": 1127168,
+   "lula_pct": 25.04,
+   "flavio_votos": 3000020,
+   "flavio_pct": 66.65,
+   "lider": "Flávio",
+   "diferenca_votos": 1872852,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 3000020,
+     "pct": 66.65,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 1127168,
+     "pct": 25.04,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 134273,
+     "pct": 2.98,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 132795,
+     "pct": 2.95,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 79911,
+     "pct": 1.78,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 16718,
+     "pct": 0.37,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 5049,
+     "pct": 0.11,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 1503,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 1429,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 828,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 643,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 560,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "SE",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 1740135,
+   "comparecimento": 1439082,
+   "abstencao": 301053,
+   "abstencao_pct": 17.3,
+   "brancos": 24859,
+   "nulos": 50027,
+   "validos": 1364196,
+   "lula_votos": 856019,
+   "lula_pct": 62.75,
+   "flavio_votos": 417839,
+   "flavio_pct": 30.63,
+   "lider": "Lula",
+   "diferenca_votos": 438180,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 856019,
+     "pct": 62.75,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 417839,
+     "pct": 30.63,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 38895,
+     "pct": 2.85,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 26651,
+     "pct": 1.95,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 21405,
+     "pct": 1.57,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 1158,
+     "pct": 0.08,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 991,
+     "pct": 0.07,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 457,
+     "pct": 0.03,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 331,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 204,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 138,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 108,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "SP",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 34122892,
+   "comparecimento": 26431992,
+   "abstencao": 7690900,
+   "abstencao_pct": 22.54,
+   "brancos": 632801,
+   "nulos": 916243,
+   "validos": 24882948,
+   "lula_votos": 9505413,
+   "lula_pct": 38.2,
+   "flavio_votos": 12922023,
+   "flavio_pct": 51.93,
+   "lider": "Flávio",
+   "diferenca_votos": 3416610,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 12922023,
+     "pct": 51.93,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 9505413,
+     "pct": 38.2,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 892368,
+     "pct": 3.59,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 804310,
+     "pct": 3.23,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 579571,
+     "pct": 2.33,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 94635,
+     "pct": 0.38,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 42532,
+     "pct": 0.17,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 15815,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 10563,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 6129,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 5160,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 4429,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "TO",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 1182023,
+   "comparecimento": 965196,
+   "abstencao": 216827,
+   "abstencao_pct": 18.34,
+   "brancos": 8344,
+   "nulos": 26405,
+   "validos": 930447,
+   "lula_votos": 404009,
+   "lula_pct": 43.42,
+   "flavio_votos": 469321,
+   "flavio_pct": 50.44,
+   "lider": "Flávio",
+   "diferenca_votos": 65312,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 469321,
+     "pct": 50.44,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 404009,
+     "pct": 43.42,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 22434,
+     "pct": 2.41,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 20189,
+     "pct": 2.17,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 12983,
+     "pct": 1.4,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 595,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 395,
+     "pct": 0.04,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 171,
+     "pct": 0.02,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 117,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 101,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 67,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 65,
+     "pct": 0.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  },
+  {
+   "uf": "ZZ",
+   "atualizado_tse": "05/10/2026 12:51:05",
+   "secoes_pct": 100.0,
+   "eleitorado": 916534,
+   "comparecimento": 341766,
+   "abstencao": 574345,
+   "abstencao_pct": 62.69,
+   "brancos": 5816,
+   "nulos": 5068,
+   "validos": 330882,
+   "lula_votos": 157387,
+   "lula_pct": 47.57,
+   "flavio_votos": 143900,
+   "flavio_pct": 43.49,
+   "lider": "Lula",
+   "diferenca_votos": 13487,
+   "candidatos": [
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 157387,
+     "pct": 47.57,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 143900,
+     "pct": 43.49,
+     "eleito": true,
+     "situacao": "2º turno"
+    },
+    {
+     "numero": 70,
+     "nome": "Escritor Augusto Cury",
+     "partido": "AVANTE",
+     "votos": 9734,
+     "pct": 2.94,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 14,
+     "nome": "Renan Santos",
+     "partido": "MISSÃO",
+     "votos": 8580,
+     "pct": 2.59,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 55,
+     "nome": "Ronaldo Caiado",
+     "partido": "PSD",
+     "votos": 4708,
+     "pct": 1.42,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 30,
+     "nome": "Zema",
+     "partido": "NOVO",
+     "votos": 3329,
+     "pct": 1.01,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 80,
+     "nome": "Samara",
+     "partido": "UP",
+     "votos": 1053,
+     "pct": 0.32,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 27,
+     "nome": "Clariana Barao",
+     "partido": "DC",
+     "votos": 825,
+     "pct": 0.25,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 21,
+     "nome": "Edmilson Costa",
+     "partido": "PCB",
+     "votos": 421,
+     "pct": 0.13,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 16,
+     "nome": "Hertz Dias",
+     "partido": "PSTU",
+     "votos": 373,
+     "pct": 0.11,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 35,
+     "nome": "Veterinário Wilson Grassi",
+     "partido": "DEMOCRATA",
+     "votos": 373,
+     "pct": 0.11,
+     "eleito": false,
+     "situacao": "Não eleito"
+    },
+    {
+     "numero": 29,
+     "nome": "Rui Costa Pimenta",
+     "partido": "PCO",
+     "votos": 199,
+     "pct": 0.06,
+     "eleito": false,
+     "situacao": "Não eleito"
+    }
+   ],
+   "totalizacao_final": true
+  }
+ ],
+ "fonte": "TSE · resultados.tse.jus.br (API pública de divulgação)",
+ "faltaram": []
+}

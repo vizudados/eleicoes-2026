@@ -1,0 +1,4 @@
+Use your built-in image generation tool to create exactly ONE new image. Do not write or run any code, do not create or edit files. Use the attached images only as described in the REFERENCES line. Do not change the wording of the image prompt below. After the image is generated, reply only with the absolute file path of the generated PNG.
+
+IMAGE PROMPT:
+STYLE: Hand-drawn reportage pen sketch, like a journalist's field notebook: thin monoline black ink lines on plain pure white paper, loose and lively hand-drawn strokes with small overshooting construction lines, a few quick scribbled hatching lines for texture, drawn with a fine-liner pen. Pure black lines only: no color, no grey wash, no tonal shading, no gradients, no solid black fills. Flat, clean, pure white background (#FFFFFF) everywhere, with no paper texture, ideal for vectorization.

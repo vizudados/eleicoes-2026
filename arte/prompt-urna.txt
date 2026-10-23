@@ -1,0 +1,5 @@
+FORMAT: square, 1:1.
+SUBJECT: A Brazilian electronic voting machine (urna eletronica) seen in three-quarter view on a small school desk, inside its folding cardboard privacy booth (cabine de votacao) with the two side wings open; the urna shows its small screen and the numeric keypad with three larger keys on the bottom row; a simple school chair beside the desk. Draw the keys as small blank rounded rectangles.
+COMPOSITION: The object is centered, occupying about 60% of the frame, standing on a short ground line, with generous white margin on all sides.
+REFERENCES: Image 1 is the line-art style reference: use it ONLY for the pen stroke (line weight, sketchy quality, level of detail); do not copy its content.
+CONSTRAINTS: Black ink lines on pure white only. No text, no letters, no numbers, no logos, no coat of arms, no signage, no watermark, no signature, no border or frame. No people.

@@ -1,0 +1,1142 @@
+{
+ "eleicao": 6258,
+ "turno": 2,
+ "coletado_em": "23/10/2026 00:08:36",
+ "atualizado_tse": "",
+ "status": "aguardando",
+ "brasil": {
+  "uf": "BR",
+  "atualizado_tse": "",
+  "secoes_pct": 0.0,
+  "eleitorado": 158745502,
+  "comparecimento": 0,
+  "abstencao": 0,
+  "abstencao_pct": 0.0,
+  "brancos": 0,
+  "nulos": 0,
+  "validos": 0,
+  "lula_votos": 0,
+  "lula_pct": 0.0,
+  "flavio_votos": 0,
+  "flavio_pct": 0.0,
+  "lider": "—",
+  "diferenca_votos": 0,
+  "candidatos": [
+   {
+    "numero": 22,
+    "nome": "Flavio Bolsonaro",
+    "partido": "PL",
+    "votos": 0,
+    "pct": 0.0,
+    "eleito": false,
+    "situacao": ""
+   },
+   {
+    "numero": 13,
+    "nome": "Lula",
+    "partido": "PT",
+    "votos": 0,
+    "pct": 0.0,
+    "eleito": false,
+    "situacao": ""
+   }
+  ],
+  "totalizacao_final": false
+ },
+ "ufs": [
+  {
+   "uf": "AC",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 613715,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "AL",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 2442081,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "AM",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 2798661,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "AP",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 576910,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "BA",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 11312891,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "CE",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 6996521,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "DF",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 2258995,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "ES",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 2991515,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "GO",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 5080385,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "MA",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 5183049,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "MG",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 16372144,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "MS",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 2024437,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "MT",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 2637879,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "PA",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 6262063,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "PB",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 3248434,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "PE",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 7223227,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "PI",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 2704695,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "PR",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 8613628,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "RJ",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 12857526,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "RN",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 2659867,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "RO",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 1265926,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "RR",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 401540,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "RS",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 8522318,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "SC",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 5734687,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "SE",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 1740093,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "SP",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 34123591,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "TO",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 1182041,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  },
+  {
+   "uf": "ZZ",
+   "atualizado_tse": "",
+   "secoes_pct": 0.0,
+   "eleitorado": 916683,
+   "comparecimento": 0,
+   "abstencao": 0,
+   "abstencao_pct": 0.0,
+   "brancos": 0,
+   "nulos": 0,
+   "validos": 0,
+   "lula_votos": 0,
+   "lula_pct": 0.0,
+   "flavio_votos": 0,
+   "flavio_pct": 0.0,
+   "lider": "—",
+   "diferenca_votos": 0,
+   "candidatos": [
+    {
+     "numero": 22,
+     "nome": "Flavio Bolsonaro",
+     "partido": "PL",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    },
+    {
+     "numero": 13,
+     "nome": "Lula",
+     "partido": "PT",
+     "votos": 0,
+     "pct": 0.0,
+     "eleito": false,
+     "situacao": ""
+    }
+   ],
+   "totalizacao_final": false
+  }
+ ],
+ "fonte": "TSE · resultados.tse.jus.br (API pública de divulgação)",
+ "faltaram": []
+}

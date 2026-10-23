@@ -1,0 +1,14 @@
+# Brutos do TSE e do IBGE: grandes e regeráveis (pipeline/extrair_*.py). Os levantamentos feitos à mão ficam no repo.
+dados/bruto/tse/
+dados/bruto/ibge/
+# Rascunhos de imagem do Codex e logs de geração (as artes limpas em arte/limpos e arte/mapas ficam).
+arte/candidatas/
+arte/logs/
+arte/lista-upload*.json
+mockup/revisao/
+__pycache__/
+*.pyc
+.DS_Store
+# Material interno: brief dos agentes (cita outro projeto da casa) e referência de estilo de outro projeto.
+docs/brief-visual.md
+arte/ref/estilo-traco.png

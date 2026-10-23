@@ -1,0 +1,2287 @@
+{
+  "meta": {
+    "gerado_em": "2026-10-22 (coleta concluída na madrugada de 23/10)",
+    "pergunta_do_painel": "O que mudou depois do debate na Band?",
+    "escopo": "Os dois debates presidenciais da Band em 2026. O de 23/08 é o principal da campanha do 1º turno (o primeiro da temporada); o de 18/10 é o único em que Lula e Flávio se enfrentaram.",
+    "aviso_foco": "No debate de 23/08 Lula e Flávio faltaram; a mudança mensurável depois dele foi a alta de Augusto Cury. O efeito sobre Lula × Flávio só pode ser medido no debate de 18/10, com 4 dias de pesquisas depois.",
+    "regras": "Nada estimado. Campo sem fonte fica null com a razão em *_obs. Trechos entre aspas têm até 15 palavras. 'o_numero_mostra' é conta sobre a base local; 'atribuicoes_ao_debate' é o que institutos e imprensa disseram.",
+    "arquivos_relacionados": [
+      "debates.csv",
+      "FONTES.md",
+      "../pesquisas/pesquisas_1turno.csv",
+      "../pesquisas/pesquisas_2turno.csv"
+    ]
+  },
+  "debate_1turno_2026_08_23": {
+    "identificacao": {
+      "data": "2026-08-23",
+      "dia_semana": "domingo",
+      "turno": 1,
+      "horario_inicio": "20h (Brasília)",
+      "fim_e_duracao": "cerca de 1h30 segundo a BBC News Brasil; a live do canal Band Jornalismo no YouTube (com pré-debate desde 18h57) terminou às 21h31. Divergência: Tribuna de Jundiaí (24/08) diz que os candidatos tiveram 'quase duas horas para falar ao país'.",
+      "local": "estúdios da Band, Morumbi, São Paulo",
+      "emissora": "Band",
+      "pool": "Grupo Bandeirantes (Band, BandNews TV, BandNews FM, Rádio Bandeirantes, Band.com.br, YouTube) + Estadão + TV Cultura + TV Gazeta + Jovem Pan",
+      "remarcacao": "previsto para 16/08; adiado para 23/08 para tentar acomodar a agenda de Lula (Band e BBC). O primeiro anúncio da Band (01/04) falava em 9 e 16 de agosto para os debates de governador e presidente.",
+      "mediacao": "Adriana Araújo e Eduardo Oinegue",
+      "jornalistas_perguntadores": "Ernesto Paglia (TV Cultura), Thaís Freitas (Rádio Bandeirantes), Sheila Magalhães (BandNews FM), segundo Aos Fatos",
+      "convidados": 6,
+      "participantes": [
+        "Ronaldo Caiado (PSD)",
+        "Renan Santos (Missão)",
+        "Augusto Cury (Avante)"
+      ],
+      "ausentes": [
+        {
+          "nome": "Lula (PT)",
+          "motivo": "no fim de julho disse que não iria a debates 'para ouvir bobagem'; a campanha alegou falta de igualdade de condições por terem sido convidados candidatos que a lei não obriga (Renan e Zema). Deu entrevista gravada à Record exibida no Domingo Espetacular no mesmo horário (a partir das 20h30).",
+          "fontes": [
+            "https://www.congressoemfoco.com.br/noticia/121577/band-realiza-primeiro-debate-presidencial-veja-quem-participa",
+            "https://www.bnews.com.br/noticias/politica/record-exibe-entrevista-com-lula-no-mesmo-horario-do-debate-da-band.html",
+            "https://mais.opovo.com.br/jornal/politica/2026/08/24/lula-falta-ao-debate-e-tem-entrevista-exibida-no-mesmo-horario-em-outra-emissora.html"
+          ]
+        },
+        {
+          "nome": "Flávio Bolsonaro (PL)",
+          "motivo": "condicionou a presença à de Lula; a campanha avaliou que, sem o petista, viraria o principal alvo.",
+          "fontes": [
+            "https://www.congressoemfoco.com.br/noticia/121577/band-realiza-primeiro-debate-presidencial-veja-quem-participa",
+            "https://www.congressoemfoco.com.br/noticia/121583/ausentes-lula-e-flavio-viram-principais-alvos-do-debate-da-band"
+          ]
+        },
+        {
+          "nome": "Romeu Zema (Novo)",
+          "motivo": "cancelou no início da tarde do próprio domingo (nota às 12h01): a mudança de data 'perdeu o seu propósito inicial' sem Lula e Flávio.",
+          "fontes": [
+            "https://poder360.com.br/poder-eleicoes-2026/sem-lula-e-flavio-debate-na-band-tera-caiado-zema-renan-e-cury",
+            "https://www.congressoemfoco.com.br/noticia/121577/band-realiza-primeiro-debate-presidencial-veja-quem-participa"
+          ]
+        }
+      ],
+      "incidente_pre_debate": "Cury chegou à Band, anunciou que não entraria em protesto contra as ausências e a entrevista de Lula na Record, e voltou atrás minutos antes do início.",
+      "regra_pulpito_vazio": "púlpitos dos ausentes mantidos vazios no estúdio, por regra acertada com as campanhas. Ordem (esq.→dir.): Renan, [Lula], [Flávio], Caiado, Cury, [Zema]. Não era permitido perguntar a ausentes.",
+      "fontes": [
+        "https://www.band.com.br/nacional/brasil/confira-um-resumo-do-debate-da-band-para-presidente",
+        "https://www.band.com.br/noticias/jornal-da-band/ultimas/estadao-se-junta-a-band-na-cobertura-do-debate-presidencial-202608132020",
+        "https://www.congressoemfoco.com.br/noticia/121577/band-realiza-primeiro-debate-presidencial-veja-quem-participa",
+        "https://poder360.com.br/poder-eleicoes-2026/sem-lula-e-flavio-debate-na-band-tera-caiado-zema-renan-e-cury",
+        "https://www.aosfatos.org/noticias/checamos-debate-presidencial-band/",
+        "https://www.agazeta.com.br/mundo/debate-da-band-os-principais-momentos-do-primeiro-confronto-entre-candidatos-a-presidencia-0826",
+        "https://www.youtube.com/watch?v=8ejQOXgiMvI",
+        "https://tribunadejundiai.com.br/politica/eleicoes-2026/os-pulpitos-vazios-venceram-o-primeiro-debate-presidencial/"
+      ]
+    },
+    "formato": {
+      "blocos": [
+        "1º bloco: perguntas da mediação a cada candidato (Renan: segurança; Caiado: economia/fiscal; Cury: educação) e primeiro confronto direto entre candidatos",
+        "2º bloco: perguntas de jornalistas convidados com comentário de outro candidato (temas: segurança, relação com os EUA/tarifaço, escala 6x1)",
+        "3º bloco: segundo confronto direto e considerações finais de 1min30 para cada candidato"
+      ],
+      "temas_sorteados": null,
+      "temas_sorteados_obs": "nenhuma fonte registra sorteio de temas; o sorteio feito com as campanhas definiu a posição no palco",
+      "direito_de_resposta_regra": "1 minuto, avaliado por comissão no mesmo bloco (Aos Fatos)",
+      "fontes": [
+        "https://www.band.com.br/nacional/brasil/confira-um-resumo-do-debate-da-band-para-presidente",
+        "https://www.congressoemfoco.com.br/noticia/121577/band-realiza-primeiro-debate-presidencial-veja-quem-participa",
+        "https://www.aosfatos.org/noticias/checamos-debate-presidencial-band/",
+        "https://poder360.com.br/poder-eleicoes-2026/sem-lula-e-flavio-debate-na-band-tera-caiado-zema-renan-e-cury"
+      ]
+    },
+    "momentos": [
+      {
+        "momento": "Chegada com fraldas com nomes de Lula e Flávio e ataque aos púlpitos vazios",
+        "quem": "Renan Santos",
+        "trecho": "Eles são covardes",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/121583/ausentes-lula-e-flavio-viram-principais-alvos-do-debate-da-band"
+      },
+      {
+        "momento": "Ausentes chamados de fujões",
+        "quem": "Ronaldo Caiado",
+        "trecho": "fujões",
+        "fonte_url": "https://diariodocomercio.com.br/?p=621218"
+      },
+      {
+        "momento": "Trocadilho com o filme sobre Bolsonaro (Vorcaro) e o caso Lulinha/INSS",
+        "quem": "Ronaldo Caiado",
+        "trecho": "Dark Horse de um lado e 'dark lobby' do outro",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/121583/ausentes-lula-e-flavio-viram-principais-alvos-do-debate-da-band"
+      },
+      {
+        "momento": "Cobrança a Lula ausente sobre educação",
+        "quem": "Augusto Cury",
+        "trecho": "Lula tinha que estar aqui para responder sobre o caos que está a educação",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/121583/ausentes-lula-e-flavio-viram-principais-alvos-do-debate-da-band"
+      },
+      {
+        "momento": "Cury critica a agressividade de Renan",
+        "quem": "Augusto Cury",
+        "trecho": "Você tem um nível de agressividade que me assombra",
+        "fonte_url": "https://portaln10.com.br/politica/eleicoes/augusto-cury-renan-ataque-eleitores-lula-351625/"
+      },
+      {
+        "momento": "Renan tenta perguntar ao púlpito vazio de Lula e é barrado",
+        "quem": "mediação (Adriana Araújo)",
+        "trecho": "o senhor precisa escolher um dos candidatos presentes",
+        "fonte_url": "https://www.aosfatos.org/noticias/checamos-debate-presidencial-band/"
+      },
+      {
+        "momento": "Promessa de 'banho de sangue' contra facções",
+        "quem": "Renan Santos",
+        "trecho": "banho de sangue",
+        "fonte_url": "https://www.agazeta.com.br/mundo/debate-da-band-os-principais-momentos-do-primeiro-confronto-entre-candidatos-a-presidencia-0826"
+      },
+      {
+        "momento": "Fala checada como falsa",
+        "quem": "Ronaldo Caiado",
+        "trecho": "Olha, acabou a criminalidade nas escolas.",
+        "fonte_url": "https://www.aosfatos.org/noticias/checamos-debate-presidencial-band/"
+      },
+      {
+        "momento": "Cury diz que faria de Caiado o xerife do Brasil",
+        "quem": "Augusto Cury",
+        "trecho": "o xerife do Brasil",
+        "fonte_url": "https://www.band.com.br/nacional/brasil/confira-um-resumo-do-debate-da-band-para-presidente"
+      },
+      {
+        "momento": "Cury sobre a entrevista de Lula na Record no mesmo horário",
+        "quem": "Augusto Cury",
+        "trecho": "um desrespeito à democracia",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/121583/ausentes-lula-e-flavio-viram-principais-alvos-do-debate-da-band"
+      }
+    ],
+    "momentos_obs": "Desdobramento: advogado do PSOL apresentou notícia-crime ao MPE contra Renan por fala sobre Janja no debate (acusação, não decisão).",
+    "temas": [
+      "segurança pública (facções como terroristas, intervenção federal, PEC da Segurança, presídios)",
+      "economia e juros (Caiado: juros a 6%)",
+      "educação",
+      "escala 6x1",
+      "relação com os EUA / tarifaço",
+      "corrupção (Banco Master/Vorcaro, 'Dark Horse', INSS/Lulinha)",
+      "violência contra a mulher",
+      "saúde mental (Cury)",
+      "obrigatoriedade de presença em debates (proposta de Caiado)"
+    ],
+    "temas_fontes": [
+      "https://www.congressoemfoco.com.br/noticia/121583/ausentes-lula-e-flavio-viram-principais-alvos-do-debate-da-band",
+      "https://www.band.com.br/nacional/brasil/confira-um-resumo-do-debate-da-band-para-presidente",
+      "https://diariodocomercio.com.br/?p=621218"
+    ],
+    "direitos_de_resposta": {
+      "pedidos": null,
+      "obs": "nenhuma fonte registra pedido ou concessão de direito de resposta (Aos Fatos descreve a regra e não registra pedidos)"
+    },
+    "alvo_principal": {
+      "resposta": "Lula, ausente, foi o alvo mais citado; Lula e Flávio concentraram a maior parte dos ataques",
+      "contagem": null,
+      "obs": "não há contagem de perguntas por alvo; regra proibia perguntar a ausentes",
+      "fonte_url": "https://www.congressoemfoco.com.br/noticia/121583/ausentes-lula-e-flavio-viram-principais-alvos-do-debate-da-band"
+    },
+    "checagens": {
+      "fonte": "Aos Fatos",
+      "renan_boxes": 5,
+      "caiado_boxes": 3,
+      "cury_boxes": 2,
+      "obs": "1 'falso' para Renan (insegurança alimentar) e 1 para Caiado (criminalidade nas escolas); os demais sem rótulo visível",
+      "fonte_url": "https://www.aosfatos.org/noticias/checamos-debate-presidencial-band/"
+    },
+    "audiencia": {
+      "tv": [
+        {
+          "medida": "média",
+          "valor_pontos": 2.2,
+          "praca": "Grande São Paulo",
+          "medidor": "Ibope/Kantar, dado prévio obtido pelo TV Pop",
+          "posicao": "4º lugar",
+          "fonte": "Pipoca Moderna (19/10/2026)",
+          "fonte_url": "https://pipocamoderna.com.br/2026/10/debate-band-lideranca-globo/"
+        },
+        {
+          "medida": "média e pico",
+          "valor_pontos": 1.9,
+          "pico_pontos": 2.9,
+          "praca": "não informada",
+          "medidor": "não informado ('segundo dados publicados')",
+          "fonte": "Vermelho (24/08/2026), veículo de linha editorial de esquerda",
+          "fonte_url": "https://vermelho.org.br/2026/08/24/audiencia-mostra-decisao-acertada-de-lula-em-dar-entrevista-ao-inves-de-ir-a-debate/"
+        },
+        {
+          "medida": "minuto das 20h57 (tempo real, não é média)",
+          "valor_pontos": 2.06,
+          "praca": "Grande São Paulo",
+          "medidor": "não informado",
+          "posicao": "4º lugar (Globo 16,13; SBT 7,84; Record 4,28)",
+          "fonte": "Revista Fórum e DCM (24/08/2026)",
+          "fonte_url": "https://revistaforum.com.br/politica/lula-record-audiencia-debate-band/"
+        }
+      ],
+      "concorrente_mesmo_horario": {
+        "programa": "Domingo Espetacular (Record) com entrevista de Lula, a partir das 20h30",
+        "valores": "5,4 pontos de média (Vermelho, sem praça/medidor) | 4,28 no minuto das 20h57 em Grande SP (Fórum/DCM)",
+        "fontes": [
+          "https://vermelho.org.br/2026/08/24/audiencia-mostra-decisao-acertada-de-lula-em-dar-entrevista-ao-inves-de-ir-a-debate/",
+          "https://revistaforum.com.br/politica/lula-record-audiencia-debate-band/",
+          "https://www.diariodocentrodomundo.com.br/lula-record-dobro-audiencia-debate-band"
+        ]
+      },
+      "streaming": {
+        "pico_simultaneo": null,
+        "pico_simultaneo_obs": "não encontrado em nenhuma fonte (nem da Band)",
+        "visualizacoes_youtube": [
+          {
+            "canal": "Band Jornalismo",
+            "video": "DEBATE PRESIDENCIAL 2026 NA BAND | 23/08/2026 (live, 18h57–21h31, inclui pré-debate)",
+            "visualizacoes": 4439881,
+            "coleta": "2026-10-22 ~23h50, página do vídeo",
+            "fonte_url": "https://www.youtube.com/watch?v=8ejQOXgiMvI"
+          },
+          {
+            "canal": "Rádio BandNews FM",
+            "video": "Transmissão do debate da Band (live)",
+            "visualizacoes": 1063704,
+            "coleta": "2026-10-22 ~23h50, página do vídeo",
+            "fonte_url": "https://www.youtube.com/watch?v=B856kFWqeBU"
+          }
+        ]
+      },
+      "leitura": "o debate sem Lula e Flávio teve cerca de 2 pontos em Grande SP, contra 13,7 de média no 1º debate de 2022 (dado consolidado divulgado pela Band); a entrevista de Lula na Record, no mesmo horário, teve mais audiência que o debate em todas as medições encontradas."
+    },
+    "repercussao_digital": {
+      "monitoramentos": [
+        {
+          "fonte": "Vox Radar (via CNN Brasil, 27/08)",
+          "metrica": "seguidores no Instagram, variação após o debate",
+          "valores": {
+            "Augusto Cury": "+19,4% (≈8,3 mi → ≈9,9 mi; +1,55 mi em 5 dias)",
+            "Renan Santos": "+18,8% (2,1 mi → 2,49 mi)",
+            "Ronaldo Caiado": "+4,5% (2,18 mi → 2,28 mi)",
+            "Flávio Bolsonaro": "+0,5%",
+            "Romeu Zema": "+0,3%",
+            "Lula": "-0,04% (-6.590)"
+          },
+          "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/apos-debate-cury-e-candidato-com-maior-crescimento-de-seguidores-e-buscas/"
+        },
+        {
+          "fonte": "Vox Radar (via CNN Brasil, 27/08)",
+          "metrica": "menções a Cury nas redes",
+          "valores": {
+            "dia do debate (23/08)": 13869,
+            "quarta-feira 26/08": 20193
+          },
+          "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/apos-debate-cury-e-candidato-com-maior-crescimento-de-seguidores-e-buscas/"
+        },
+        {
+          "fonte": "Vox Radar (via CNN Brasil, 31/08)",
+          "metrica": "seguidores de Cury no Instagram",
+          "valores": {
+            "dia do debate": 8326495,
+            "31/08": 10770423
+          },
+          "obs": "período inclui a sabatina do Jornal Nacional (29/08)",
+          "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/vox-radar-cury-tem-aumento-de-seguidores-e-mencoes-apos-debate-e-sabatina/"
+        },
+        {
+          "fonte": "AP Exata (via Estadão, citado por CartaCapital 31/08)",
+          "metrica": "participação de Cury nas menções aos presidenciáveis",
+          "valores": {
+            "até o dia do debate": "0,35%",
+            "quinta-feira seguinte (27/08)": "13,5%"
+          },
+          "obs": "matéria original do Estadão não acessada (site bloqueado para a ferramenta)",
+          "fonte_url": "https://www.cartacapital.com.br/politica/o-que-explica-a-ascensao-de-augusto-cury-nas-pesquisas-eleitorais/"
+        },
+        {
+          "fonte": "Bites (via CartaCapital 31/08 e DCM)",
+          "metrica": "semana pós-debate",
+          "valores": {
+            "Cury novos seguidores": "2,6 mi (+18%)",
+            "Cury interações": "6,7 mi (2º lugar; Flávio 6,9 mi)"
+          },
+          "fonte_url": "https://www.cartacapital.com.br/politica/o-que-explica-a-ascensao-de-augusto-cury-nas-pesquisas-eleitorais/"
+        },
+        {
+          "fonte": "Quaest, Índice de Popularidade Digital (via BP Money 02/09)",
+          "metrica": "IPD semana encerrada em 30/08",
+          "valores": {
+            "Augusto Cury": "54,5 pontos (4º, atrás de Flávio, Lula e Renan)"
+          },
+          "fonte_url": "https://bpmoney.com.br/politica/augusto-cury-chega-a-10-e-assume-3o-lugar-em-pesquisa-quaest-entenda-cenario/"
+        },
+        {
+          "fonte": "BP Money (sem fonte primária)",
+          "metrica": "trecho de Cury no debate",
+          "valores": {
+            "visualizações": "mais de 21 milhões",
+            "curtidas": "1,3 milhão (Instagram)"
+          },
+          "obs": "perfil e plataforma das visualizações não identificados",
+          "fonte_url": "https://bpmoney.com.br/politica/augusto-cury-chega-a-10-e-assume-3o-lugar-em-pesquisa-quaest-entenda-cenario/"
+        },
+        {
+          "fonte": "Campanha de Renan Santos (via Jovem Pan)",
+          "metrica": "menções",
+          "valores": {
+            "alegação": "Renan teria sido o candidato da direita com mais menções, atrás só de Lula"
+          },
+          "obs": "alegação de campanha, sem número nem ferramenta",
+          "fonte_url": "https://jovempan.com.br/politica/campanha-de-renan-santos-defende-tom-agressivo-durante-debate-ele-e-assim/"
+        }
+      ],
+      "google_trends_imprensa": [
+        {
+          "fonte": "Sala Digital Band + Google",
+          "dado": "Cury liderou o volume de buscas no Google durante o debate (sem índice numérico)",
+          "fonte_url": "https://www.band.com.br/nacional/brasil/augusto-cury-lidera-buscas-no-google-apos-debate-na-band"
+        },
+        {
+          "fonte": "TradeMap (24/08), Google Trends ao longo de 23/08, escala 0–100",
+          "dado": {
+            "Lula": 100,
+            "Augusto Cury": 45,
+            "Renan Santos": 31,
+            "Ronaldo Caiado": 27,
+            "Flávio Bolsonaro": 17,
+            "Romeu Zema": 5
+          },
+          "obs": "pico de Lula durante a entrevista na Record",
+          "fonte_url": "https://trademap.com.br/noticias/news-8221795"
+        },
+        {
+          "fonte": "Vox Radar (via CNN Brasil 27/08)",
+          "dado": "Cury: média 2,9 antes do debate → 49 no dia seguinte → 100 na noite de 26/08; buscas +900% na semana; +1.000% em MG nas 15h após o debate",
+          "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/apos-debate-cury-e-candidato-com-maior-crescimento-de-seguidores-e-buscas/"
+        }
+      ],
+      "google_trends_coletado": {
+        "metodo": "Coletado nesta pesquisa em 22/10/2026 (~23h50) no endpoint público do trends.google.com (explore + widgetdata/multiline), geo=BR, hl=pt-BR, fuso de Brasília, termos de pesquisa como texto (não 'tópicos'). Índice relativo 0–100 dentro de cada consulta; consultas diferentes não são comparáveis entre si. O Google amostra os dados: repetir a consulta pode variar alguns pontos.",
+        "diario_16ago_06set": [
+          {
+            "periodo_brt": "2026-08-15",
+            "Lula": 29,
+            "Flávio Bolsonaro": 14,
+            "Augusto Cury": 2,
+            "Renan Santos": 4,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-16",
+            "Lula": 34,
+            "Flávio Bolsonaro": 9,
+            "Augusto Cury": 3,
+            "Renan Santos": 6,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-17",
+            "Lula": 31,
+            "Flávio Bolsonaro": 8,
+            "Augusto Cury": 3,
+            "Renan Santos": 7,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-18",
+            "Lula": 34,
+            "Flávio Bolsonaro": 9,
+            "Augusto Cury": 2,
+            "Renan Santos": 6,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-19",
+            "Lula": 29,
+            "Flávio Bolsonaro": 6,
+            "Augusto Cury": 2,
+            "Renan Santos": 5,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-20",
+            "Lula": 32,
+            "Flávio Bolsonaro": 5,
+            "Augusto Cury": 3,
+            "Renan Santos": 5,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-21",
+            "Lula": 33,
+            "Flávio Bolsonaro": 7,
+            "Augusto Cury": 3,
+            "Renan Santos": 5,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-22",
+            "Lula": 43,
+            "Flávio Bolsonaro": 7,
+            "Augusto Cury": 7,
+            "Renan Santos": 7,
+            "Ronaldo Caiado": 2
+          },
+          {
+            "periodo_brt": "2026-08-23",
+            "Lula": 48,
+            "Flávio Bolsonaro": 7,
+            "Augusto Cury": 16,
+            "Renan Santos": 16,
+            "Ronaldo Caiado": 2
+          },
+          {
+            "periodo_brt": "2026-08-24",
+            "Lula": 41,
+            "Flávio Bolsonaro": 6,
+            "Augusto Cury": 16,
+            "Renan Santos": 10,
+            "Ronaldo Caiado": 2
+          },
+          {
+            "periodo_brt": "2026-08-25",
+            "Lula": 38,
+            "Flávio Bolsonaro": 9,
+            "Augusto Cury": 51,
+            "Renan Santos": 17,
+            "Ronaldo Caiado": 7
+          },
+          {
+            "periodo_brt": "2026-08-26",
+            "Lula": 47,
+            "Flávio Bolsonaro": 9,
+            "Augusto Cury": 81,
+            "Renan Santos": 17,
+            "Ronaldo Caiado": 2
+          },
+          {
+            "periodo_brt": "2026-08-27",
+            "Lula": 100,
+            "Flávio Bolsonaro": 15,
+            "Augusto Cury": 53,
+            "Renan Santos": 8,
+            "Ronaldo Caiado": 2
+          },
+          {
+            "periodo_brt": "2026-08-28",
+            "Lula": 65,
+            "Flávio Bolsonaro": 24,
+            "Augusto Cury": 29,
+            "Renan Santos": 6,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-29",
+            "Lula": 39,
+            "Flávio Bolsonaro": 10,
+            "Augusto Cury": 29,
+            "Renan Santos": 6,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-30",
+            "Lula": 38,
+            "Flávio Bolsonaro": 9,
+            "Augusto Cury": 16,
+            "Renan Santos": 29,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-08-31",
+            "Lula": 39,
+            "Flávio Bolsonaro": 7,
+            "Augusto Cury": 12,
+            "Renan Santos": 25,
+            "Ronaldo Caiado": 6
+          },
+          {
+            "periodo_brt": "2026-09-01",
+            "Lula": 39,
+            "Flávio Bolsonaro": 6,
+            "Augusto Cury": 9,
+            "Renan Santos": 8,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-09-02",
+            "Lula": 31,
+            "Flávio Bolsonaro": 6,
+            "Augusto Cury": 7,
+            "Renan Santos": 5,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-09-03",
+            "Lula": 34,
+            "Flávio Bolsonaro": 6,
+            "Augusto Cury": 6,
+            "Renan Santos": 5,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-09-04",
+            "Lula": 36,
+            "Flávio Bolsonaro": 13,
+            "Augusto Cury": 5,
+            "Renan Santos": 5,
+            "Ronaldo Caiado": 1
+          },
+          {
+            "periodo_brt": "2026-09-05",
+            "Lula": 37,
+            "Flávio Bolsonaro": 12,
+            "Augusto Cury": 5,
+            "Renan Santos": 4,
+            "Ronaldo Caiado": 1
+          }
+        ],
+        "horario_noite_23ago": [
+          {
+            "periodo_brt": "2026-08-23 17:00",
+            "Lula": 24,
+            "Flávio Bolsonaro": 6,
+            "Augusto Cury": 2,
+            "Renan Santos": 3,
+            "Ronaldo Caiado": 0
+          },
+          {
+            "periodo_brt": "2026-08-23 18:00",
+            "Lula": 31,
+            "Flávio Bolsonaro": 7,
+            "Augusto Cury": 2,
+            "Renan Santos": 3,
+            "Ronaldo Caiado": 0
+          },
+          {
+            "periodo_brt": "2026-08-23 19:00",
+            "Lula": 40,
+            "Flávio Bolsonaro": 9,
+            "Augusto Cury": 6,
+            "Renan Santos": 7,
+            "Ronaldo Caiado": 0
+          },
+          {
+            "periodo_brt": "2026-08-23 20:00",
+            "Lula": 100,
+            "Flávio Bolsonaro": 12,
+            "Augusto Cury": 50,
+            "Renan Santos": 37,
+            "Ronaldo Caiado": 12
+          },
+          {
+            "periodo_brt": "2026-08-23 21:00",
+            "Lula": 87,
+            "Flávio Bolsonaro": 11,
+            "Augusto Cury": 47,
+            "Renan Santos": 44,
+            "Ronaldo Caiado": 15
+          },
+          {
+            "periodo_brt": "2026-08-23 22:00",
+            "Lula": 48,
+            "Flávio Bolsonaro": 6,
+            "Augusto Cury": 28,
+            "Renan Santos": 23,
+            "Ronaldo Caiado": 4
+          },
+          {
+            "periodo_brt": "2026-08-23 23:00",
+            "Lula": 42,
+            "Flávio Bolsonaro": 6,
+            "Augusto Cury": 21,
+            "Renan Santos": 18,
+            "Ronaldo Caiado": 0
+          },
+          {
+            "periodo_brt": "2026-08-24 00:00",
+            "Lula": 37,
+            "Flávio Bolsonaro": 5,
+            "Augusto Cury": 17,
+            "Renan Santos": 20,
+            "Ronaldo Caiado": 0
+          },
+          {
+            "periodo_brt": "2026-08-24 01:00",
+            "Lula": 43,
+            "Flávio Bolsonaro": 0,
+            "Augusto Cury": 14,
+            "Renan Santos": 19,
+            "Ronaldo Caiado": 7
+          }
+        ],
+        "leitura": "Na hora do debate (20h de 23/08), Lula marcou 100 (entrevista na Record), Cury 50, Renan 37, Caiado e Flávio 12. No diário, Cury foi de 3 (22/08) para 16 (24–25/08), 51 (26/08) e 81 (27/08), acima de Lula nesses dois dias; o pico de Lula (100) foi em 28/08."
+      },
+      "trending_topics": null,
+      "trending_topics_obs": "não encontrado registro de Trending Topics do X para o debate de 23/08"
+    },
+    "quem_venceu": {
+      "pesquisas_quantitativas": [],
+      "pesquisas_quantitativas_obs": "não foi encontrada pesquisa de 'quem se saiu melhor' (Datafolha, Quaest, AtlasIntel ou outra) para este debate",
+      "avaliacoes_qualitativas": [
+        {
+          "quem": "Rafael Cortez (Tendências), à BBC News Brasil",
+          "avaliacao": "Renan foi quem melhor aproveitou o debate",
+          "trecho": "Parece que Renan é alguém que melhor aproveitou o debate",
+          "fonte_url": "https://www.correiobraziliense.com.br/mundo/2026/08/7485698-quem-ganhou-o-primeiro-debate-presidencial.html"
+        },
+        {
+          "quem": "Mayra Goulart (UFRJ), à BBC News Brasil",
+          "avaliacao": "Renan foi o grande personagem da noite",
+          "trecho": "o grande personagem da noite",
+          "fonte_url": "https://www.correiobraziliense.com.br/mundo/2026/08/7485698-quem-ganhou-o-primeiro-debate-presidencial.html"
+        },
+        {
+          "quem": "Roberto Motta, comentarista da Jovem Pan",
+          "avaliacao": "Renan foi o melhor; Cury decepcionou",
+          "trecho": "Renan foi o melhor, porque o Caiado não apresentou nada de novo",
+          "fonte_url": "https://jovempan.com.br/politica/campanha-de-renan-santos-defende-tom-agressivo-durante-debate-ele-e-assim/"
+        }
+      ],
+      "obs": "As avaliações de analistas na noite do debate apontaram Renan; as pesquisas de intenção de voto seguintes mostraram alta de Cury, não de Renan (ver pesquisas_antes_depois)."
+    },
+    "pesquisas_antes_depois": {
+      "base": "pesquisas_1turno.csv e pesquisas_2turno.csv (votos totais), pasta dados/bruto/pesquisas",
+      "regra_janelas": "antes: campo terminado entre 13/08 e 22/08 (inteiro antes do dia do debate); depois: campo iniciado a partir de 24/08 e terminado até 06/09 (14 dias). Excluídas pesquisas com campo que inclui 23/08.",
+      "excluidas_campo_inclui_23ago": [
+        "Nexus 2026-08-21 a 2026-08-23",
+        "Gerp 2026-08-21 a 2026-08-25",
+        "Indexa 2026-08-20 a 2026-08-23",
+        "PoderData 2026-08-23 a 2026-08-26"
+      ],
+      "primeiro_turno_votos_totais": {
+        "antes": {
+          "lula": {
+            "media": 39.33,
+            "n": 4
+          },
+          "flavio": {
+            "media": 34.77,
+            "n": 4
+          },
+          "cury": {
+            "media": 1.8,
+            "n": 4
+          },
+          "renan": {
+            "media": 3.95,
+            "n": 4
+          },
+          "outros": {
+            "media": 10.15,
+            "n": 4
+          }
+        },
+        "depois": {
+          "lula": {
+            "media": 38.26,
+            "n": 10
+          },
+          "flavio": {
+            "media": 32.9,
+            "n": 10
+          },
+          "cury": {
+            "media": 9.05,
+            "n": 10
+          },
+          "renan": {
+            "media": 3.94,
+            "n": 10
+          },
+          "outros": {
+            "media": 7.69,
+            "n": 10
+          }
+        },
+        "lista_antes": [
+          {
+            "instituto": "Quaest",
+            "contratante": "Grupo Globo (TV Globo e O Globo)",
+            "campo": "2026-08-10 a 2026-08-13",
+            "divulgacao": "2026-08-14",
+            "registro_tse": "BR-06773/2026",
+            "modo": "presencial",
+            "lula": 38.0,
+            "flavio": 31.0,
+            "cury": 2.0,
+            "renan": 4.0,
+            "outros": 7.0,
+            "fonte_url": "https://www.poder360.com.br/poder-eleicoes-2026/lula-tem-43-ante-40-de-flavio-bolsonaro-no-2o-turno-diz-quaest/"
+          },
+          {
+            "instituto": "Nexus",
+            "contratante": "BTG Pactual",
+            "campo": "2026-08-14 a 2026-08-16",
+            "divulgacao": "2026-08-17",
+            "registro_tse": "BR-03317/2026",
+            "modo": "telefone",
+            "lula": 41.0,
+            "flavio": 36.0,
+            "cury": 1.0,
+            "renan": 4.0,
+            "outros": 10.0,
+            "fonte_url": "https://www.canalmeio.com.br/wp-content/uploads/2026/08/BTG-Nexus-Eleicoes-2026-Rodada-10-versao-executiva-17.ago_.2026.pdf"
+          },
+          {
+            "instituto": "Datafolha",
+            "contratante": "Folha de S.Paulo e TV Globo",
+            "campo": "2026-08-18 a 2026-08-19",
+            "divulgacao": "2026-08-21",
+            "registro_tse": "BR-04496/2026",
+            "modo": "presencial",
+            "lula": 39.0,
+            "flavio": 33.0,
+            "cury": 2.0,
+            "renan": 4.0,
+            "outros": 12.0,
+            "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/datafolha-lula-tem-39-das-intencoes-de-voto-no-1o-turno-flavio-33/"
+          },
+          {
+            "instituto": "Veritá",
+            "contratante": "Recursos próprios",
+            "campo": "2026-08-16 a 2026-08-20",
+            "divulgacao": "2026-08-21",
+            "registro_tse": "BR-04006/2026",
+            "modo": "misto (presencial e telefone)",
+            "lula": 39.3,
+            "flavio": 39.1,
+            "cury": 2.2,
+            "renan": 3.8,
+            "outros": 11.6,
+            "fonte_url": "https://tribunadejundiai.com.br/politica/eleicoes-2026/pesquisa-eleitoral-2026-flavio-bolsonaro-lula-segundo-turno/"
+          }
+        ],
+        "lista_depois": [
+          {
+            "instituto": "Vox Brasil",
+            "contratante": "Recursos próprios",
+            "campo": "2026-08-25 a 2026-08-27",
+            "divulgacao": "2026-08-29",
+            "registro_tse": "BR-05519/2026",
+            "modo": "presencial",
+            "lula": 37.1,
+            "flavio": 34.8,
+            "cury": 2.6,
+            "renan": 3.3,
+            "outros": 11.9,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/08/RELATORIO-TSE-VOX-BRASIL-NACIONAL-6-29-08-2026-TSE.pdf"
+          },
+          {
+            "instituto": "AtlasIntel",
+            "contratante": "",
+            "campo": "2026-08-25 a 2026-08-30",
+            "divulgacao": "2026-08-31",
+            "registro_tse": "BR-07972/2026",
+            "modo": "online",
+            "lula": 43.4,
+            "flavio": 33.7,
+            "cury": 7.8,
+            "renan": 7.6,
+            "outros": 7.3,
+            "fonte_url": "https://www.congressoemfoco.com.br/noticia/121788/atlas-bloomberg-lula-abre-9-7-pontos-sobre-flavio-e-cury-chega-a-7-8"
+          },
+          {
+            "instituto": "Nexus",
+            "contratante": "BTG Pactual",
+            "campo": "2026-08-28 a 2026-08-30",
+            "divulgacao": "2026-08-31",
+            "registro_tse": "BR-08900/2026",
+            "modo": "telefone",
+            "lula": 39.0,
+            "flavio": 33.0,
+            "cury": 11.0,
+            "renan": 3.0,
+            "outros": 7.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/08/BTG-Nexus-nacional-31ago2026.pdf"
+          },
+          {
+            "instituto": "Real Time Big Data",
+            "contratante": "Recursos próprios",
+            "campo": "2026-08-27 a 2026-08-31",
+            "divulgacao": "2026-09-01",
+            "registro_tse": "BR-03490/2026",
+            "modo": "telefone",
+            "lula": 38.0,
+            "flavio": 30.0,
+            "cury": 11.0,
+            "renan": 7.0,
+            "outros": 8.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/09/Pesquisa-presidencial-Brasil-Real-Time-Big-Data-1-set-2026.pdf"
+          },
+          {
+            "instituto": "Quaest",
+            "contratante": "Grupo Globo (TV Globo e O Globo)",
+            "campo": "2026-08-30 a 2026-09-01",
+            "divulgacao": "2026-09-02",
+            "registro_tse": "BR-07065/2026",
+            "modo": "presencial",
+            "lula": 37.0,
+            "flavio": 29.0,
+            "cury": 10.0,
+            "renan": 3.0,
+            "outros": 3.0,
+            "fonte_url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/quaest-presidente-setembro-2026/"
+          },
+          {
+            "instituto": "Datafolha",
+            "contratante": "Folha de S.Paulo e TV Globo",
+            "campo": "2026-09-01 a 2026-09-02",
+            "divulgacao": "2026-09-03",
+            "registro_tse": "BR-03669/2026",
+            "modo": "presencial",
+            "lula": 38.0,
+            "flavio": 33.0,
+            "cury": 8.0,
+            "renan": 3.0,
+            "outros": 9.0,
+            "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/datafolha-no-1o-turno-lula-tem-38-flavio-33-e-cury-8/"
+          },
+          {
+            "instituto": "Futura",
+            "contratante": "Recursos próprios (Futura)",
+            "campo": "2026-08-27 a 2026-09-01",
+            "divulgacao": "2026-09-03",
+            "registro_tse": "BR-02793/2026",
+            "modo": "telefone",
+            "lula": 38.7,
+            "flavio": 33.6,
+            "cury": 9.9,
+            "renan": 2.8,
+            "outros": 8.9,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/09/pesquisaFutura-nacional-presidente-3set2026.pdf"
+          },
+          {
+            "instituto": "PoderData",
+            "contratante": "Recursos próprios (Poder360), parceria de divulgação com Aya",
+            "campo": "2026-08-30 a 2026-09-02",
+            "divulgacao": "2026-09-03",
+            "registro_tse": "BR-07561/2026",
+            "modo": "telefone (URA)",
+            "lula": 37.0,
+            "flavio": 34.0,
+            "cury": 10.0,
+            "renan": 3.0,
+            "outros": 11.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/09/Relatorio-PoderData-Eleitoral-2set26.pdf"
+          },
+          {
+            "instituto": "Veritá",
+            "contratante": "Recursos próprios",
+            "campo": "2026-09-01 a 2026-09-04",
+            "divulgacao": "2026-09-06",
+            "registro_tse": "BR-09426/2026",
+            "modo": "",
+            "lula": 38.4,
+            "flavio": 38.9,
+            "cury": 12.2,
+            "renan": 3.7,
+            "outros": 4.8,
+            "fonte_url": "https://tribunadoplanalto.com.br/verita-aponta-empate-entre-flavio-e-lula-cury-aparece-em-terceiro-com-122/"
+          },
+          {
+            "instituto": "Quaest",
+            "contratante": "Grupo Globo (TV Globo e O Globo)",
+            "campo": "2026-09-03 a 2026-09-06",
+            "divulgacao": "2026-09-07",
+            "registro_tse": "BR-01720/2026",
+            "modo": "presencial",
+            "lula": 36.0,
+            "flavio": 29.0,
+            "cury": 8.0,
+            "renan": 3.0,
+            "outros": 6.0,
+            "fonte_url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/quaest-presidente-setembro-2026-2/"
+          }
+        ],
+        "pareado_mesmo_instituto": {
+          "linhas": [
+            {
+              "instituto": "Datafolha",
+              "antes_campo": "2026-08-18 a 2026-08-19",
+              "depois_campo": "2026-09-01 a 2026-09-02",
+              "lula_antes": 39.0,
+              "lula_depois": 38.0,
+              "lula_var": -1.0,
+              "flavio_antes": 33.0,
+              "flavio_depois": 33.0,
+              "flavio_var": 0.0,
+              "cury_antes": 2.0,
+              "cury_depois": 8.0,
+              "cury_var": 6.0,
+              "renan_antes": 4.0,
+              "renan_depois": 3.0,
+              "renan_var": -1.0,
+              "outros_antes": 12.0,
+              "outros_depois": 9.0,
+              "outros_var": -3.0
+            },
+            {
+              "instituto": "Nexus",
+              "antes_campo": "2026-08-14 a 2026-08-16",
+              "depois_campo": "2026-08-28 a 2026-08-30",
+              "lula_antes": 41.0,
+              "lula_depois": 39.0,
+              "lula_var": -2.0,
+              "flavio_antes": 36.0,
+              "flavio_depois": 33.0,
+              "flavio_var": -3.0,
+              "cury_antes": 1.0,
+              "cury_depois": 11.0,
+              "cury_var": 10.0,
+              "renan_antes": 4.0,
+              "renan_depois": 3.0,
+              "renan_var": -1.0,
+              "outros_antes": 10.0,
+              "outros_depois": 7.0,
+              "outros_var": -3.0
+            },
+            {
+              "instituto": "Quaest",
+              "antes_campo": "2026-08-10 a 2026-08-13",
+              "depois_campo": "2026-08-30 a 2026-09-01",
+              "lula_antes": 38.0,
+              "lula_depois": 37.0,
+              "lula_var": -1.0,
+              "flavio_antes": 31.0,
+              "flavio_depois": 29.0,
+              "flavio_var": -2.0,
+              "cury_antes": 2.0,
+              "cury_depois": 10.0,
+              "cury_var": 8.0,
+              "renan_antes": 4.0,
+              "renan_depois": 3.0,
+              "renan_var": -1.0,
+              "outros_antes": 7.0,
+              "outros_depois": 3.0,
+              "outros_var": -4.0
+            },
+            {
+              "instituto": "Veritá",
+              "antes_campo": "2026-08-16 a 2026-08-20",
+              "depois_campo": "2026-09-01 a 2026-09-04",
+              "lula_antes": 39.3,
+              "lula_depois": 38.4,
+              "lula_var": -0.9,
+              "flavio_antes": 39.1,
+              "flavio_depois": 38.9,
+              "flavio_var": -0.2,
+              "cury_antes": 2.2,
+              "cury_depois": 12.2,
+              "cury_var": 10.0,
+              "renan_antes": 3.8,
+              "renan_depois": 3.7,
+              "renan_var": -0.1,
+              "outros_antes": 11.6,
+              "outros_depois": 4.8,
+              "outros_var": -6.8
+            }
+          ],
+          "variacao_media": {
+            "lula": {
+              "var_media_pp": -1.23,
+              "n": 4
+            },
+            "flavio": {
+              "var_media_pp": -1.3,
+              "n": 4
+            },
+            "cury": {
+              "var_media_pp": 8.5,
+              "n": 4
+            },
+            "renan": {
+              "var_media_pp": -0.78,
+              "n": 4
+            },
+            "outros": {
+              "var_media_pp": -4.2,
+              "n": 4
+            }
+          }
+        }
+      },
+      "segundo_turno_simulado_lula_x_flavio": {
+        "antes": {
+          "lula": {
+            "media": 44.75,
+            "n": 4
+          },
+          "flavio": {
+            "media": 43.58,
+            "n": 4
+          }
+        },
+        "depois": {
+          "lula": {
+            "media": 44.33,
+            "n": 10
+          },
+          "flavio": {
+            "media": 44.14,
+            "n": 10
+          }
+        },
+        "lista_antes": [
+          {
+            "instituto": "Quaest",
+            "contratante": "Grupo Globo (TV Globo e O Globo)",
+            "campo": "2026-08-10 a 2026-08-13",
+            "divulgacao": "2026-08-14",
+            "registro_tse": "BR-06773/2026",
+            "modo": "presencial",
+            "lula": 43.0,
+            "flavio": 40.0,
+            "fonte_url": "https://www.poder360.com.br/poder-eleicoes-2026/lula-tem-43-ante-40-de-flavio-bolsonaro-no-2o-turno-diz-quaest/"
+          },
+          {
+            "instituto": "Nexus",
+            "contratante": "BTG Pactual",
+            "campo": "2026-08-14 a 2026-08-16",
+            "divulgacao": "2026-08-17",
+            "registro_tse": "BR-03317/2026",
+            "modo": "telefone",
+            "lula": 47.0,
+            "flavio": 44.0,
+            "fonte_url": "https://www.canalmeio.com.br/wp-content/uploads/2026/08/BTG-Nexus-Eleicoes-2026-Rodada-10-versao-executiva-17.ago_.2026.pdf"
+          },
+          {
+            "instituto": "Datafolha",
+            "contratante": "Folha de S.Paulo e TV Globo",
+            "campo": "2026-08-18 a 2026-08-19",
+            "divulgacao": "2026-08-21",
+            "registro_tse": "BR-04496/2026",
+            "modo": "presencial",
+            "lula": 47.0,
+            "flavio": 43.0,
+            "fonte_url": "https://www.poder360.com.br/poder-eleicoes-2026/lula-tem-47-e-flavio-43-em-2o-turno-diz-datafolha/"
+          },
+          {
+            "instituto": "Veritá",
+            "contratante": "Recursos próprios",
+            "campo": "2026-08-16 a 2026-08-20",
+            "divulgacao": "2026-08-21",
+            "registro_tse": "BR-04006/2026",
+            "modo": "misto (presencial e telefone)",
+            "lula": 42.0,
+            "flavio": 47.3,
+            "fonte_url": "https://pleno.news/brasil/eleicoes-2026/verita-flavio-bolsonaro-venceria-lula-em-disputa-no-2o-turno.html"
+          }
+        ],
+        "lista_depois": [
+          {
+            "instituto": "Vox Brasil",
+            "contratante": "Recursos próprios",
+            "campo": "2026-08-25 a 2026-08-27",
+            "divulgacao": "2026-08-29",
+            "registro_tse": "BR-05519/2026",
+            "modo": "presencial",
+            "lula": 44.5,
+            "flavio": 45.1,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/08/RELATORIO-TSE-VOX-BRASIL-NACIONAL-6-29-08-2026-TSE.pdf"
+          },
+          {
+            "instituto": "AtlasIntel",
+            "contratante": "",
+            "campo": "2026-08-25 a 2026-08-30",
+            "divulgacao": "2026-08-31",
+            "registro_tse": "BR-07972/2026",
+            "modo": "online",
+            "lula": 47.1,
+            "flavio": 42.6,
+            "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/atlas-bloomberg-lula-tem-471-no-2o-turno-flavio-426/"
+          },
+          {
+            "instituto": "Nexus",
+            "contratante": "BTG Pactual",
+            "campo": "2026-08-28 a 2026-08-30",
+            "divulgacao": "2026-08-31",
+            "registro_tse": "BR-08900/2026",
+            "modo": "telefone",
+            "lula": 46.0,
+            "flavio": 45.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/08/BTG-Nexus-nacional-31ago2026.pdf"
+          },
+          {
+            "instituto": "Real Time Big Data",
+            "contratante": "Recursos próprios",
+            "campo": "2026-08-27 a 2026-08-31",
+            "divulgacao": "2026-09-01",
+            "registro_tse": "BR-03490/2026",
+            "modo": "telefone",
+            "lula": 44.0,
+            "flavio": 44.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/09/Pesquisa-presidencial-Brasil-Real-Time-Big-Data-1-set-2026.pdf"
+          },
+          {
+            "instituto": "Quaest",
+            "contratante": "Grupo Globo (TV Globo e O Globo)",
+            "campo": "2026-08-30 a 2026-09-01",
+            "divulgacao": "2026-09-02",
+            "registro_tse": "BR-07065/2026",
+            "modo": "presencial",
+            "lula": 42.0,
+            "flavio": 41.0,
+            "fonte_url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/quaest-presidente-setembro-2026/"
+          },
+          {
+            "instituto": "Datafolha",
+            "contratante": "Folha de S.Paulo e TV Globo",
+            "campo": "2026-09-01 a 2026-09-02",
+            "divulgacao": "2026-09-03",
+            "registro_tse": "BR-03669/2026",
+            "modo": "presencial",
+            "lula": 46.0,
+            "flavio": 44.0,
+            "fonte_url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/datafolha-presidente-setembro-2026/"
+          },
+          {
+            "instituto": "Futura",
+            "contratante": "Recursos próprios (Futura)",
+            "campo": "2026-08-27 a 2026-09-01",
+            "divulgacao": "2026-09-03",
+            "registro_tse": "BR-02793/2026",
+            "modo": "telefone",
+            "lula": 45.6,
+            "flavio": 45.2,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/09/pesquisaFutura-nacional-presidente-3set2026.pdf"
+          },
+          {
+            "instituto": "PoderData",
+            "contratante": "Recursos próprios (Poder360), parceria de divulgação com Aya",
+            "campo": "2026-08-30 a 2026-09-02",
+            "divulgacao": "2026-09-03",
+            "registro_tse": "BR-07561/2026",
+            "modo": "telefone (URA)",
+            "lula": 44.0,
+            "flavio": 45.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/09/Relatorio-PoderData-Eleitoral-2set26.pdf"
+          },
+          {
+            "instituto": "Veritá",
+            "contratante": "Recursos próprios",
+            "campo": "2026-09-01 a 2026-09-04",
+            "divulgacao": "2026-09-06",
+            "registro_tse": "BR-09426/2026",
+            "modo": "",
+            "lula": 43.1,
+            "flavio": 48.5,
+            "fonte_url": "https://midiamax.com.br/brasil/2026/pesquisa-aponta-flavio-bolsonaro-485-intencao-votos-ganharia-lula-2o-turno/"
+          },
+          {
+            "instituto": "Quaest",
+            "contratante": "Grupo Globo (TV Globo e O Globo)",
+            "campo": "2026-09-03 a 2026-09-06",
+            "divulgacao": "2026-09-07",
+            "registro_tse": "BR-01720/2026",
+            "modo": "presencial",
+            "lula": 41.0,
+            "flavio": 41.0,
+            "fonte_url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/quaest-presidente-setembro-2026-2/"
+          }
+        ],
+        "pareado_mesmo_instituto": {
+          "linhas": [
+            {
+              "instituto": "Datafolha",
+              "antes_campo": "2026-08-18 a 2026-08-19",
+              "depois_campo": "2026-09-01 a 2026-09-02",
+              "lula_antes": 47.0,
+              "lula_depois": 46.0,
+              "lula_var": -1.0,
+              "flavio_antes": 43.0,
+              "flavio_depois": 44.0,
+              "flavio_var": 1.0
+            },
+            {
+              "instituto": "Nexus",
+              "antes_campo": "2026-08-14 a 2026-08-16",
+              "depois_campo": "2026-08-28 a 2026-08-30",
+              "lula_antes": 47.0,
+              "lula_depois": 46.0,
+              "lula_var": -1.0,
+              "flavio_antes": 44.0,
+              "flavio_depois": 45.0,
+              "flavio_var": 1.0
+            },
+            {
+              "instituto": "Quaest",
+              "antes_campo": "2026-08-10 a 2026-08-13",
+              "depois_campo": "2026-08-30 a 2026-09-01",
+              "lula_antes": 43.0,
+              "lula_depois": 42.0,
+              "lula_var": -1.0,
+              "flavio_antes": 40.0,
+              "flavio_depois": 41.0,
+              "flavio_var": 1.0
+            },
+            {
+              "instituto": "Veritá",
+              "antes_campo": "2026-08-16 a 2026-08-20",
+              "depois_campo": "2026-09-01 a 2026-09-04",
+              "lula_antes": 42.0,
+              "lula_depois": 43.1,
+              "lula_var": 1.1,
+              "flavio_antes": 47.3,
+              "flavio_depois": 48.5,
+              "flavio_var": 1.2
+            }
+          ],
+          "variacao_media": {
+            "lula": {
+              "var_media_pp": -0.47,
+              "n": 4
+            },
+            "flavio": {
+              "var_media_pp": 1.05,
+              "n": 4
+            }
+          }
+        }
+      },
+      "o_numero_mostra": [
+        "1º turno, média simples: Cury 1,8% (4 pesquisas antes) → 9,05% (10 depois); Lula 39,33 → 38,26; Flávio 34,77 → 32,90; Renan 3,95 → 3,94; outros (Caiado+Zema+demais) 10,15 → 7,69.",
+        "Mesmo instituto (Quaest, Nexus, Datafolha, Veritá; última antes × primeira depois): Cury +8,5 p.p. em média; Lula -1,23; Flávio -1,30; Renan -0,78; outros -4,2.",
+        "2º turno simulado Lula × Flávio: média 44,75 × 43,58 antes → 44,33 × 44,14 depois; pareado Lula -0,47 e Flávio +1,05 p.p. (dentro das margens).",
+        "Calendário da alta: a primeira pesquisa com campo inteiro depois do debate e antes de 28/08 (Vox Brasil, 25–27/08) tinha Cury com 2,6%; as de campo a partir de 27–28/08 (Real Time Big Data, Nexus, Futura, Quaest, Datafolha, PoderData, Veritá) trazem Cury entre 8% e 12,2%; a AtlasIntel (25–30/08) tem 7,8%. O horário eleitoral começou em 28/08 e a sabatina de Cury no Jornal Nacional foi em 29/08, segundo CartaCapital e CNN.",
+        "A alta não durou: na base, Cury fica entre 2% e 8% a partir de meados de setembro, entre 1% e 4,5% nas pesquisas da véspera (campo até 02–03/10) e teve 2,89% dos válidos no resultado oficial."
+      ],
+      "atribuicoes_ao_debate": [
+        {
+          "quem": "Fernando Mitre, diretor de jornalismo da Band (coluna)",
+          "o_que_disse": "na primeira pesquisa depois do debate, Cury chegou a 11 pontos, subindo nove; cita também apoio de Pablo Marçal e reação à polarização como hipóteses",
+          "fonte_url": "https://www.band.com.br/colunistas/fernando-mitre/o-atual-cenario-eleitoral-com-a-nova-pesquisa"
+        },
+        {
+          "quem": "CartaCapital (Vinícius Nunes, 31/08)",
+          "o_que_disse": "trata o debate como ponto de partida: 'A participação no debate deu à campanha material para circular na internet'; ressalva que não dá para separar o debate da sabatina da Globo (29/08), do início do horário eleitoral (28/08) e das redes",
+          "fonte_url": "https://www.cartacapital.com.br/politica/o-que-explica-a-ascensao-de-augusto-cury-nas-pesquisas-eleitorais/"
+        },
+        {
+          "quem": "Marcelo Tokarski, CEO da Nexus (ao Metrópoles, citado por CartaCapital)",
+          "o_que_disse": "o crescimento já vinha sendo captado depois do debate da Band; boa parte das entrevistas ocorreu antes ou durante a sabatina",
+          "fonte_url": "https://www.cartacapital.com.br/politica/o-que-explica-a-ascensao-de-augusto-cury-nas-pesquisas-eleitorais/"
+        },
+        {
+          "quem": "Nexus/BTG (análise do fluxo de votos, via Jornal Opção/Agora RN)",
+          "o_que_disse": "4 dos 9 pontos de Cury vieram de quem votava em Flávio na rodada anterior (não atribui ao debate)",
+          "fonte_url": "https://agorarn.com.br/brasil/augusto-cury-terceiro-lugar-pesquisas-nexus-atlasintel/"
+        },
+        {
+          "quem": "Luis Tibé, presidente do Avante (Correio da Manhã, 28/08)",
+          "o_que_disse": "Cury 'furou a bolha da polarização' após o debate",
+          "fonte_url": "https://www.correiodamanha.com.br/colunistas/paulo-cappelli/2026/08/314783-presidente-do-avante-diz-que-augusto-cury-furou-bolha-da-polarizacao-apos-desempenho-em-debate.html"
+        },
+        {
+          "quem": "Augusto Cury (SBT News)",
+          "o_que_disse": "atribui a alta a um movimento espontâneo de eleitores após o debate",
+          "fonte_url": "https://sbtnews.sbt.com.br/noticia/eleicoes/cury-atribui-alta-nas-pesquisas-a-movimento-espontaneo"
+        },
+        {
+          "quem": "CNN Brasil (31/08)",
+          "o_que_disse": "a ascensão ocorre poucos dias após o primeiro debate, sem atribuir causa",
+          "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/nexus-cury-chega-a-11-e-e-1o-nome-da-terceira-via-a-ter-dois-digitos/"
+        },
+        {
+          "quem": "TradeMap",
+          "o_que_disse": "a coincidência no tempo não permite concluir que os eventos causaram a alta",
+          "fonte_url": "https://trademap.com.br/noticias/news-8252917"
+        },
+        {
+          "quem": "Rafael Cortez (Tendências), à BBC, antes das pesquisas",
+          "o_que_disse": "previu que o debate mexeria pouco com Lula e Flávio e poderia afetar a disputa pelo 3º lugar",
+          "fonte_url": "https://www.agazeta.com.br/mundo/debate-da-band-os-principais-momentos-do-primeiro-confronto-entre-candidatos-a-presidencia-0826"
+        }
+      ]
+    }
+  },
+  "debate_2turno_2026_10_18": {
+    "identificacao": {
+      "data": "2026-10-18",
+      "dia_semana": "domingo",
+      "turno": 2,
+      "horario_inicio": "20h15 (Congresso em Foco); faixa de audiência informada pela Band: 20h20–22h04",
+      "fim_e_duracao": "encerramento às 22h10 (Poder360); cerca de 1h55",
+      "local": "estúdios da Band, São Paulo",
+      "emissora": "Band",
+      "pool": "Grupo Bandeirantes + Estadão + TV Cultura + TV Gazeta + Jovem Pan News",
+      "remarcacao": "marcado para 11/10 e transferido para 18/10. Flávio disse em 13/10 que a ida 'não estava prevista' e recuou em 14/10, depois que Lula confirmou presença em vídeo enviado à Band.",
+      "mediacao": "Adriana Araújo e Eduardo Oinegue",
+      "participantes": [
+        "Lula (PT)",
+        "Flávio Bolsonaro (PL)"
+      ],
+      "ausentes": [],
+      "observacao": "primeiro e, até 22/10, único confronto direto entre Lula e Flávio na campanha; nenhum dos dois foi a debates no 1º turno",
+      "fontes": [
+        "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band",
+        "https://poder360.com.br/poder-eleicoes-2026/debate-de-lula-e-flavio-na-band-chega-a-539-milhoes-simultaneos",
+        "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/lula-e-flavio-fazem-primeiro-debate-das-eleicoes-na-band",
+        "https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/",
+        "https://www.dgabc.com.br/Noticia/4352608/flavio-bolsonaro-recua-de-desistencia-e-confirma-presenca-em-debate-da-band-no-domingo",
+        "https://www.band.com.br/nacional/brasil/debate-historico-da-band-marca-primeiro-confronto-entre-lula-e-flavio"
+      ]
+    },
+    "formato": {
+      "blocos": [
+        "1º bloco: perguntas dos mediadores e confronto direto livre de 30 minutos, com banco de 15 minutos para cada candidato",
+        "2º e 3º blocos: perguntas de jornalistas e rodadas de pergunta, resposta, réplica e tréplica",
+        "encerramento: considerações finais"
+      ],
+      "temas_sorteados": null,
+      "temas_sorteados_obs": "não há registro de sorteio de temas",
+      "fontes": [
+        "https://poder360.com.br/poder-eleicoes-2026/debate-de-lula-e-flavio-na-band-chega-a-539-milhoes-simultaneos",
+        "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band",
+        "https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/"
+      ]
+    },
+    "momentos": [
+      {
+        "momento": "Desafio para abrir sigilos bancário e telefônico dos dois candidatos (corte mais visto, segundo Ativaweb)",
+        "quem": "Lula",
+        "trecho": "Eu desafio você. Amanhã abrimos a nossa conta bancária",
+        "fonte_url": "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/lula-e-flavio-fazem-primeiro-debate-das-eleicoes-na-band"
+      },
+      {
+        "momento": "Banco Master/Vorcaro e os R$ 134 milhões para o filme Dark Horse",
+        "quem": "Lula",
+        "trecho": "Vocês fizeram ele um banqueiro e eu fiz ele um prisioneiro.",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band"
+      },
+      {
+        "momento": "INSS, Roberta Luchsinger e Lulinha",
+        "quem": "Flávio Bolsonaro",
+        "trecho": "Lula, é melhor você não botar a mão no fogo pelo seu filho, não.",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band"
+      },
+      {
+        "momento": "Resposta sobre o 'Careca do INSS'",
+        "quem": "Flávio Bolsonaro",
+        "trecho": "Eu não mantenho escritório com o Careca, Lula.",
+        "fonte_url": "https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/"
+      },
+      {
+        "momento": "Segurança pública",
+        "quem": "Flávio Bolsonaro",
+        "trecho": "Eu vou declarar guerra ao narcoterrorismo.",
+        "fonte_url": "https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/"
+      },
+      {
+        "momento": "SUS",
+        "quem": "Lula",
+        "trecho": "Ele quer privatizar o SUS.",
+        "fonte_url": "https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/"
+      },
+      {
+        "momento": "Pandemia: Flávio admite falhas",
+        "quem": "Flávio Bolsonaro",
+        "trecho": "Eu faço aqui essa minha culpa.",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band"
+      },
+      {
+        "momento": "Armas",
+        "quem": "Flávio Bolsonaro",
+        "trecho": "Aqui é o Flávio, não é o Jair.",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band"
+      },
+      {
+        "momento": "Flávio se manifesta atrás de Lula durante a resposta sobre o SUS; plateia ri",
+        "quem": "Adriana Araújo (mediação)",
+        "trecho": "O senhor não tem o direito de se manifestar nesse momento",
+        "fonte_url": "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band"
+      },
+      {
+        "momento": "Fala de Lula nas considerações finais que gerou a hashtag #OBrasilAcabou",
+        "quem": "Lula",
+        "trecho": "Nesse 4º mandato, a gente vai dizer: o Brasil acabou",
+        "fonte_url": "https://www.poder360.com.br/poder-eleicoes-2026/veja-os-memes-do-debate-entre-lula-e-flavio-bolsonaro-na-band/"
+      }
+    ],
+    "momentos_obs": "Após o debate, o GATE da PM-SP foi acionado por suspeita de bomba em carro no estacionamento da Band; nada foi encontrado (Agência Brasil). Houve briga na plateia comentada nas redes (Poder360) e a primeira-dama Janja foi repreendida pela produção (O Tempo/Ric).",
+    "temas": [
+      "segurança pública (facções como narcoterroristas, 500 mil vagas prisionais, Ministério da Segurança, Lei Antifacção)",
+      "economia (juros, dívida pública, inflação, MEI)",
+      "fraude no INSS (Careca do INSS, Roberta Luchsinger, Lulinha)",
+      "Banco Master/Vorcaro e filme Dark Horse",
+      "saúde/SUS e pandemia",
+      "saidinhas e armas",
+      "escala 6x1",
+      "quebra de sigilo bancário e telefônico",
+      "relações com EUA, Milei e minerais críticos",
+      "direitos das mulheres"
+    ],
+    "temas_fontes": [
+      "https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/",
+      "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band",
+      "https://agenciabrasil.ebc.com.br/politica/noticia/2026-10/lula-e-flavio-fazem-primeiro-debate-das-eleicoes-na-band"
+    ],
+    "direitos_de_resposta": {
+      "flavio_pedidos": 3,
+      "flavio_concedidos": 1,
+      "obs": "Aos Fatos: Flávio pediu duas vezes no 1º confronto (uma deferida, 1 minuto) e de novo no bloco de saúde (negado); Lula disse 'eu quero direito de resposta' no bloco de saúde sem formalizar. Divergência: Congresso em Foco registra que Lula pediu direito de resposta durante a fala sobre o SUS.",
+      "fontes": [
+        "https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/",
+        "https://www.congressoemfoco.com.br/noticia/123351/veja-o-primeiro-debate-entre-lula-e-flavio-bolsonaro-na-band"
+      ]
+    },
+    "alvo_principal": {
+      "resposta": null,
+      "obs": "debate a dois; nenhuma fonte contou perguntas por candidato"
+    },
+    "checagens": {
+      "fonte": "Aos Fatos",
+      "flavio_checagens": 26,
+      "lula_checagens": 23,
+      "obs": "classificação inferida da redação de cada checagem (a matéria não usa escala única): Flávio ≈12 falsas/sem respaldo, 10 distorcidas/imprecisas, 2 corretas; Lula 18 verdadeiras/corretas, 3 parciais/distorcidas, 2 falsas",
+      "fonte_url": "https://www.aosfatos.org/noticias/checamos-lula-flavio-bolsonaro-debate-band/"
+    },
+    "audiencia": {
+      "tv": [
+        {
+          "medida": "média, pico e share (consolidado)",
+          "valor_pontos": 15,
+          "pico_pontos": 16.5,
+          "share_pct": 24,
+          "faixa": "20h20–22h04",
+          "pessoas": "2,7 milhões",
+          "praca": "Grande São Paulo",
+          "medidor": "Kantar IBOPE (dado divulgado pela Band)",
+          "posicao": "1º lugar; programa mais visto da TV na data",
+          "fonte": "O Universo da TV e Portal TV e Streaming (19/10), reproduzindo balanço da Band",
+          "fonte_url": "https://www.ouniversodatv.com/2026/10/lula-e-flavio-bolsonaro-levam-debate-da.html"
+        },
+        {
+          "medida": "média e pico (prévia)",
+          "valor_pontos": 13.39,
+          "pico_pontos": 15.21,
+          "pico_horario": "21h35",
+          "share_pct": 21.52,
+          "faixa": "21h03–22h11 (período em que liderou)",
+          "praca": "Grande São Paulo",
+          "medidor": "Ibope/Kantar prévio, via TV Pop",
+          "pnt_15_regioes": {
+            "Band": 12.6,
+            "Globo": 11.16,
+            "SBT": 4.72,
+            "Record": 3.93
+          },
+          "fonte": "Pipoca Moderna (19/10)",
+          "fonte_url": "https://pipocamoderna.com.br/2026/10/debate-band-lideranca-globo/"
+        },
+        {
+          "medida": "média e pico (prévia)",
+          "valor_pontos": 13,
+          "pico_pontos": 15,
+          "praca": "Grande São Paulo",
+          "medidor": "dados prévios divulgados pela Folha",
+          "concorrente": "Fantástico (Globo) 12 de média; no PNT (15 regiões) 13 × 12",
+          "fonte": "CartaCapital (18/10, 22h41)",
+          "fonte_url": "https://www.cartacapital.com.br/cartaexpressa/band-lidera-audiencia-com-debate-entre-lula-e-flavio-bolsonaro/"
+        }
+      ],
+      "outros_canais_band": {
+        "BandNews TV mesma faixa": "1,7 ponto, share 2,4%",
+        "Canal Livre pós-debate (22h12–23h33)": "5,1 de média, pico 14,7, share 10,3%",
+        "fonte_url": "https://www.ouniversodatv.com/2026/10/lula-e-flavio-bolsonaro-levam-debate-da.html"
+      },
+      "streaming": {
+        "pico_simultaneo": 5385394,
+        "pico_simultaneo_obs": "aparelhos conectados ao YouTube da Band às 21h30 (Poder360); início 2,46 mi (20h16), fim 5,13 mi (22h10). A Band divulgou 6 milhões de usuários simultâneos somando canais Band Jornalismo e rádios, com 38 milhões de views — números não são da mesma base.",
+        "fontes": [
+          "https://poder360.com.br/poder-eleicoes-2026/debate-de-lula-e-flavio-na-band-chega-a-539-milhoes-simultaneos",
+          "https://www.ouniversodatv.com/2026/10/lula-e-flavio-bolsonaro-levam-debate-da.html"
+        ],
+        "visualizacoes_youtube": [
+          {
+            "canal": "Band Jornalismo",
+            "video": "Flávio Bolsonaro x Lula: debate presidencial do 2º turno na Band - 18/10/2026 (live 15h59–22h12, inclui pré-debate)",
+            "visualizacoes": 32253806,
+            "coleta": "2026-10-22 ~23h50",
+            "fonte_url": "https://www.youtube.com/watch?v=Gqc1rQtzWUk"
+          }
+        ],
+        "redes_band_emplifi": {
+          "impressões": "118,4 milhões",
+          "visualizações de vídeo": "103 milhões",
+          "engajamentos": "5,1 milhões em 972 posts",
+          "fonte_url": "https://www.ouniversodatv.com/2026/10/lula-e-flavio-bolsonaro-levam-debate-da.html"
+        }
+      },
+      "leitura": "Maior audiência de debate em 20 anos, segundo a Band (desde o 2º turno de 2006, Lula × Alckmin). Contra o debate de 23/08 (2,2 na prévia): 6,8 vezes usando o consolidado de 18/10 (15) e 6,1 vezes prévia contra prévia (13,39)."
+    },
+    "repercussao_digital": {
+      "monitoramentos": [
+        {
+          "fonte": "Bites (via Vermelho, 20/10)",
+          "metrica": "24h após o debate (até o meio-dia de 19/10)",
+          "valores": {
+            "interações Lula": "25,5 mi",
+            "interações Flávio": "5 mi",
+            "menções diretas ao debate Flávio": "426 mil",
+            "menções diretas ao debate Lula": "288 mil",
+            "memes e cortes Lula": "9,5 mil",
+            "memes e cortes Flávio": "7 mil",
+            "citações sobre o debate": "1,7 mi (~20% do conteúdo digital monitorado)",
+            "citações sobre sigilo": "501 mil",
+            "novos seguidores Lula": "176 mil"
+          },
+          "obs": "veículo secundário de linha editorial de esquerda; relatório original da Bites não localizado",
+          "fonte_url": "https://vermelho.org.br/2026/10/20/lula-dispara-nas-redes-apos-debate-na-band-e-supera-flavio-em-5-vezes/"
+        },
+        {
+          "fonte": "Quaest, Índice de Popularidade Digital (Folha de S.Paulo, via DCM)",
+          "metrica": "IPD até 19/10, escala 0–100",
+          "valores": {
+            "Lula": 83.3,
+            "Flávio Bolsonaro": 76.6,
+            "diferença 16/10": 6.2,
+            "diferença 19/10": 6.7,
+            "Instagram pós-debate": "Lula +178 mil, Flávio +149 mil",
+            "comentários no dia do debate": "Lula 95% de 6 milhões"
+          },
+          "fonte_url": "https://www.diariodocentrodomundo.com.br/lula-amplia-vantagem-sobre-flavio-em-popularidade-digital-apos-debate-da-band"
+        },
+        {
+          "fonte": "Ativaweb DataLab (coluna de Míriam Leitão, O Globo, via Brasil 247)",
+          "metrica": "desafio de Lula sobre sigilos",
+          "valores": {
+            "menções, comentários e interações": "mais de 12 milhões",
+            "views do corte mais visto": "10,2 milhões"
+          },
+          "fonte_url": "https://www.brasil247.com/brasil/desafio-de-lula-a-flavio-bolsonaro-sobre-sigilos-domina-repercussao-do-debate-da-band/"
+        },
+        {
+          "fonte": "Ativaweb DataLab (divulgado pelo UOL, via Agora RN 19/10)",
+          "metrica": "vídeos dos candidatos após o debate",
+          "valores": {
+            "Lula": "12 vídeos, 65,7 mi de visualizações",
+            "Flávio": "4 vídeos, 22,1 mi de visualizações",
+            "índice de vantagem digital": "Lula 60,5% × Flávio 39,5%",
+            "visualizações": "Lula 74,8%",
+            "curtidas em comentários": "Lula 62,8%",
+            "chat ao vivo": "Lula 60%",
+            "novos seguidores": "Lula 56,3% (madrugada: Lula 125 mil, Flávio 97 mil)",
+            "volume de comentários": "Flávio 51,6%"
+          },
+          "obs": "mede alcance nas redes, não voto",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        }
+      ],
+      "trending_topics": [
+        {
+          "assunto": "#DebatenaBand",
+          "dado": "10 horas nos Trending Topics do X",
+          "fonte": "balanço da Band",
+          "fonte_url": "https://www.ouniversodatv.com/2026/10/lula-e-flavio-bolsonaro-levam-debate-da.html"
+        },
+        {
+          "assunto": "#OBrasilAcabou",
+          "dado": "entre os assuntos mais comentados após fala de Lula nas considerações finais (sem posição)",
+          "fonte_url": "https://www.poder360.com.br/poder-eleicoes-2026/veja-os-memes-do-debate-entre-lula-e-flavio-bolsonaro-na-band/"
+        }
+      ],
+      "google_trends_imprensa": [
+        {
+          "fonte": "A Crítica",
+          "dado": "'Flávio Comando Vermelho' e 'Flávio Ana Clara' passaram de 100 mil buscas em 4 horas; 'Flávio rachadinha' e 'Flávio Vorcaro' +900%; 'Lula sócio da Roberta' e 'idade do Lula' +1.000%",
+          "fonte_url": "https://acritica.net/nacional/buscas-flavio-lula-google-debate-band/"
+        },
+        {
+          "fonte": "SBT News (Basília Rodrigues)",
+          "dado": "buscas por 'miliciano' +5.000% em 24h",
+          "fonte_url": "https://sbtnews.sbt.com.br/colunas/coluna-da-basilia/busca-por-miliciano-dispara-em-debate-entre-lula-e-flavio"
+        },
+        {
+          "fonte": "Bites (via Vermelho)",
+          "dado": "maior interesse de buscas sobre debate na série da agência desde 2004",
+          "fonte_url": "https://vermelho.org.br/2026/10/20/lula-dispara-nas-redes-apos-debate-na-band-e-supera-flavio-em-5-vezes/"
+        }
+      ],
+      "google_trends_coletado": {
+        "metodo": "mesmo método do debate de 23/08 (coleta em 22/10/2026)",
+        "diario_05out_22out": [
+          {
+            "periodo_brt": "2026-10-04",
+            "Lula": 100,
+            "Flávio Bolsonaro": 50
+          },
+          {
+            "periodo_brt": "2026-10-05",
+            "Lula": 48,
+            "Flávio Bolsonaro": 16
+          },
+          {
+            "periodo_brt": "2026-10-06",
+            "Lula": 41,
+            "Flávio Bolsonaro": 16
+          },
+          {
+            "periodo_brt": "2026-10-07",
+            "Lula": 45,
+            "Flávio Bolsonaro": 13
+          },
+          {
+            "periodo_brt": "2026-10-08",
+            "Lula": 52,
+            "Flávio Bolsonaro": 11
+          },
+          {
+            "periodo_brt": "2026-10-09",
+            "Lula": 52,
+            "Flávio Bolsonaro": 15
+          },
+          {
+            "periodo_brt": "2026-10-10",
+            "Lula": 50,
+            "Flávio Bolsonaro": 13
+          },
+          {
+            "periodo_brt": "2026-10-11",
+            "Lula": 52,
+            "Flávio Bolsonaro": 13
+          },
+          {
+            "periodo_brt": "2026-10-12",
+            "Lula": 46,
+            "Flávio Bolsonaro": 11
+          },
+          {
+            "periodo_brt": "2026-10-13",
+            "Lula": 38,
+            "Flávio Bolsonaro": 11
+          },
+          {
+            "periodo_brt": "2026-10-14",
+            "Lula": 39,
+            "Flávio Bolsonaro": 9
+          },
+          {
+            "periodo_brt": "2026-10-15",
+            "Lula": 43,
+            "Flávio Bolsonaro": 10
+          },
+          {
+            "periodo_brt": "2026-10-16",
+            "Lula": 60,
+            "Flávio Bolsonaro": 15
+          },
+          {
+            "periodo_brt": "2026-10-17",
+            "Lula": 92,
+            "Flávio Bolsonaro": 18
+          },
+          {
+            "periodo_brt": "2026-10-18",
+            "Lula": 90,
+            "Flávio Bolsonaro": 24
+          },
+          {
+            "periodo_brt": "2026-10-19",
+            "Lula": 71,
+            "Flávio Bolsonaro": 20
+          },
+          {
+            "periodo_brt": "2026-10-20",
+            "Lula": 62,
+            "Flávio Bolsonaro": 19
+          },
+          {
+            "periodo_brt": "2026-10-21",
+            "Lula": 53,
+            "Flávio Bolsonaro": 15
+          }
+        ],
+        "horario_noite_18out": [
+          {
+            "periodo_brt": "2026-10-18 17:00",
+            "Lula": 21,
+            "Flávio Bolsonaro": 4
+          },
+          {
+            "periodo_brt": "2026-10-18 18:00",
+            "Lula": 23,
+            "Flávio Bolsonaro": 6
+          },
+          {
+            "periodo_brt": "2026-10-18 19:00",
+            "Lula": 31,
+            "Flávio Bolsonaro": 7
+          },
+          {
+            "periodo_brt": "2026-10-18 20:00",
+            "Lula": 73,
+            "Flávio Bolsonaro": 13
+          },
+          {
+            "periodo_brt": "2026-10-18 21:00",
+            "Lula": 100,
+            "Flávio Bolsonaro": 19
+          },
+          {
+            "periodo_brt": "2026-10-18 22:00",
+            "Lula": 61,
+            "Flávio Bolsonaro": 17
+          },
+          {
+            "periodo_brt": "2026-10-18 23:00",
+            "Lula": 39,
+            "Flávio Bolsonaro": 11
+          },
+          {
+            "periodo_brt": "2026-10-19 00:00",
+            "Lula": 31,
+            "Flávio Bolsonaro": 9
+          },
+          {
+            "periodo_brt": "2026-10-19 01:00",
+            "Lula": 26,
+            "Flávio Bolsonaro": 7
+          }
+        ],
+        "leitura": "Na noite do debate, Lula atingiu 100 às 21h e Flávio Bolsonaro 19. No diário, 18/10 e 19/10 foram os dias de maior busca por Lula desde o dia seguinte ao 1º turno (05/10 = 100)."
+      }
+    },
+    "quem_venceu": {
+      "pesquisas_quantitativas": [],
+      "pesquisas_quantitativas_obs": "nenhuma pesquisa quantitativa de 'quem se saiu melhor' encontrada até 22/10; o Datafolha de 20–22/10 não divulgou pergunta sobre o debate nas fontes consultadas. O Datafolha de 24/10 deve medir o debate da Globo (23/10), não o da Band.",
+      "pesquisas_qualitativas": [
+        {
+          "instituto": "Quaest",
+          "metodo": "qualitativa durante o debate: 30 grupos de 8 a 12 eleitores (de Lula, de Flávio e indecisos), nota de 0 a 100",
+          "resultado": {
+            "Flávio Bolsonaro": 82,
+            "Lula": 79
+          },
+          "leitura_do_instituto": "Flávio 'ligeiramente superior', visto como mais seguro em segurança pública e tecnologia; Lula melhor em saúde e pandemia; 'O debate não parece ter produzido uma virada de percepção significativa.'",
+          "fontes": [
+            "https://oantagonista.com.br/brasil/flavio-foi-ligeiramente-superior-no-debate-indica-quaest/",
+            "https://www.diariodocentrodomundo.com.br/lula-x-flavio-bolsonaro-quem-venceu-o-debate-segundo-pesquisa/"
+          ]
+        }
+      ],
+      "avaliacoes_qualitativas": [
+        {
+          "quem": "João Ricardo Matta (FGV)",
+          "avaliacao": "Flávio mais tranquilo fora dos confrontos; Lula com vantagem nos embates diretos",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        },
+        {
+          "quem": "Bhreno Vieira (UFPE)",
+          "avaliacao": "Flávio mais à vontade, mas nenhum converteu votos de forma evidente",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        },
+        {
+          "quem": "Mayra Goulart (UFRJ)",
+          "avaliacao": "Flávio impôs segurança pública e foi evasivo em outros pontos; Lula mais firme em saúde",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        },
+        {
+          "quem": "Alan Ghani (Jovem Pan)",
+          "avaliacao": "Flávio venceu",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        },
+        {
+          "quem": "Matheus Leitão (Metrópoles)",
+          "avaliacao": "Lula venceu, dois blocos a um",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        },
+        {
+          "quem": "Igor Gadelha (Metrópoles)",
+          "avaliacao": "empate",
+          "trecho": "um empate sem potencial evidente para convencer indecisos",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        },
+        {
+          "quem": "José Roberto de Toledo (UOL)",
+          "avaliacao": "poucas mudanças de voto; se houve vencedor, foram os brancos e nulos",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        },
+        {
+          "quem": "os dois candidatos",
+          "avaliacao": "ambos disseram ter se saído bem",
+          "fonte_url": "https://www.band.com.br/nacional/brasil/candidatos-avaliam-o-debate-da-band-de-maneira-positiva"
+        }
+      ],
+      "placar_das_avaliacoes": "sem consenso: 1 colunista deu Flávio, 1 deu Lula, os demais viram empate ou vantagens por tema (resumo do Agora RN, 19/10)"
+    },
+    "pesquisas_antes_depois": {
+      "base": "pesquisas_2turno.csv (votos totais, momento apos_1turno)",
+      "regra_janelas": "antes: campo iniciado após o 1º turno (>= 05/10) e terminado entre 08/10 e 17/10; depois: campo iniciado a partir de 19/10 (até 22/10, data de hoje, 4 dias). Excluídas pesquisas com campo que inclui 18/10 e a Instituto Phoenix (amostra em 15 UFs, não nacional). Pesquisas sem totais publicados ficam fora das médias.",
+      "excluidas_campo_inclui_18out": [
+        "AtlasIntel 2026-10-13 a 2026-10-18",
+        "Nexus 2026-10-16 a 2026-10-18",
+        "PoderData 2026-10-16 a 2026-10-18",
+        "Alfa Inteligência 2026-10-15 a 2026-10-19",
+        "Instituto França (IFP) 2026-10-16 a 2026-10-20",
+        "Real Time Big Data 2026-10-15 a 2026-10-19",
+        "Ideia 2026-10-15 a 2026-10-19",
+        "Palver 2026-10-18 a 2026-10-20",
+        "Quaest 2026-10-17 a 2026-10-20",
+        "Veritá 2026-10-15 a 2026-10-19"
+      ],
+      "segundo_turno_votos_totais": {
+        "antes": {
+          "lula": {
+            "media": 45.59,
+            "n": 19
+          },
+          "flavio": {
+            "media": 48.02,
+            "n": 19
+          },
+          "brancos_nulos": {
+            "media": 3.97,
+            "n": 19
+          },
+          "indecisos": {
+            "media": 2.16,
+            "n": 19
+          }
+        },
+        "depois": {
+          "lula": {
+            "media": 45.98,
+            "n": 5
+          },
+          "flavio": {
+            "media": 48.02,
+            "n": 5
+          },
+          "brancos_nulos": {
+            "media": 3.26,
+            "n": 5
+          },
+          "indecisos": {
+            "media": 1.78,
+            "n": 5
+          }
+        },
+        "lista_antes": [
+          {
+            "instituto": "Ipespe",
+            "contratante": "Recursos próprios (parceria Abrapel)",
+            "campo": "2026-10-06 a 2026-10-08",
+            "divulgacao": "2026-10-10",
+            "registro_tse": "BR-00933/2026",
+            "modo": "telefone",
+            "lula": 44.0,
+            "flavio": 49.0,
+            "fonte_url": "https://ipespe.org.br/wp-content/uploads/2026/10/TCK-CAMPANHA-01_-IPESPE-ABRAPEL_2T_-6-a-8-OUT-2026_vf.pdf"
+          },
+          {
+            "instituto": "DataTrends",
+            "contratante": "Recursos próprios",
+            "campo": "2026-10-07 a 2026-10-09",
+            "divulgacao": "2026-10-11",
+            "registro_tse": "BR-03576/2026",
+            "modo": "telefone (URA)",
+            "lula": 44.0,
+            "flavio": 50.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-datatrends-nacional-11out2026.pdf"
+          },
+          {
+            "instituto": "Futura",
+            "contratante": "100% Cidades",
+            "campo": "2026-10-07 a 2026-10-10",
+            "divulgacao": "2026-10-13",
+            "registro_tse": "BR-00650/2026",
+            "modo": "telefone",
+            "lula": 46.6,
+            "flavio": 50.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/Pesquisa-Futura-presidente.pdf"
+          },
+          {
+            "instituto": "Gerp",
+            "contratante": "Recursos próprios",
+            "campo": "2026-10-08 a 2026-10-12",
+            "divulgacao": "2026-10-13",
+            "registro_tse": "BR-07877/2026",
+            "modo": "telefone",
+            "lula": 44.0,
+            "flavio": 53.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/PRESIDENCIA_DO_BRASIL_32o_Relatorio_Presidencia_2026_primeiro.pdf"
+          },
+          {
+            "instituto": "Nexus",
+            "contratante": "BTG Pactual",
+            "campo": "2026-10-10 a 2026-10-12",
+            "divulgacao": "2026-10-13",
+            "registro_tse": "BR-07997/2026",
+            "modo": "telefone",
+            "lula": 45.0,
+            "flavio": 48.0,
+            "fonte_url": "https://www.nexus.fsb.com.br/estudos-divulgados/pesquisa-btg-nexus-de-intencao-de-votos-para-presidente-do-brasil-13-de-outubro-de-2026/"
+          },
+          {
+            "instituto": "PoderData",
+            "contratante": "Recursos próprios (Poder360), parceria de divulgação com Aya",
+            "campo": "2026-10-10 a 2026-10-12",
+            "divulgacao": "2026-10-13",
+            "registro_tse": "BR-01209/2026",
+            "modo": "telefone (URA)",
+            "lula": 46.0,
+            "flavio": 48.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-12out26-2.pdf"
+          },
+          {
+            "instituto": "Quaest",
+            "contratante": "Grupo Globo (TV Globo e O Globo)",
+            "campo": "2026-10-10 a 2026-10-13",
+            "divulgacao": "2026-10-14",
+            "registro_tse": "BR-08729/2026",
+            "modo": "presencial",
+            "lula": 44.0,
+            "flavio": 46.0,
+            "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/quaest-flavio-tem-46-no-2o-turno-lula-44/"
+          },
+          {
+            "instituto": "Datafolha",
+            "contratante": "Folha de S.Paulo",
+            "campo": "2026-10-13 a 2026-10-14",
+            "divulgacao": "2026-10-15",
+            "registro_tse": "BR-00466/2026",
+            "modo": "presencial",
+            "lula": 45.0,
+            "flavio": 47.0,
+            "fonte_url": "https://www.poder360.com.br/poder-eleicoes-2026/datafolha-confirma-poderdata-aya-e-da-flavio-com-51-e-lula-com-49/"
+          },
+          {
+            "instituto": "Indexa",
+            "contratante": "Agência Estado (Broadcast/Estadão)",
+            "campo": "2026-10-13 a 2026-10-14",
+            "divulgacao": "2026-10-15",
+            "registro_tse": "BR-04629/2026",
+            "modo": "telefone",
+            "lula": 42.0,
+            "flavio": 44.0,
+            "fonte_url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/indexa-broadcast-presidente-outubro-2026-segundo-turno/"
+          },
+          {
+            "instituto": "Palver",
+            "contratante": "Recursos próprios",
+            "campo": "2026-10-10 a 2026-10-13",
+            "divulgacao": "2026-10-15",
+            "registro_tse": "BR-08028/2026",
+            "modo": "online",
+            "lula": 49.0,
+            "flavio": 50.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/pesquisa-palver-presidente-nacional-15out2026-1.pdf"
+          },
+          {
+            "instituto": "Futura",
+            "contratante": "100% Cidades",
+            "campo": "2026-10-14 a 2026-10-15",
+            "divulgacao": "2026-10-16",
+            "registro_tse": "BR-03764/2026",
+            "modo": "telefone",
+            "lula": 47.5,
+            "flavio": 49.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/Relatorio_BR_Out_2_V2_ComTexto_Final.pdf"
+          },
+          {
+            "instituto": "Gerp",
+            "contratante": "Recursos próprios",
+            "campo": "2026-10-14 a 2026-10-16",
+            "divulgacao": "2026-10-16",
+            "registro_tse": "BR-05187/2026",
+            "modo": "telefone",
+            "lula": 45.0,
+            "flavio": 50.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/PesquisaGerp-presidente-16out2026.pdf"
+          },
+          {
+            "instituto": "MDA",
+            "contratante": "CNT (Confederação Nacional do Transporte)",
+            "campo": "2026-10-13 a 2026-10-15",
+            "divulgacao": "2026-10-16",
+            "registro_tse": "BR-00652/2026",
+            "modo": "presencial",
+            "lula": 45.9,
+            "flavio": 46.8,
+            "fonte_url": "https://data.cnt.org.br/wp-content/uploads/2026/10/Relatorio-Pesquisa-CNT-de-Opiniao-R172-OUTUBRO26.pdf"
+          },
+          {
+            "instituto": "PoderData",
+            "contratante": "Recursos próprios (Poder360), parceria de divulgação com Aya",
+            "campo": "2026-10-13 a 2026-10-15",
+            "divulgacao": "2026-10-16",
+            "registro_tse": "BR-04258/2026",
+            "modo": "telefone (URA)",
+            "lula": 47.0,
+            "flavio": 47.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-15out26.pdf"
+          },
+          {
+            "instituto": "Ipespe",
+            "contratante": "Recursos próprios (parceria Abrapel)",
+            "campo": "2026-10-13 a 2026-10-15",
+            "divulgacao": "2026-10-17",
+            "registro_tse": "BR-00223/2026",
+            "modo": "telefone",
+            "lula": 46.0,
+            "flavio": 48.0,
+            "fonte_url": "https://ipespe.org.br/wp-content/uploads/2026/10/TRK-CAMPANHA-02_-IPESPE-ABRAPEL_2T_-13-a-15-OUT-2026.pdf"
+          },
+          {
+            "instituto": "Veritá",
+            "contratante": "Recursos próprios",
+            "campo": "2026-10-12 a 2026-10-16",
+            "divulgacao": "2026-10-17",
+            "registro_tse": "BR-01107/2026",
+            "modo": "",
+            "lula": null,
+            "flavio": null,
+            "fonte_url": "https://www.cnnbrasil.com.br/eleicoes/verita-flavio-tem-511-dos-votos-validos-no-2o-turno-lula-489/"
+          },
+          {
+            "instituto": "Vox Brasil",
+            "contratante": "Recursos próprios",
+            "campo": "2026-10-15 a 2026-10-17",
+            "divulgacao": "2026-10-18",
+            "registro_tse": "BR-04332/2026",
+            "modo": "presencial",
+            "lula": 46.4,
+            "flavio": 44.6,
+            "fonte_url": "https://www.metropoles.com/brasil/vox-brasil-com-empate-tecnico-lula-tem-464-e-flavio-bolsonaro-446"
+          },
+          {
+            "instituto": "DataTrends",
+            "contratante": "",
+            "campo": "2026-10-15 a 2026-10-17",
+            "divulgacao": "2026-10-19",
+            "registro_tse": "BR-04454/2026",
+            "modo": "telefone (URA)",
+            "lula": 46.0,
+            "flavio": 49.0,
+            "fonte_url": "https://www.gp1.com.br/eleicoes-2026/noticia/2026/10/19/flavio-bolsonaro-tem-515-e-lula-485-aponta-datatrends-634295.html"
+          },
+          {
+            "instituto": "Futura",
+            "contratante": "100% Cidades",
+            "campo": "2026-10-16 a 2026-10-17",
+            "divulgacao": "2026-10-19",
+            "registro_tse": "BR-06715/2026",
+            "modo": "telefone",
+            "lula": 47.5,
+            "flavio": 48.3,
+            "fonte_url": "https://exame.com/brasil/pesquisa-futura-para-presidente-flavio-bolsonaro-tem-504-e-lula-496-no-2o-turno/"
+          },
+          {
+            "instituto": "Instituto Ranking",
+            "contratante": "Fonte83 (Inteligencia.com Serviços)",
+            "campo": "2026-10-14 a 2026-10-16",
+            "divulgacao": "2026-10-20",
+            "registro_tse": "BR-00152/2026",
+            "modo": "presencial",
+            "lula": 45.4,
+            "flavio": 44.6,
+            "fonte_url": "https://fonte83.com.br/politica/pesquisa-nacional-data-ranking-fonte83-lula-tem-504-e-flavio-496-dos-votos-validos-no-2o-turno/"
+          }
+        ],
+        "lista_depois": [
+          {
+            "instituto": "Futura",
+            "contratante": "",
+            "campo": "2026-10-19 a 2026-10-20",
+            "divulgacao": "2026-10-21",
+            "registro_tse": "BR-06614/2026",
+            "modo": "telefone",
+            "lula": 46.8,
+            "flavio": 48.9,
+            "fonte_url": "https://www.cartacapital.com.br/politica/flavio-e-lula-seguem-tecnicamente-empatados-mostra-pesquisa-futura/"
+          },
+          {
+            "instituto": "Gerp",
+            "contratante": "Recursos próprios",
+            "campo": "2026-10-19 a 2026-10-21",
+            "divulgacao": "2026-10-21",
+            "registro_tse": "BR-03835/2026",
+            "modo": "telefone",
+            "lula": 45.0,
+            "flavio": 50.0,
+            "fonte_url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/gerp-presidente-outubro-2026-segundo-turno-3/"
+          },
+          {
+            "instituto": "Datafolha",
+            "contratante": "Folha de S.Paulo e TV Globo",
+            "campo": "2026-10-20 a 2026-10-22",
+            "divulgacao": "2026-10-22",
+            "registro_tse": "BR-09709/2026",
+            "modo": "presencial",
+            "lula": 46.0,
+            "flavio": 47.0,
+            "fonte_url": "https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-50-dos-votos-validos-contra-50-de-lula-diz-datafolha/"
+          },
+          {
+            "instituto": "Indexa",
+            "contratante": "Agência Estado (Broadcast/Estadão)",
+            "campo": "2026-10-20 a 2026-10-21",
+            "divulgacao": "2026-10-22",
+            "registro_tse": "BR-02348/2026",
+            "modo": "telefone",
+            "lula": 44.1,
+            "flavio": 45.2,
+            "fonte_url": "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/indexa-broadcast-presidente-outubro-2026-segundo-turno-2/"
+          },
+          {
+            "instituto": "PoderData",
+            "contratante": "Recursos próprios (Poder360), parceria de divulgação com Aya",
+            "campo": "2026-10-19 a 2026-10-21",
+            "divulgacao": "2026-10-22",
+            "registro_tse": "BR-07926/2026",
+            "modo": "telefone (URA)",
+            "lula": 48.0,
+            "flavio": 49.0,
+            "fonte_url": "https://static.poder360.com.br/uploads/2026/10/Relatorio-PoderData-Eleitoral-21out26-2.pdf"
+          }
+        ],
+        "pareado_mesmo_instituto": {
+          "linhas": [
+            {
+              "instituto": "Datafolha",
+              "antes_campo": "2026-10-13 a 2026-10-14",
+              "depois_campo": "2026-10-20 a 2026-10-22",
+              "lula_antes": 45.0,
+              "lula_depois": 46.0,
+              "lula_var": 1.0,
+              "flavio_antes": 47.0,
+              "flavio_depois": 47.0,
+              "flavio_var": 0.0
+            },
+            {
+              "instituto": "Futura",
+              "antes_campo": "2026-10-16 a 2026-10-17",
+              "depois_campo": "2026-10-19 a 2026-10-20",
+              "lula_antes": 47.5,
+              "lula_depois": 46.8,
+              "lula_var": -0.7,
+              "flavio_antes": 48.3,
+              "flavio_depois": 48.9,
+              "flavio_var": 0.6
+            },
+            {
+              "instituto": "Gerp",
+              "antes_campo": "2026-10-14 a 2026-10-16",
+              "depois_campo": "2026-10-19 a 2026-10-21",
+              "lula_antes": 45.0,
+              "lula_depois": 45.0,
+              "lula_var": 0.0,
+              "flavio_antes": 50.0,
+              "flavio_depois": 50.0,
+              "flavio_var": 0.0
+            },
+            {
+              "instituto": "Indexa",
+              "antes_campo": "2026-10-13 a 2026-10-14",
+              "depois_campo": "2026-10-20 a 2026-10-21",
+              "lula_antes": 42.0,
+              "lula_depois": 44.1,
+              "lula_var": 2.1,
+              "flavio_antes": 44.0,
+              "flavio_depois": 45.2,
+              "flavio_var": 1.2
+            },
+            {
+              "instituto": "PoderData",
+              "antes_campo": "2026-10-13 a 2026-10-15",
+              "depois_campo": "2026-10-19 a 2026-10-21",
+              "lula_antes": 47.0,
+              "lula_depois": 48.0,
+              "lula_var": 1.0,
+              "flavio_antes": 47.0,
+              "flavio_depois": 49.0,
+              "flavio_var": 2.0
+            }
+          ],
+          "variacao_media": {
+            "lula": {
+              "var_media_pp": 0.68,
+              "n": 5
+            },
+            "flavio": {
+              "var_media_pp": 0.76,
+              "n": 5
+            }
+          }
+        }
+      },
+      "o_numero_mostra": [
+        "Média simples: Lula 45,59 × Flávio 48,02 antes (19 pesquisas) → Lula 45,98 × Flávio 48,02 depois (5 pesquisas). Diferença de Flávio sobre Lula: 2,43 → 2,04 p.p.",
+        "Mesmo instituto (Datafolha, Futura, Gerp, Indexa, PoderData; última antes × primeira depois): Lula +0,68 e Flávio +0,76 p.p. em média — variação dentro das margens de erro.",
+        "Brancos/nulos 3,97 → 3,26 e indecisos 2,16 → 1,78 (médias simples, conceitos diferem por instituto).",
+        "Janela 'depois' tem só 4 dias e 5 pesquisas; 10 pesquisas com campo atravessando 18/10 ficaram fora."
+      ],
+      "atribuicoes_ao_debate": [
+        {
+          "quem": "Quaest (qualitativa)",
+          "o_que_disse": "o debate não parece ter produzido virada de percepção",
+          "fonte_url": "https://oantagonista.com.br/brasil/flavio-foi-ligeiramente-superior-no-debate-indica-quaest/"
+        },
+        {
+          "quem": "José Roberto de Toledo (UOL) e Bhreno Vieira (UFPE), via Agora RN",
+          "o_que_disse": "previsão de poucas mudanças de voto; nenhum candidato converteu votos de forma evidente",
+          "fonte_url": "https://agorarn.com.br/?p=2407572"
+        },
+        {
+          "quem": "O Tempo (19/10)",
+          "o_que_disse": "o título liga as pesquisas de 19/10 ao debate, mas o texto não atribui efeito (as pesquisas citadas tinham campo antes ou durante 18/10)",
+          "fonte_url": "https://www.otempo.com.br/canal-o-tempo/programas/primeira-analise/2026/10/19/lula-e-flavio-bolsonaro-na-band-pesquisas-depois-do-debate-mostram-quem-esta-a-frente"
+        }
+      ]
+    }
+  },
+  "comparacao_historica_audiencia_band": [
+    {
+      "debate": "Band 1º turno 2026 (23/08), sem Lula e Flávio",
+      "media_gsp": 2.2,
+      "pico_gsp": null,
+      "share_pct": null,
+      "tipo": "prévia",
+      "youtube_pico_simultaneo": null,
+      "fonte_url": "https://pipocamoderna.com.br/2026/10/debate-band-lideranca-globo/",
+      "obs": "Vermelho: 1,9 média / 2,9 pico (sem praça)"
+    },
+    {
+      "debate": "Band 2º turno 2026 (18/10), Lula × Flávio",
+      "media_gsp": 15,
+      "pico_gsp": 16.5,
+      "share_pct": 24,
+      "tipo": "consolidado divulgado pela Band",
+      "youtube_pico_simultaneo": 5385394,
+      "fonte_url": "https://www.ouniversodatv.com/2026/10/lula-e-flavio-bolsonaro-levam-debate-da.html",
+      "obs": "prévia: 13 a 13,39 média, 15 a 15,21 pico"
+    },
+    {
+      "debate": "Band 1º turno 2022 (28/08/2022)",
+      "media_gsp": 13.7,
+      "pico_gsp": 15.2,
+      "share_pct": 21.6,
+      "tipo": "divulgado pela Band",
+      "youtube_pico_simultaneo": 1500000,
+      "fonte_url": "https://www.band.com.br/eleicoes/noticias/debate-na-band-lidera-na-tv-aberta-e-bate-recorde-em-transmissao-no-youtube-16531283",
+      "obs": "prévia: 13,3 / 14,8 (Poder360, CartaCapital); YouTube: 'mais de 1,5 milhão' só no canal Band Jornalismo"
+    },
+    {
+      "debate": "Band 2º turno 2022 (16/10/2022)",
+      "media_gsp": 12.4,
+      "pico_gsp": 15,
+      "share_pct": 18.9,
+      "tipo": "divulgado 18/10/2022",
+      "youtube_pico_simultaneo": null,
+      "fonte_url": "https://pleno.news/brasil/politica-nacional/debate-na-band-levou-emissora-a-vice-lideranca-de-audiencia.html",
+      "obs": "divergências: 13,1/14,5 (Poder360); 11,8 prévia (O Antagonista)"
+    },
+    {
+      "debate": "Band 1º turno 2018 (09/08/2018)",
+      "media_gsp": null,
+      "pico_gsp": null,
+      "share_pct": 11.3,
+      "tipo": "média nacional Ibope: 6,2 / pico 8,0",
+      "youtube_pico_simultaneo": 470000,
+      "fonte_url": "https://www.bemparana.com.br/noticia/curitiba-teve-maior-audiencia-do-pais-no-debate-da-band",
+      "obs": "GSP não confirmado em fonte aberta (resumo de busca citava 6,1/7,5); YouTube 2018: 470 mil (Band, 2022) × 390 mil (TecMundo, 2018)"
+    }
+  ],
+  "proximo_debate": {
+    "data": "2026-10-23",
+    "emissora": "Globo",
+    "status": "agendado (Lula e Flávio convidados); fora do escopo 'até hoje'",
+    "fonte_url": "https://pt.wikipedia.org/wiki/Elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
+  }
+}
