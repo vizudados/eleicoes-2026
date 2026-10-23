@@ -1,0 +1,45 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: O 2º turno simulado no Brasil (com o exterior): Lula × Flávio em % dos válidos, em quantas UFs cada um fica à frente e a diferença em votos; o rótulo diz se a conta usa os controles ou uma pesquisa.
+*/
+-- 1 · Leituras
+VAR _pesq = [T22 · pesquisa em uso]
+VAR _data = [T22 · pesquisa · data]
+VAR _lula = [T22 · cenário · Lula %]
+VAR _flavio = [T22 · cenário · Flávio %]
+VAR _ufL = [T22 · cenário · UFs com Lula à frente]
+VAR _ufF = [T22 · cenário · UFs com Flávio à frente]
+VAR _dif = [T22 · cenário · diferença]
+-- 2 · Textos
+VAR _rotulo =
+    IF (
+        ISBLANK ( _pesq ),
+        "Seus controles",
+        "Pesquisa " & SUBSTITUTE ( _pesq, "<", "&lt;" ) & ", " & FORMAT ( _data, "dd/MM" )
+    )
+VAR _txtUfL = "à frente em " & _ufL & IF ( _ufL = 1, " UF", " UFs" )
+VAR _txtUfF = "à frente em " & _ufF & IF ( _ufF = 1, " UF", " UFs" )
+VAR _nota =
+    SWITCH (
+        TRUE (),
+        ABS ( _dif ) < 50000, "praticamente empatados",
+        _dif > 0, "Lula vence por " & FORMAT ( _dif / 1000000, "0.0" ) & " mi" & " de votos",
+        "Flávio vence por " & FORMAT ( - _dif / 1000000, "0.0" ) & " mi" & " de votos"
+    )
+-- 3 · Geometria
+VAR _wl = _lula * 100 -- geometria
+-- 4 · Marcação
+RETURN
+    "<div class='tela t22r'>"
+        & "<div class='rot sobe'>Resultado do 2º turno simulado · " & _rotulo & "</div>"
+        & "<div class='lado l sobe d1'><span class='q'>Lula</span><span class='num'>" & FORMAT ( _lula, "0.0%" )
+            & "</span><span class='u'>" & _txtUfL & "</span></div>"
+        & "<div class='lado f sobe d2'><span class='q'>Flávio</span><span class='num'>" & FORMAT ( _flavio, "0.0%" )
+            & "</span><span class='u'>" & _txtUfF & "</span></div>"
+        & "<div class='br'><i class='bl barra-x' style='width:" & FORMAT ( _wl, "0.0##", "en-US" ) & "%'></i>"
+            & "<i class='bf barra-x-dir' style='width:" & FORMAT ( 100 - _wl, "0.0##", "en-US" ) & "%'></i>"
+            & "<i class='meio'></i></div>"
+        & "<div class='cinq'>50%</div>"
+        & "<div class='mao sobe d6'>" & _nota & "</div>"
+    & "</div>"

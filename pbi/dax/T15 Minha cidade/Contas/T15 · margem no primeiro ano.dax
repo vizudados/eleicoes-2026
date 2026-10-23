@@ -1,0 +1,10 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Margem do PT no município na primeira eleição da série.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › serie 2006 › +30,0 p.p.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · primeiro ano]
+RETURN
+    CALCULATE ( [T15 · margem no ano], 'Ano'[Ano] = _a )

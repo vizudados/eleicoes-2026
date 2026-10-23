@@ -1,0 +1,57 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: A abstenção em cada 1º turno de 2006 a 2026, no recorte: uma linha que se desenha com o % em cada eleição. Só lê contas; a escala é geometria.
+*/
+-- 1 · Leituras
+VAR _p06 = [T06 · abstenção % 2006]
+VAR _p26 = [T06 · abstenção %]
+VAR _dpp = [T06 · variação da abstenção em p.p.]
+VAR _anos =
+    ADDCOLUMNS ( VALUES ( 'Ano'[Ano] ), "@p", [T06 · abstenção % (ano)], "@n", [T06 · abstenções (ano)] )
+-- 2 · Textos
+VAR _verbo = IF ( _dpp >= 0, "subiu", "caiu" )
+VAR _manchete = "Em 20 anos, a abstenção " & _verbo & " de " & FORMAT ( _p06, "0.0%" ) & " para " & FORMAT ( _p26, "0.0%" )
+-- 3 · Geometria (anos em x 60–700; % de cima para baixo em y 30–220, de 10% a 26% — ou o que couber)
+VAR _min = MIN ( 0.10, MINX ( _anos, [@p] ) - 0.01 ) -- geometria
+VAR _max = MAX ( 0.26, MAXX ( _anos, [@p] ) + 0.01 ) -- geometria
+VAR _pts =
+    ADDCOLUMNS (
+        _anos,
+        "@x", 60 + ( 'Ano'[Ano] - 2006 ) / 20 * 640, -- geometria
+        "@y", 220 - ( [@p] - _min ) / ( _max - _min ) * 190 -- geometria
+    )
+VAR _caminho =
+    CONCATENATEX ( _pts, FORMAT ( [@x], "0.0##", "en-US" ) & "," & FORMAT ( [@y], "0.0##", "en-US" ), " L", 'Ano'[Ano], ASC ) -- geometria
+VAR _area =
+    "M60,250 L" & _caminho & " L700,250 Z" -- geometria
+VAR _rotulos =
+    CONCATENATEX (
+        _pts,
+        "<div class='pt sobe d" & ( ( 'Ano'[Ano] - 2006 ) / 4 + 6 ) & "' style='left:" & FORMAT ( [@x] - 50, "0.0##", "en-US" )
+            & "px;top:" & FORMAT ( [@y] - 40, "0.0##", "en-US" ) & "px'>" & FORMAT ( [@p], "0.0%" ) & "</div>"
+            & "<div class='an' style='left:" & FORMAT ( [@x] - 50, "0.0##", "en-US" ) & "px'>" & 'Ano'[Ano] & "</div>",
+        "",
+        'Ano'[Ano], ASC
+    )
+VAR _pontos =
+    CONCATENATEX (
+        _pts,
+        "<circle class='brota d" & ( ( 'Ano'[Ano] - 2006 ) / 4 + 5 ) & "' cx='" & FORMAT ( [@x], "0.0##", "en-US" ) & "' cy='"
+            & FORMAT ( [@y], "0.0##", "en-US" ) & "' r='6'/>",
+        "",
+        'Ano'[Ano], ASC
+    )
+-- 4 · Marcação
+VAR _html =
+    "<div class='tela se'>"
+        & "<div class='sob sobe'>A ausência em duas décadas · 1º turno</div>"
+        & "<div class='man sobe d1'>" & _manchete & "</div>"
+        & "<div class='gr'><svg width='760' height='270' viewBox='0 0 760 270'>"
+        & "<path class='area esmaece' d='" & _area & "'/>"
+        & "<path class='linha traco d3' pathLength='1' d='M" & _caminho & "'/>"
+        & "<line class='base' x1='40' y1='250' x2='720' y2='250'/>" & _pontos & "</svg>" & _rotulos
+        & "<div class='mao dpp entra d14'>" & FORMAT ( _dpp, "+0.0;−0.0;0.0" ) & IF ( ABS ( _dpp ) < 2, " ponto", " pontos" ) & " em 20 anos</div></div>"
+    & "</div>"
+RETURN
+    _html

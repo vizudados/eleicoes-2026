@@ -1,0 +1,15 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0.0%
+@descricao: Onde o candidato do item começa na barra dos válidos: soma das parcelas dos mais votados que ele (0–1).
+*/
+VAR _v = [T01 · votos do candidato]
+VAR _todos =
+    CALCULATETABLE (
+        VALUES ( 'Candidato UF'[Candidato] ),
+        REMOVEFILTERS ( 'Candidato UF'[Candidato] ),
+        'Candidato UF'[Ano] = 2026
+    )
+VAR _antes = SUMX ( FILTER ( _todos, [T01 · votos do candidato] > _v ), [T01 · votos do candidato] )
+RETURN
+    IF ( _v > 0, DIVIDE ( _antes, CALCULATE ( [T01 · válidos], REMOVEFILTERS ( 'Candidato UF'[Candidato] ) ) ) )

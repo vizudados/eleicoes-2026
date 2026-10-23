@@ -1,0 +1,8 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0.0%
+@descricao: Margem de Lula em 2022 somando os votos das cidades do contexto.
+@oraculo: mockup/data/eleicoes.json › paginas[13] › celulas › margem26_txt
+@gerado: pbi/scripts/desenho_t13.py
+*/
+DIVIDE ( [T13 · saldo 2022], [T13 · válidos 2022] )

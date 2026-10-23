@@ -1,0 +1,47 @@
+/// De que lado cada município ficou em 2022 e em 2026 (margem do PT > 0 = PT à frente): Virou para Flávio, Lula nas duas, Bolsonaro nas duas (Jair em 2022, Flávio em 2026) ou Empate ou cidade nova. Só alimenta a segmentação "Virou?" da tela 19; as contas leem as margens.
+table 'T19 Lado'
+	lineageTag: b172b4e1-c84f-5493-908f-8f96610e84bf
+
+	/// Código IBGE do município (chave; liga com Município).
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: 411c9fa1-997f-511c-8ca6-bde2359a9d0c
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Lado em 2022 → 2026: Virou para Flávio, Lula nas duas, Bolsonaro nas duas, Empate ou cidade nova.
+	column Lado
+		dataType: string
+		lineageTag: 0d96cc32-2537-5f36-8990-6538aa6a767a
+		summarizeBy: none
+		sourceColumn: Lado
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem do rótulo na segmentação.
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3066496b-736f-55b1-845f-5bedd041b409
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T19 Lado' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/t19_lado.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"cd_ibge", "lado", "lado_ordem"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"cd_ibge", type text}, {"lado", type text}, {"lado_ordem", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"cd_ibge", "CodIBGE"}, {"lado", "Lado"}, {"lado_ordem", "Ordem"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

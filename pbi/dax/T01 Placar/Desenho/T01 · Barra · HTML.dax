@@ -1,0 +1,34 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Segmento da barra dos votos válidos para o candidato da linha (uma entrada por candidato): começa onde terminam os mais votados, largura = parcela dos válidos.
+*/
+-- 1 · Leituras
+VAR _v = [T01 · votos do candidato]
+VAR _p = [T01 · parte dos válidos]
+VAR _ini = [T01 · início na barra]
+VAR _pos = [T01 · posição do candidato]
+VAR _num = [T01 · número do candidato]
+-- 2 · Textos
+VAR _cor =
+    SWITCH (
+        TRUE (),
+        _num = 22, "f",
+        _num = 13, "l",
+        _pos = 3, "s3",
+        _pos = 4, "s4",
+        "s5"
+    )
+VAR _lado = IF ( _pos = 2, " dir", "" )
+VAR _txtP = IF ( _p >= 0.08, "<b>" & FORMAT ( _p, "0.0%" ) & "</b>", "" )
+-- 3 · Geometria (barra de 860 px)
+VAR _x = FORMAT ( _ini * 860, "0.0##", "en-US" ) -- geometria
+VAR _w = FORMAT ( _p * 860, "0.0##", "en-US" ) -- geometria
+VAR _atraso = MIN ( _pos + 3, 12 ) -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        _v > 0,
+        "<div class='tela br'><div class='sg " & _cor & _lado & " barra-x d" & _atraso
+            & "' style='left:" & _x & "px;width:" & _w & "px'>" & _txtP & "</div></div>"
+    )

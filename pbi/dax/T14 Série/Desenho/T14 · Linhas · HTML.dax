@@ -1,0 +1,86 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Uma entrada por eleição (granularidade Ano): os pontos do PT e do adversário com o rótulo, o trecho de linha até a eleição seguinte (que se desenha em sequência), o laço à mão quando o PT ficou atrás e o eixo com os candidatos. A 1ª eleição desenha a grade. Escala pelas contas 'T14 · escala …'.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _ano = [T14 · ano]
+VAR _pt = [T14 · PT %]
+VAR _adv = [T14 · adversário %]
+VAR _ptN = CALCULATE ( [T14 · PT %], 'Ano'[Ano] = _ano + 4 )
+VAR _advN = CALCULATE ( [T14 · adversário %], 'Ano'[Ano] = _ano + 4 )
+VAR _cpt = [T14 · candidato do PT]
+VAR _cadv = [T14 · adversário]
+VAR _part = [T14 · partido do adversário]
+VAR _min = [T14 · escala mínima]
+VAR _max = [T14 · escala máxima]
+-- 2 · Textos
+VAR _cptCurto = SWITCH ( _cpt, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", _cpt )
+VAR _cadvCurto =
+    SWITCH ( _cadv, "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio",
+        "Jair Bolsonaro", "Bolsonaro", _cadv )
+VAR _atras = _pt < _adv
+-- 3 · Geometria (anos a cada 276 px a partir de x 120; valores de y 30 a 270 entre o piso e o teto da escala)
+VAR _lo = FLOOR ( _min * 100 - 4, 10 ) / 100
+VAR _hi = CEILING ( _max * 100 + 4, 10 ) / 100
+VAR _i = ( _ano - 2006 ) / 4
+VAR _x = 120 + _i * 276
+VAR _yPt = 270 - 240 * ( _pt - _lo ) / ( _hi - _lo )
+VAR _yAdv = 270 - 240 * ( _adv - _lo ) / ( _hi - _lo )
+VAR _yPtN = 270 - 240 * ( _ptN - _lo ) / ( _hi - _lo )
+VAR _yAdvN = 270 - 240 * ( _advN - _lo ) / ( _hi - _lo )
+VAR _f = FORMAT ( _x, "0.0", "en-US" )
+VAR _fN = FORMAT ( _x + 276, "0.0", "en-US" )
+VAR _atraso = 300 + _i * 380
+VAR _ptCima = _pt >= _adv
+VAR _grade =
+    IF (
+        _ano = 2006,
+        CONCATENATEX (
+            GENERATESERIES ( _lo * 100, _hi * 100, 10 ),
+            VAR _yy = 270 - 240 * ( [Value] / 100 - _lo ) / ( _hi - _lo )
+            RETURN
+                "<line class='g' x1='70' x2='1560' y1='" & FORMAT ( _yy, "0.0", "en-US" ) & "' y2='"
+                    & FORMAT ( _yy, "0.0", "en-US" ) & "'/><text class='tk' x='58' y='" & FORMAT ( _yy + 4, "0.0", "en-US" )
+                    & "' text-anchor='end'>" & [Value] & "%</text>",
+            ""
+        ) & "<line class='base' x1='70' x2='1560' y1='290' y2='290'/>"
+    )
+VAR _seg =
+    IF (
+        NOT ISBLANK ( _ptN ),
+        "<line class='lpt traco' pathLength='1' style='animation-delay:" & _atraso & "ms' x1='" & _f & "' y1='"
+            & FORMAT ( _yPt, "0.0", "en-US" ) & "' x2='" & _fN & "' y2='" & FORMAT ( _yPtN, "0.0", "en-US" ) & "'/>"
+            & "<line class='ladv traco' pathLength='1' style='animation-delay:" & _atraso & "ms' x1='" & _f & "' y1='"
+            & FORMAT ( _yAdv, "0.0", "en-US" ) & "' x2='" & _fN & "' y2='" & FORMAT ( _yAdvN, "0.0", "en-US" ) & "'/>"
+    )
+VAR _laco =
+    IF (
+        _atras,
+        "<path class='laco traco' pathLength='1' style='animation-delay:" & ( _atraso + 900 ) & "ms' transform='translate("
+            & _f & "," & FORMAT ( _yPt, "0.0", "en-US" ) & ")' d='M-20.8,-23.0 L-17.0,-27.1 L-11.6,-29.4 L-5.4,-29.3 L0.4,-27.6 L5.7,-26.0 L11.0,-25.5 L17.0,-25.4 L23.2,-24.3 L28.1,-21.3 L30.7,-16.7 L31.4,-11.7 L31.9,-7.2 L33.6,-3.1 L36.1,1.4 L37.6,6.4 L36.3,11.3 L32.2,15.2 L26.9,17.9 L22.0,20.2 L18.1,23.3 L14.2,27.1 L9.2,30.4 L3.0,31.5 L-3.1,30.2 L-8.5,27.5 L-13.3,25.0 L-18.5,23.5 L-24.5,22.2 L-30.3,20.0 L-34.3,16.0 L-35.5,10.9 L-34.7,5.8 L-34.0,1.2 L-34.6,-3.3 L-35.9,-8.3 L-35.8,-13.5 L-33.0,-18.2 L-27.7,-21.2 L-21.6,-22.9 L-16.1,-24.4 L-11.4,-26.8 L-6.3,-29.9 L-0.3,-32.2 L6.1,-32.1 L11.9,-29.5'/>"
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pt ),
+        "<div class='tela ano'>"
+            & "<div class='alvo' style='left:" & FORMAT ( _x - 128, "0.0", "en-US" ) & "px'></div>"
+            & "<svg class='sv' width='1620' height='370' viewBox='0 0 1620 370'>"
+                & _grade & _seg & _laco
+                & "<circle class='ppt brota' style='animation-delay:" & ( _atraso - 120 ) & "ms' cx='" & _f & "' cy='"
+                    & FORMAT ( _yPt, "0.0", "en-US" ) & "' r='7.5'/>"
+                & "<circle class='padv brota' style='animation-delay:" & ( _atraso - 120 ) & "ms' cx='" & _f & "' cy='"
+                    & FORMAT ( _yAdv, "0.0", "en-US" ) & "' r='7.5'/>"
+            & "</svg>"
+            & "<div class='vl vpt sobe' style='left:" & FORMAT ( _x - 60, "0.0", "en-US" ) & "px;top:"
+                & FORMAT ( IF ( _ptCima, _yPt - 38, _yPt + IF ( _atras, 30, 12 ) ), "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 200 )
+                & "ms'>" & FORMAT ( _pt, "0.0%" ) & "</div>"
+            & "<div class='vl vadv sobe' style='left:" & FORMAT ( _x - 60, "0.0", "en-US" ) & "px;top:"
+                & FORMAT ( IF ( _ptCima, _yAdv + 12, _yAdv - 38 ), "0.0", "en-US" ) & "px;animation-delay:" & ( _atraso + 200 )
+                & "ms'>" & FORMAT ( _adv, "0.0%" ) & "</div>"
+            & "<div class='xl entra' style='left:" & FORMAT ( _x - 128, "0.0", "en-US" ) & "px;animation-delay:" & _atraso
+                & "ms'><b>" & _ano & "</b><span>" & _cptCurto & " × " & _cadvCurto & " · " & _part & "</span></div>"
+        & "</div>"
+    )

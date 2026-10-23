@@ -1,0 +1,6 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: #,0
+@descricao: Eleitores aptos em 2026 nos municípios do contexto.
+*/
+CALCULATE ( SUM ( 'Município ano'[Aptos] ), 'Município ano'[Ano] = 2026 )

@@ -1,0 +1,8 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Votos de Lula em 2026 menos em 2022, somados no recorte.
+@oraculo: mockup/data/eleicoes.json › paginas[11] › variacao_votos › lula = −3.399.184
+@gerado: pbi/scripts/desenho_t11.py
+*/
+[T11 · votos de Lula 2026] - [T11 · votos de Lula 2022]

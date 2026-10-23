@@ -1,0 +1,17 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: Votos do candidato do PT sobre os válidos no ano do contexto. Sem recorte de municípios, o resultado nacional oficial (com o exterior); com UF, a soma dos municípios.
+@oraculo: mockup/data/eleicoes.json › paginas[14] › anos › pt › pct (2006 48,6% … 2026 45,2%)
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _mun = ISCROSSFILTERED ( 'Município' )
+RETURN
+    IF (
+        _mun,
+        DIVIDE ( SUM ( 'Município ano'[VotosPT] ), SUM ( 'Município ano'[Validos] ) ),
+        DIVIDE (
+            CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Partido] = "PT" ),
+            MAX ( 'Candidato ano'[ValidosAno] )
+        )
+    )

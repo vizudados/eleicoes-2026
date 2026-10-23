@@ -1,0 +1,7 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: 0
+@descricao: Quantos marcos a trajetória de Lula tem.
+@oraculo: dados/pbi/trajetoria.csv = 10
+*/
+CALCULATE ( COUNTROWS ( 'Trajetória' ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Lula" )

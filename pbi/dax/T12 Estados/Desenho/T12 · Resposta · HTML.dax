@@ -1,0 +1,120 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Coluna da resposta: em quantas unidades a margem de Lula caiu, quem mudou de lado, a exceção, o que é margem (com o Brasil 2022 e 2026) e as cinco regiões. Só lê contas 'T12 · …'.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _caiu = [T12 · unidades onde a margem caiu]
+VAR _tot = [T12 · unidades]
+VAR _nSubiu = [T12 · unidades onde a margem subiu]
+VAR _subiu = [T12 · onde a margem subiu]
+VAR _alta = [T12 · alta onde a margem subiu]
+VAR _mudaram = [T12 · mudaram para o adversário]
+VAR _nMud = [T12 · quantas mudaram para o adversário]
+VAR _nMudL = [T12 · quantas mudaram para Lula]
+VAR _l22 = [T12 · Lula % do Brasil 2022]
+VAR _a22 = [T12 · PL % do Brasil 2022]
+VAR _l26 = [T12 · Lula % do Brasil 2026]
+VAR _a26 = [T12 · PL % do Brasil 2026]
+VAR _m22 = [T12 · margem do Brasil 2022]
+VAR _m26 = [T12 · margem do Brasil 2026]
+VAR _dBr = [T12 · variação do Brasil]
+VAR _reg =
+    ADDCOLUMNS (
+        DATATABLE ( "Região", STRING, { { "Norte" }, { "Nordeste" }, { "Centro-Oeste" }, { "Sudeste" }, { "Sul" } } ),
+        "@m22", VAR _r = [Região] RETURN CALCULATE ( [T12 · margem 2022], 'UF'[Região] = _r ),
+        "@m26", VAR _r = [Região] RETURN CALCULATE ( [T12 · margem 2026], 'UF'[Região] = _r ),
+        "@d", VAR _r = [Região] RETURN CALCULATE ( [T12 · variação], 'UF'[Região] = _r )
+    )
+-- 2 · Textos
+VAR _txtMud =
+    SWITCH (
+        TRUE (),
+        _nMud = 0 && _nMudL = 0, "Nenhuma unidade mudou de lado",
+        _nMud = 0, "Nenhuma unidade passou para o lado de Flávio",
+        _nMud = 1, "<span class='sub'>" & _mudaram & "</span> mudou de lado",
+        "<span class='sub'>" & _mudaram & "</span> mudaram de lado"
+    )
+VAR _txtSubiu =
+    SWITCH (
+        TRUE (),
+        _nSubiu = 0, "A margem de Lula não subiu em nenhuma unidade.",
+        _nSubiu = 1, "Só " & IF ( _subiu = "Distrito Federal", "o ", "" ) & _subiu & " foi na direção de Lula: <b>"
+            & FORMAT ( _alta * 100, "+0.0;−0.0;0.0" ) & " p.p.</b>",
+        FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula: " & _subiu & "."
+    )
+VAR _txtUnid = IF ( _caiu = 1, "unidade em que", "unidades em que" )
+-- 3 · Geometria (barras do Brasil: 100% = 300 px; mini eixos das regiões de −50 a +50 p.p. em 250 px)
+VAR _wl22 = 300 * _l22 -- geometria
+VAR _wa22 = 300 * _a22 -- geometria
+VAR _wl26 = 300 * _l26 -- geometria
+VAR _wa26 = 300 * _a26 -- geometria
+VAR _linhasReg =
+    CONCATENATEX (
+        _reg,
+        VAR _pos = RANKX ( _reg, [@d], , ASC, Dense ) /* geometria */
+        VAR _x22 = ( 10 + 290 * ( MAX ( -0.45, MIN ( 0.45, [@m22] ) ) + 0.45 ) / 0.9 )
+        VAR _x26 = ( 10 + 290 * ( MAX ( -0.45, MIN ( 0.45, [@m26] ) ) + 0.45 ) / 0.9 )
+        VAR _cor = IF ( [@m26] < 0, "var(--azul)", "var(--vermelho)" )
+        VAR _cor22 = IF ( [@m22] < 0, "var(--azul)", "var(--vermelho)" )
+        VAR _nota =
+            IF ( [@m22] > 0 && [@m26] < 0, " <span class='mao mud'>passou para Flávio</span>", "" )
+        RETURN
+            "<div class='rg sobe d" & ( 8 + _pos ) & "' style='top:" & ( 30 + ( _pos - 1 ) * 46 ) & "px'>"
+                & "<div class='nm'>" & [Região] & _nota & "</div>"
+                & "<div class='vv'>" & FORMAT ( [@m22] * 100, "+0.0;−0.0;0.0" ) & " → " & FORMAT ( [@m26] * 100, "+0.0;−0.0;0.0" ) & "</div>"
+                & "<svg class='mini' width='310' height='20' viewBox='0 0 310 20'>"
+                    & "<line x1='155' x2='155' y1='0' y2='20' class='zero'/>"
+                    & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 1200 + _pos * 90 )
+                        & "ms' x1='" & FORMAT ( _x22, "0.0", "en-US" ) & "' x2='" & FORMAT ( _x26, "0.0", "en-US" )
+                        & "' y1='10' y2='10'/>"
+                    & "<circle cx='" & FORMAT ( _x22, "0.0", "en-US" ) & "' cy='10' r='4.5' class='m22' stroke='"
+                        & _cor22 & "'/>"
+                    & "<circle class='brota' style='animation-delay:" & ( 1500 + _pos * 90 ) & "ms' cx='"
+                        & FORMAT ( _x26, "0.0", "en-US" ) & "' cy='10' r='5.5' fill='" & _cor & "'/>"
+                & "</svg>"
+                & "<div class='dv'>" & FORMAT ( [@d] * 100, "+0.0;−0.0;0.0" ) & "</div>"
+            & "</div>",
+        "",
+        [@d], ASC
+    )
+-- 4 · Marcação
+VAR _barra =
+    "<div class='ano'>{ANO}</div><div class='tr'><i class='bl barra-x' style='width:{WL}px'></i>"
+        & "<i class='ba barra-x-dir' style='width:{WA}px'></i></div>"
+VAR _brasil =
+    "<div class='br'>"
+        & "<div class='lnb'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _barra, "{ANO}", "2022" ), "{WL}",
+            FORMAT ( _wl22, "0.0", "en-US" ) ), "{WA}", FORMAT ( _wa22, "0.0", "en-US" ) )
+            & "<div class='pc'><span class='lula'>" & FORMAT ( _l22, "0.0%" ) & "</span> × <span class='flavio'>"
+            & FORMAT ( _a22, "0.0%" ) & "</span></div><div class='mg num'>" & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & "</div></div>"
+        & "<div class='lnb'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _barra, "{ANO}", "2026" ), "{WL}",
+            FORMAT ( _wl26, "0.0", "en-US" ) ), "{WA}", FORMAT ( _wa26, "0.0", "en-US" ) )
+            & "<div class='pc'><span class='lula'>" & FORMAT ( _l26, "0.0%" ) & "</span> × <span class='flavio'>"
+            & FORMAT ( _a26, "0.0%" ) & "</span></div><div class='mg num'>" & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & "</div></div>"
+    & "</div>"
+RETURN
+    "<div class='tela t12r'>"
+        & "<div class='topo sobe'><span class='num g'>" & FORMAT ( _caiu, "0" ) & "</span><span class='de'>de</span>"
+            & "<span class='num g'>" & FORMAT ( _tot, "0" ) & "</span></div>"
+        & "<div class='man t1 sobe d2'>" & _txtUnid & " a margem de <span class='lula'>Lula</span> caiu de 2022 "
+            & "para 2026</div>"
+        & "<div class='man t2 sobe d3'>" & _txtMud
+            & "<svg width='300' height='14' viewBox='0 0 300 14'><path class='traco' style='animation-delay:1100ms' "
+            & "pathLength='1' d='M3,9 C60,4 150,12 296,5' fill='none' stroke='var(--azul)' stroke-width='5' "
+            & "stroke-linecap='round'/></svg></div>"
+        & "<div class='txt t3 entra d5'>" & _txtSubiu & "</div>"
+        & "<div class='margem'>"
+            & "<div class='rot entra d6'>O QUE É MARGEM</div>"
+            & "<div class='txt ex entra d6'>É a distância entre os votos de Lula e os do adversário, em pontos dos "
+                & "votos válidos: positiva, Lula à frente; negativa, o adversário. No Brasil, foi de "
+                & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos: " & IF ( _dBr < 0, "caiu ", "subiu " )
+                & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) & ".</div>"
+            & _brasil
+        & "</div>"
+        & "<div class='regioes'>"
+            & "<div class='rot entra d8'>POR REGIÃO · MARGEM DE LULA 2022 → 2026</div>"
+            & _linhasReg
+        & "</div>"
+    & "</div>"

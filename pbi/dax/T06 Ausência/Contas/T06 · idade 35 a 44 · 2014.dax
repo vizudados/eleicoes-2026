@@ -1,0 +1,12 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0.0%
+@descricao: Abstenção da faixa 35 a 44 no 1º turno de 2014, no Brasil (0–1): faltosos ÷ aptos da faixa.
+@oraculo: paginas[6].idade[35 a 44].pct2014
+*/
+CALCULATE (
+    DIVIDE ( SUM ( 'Abstenção perfil'[Abstencao] ), SUM ( 'Abstenção perfil'[Aptos] ) ),
+    'Abstenção perfil'[Ano] = 2014,
+    'Abstenção perfil'[Dimensão] = "faixa_etaria",
+    'Abstenção perfil'[Categoria] IN { "35 a 39 anos", "40 a 44 anos" }
+)

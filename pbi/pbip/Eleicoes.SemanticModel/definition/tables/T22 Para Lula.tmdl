@@ -1,0 +1,25 @@
+/// Parâmetro do simulador (tela 22): % dos eleitores dos outros candidatos que votarem e escolhem Lula, de 0 a 100 em passos de 2. Sem marca, a conta usa 50.
+table 'T22 Para Lula'
+	lineageTag: 4cc62d08-b0e2-5a38-ab93-22b179df115b
+
+	/// Dos eleitores dos outros candidatos que forem votar, quantos % escolhem Lula (o resto vai para Flávio).
+	column 'Para Lula'
+		dataType: int64
+		formatString: 0
+		lineageTag: 05d20b7a-224c-58f1-91e9-2c7d46c92d65
+		summarizeBy: none
+		sourceColumn: Para Lula
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T22 Para Lula' = m
+		mode: import
+		source =
+				let
+				    Valores = List.Numbers(0, 51, 2),
+				    Tabela = Table.FromList(Valores, Splitter.SplitByNothing(), {"Para Lula"}),
+				    Tipos = Table.TransformColumnTypes(Tabela, {{"Para Lula", Int64.Type}})
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,6 @@
+{"titulo": "Como ler o mapa dos votos de Lula",
+ "blocos": [
+  ["Como ler", "Cada ponto do mapa é um município: quanto maior, mais votos de Lula; vermelho onde ele ficou à frente (mais escuro, maior a vantagem), areia onde Flávio ficou à frente. Passe o mouse num ponto para ver a cidade em 2022 e 2026. Escolha uma UF no filtro para aproximar o mapa."],
+  ["De onde vêm os números", "TSE, votação por município no 1º turno de 2022 e 2026 (arquivos de 22/10/2026), e IBGE, Censo 2022 (população). O % e os votos do topo seguem o resultado oficial; regiões e municípios somam as urnas do Brasil, sem o exterior."],
+  ["Para lembrar", "Margem é a diferença entre os votos de Lula e os de Flávio, dividida pelos votos válidos do lugar. 'À frente' quer dizer ter mais votos que Flávio no município."]
+ ]}

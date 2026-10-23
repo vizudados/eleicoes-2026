@@ -1,0 +1,10 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0%
+@descricao: Parcela dos eleitores aptos do recorte que vivem nos municípios em que Flávio ficou à frente (0–1).
+@oraculo: paginas[5].eleitores_nesses_municipios_txt
+*/
+DIVIDE (
+    SUMX ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T05 · votos (municípios)] > [T05 · votos do adversário (municípios)] ), [T05 · aptos (municípios)] ),
+    [T05 · aptos (municípios)]
+)

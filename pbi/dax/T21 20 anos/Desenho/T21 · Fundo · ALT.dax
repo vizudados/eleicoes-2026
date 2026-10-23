@@ -1,0 +1,11 @@
+/*
+@pasta: T21 20 anos\Desenho
+@formato: texto
+@descricao: Texto alternativo da tela 21.
+*/
+-- 1 · Leituras
+VAR _n06 = CALCULATE ( [T21 · municípios com o PT à frente], 'Ano'[Ano] = 2006 )
+VAR _n26 = CALCULATE ( [T21 · municípios com o PT à frente], 'Ano'[Ano] = 2026 )
+RETURN
+    "De " & FORMAT ( _n06, "#,0" ) & " para " & FORMAT ( _n26, "#,0" ) & " municípios com o PT à frente, de 2006 a "
+        & "2026. Mapa de pontos com a margem de cada ano; o play anda pelas seis eleições."

@@ -1,0 +1,11 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0.0%
+@descricao: Variação da margem na UF em que ela subiu (quando é uma só).
+@oraculo: mockup/data/eleicoes.json › paginas[12] › excecoes › +1,6 p.p.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE (
+    MAXX ( FILTER ( VALUES ( 'UF'[UF] ), [T12 · variação] > 0 ), [T12 · variação] ),
+    'UF'[Tipo] = "UF"
+)

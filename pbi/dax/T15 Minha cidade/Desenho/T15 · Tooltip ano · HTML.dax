@@ -1,0 +1,47 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Dossiê da eleição na cidade: PT, adversário e os demais candidatos em barras, a abstenção e os nomes. Só lê contas.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _cid = [T15 · cidade]
+VAR _ano = [T15 · ano]
+VAR _pt = [T15 · PT % no ano]
+VAR _adv = [T15 · adversário % no ano]
+VAR _out = [T15 · outros % no ano]
+VAR _abs = [T15 · abstenção no ano]
+VAR _cpt = [T15 · candidato do PT]
+VAR _cadv = [T15 · adversário]
+VAR _troca = [T15 · última troca de lado]
+VAR _m = [T15 · margem no ano]
+-- 2 · Textos
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cid, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _selo = IF ( _m < 0, "ADVERSÁRIO À FRENTE", "PT À FRENTE" )
+VAR _clsSelo = IF ( _m < 0, "selo az", "selo vm" )
+VAR _mao =
+    SWITCH (
+        TRUE (),
+        _ano = _troca, "o ano da virada",
+        _out >= 0.15, "muito voto em outros nomes",
+        "PT × adversário, só os dois"
+    )
+-- 3 · Geometria (barras: 70% = 200 px)
+VAR _wpt = FORMAT ( 200 * MIN ( 1, _pt / 0.7 ), "0.0", "en-US" )
+VAR _wadv = FORMAT ( 200 * MIN ( 1, _adv / 0.7 ), "0.0", "en-US" )
+VAR _wout = FORMAT ( 200 * MIN ( 1, _out / 0.7 ), "0.0", "en-US" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela tt15'><div class='fita'></div>"
+        & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
+        & "<div class='an sobe'>" & _ano & " em " & _nome & "</div>"
+        & "<div class='rot entra d1'>VOTOS VÁLIDOS NO 1º TURNO</div>"
+        & "<div class='cl entra d2'><span class='nm'>" & _cpt & " <i>PT</i></span><span class='tr'><b class='barra-x pt' "
+            & "style='width:" & _wpt & "px'></b></span><span class='pc'>" & FORMAT ( _pt, "0.0%" ) & "</span></div>"
+        & "<div class='cl entra d3'><span class='nm'>" & _cadv & "</span><span class='tr'><b class='barra-x adv' "
+            & "style='width:" & _wadv & "px'></b></span><span class='pc'>" & FORMAT ( _adv, "0.0%" ) & "</span></div>"
+        & "<div class='cl entra d4'><span class='nm'>os demais</span><span class='tr'><b class='barra-x' style='width:"
+            & _wout & "px'></b></span><span class='pc'>" & FORMAT ( _out, "0.0%" ) & "</span></div>"
+        & "<div class='nota entra d5'>Faltaram " & FORMAT ( _abs, "0.0%" ) & " dos eleitores da cidade.</div>"
+        & "<div class='mao entra d6'>" & _mao & "</div>"
+    & "</div>"

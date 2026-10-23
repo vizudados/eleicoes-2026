@@ -1,0 +1,6 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: texto
+@descricao: Sigla da UF do quadrado (ZZ = exterior).
+*/
+SELECTEDVALUE ( 'UF'[UF] )

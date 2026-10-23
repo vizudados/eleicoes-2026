@@ -1,0 +1,7 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: Votos de Lula (número 13) no 1º turno de 2026, no recorte (com o exterior no Brasil).
+@oraculo: paginas[3].votos
+*/
+CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 13 )

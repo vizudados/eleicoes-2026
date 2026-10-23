@@ -1,0 +1,14 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0
+@descricao: Colocação de Lula no 1º turno de 2026, no recorte.
+@oraculo: paginas[3].posicao_txt
+*/
+VAR _v = [T03 · votos]
+VAR _todos =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'Candidato UF'[Número] ), 'Candidato UF'[Ano] = 2026 ),
+        "@v", CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026 )
+    )
+RETURN
+    1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) )

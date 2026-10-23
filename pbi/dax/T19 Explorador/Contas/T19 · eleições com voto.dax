@@ -1,0 +1,11 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0
+@descricao: Em quantas das seis eleições (2006–2026) há votos no contexto (o município pode ter sido criado depois de 2006).
+*/
+COALESCE (
+    COUNTROWS (
+        FILTER ( VALUES ( 'Ano'[Ano] ), CALCULATE ( SUM ( 'Município ano'[Validos] ) ) > 0 )
+    ),
+    0
+)

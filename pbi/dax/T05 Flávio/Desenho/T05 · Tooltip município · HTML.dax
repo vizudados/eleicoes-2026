@@ -1,0 +1,84 @@
+/*
+@pasta: T05 Flávio\Desenho
+@formato: texto
+@descricao: Dossiê do município do ponto (ficha pautada presa com fita): Flávio × Lula em 2026, o mesmo par em 2022 e a margem antes e agora, com a nota à mão do que aconteceu. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _mun = [T05 · município]
+VAR _reg = [T05 · região do município]
+VAR _pop = [T05 · população]
+VAR _p26 = [T05 · % (municípios)]
+VAR _a26 = [T05 · adversário % (municípios)]
+VAR _p22 = [T05 · % 2022 (municípios)]
+VAR _a22 = [T05 · adversário % 2022 (municípios)]
+VAR _m22 = [T05 · margem 2022]
+VAR _m26 = [T05 · margem]
+VAR _v26 = [T05 · votos (municípios)]
+VAR _sit = [T05 · situação]
+VAR _c22 = [T05 · candidato 2022]
+-- 2 · Textos
+VAR _nome22 = IF ( "PL" = "PT", "Lula", SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _c22, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) )
+VAR _outro22 = IF ( "PL" = "PT", "Jair Bolsonaro", "Lula" )
+VAR _nota =
+    SWITCH (
+        _sit,
+        1, "seguiu com o PL",
+        2, "virou para Lula",
+        3, "virou para Flávio",
+        "seguiu com Lula"
+    )
+VAR _clsNota = IF ( _sit = 1 || _sit = 3, "flavio-esc", "neutro" )
+VAR _txtM22 = FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" )
+VAR _txtM26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
+-- 3 · Geometria (barras de 0 a 100% em 180 px)
+VAR _w26 = FORMAT ( _p26 * 180, "0.0##", "en-US" ) -- geometria
+VAR _wa26 = FORMAT ( _a26 * 180, "0.0##", "en-US" ) -- geometria
+VAR _w22 = FORMAT ( _p22 * 180, "0.0##", "en-US" ) -- geometria
+VAR _wa22 = FORMAT ( _a22 * 180, "0.0##", "en-US" ) -- geometria
+-- 4 · Marcação
+VAR _css =
+    "<style>"
+        & ".tt3{position:fixed;inset:0;background:var(--papel)}"
+        & ".tt3 .ficha{position:absolute;left:14px;top:22px;right:14px;bottom:14px;background:var(--branco);"
+        & "border:1.5px solid var(--areia);background-image:repeating-linear-gradient(transparent 0 31px,"
+        & "rgba(203,189,162,.45) 31px 32px);box-shadow:3px 4px 0 rgba(28,25,21,.07)}"
+        & ".tt3 .fita{position:absolute;left:170px;top:-16px;width:96px;transform:rotate(-3deg);opacity:.9}"
+        & ".tt3 .pino{position:absolute;right:16px;top:14px;width:30px}"
+        & ".tt3 .cab{position:absolute;left:18px;top:14px;right:56px}"
+        & ".tt3 .nm{font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-.01em}"
+        & ".tt3 .an{position:absolute;left:18px;right:18px;display:grid;grid-template-columns:52px 1fr;row-gap:6px;"
+        & "align-items:center}.tt3 .a26{top:84px}.tt3 .a22{top:166px}"
+        & ".tt3 .ano{font-size:15px;font-weight:700}"
+        & ".tt3 .lin{display:flex;align-items:center;gap:8px;font-size:15px}"
+        & ".tt3 .lin i{display:block;height:12px}.tt3 .lin b{font-weight:700;min-width:50px}"
+        & ".tt3 .lin span{color:var(--grafite)}"
+        & ".tt3 .ci{background:var(--azul)}.tt3 .co{background:var(--areia)}"
+        & ".tt3 .mg{position:absolute;left:18px;right:18px;top:248px;font-size:15px;color:var(--grafite)}"
+        & ".tt3 .mg b{color:var(--tinta)}"
+        & ".tt3 .mao{position:absolute;right:18px;bottom:8px;font-size:28px}"
+        & ".tt3 .neutro{color:var(--grafite)}"
+    & "</style>"
+VAR _lin = "<div class='lin'><i class='"
+VAR _html =
+    _css
+        & "<div class='tt3'><div class='ficha'>"
+        & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/>"
+        & "<img class='pino' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/pino-tinta.png'/>"
+        & "<div class='cab sobe'><div class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mun, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & FORMAT ( _pop, "#,0" ) & " habitantes</div></div>"
+        & "<div class='an a26 sobe d1'><div class='ano'>2026</div><div>"
+        & _lin & "ci barra-x' style='width:" & _w26 & "px'></i><b>" & FORMAT ( _p26, "0.0%" ) & "</b><span>Flávio</span></div>"
+        & _lin & "co barra-x' style='width:" & _wa26 & "px'></i><b>" & FORMAT ( _a26, "0.0%" ) & "</b><span>Lula</span></div>"
+        & "</div></div>"
+        & "<div class='an a22 sobe d2'><div class='ano'>2022</div><div>"
+        & _lin & "ci barra-x' style='width:" & _w22 & "px;opacity:.55'></i><b>" & FORMAT ( _p22, "0.0%" ) & "</b><span>"
+        & _nome22 & "</span></div>"
+        & _lin & "co barra-x' style='width:" & _wa22 & "px;opacity:.55'></i><b>" & FORMAT ( _a22, "0.0%" ) & "</b><span>"
+        & _outro22 & "</span></div>"
+        & "</div></div>"
+        & "<div class='mg sobe d3'>Margem do PL, em pontos: <b>" & _txtM22 & "</b> → <b>"
+        & _txtM26 & "</b></div>"
+        & "<div class='mao " & _clsNota & " entra d5'>" & _nota & "</div>"
+        & "</div></div>"
+RETURN
+    IF ( NOT ISBLANK ( _mun ) && NOT ISBLANK ( _v26 ), _html )

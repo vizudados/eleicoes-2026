@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0.0%
+@descricao: Parcela dos aptos que não escolheu ninguém em 2026 (0–1).
+@oraculo: paginas[6].nao_escolheram_2026_pct_txt = 24,8%
+*/
+DIVIDE ( [T06 · não escolheram], [T06 · aptos] )

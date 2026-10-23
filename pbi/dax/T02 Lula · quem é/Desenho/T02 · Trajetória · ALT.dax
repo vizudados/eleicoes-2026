@@ -1,0 +1,11 @@
+/*
+@pasta: T02 Lula · quem é\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da linha do tempo.
+*/
+LEFT (
+    "Linha do tempo da trajetória política de Lula: " & [T02 · Trajetória · marcos] & " marcos, de "
+        & [T02 · Trajetória · primeiro ano] & " a " & [T02 · Trajetória · último ano]
+        & ". Passe o mouse num marco para ver a foto da época e o que aconteceu.",
+    250
+)

@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0.0%
+@descricao: Parcela dos aptos que faltaram em 2006, no recorte (0–1).
+@oraculo: paginas[6].abstencao_2006_txt = 16,8%
+*/
+CALCULATE ( [T06 · abstenção % (ano)], 'Ano'[Ano] = 2006 )

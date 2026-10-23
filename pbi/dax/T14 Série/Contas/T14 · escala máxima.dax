@@ -1,0 +1,10 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: Maior valor da série (PT e adversário) no recorte, para a escala do gráfico.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+MAXX (
+    ALL ( 'Ano'[Ano] ),
+    MAX ( [T14 · PT %], [T14 · adversário %] )
+)

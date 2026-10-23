@@ -1,0 +1,7 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: 0
+@descricao: Ano do primeiro marco de Lula.
+@oraculo: Lula 1975 · Flávio 2002
+*/
+CALCULATE ( MIN ( 'Trajetória'[Ano] ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Lula" )

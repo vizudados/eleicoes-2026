@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Variação da margem de Lula de 2022 para 2026 (somando os votos do contexto).
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › variacao_txt = −5,4 p.p.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+[T15 · margem 2026] - [T15 · margem 2022]

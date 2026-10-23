@@ -1,0 +1,12 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0.0%
+@descricao: Parcela dos válidos do candidato do item na UF mais forte (0–1).
+*/
+VAR _ufs =
+ADDCOLUMNS (
+    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
+    "@p", [T01 · % do candidato na UF]
+)
+RETURN
+    MAXX ( _ufs, [@p] )

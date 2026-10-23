@@ -1,0 +1,11 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Municípios com votos em 2026 no recorte (no mapa).
+@oraculo: mockup/data/eleicoes.json › paginas[11] › municipios = 5.571
+@gerado: pbi/scripts/desenho_t11.py
+*/
+SUMX (
+    VALUES ( 'Município'[CodIBGE] ),
+    IF ( [T11 · válidos 2026] > 0, 1 )
+) + 0

@@ -1,0 +1,7 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: Municípios do recorte em que Lula teve mais votos que Flávio.
+@oraculo: paginas[3].municipios_a_frente
+*/
+COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T03 · votos (municípios)] > [T03 · votos do adversário (municípios)] ) ) + 0

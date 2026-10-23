@@ -1,0 +1,7 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: Região da UF da linha.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+SELECTEDVALUE ( 'UF'[Região] )

@@ -1,0 +1,14 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: #,0
+@descricao: Municípios da UF com Lula à frente em 2022 e Flávio em 2026.
+@oraculo: mockup/data/eleicoes.json › paginas[12] › ufs › municipios_que_viraram (TO 37, MG 178)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+SUMX (
+    VALUES ( 'Município'[CodIBGE] ),
+    VAR _d22 = [T12 · saldo municipal 2022]
+    VAR _d26 = [T12 · saldo municipal 2026]
+    RETURN
+        IF ( _d22 > 0 && _d26 < 0, 1 )
+) + 0

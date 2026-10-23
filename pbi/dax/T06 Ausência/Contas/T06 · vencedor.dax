@@ -1,0 +1,11 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: texto
+@descricao: Quem teve mais votos no recorte em 2026: Flávio ou Lula.
+*/
+IF (
+    CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 13 )
+        > CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 22 ),
+    "Lula",
+    "Flávio"
+)

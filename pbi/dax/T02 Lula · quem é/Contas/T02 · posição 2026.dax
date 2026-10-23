@@ -1,0 +1,14 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: 0
+@descricao: Colocação de Lula no 1º turno de 2026, no Brasil.
+@oraculo: Lula 2 · Flávio 1
+*/
+VAR _v = [T02 · votos 2026]
+VAR _todos =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'Candidato UF'[Número] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2026 ),
+        "@v", CALCULATE ( SUM ( 'Candidato UF'[Votos] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2026 )
+    )
+RETURN
+    1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) )

@@ -1,0 +1,10 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0%
+@descricao: Parcela dos votos de Lula (soma dos municípios do recorte) que veio da região ou do município da linha (0–1).
+@oraculo: paginas[3].regioes[].parte_dos_votos
+*/
+DIVIDE (
+    [T03 · votos (municípios)],
+    CALCULATE ( [T03 · votos (municípios)], REMOVEFILTERS ( 'UF'[Região] ), REMOVEFILTERS ( 'Município'[Rótulo] ) )
+)

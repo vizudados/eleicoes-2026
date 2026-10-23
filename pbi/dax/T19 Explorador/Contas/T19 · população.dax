@@ -1,0 +1,7 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: #,0
+@descricao: População residente (Censo 2022) no contexto.
+@oraculo: mockup/data/eleicoes.json › Explorador › populacao_txt
+*/
+SUM ( 'Município'[População] )

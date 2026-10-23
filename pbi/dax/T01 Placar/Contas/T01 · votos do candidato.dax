@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: #,0
+@descricao: Votos do candidato do item (barra/legenda) em 2026, no recorte.
+*/
+CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026 )

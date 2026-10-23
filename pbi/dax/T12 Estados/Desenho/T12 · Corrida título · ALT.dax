@@ -1,0 +1,12 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Texto alternativo do título da corrida.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _nSubiu = [T12 · unidades onde a margem subiu]
+-- 2 · Textos
+RETURN
+    "Margem de Lula em cada unidade, de 2022 para 2026, ordenada da maior queda à alta; "
+        & FORMAT ( _nSubiu, "0" ) & IF ( _nSubiu = 1, " unidade subiu.", " unidades subiram." )

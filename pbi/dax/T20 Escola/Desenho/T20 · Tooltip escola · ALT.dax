@@ -1,0 +1,13 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: Texto alternativo do post-it do local.
+*/
+-- 1 · Leituras
+VAR _nome = [T20 · nome do local]
+VAR _m22 = [T20 · margem 2022]
+VAR _m26 = [T20 · margem 2026]
+-- 2 · Textos
+VAR _t22 = IF ( ISBLANK ( _m22 ), "sem dado em 2022", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " em 2022" )
+RETURN
+    IF ( NOT ISBLANK ( _nome ), _nome & ": margem de Lula " & _t22 & " e " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " em 2026." )

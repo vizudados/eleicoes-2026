@@ -1,0 +1,7 @@
+/*
+@pasta: T04 Flávio · quem é\Contas
+@formato: #,0
+@descricao: Votos de Flávio no 1º turno de 2026, no Brasil (com o exterior).
+@oraculo: paginas[1].candidatos
+*/
+CALCULATE ( SUM ( 'Candidato UF'[Votos] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 22 )

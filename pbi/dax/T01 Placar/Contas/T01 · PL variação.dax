@@ -1,0 +1,7 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: #,0
+@descricao: Votos do PL em 2026 menos 2022, no recorte (positivo = ganhou).
+@oraculo: paginas[1].de_2022_para_2026 › PL.variacao = +5.032.158
+*/
+[T01 · Flávio votos] - [T01 · PL 2022 votos]

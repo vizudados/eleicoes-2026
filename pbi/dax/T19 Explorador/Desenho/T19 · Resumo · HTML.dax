@@ -1,0 +1,34 @@
+/*
+@pasta: T19 Explorador\Desenho
+@formato: texto
+@descricao: Faixa do recorte acima da lista: os filtros em uso e quantos municípios, com Lula à frente, com Flávio à frente e que viraram, com a barra da proporção. Só lê as contas de T19.
+*/
+-- 1 · Leituras
+VAR _recorte = [T19 · recorte em uso]
+VAR _n = [T19 · municípios no recorte]
+VAR _lula = [T19 · municípios com Lula à frente]
+VAR _flavio = [T19 · municípios com Flávio à frente]
+VAR _viraram = [T19 · municípios que viraram]
+-- 2 · Textos
+VAR _rec0 = SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" )
+VAR _txtN = FORMAT ( _n, "#,0" )
+VAR _txtLula = FORMAT ( _lula, "#,0" )
+VAR _txtFlavio = FORMAT ( _flavio, "#,0" )
+VAR _txtViraram = FORMAT ( _viraram, "#,0" )
+VAR _rotN = IF ( _n = 1, "município no recorte", "municípios no recorte" )
+VAR _rotViraram = IF ( _viraram = 1, "virou de Lula para Flávio", "viraram de Lula para Flávio" )
+-- 3 · Geometria
+VAR _total = _lula + _flavio
+VAR _largLula = IF ( _total > 0, DIVIDE ( _lula, _total ) * 100, 0 ) -- geometria
+VAR _largFlavio = IF ( _total > 0, DIVIDE ( _flavio, _total ) * 100, 0 ) -- geometria
+-- 4 · Marcação
+RETURN
+    "<div class='tela t19r'>"
+        & "<div class='sob sobe'>Recorte · " & _rec0 & "</div>"
+        & "<div class='st sobe d1'><span class='num'>" & _txtN & "</span><span class='r'>" & _rotN & "</span></div>"
+        & "<div class='st sobe d2 lula'><span class='num'>" & _txtLula & "</span><span class='r'>com Lula à frente</span></div>"
+        & "<div class='st sobe d3 flavio'><span class='num'>" & _txtFlavio & "</span><span class='r'>com Flávio à frente</span></div>"
+        & "<div class='st sobe d4'><span class='num'>" & _txtViraram & "</span><span class='r'>" & _rotViraram & "</span></div>"
+        & "<div class='br'><i class='l barra-x' style='width:" & FORMAT ( _largLula, "0.0##", "en-US" ) & "%'></i>"
+        & "<i class='f barra-x-dir' style='width:" & FORMAT ( _largFlavio, "0.0##", "en-US" ) & "%'></i></div>"
+    & "</div>"

@@ -1,0 +1,14 @@
+/*
+@pasta: T19 Explorador\Desenho
+@formato: texto
+@descricao: Texto alternativo da lista do Explorador.
+*/
+-- 1 · Leituras
+VAR _recorte = [T19 · recorte em uso]
+VAR _n = [T19 · municípios na lista]
+-- 2 · Textos
+RETURN
+    IF ( _n = 1, "Lista com o município do recorte (", "Lista dos " & _n & " municípios com mais votos válidos em "
+        & "2026 no recorte (" ) & _recorte & "): Lula e Flávio em 2026, a margem do PT de 2006 a 2026 e a mudança de "
+        & "2022 para 2026. "
+        & "Passe o mouse numa linha para o dossiê; clique para destacar o ponto na dispersão."

@@ -1,0 +1,11 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0
+@descricao: UFs (sem o exterior) em que a margem de Lula subiu.
+@oraculo: mockup/data/eleicoes.json › paginas[12] › excecoes = DF
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE (
+    COUNTROWS ( FILTER ( VALUES ( 'UF'[UF] ), [T12 · variação] > 0 ) ),
+    'UF'[Tipo] = "UF"
+) + 0

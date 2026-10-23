@@ -1,0 +1,21 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: texto
+@descricao: As três cidades mais populosas do contexto, separadas por vírgula e 'e'.
+@oraculo: mockup/data/eleicoes.json › paginas[13] › celulas › exemplos
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _top =
+    TOPN ( 3, 'Município', 'Município'[População], DESC, 'Município'[Rótulo], ASC )
+VAR _n = COUNTROWS ( _top )
+VAR _ultimo =
+    MAXX ( TOPN ( 1, _top, 'Município'[População], ASC, 'Município'[Rótulo], DESC ), 'Município'[Rótulo] )
+VAR _resto =
+    CONCATENATEX (
+        FILTER ( _top, 'Município'[Rótulo] <> _ultimo ),
+        'Município'[Rótulo],
+        ", ",
+        'Município'[População], DESC
+    )
+RETURN
+    SWITCH ( TRUE (), _n = 0, BLANK (), _n = 1, _ultimo, _resto & " e " & _ultimo )

@@ -1,0 +1,20 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: A maior variação de margem entre as parecidas.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _p = SELECTEDVALUE ( 'Município'[Porte] )
+VAR _q = SELECTEDVALUE ( 'Município'[Quinto de renda] )
+VAR _t =
+    CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( 'Município'[CodIBGE] ), "@d", [T15 · variação] ),
+        REMOVEFILTERS ( 'Município' ),
+        REMOVEFILTERS ( 'UF' ),
+        'Município'[Porte] = _p,
+        'Município'[Quinto de renda] = _q
+    )
+VAR _ok =
+    FILTER ( _t, NOT ISBLANK ( [@d] ) )
+RETURN
+    MAXX ( _ok, [@d] )

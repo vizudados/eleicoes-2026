@@ -1,0 +1,42 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: Post-it do local sob o mouse (página de tooltip ttT20Escola): bairro, seções, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026.
+*/
+-- 1 · Leituras
+VAR _bairro = [T20 · bairro]
+VAR _secoes = [T20 · seções]
+VAR _val = [T20 · válidos 2026]
+VAR _lula = [T20 · Lula % 2026]
+VAR _flavio = [T20 · Flávio % 2026]
+VAR _m18 = [T20 · margem 2018]
+VAR _m22 = [T20 · margem 2022]
+VAR _m26 = [T20 · margem 2026]
+VAR _virou = [T20 · virou]
+-- 2 · Textos
+VAR _nome0 = [T20 · nome do local]
+VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
+VAR _sub =
+    _bairro & " · " & _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" ) & " válidos"
+VAR _t18 = IF ( ISBLANK ( _m18 ), "—", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
+VAR _t22 = IF ( ISBLANK ( _m22 ), "—", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
+VAR _t26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
+VAR _nota =
+    SWITCH ( TRUE (), _virou = 1, "virou em 2026", _m26 > 0, "Lula à frente", "Flávio à frente" )
+VAR _selo = IF ( _virou = 1, "<div class='selo'>virou</div>", "" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _nome0 ),
+        "<div class='tela tt20'>"
+            & "<div class='nm'>" & _nome & "</div>"
+            & "<div class='sub'>" & _sub & "</div>"
+            & "<div class='duelo'><span class='lula'>Lula " & FORMAT ( _lula, "0.0%" ) & "</span>"
+            & "<span class='flavio'>Flávio " & FORMAT ( _flavio, "0.0%" ) & "</span></div>"
+            & "<div class='rot'>Margem de Lula · 2018 → 2022 → 2026</div>"
+            & "<div class='serie tnum'>" & _t18 & " <i>→</i> " & _t22 & " <i>→</i> " & _t26 & " p.p.</div>"
+            & _selo
+            & "<div class='mao'>" & _nota & "</div>"
+        & "</div>"
+    )

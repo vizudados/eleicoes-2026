@@ -1,0 +1,11 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0
+@descricao: Quantas UFs passaram do adversário à frente para Lula à frente.
+@oraculo: 0 (motor)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE (
+    COUNTROWS ( FILTER ( VALUES ( 'UF'[UF] ), [T12 · margem 2022] < 0 && [T12 · margem 2026] > 0 ) ),
+    'UF'[Tipo] = "UF"
+) + 0

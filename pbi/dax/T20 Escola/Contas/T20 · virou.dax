@@ -1,0 +1,10 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: 1 quando Lula estava à frente no local em 2022 e Flávio em 2026.
+@oraculo: mockup/data/eleicoes.json › Escola › virou
+*/
+VAR _m22 = [T20 · margem 2022]
+VAR _m26 = [T20 · margem 2026]
+RETURN
+    IF ( _m22 > 0 && _m26 < 0, 1, 0 )

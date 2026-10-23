@@ -1,0 +1,7 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: texto
+@descricao: Nome da UF do município escolhido.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+LOOKUPVALUE ( 'UF'[Nome], 'UF'[UF], [T15 · UF da cidade] )

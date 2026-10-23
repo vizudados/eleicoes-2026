@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: texto
+@descricao: Sigla do partido do candidato do item em 2026.
+*/
+CALCULATE ( SELECTEDVALUE ( 'Candidato UF'[Partido] ), 'Candidato UF'[Ano] = 2026 )

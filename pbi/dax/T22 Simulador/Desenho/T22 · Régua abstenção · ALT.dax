@@ -1,0 +1,6 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Texto alternativo da régua de abstenção.
+*/
+"Controle: " & FORMAT ( [T22 · parte que não vota] * 100, "0" ) & "% dos eleitores dos outros não escolhem ninguém."

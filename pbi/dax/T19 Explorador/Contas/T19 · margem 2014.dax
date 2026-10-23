@@ -1,0 +1,14 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0.0%
+@descricao: Margem do PT em 2014: (votos do PT − votos do adversário principal) ÷ votos válidos, no contexto (um município na linha da lista e no ponto da dispersão; o recorte inteiro no resumo). Vazio sem votos no ano.
+@oraculo: mockup/data/eleicoes.json › Explorador › margem_serie
+*/
+VAR _pt =
+    CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = 2014 )
+VAR _adv =
+    CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2014 )
+VAR _val =
+    CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2014 )
+RETURN
+    DIVIDE ( _pt - _adv, _val )

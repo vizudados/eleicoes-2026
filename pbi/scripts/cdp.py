@@ -36,8 +36,25 @@ def pagina_do_relatorio(nav):
     return melhor
 
 
+_AREA = {}
+
+
 def area_da_pagina(pg):
-    """Caixa (x, y, escala) da página 1920×1080 na tela, pelo quadro da casca (que ocupa a página inteira)."""
+    """Caixa (x, y, escala) da página 1920×1080 na tela, pelo quadro da casca (que ocupa a página inteira). A geometria
+    não muda entre páginas: a primeira medida vale para o roteiro todo; enquanto não há, tenta por até 30 s."""
+    if "a" in _AREA:
+        return _AREA["a"]
+    fim = time.time() + 30
+    while time.time() < fim:
+        a = _medir_area(pg)
+        if a:
+            _AREA["a"] = a
+            return a
+        time.sleep(1)
+    raise SystemExit("não achei a casca na página aberta")
+
+
+def _medir_area(pg):
     for f in pg.frames:
         try:
             if f.query_selector(".cs.tela") or f.query_selector(".cp.tela") or f.query_selector(".fx.tela"):
@@ -47,7 +64,7 @@ def area_da_pagina(pg):
                     return b["x"], b["y"], b["width"] / 1920
         except Exception:  # noqa: BLE001
             continue
-    raise SystemExit("não achei a casca na página aberta")
+    return None
 
 
 def quadro_com(pg, seletor, texto=None):

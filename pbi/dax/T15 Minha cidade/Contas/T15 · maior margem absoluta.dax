@@ -1,0 +1,7 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Maior margem (em módulo) da série do município; escala das barras.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+MAXX ( ALL ( 'Ano'[Ano] ), ABS ( [T15 · margem no ano] ) )

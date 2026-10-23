@@ -1,0 +1,12 @@
+/*
+@pasta: T05 Flávio\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da coluna do resumo.
+*/
+LEFT (
+    "Flávio, " & [T05 · recorte] & ": " & FORMAT ( [T05 · %], "0.0%" ) & " dos válidos, " & SWITCH ( TRUE (), ABS ( [T05 · votos] ) >= 1000000, FORMAT ( [T05 · votos] / 1000000, "0.00" ) & " mi", ABS ( [T05 · votos] ) >= 1000, FORMAT ( [T05 · votos] / 1000, "0.0" ) & " mil", FORMAT ( [T05 · votos], "#,0" ) )
+        & " de votos; à frente em " & [T05 · municípios à frente] & " de " & [T05 · municípios]
+        & IF ( [T05 · municípios] = 1, " município", " municípios" ) & ". Mais forte: " & [T05 · lugar mais forte]
+        & "; mais fraco: " & [T05 · lugar mais fraco] & ".",
+    250
+)

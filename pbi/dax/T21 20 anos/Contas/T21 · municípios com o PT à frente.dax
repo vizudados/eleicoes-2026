@@ -1,0 +1,10 @@
+/*
+@pasta: T21 20 anos\Contas
+@formato: #,0
+@descricao: Municípios do Brasil em que o PT ficou à frente no ano do contexto (margem > 0). Ignora o município da linha: o mesmo número em todos os pontos do mapa.
+@oraculo: mockup/data/eleicoes.json › 20 anos › anos[].municipios_pt_frente (3.103 · 4.140 · 3.732 · 2.713 · 3.376 · 2.663)
+*/
+CALCULATE (
+    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T21 · margem] > 0 ) ),
+    REMOVEFILTERS ( 'Município' )
+)

@@ -1,0 +1,11 @@
+/*
+@pasta: T21 20 anos\Desenho
+@formato: texto
+@descricao: Texto alternativo do mapa animado da tela 21.
+*/
+-- 1 · Leituras
+VAR _n26 = CALCULATE ( [T21 · municípios com o PT à frente], 'Ano'[Ano] = 2026 )
+VAR _m26 = CALCULATE ( [T21 · margem nacional], 'Ano'[Ano] = 2026 )
+RETURN
+    "Mapa dos municípios pela margem do PT. Em 2026, " & FORMAT ( _n26, "#,0" ) & " municípios com o PT à frente e "
+        & "margem nacional de " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos. Use o play ou clique num ano."

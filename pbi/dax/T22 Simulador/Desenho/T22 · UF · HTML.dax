@@ -1,0 +1,36 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Um quadrado do mapa de quadrados (granularidade UF[UF], com o exterior): a cor de quem fica à frente no cenário, mais forte quanto maior a vantagem, a sigla e o % de Lula.
+*/
+-- 1 · Leituras
+VAR _uf = [T22 · UF · sigla]
+VAR _col = [T22 · UF · coluna na grade]
+VAR _lin = [T22 · UF · linha na grade]
+VAR _lula = [T22 · cenário · Lula %]
+-- 2 · Textos
+VAR _sigla = IF ( _uf = "ZZ", "EX", _uf )
+VAR _m = _lula - 0.5
+VAR _cor =
+    SWITCH (
+        TRUE (),
+        _m <= -0.15, "#1D3C6E",
+        _m <= -0.05, "#2B5797",
+        _m < 0, "#8FA8CF",
+        _m < 0.05, "#D9877B",
+        _m < 0.15, "#B8322A",
+        "#8E2620"
+    )
+VAR _clara = _m > -0.05 && _m < 0.05
+VAR _cls = IF ( _clara, "q clara", "q" ) & IF ( _uf = "ZZ", " ex", "" )
+-- 3 · Geometria
+VAR _x = _col * 66 -- geometria
+VAR _y = _lin * 66 -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _lula ),
+        "<div class='tela t22g'><div class='" & _cls & " cor-q' style='left:" & _x & "px;top:" & _y
+            & "px;background:" & _cor & ";animation-delay:" & ( 400 + ( _col + _lin ) * 70 ) & "ms'>"
+            & "<b>" & _sigla & "</b><span>" & FORMAT ( _lula, "0%" ) & "</span></div></div>"
+    )

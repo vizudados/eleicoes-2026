@@ -1,0 +1,13 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0
+@descricao: Ordem da unidade (as 27 e o exterior) da maior queda de margem para a maior alta; posiciona a linha.
+@oraculo: mockup/data/eleicoes.json › paginas[12] › ufs (ordem por variação)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+VAR _v = [T12 · variação]
+RETURN
+    IF (
+        NOT ISBLANK ( _v ),
+        COUNTROWS ( FILTER ( ALL ( 'UF' ), [T12 · variação] < _v ) ) + 1
+    )

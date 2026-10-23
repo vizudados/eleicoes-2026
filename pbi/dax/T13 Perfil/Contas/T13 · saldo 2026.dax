@@ -1,0 +1,10 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: #,0
+@descricao: Votos de Lula menos os do adversário em 2026, somados nas cidades do contexto.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+CALCULATE (
+    SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ),
+    'Município ano'[Ano] = 2026
+)

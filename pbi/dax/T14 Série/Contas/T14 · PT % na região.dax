@@ -1,0 +1,8 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: PT % somando os municípios da região do contexto (ignora o filtro de UF).
+@oraculo: mockup/data/eleicoes.json › paginas[14] › regioes › pt_pct (Nordeste 2026 63,8%)
+@gerado: pbi/scripts/desenho_t14.py
+*/
+CALCULATE ( [T14 · PT %], REMOVEFILTERS ( 'UF' ) )

@@ -1,0 +1,16 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: Nomes das UFs em que a margem de Lula subiu, em ordem alfabética.
+@oraculo: mockup/data/eleicoes.json › paginas[12] › excecoes › Distrito Federal
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE (
+    CONCATENATEX (
+        FILTER ( VALUES ( 'UF'[Nome] ), [T12 · variação] > 0 ),
+        'UF'[Nome],
+        ", ",
+        'UF'[Nome], ASC
+    ),
+    'UF'[Tipo] = "UF"
+)

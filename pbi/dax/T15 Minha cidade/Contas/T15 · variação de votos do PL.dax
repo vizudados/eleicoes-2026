@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Votos do PL em 2026 (Flávio) menos em 2022 (Jair) no município.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › votos › variacao_pl_txt = +6.957
+@gerado: pbi/scripts/desenho_t15.py
+*/
+[T15 · votos do PL 2026] - [T15 · votos do PL 2022]

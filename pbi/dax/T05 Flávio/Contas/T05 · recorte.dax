@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: texto
+@descricao: Nome do recorte: Brasil ou o nome da UF escolhida no filtro.
+*/
+IF ( [T05 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome], "UFs escolhidas" ), "Brasil" )

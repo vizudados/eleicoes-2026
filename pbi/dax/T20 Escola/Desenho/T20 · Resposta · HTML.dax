@@ -1,0 +1,25 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: A resposta da tela: '12 de 112' locais com Lula à frente (contador), a manchete com o número de 2022 e quantos viraram.
+*/
+-- 1 · Leituras
+VAR _lula = [T20 · locais com Lula à frente]
+VAR _n = [T20 · locais]
+VAR _lula22 = [T20 · locais com Lula à frente em 2022]
+VAR _n22 = [T20 · locais em 2022]
+VAR _viraram = [T20 · locais que viraram]
+-- 2 · Textos
+VAR _rotLocal = IF ( _lula = 1, "local de votação com Lula à frente em 2026", "locais de votação com Lula à frente em 2026" )
+VAR _txtViraram =
+    IF ( _viraram = 1, "1 local virou", _viraram & " locais viraram" ) & " de Lula para Flávio."
+-- 4 · Marcação
+RETURN
+    "<div class='tela t20r'>"
+        & "<div class='grande sobe'><span class='num'>" & _lula & "</span> de <span class='num'>" & _n & "</span></div>"
+        & "<div class='rotulo sobe d2'>" & _rotLocal & "</div>"
+        & "<div class='man sobe d3'>Lula ficou à frente em " & _lula & " dos " & _n
+            & IF ( _n = 1, " local", " locais" ) & " de votação de Contagem; em 2022, eram <span class='num'>"
+            & _lula22 & "</span></div>"
+        & "<div class='txt sobe d4'>" & _txtViraram & " Em 2022, a cidade votava em " & _n22 & " locais.</div>"
+    & "</div>"

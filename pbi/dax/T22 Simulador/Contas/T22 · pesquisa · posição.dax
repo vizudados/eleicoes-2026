@@ -1,0 +1,12 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0
+@descricao: Posição da pesquisa na lista, da que dá mais votos a Lula à que dá menos.
+*/
+IF (
+    NOT ISBLANK ( [T22 · pesquisa · data] ),
+    RANKX (
+        FILTER ( ALLSELECTED ( 'Transferência'[Instituto] ), NOT ISBLANK ( [T22 · pesquisa · data] ) ),
+        [T22 · cenário · Lula %], , DESC, SKIP
+    )
+)

@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0.0%
+@descricao: Quanto a margem do PT mudou de 2022 para 2026 (margem 2026 − margem 2022, em pontos); vazio quando falta um dos anos (município novo).
+@oraculo: mockup/data/eleicoes.json › Explorador › variacao
+*/
+VAR _m22 = [T19 · margem 2022]
+VAR _m26 = [T19 · margem 2026]
+RETURN
+    IF ( NOT ISBLANK ( _m22 ) && NOT ISBLANK ( _m26 ), _m26 - _m22 )

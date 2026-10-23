@@ -1,0 +1,9 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0
+@descricao: 1 quando a distância entre PT e PL em 2026 é menor que em 2022, no recorte.
+*/
+VAR _d22 = ABS ( [T01 · PT 2022 votos] - [T01 · PL 2022 votos] )
+VAR _d26 = ABS ( [T01 · Lula votos] - [T01 · Flávio votos] )
+RETURN
+    IF ( _d26 < _d22, 1, 0 )

@@ -1,0 +1,9 @@
+/*
+@pasta: T02 Lula · quem é\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê do marco.
+*/
+LEFT (
+    [T02 · Trajetória · ano] & " · " & [T02 · Trajetória · título] & ": " & [T02 · Trajetória · texto do marco],
+    250
+)

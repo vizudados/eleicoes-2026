@@ -1,0 +1,25 @@
+/// Parâmetro do simulador (tela 22): mudança no comparecimento, de −5 a +5 pontos dos aptos de cada UF; os votos novos se dividem ao meio entre Lula e Flávio. Sem marca, 0.
+table 'T22 Comparecimento'
+	lineageTag: 33127cdf-49f5-59bd-836f-7530e430380d
+
+	/// Pontos de comparecimento a mais (ou a menos) sobre os aptos de cada UF; os votos novos se dividem ao meio.
+	column Comparecimento
+		dataType: int64
+		formatString: 0
+		lineageTag: 6e2b4f7d-534b-5f7c-a1d6-d6b4c5792a1b
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T22 Comparecimento' = m
+		mode: import
+		source =
+				let
+				    Valores = List.Numbers(-5, 11, 1),
+				    Tabela = Table.FromList(Valores, Splitter.SplitByNothing(), {"Comparecimento"}),
+				    Tipos = Table.TransformColumnTypes(Tabela, {{"Comparecimento", Int64.Type}})
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

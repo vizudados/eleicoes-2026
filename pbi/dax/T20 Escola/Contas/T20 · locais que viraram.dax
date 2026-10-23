@@ -1,0 +1,15 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Locais de 2026 em que Lula ficou à frente em 2022 (mesmo zona + número) e Flávio em 2026.
+@oraculo: mockup/data/eleicoes.json › Escola › locais_que_viraram (14)
+*/
+COALESCE (
+    COUNTROWS (
+        FILTER (
+            'T20 Local',
+            'T20 Local'[VotosPT2022] > 'T20 Local'[VotosAdv2022] && 'T20 Local'[VotosPT2026] < 'T20 Local'[VotosAdv2026]
+        )
+    ),
+    0
+)

@@ -1,0 +1,54 @@
+/*
+@pasta: T04 Flávio · quem é\Desenho
+@formato: texto
+@descricao: Dossiê do marco (polaroide presa com fita): a foto da época redesenhada em traço (ou um desenho e a nota 'sem foto de licença aberta'), a data, o título, o texto, a legenda da foto e o crédito. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _tit = [T04 · Trajetória · título]
+VAR _txt = [T04 · Trajetória · texto do marco]
+VAR _ano = [T04 · Trajetória · ano]
+VAR _data = [T04 · Trajetória · data]
+VAR _foto = [T04 · Trajetória · foto]
+VAR _temFoto = [T04 · Trajetória · tem foto]
+VAR _leg = [T04 · Trajetória · legenda da foto]
+VAR _cred = [T04 · Trajetória · crédito da foto]
+-- 2 · Textos
+VAR _txtData =
+    IF (
+        ISBLANK ( _data ),
+        FORMAT ( _ano, "0" ),
+        IF ( DAY ( _data ) = 1, "1º", FORMAT ( _data, "d" ) ) & FORMAT ( _data, " ""de"" mmmm ""de"" yyyy" )
+    )
+VAR _icone =
+    SWITCH (
+        TRUE (),
+        SEARCH ( "sindicato", _tit, 1, 0 ) > 0, "megafone",
+        SEARCH ( "campanha", _tit, 1, 0 ) > 0, "megafone",
+        SEARCH ( "fundação", _tit, 1, 0 ) > 0, "pessoas",
+        SEARCH ( "Disputa", _tit, 1, 0 ) > 0, "urna",
+        "jornal"
+    )
+VAR _srcIcone = "https://vizudados.github.io/eleicoes-2026/midia/arte/icones/" & _icone & "-tinta.png"
+VAR _quadro =
+    IF (
+        _temFoto = 1,
+        "<img class='foto' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/trajetoria/" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _foto, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ".png' data-reserva='"
+            & _srcIcone & "'/>",
+        "<img class='foto reserva' alt='' src='" & _srcIcone & "'/>"
+            & "<div class='sem mao'>sem foto de licença aberta</div>"
+    )
+VAR _rodape =
+    IF ( _temFoto = 1, "<div class='nota lg'><b>Na foto:</b> " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _leg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='nota cr'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cred, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>" )
+-- 4 · Marcação
+VAR _html =
+    "<div class='tt2'>"
+        & "<div class='pol'>" & _quadro & "<div class='ano mao nc'>" & _ano & "</div>"
+        & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/></div>"
+        & "<div class='col'><div class='rot flavio-esc sobe'>" & _txtData & "</div>"
+        & "<div class='man sobe d1'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _tit, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='txt sobe d2'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & IF ( _temFoto = 1, "<div class='pe sobe d3'>" & _rodape & "</div>" ) & "</div>"
+    & "</div>"
+RETURN
+    IF ( NOT ISBLANK ( _tit ), _html )

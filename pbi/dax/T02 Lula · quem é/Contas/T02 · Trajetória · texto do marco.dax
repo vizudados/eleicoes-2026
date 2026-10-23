@@ -1,0 +1,6 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: texto
+@descricao: O que aconteceu no marco da linha (até ~200 caracteres).
+*/
+SELECTEDVALUE ( 'Trajetória'[Texto] )

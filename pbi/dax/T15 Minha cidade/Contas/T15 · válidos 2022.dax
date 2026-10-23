@@ -1,0 +1,7 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Votos válidos em 2022 no município.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Ano'[Ano] = 2022 )

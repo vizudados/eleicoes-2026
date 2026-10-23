@@ -1,0 +1,19 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0%
+@descricao: Parcela dos votos do candidato que veio da origem principal (0–1).
+@oraculo: paginas[3].regioes[0].parte_dos_votos_txt
+*/
+VAR _reg =
+    ADDCOLUMNS ( VALUES ( 'UF'[Região] ), "@v", [T03 · votos (municípios)], "@p", [T03 · % (municípios)] )
+VAR _mun =
+    ADDCOLUMNS (
+        FILTER ( VALUES ( 'Município'[Rótulo] ), [T03 · com UF] = 1 ),
+        "@v", [T03 · votos (municípios)],
+        "@p", [T03 · % (municípios)]
+    )
+VAR _topReg = TOPN ( 1, _reg, [@v], DESC, 'UF'[Região], ASC )
+VAR _topMun = TOPN ( 1, _mun, [@v], DESC, 'Município'[Rótulo], ASC )
+VAR _uf = [T03 · com UF] = 1
+RETURN
+    DIVIDE ( IF ( _uf, MAXX ( _topMun, [@v] ), MAXX ( _topReg, [@v] ) ), [T03 · votos (municípios)] )

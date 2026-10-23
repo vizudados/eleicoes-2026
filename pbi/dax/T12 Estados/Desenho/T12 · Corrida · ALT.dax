@@ -1,0 +1,14 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Texto alternativo da corrida das unidades.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _mudaram = [T12 · mudaram para o adversário]
+VAR _subiu = [T12 · onde a margem subiu]
+-- 2 · Textos
+RETURN
+    "Cada linha é uma unidade: o círculo vazado é a margem de Lula em 2022 e o cheio, a de 2026. Mudaram de lado: "
+        & IF ( ISBLANK ( _mudaram ), "nenhuma", _mudaram ) & ". Subiu: "
+        & IF ( ISBLANK ( _subiu ) || _subiu = "", "nenhuma", _subiu ) & "."

@@ -1,0 +1,9 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0
+@descricao: 1 se, na última troca de lado, o município passou para o PT; 0 se passou para o adversário.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _a = [T15 · última troca de lado]
+RETURN
+    IF ( NOT ISBLANK ( _a ), IF ( CALCULATE ( [T15 · margem no ano], 'Ano'[Ano] = _a ) > 0, 1, 0 ) )

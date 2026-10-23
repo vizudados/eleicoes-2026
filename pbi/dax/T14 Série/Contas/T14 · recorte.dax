@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: texto
+@descricao: Nome da UF escolhida no filtro da tela (vazio = Brasil).
+@gerado: pbi/scripts/desenho_t14.py
+*/
+IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )

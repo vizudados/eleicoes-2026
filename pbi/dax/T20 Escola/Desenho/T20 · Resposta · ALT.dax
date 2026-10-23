@@ -1,0 +1,13 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: Texto alternativo da resposta da tela 20.
+*/
+-- 1 · Leituras
+VAR _lula = [T20 · locais com Lula à frente]
+VAR _n = [T20 · locais]
+VAR _lula22 = [T20 · locais com Lula à frente em 2022]
+VAR _viraram = [T20 · locais que viraram]
+RETURN
+    "Lula ficou à frente em " & _lula & " dos " & _n & " locais de votação de Contagem em 2026; em 2022, eram "
+        & _lula22 & ". " & _viraram & IF ( _viraram = 1, " local virou", " locais viraram" ) & " de Lula para Flávio."

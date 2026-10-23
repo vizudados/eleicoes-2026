@@ -5,6 +5,6 @@
 */
 IF (
     NOT ISBLANK ( [T09 · candidato] ),
-    [T09 · candidato] & ": seguidores ganhos e atuais rede a rede, o ganho no 2º turno segundo duas fontes e os pagamentos à Meta declarados ao TSE, R$ "
-        & FORMAT ( [T09 · TSE · pagamentos à Meta] / 1000000, "0.00" ) & " mi."
+    [T09 · candidato] & ": seguidores rede a rede; anúncios da página na Meta, R$ " & FORMAT ( [T09 · Meta · 90 dias] / 1000000, "0.00" )
+        & " mi em 90 dias; e, em outra base, pagamentos à Meta declarados ao TSE, R$ " & FORMAT ( [T09 · TSE · pagamentos à Meta] / 1000000, "0.00" ) & " mi."
 )

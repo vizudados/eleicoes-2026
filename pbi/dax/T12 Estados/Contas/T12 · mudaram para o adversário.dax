@@ -1,0 +1,17 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: Nomes das UFs com Lula à frente em 2022 e Flávio em 2026, em ordem alfabética, ligados por vírgula e 'e'.
+@oraculo: mockup/data/eleicoes.json › paginas[12] › estados_que_mudaram_de_lado (Minas Gerais e Tocantins)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+VAR _t =
+    CALCULATETABLE (
+        FILTER ( VALUES ( 'UF'[Nome] ), [T12 · margem 2022] > 0 && [T12 · margem 2026] < 0 ),
+        'UF'[Tipo] = "UF"
+    )
+VAR _n = COUNTROWS ( _t )
+VAR _ultimo = MAXX ( _t, 'UF'[Nome] )
+VAR _resto = CONCATENATEX ( FILTER ( _t, 'UF'[Nome] <> _ultimo ), 'UF'[Nome], ", ", 'UF'[Nome], ASC )
+RETURN
+    SWITCH ( TRUE (), _n = 0, BLANK (), _n = 1, _ultimo, _resto & " e " & _ultimo )

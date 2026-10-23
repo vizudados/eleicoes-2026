@@ -1,0 +1,7 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Votos válidos no local em 2026 (dá o tamanho do ponto no mapa).
+@oraculo: mockup/data/eleicoes.json › Escola › validos_txt
+*/
+SUM ( 'T20 Local'[Validos2026] )

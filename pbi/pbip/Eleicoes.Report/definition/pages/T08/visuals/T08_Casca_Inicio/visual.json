@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à capa'"
+                  "Value": "'Sumário: todas as telas'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à capa'"
+                  "Value": "'Sumário: todas as telas'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T00_CHEGADA_01'"
+                  "Value": "'TIX_CHEGADA_01'"
                 }
               }
             }

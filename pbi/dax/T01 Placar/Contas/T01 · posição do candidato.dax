@@ -1,0 +1,14 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0
+@descricao: Colocação do candidato do item em 2026, no recorte (1 = mais votado).
+*/
+VAR _v = [T01 · votos do candidato]
+VAR _todos =
+    CALCULATETABLE (
+        VALUES ( 'Candidato UF'[Candidato] ),
+        REMOVEFILTERS ( 'Candidato UF'[Candidato] ),
+        'Candidato UF'[Ano] = 2026
+    )
+RETURN
+    IF ( _v > 0, 1 + COUNTROWS ( FILTER ( _todos, [T01 · votos do candidato] > _v ) ) )

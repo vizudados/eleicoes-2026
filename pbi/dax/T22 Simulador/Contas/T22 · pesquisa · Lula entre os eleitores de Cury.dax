@@ -1,0 +1,12 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0.0%
+@descricao: Na pesquisa em uso (a última de cada instituto depois do 1º turno), a parte dos eleitores de Cury que vai para Lula no 2º turno; sem o segmento, o agregado da terceira via.
+@oraculo: dados/pbi/transferencia.csv
+*/
+VAR _data = [T22 · pesquisa · data]
+VAR _linhas = CALCULATETABLE ( 'Transferência', 'Transferência'[Divulgação] = _data )
+VAR _seg = MAXX ( FILTER ( _linhas, 'Transferência'[Segmento] = "Cury" ), 'Transferência'[Lula] )
+VAR _agregado = MAXX ( FILTER ( _linhas, 'Transferência'[Segmento] = "agregado_3via" ), 'Transferência'[Lula] )
+RETURN
+    IF ( NOT ISBLANK ( _data ), DIVIDE ( COALESCE ( _seg, _agregado, 0 ), 100 ) )

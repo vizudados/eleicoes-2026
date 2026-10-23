@@ -1,0 +1,89 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Entre as cidades parecidas (mesmo porte e quinto de renda): a posição da cidade na queda, a variação do grupo e o histograma das variações com a cidade marcada. Só lê contas.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _ok = [T15 · cidade escolhida]
+VAR _cid = [T15 · cidade]
+VAR _n = [T15 · parecidas · quantidade]
+VAR _pos = [T15 · parecidas · posição]
+VAR _vg = [T15 · parecidas · variação do grupo]
+VAR _var = [T15 · variação]
+VAR _min = [T15 · parecidas · menor variação]
+VAR _max = [T15 · parecidas · maior variação]
+VAR _lista = [T15 · parecidas · contagem por faixa]
+VAR _porte = [T15 · porte]
+VAR _quinto = [T15 · quinto de renda]
+-- 2 · Textos
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cid, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _grupo =
+    "cidades de " & _porte & IF ( RIGHT ( _porte, 3 ) = "mil", " habitantes", " de habitantes" ) & " e renda "
+        & SWITCH ( _quinto, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres", "no " & _quinto )
+VAR _txtPos =
+    IF ( _n = 1, "a única do grupo", FORMAT ( _pos, "0" ) & "ª maior queda de " & FORMAT ( _n, "#,0" ) )
+VAR _txtComp =
+    IF (
+        _n = 1,
+        _nome & " é a única entre as " & _grupo & ": não há com quem comparar.",
+        _grupo & "; o grupo " & IF ( _vg < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _vg ) * 100, "0.0" ) & " p.p., "
+            & _nome & IF ( _var < 0, " caiu ", " subiu " ) & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p."
+    )
+-- 3 · Geometria (histograma de 20 faixas em 1000 px; altura até 104 px, base em y 280)
+VAR _faixas =
+    ADDCOLUMNS (
+        GENERATESERIES ( 1, 20 ),
+        "@n", VALUE ( PATHITEM ( _lista, [Value] ) )
+    )
+VAR _nMax = MAXX ( _faixas, [@n] ) /* geometria */
+VAR _larg = 1000 / 20
+VAR _passo = ( _max - _min ) / 20
+VAR _faixaCid = IF ( _passo = 0, 20, MIN ( 20, INT ( ( _var - _min ) / _passo ) + 1 ) )
+VAR _xCid = 1000 * DIVIDE ( _var - _min, _max - _min, 0.5 ) /* geometria */
+VAR _xGrupo = 1000 * DIVIDE ( _vg - _min, _max - _min, 0.5 ) /* geometria */
+VAR _barras =
+    CONCATENATEX (
+        _faixas,
+        VAR _h = 104 * DIVIDE ( [@n], _nMax ) /* geometria */
+        RETURN
+            "<rect class='" & IF ( [Value] = _faixaCid, "hb cid", "hb" ) & " barra-y' style='animation-delay:"
+                & ( 300 + [Value] * 30 ) & "ms' x='" & FORMAT ( ( [Value] - 1 ) * _larg + 2, "0.0", "en-US" )
+                & "' y='" & FORMAT ( 280 - _h, "0.0", "en-US" ) & "' width='" & FORMAT ( _larg - 4, "0.0", "en-US" )
+                & "' height='" & FORMAT ( _h, "0.0", "en-US" ) & "'/>",
+        "",
+        [Value], ASC
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        _ok = 1 && NOT ISBLANK ( _n ),
+        "<div class='tela t15p'>"
+            & "<div class='rot entra'>" & IF ( _n = 1, "SEM CIDADES PARECIDAS", "ENTRE AS " & FORMAT ( _n, "#,0" )
+                & " CIDADES PARECIDAS" ) & " · MESMO PORTE E MESMA RENDA</div>"
+            & "<div class='pos sobe d1'>" & _txtPos & "</div>"
+            & "<div class='txt comp entra d3'>" & _txtComp & "</div>"
+            & IF (
+                _n > 1,
+                "<svg class='hist' width='1010' height='300' viewBox='0 0 1010 300'>"
+                    & "<line class='eixo' x1='0' x2='1000' y1='280' y2='280'/>"
+                    & _barras
+                    & "<line class='grupo traco' pathLength='1' style='animation-delay:1100ms' x1='"
+                        & FORMAT ( _xGrupo, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xGrupo, "0.0", "en-US" )
+                        & "' y1='168' y2='282'/>"
+                    & "<line class='cidade traco' pathLength='1' style='animation-delay:1300ms' x1='"
+                        & FORMAT ( _xCid, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xCid, "0.0", "en-US" ) & "' y1='150' y2='282'/>"
+                    & "<text class='tk' x='0' y='298'>" & FORMAT ( _min * 100, "+0.0;−0.0;0.0" ) & "</text>"
+                    & "<text class='tk' x='1000' y='298' text-anchor='end'>" & FORMAT ( _max * 100, "+0.0;−0.0;0.0" ) & "</text>"
+                    & "<text class='tk' x='500' y='298' text-anchor='middle'>quanto variou a margem de Lula em cada cidade "
+                        & "parecida, 2022 → 2026, em pontos; cada barra junta as cidades de uma faixa"
+                        & "</text>"
+                & "</svg>"
+                & "<div class='rc cid entra d8' style='left:" & FORMAT ( _xCid - 120, "0.0", "en-US" ) & "px'><span>" & _nome
+                    & " " & FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & "</span></div>"
+                & "<div class='rc grp entra d9' style='left:" & FORMAT ( _xGrupo - 120, "0.0", "en-US" ) & "px'><span>grupo "
+                    & FORMAT ( _vg * 100, "+0.0;−0.0;0.0" ) & "</span></div>",
+                ""
+            )
+        & "</div>"
+    )

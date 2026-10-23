@@ -1,0 +1,17 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: texto
+@descricao: Porte (linha) em que a margem de Lula mais caiu.
+@oraculo: mockup/data/eleicoes.json › paginas[13] › linhas (até 10 mil −12,9)
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _r =
+    ADDCOLUMNS (
+        FILTER (
+            SUMMARIZE ( 'Município', 'Município'[PorteOrdem], 'Município'[Porte] ),
+            NOT ISBLANK ( 'Município'[PorteOrdem] )
+        ),
+        "@v", [T13 · variação]
+    )
+RETURN
+    MAXX ( TOPN ( 1, _r, [@v], ASC, 'Município'[PorteOrdem], ASC ), 'Município'[Porte] )

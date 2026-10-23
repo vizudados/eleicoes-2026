@@ -1,0 +1,17 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: #,0
+@descricao: Votos somados dos candidatos do 5º lugar em diante, no recorte.
+@oraculo: paginas[1].demais.votos = 3.192.291
+*/
+VAR _lista =
+    FILTER (
+        ADDCOLUMNS (
+            CALCULATETABLE ( VALUES ( 'Candidato UF'[Candidato] ), 'Candidato UF'[Ano] = 2026 ),
+            "@v", [T01 · votos do candidato],
+            "@p", [T01 · posição do candidato]
+        ),
+        [@p] >= 5 && [@v] > 0
+    )
+RETURN
+    SUMX ( _lista, [@v] )

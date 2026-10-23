@@ -1,0 +1,11 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do bloco da resposta.
+*/
+LEFT (
+    [T06 · recorte] & ": " & SWITCH ( TRUE (), ABS ( [T06 · abstenções] ) >= 1000000, FORMAT ( [T06 · abstenções] / 1000000, "0.00" ) & " mi", ABS ( [T06 · abstenções] ) >= 1000, FORMAT ( [T06 · abstenções] / 1000, "0.0" ) & " mil", FORMAT ( [T06 · abstenções], "#,0" ) ) & " não foram votar em 2026 (" & FORMAT ( [T06 · abstenção %], "0.0%" )
+        & " dos aptos), " & FORMAT ( [T06 · vezes a diferença], "0.0" ) & " vezes a diferença entre Flávio e "
+        & "Lula. Com brancos e nulos, " & SWITCH ( TRUE (), ABS ( [T06 · não escolheram] ) >= 1000000, FORMAT ( [T06 · não escolheram] / 1000000, "0.00" ) & " mi", ABS ( [T06 · não escolheram] ) >= 1000, FORMAT ( [T06 · não escolheram] / 1000, "0.0" ) & " mil", FORMAT ( [T06 · não escolheram], "#,0" ) ) & " não escolheram ninguém.",
+    250
+)

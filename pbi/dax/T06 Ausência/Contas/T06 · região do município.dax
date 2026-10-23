@@ -1,0 +1,6 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: texto
+@descricao: Região do município da linha.
+*/
+SELECTEDVALUE ( 'Município'[Região] )

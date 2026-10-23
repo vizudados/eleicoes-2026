@@ -1,0 +1,10 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Votos de Lula (PT) menos os do adversário (PL) em 2022, somados no recorte. Positivo: Lula à frente.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+CALCULATE (
+    SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ),
+    'Município ano'[Ano] = 2022
+)

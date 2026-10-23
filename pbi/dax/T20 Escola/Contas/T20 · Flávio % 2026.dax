@@ -1,0 +1,7 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0.0%
+@descricao: Votos de Flávio ÷ válidos no local, 2026.
+@oraculo: mockup/data/eleicoes.json › Escola › flavio_txt
+*/
+DIVIDE ( SUM ( 'T20 Local'[VotosAdv2026] ), SUM ( 'T20 Local'[Validos2026] ) )

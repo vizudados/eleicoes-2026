@@ -1,0 +1,84 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Topo da tela: quantas vezes o PT terminou o 1º turno atrás (ou à frente) e em quais anos, com os candidatos. Só lê contas 'T14 · …'.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _k = [T14 · eleições com o PT atrás]
+VAR _n = [T14 · eleições]
+VAR _a26 = [T14 · PT atrás em 2026]
+VAR _uf = [T14 · recorte]
+VAR _anos =
+    ADDCOLUMNS (
+        VALUES ( 'Ano'[Ano] ),
+        "@m", [T14 · margem do PT],
+        "@pt", [T14 · PT %],
+        "@adv", [T14 · adversário %],
+        "@cpt", [T14 · candidato do PT],
+        "@cadv", [T14 · adversário]
+    )
+-- 2 · Textos
+VAR _atras = FILTER ( _anos, [@m] < 0 ) /* lista */
+VAR _nAtras = COUNTROWS ( _atras ) /* lista */
+VAR _txtAnos =
+    CONCATENATEX (
+        _atras,
+        "em " & 'Ano'[Ano] & " (" & [@cpt] & " " & FORMAT ( [@pt], "0.0%" ) & " × " & [@cadv] & " " & FORMAT ( [@adv], "0.0%" ) & ")",
+        "; ",
+        'Ano'[Ano], ASC
+    )
+VAR _grande =
+    SWITCH (
+        TRUE (),
+        _k = _n, FORMAT ( _k, "0" ) & " de " & FORMAT ( _n, "0" ),
+        _a26 = 1, FORMAT ( _k, "0" ) & "ª vez",
+        FORMAT ( _n - _k, "0" ) & " de " & FORMAT ( _n, "0" )
+    )
+VAR _onde = IF ( ISBLANK ( _uf ), "", " em " & _uf )
+VAR _man =
+    SWITCH (
+        TRUE (),
+        _k = _n, IF ( ISBLANK ( _uf ), "", _uf & ": " ) & "o PT terminou o 1º turno atrás do adversário nas seis eleições",
+        _a26 = 1 && ISBLANK ( _uf ),
+            "Pela " & FORMAT ( _k, "0" ) & "ª vez em seis eleições, o PT termina o 1º turno em segundo lugar",
+        _a26 = 1,
+            _uf & ": pela " & FORMAT ( _k, "0" ) & "ª vez em seis eleições, o PT termina o 1º turno atrás do adversário",
+        _k = 0, "O PT ficou à frente nas seis eleições" & _onde & ", inclusive em 2026",
+        "O PT ficou à frente em " & FORMAT ( _n - _k, "0" ) & " das seis eleições" & _onde & ", inclusive em 2026"
+    )
+VAR _soAnos = CONCATENATEX ( _atras, 'Ano'[Ano], ", ", 'Ano'[Ano], ASC )
+VAR _sub =
+    SWITCH (
+        TRUE (),
+        _nAtras = 0, "",
+        _nAtras <= 2, "Atrás " & _txtAnos & ".",
+        "Atrás em " & _soAnos & "."
+    )
+-- 3 · Geometria e 4 · Marcação (urnas de 76 px a cada 92, a partir de x 1086)
+VAR _urnas =
+    CONCATENATEX (
+        _anos,
+        VAR _i = ( 'Ano'[Ano] - 2006 ) / 4
+        VAR _vez = CALCULATE ( [T14 · vez em que o PT ficou atrás] )
+        RETURN
+            "<div class='ux " & IF ( [@m] < 0, "adv", "pt" ) & " brota' style='left:" & ( 1086 + _i * 92 )
+                & "px;animation-delay:" & ( 500 + _i * 140 ) & "ms'></div>"
+                & "<div class='ua' style='left:" & ( 1086 + _i * 92 ) & "px'>" & 'Ano'[Ano] & "</div>"
+                & IF (
+                    NOT ISBLANK ( _vez ),
+                    "<div class='uv mao entra' style='left:" & ( 1086 + _i * 92 ) & "px;animation-delay:"
+                        & ( 900 + _i * 140 ) & "ms'>" & FORMAT ( _vez, "0" ) & "ª vez</div>"
+                ),
+        "",
+        'Ano'[Ano], ASC
+    )
+RETURN
+    "<div class='tela t14r'>"
+        & "<div class='num g sobe'>" & _grande & "</div>"
+        & "<div class='man m sobe d2'>" & _man & "</div>"
+        & "<div class='nota s entra d4'>" & _sub & "</div>"
+        & "<div class='rot ur entra d3'>QUEM TERMINOU NA FRENTE, ELEIÇÃO A ELEIÇÃO</div>"
+        & _urnas
+        & "<div class='nota ul entra d8'>urna vermelha: o PT à frente · azul: o adversário</div>"
+    & "</div>"

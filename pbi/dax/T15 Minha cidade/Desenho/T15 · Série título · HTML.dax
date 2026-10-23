@@ -1,0 +1,38 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Título da série da cidade: de onde a margem saiu, aonde chegou e quando virou.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _ok = [T15 · cidade escolhida]
+VAR _cid = [T15 · cidade]
+VAR _a0 = [T15 · primeiro ano]
+VAR _m0 = [T15 · margem no primeiro ano]
+VAR _m26 = [T15 · margem 2026]
+VAR _troca = [T15 · última troca de lado]
+VAR _nTrocas = [T15 · trocas de lado]
+VAR _paraPT = [T15 · PT à frente na última troca]
+-- 2 · Textos
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cid, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _txtTroca =
+    SWITCH (
+        TRUE (),
+        _nTrocas = 0 && _m26 > 0, "o PT ficou à frente em todas",
+        _nTrocas = 0, "o adversário ficou à frente em todas",
+        _paraPT = 1, _nome & " voltou para o PT em " & _troca,
+        _nome & " virou para o adversário em " & _troca & IF ( _troca < 2026, ", não em 2026", "" )
+    )
+VAR _man =
+    "De " & FORMAT ( _m0 * 100, "+0.0;−0.0;0.0" ) & " p.p. em " & _a0 & " a " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " p.p. em 2026; " & _txtTroca
+-- 4 · Marcação
+RETURN
+    IF (
+        _ok = 1,
+        "<div class='tela t15t'>"
+            & "<div class='rot entra'>MARGEM DO PT EM " & UPPER ( _nome ) & " · " & _a0 & " → 2026</div>"
+            & "<div class='man sobe d1'>" & _man & "</div>"
+            & "<div class='leg entra d2'><span><i class='pt'></i>PT à frente</span><span><i class='adv'></i>adversário à "
+                & "frente</span></div>"
+        & "</div>"
+    )

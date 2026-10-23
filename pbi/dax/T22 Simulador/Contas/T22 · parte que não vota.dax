@@ -1,0 +1,7 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0%
+@descricao: Controle do simulador: a parte dos votos dos outros candidatos que não vai para ninguém (branco, nulo ou falta), 0–0,5; sem marca, zero.
+@oraculo: ponto de partida: 0
+*/
+SELECTEDVALUE ( 'T22 Não votam'[Não votam], 0 ) / 100

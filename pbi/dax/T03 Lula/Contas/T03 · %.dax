@@ -1,0 +1,7 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0%
+@descricao: Parcela de Lula nos válidos de 2026 do recorte (0–1); na linha de uma UF, o % da UF.
+@oraculo: paginas[3].pct
+*/
+DIVIDE ( [T03 · votos], [T03 · válidos] )

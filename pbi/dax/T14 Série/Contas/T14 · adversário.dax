@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: texto
+@descricao: Adversário principal no ano do contexto.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+SELECTEDVALUE ( 'Ano'[Adversário] )

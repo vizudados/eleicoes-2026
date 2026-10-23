@@ -1,0 +1,13 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Texto alternativo do título da série.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _cid = [T15 · cidade]
+VAR _troca = [T15 · última troca de lado]
+-- 2 · Textos
+RETURN
+    "Margem do PT em " & _cid & " a cada eleição de 2006 a 2026"
+        & IF ( ISBLANK ( _troca ), ".", "; a última troca de lado foi em " & _troca & "." )

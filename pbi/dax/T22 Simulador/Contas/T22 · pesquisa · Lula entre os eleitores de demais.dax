@@ -1,0 +1,23 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0.0%
+@descricao: Na pesquisa em uso, a parte dos eleitores dos demais candidatos (Zema e mais 6) que vai para Lula: o segmento 'outros'; sem ele, Zema; sem ele, o agregado; sem nenhum, a média de Cury, Renan e Caiado pelos votos.
+@oraculo: dados/pbi/transferencia.csv
+*/
+VAR _data = [T22 · pesquisa · data]
+VAR _linhas = CALCULATETABLE ( 'Transferência', 'Transferência'[Divulgação] = _data )
+VAR _outros = MAXX ( FILTER ( _linhas, 'Transferência'[Segmento] = "outros" ), 'Transferência'[Lula] )
+VAR _zema = MAXX ( FILTER ( _linhas, 'Transferência'[Segmento] = "Zema" ), 'Transferência'[Lula] )
+VAR _agregado = MAXX ( FILTER ( _linhas, 'Transferência'[Segmento] = "agregado_3via" ), 'Transferência'[Lula] )
+VAR _media =
+    DIVIDE (
+        [T22 · votos de Cury] * [T22 · pesquisa · Lula entre os eleitores de Cury]
+            + [T22 · votos de Renan] * [T22 · pesquisa · Lula entre os eleitores de Renan]
+            + [T22 · votos de Caiado] * [T22 · pesquisa · Lula entre os eleitores de Caiado],
+        [T22 · votos de Cury] + [T22 · votos de Renan] + [T22 · votos de Caiado]
+    )
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        COALESCE ( DIVIDE ( COALESCE ( _outros, _zema, _agregado ), 100 ), _media )
+    )

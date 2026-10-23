@@ -1,0 +1,15 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Municípios que trocaram de lado nas duas regiões com mais viradas, somados.
+@oraculo: mockup/data/eleicoes.json › paginas[11] › Sudeste 287 + Sul 251 = 538
+@gerado: pbi/scripts/desenho_t11.py
+*/
+VAR _r =
+    ADDCOLUMNS ( VALUES ( 'Município'[Região] ), "@n", [T11 · viraram] )
+VAR _top1 =
+    TOPN ( 1, _r, [@n], DESC, 'Município'[Região], ASC )
+VAR _top2 =
+    TOPN ( 2, _r, [@n], DESC, 'Município'[Região], ASC )
+RETURN
+    SUMX ( _top2, [@n] )

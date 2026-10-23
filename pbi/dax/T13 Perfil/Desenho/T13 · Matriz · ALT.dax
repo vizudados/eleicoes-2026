@@ -1,0 +1,16 @@
+/*
+@pasta: T13 Perfil\Desenho
+@formato: texto
+@descricao: Texto alternativo da matriz porte × renda.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+-- 1 · Leituras
+VAR _v = [T13 · maior queda · variação]
+VAR _p = [T13 · maior queda · porte]
+VAR _q = [T13 · maior queda · quinto]
+VAR _cres = [T13 · queda cresce quando a cidade diminui]
+-- 2 · Textos
+RETURN
+    "Matriz de porte por renda com a queda da margem de Lula em cada grupo de cidades. "
+        & IF ( _cres = 1, "Quanto menor a cidade, maior a queda. ", "" )
+        & "A maior queda: " & _p & " e " & _q & ", " & FORMAT ( _v * 100, "+0.0;−0.0;0.0" ) & " pontos."

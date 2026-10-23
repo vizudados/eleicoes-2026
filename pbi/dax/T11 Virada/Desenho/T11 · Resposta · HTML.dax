@@ -1,0 +1,110 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Coluna da resposta: quantos municípios trocaram Lula por Flávio, o caminho inverso e a fila das cidades 2022 → 2026 (barras e faixas, com a faixa dos que trocaram anotada à mão). Só lê contas 'T11 · …'.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _vir = [T11 · viraram]
+VAR _vol = [T11 · voltaram]
+VAR _l22 = [T11 · Lula à frente em 2022]
+VAR _a22 = [T11 · adversário à frente em 2022]
+VAR _e22 = [T11 · empates em 2022]
+VAR _l26 = [T11 · Lula à frente em 2026]
+VAR _f26 = [T11 · Flávio à frente em 2026]
+VAR _e26 = [T11 · empates em 2026]
+VAR _ll = [T11 · seguiram com Lula]
+VAR _ff = [T11 · seguiram com o adversário]
+VAR _tot = [T11 · municípios]
+-- 2 · Textos
+VAR _txtVir = IF ( _vir = 0, "nenhum", FORMAT ( _vir, "#,0" ) )
+VAR _txtFrase =
+    IF ( _vir <= 1, "município trocou", "municípios trocaram" )
+VAR _txtInv =
+    SWITCH (
+        TRUE (),
+        _vol = 0 && _vir = 0, "e nenhum trocou Flávio por Lula",
+        _vol = 0, "nenhum fez o caminho inverso",
+        _vol = 1, "1 fez o caminho inverso",
+        FORMAT ( _vol, "#,0" ) & " fizeram o caminho inverso"
+    )
+VAR _clsGrande = IF ( _vir = 0, "grande palavra", "grande" )
+VAR _txtNota =
+    IF ( _vir = 0, "", IF ( _vir = 1, "o 1 que trocou", "os " & FORMAT ( _vir, "#,0" ) & " que trocaram" ) & " →" )
+VAR _txtEmp =
+    IF (
+        _e22 + _e26 > 0,
+        " Empates exatos (" & FORMAT ( _e22, "#,0" ) & " em 2022, " & FORMAT ( _e26, "#,0" ) & " em 2026) ficam de fora.",
+        ""
+    )
+-- 3 · Geometria (fila de 420 px com 6 px entre os blocos: uma cidade = 408 ÷ total)
+VAR _s = DIVIDE ( 408, _tot ) -- geometria
+VAR _xE22 = _l22 * _s + 6 -- geometria
+VAR _xA22 = ( _l22 + _e22 ) * _s + 12 -- geometria
+VAR _xE26 = _l26 * _s + 6 -- geometria
+VAR _xF26 = ( _l26 + _e26 ) * _s + 12 -- geometria
+VAR _dLL =
+    "M" & FORMAT ( 0, "0.0", "en-US" ) & ",32 C" & FORMAT ( 0, "0.0", "en-US" ) & ",150 "
+        & FORMAT ( 0, "0.0", "en-US" ) & ",150 " & FORMAT ( 0, "0.0", "en-US" ) & ",268 L"
+        & FORMAT ( _ll * _s, "0.0", "en-US" ) & ",268 C" & FORMAT ( _ll * _s, "0.0", "en-US" ) & ",150 "
+        & FORMAT ( _ll * _s, "0.0", "en-US" ) & ",150 " & FORMAT ( _ll * _s, "0.0", "en-US" ) & ",32 Z"
+VAR _dLF =
+    "M" & FORMAT ( _ll * _s, "0.0", "en-US" ) & ",32 C" & FORMAT ( _ll * _s, "0.0", "en-US" ) & ",150 "
+        & FORMAT ( 420 - _vir * _s, "0.0", "en-US" ) & ",150 " & FORMAT ( 420 - _vir * _s, "0.0", "en-US" ) & ",268 L"
+        & FORMAT ( 420, "0.0", "en-US" ) & ",268 C" & FORMAT ( 420, "0.0", "en-US" ) & ",150 "
+        & FORMAT ( ( _ll + _vir ) * _s, "0.0", "en-US" ) & ",150 " & FORMAT ( ( _ll + _vir ) * _s, "0.0", "en-US" ) & ",32 Z"
+VAR _dFL =
+    "M" & FORMAT ( _xA22, "0.0", "en-US" ) & ",32 C" & FORMAT ( _xA22, "0.0", "en-US" ) & ",150 "
+        & FORMAT ( _ll * _s, "0.0", "en-US" ) & ",150 " & FORMAT ( _ll * _s, "0.0", "en-US" ) & ",268 L"
+        & FORMAT ( ( _ll + _vol ) * _s, "0.0", "en-US" ) & ",268 C" & FORMAT ( ( _ll + _vol ) * _s, "0.0", "en-US" ) & ",150 "
+        & FORMAT ( _xA22 + _vol * _s, "0.0", "en-US" ) & ",150 " & FORMAT ( _xA22 + _vol * _s, "0.0", "en-US" ) & ",32 Z"
+VAR _dFF =
+    "M" & FORMAT ( _xA22 + _vol * _s, "0.0", "en-US" ) & ",32 C" & FORMAT ( _xA22 + _vol * _s, "0.0", "en-US" ) & ",150 "
+        & FORMAT ( _xF26, "0.0", "en-US" ) & ",150 " & FORMAT ( _xF26, "0.0", "en-US" ) & ",268 L"
+        & FORMAT ( _xF26 + _ff * _s, "0.0", "en-US" ) & ",268 C" & FORMAT ( _xF26 + _ff * _s, "0.0", "en-US" ) & ",150 "
+        & FORMAT ( _xA22 + ( _vol + _ff ) * _s, "0.0", "en-US" ) & ",150 " & FORMAT ( _xA22 + ( _vol + _ff ) * _s, "0.0", "en-US" ) & ",32 Z"
+VAR _xNota = ( _ll * _s + 420 - _vir * _s ) / 2 - 14 -- geometria
+VAR _rect =
+    "<rect class='barra-x' y='0' height='32' x='"
+VAR _rect2 =
+    "<rect class='barra-x d6' y='268' height='32' x='"
+-- 4 · Marcação
+VAR _svg =
+    "<svg class='fila' width='420' height='300' viewBox='0 0 420 300'>"
+        & "<path class='fx esmaece d7' fill='var(--rosa)' fill-opacity='.38' d='" & _dLL & "'/>"
+        & "<path class='fx esmaece d8' fill='var(--azul-claro)' fill-opacity='.42' d='" & _dFF & "'/>"
+        & "<path class='fx esmaece d8' fill='var(--vermelho)' fill-opacity='.85' d='" & _dFL & "'/>"
+        & "<path class='fx forte' fill='var(--azul)' fill-opacity='.9' d='" & _dLF & "'/>"
+        & _rect & "0' width='" & FORMAT ( _l22 * _s, "0.0", "en-US" ) & "' fill='var(--vermelho)'/>"
+        & _rect & FORMAT ( _xA22, "0.0", "en-US" ) & "' width='" & FORMAT ( _a22 * _s, "0.0", "en-US" )
+            & "' fill='var(--azul-claro)'/>"
+        & _rect2 & "0' width='" & FORMAT ( _l26 * _s, "0.0", "en-US" ) & "' fill='var(--vermelho)'/>"
+        & _rect2 & FORMAT ( _xF26, "0.0", "en-US" ) & "' width='" & FORMAT ( _f26 * _s, "0.0", "en-US" )
+            & "' fill='var(--azul)'/>"
+    & "</svg>"
+VAR _html =
+    "<div class='tela t11r'>"
+        & "<div class='num " & _clsGrande & " sobe'>" & _txtVir & "</div>"
+        & "<div class='man frase sobe d2'>" & _txtFrase & " <span class='lula'>Lula</span> por "
+            & "<span class='flavio'>Flávio</span> de 2022 para 2026</div>"
+        & "<div class='inv entra d4'><span>" & _txtInv & "</span>"
+            & "<svg width='330' height='16' viewBox='0 0 330 16'><path class='traco' style='animation-delay:900ms' "
+            & "pathLength='1' d='M3,10 C70,4 170,13 326,6' fill='none' stroke='var(--tinta)' stroke-width='5' "
+            & "stroke-linecap='round'/></svg></div>"
+        & "<div class='fluxo'>"
+            & "<div class='rot entra d5'>CIDADE A CIDADE · QUEM FICOU À FRENTE</div>"
+            & "<div class='lb cima'><span class='e'><span class='ano'>2022</span><b class='num lula'>" & FORMAT ( _l22, "#,0" )
+                & "</b><span> com Lula</span></span><span class='d'><b class='num flavio'>" & FORMAT ( _a22, "#,0" )
+                & "</b><span> com Bolsonaro</span></span></div>"
+            & "<div class='palco'>" & _svg
+                & "<div class='mao anota entra d11' style='width:" & FORMAT ( MAX ( 120, _xNota ), "0.0", "en-US" ) & "px'>"
+                & _txtNota & "</div></div>"
+            & "<div class='lb baixo'><span class='e'><span class='ano'>2026</span><b class='num lula'>" & FORMAT ( _l26, "#,0" )
+                & "</b><span> com Lula</span></span><span class='d'><b class='num flavio'>" & FORMAT ( _f26, "#,0" )
+                & "</b><span> com Flávio</span></span></div>"
+            & "<div class='nota entra d9'>Cada cidade ocupa o mesmo espaço na fila. A faixa azul forte são as que "
+                & "trocaram Lula por Flávio." & _txtEmp & "</div>"
+        & "</div>"
+    & "</div>"
+RETURN
+    _html

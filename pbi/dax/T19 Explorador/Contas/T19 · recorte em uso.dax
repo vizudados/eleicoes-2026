@@ -1,0 +1,42 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: texto
+@descricao: Os filtros que formam o recorte, em palavras ('Sudeste · 10 a 50 mil hab. · seleção na dispersão'); 'Todo o Brasil' sem filtro.
+@oraculo: mockup/data/eleicoes.json › Explorador › padrao.recorte_txt
+*/
+VAR _regiao =
+    IF ( ISFILTERED ( 'UF'[Região] ), CONCATENATEX ( VALUES ( 'UF'[Região] ), 'UF'[Região], ", " ) )
+VAR _uf =
+    IF ( ISFILTERED ( 'UF'[Nome] ), CONCATENATEX ( VALUES ( 'UF'[UF] ), 'UF'[UF], ", " ) )
+VAR _porte =
+    IF (
+        ISFILTERED ( 'Município'[Porte] ),
+        CONCATENATEX ( VALUES ( 'Município'[Porte] ), 'Município'[Porte], ", " ) & " hab."
+    )
+VAR _quinto =
+    IF (
+        ISFILTERED ( 'Município'[Quinto de renda] ),
+        "renda: " & CONCATENATEX ( VALUES ( 'Município'[Quinto de renda] ), 'Município'[Quinto de renda], ", " )
+    )
+VAR _lado =
+    IF ( ISFILTERED ( 'T19 Lado'[Lado] ), CONCATENATEX ( VALUES ( 'T19 Lado'[Lado] ), 'T19 Lado'[Lado], ", " ) )
+VAR _nBusca = COUNTROWS ( VALUES ( 'Município'[Rótulo] ) )
+VAR _busca =
+    IF (
+        ISFILTERED ( 'Município'[Rótulo] ),
+        IF (
+            _nBusca <= 3,
+            CONCATENATEX ( VALUES ( 'Município'[Rótulo] ), 'Município'[Rótulo], ", " ),
+            _nBusca & " cidades buscadas"
+        )
+    )
+VAR _laco =
+    IF ( ISFILTERED ( 'Município'[CodIBGE] ), "seleção na dispersão" )
+VAR _partes =
+    {
+        ( 1, _regiao ), ( 2, _uf ), ( 3, _porte ), ( 4, _quinto ), ( 5, _lado ), ( 6, _busca ), ( 7, _laco )
+    }
+VAR _texto =
+    CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], " · ", [Value1], ASC )
+RETURN
+    IF ( _texto = "", "Todo o Brasil", _texto )

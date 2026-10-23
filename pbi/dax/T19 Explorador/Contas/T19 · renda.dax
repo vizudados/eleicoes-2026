@@ -1,0 +1,7 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: #,0
+@descricao: Rendimento domiciliar per capita médio do município (R$/mês, Censo 2022); vazio no recorte de mais de um município.
+@oraculo: mockup/data/eleicoes.json › Explorador › renda_txt
+*/
+SELECTEDVALUE ( 'Município'[Renda per capita] )

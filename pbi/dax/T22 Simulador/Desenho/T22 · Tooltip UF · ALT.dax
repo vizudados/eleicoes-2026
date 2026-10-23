@@ -1,0 +1,11 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê da UF.
+*/
+-- 1 · Leituras
+VAR _nome = [T22 · UF · nome]
+VAR _lula = [T22 · cenário · Lula %]
+RETURN
+    IF ( NOT ISBLANK ( _nome ), _nome & " no cenário: Lula " & FORMAT ( _lula, "0.0%" ) & ", Flávio "
+        & FORMAT ( 1 - _lula, "0.0%" ) & "." )

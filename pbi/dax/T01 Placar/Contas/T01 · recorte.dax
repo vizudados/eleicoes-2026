@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: texto
+@descricao: Nome do recorte: Brasil ou o nome da UF escolhida no filtro.
+*/
+IF ( [T01 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome], "as UFs escolhidas" ), "Brasil" )

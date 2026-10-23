@@ -1,0 +1,72 @@
+/*
+@pasta: T19 Explorador\Desenho
+@formato: texto
+@descricao: Uma linha da lista do Explorador (granularidade: Município[Rótulo]; o visual mostra os 14 com mais votos válidos): nome, Lula e Flávio em 2026, a minilinha da margem 2006–2026, a mudança 2022 → 2026 e o selo de quem virou. Posição pela conta da posição na lista.
+*/
+-- 1 · Leituras
+VAR _pos = [T19 · posição na lista]
+VAR _lula = [T19 · Lula % 2026]
+VAR _flavio = [T19 · Flávio % 2026]
+VAR _var = [T19 · variação da margem]
+VAR _virou = [T19 · virou]
+VAR _m06 = [T19 · margem 2006]
+VAR _m10 = [T19 · margem 2010]
+VAR _m14 = [T19 · margem 2014]
+VAR _m18 = [T19 · margem 2018]
+VAR _m22 = [T19 · margem 2022]
+VAR _m26 = [T19 · margem 2026]
+-- 2 · Textos
+VAR _nome0 = [T19 · município]
+VAR _nome1 = SUBSTITUTE ( _nome0, "&", "&amp;" )
+VAR _nome2 = SUBSTITUTE ( SUBSTITUTE ( _nome1, "<", "&lt;" ), ">", "&gt;" )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome2, """", "&quot;" ), "'", "&#39;" )
+VAR _txtLula = FORMAT ( _lula, "0.0%" )
+VAR _txtFlavio = FORMAT ( _flavio, "0.0%" )
+VAR _txtVar = IF ( ISBLANK ( _var ), "—", FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) )
+VAR _clsVar = IF ( _var < 0, "flavio", IF ( _var > 0, "lula", "" ) )
+VAR _clsFim = IF ( _m26 < 0, "f", "l" )
+VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
+VAR _atraso = "d" & MIN ( _pos, 16 )
+-- 3 · Geometria
+VAR _y = 36 + ( _pos - 1 ) * 45 -- geometria
+VAR _base = { ( 0, 4.0, _m06 ), ( 1, 29.6, _m10 ), ( 2, 55.2, _m14 ), ( 3, 80.8, _m18 ), ( 4, 106.4, _m22 ), ( 5, 132.0, _m26 ) } /* lista */
+VAR _pts =
+    FILTER ( /* lista */
+        SELECTCOLUMNS (
+            _base,
+            "i", [Value1],
+            "x", [Value2],
+            "y", IF ( ISBLANK ( [Value3] ), BLANK (), 15.0 - MAX ( -0.6, MIN ( 0.6, [Value3] ) ) / 0.6 * 13.0 )
+        ),
+        NOT ISBLANK ( [y] )
+    ) -- geometria
+VAR _primeiro = MINX ( _pts, [i] ) /* lista */
+VAR _d =
+    CONCATENATEX (
+        _pts,
+        IF ( [i] = _primeiro, "M", "L" ) & FORMAT ( [x], "0.0##", "en-US" ) & "," & FORMAT ( [y], "0.0##", "en-US" ),
+        " ",
+        [i], ASC
+    ) /* lista */
+VAR _yFim = MAXX ( FILTER ( _pts, [i] = 5 ), [y] ) /* lista */
+VAR _ponto =
+    IF (
+        NOT ISBLANK ( _yFim ),
+        "<circle class='" & _clsFim & "' cx='132.0' cy='" & FORMAT ( _yFim, "0.0##", "en-US" ) & "' r='3.6'/>"
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pos ),
+        "<div class='tela t19l'><div class='ln sobe " & _atraso & "' style='top:" & _y & "px'>"
+            & "<span class='c-nome' title='" & _nome & "'>" & _nome & "</span>"
+            & "<span class='c-l lula tnum'>" & _txtLula & "</span>"
+            & "<span class='c-f flavio tnum'>" & _txtFlavio & "</span>"
+            & "<svg class='c-s' width='136' height='30' viewBox='0 0 136 30'>"
+                & "<line class='zero' x1='0' x2='136' y1='15.0' y2='15.0'/>"
+                & "<path class='traco-rapido' pathLength='1' d='" & _d & "'/>" & _ponto
+            & "</svg>"
+            & "<span class='c-v tnum " & _clsVar & "'>" & _txtVar & "</span>"
+            & "<span class='c-x'>" & _selo & "</span>"
+        & "</div></div>"
+    )

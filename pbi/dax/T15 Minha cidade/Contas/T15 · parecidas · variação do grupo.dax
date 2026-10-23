@@ -1,0 +1,20 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Variação da margem de Lula no grupo de cidades parecidas, somando os votos delas.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › entre_parecidas › variacao_grupo_txt = −5,6 p.p.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _p = SELECTEDVALUE ( 'Município'[Porte] )
+VAR _q = SELECTEDVALUE ( 'Município'[Quinto de renda] )
+RETURN
+    IF (
+        NOT ISBLANK ( _p ) && NOT ISBLANK ( _q ),
+        CALCULATE (
+            [T15 · variação],
+            REMOVEFILTERS ( 'Município' ),
+            REMOVEFILTERS ( 'UF' ),
+            'Município'[Porte] = _p,
+            'Município'[Quinto de renda] = _q
+        )
+    )

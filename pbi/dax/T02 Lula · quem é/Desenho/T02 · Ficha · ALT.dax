@@ -1,0 +1,11 @@
+/*
+@pasta: T02 Lula · quem é\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da ficha.
+*/
+LEFT (
+    "Luiz Inácio Lula da Silva, na vida pública desde " & [T02 · Trajetória · primeiro ano] & ". No 1º turno de 2026, "
+        & SWITCH ( TRUE (), ABS ( [T02 · votos 2026] ) >= 1000000, FORMAT ( [T02 · votos 2026] / 1000000, "0.00" ) & " mi", ABS ( [T02 · votos 2026] ) >= 1000, FORMAT ( [T02 · votos 2026] / 1000, "0.0" ) & " mil", FORMAT ( [T02 · votos 2026], "#,0" ) ) & " de votos (" & FORMAT ( [T02 · % 2026], "0.0%" ) & "), "
+        & [T02 · posição 2026] & "º lugar.",
+    250
+)

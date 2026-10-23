@@ -1,0 +1,7 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: #,0
+@descricao: Votos de Lula no 1º turno de 2026, no Brasil (com o exterior).
+@oraculo: paginas[1].candidatos
+*/
+CALCULATE ( SUM ( 'Candidato UF'[Votos] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 13 )

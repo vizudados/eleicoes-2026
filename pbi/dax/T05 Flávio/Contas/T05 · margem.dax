@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0.0%
+@descricao: Margem de Flávio em 2026: (votos dele − votos de Lula) ÷ válidos (−1 a 1). Cor do ponto no mapa.
+*/
+DIVIDE ( [T05 · votos (municípios)] - [T05 · votos do adversário (municípios)], [T05 · válidos (municípios)] )

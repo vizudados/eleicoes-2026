@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: Votos do candidato sobre os válidos do ano (nacional, com o exterior).
+@gerado: pbi/scripts/desenho_t14.py
+*/
+DIVIDE ( SUM ( 'Candidato ano'[Votos] ), MAX ( 'Candidato ano'[ValidosAno] ) )

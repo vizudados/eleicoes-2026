@@ -1,0 +1,13 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: No ano do contexto, se o PT ficou atrás: quantas vezes isso já tinha acontecido até ali, contando este ano (1ª, 2ª…). Vazio se o PT ficou à frente.
+@oraculo: mockup/data/eleicoes.json › paginas[14] › 2018 = 1ª, 2026 = 2ª
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _ano = SELECTEDVALUE ( 'Ano'[Ano] )
+RETURN
+    IF (
+        [T14 · margem do PT] < 0,
+        COUNTROWS ( FILTER ( ALL ( 'Ano'[Ano] ), 'Ano'[Ano] <= _ano && [T14 · margem do PT] < 0 ) )
+    )

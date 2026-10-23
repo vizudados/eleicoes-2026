@@ -1,0 +1,20 @@
+/*
+@pasta: T04 Flávio · quem é\Contas
+@formato: texto
+@descricao: Onde e quando a foto original do marco da linha foi feita (pode ser de outro momento que o do marco). Fonte: dados/bruto/trajetoria/desenhos.csv.
+*/
+VAR _f = [T04 · Trajetória · foto]
+RETURN
+    SWITCH (
+        _f,
+"flavio-2002-alerj", "Como deputado estadual do RJ, em formatura de grupamento da Seap, 17 de dezembro de 2014",
+"flavio-2016-prefeitura", "Como deputado estadual do RJ, 2015",
+"flavio-2018-senado", "Já eleito senador, Rio de Janeiro, 29 de novembro de 2018",
+"flavio-2019-posse", "Posse no plenário do Senado, Brasília, 1º de fevereiro de 2019",
+"flavio-2020-denuncia", "Entrevista no Senado, Brasília, 30 de novembro de 2021",
+"flavio-2022-arquivamento", "Entrevista no Senado, Brasília, 12 de maio de 2022",
+"flavio-2025-csp", "Reunião da Comissão de Segurança Pública do Senado, Brasília, 19 de agosto de 2025",
+"flavio-2025-precandidatura", "Comissão do Senado, Brasília, 3 de setembro de 2025",
+"flavio-2026-primeiro-turno", "Discurso no plenário do Senado, Brasília, 1º de setembro de 2026",
+        BLANK ()
+    )

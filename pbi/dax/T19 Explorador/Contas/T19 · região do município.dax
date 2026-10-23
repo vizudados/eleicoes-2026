@@ -1,0 +1,6 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: texto
+@descricao: Região do município (Norte … Sul).
+*/
+SELECTEDVALUE ( 'Município'[Região] )

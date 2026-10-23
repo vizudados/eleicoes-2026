@@ -1,0 +1,14 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0
+@descricao: Colocação de Flávio no 1º turno de 2026, no recorte.
+@oraculo: paginas[5].posicao_txt
+*/
+VAR _v = [T05 · votos]
+VAR _todos =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'Candidato UF'[Número] ), 'Candidato UF'[Ano] = 2026 ),
+        "@v", CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026 )
+    )
+RETURN
+    1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) )

@@ -1,0 +1,7 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: #,0
+@descricao: Votos dos candidatos fora Lula e Flávio no 1º turno de 2026 (Cury, Renan, Caiado e os demais): o que está em jogo no 2º turno.
+@oraculo: mockup/data/eleicoes.json › Simulador › total_outros_txt (9,32 mi)
+*/
+[T22 · votos de Cury] + [T22 · votos de Renan] + [T22 · votos de Caiado] + [T22 · votos dos demais]

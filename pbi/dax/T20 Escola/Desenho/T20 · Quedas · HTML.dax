@@ -1,0 +1,31 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: Uma linha da lista das 5 maiores quedas da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local], Top 5 pela queda): posição, nome, bairro e seções, a queda e o selo.
+*/
+-- 1 · Leituras
+VAR _pos = [T20 · posição na queda]
+VAR _bairro = [T20 · bairro]
+VAR _secoes = [T20 · seções]
+VAR _var = [T20 · variação da margem]
+VAR _virou = [T20 · virou]
+-- 2 · Textos
+VAR _nome0 = [T20 · nome do local]
+VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
+VAR _txtVar = FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " p.p."
+VAR _sub = _bairro & " · " & _secoes & IF ( _secoes = 1, " seção", " seções" )
+VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
+-- 3 · Geometria
+VAR _y = 70 + ( _pos - 1 ) * 88 -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pos ) && _pos <= 5,
+        "<div class='tela t20q'><div class='ln sobe d" & ( _pos + 2 ) & "' style='top:" & _y & "px'>"
+            & "<span class='p'>" & _pos & "</span>"
+            & "<span class='nm'>" & _nome & "</span>"
+            & "<span class='sb'>" & _sub & "</span>"
+            & "<span class='v flavio tnum'>" & _txtVar & "</span>" & _selo
+        & "</div></div>"
+    )

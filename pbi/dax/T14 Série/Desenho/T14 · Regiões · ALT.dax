@@ -1,0 +1,12 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Texto alternativo das regiões.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _sel = [T14 · região do recorte]
+-- 2 · Textos
+RETURN
+    "Cinco pequenos gráficos, um por região, com o PT e o adversário de 2006 a 2026 na mesma escala"
+        & IF ( ISBLANK ( _sel ), ".", "; em destaque, " & _sel & "." )

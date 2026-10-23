@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: texto
+@descricao: Nome de urna do candidato do PL em 2022.
+*/
+CALCULATE ( SELECTEDVALUE ( 'Candidato UF'[Candidato] ), 'Candidato UF'[Ano] = 2022, 'Candidato UF'[Número] = 22 )

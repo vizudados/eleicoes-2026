@@ -1,0 +1,7 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0.00
+@descricao: Controle do simulador: pontos de comparecimento a mais (ou a menos) sobre os aptos de cada UF (−0,05 a +0,05); sem marca, zero.
+@oraculo: ponto de partida: 0
+*/
+SELECTEDVALUE ( 'T22 Comparecimento'[Comparecimento], 0 ) / 100

@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0.0%
+@descricao: Votos de Flávio Bolsonaro ÷ válidos, 1º turno de 2026, no contexto.
+@oraculo: mockup/data/eleicoes.json › Explorador › flavio26_txt
+*/
+DIVIDE (
+    CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2026 ),
+    [T19 · válidos 2026]
+)

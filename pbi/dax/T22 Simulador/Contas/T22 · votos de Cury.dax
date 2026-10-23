@@ -1,0 +1,7 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: #,0
+@descricao: Votos de Augusto Cury no 1º turno de 2026 no contexto.
+@oraculo: mockup/data/eleicoes.json › Simulador › votos_outros.Cury (3,45 mi)
+*/
+CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 70 )

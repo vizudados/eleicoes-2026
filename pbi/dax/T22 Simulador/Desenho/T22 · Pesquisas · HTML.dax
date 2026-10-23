@@ -1,0 +1,34 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Uma linha da lista das pesquisas (granularidade Transferência[Instituto]): para onde vão os votos dos outros segundo a última pesquisa do instituto depois do 1º turno, e o 2º turno que isso daria. Clicar leva o cenário da pesquisa ao resultado e ao mapa.
+*/
+-- 1 · Leituras
+VAR _data = [T22 · pesquisa · data]
+VAR _pos = [T22 · pesquisa · posição]
+VAR _a = [T22 · pesquisa · parte para Lula entre os que votam]
+VAR _b = [T22 · pesquisa · parte que não vota]
+VAR _lula = [T22 · cenário · Lula %]
+VAR _flavio = [T22 · cenário · Flávio %]
+-- 2 · Textos
+VAR _inst0 = [T22 · pesquisa em uso]
+VAR _inst = SUBSTITUTE ( SUBSTITUTE ( _inst0, "&", "&amp;" ), "<", "&lt;" )
+VAR _txtData = FORMAT ( _data, "dd/MM" )
+VAR _txtL = FORMAT ( _lula, "0.0%" )
+VAR _txtF = FORMAT ( _flavio, "0.0%" )
+-- 3 · Geometria
+VAR _wl = ( 1 - _b ) * _a * 260 -- geometria
+VAR _wf = ( 1 - _b ) * ( 1 - _a ) * 260 -- geometria
+VAR _y = 62 + ( _pos - 1 ) * 28 -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _data ),
+        "<div class='tela t22p'><div class='ln sobe d" & ( _pos + 2 ) & "' style='top:" & _y & "px'>"
+            & "<span class='i'>" & _inst & "</span><span class='d'>" & _txtData & "</span>"
+            & "<span class='b'><i class='l' style='width:" & FORMAT ( _wl, "0.0##", "en-US" ) & "px'></i>"
+            & "<i class='f' style='width:" & FORMAT ( _wf, "0.0##", "en-US" ) & "px'></i></span>"
+            & "<span class='pa tnum'>" & FORMAT ( _a * 100, "0" ) & "%</span>"
+            & "<span class='r tnum'><b class='lula'>" & _txtL & "</b> × <b class='flavio'>" & _txtF & "</b></span>"
+        & "</div></div>"
+    )

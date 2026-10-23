@@ -1,0 +1,19 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do bloco do placar (≤ 250 caracteres).
+*/
+-- 1 · Leituras
+VAR _rec = [T01 · recorte]
+VAR _fv = [T01 · Flávio votos]
+VAR _lv = [T01 · Lula votos]
+VAR _fp = [T01 · Flávio %]
+VAR _lp = [T01 · Lula %]
+VAR _dif = [T01 · diferença]
+-- 2 · Textos
+RETURN
+    LEFT (
+        "Placar do 1º turno, " & _rec & ": Flávio Bolsonaro " & SWITCH ( TRUE (), ABS ( _fv ) >= 1000000, FORMAT ( _fv / 1000000, "0.00" ) & " mi", ABS ( _fv ) >= 1000, FORMAT ( _fv / 1000, "0.0" ) & " mil", FORMAT ( _fv, "#,0" ) ) & " (" & FORMAT ( _fp, "0.0%" ) & "), Lula "
+            & SWITCH ( TRUE (), ABS ( _lv ) >= 1000000, FORMAT ( _lv / 1000000, "0.00" ) & " mi", ABS ( _lv ) >= 1000, FORMAT ( _lv / 1000, "0.0" ) & " mil", FORMAT ( _lv, "#,0" ) ) & " (" & FORMAT ( _lp, "0.0%" ) & "). Diferença de " & FORMAT ( _dif, "#,0" ) & " votos.",
+        250
+    )

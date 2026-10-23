@@ -1,0 +1,237 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "T04_Quem_Html",
+  "position": {
+    "x": 150,
+    "y": 140,
+    "z": 300,
+    "height": 480,
+    "width": 1620,
+    "tabOrder": 100
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Casca · vazio"
+                }
+              },
+              "queryRef": "_Medidas.Casca · vazio",
+              "nativeQueryRef": "Casca · vazio"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.qe{color:var(--tinta)}.qe .rotc{position:absolute;left:0;top:22px}.qe h1{position:absolute;left:0;top:50px;width:560px;margin:0;font-size:48px;font-weight:700;letter-spacing:-.025em;line-height:1.06}.qe .cred{position:absolute;left:0;top:394px;width:540px}.qe .ret{position:absolute;left:610px;top:-6px;width:400px;height:476px;object-fit:contain;object-position:50% 100%}.qe .cena{position:absolute;left:1052px;top:26px;width:568px;transform:rotate(1.2deg);transform-origin:50% 0}.qe .cena .papel{background:var(--branco);padding:12px 12px 14px 12px;box-shadow:0 1px 0 var(--areia),3px 6px 14px rgba(28,25,21,.12)}.qe .cena img.ce{display:block;width:544px;height:363px;object-fit:cover;object-position:50% 40%;background:var(--papel)}.qe .cena .fita{position:absolute;left:236px;top:-20px;width:110px;transform:rotate(-4deg);opacity:.9}.qe .cena .leg{position:absolute;left:0;top:400px;width:568px;transform:rotate(-1.2deg);transform-origin:0 0}.qe .cena .leg .mao{font-size:26px;color:var(--tinta);line-height:1.1}.qe .cena .leg .nota{margin-top:4px}</style><div class=''tela qe''><div class=''rot rotc flavio-esc sobe''>FLÁVIO · PL · 22</div><h1 class=''sobe d1''>Flávio Bolsonaro</h1><img class=''ret entra d2'' alt=''Retrato de Flávio Bolsonaro em traço'' src=''https://vizudados.github.io/eleicoes-2026/midia/arte/retrato-flavio-azul_escuro.png''/><div class=''cena sobe d6''><div class=''papel''><img class=''ce'' alt=''Cena do comício em traço'' src=''https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-flavio-tinta.png'' data-reserva=''https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-flavio-tinta.png''/></div><img class=''fita'' alt='''' src=''https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png''/><div class=''leg''><div class=''mao''>Ato de 7 de Setembro de 2021, Av. Paulista, São Paulo</div><div class=''nota''>Desenho CC BY-SA 4.0 a partir de foto de Isac Nóbrega/PR (CC BY 2.0)</div></div></div><div class=''nota cred''>Retrato em traço a partir da foto oficial (Agência Senado)</div></div>{{content}}<script>(function(){try{var W=window,D=document;var f=function(i){if(i.__res){return;}i.__res=1;var t=function(){var r=i.getAttribute(''data-reserva'');if(r&&i.getAttribute(''src'')!==r){i.setAttribute(''src'',r);i.classList.add(''reserva'');}};if(i.complete&&i.naturalWidth===0){t();}else{i.addEventListener(''error'',t);}};var p=function(){var l=D.querySelectorAll(''img[data-reserva]'');for(var k=0;k<l.length;k++){f(l[k]);}};p();if(!W.__resObs&&W.MutationObserver){W.__resObs=1;new W.MutationObserver(p).observe(D.body,{childList:true,subtree:true});}}catch(x){}})();</script><script>(function(){''use strict'';try{var W=window,D=document;if(W.matchMedia&&W.matchMedia(''(prefers-reduced-motion: reduce)'').matches){return;}if(W.__mvAgenda){W.__mvAgenda();return;}var M={n:{},b:{},nb:-1,t0:0};var RX=/(\\d{1,3}(?:\\.\\d{3})+|\\d+)(?:,(\\d+))?/;var GX={uX:1,uCresceX:1,rkW:1},GY={uY:1,uCresceY:1,tcCol:1},GE={uEntra:1,uSobe:1,jAcende:1,tcIn:1,eTraco:1,eCor:1,eCorEsc:1,eEscala:1};var fmt=function(x,dec,grp){var t=Math.abs(x).toFixed(dec).split(''.''),i=t[0];if(grp){i=i.replace(/\\B(?=(\\d{3})+(?!\\d))/g,''.'');}return (x<0?''-'':'''')+(t.length>1?i+'',''+t[1]:i);};var processar=function(){var R=D.getElementById(''htmlContent'')||D.body;if(!R){return;}var agora=Date.now();if(!M.t0){M.t0=agora;}var entrada=(agora-M.t0)<1500;var tw=D.createTreeWalker(R,4,null),no,cs=[];while((no=tw.nextNode())){var v=no.nodeValue;if(!v||!/\\d/.test(v)){continue;}var p=no.parentNode;if(!p||p.nodeType!==1||(p.closest&&p.closest(''.nc,script,style,title''))){continue;}var m=RX.exec(v);if(!m){continue;}var resto=v.slice(0,m.index)+v.slice(m.index+m[0].length);if(/\\d/.test(resto)||resto.replace(/\\s+/g,'' '').trim().length>12){continue;}if(!m[2]&&m[1].length===4&&+m[1]>=1990&&+m[1]<=2100){continue;}if(/^[ºª°]/.test(v.slice(m.index+m[0].length))){continue;}var fs=parseFloat(W.getComputedStyle(p).fontSize)||0;if(fs<20){continue;}cs.push([no,m,v]);}var A=[],novo={};for(var i=0;i<cs.length;i++){var c=cs[i],mm=c[1],v0=c[2],val=parseFloat(mm[1].replace(/\\./g,'''')+''.''+(mm[2]||''0''));var k=i+''|''+v0.slice(0,mm.index)+''#''+v0.slice(mm.index+mm[0].length);var pv=M.n[k];novo[k]=val;var de=entrada?0:pv;if(de===undefined||de===val){continue;}A.push({t:c[0],a:v0.slice(0,mm.index),z:v0.slice(mm.index+mm[0].length),de:de,ate:val,dec:mm[2]?mm[2].length:0,grp:mm[1].indexOf(''.'')>=0,o:v0});}M.n=novo;if(A.length){for(var j=0;j<A.length;j++){var e=A[j];e.t.nodeValue=e.a+fmt(e.de,e.dec,e.grp)+e.z;}var dur=entrada?1000:700,ini=null;var passo=function(ts){if(ini===null){ini=ts;}var q=Math.min(1,(ts-ini)/dur),f=1-Math.pow(1-q,3);for(var j=0;j<A.length;j++){var e=A[j];e.t.nodeValue=q>=1?e.o:e.a+fmt(e.de+(e.ate-e.de)*f,e.dec,e.grp)+e.z;}if(q<1){W.requestAnimationFrame(passo);}};W.requestAnimationFrame(passo);}var els=R.getElementsByTagName(''*''),bs=[],fe=[];for(var b=0;b<els.length;b++){var el=els[b];if(!(el instanceof HTMLElement)){continue;}var an=W.getComputedStyle(el).animationName;if(!an||an===''none''){continue;}an=an.split('','')[0].trim();if(GX[an]){bs.push([el,0]);}else if(GY[an]){bs.push([el,1]);}else if(GE[an]){fe.push(el);}}var nb=bs.length,tam={},mv=[];for(var r=0;r<nb;r++){var x=bs[r][0],ax=bs[r][1],sz=ax?x.offsetHeight:x.offsetWidth,kk=r+(ax?''y'':''x'');tam[kk]=sz;if(entrada||M.nb!==nb){continue;}var ant=M.b[kk];if(ant===undefined||sz<=0){continue;}x.style.animation=''none'';if(Math.abs(ant-sz)<0.5){continue;}x.style.transition=''none'';x.style.transform=(ax?''scaleY('':''scaleX('')+Math.max(0,ant/sz).toFixed(4)+'')'';mv.push(x);}M.b=tam;M.nb=nb;if(!entrada){for(var f2=0;f2<fe.length;f2++){fe[f2].style.animation=''none'';}}if(mv.length){void R.offsetHeight;for(var g=0;g<mv.length;g++){mv[g].style.transition=''transform .7s cubic-bezier(.2,.7,.2,1)'';mv[g].style.transform='''';}}};var pend=0;var agenda=function(){if(pend){return;}pend=1;W.requestAnimationFrame(function(){pend=0;try{processar();}catch(x){}});};W.__mvAgenda=agenda;var entra=function(x){return x.nodeType===1&&(x.classList.contains(''htmlViewerEntry'')||(x.querySelector&&x.querySelector(''.htmlViewerEntry'')!==null));};if(W.MutationObserver){new W.MutationObserver(function(rs){for(var i=0;i<rs.length;i++){var ad=rs[i].addedNodes;for(var j=0;j<ad.length;j++){if(entra(ad[j])){agenda();return;}}}}).observe(D.body,{childList:true,subtree:true});}agenda();}catch(x){}})();</script>'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'T04_Quem_Html'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Flávio Bolsonaro: retrato em traço e cena de comício. Ato de 7 de Setembro de 2021, Av. Paulista, São Paulo.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

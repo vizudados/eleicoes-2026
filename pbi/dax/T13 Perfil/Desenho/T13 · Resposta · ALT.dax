@@ -1,0 +1,15 @@
+/*
+@pasta: T13 Perfil\Desenho
+@formato: texto
+@descricao: Texto alternativo da coluna da resposta.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+-- 1 · Leituras
+VAR _pv = [T13 · maior queda · variação]
+VAR _pp = [T13 · maior queda · porte]
+VAR _pq = [T13 · maior queda · quinto]
+VAR _mv = [T13 · menor queda · variação]
+-- 2 · Textos
+RETURN
+    "A margem de Lula caiu mais nas cidades " & _pp & " e " & _pq & ": " & FORMAT ( _pv * 100, "+0.0;−0.0;0.0" ) & " pontos. A menor queda: "
+        & FORMAT ( _mv * 100, "+0.0;−0.0;0.0" ) & " pontos."

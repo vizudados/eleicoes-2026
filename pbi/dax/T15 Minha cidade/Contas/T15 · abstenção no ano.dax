@@ -1,0 +1,7 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Eleitores que faltaram sobre os aptos no ano, no município.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+DIVIDE ( SUM ( 'Município ano'[Abstencoes] ), SUM ( 'Município ano'[Aptos] ) )

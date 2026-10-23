@@ -1,0 +1,15 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Legenda do mapa de pontos (como ler a cor e o tamanho).
+*/
+-- 1 · Leituras
+VAR _comUF = [T03 · com UF]
+-- 4 · Marcação
+RETURN
+    "<div class='tela lgm entra d6'>"
+        & "<span class='it'><i class='bol'></i>cada ponto é um município; o tamanho segue os votos de Lula</span>"
+        & "<span class='it'><i class='esc'></i>Lula à frente: quanto mais escuro, maior a margem</span>"
+        & "<span class='it'><i class='atr'></i>Flávio à frente</span>"
+        & "<span class='it dica'>passe o mouse num ponto para ver a cidade</span>"
+    & "</div>"

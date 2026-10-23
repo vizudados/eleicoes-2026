@@ -1,0 +1,64 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Dossiê do candidato da barra (ficha com clipe): onde foi mais forte e mais fraco no Brasil e em quantas UFs ficou em 1º. Só lê contas 'T01 · …'.
+*/
+-- 1 · Leituras
+VAR _nome = SELECTEDVALUE ( 'Candidato UF'[Candidato] )
+VAR _num = [T01 · número do candidato]
+VAR _par = [T01 · partido do candidato]
+VAR _pos = [T01 · posição do candidato]
+VAR _ufF = [T01 · UF mais forte do candidato]
+VAR _pF = [T01 · % na UF mais forte do candidato]
+VAR _ufR = [T01 · UF mais fraca do candidato]
+VAR _pR = [T01 · % na UF mais fraca do candidato]
+VAR _n1 = [T01 · UFs em 1º do candidato]
+VAR _comUF = [T01 · com UF]
+-- 2 · Textos
+VAR _cor = SWITCH ( _num, 22, "flavio", 13, "lula", "neutro" )
+VAR _ic = SWITCH ( _num, 22, "urna-azul", 13, "urna-vermelho", "urna-tinta" )
+VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtPar = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _par, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _num
+VAR _txtPF = FORMAT ( _pF, "0.0%" )
+VAR _txtPR = FORMAT ( _pR, "0.0%" )
+VAR _onde = IF ( _comUF = 1, _pos & "º lugar nesta UF", _pos & "º lugar no Brasil" )
+VAR _nota =
+    IF (
+        _n1 > 0,
+        "1º lugar em " & _n1 & IF ( _n1 = 1, " UF", " UFs" ),
+        _onde
+    )
+-- 4 · Marcação
+VAR _css =
+    "<style>"
+        & ".tt1{position:fixed;inset:0;background:var(--papel)}"
+        & ".tt1 .ficha{position:absolute;left:16px;top:18px;right:16px;bottom:16px;background:var(--branco);"
+        & "border:1.5px solid var(--areia);box-shadow:3px 4px 0 rgba(28,25,21,.08)}"
+        & ".tt1 .clipe{position:absolute;right:34px;top:-12px;width:34px;transform:rotate(8deg)}"
+        & ".tt1 .ic{position:absolute;left:22px;top:20px;width:46px}"
+        & ".tt1 .cab{position:absolute;left:82px;top:20px;right:70px}"
+        & ".tt1 .nm{font-size:24px;font-weight:700;line-height:1.1;letter-spacing:-.01em}"
+        & ".tt1 .pt{margin-top:6px}"
+        & ".tt1 .lin{position:absolute;left:22px;right:22px;display:flex;justify-content:space-between;"
+        & "align-items:baseline;border-top:1px dashed var(--areia);padding-top:12px}"
+        & ".tt1 .lin .rot{white-space:nowrap}.tt1 .lin .v{text-align:right;font-size:16px}"
+        & ".tt1 .lin .v b{font-size:24px;font-weight:700;margin-left:8px}"
+        & ".tt1 .l1{top:108px}.tt1 .l2{top:164px}"
+        & ".tt1 .mao{position:absolute;left:22px;bottom:12px;font-size:28px}"
+        & ".tt1 .neutro{color:var(--tinta)}"
+    & "</style>"
+VAR _html =
+    _css
+        & "<div class='tt1'><div class='ficha'>"
+        & "<img class='clipe' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/clipe-tinta.png'/>"
+        & "<img class='ic entra' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/" & _ic & ".png'/>"
+        & "<div class='cab sobe'><div class='nm " & _cor & "'>" & _txtNome & "</div>"
+        & "<div class='rot pt'>" & _txtPar & " · no Brasil</div></div>"
+        & "<div class='lin l1 sobe d2'><span class='rot'>Mais forte em</span>"
+        & "<span class='v'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _ufF, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "<b class='" & _cor & "'>" & _txtPF & "</b></span></div>"
+        & "<div class='lin l2 sobe d3'><span class='rot'>Mais fraco em</span>"
+        & "<span class='v'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _ufR, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "<b>" & _txtPR & "</b></span></div>"
+        & "<div class='mao " & _cor & " entra d5'>" & _nota & "</div>"
+        & "</div></div>"
+RETURN
+    IF ( NOT ISBLANK ( _nome ), _html )

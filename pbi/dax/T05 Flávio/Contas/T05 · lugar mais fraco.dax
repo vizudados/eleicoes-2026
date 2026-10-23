@@ -1,0 +1,20 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: texto
+@descricao: UF (no Brasil) ou município (numa UF) onde o candidato teve o fraco % dos válidos.
+@oraculo: paginas[5].uf_mais_fraca.nome
+*/
+VAR _ufs =
+    ADDCOLUMNS ( CALCULATETABLE ( VALUES ( 'UF'[Nome] ), 'UF'[Tipo] = "UF" ), "@p", [T05 · %] )
+VAR _mun =
+    ADDCOLUMNS (
+        FILTER ( VALUES ( 'Município'[Rótulo] ), [T05 · com UF] = 1 && [T05 · válidos (municípios)] > 0 ),
+        "@p", [T05 · % (municípios)]
+    )
+VAR _uf = [T05 · com UF] = 1
+RETURN
+    IF (
+        _uf,
+        MAXX ( TOPN ( 1, _mun, [@p], ASC, 'Município'[Rótulo], ASC ), 'Município'[Rótulo] ),
+        MAXX ( TOPN ( 1, _ufs, [@p], ASC, 'UF'[Nome], ASC ), 'UF'[Nome] )
+    )

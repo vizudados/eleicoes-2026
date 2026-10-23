@@ -1,0 +1,9 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0.0%
+@descricao: Parcela do candidato do item nos válidos de 2026 do recorte (0–1).
+*/
+DIVIDE (
+    [T01 · votos do candidato],
+    CALCULATE ( [T01 · válidos], REMOVEFILTERS ( 'Candidato UF'[Candidato] ) )
+)

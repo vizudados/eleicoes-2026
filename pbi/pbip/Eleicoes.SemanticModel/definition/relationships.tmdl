@@ -37,3 +37,7 @@ relationship c79d3ee8-dc64-5c0f-beeb-3c945bd73fba
 relationship 9a44cd5c-10f9-5635-8593-a0f9537b4765
 	fromColumn: 'Trends UF'.UF
 	toColumn: UF.UF
+
+relationship 5483d1e2-decd-5334-903b-9382c3b9fe3c
+	fromColumn: 'Município'.CodIBGE
+	toColumn: 'T19 Lado'.CodIBGE

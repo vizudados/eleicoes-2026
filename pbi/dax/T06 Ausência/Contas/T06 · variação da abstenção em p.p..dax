@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0.0
+@descricao: Variação da abstenção de 2006 para 2026, em pontos percentuais.
+@oraculo: +4,3
+*/
+( [T06 · abstenção %] - [T06 · abstenção % 2006] ) * 100

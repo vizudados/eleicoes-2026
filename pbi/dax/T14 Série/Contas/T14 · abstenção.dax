@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: Eleitores que faltaram sobre os aptos no ano do contexto (Brasil, sem o exterior).
+@gerado: pbi/scripts/desenho_t14.py
+*/
+DIVIDE ( SUM ( 'Comparecimento ano'[Abstencoes] ), SUM ( 'Comparecimento ano'[Aptos] ) )

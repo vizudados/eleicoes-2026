@@ -1,0 +1,10 @@
+/*
+@pasta: T21 20 anos\Contas
+@formato: 0.0%
+@descricao: Margem do PT no ano do contexto: (votos do PT − votos do adversário principal) ÷ válidos, somados no contexto (um município no ponto do mapa).
+@oraculo: mockup/data/eleicoes.json › 20 anos
+*/
+DIVIDE (
+    SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ),
+    SUM ( 'Município ano'[Validos] )
+)

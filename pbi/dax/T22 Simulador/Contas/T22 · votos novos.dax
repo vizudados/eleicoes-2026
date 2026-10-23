@@ -1,0 +1,6 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: #,0
+@descricao: Votos a mais (ou a menos) pela mudança no comparecimento: pontos × aptos de cada UF; no simulador, metade vai para cada candidato.
+*/
+SUMX ( VALUES ( 'UF'[UF] ), [T22 · mudança no comparecimento] * [T22 · aptos 2026] )

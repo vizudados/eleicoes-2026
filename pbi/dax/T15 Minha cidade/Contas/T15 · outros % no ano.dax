@@ -1,0 +1,7 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Votos dos demais candidatos sobre os válidos no ano, no município.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+DIVIDE ( SUM ( 'Município ano'[VotosDemais] ), SUM ( 'Município ano'[Validos] ) )

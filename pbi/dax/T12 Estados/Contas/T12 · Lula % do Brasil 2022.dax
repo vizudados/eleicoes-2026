@@ -1,0 +1,8 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0.0%
+@descricao: Lula sobre os válidos no Brasil em 2022, com o exterior.
+@oraculo: paginas[14] › anos › pt › pct
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE ( [T12 · Lula % 2022], REMOVEFILTERS ( 'UF' ) )

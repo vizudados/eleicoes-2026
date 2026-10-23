@@ -1,0 +1,8 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: 0.0%
+@descricao: Margem de Lula em 2026: (Lula − adversário) ÷ válidos. Tooltip e lista das maiores que viraram.
+@oraculo: mockup/data/eleicoes.json › paginas[11] › maiores_que_viraram › margem
+@gerado: pbi/scripts/desenho_t11.py
+*/
+DIVIDE ( [T11 · saldo 2026], [T11 · válidos 2026] )

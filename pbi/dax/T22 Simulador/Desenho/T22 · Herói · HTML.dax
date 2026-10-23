@@ -1,0 +1,23 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: A resposta da tela: quanto dos votos dos outros candidatos Lula precisaria para empatar (contador), a manchete e o aviso de que é simulação.
+*/
+-- 1 · Leituras
+VAR _emp = [T22 · empate sem abstenção]
+VAR _outros = [T22 · votos dos outros]
+VAR _dif = [T22 · diferença no 1º turno]
+-- 2 · Textos
+VAR _txtEmp = FORMAT ( _emp * 100, "0" )
+VAR _txtOutros = FORMAT ( _outros / 1000000, "0.00" ) & " mi"
+VAR _txtDif = FORMAT ( _dif / 1000000, "0.00" ) & " mi"
+-- 4 · Marcação
+RETURN
+    "<div class='tela t22h'>"
+        & "<div class='grande sobe'><span class='num'>" & _txtEmp & "</span>%</div>"
+        & "<div class='lado sobe d2'>dos <b>" & _txtOutros & "</b> de votos dos outros candidatos: o que Lula "
+            & "precisaria para empatar com Flávio</div>"
+        & "<div class='man sobe d3'>Flávio terminou o 1º turno <span class='num'>" & _txtDif
+            & "</span> à frente. Para empatar, Lula precisaria de " & _txtEmp & "% dos votos dos outros; metade "
+            & "não basta.</div>"
+    & "</div>"

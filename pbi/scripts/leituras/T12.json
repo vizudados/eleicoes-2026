@@ -1,0 +1,6 @@
+{"titulo": "Como cada estado se moveu?",
+ "blocos": [
+  ["Como ler", "Cada linha é um estado. O círculo vazado é onde Lula estava em 2022 e o cheio, onde ficou em 2026; a seta mostra para que lado o estado andou. À direita do zero, Lula à frente; à esquerda, o adversário. As linhas em azul claro mudaram de lado."],
+  ["De onde vêm os números", "Votos do 1º turno de 2022 e de 2026 por estado, do TSE; o exterior aparece como uma linha à parte e fica fora da contagem das 27 unidades."],
+  ["Para lembrar", "A margem é a diferença entre os votos de Lula e os do adversário, em pontos dos votos válidos. Passe o mouse numa linha para ver o dossiê do estado."]
+ ]}

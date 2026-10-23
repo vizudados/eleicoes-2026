@@ -1,0 +1,18 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê do candidato.
+*/
+-- 1 · Leituras
+VAR _nome = SELECTEDVALUE ( 'Candidato UF'[Candidato] )
+VAR _ufF = [T01 · UF mais forte do candidato]
+VAR _pF = [T01 · % na UF mais forte do candidato]
+VAR _ufR = [T01 · UF mais fraca do candidato]
+VAR _pR = [T01 · % na UF mais fraca do candidato]
+-- 2 · Textos
+RETURN
+    LEFT (
+        _nome & ": mais forte em " & _ufF & " (" & FORMAT ( _pF, "0.0%" ) & "), mais fraco em " & _ufR & " ("
+            & FORMAT ( _pR, "0.0%" ) & ").",
+        250
+    )

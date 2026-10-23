@@ -1,0 +1,6 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Sublinhado à mão sob 'não foram votar' (traço que se desenha). Desenho fixo.
+*/
+"<svg class='subl' viewBox='0 0 300 16' preserveAspectRatio='none' aria-hidden='true'><path pathLength='1' class='traco' style='animation-delay:1.1s' d='M3,10 C60,4 140,13 205,7 C240,4 270,6 297,9' fill='none' stroke='#1C1915' stroke-width='3' stroke-linecap='round'/></svg>"

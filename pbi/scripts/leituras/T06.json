@@ -1,0 +1,6 @@
+{"titulo": "Como ler a ausência",
+ "blocos": [
+  ["Como ler", "O número grande é quem não foi votar. A barra escura é esse total; a faixa listrada embaixo é a diferença entre os dois mais votados, e os cortes mostram quantas vezes ela cabe ali. À direita, o mapa (um ponto por município) e quem falta mais, por idade."],
+  ["De onde vêm os números", "TSE: comparecimento e abstenção do 1º turno de 2006 a 2026 e perfil do eleitor por idade (o TSE publica desde 2014, só para o Brasil). Com o filtro de UF, as contas somam os municípios da UF."],
+  ["Para lembrar", "Abstenção é quem estava apto a votar e não foi à urna. Somando brancos e nulos, chega-se a quem não escolheu nenhum candidato. O voto é facultativo aos 16 e 17 anos e acima dos 70."]
+ ]}

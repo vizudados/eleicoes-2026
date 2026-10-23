@@ -1,0 +1,6 @@
+{"titulo": "Como votou a minha cidade?",
+ "blocos": [
+  ["Como ler", "Escolha a cidade no campo Município, no alto da tela; tudo muda com ela. As barras mostram a margem do PT em cada eleição: para cima, o PT à frente; para baixo, o adversário. Passe o mouse num ano para ver a votação daquele ano."],
+  ["De onde vêm os números", "Votos do 1º turno de 2006 a 2026 na cidade, do TSE. População e renda por pessoa do Censo 2022, do IBGE. As cidades parecidas têm o mesmo porte e estão no mesmo quinto de renda, em todo o Brasil."],
+  ["Para lembrar", "Margem é a diferença entre os votos do PT e os do adversário, em pontos dos votos válidos. A posição entre as parecidas conta da maior queda para a menor: 1ª é a que mais caiu."]
+ ]}

@@ -1,0 +1,14 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: População (Censo 2022) da cidade grande mais forte.
+*/
+VAR _gr =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'Município'[Rótulo] ), 'Município'[População] >= 100000 ),
+        "@p", [T03 · % (municípios)],
+        "@pop", CALCULATE ( SUM ( 'Município'[População] ) )
+    )
+VAR _top = TOPN ( 1, _gr, [@p], DESC, 'Município'[Rótulo], ASC )
+RETURN
+    MAXX ( _top, [@pop] )

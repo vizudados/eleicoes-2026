@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0%
+@descricao: Margem do PT em 2022: (votos − votos do adversário) ÷ válidos (−1 a 1).
+*/
+DIVIDE ( [T03 · votos 2022 (municípios)] - [T03 · votos do adversário 2022 (municípios)], [T03 · válidos 2022 (municípios)] )

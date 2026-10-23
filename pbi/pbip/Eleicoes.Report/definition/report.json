@@ -77,6 +77,17 @@
       ]
     },
     {
+      "name": "STANDALONEdeneb7E15AEF80B9E4D4F8E12924291ECE89A",
+      "type": "CustomVisual",
+      "items": [
+        {
+          "name": "STANDALONEdeneb7E15AEF80B9E4D4F8E12924291ECE89A.pbiviz.json",
+          "path": "STANDALONEdeneb7E15AEF80B9E4D4F8E12924291ECE89A.pbiviz.json",
+          "type": "CustomVisualMetadata"
+        }
+      ]
+    },
+    {
       "name": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
       "type": "CustomVisual",
       "items": [

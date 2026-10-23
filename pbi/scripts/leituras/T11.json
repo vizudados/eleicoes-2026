@@ -1,0 +1,6 @@
+{"titulo": "Onde os votos mudaram de lado?",
+ "blocos": [
+  ["Como ler", "Cada ponto do mapa é um município. Os pontos claros mostram quem ficou à frente em 2026; os azuis fortes são as cidades que tinham Lula à frente em 2022 e passaram para Flávio. Passe o mouse num ponto para ver o dossiê da cidade."],
+  ["De onde vêm os números", "Votos do 1º turno de 2022 e de 2026 por município, do TSE, sem o exterior. Uma cidade virou quando Lula tinha mais votos que o adversário em 2022 e menos em 2026."],
+  ["Para lembrar", "Margem é a diferença entre os votos de Lula e os do adversário, em pontos dos votos válidos. O filtro de estado aproxima o mapa e refaz todas as contas da tela."]
+ ]}

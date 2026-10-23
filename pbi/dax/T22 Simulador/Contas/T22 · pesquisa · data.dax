@@ -1,0 +1,14 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: dd/MM/yyyy
+@descricao: Divulgação da última pesquisa do instituto em uso feita depois do 1º turno (04/10/2026) com o cruzamento por candidato; vazio sem pesquisa.
+@oraculo: dados/pbi/transferencia.csv
+*/
+IF (
+    NOT ISBLANK ( [T22 · pesquisa em uso] ),
+    CALCULATE (
+        MAX ( 'Transferência'[Divulgação] ),
+        'Transferência'[Segmento] IN { "Cury", "Renan", "Caiado", "outros", "Zema", "agregado_3via" },
+        'Transferência'[Divulgação] > DATE ( 2026, 10, 4 )
+    )
+)

@@ -1,0 +1,12 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0
+@descricao: Posição da UF entre as 27 pela queda da margem (1 = a que mais caiu). Exterior fica vazio.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+VAR _v = [T12 · variação]
+RETURN
+    IF (
+        NOT ISBLANK ( _v ) && SELECTEDVALUE ( 'UF'[Tipo] ) = "UF",
+        COUNTROWS ( FILTER ( ALL ( 'UF' ), 'UF'[Tipo] = "UF" && [T12 · variação] < _v ) ) + 1
+    )

@@ -1,0 +1,6 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: #,0
+@descricao: Eleitores aptos em 2026 no contexto (sem o exterior: o TSE não publica os aptos do exterior por município).
+*/
+CALCULATE ( SUM ( 'Município ano'[Aptos] ), 'Município ano'[Ano] = 2026 )

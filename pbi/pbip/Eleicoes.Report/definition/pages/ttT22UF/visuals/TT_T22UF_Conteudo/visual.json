@@ -1,0 +1,242 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "TT_T22UF_Conteudo",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 300,
+    "height": 250,
+    "width": 420,
+    "tabOrder": 300
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T22 · Tooltip UF · HTML"
+                }
+              },
+              "queryRef": "_Medidas.T22 · Tooltip UF · HTML",
+              "nativeQueryRef": "T22 · Tooltip UF · HTML"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.tt22{background:var(--branco);padding:24px 24px 14px 24px;border:1.5px solid var(--areia)}.tt22 .nm{font-size:22px;font-weight:700;padding-right:40px}.tt22 .rot{margin-top:12px;font-size:11px}.tt22 .duelo{margin-top:2px;display:flex;gap:22px;font-size:22px;font-weight:700}.tt22 .duelo.menor{font-size:16px;font-weight:600}.tt22 .pe{margin-top:12px;font-size:14px;line-height:1.4;color:var(--grafite);padding-right:6px}.tt22 .mao{position:absolute;right:20px;bottom:6px;font-size:25px;color:var(--vermelho-escuro);transform:rotate(-2deg)}.tt22c{position:fixed;right:16px;top:-8px;width:34px;z-index:2;pointer-events:none}</style>{{content}}<img class=''tt22c'' alt='''' src=''data:image/png;base64,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''/>'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'TT_T22UF_Conteudo'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T22 · Tooltip UF · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

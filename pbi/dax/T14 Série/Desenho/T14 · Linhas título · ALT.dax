@@ -1,0 +1,12 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Texto alternativo do título do gráfico.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _ma = [T14 · melhor ano do PT]
+VAR _pa = [T14 · pior ano do PT]
+-- 2 · Textos
+RETURN
+    "Linhas do PT e do adversário principal, de 2006 a 2026. Melhor ano do PT: " & _ma & "; pior: " & _pa & "."

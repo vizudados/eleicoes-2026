@@ -1,0 +1,25 @@
+/// Parâmetro do simulador (tela 22): % dos votos dos outros candidatos que não vão para ninguém, de 0 a 50 em passos de 5. Sem marca, a conta usa 0.
+table 'T22 Não votam'
+	lineageTag: d2e08333-704a-5d73-b05f-3246facd5e1c
+
+	/// Quantos % dos votos dos outros candidatos não vão para ninguém (branco, nulo ou falta).
+	column 'Não votam'
+		dataType: int64
+		formatString: 0
+		lineageTag: 4df244ce-12f1-5794-a98d-ef070174c210
+		summarizeBy: none
+		sourceColumn: Não votam
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T22 Não votam' = m
+		mode: import
+		source =
+				let
+				    Valores = List.Numbers(0, 11, 5),
+				    Tabela = Table.FromList(Valores, Splitter.SplitByNothing(), {"Não votam"}),
+				    Tipos = Table.TransformColumnTypes(Tabela, {{"Não votam", Int64.Type}})
+				in
+				    Tipos
+
+	annotation PBI_ResultType = Table

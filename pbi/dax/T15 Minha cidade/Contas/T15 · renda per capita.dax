@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Renda domiciliar per capita do município escolhido (Censo 2022, R$/mês).
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › renda_pc_txt = R$ 1.663
+@gerado: pbi/scripts/desenho_t15.py
+*/
+MAX ( 'Município'[Renda per capita] )

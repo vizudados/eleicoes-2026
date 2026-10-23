@@ -1,0 +1,7 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0.0%
+@descricao: Parte dos votos dos outros que Lula precisaria para empatar se todos votassem: 1/2 + diferença ÷ (2 × votos dos outros).
+@oraculo: mockup/data/eleicoes.json › Simulador › empate_fracao_lula (0,6194)
+*/
+0.5 + DIVIDE ( [T22 · diferença no 1º turno], 2 * [T22 · votos dos outros] )

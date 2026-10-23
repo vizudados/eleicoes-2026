@@ -1,0 +1,7 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: texto
+@descricao: Sigla da UF do município escolhido.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+SELECTEDVALUE ( 'Município'[UF] )

@@ -1,0 +1,6 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: 0
+@descricao: Posição cronológica do marco da linha (1 = o mais antigo).
+*/
+SELECTEDVALUE ( 'Trajetória'[Ordem] )

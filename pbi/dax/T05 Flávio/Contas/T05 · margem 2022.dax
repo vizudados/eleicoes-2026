@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0.0%
+@descricao: Margem do PL em 2022: (votos − votos do adversário) ÷ válidos (−1 a 1).
+*/
+DIVIDE ( [T05 · votos 2022 (municípios)] - [T05 · votos do adversário 2022 (municípios)], [T05 · válidos 2022 (municípios)] )

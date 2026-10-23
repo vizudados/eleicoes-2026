@@ -1,0 +1,8 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0.0%
+@descricao: Variação da margem de Lula de 2022 para 2026 (pontos percentuais em fração).
+@oraculo: mockup/data/eleicoes.json › paginas[12] › ufs › variacao (TO −13,4; DF +1,6)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+[T12 · margem 2026] - [T12 · margem 2022]

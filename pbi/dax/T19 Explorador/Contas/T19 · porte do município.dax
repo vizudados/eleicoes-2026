@@ -1,0 +1,7 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: texto
+@descricao: Faixa de população do município (até 10 mil … mais de 1 milhão).
+@oraculo: mockup/data/eleicoes.json › Explorador › porte
+*/
+SELECTEDVALUE ( 'Município'[Porte] )

@@ -1,0 +1,33 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Dossiê da UF no cenário (página de tooltip ttT22UF): Lula × Flávio no cenário, no 1º turno (só os dois) e o peso dos outros candidatos ali.
+*/
+-- 1 · Leituras
+VAR _nome = [T22 · UF · nome]
+VAR _lula = [T22 · cenário · Lula %]
+VAR _flavio = [T22 · cenário · Flávio %]
+VAR _lula1 = [T22 · Lula % no 1º turno]
+VAR _outros = [T22 · parte dos outros nos válidos]
+VAR _dif = [T22 · cenário · diferença]
+-- 2 · Textos
+VAR _quem = IF ( _dif > 0, "Lula à frente", IF ( _dif < 0, "Flávio à frente", "empate" ) )
+VAR _mudou = ( _lula - _lula1 ) * 100
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _nome ),
+        "<div class='tela tt22'>"
+            & "<div class='nm'>" & _nome & "</div>"
+            & "<div class='rot'>No cenário</div>"
+            & "<div class='duelo'><span class='lula'>Lula " & FORMAT ( _lula, "0.0%" ) & "</span>"
+            & "<span class='flavio'>Flávio " & FORMAT ( _flavio, "0.0%" ) & "</span></div>"
+            & "<div class='rot'>No 1º turno, só os dois</div>"
+            & "<div class='duelo menor'><span class='lula'>Lula " & FORMAT ( _lula1, "0.0%" ) & "</span>"
+            & "<span class='flavio'>Flávio " & FORMAT ( 1 - _lula1, "0.0%" ) & "</span></div>"
+            & "<div class='pe'>Os outros candidatos tiveram " & FORMAT ( _outros, "0.0%" ) & " dos votos aqui. No "
+            & "cenário, Lula " & IF ( _mudou < 0, "perde ", "ganha " ) & FORMAT ( ABS ( _mudou ), "0.0" )
+            & IF ( ROUND ( ABS ( _mudou ), 1 ) = 1, " ponto", " pontos" ) & " em relação ao 1º turno.</div>"
+            & "<div class='mao'>" & _quem & "</div>"
+        & "</div>"
+    )

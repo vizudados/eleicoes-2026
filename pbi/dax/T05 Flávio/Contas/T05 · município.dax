@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: texto
+@descricao: Nome (UF) do município da linha.
+*/
+SELECTEDVALUE ( 'Município'[Rótulo] )

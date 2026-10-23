@@ -1,0 +1,15 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: texto
+@descricao: As três cidades mais populosas da célula de menor queda.
+@oraculo: mockup/data/eleicoes.json › paginas[13] › celulas › exemplos
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _p = [T13 · menor queda · porte]
+VAR _q = [T13 · menor queda · quinto]
+RETURN
+    CALCULATE (
+        [T13 · exemplos],
+        'Município'[Porte] = _p,
+        'Município'[Quinto de renda] = _q
+    )

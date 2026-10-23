@@ -1,0 +1,7 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0.0
+@descricao: Diferença entre os percentuais de Flávio e Lula, em pontos percentuais, sem sinal.
+@oraculo: paginas[1].diferenca.pp_txt = 1,9 p.p.
+*/
+ABS ( [T01 · Flávio %] - [T01 · Lula %] ) * 100

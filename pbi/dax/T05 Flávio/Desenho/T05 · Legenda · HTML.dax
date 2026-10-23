@@ -1,0 +1,15 @@
+/*
+@pasta: T05 Flávio\Desenho
+@formato: texto
+@descricao: Legenda do mapa de pontos (como ler a cor e o tamanho).
+*/
+-- 1 · Leituras
+VAR _comUF = [T05 · com UF]
+-- 4 · Marcação
+RETURN
+    "<div class='tela lgm entra d6'>"
+        & "<span class='it'><i class='bol'></i>cada ponto é um município; o tamanho segue os votos de Flávio</span>"
+        & "<span class='it'><i class='esc'></i>Flávio à frente: quanto mais escuro, maior a margem</span>"
+        & "<span class='it'><i class='atr'></i>Lula à frente</span>"
+        & "<span class='it dica'>passe o mouse num ponto para ver a cidade</span>"
+    & "</div>"

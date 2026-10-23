@@ -1,0 +1,20 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: texto
+@descricao: UF (no Brasil) ou município (numa UF) onde o candidato teve o forte % dos válidos.
+@oraculo: paginas[5].ufs_mais_fortes[0].nome
+*/
+VAR _ufs =
+    ADDCOLUMNS ( CALCULATETABLE ( VALUES ( 'UF'[Nome] ), 'UF'[Tipo] = "UF" ), "@p", [T05 · %] )
+VAR _mun =
+    ADDCOLUMNS (
+        FILTER ( VALUES ( 'Município'[Rótulo] ), [T05 · com UF] = 1 && [T05 · válidos (municípios)] > 0 ),
+        "@p", [T05 · % (municípios)]
+    )
+VAR _uf = [T05 · com UF] = 1
+RETURN
+    IF (
+        _uf,
+        MAXX ( TOPN ( 1, _mun, [@p], DESC, 'Município'[Rótulo], ASC ), 'Município'[Rótulo] ),
+        MAXX ( TOPN ( 1, _ufs, [@p], DESC, 'UF'[Nome], ASC ), 'UF'[Nome] )
+    )

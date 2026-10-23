@@ -1,0 +1,17 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê do município.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _nome = [T11 · município · nome]
+VAR _uf = [T11 · município · UF]
+VAR _m22 = [T11 · margem 2022]
+VAR _m26 = [T11 · margem 2026]
+VAR _sit = [T11 · situação]
+-- 2 · Textos
+RETURN
+    _nome & " (" & _uf & "): margem de Lula de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " p.p. em 2022 para "
+        & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " p.p. em 2026"
+        & IF ( _sit = 2 || _sit = 3, "; virou.", "." )

@@ -1,0 +1,12 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Texto alternativo da série da cidade.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _cid = [T15 · cidade]
+-- 2 · Textos
+RETURN
+    "Barras da margem do PT em " & _cid & " em cada 1º turno de 2006 a 2026: para cima, PT à frente; para baixo, o "
+        & "adversário. Passe o mouse num ano para ver a votação daquele ano."

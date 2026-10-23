@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: 1 quando um local foi escolhido (no filtro do topo, no mapa ou na lista); 0 quando a ficha mostra o exemplo da história.
+*/
+IF ( ISFILTERED ( 'T20 Local'[Local] ) && HASONEVALUE ( 'T20 Local'[Local] ), 1, 0 )

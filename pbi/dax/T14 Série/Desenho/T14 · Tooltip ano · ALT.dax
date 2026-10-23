@@ -1,0 +1,12 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê da eleição.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _ano = [T14 · ano]
+VAR _pos = [T14 · posição do PT]
+-- 2 · Textos
+RETURN
+    "Eleição de " & _ano & ": o PT ficou em " & FORMAT ( _pos, "0" ) & "º lugar no 1º turno."

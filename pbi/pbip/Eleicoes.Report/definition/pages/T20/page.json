@@ -54,5 +54,52 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T20_Filtro_Escola",
+      "target": "T20_Mapa_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Filtro_Escola",
+      "target": "T20_Quedas_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Filtro_Escola",
+      "target": "T20_Resposta_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Mapa_Html",
+      "target": "T20_Filtro_Escola",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Mapa_Html",
+      "target": "T20_Quedas_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Mapa_Html",
+      "target": "T20_Resposta_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Quedas_Html",
+      "target": "T20_Filtro_Escola",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Quedas_Html",
+      "target": "T20_Mapa_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T20_Quedas_Html",
+      "target": "T20_Resposta_Html",
+      "type": "NoFilter"
+    }
+  ]
 }

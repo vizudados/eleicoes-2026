@@ -1,0 +1,11 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: #,0
+@descricao: Votos de Jair Bolsonaro (PL, 22) em 2022 no recorte de UF.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE (
+    SUM ( 'Candidato UF'[Votos] ),
+    'Candidato UF'[Ano] = 2022,
+    'Candidato UF'[Número] = 22
+)

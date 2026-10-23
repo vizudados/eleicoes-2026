@@ -1,0 +1,17 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: texto
+@descricao: Segunda região com mais municípios que trocaram de lado.
+@oraculo: mockup/data/eleicoes.json › paginas[11] › viraram_por_regiao[1] = Sul
+@gerado: pbi/scripts/desenho_t11.py
+*/
+VAR _r =
+    ADDCOLUMNS ( VALUES ( 'Município'[Região] ), "@n", [T11 · viraram] )
+VAR _top1 =
+    TOPN ( 1, _r, [@n], DESC, 'Município'[Região], ASC )
+VAR _top2 =
+    TOPN ( 2, _r, [@n], DESC, 'Município'[Região], ASC )
+VAR _seg =
+    EXCEPT ( _top2, _top1 )
+RETURN
+    IF ( MAXX ( _seg, [@n] ) > 0, MAXX ( _seg, 'Município'[Região] ) )

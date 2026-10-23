@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: #,0
+@descricao: População (Censo 2022) do município da linha.
+*/
+SUM ( 'Município'[População] )

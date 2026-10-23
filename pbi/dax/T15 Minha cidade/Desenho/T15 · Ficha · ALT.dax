@@ -1,0 +1,20 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Texto alternativo da ficha da cidade.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _ok = [T15 · cidade escolhida]
+VAR _cid = [T15 · cidade]
+VAR _l26 = [T15 · Lula % 2026]
+VAR _p26 = [T15 · PL % 2026]
+VAR _var = [T15 · variação]
+-- 2 · Textos
+RETURN
+    IF (
+        _ok = 1,
+        _cid & ": em 2026, Lula " & FORMAT ( _l26, "0.0%" ) & " e Flávio " & FORMAT ( _p26, "0.0%" ) & "; a margem de Lula variou "
+            & FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " pontos desde 2022.",
+        "Nenhuma cidade escolhida: use o filtro de município."
+    )

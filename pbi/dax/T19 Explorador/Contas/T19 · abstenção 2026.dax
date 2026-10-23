@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0.0%
+@descricao: Eleitores que faltaram ÷ aptos, 1º turno de 2026, no contexto.
+@oraculo: mockup/data/eleicoes.json › Explorador › abstencao26_txt
+*/
+DIVIDE (
+    CALCULATE ( SUM ( 'Município ano'[Abstencoes] ), 'Município ano'[Ano] = 2026 ),
+    CALCULATE ( SUM ( 'Município ano'[Aptos] ), 'Município ano'[Ano] = 2026 )
+)

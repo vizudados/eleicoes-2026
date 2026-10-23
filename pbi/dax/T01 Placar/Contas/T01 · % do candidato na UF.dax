@@ -1,0 +1,12 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0.0%
+@descricao: Parcela do candidato do item nos válidos de 2026 da UF da linha (0–1); vazio no exterior. Base das contas do dossiê.
+*/
+IF (
+    SELECTEDVALUE ( 'UF'[Tipo] ) = "UF",
+    DIVIDE (
+        [T01 · votos do candidato],
+        CALCULATE ( [T01 · votos do candidato], REMOVEFILTERS ( 'Candidato UF'[Candidato] ) )
+    )
+)

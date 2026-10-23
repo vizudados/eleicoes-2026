@@ -1,0 +1,220 @@
+/// Os 112 locais de votação de Contagem (MG) em 2026, com os votos de presidente (1º turno) de 2026, 2022 e 2018 do mesmo local e a posição no mapa da tela 20. Nome legível no lugar das maiúsculas do TSE; o mesmo prédio com dois números ganha o número no nome.
+table 'T20 Local'
+	lineageTag: f15c0fad-7fd0-5b66-9863-dba21bdbcd5b
+
+	/// Identificador do local (1…112).
+	column Id
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 02c7fd72-caf1-579d-ad4e-ae4e1e4d25d4
+		summarizeBy: none
+		sourceColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome do local de votação (escola), legível; único.
+	column Local
+		dataType: string
+		lineageTag: ad90088b-1eeb-5237-a97a-a0f4db40885a
+		summarizeBy: none
+		sourceColumn: Local
+		sortByColumn: Id
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome como o TSE escreve em 2026.
+	column 'Nome TSE'
+		dataType: string
+		isHidden
+		lineageTag: 0f1ccdde-aef4-5e22-a8c3-161cba92b7fe
+		summarizeBy: none
+		sourceColumn: Nome TSE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Bairro do local (cadastro do TSE de 2022).
+	column Bairro
+		dataType: string
+		lineageTag: bb2d7431-fe72-5157-9a81-05485c5c98e7
+		summarizeBy: none
+		sourceColumn: Bairro
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Endereço do local.
+	column 'Endereço'
+		dataType: string
+		isHidden
+		lineageTag: 1f1941a2-e9a9-55e7-ad4c-4c0a1448f9ed
+		summarizeBy: none
+		sourceColumn: Endereço
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Zona eleitoral.
+	column Zona
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5d17c77f-c15c-5d62-89bc-06c65b515e7c
+		summarizeBy: none
+		sourceColumn: Zona
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Número do local na zona.
+	column 'Número'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5b4a7d58-2730-5804-b8cd-e9358eeb5a68
+		summarizeBy: none
+		sourceColumn: Número
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Seções no local em 2026.
+	column 'Seções'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 337079f5-712f-518e-9b31-7a70690bb809
+		summarizeBy: none
+		sourceColumn: Seções
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do PT no local em 2026.
+	column VotosPT2026
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: d4ca79d2-a495-5d0d-85c2-729093b7f9e1
+		summarizeBy: none
+		sourceColumn: VotosPT2026
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do adversário principal no local em 2026.
+	column VotosAdv2026
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 766729d6-01d9-54bc-b194-6259e344041d
+		summarizeBy: none
+		sourceColumn: VotosAdv2026
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos no local em 2026.
+	column Validos2026
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: bd81e366-4e55-5aa3-b844-4015e4bcd69f
+		summarizeBy: none
+		sourceColumn: Validos2026
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do PT no local em 2022 (soma das seções do mesmo zona + número; vazio quando o local não existia).
+	column VotosPT2022
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 06eb5546-6add-5501-b617-becf62c1be18
+		summarizeBy: none
+		sourceColumn: VotosPT2022
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do adversário principal no local em 2022 (soma das seções do mesmo zona + número; vazio quando o local não existia).
+	column VotosAdv2022
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4fa8e1e5-f8f7-5a1c-a66d-ccfee415c697
+		summarizeBy: none
+		sourceColumn: VotosAdv2022
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos no local em 2022 (soma das seções do mesmo zona + número; vazio quando o local não existia).
+	column Validos2022
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4767f6cc-514f-51db-87fc-6925e2bf3640
+		summarizeBy: none
+		sourceColumn: Validos2022
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do PT no local em 2018 (soma das seções do mesmo zona + número; vazio quando o local não existia).
+	column VotosPT2018
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 72b64da0-6626-5bb7-86cb-5cc0443057dc
+		summarizeBy: none
+		sourceColumn: VotosPT2018
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos do adversário principal no local em 2018 (soma das seções do mesmo zona + número; vazio quando o local não existia).
+	column VotosAdv2018
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 63326dd4-2601-50d8-a072-37b514f1ca8f
+		summarizeBy: none
+		sourceColumn: VotosAdv2018
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos no local em 2018 (soma das seções do mesmo zona + número; vazio quando o local não existia).
+	column Validos2018
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 381da12b-5bee-5a4c-a7f1-3037e4504f81
+		summarizeBy: none
+		sourceColumn: Validos2018
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Posição horizontal no mapa da tela (% da largura).
+	column PX
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 78488db5-6f73-55cf-ae74-89f3dd5e6a3c
+		summarizeBy: none
+		sourceColumn: PX
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Posição vertical no mapa da tela (% da altura).
+	column PY
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 9e37990a-9f77-5fe7-b02c-e5424a0e66b9
+		summarizeBy: none
+		sourceColumn: PY
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T20 Local' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/t20_locais.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"id", "local", "nome_tse", "bairro", "endereco", "zona", "numero", "secoes", "pt_2026", "adv_2026", "validos_2026", "pt_2022", "adv_2022", "validos_2022", "pt_2018", "adv_2018", "validos_2018", "px", "py"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"id", Int64.Type}, {"local", type text}, {"nome_tse", type text}, {"bairro", type text}, {"endereco", type text}, {"zona", Int64.Type}, {"numero", Int64.Type}, {"secoes", Int64.Type}, {"pt_2026", Int64.Type}, {"adv_2026", Int64.Type}, {"validos_2026", Int64.Type}, {"pt_2022", Int64.Type}, {"adv_2022", Int64.Type}, {"validos_2022", Int64.Type}, {"pt_2018", Int64.Type}, {"adv_2018", Int64.Type}, {"validos_2018", Int64.Type}, {"px", type number}, {"py", type number}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"id", "Id"}, {"local", "Local"}, {"nome_tse", "Nome TSE"}, {"bairro", "Bairro"}, {"endereco", "Endereço"}, {"zona", "Zona"}, {"numero", "Número"}, {"secoes", "Seções"}, {"pt_2026", "VotosPT2026"}, {"adv_2026", "VotosAdv2026"}, {"validos_2026", "Validos2026"}, {"pt_2022", "VotosPT2022"}, {"adv_2022", "VotosAdv2022"}, {"validos_2022", "Validos2022"}, {"pt_2018", "VotosPT2018"}, {"adv_2018", "VotosAdv2018"}, {"validos_2018", "Validos2018"}, {"px", "PX"}, {"py", "PY"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

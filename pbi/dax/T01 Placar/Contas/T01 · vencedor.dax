@@ -1,0 +1,9 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: texto
+@descricao: Quem teve mais votos no recorte: Flávio, Lula ou empate.
+*/
+VAR _f = [T01 · Flávio votos]
+VAR _l = [T01 · Lula votos]
+RETURN
+    SWITCH ( TRUE (), _f > _l, "Flávio", _l > _f, "Lula", "empate" )

@@ -1,0 +1,69 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Bloco da resposta da tela 06: quantos não foram votar, a régua de quantas vezes a diferença entre os dois primeiros cabe nesse número e quem não escolheu ninguém. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _comUF = [T06 · com UF]
+VAR _recorte = [T06 · recorte]
+VAR _abst = [T06 · abstenções]
+VAR _pct = [T06 · abstenção %]
+VAR _aptos = [T06 · aptos]
+VAR _dif = [T06 · diferença Flávio Lula]
+VAR _vezes = [T06 · vezes a diferença]
+VAR _venc = [T06 · vencedor]
+VAR _nao = [T06 · não escolheram]
+VAR _naoP = [T06 · não escolheram %]
+-- 2 · Textos
+VAR _txtAbst = SWITCH ( TRUE (), ABS ( _abst ) >= 1000000, FORMAT ( _abst / 1000000, "0.0" ) & " mi", ABS ( _abst ) >= 1000, FORMAT ( _abst / 1000, "0.0" ) & " mil", FORMAT ( _abst, "#,0" ) )
+VAR _txtAptos = SWITCH ( TRUE (), ABS ( _aptos ) >= 1000000, FORMAT ( _aptos / 1000000, "0.0" ) & " mi", ABS ( _aptos ) >= 1000, FORMAT ( _aptos / 1000, "0.0" ) & " mil", FORMAT ( _aptos, "#,0" ) )
+VAR _txtDif = SWITCH ( TRUE (), ABS ( _dif ) >= 1000000, FORMAT ( _dif / 1000000, "0.00" ) & " mi", ABS ( _dif ) >= 1000, FORMAT ( _dif / 1000, "0.0" ) & " mil", FORMAT ( _dif, "#,0" ) )
+VAR _par = IF ( _venc = "Lula", "Lula e Flávio", "Flávio e Lula" )
+VAR _n = INT ( _vezes )
+VAR _txtVezes = IF ( _vezes >= 10, FORMAT ( _n, "0" ), FORMAT ( _vezes, "0.0" ) )
+VAR _manchete =
+    IF (
+        _vezes >= 1,
+        "É " & _txtVezes & " vezes a diferença entre " & _par,
+        "A diferença entre " & _par & " foi maior que o número de quem faltou"
+    )
+VAR _txtNota = IF ( _vezes >= 1, "cabe " & _txtVezes & " vezes", "não cabe nem uma vez" )
+VAR _rodape =
+    "Somando brancos e nulos, " & SWITCH ( TRUE (), ABS ( _nao ) >= 1000000, FORMAT ( _nao / 1000000, "0.0" ) & " mi", ABS ( _nao ) >= 1000, FORMAT ( _nao / 1000, "0.0" ) & " mil", FORMAT ( _nao, "#,0" ) ) & " (" & FORMAT ( _naoP, "0.0%" ) & " dos aptos) não escolheram ninguém."
+-- 3 · Geometria (régua de 760 px = quem faltou; a diferença é um pedaço dela)
+VAR _wDif = IF ( _vezes >= 1, MAX ( 3, DIVIDE ( 760, _vezes ) ), 760 ) -- geometria
+VAR _wAbst = IF ( _vezes >= 1, 760, MAX ( 3, 760 * _vezes ) ) -- geometria
+VAR _passo = SWITCH ( TRUE (), _n <= 40, 1, _n <= 200, 5, _n <= 1000, 25, 100 ) -- geometria
+VAR _cortes = GENERATESERIES ( _passo, MAX ( _n, _passo ), _passo ) /* lista */
+VAR _marcas =
+    CONCATENATEX (
+        FILTER ( _cortes, [Value] * _wDif < 758 && _vezes >= 1 ), /* lista */
+        VAR _x = FORMAT ( [Value] * _wDif, "0.0##", "en-US" ) -- geometria
+        RETURN
+            "<line x1='" & _x & "' y1='4' x2='" & _x & "' y2='40'/>",
+        "",
+        [Value], ASC
+    )
+VAR _txtW = FORMAT ( _wDif, "0.0##", "en-US" ) -- geometria
+VAR _txtWA = FORMAT ( _wAbst, "0.0##", "en-US" ) -- geometria
+VAR _clsNota = IF ( _vezes >= 1, "mao nota1", "mao nota1 baixa" )
+-- 4 · Marcação
+VAR _html =
+    "<div class='tela rp'>"
+        & "<div class='sob sobe'>Quem não foi votar · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='topo'><div class='big sobe d1'>" & _txtAbst & "</div>"
+        & "<div class='lado sobe d2'><div class='nfv'>não foram votar</div>" & [T06 · sublinhado · SVG]
+        & "<div class='txt'>" & FORMAT ( _pct, "0.0%" ) & " dos " & _txtAptos & " de eleitores aptos em 2026</div></div></div>"
+        & "<div class='man mc sobe d3'>" & _manchete & "</div>"
+        & "<div class='regua'>"
+        & "<div class='rot rt1 sobe d4'>Quem faltou · " & _txtAbst & "</div>"
+        & "<svg class='r1' width='760' height='44' viewBox='0 0 760 44'><rect class='cheia barra-x d5' x='0' y='4' width='" & _txtWA & "' height='36'/>"
+        & "<g class='cortes entra d9'>" & _marcas & "</g></svg>"
+        & "<div class='dif' style='width:" & _txtW & "px'><div class='barra-x d8'></div></div>"
+        & "<div class='rot rt2 sobe d8'>A diferença entre " & _par & " · " & _txtDif & "</div>"
+        & "<div class='" & _clsNota & " entra d12'>" & _txtNota & "</div>"
+        & "</div>"
+        & "<div class='txt pe sobe d10'>" & _rodape & "</div>"
+    & "</div>"
+RETURN
+    _html

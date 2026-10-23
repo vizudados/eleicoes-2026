@@ -1,0 +1,113 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Bloco da direita da tela 01: de 2022 para 2026, os votos do PT e do PL (duas linhas que se cruzam quando o mais votado muda). Só lê as contas 'T01 · …'; a escala é geometria.
+*/
+-- 1 · Leituras
+VAR _comUF = [T01 · com UF]
+VAR _recorte = [T01 · recorte]
+VAR _pt22 = [T01 · PT 2022 votos]
+VAR _pl22 = [T01 · PL 2022 votos]
+VAR _pt26 = [T01 · Lula votos]
+VAR _pl26 = [T01 · Flávio votos]
+VAR _ptp22 = [T01 · PT 2022 %]
+VAR _plp22 = [T01 · PL 2022 %]
+VAR _ptp26 = [T01 · Lula %]
+VAR _plp26 = [T01 · Flávio %]
+VAR _dPT = [T01 · PT variação]
+VAR _dPL = [T01 · PL variação]
+VAR _nPT22 = [T01 · PT 2022 candidato]
+VAR _nPL22 = [T01 · PL 2022 candidato]
+VAR _virou = [T01 · virou]
+VAR _encolheu = [T01 · distância encolheu]
+-- 2 · Textos
+VAR _txtDPT = IF ( _dPT < 0, "−", "+" ) & SWITCH ( TRUE (), ABS ( ABS ( _dPT ) ) >= 1000000, FORMAT ( ABS ( _dPT ) / 1000000, "0.00" ) & " mi", ABS ( ABS ( _dPT ) ) >= 1000, FORMAT ( ABS ( _dPT ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( _dPT ), "#,0" ) )
+VAR _txtDPL = IF ( _dPL < 0, "−", "+" ) & SWITCH ( TRUE (), ABS ( ABS ( _dPL ) ) >= 1000000, FORMAT ( ABS ( _dPL ) / 1000000, "0.00" ) & " mi", ABS ( ABS ( _dPL ) ) >= 1000, FORMAT ( ABS ( _dPL ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( _dPL ), "#,0" ) )
+VAR _verboPT = IF ( _dPT < 0, " perdeu ", " ganhou " )
+VAR _verboPL = IF ( _dPL < 0, " perdeu ", " ganhou " )
+VAR _manchete = "Lula" & _verboPT & SWITCH ( TRUE (), ABS ( ABS ( _dPT ) ) >= 1000000, FORMAT ( ABS ( _dPT ) / 1000000, "0.00" ) & " mi", ABS ( ABS ( _dPT ) ) >= 1000, FORMAT ( ABS ( _dPT ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( _dPT ), "#,0" ) ) & " de votos; o PL" & _verboPL & SWITCH ( TRUE (), ABS ( ABS ( _dPL ) ) >= 1000000, FORMAT ( ABS ( _dPL ) / 1000000, "0.00" ) & " mi", ABS ( ABS ( _dPL ) ) >= 1000, FORMAT ( ABS ( _dPL ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( _dPL ), "#,0" ) )
+VAR _txtPT22 = SWITCH ( TRUE (), ABS ( _pt22 ) >= 1000000, FORMAT ( _pt22 / 1000000, "0.00" ) & " mi", ABS ( _pt22 ) >= 1000, FORMAT ( _pt22 / 1000, "0.0" ) & " mil", FORMAT ( _pt22, "#,0" ) ) & " · " & FORMAT ( _ptp22, "0.0%" )
+VAR _txtPL22 = SWITCH ( TRUE (), ABS ( _pl22 ) >= 1000000, FORMAT ( _pl22 / 1000000, "0.00" ) & " mi", ABS ( _pl22 ) >= 1000, FORMAT ( _pl22 / 1000, "0.0" ) & " mil", FORMAT ( _pl22, "#,0" ) ) & " · " & FORMAT ( _plp22, "0.0%" )
+VAR _txtPT26 = SWITCH ( TRUE (), ABS ( _pt26 ) >= 1000000, FORMAT ( _pt26 / 1000000, "0.00" ) & " mi", ABS ( _pt26 ) >= 1000, FORMAT ( _pt26 / 1000, "0.0" ) & " mil", FORMAT ( _pt26, "#,0" ) ) & " · " & FORMAT ( _ptp26, "0.0%" )
+VAR _txtPL26 = SWITCH ( TRUE (), ABS ( _pl26 ) >= 1000000, FORMAT ( _pl26 / 1000000, "0.00" ) & " mi", ABS ( _pl26 ) >= 1000, FORMAT ( _pl26 / 1000, "0.0" ) & " mil", FORMAT ( _pl26, "#,0" ) ) & " · " & FORMAT ( _plp26, "0.0%" )
+VAR _nomePT22 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nPT22, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _nomePL22 = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nPL22, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _nota =
+    SWITCH ( TRUE (), _virou = 1, "as linhas se cruzaram", _encolheu = 1, "a distância encolheu", "a distância cresceu" )
+VAR _rodape =
+    IF ( _comUF = 1, "Votos válidos · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ".", "Votos válidos, com o exterior." )
+        & " Em 2022, o PL concorreu com " & _nomePL22 & "."
+-- 3 · Geometria (eixos em x 175 e 545; votos de cima para baixo em y 40–520 do gráfico)
+VAR _max = MAX ( MAX ( _pt22, _pl22 ), MAX ( _pt26, _pl26 ) ) -- geometria
+VAR _min = MIN ( MIN ( _pt22, _pl22 ), MIN ( _pt26, _pl26 ) ) -- geometria
+VAR _folga = MAX ( ( _max - _min ) * 0.18, _max * 0.02 ) -- geometria
+VAR _topo = _max + _folga -- geometria
+VAR _esc = DIVIDE ( 480, _topo - ( _min - _folga ) ) -- geometria
+VAR _yPT22 = 40 + ( _topo - _pt22 ) * _esc -- geometria
+VAR _yPL22 = 40 + ( _topo - _pl22 ) * _esc -- geometria
+VAR _yPT26 = 40 + ( _topo - _pt26 ) * _esc -- geometria
+VAR _yPL26 = 40 + ( _topo - _pl26 ) * _esc -- geometria
+-- rótulos: centros a 56 px no mínimo em cada eixo; o rótulo (2 linhas) sobe 21 px
+VAR _m22 = ( _yPT22 + _yPL22 ) / 2 -- geometria
+VAR _s22 = MAX ( ABS ( _yPT22 - _yPL22 ), 56 ) / 2 * IF ( _yPT22 <= _yPL22, -1, 1 ) -- geometria
+VAR _m26 = ( _yPT26 + _yPL26 ) / 2 -- geometria
+VAR _s26 = MAX ( ABS ( _yPT26 - _yPL26 ), 56 ) / 2 * IF ( _yPT26 <= _yPL26, -1, 1 ) -- geometria
+VAR _lPT22 = FORMAT ( _m22 + _s22 - 21, "0.0##", "en-US" ) -- geometria
+VAR _lPL22 = FORMAT ( _m22 - _s22 - 21, "0.0##", "en-US" ) -- geometria
+VAR _lPT26 = FORMAT ( _m26 + _s26 - 21, "0.0##", "en-US" ) -- geometria
+VAR _lPL26 = FORMAT ( _m26 - _s26 - 21, "0.0##", "en-US" ) -- geometria
+-- a nota à mão fica embaixo (y 548), com uma seta curva até o cruzamento (ou até o vão de 2026)
+VAR _t = DIVIDE ( _yPT22 - _yPL22, ( _yPT22 - _yPL22 ) - ( _yPT26 - _yPL26 ), 0.5 ) -- geometria
+VAR _xAlvo = IF ( _virou = 1, 175 + 370 * _t, 533 ) -- geometria
+VAR _yAlvo = IF ( _virou = 1, _yPT22 + ( _yPT26 - _yPT22 ) * _t + 14, ( _yPT26 + _yPL26 ) / 2 ) -- geometria
+VAR _seta =
+    "M452,548 C" & FORMAT ( ( 452 + _xAlvo ) / 2 + 30, "0.0##", "en-US" ) & ",548 " & FORMAT ( _xAlvo + 6, "0.0##", "en-US" ) & ","
+        & FORMAT ( ( 548 + _yAlvo ) / 2 + 30, "0.0##", "en-US" ) & " " & FORMAT ( _xAlvo, "0.0##", "en-US" ) & "," & FORMAT ( _yAlvo + 6, "0.0##", "en-US" ) -- geometria
+VAR _ponta =
+    "M" & FORMAT ( _xAlvo - 8, "0.0##", "en-US" ) & "," & FORMAT ( _yAlvo + 18, "0.0##", "en-US" ) & " L" & FORMAT ( _xAlvo, "0.0##", "en-US" ) & "," & FORMAT ( _yAlvo + 6, "0.0##", "en-US" )
+        & " L" & FORMAT ( _xAlvo + 9, "0.0##", "en-US" ) & "," & FORMAT ( _yAlvo + 16, "0.0##", "en-US" ) -- geometria
+-- deltas a 30% de cada linha (longe do cruzamento), por fora do par
+VAR _mPT = _yPT22 + ( _yPT26 - _yPT22 ) * 0.3 -- geometria
+VAR _mPL = _yPL22 + ( _yPL26 - _yPL22 ) * 0.3 -- geometria
+VAR _inclPT = ABS ( _yPT26 - _yPT22 ) / 370 * 75 -- geometria
+VAR _inclPL = ABS ( _yPL26 - _yPL22 ) / 370 * 75 -- geometria
+VAR _yDPT = FORMAT ( _mPT + IF ( _mPT <= _mPL, -38 - _inclPT, 10 + _inclPT ), "0.0##", "en-US" ) -- geometria
+VAR _yDPL = FORMAT ( _mPL + IF ( _mPL < _mPT, -38 - _inclPL, 10 + _inclPL ), "0.0##", "en-US" ) -- geometria
+VAR _cPT22 = FORMAT ( _yPT22, "0.0##", "en-US" ) -- geometria
+VAR _cPL22 = FORMAT ( _yPL22, "0.0##", "en-US" ) -- geometria
+VAR _cPT26 = FORMAT ( _yPT26, "0.0##", "en-US" ) -- geometria
+VAR _cPL26 = FORMAT ( _yPL26, "0.0##", "en-US" ) -- geometria
+-- 4 · Marcação
+VAR _ponto = "' r='9' class='brota d6'/>"
+VAR _svg =
+    "<svg class='sl' width='720' height='600' viewBox='0 0 720 600'>" & [T01 · rabisco · SVG]
+        & "<line x1='175' y1='10' x2='175' y2='590' class='eixo'/>"
+        & "<line x1='545' y1='10' x2='545' y2='590' class='eixo'/>"
+        & "<path pathLength='1' class='lpl traco d3' filter='url(#rb)' d='M175," & _cPL22 & " L545," & _cPL26 & "'/>"
+        & "<path pathLength='1' class='lpt traco d3' filter='url(#rb)' d='M175," & _cPT22 & " L545," & _cPT26 & "'/>"
+        & "<circle cx='175' cy='" & _cPL22 & "' fill='#2B5797" & _ponto
+        & "<circle cx='175' cy='" & _cPT22 & "' fill='#B8322A" & _ponto
+        & "<circle cx='545' cy='" & _cPL26 & "' fill='#2B5797" & _ponto
+        & "<circle cx='545' cy='" & _cPT26 & "' fill='#B8322A" & _ponto
+        & "<path pathLength='1' class='seta traco d14' filter='url(#rb)' d='" & _seta & "'/>"
+        & "<path pathLength='1' class='seta traco-rapido d16' d='" & _ponta & "'/>"
+    & "</svg>"
+VAR _rotulos =
+    "<div class='rs e sobe d7' style='top:" & _lPT22 & "px'><b class='lula-esc'>" & _nomePT22 & "</b>" & _txtPT22 & "</div>"
+        & "<div class='rs e sobe d7' style='top:" & _lPL22 & "px'><b class='flavio-esc'>" & _nomePL22 & "</b>" & _txtPL22 & "</div>"
+        & "<div class='rs d sobe d9' style='top:" & _lPT26 & "px'><b class='lula-esc'>Lula</b>" & _txtPT26 & "</div>"
+        & "<div class='rs d sobe d9' style='top:" & _lPL26 & "px'><b class='flavio-esc'>Flávio Bolsonaro</b>" & _txtPL26 & "</div>"
+        & "<div class='dl lula-esc sobe d8' style='top:" & _yDPT & "px'>" & _txtDPT & "</div>"
+        & "<div class='dl flavio-esc sobe d8' style='top:" & _yDPL & "px'>" & _txtDPL & "</div>"
+        & "<div class='mao anot entra d12'>" & _nota & "</div>"
+VAR _html =
+    "<div class='tela t1v'>"
+        & "<div class='sob sobe'>De 2022 para 2026 · votos no 1º turno</div>"
+        & "<div class='man sobe d1'>" & _manchete & "</div>"
+        & "<div class='grafico'>" & _svg & _rotulos
+            & "<div class='ano a1'>2022</div><div class='ano a2'>2026</div>"
+        & "</div>"
+        & "<div class='nota pe'>" & _rodape & "</div>"
+    & "</div>"
+RETURN
+    _html

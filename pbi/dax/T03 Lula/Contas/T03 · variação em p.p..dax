@@ -1,0 +1,7 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0
+@descricao: Variação do % do PT de 2022 para 2026, em pontos percentuais.
+@oraculo: paginas[3].comparacao_2022.variacao_pp_txt
+*/
+( [T03 · %] - [T03 · % 2022] ) * 100

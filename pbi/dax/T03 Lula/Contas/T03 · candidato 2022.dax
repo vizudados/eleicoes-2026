@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: texto
+@descricao: Nome de urna do candidato do PT em 2022.
+*/
+CALCULATE ( SELECTEDVALUE ( 'Candidato UF'[Candidato] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2022, 'Candidato UF'[Número] = 13 )

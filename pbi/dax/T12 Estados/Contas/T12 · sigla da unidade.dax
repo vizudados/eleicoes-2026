@@ -1,0 +1,9 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: Sigla da UF da linha (EX para o exterior).
+@gerado: pbi/scripts/desenho_t12.py
+*/
+VAR _s = SELECTEDVALUE ( 'UF'[UF] )
+RETURN
+    IF ( _s = "ZZ", "EX", _s )

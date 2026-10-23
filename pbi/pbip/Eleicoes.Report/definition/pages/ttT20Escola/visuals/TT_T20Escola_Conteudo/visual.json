@@ -1,0 +1,242 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "TT_T20Escola_Conteudo",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 300,
+    "height": 270,
+    "width": 420,
+    "tabOrder": 300
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T20 · Tooltip escola · HTML"
+                }
+              },
+              "queryRef": "_Medidas.T20 · Tooltip escola · HTML",
+              "nativeQueryRef": "T20 · Tooltip escola · HTML"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.tt20{background:var(--branco);padding:30px 24px 14px 24px;border:1.5px solid var(--areia)}.tt20 .nm{font-size:20px;font-weight:700;line-height:1.2;padding-right:56px}.tt20 .sub{margin-top:5px;font-size:14px;color:var(--grafite)}.tt20 .duelo{margin-top:12px;display:flex;gap:22px;font-size:22px;font-weight:700}.tt20 .rot{margin-top:14px;font-size:11px}.tt20 .serie{margin-top:4px;font-size:19px;font-weight:600}.tt20 .serie i{font-style:normal;color:var(--cinza);margin:0 4px}.tt20 .selo{position:absolute;right:20px;top:112px;transform:rotate(7deg);border:2.5px solid var(--tinta);outline:1px solid var(--tinta);outline-offset:2px;padding:3px 9px;font-weight:700;font-size:13px;letter-spacing:.16em;text-transform:uppercase}.tt20 .mao{position:absolute;right:22px;bottom:8px;font-size:25px;color:var(--vermelho-escuro);transform:rotate(-2deg)}.tt20a{position:fixed;right:34px;top:-6px;width:40px;z-index:2;pointer-events:none}</style>{{content}}<img class=''tt20a'' alt='''' src=''data:image/png;base64,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''/>'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'TT_T20Escola_Conteudo'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T20 · Tooltip escola · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

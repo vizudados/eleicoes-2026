@@ -1,0 +1,7 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: Municípios do recorte com votos válidos em 2026.
+@oraculo: 5.571
+*/
+COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T03 · válidos (municípios)] > 0 ) )

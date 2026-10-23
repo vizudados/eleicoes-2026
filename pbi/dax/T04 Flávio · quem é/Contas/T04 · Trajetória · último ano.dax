@@ -1,0 +1,7 @@
+/*
+@pasta: T04 Flávio · quem é\Contas
+@formato: 0
+@descricao: Ano do último marco de Flávio.
+@oraculo: 2026
+*/
+CALCULATE ( MAX ( 'Trajetória'[Ano] ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Flávio" )

@@ -1,0 +1,24 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: texto
+@descricao: Nomes dos candidatos do 5º lugar em diante, do mais ao menos votado ('A, B e C').
+@oraculo: paginas[1].demais.nomes
+*/
+VAR _lista =
+    FILTER (
+        ADDCOLUMNS (
+            CALCULATETABLE ( VALUES ( 'Candidato UF'[Candidato] ), 'Candidato UF'[Ano] = 2026 ),
+            "@v", [T01 · votos do candidato],
+            "@p", [T01 · posição do candidato]
+        ),
+        [@p] >= 5 && [@v] > 0
+    )
+VAR _n = COUNTROWS ( _lista )
+VAR _ord = ADDCOLUMNS ( _lista, "@r", RANKX ( _lista, [@v], , DESC, DENSE ) )
+RETURN
+    CONCATENATEX (
+        _ord,
+        'Candidato UF'[Candidato] & SWITCH ( TRUE (), [@r] = _n, "", [@r] = _n - 1, " e ", ", " ),
+        "",
+        [@v], DESC
+    )

@@ -1,0 +1,7 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0.0%
+@descricao: Parcela do PT nos válidos de 2022 do recorte (0–1).
+@oraculo: paginas[3].comparacao_2022.pct_2022_txt
+*/
+DIVIDE ( [T03 · votos 2022], [T03 · válidos 2022] )

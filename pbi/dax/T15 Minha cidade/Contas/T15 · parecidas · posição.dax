@@ -1,0 +1,22 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0
+@descricao: Posição da cidade entre as parecidas pela queda da margem (1 = a maior queda).
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › entre_parecidas › posicao = 45
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _p = SELECTEDVALUE ( 'Município'[Porte] )
+VAR _q = SELECTEDVALUE ( 'Município'[Quinto de renda] )
+VAR _t =
+    CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( 'Município'[CodIBGE] ), "@d", [T15 · variação] ),
+        REMOVEFILTERS ( 'Município' ),
+        REMOVEFILTERS ( 'UF' ),
+        'Município'[Porte] = _p,
+        'Município'[Quinto de renda] = _q
+    )
+VAR _ok =
+    FILTER ( _t, NOT ISBLANK ( [@d] ) )
+VAR _d = [T15 · variação]
+RETURN
+    IF ( NOT ISBLANK ( _d ) && NOT ISBLANK ( _p ), COUNTROWS ( FILTER ( _ok, [@d] < _d ) ) + 1 )

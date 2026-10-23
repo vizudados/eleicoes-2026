@@ -1,0 +1,6 @@
+/*
+@pasta: T04 Flávio · quem é\Contas
+@formato: 0
+@descricao: Ano do marco da linha.
+*/
+SELECTEDVALUE ( 'Trajetória'[Ano] )

@@ -1,0 +1,7 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: texto
+@descricao: Porte do município do contexto (faixa de população).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+SELECTEDVALUE ( 'Município'[Porte] )

@@ -1,0 +1,301 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "TT_T02Marco_Conteudo",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 300,
+    "height": 400,
+    "width": 640,
+    "tabOrder": 300
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T02 · Tooltip marco · HTML"
+                }
+              },
+              "queryRef": "_Medidas.T02 · Tooltip marco · HTML",
+              "nativeQueryRef": "T02 · Tooltip marco · HTML"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.tt2{position:fixed;inset:0;background:var(--papel);overflow:hidden}.tt2 .pol{position:absolute;left:26px;top:40px;width:250px;height:330px;background:var(--branco);transform:rotate(-2.5deg);box-shadow:0 1px 0 var(--areia),3px 6px 14px rgba(28,25,21,.14)}.tt2 .pol .foto{position:absolute;left:13px;top:13px;width:224px;height:280px;object-fit:cover;object-position:50% 30%;background:var(--papel)}.tt2 .pol .foto.reserva{object-fit:contain;padding:60px 46px 110px 46px}.tt2 .pol .sem{position:absolute;left:24px;right:24px;top:196px;text-align:center;font-size:26px;color:var(--grafite);line-height:1.05}.tt2 .pol .ano{position:absolute;left:0;right:0;bottom:4px;text-align:center;font-size:28px;color:var(--tinta)}.tt2 .pol .fita{position:absolute;left:70px;top:-18px;width:110px;transform:rotate(3deg);opacity:.92}.tt2 .col{position:absolute;left:304px;top:30px;width:310px}.tt2 .col .man{margin-top:6px;font-size:22px;line-height:1.2}.tt2 .col .txt{margin-top:10px;font-size:15px;line-height:1.42;color:var(--tinta)}.tt2 .col .pe{margin-top:12px;border-top:1px dashed var(--areia);padding-top:8px}.tt2 .col .nota{font-size:13px;line-height:1.35}.tt2 .col .lg{color:var(--grafite)}.tt2 .col .cr{margin-top:4px}</style>{{content}}<script>(function(){try{var W=window,D=document;var f=function(i){if(i.__res){return;}i.__res=1;var t=function(){var r=i.getAttribute(''data-reserva'');if(r&&i.getAttribute(''src'')!==r){i.setAttribute(''src'',r);i.classList.add(''reserva'');}};if(i.complete&&i.naturalWidth===0){t();}else{i.addEventListener(''error'',t);}};var p=function(){var l=D.querySelectorAll(''img[data-reserva]'');for(var k=0;k<l.length;k++){f(l[k]);}};p();if(!W.__resObs&&W.MutationObserver){W.__resObs=1;new W.MutationObserver(p).observe(D.body,{childList:true,subtree:true});}}catch(x){}})();</script>'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'TT_T02Marco_Conteudo'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T02 · Tooltip marco · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "trajLula",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "Trajetória"
+              }
+            },
+            "Property": "Candidato"
+          }
+        },
+        "type": "Categorical",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "t",
+              "Entity": "Trajetória",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "In": {
+                  "Expressions": [
+                    {
+                      "Column": {
+                        "Expression": {
+                          "SourceRef": {
+                            "Source": "t"
+                          }
+                        },
+                        "Property": "Candidato"
+                      }
+                    }
+                  ],
+                  "Values": [
+                    [
+                      {
+                        "Literal": {
+                          "Value": "'Lula'"
+                        }
+                      }
+                    ]
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "isHiddenInViewMode": true,
+        "isLockedInViewMode": true
+      }
+    ]
+  }
+}

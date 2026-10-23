@@ -1,0 +1,75 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Coluna 'As maiores que viraram': até 6 municípios que trocaram de lado, por população, com a margem 2022 → 2026 num mini gráfico. Monta a lista com VALUES do município e lê as contas de cada um.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _vir = [T11 · viraram]
+VAR _lista =
+    ADDCOLUMNS ( VALUES ( 'Município'[CodIBGE] ), "@s", [T11 · situação] )
+VAR _viradas =
+    FILTER ( _lista, [@s] = 2 || [@s] = 3 ) /* lista */
+VAR _top =
+    TOPN (
+        6,
+        ADDCOLUMNS (
+            _viradas,
+            "@pop", [T11 · população],
+            "@nome", [T11 · município · nome],
+            "@uf", [T11 · município · UF],
+            "@m22", [T11 · margem 2022],
+            "@m26", [T11 · margem 2026]
+        ),
+        [@pop], DESC,
+        'Município'[CodIBGE], ASC
+    )
+-- 3 · Geometria (mini gráfico de 300 px: zero no meio; escala pelo maior afastamento da lista)
+VAR _esc =
+    MAX ( 0.05, MAXX ( _top, MAX ( ABS ( [@m22] ), ABS ( [@m26] ) ) ) ) /* geometria */
+VAR _linhas =
+    ADDCOLUMNS (
+        _top,
+        "@pos", RANKX ( _top, [@pop], , DESC, Dense ) /* geometria */,
+        "@x22", 150 + 132 * [@m22] / _esc,
+        "@x26", 150 + 132 * [@m26] / _esc
+    )
+-- 2 · Textos e 4 · Marcação
+VAR _itens =
+    CONCATENATEX (
+        _linhas,
+        VAR _y = 96 + ( [@pos] - 1 ) * 104
+        VAR _cor = IF ( [@m26] < 0, "var(--azul)", "var(--vermelho)" )
+        VAR _nome =
+            SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+        RETURN
+            "<div class='it sobe d" & ( [@pos] + 1 ) & "' style='top:" & _y & "px'>"
+                & "<span class='pos mao'>" & [@pos] & "</span>"
+                & "<div class='nm'>" & _nome & " <span class='uf'>" & [@uf] & "</span></div>"
+                & "<div class='nota'>" & FORMAT ( [@pop], "#,0" ) & " habitantes</div>"
+                & "<svg class='db' width='300' height='22' viewBox='0 0 300 22'>"
+                    & "<line x1='150' x2='150' y1='1' y2='21' class='zero'/>"
+                    & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 700 + [@pos] * 90 )
+                        & "ms' x1='" & FORMAT ( [@x22], "0.0", "en-US" ) & "' x2='" & FORMAT ( [@x26], "0.0", "en-US" )
+                        & "' y1='11' y2='11'/>"
+                    & "<circle cx='" & FORMAT ( [@x22], "0.0", "en-US" ) & "' cy='11' r='5' class='m22'/>"
+                    & "<circle class='brota' style='animation-delay:" & ( 1100 + [@pos] * 90 ) & "ms' cx='"
+                        & FORMAT ( [@x26], "0.0", "en-US" ) & "' cy='11' r='6' fill='" & _cor & "'/>"
+                & "</svg>"
+                & "<div class='mg'>" & FORMAT ( [@m22] * 100, "+0.0;−0.0;0.0" ) & " → "
+                    & FORMAT ( [@m26] * 100, "+0.0;−0.0;0.0" ) & " p.p.</div>"
+            & "</div>",
+        "",
+        [@pos], ASC
+    )
+VAR _vazio =
+    "<div class='vz txt entra d2'>Nenhum município trocou de lado neste recorte.</div>"
+RETURN
+    "<div class='tela t11m'>"
+        & "<div class='rot entra'>AS MAIORES QUE VIRARAM</div>"
+        & "<div class='txt sub entra d1'>Pela população; o traço vai da margem de 2022 à de 2026</div>"
+        & IF ( _vir = 0, _vazio, _itens )
+        & "<div class='pe nota entra d10'><b>Margem</b> é a diferença entre os votos de Lula e os do adversário, "
+            & "em pontos percentuais dos votos válidos. À direita do traço do meio, Lula à frente; à esquerda, o "
+            & "adversário.</div>"
+    & "</div>"

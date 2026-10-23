@@ -1,0 +1,12 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0.0%
+@descricao: Entre as últimas pesquisas de cada instituto, a que dá a Lula a maior parte dos eleitores dos outros que votam. Ignora a pesquisa em uso.
+*/
+CALCULATE (
+    MAXX (
+        FILTER ( VALUES ( 'Transferência'[Instituto] ), NOT ISBLANK ( [T22 · pesquisa · data] ) ),
+        [T22 · pesquisa · parte para Lula entre os que votam]
+    ),
+    REMOVEFILTERS ( 'Transferência'[Instituto] )
+)

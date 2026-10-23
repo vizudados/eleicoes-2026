@@ -1,0 +1,8 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0.0%
+@descricao: Margem de Lula no Brasil em 2022, com o exterior (ignora a UF).
+@oraculo: paginas[14] › anos (PT − adversário)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE ( [T12 · margem 2022], REMOVEFILTERS ( 'UF' ) )

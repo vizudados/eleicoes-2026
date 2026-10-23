@@ -1,0 +1,10 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: 0
+@descricao: Quantas regiões têm ao menos um município que trocou de lado.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+VAR _r =
+    ADDCOLUMNS ( VALUES ( 'Município'[Região] ), "@n", [T11 · viraram] )
+RETURN
+    COUNTROWS ( FILTER ( _r, [@n] > 0 ) ) + 0

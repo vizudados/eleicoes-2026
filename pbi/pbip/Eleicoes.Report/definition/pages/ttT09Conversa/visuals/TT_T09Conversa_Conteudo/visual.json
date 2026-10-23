@@ -1,0 +1,242 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
+  "name": "TT_T09Conversa_Conteudo",
+  "position": {
+    "x": 0,
+    "y": 0,
+    "z": 300,
+    "height": 340,
+    "width": 520,
+    "tabOrder": 300
+  },
+  "visual": {
+    "visualType": "STANDALONEhtmlContent443BE3AD55E043BF878BED274D3A6855",
+    "query": {
+      "queryState": {
+        "content": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T09 · Tooltip conversa · HTML"
+                }
+              },
+              "queryRef": "_Medidas.T09 · Tooltip conversa · HTML",
+              "nativeQueryRef": "T09 · Tooltip conversa · HTML"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "contentFormatting": [
+        {
+          "properties": {
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rebuild'"
+                }
+              }
+            },
+            "noDataMessage": {
+              "expr": {
+                "Literal": {
+                  "Value": "' '"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "compatibility": [
+        {
+          "properties": {
+            "legacyRendering": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stylesheet": [
+        {
+          "properties": {
+            "stylesheet": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estilo · CSS"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "templates": [
+        {
+          "properties": {
+            "bodyTemplate": {
+              "expr": {
+                "Literal": {
+                  "Value": "'<style>.dos{position:fixed;inset:0;background:#F1EBDF;box-shadow:inset 0 0 0 1.5px #CBBDA2;padding:40px 30px 18px 30px;overflow:hidden}.dos .fita{position:absolute;left:calc(50% - 60px);top:-14px;width:120px;opacity:.5;transform:rotate(-3deg)}.dos .ico{position:absolute;right:22px;top:18px;width:46px;opacity:.85}.dos .sob{font-size:13px;letter-spacing:.14em;padding-right:60px}.dos .tt{font-size:22px;font-weight:600;line-height:1.2;margin:6px 0 10px 0;padding-right:56px}.dos .txt{font-size:15px;line-height:1.42;color:var(--tinta)}.dos .nota{font-size:13px;margin-top:8px}.dos .mao{position:absolute;right:26px;bottom:14px;font-size:26px;color:#8E2620;transform:rotate(-3deg);white-space:nowrap}.dos .mao.az{color:#1D3C6E}.dos .mao.ti{color:#1C1915}.dos .par{display:flex;gap:28px;align-items:baseline;margin:4px 0 8px 0}.dos .par .num{font-size:34px}.dos .par small{display:block;font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}.dos hr{border:0;border-top:1px solid #CBBDA2;margin:10px 0}.tt9c .tab{display:grid;grid-template-columns:1fr 92px 92px;column-gap:12px;row-gap:7px;margin-top:10px;align-items:baseline}.tt9c .tab .h{font-size:13px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-align:right}.tt9c .tab .j{font-size:15px;color:var(--grafite);line-height:1.25}.tt9c .tab .v{font-size:17px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}.tt9c .tab .on{background:#E5DBC8;box-shadow:0 0 0 4px #E5DBC8}.tt9c .txt{margin-top:12px}.dos .tt9c .mao{position:static;display:block;text-align:right;margin-top:4px}</style><div class=''dos''><img class=''fita entra'' alt='''' src=''data:image/webp;base64,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''/><img class=''ico entra d2'' alt='''' src=''data:image/webp;base64,UklGRoYFAABXRUJQVlA4WAoAAAAQAAAALQAALwAAQUxQSPcDAAABoHXb2rHnFb+u67rf2P5s27Zt27Zt27Zt27Zduz3r6KHyJn0SEROA9+qckmo10tIAJCIpY76S5cuVzp0YCZYGStnx45cu3rJ51qI1G3efOHvi/pWGqGdKw7uDSmcIElKOq3ljiqpHIrF/tSS5qJkzFaDGywDxitgnUc5E8C+glmUn3mU/goAqiCAiCNEnAki9iKqZKkq5tRj/V0/G+RERM1NSNqP6WpzY+UUEP1xIzKuhOIKvxyRTUgyPK1S2Vbe1JYFqa3G4RwsJuTeG2PsdcMS9jAQcCRkzV+48dtG2PeeOnT587dyv42OptgZH6oXESw6ErA9enN2xZFTnklliLJSwChO+aUmF/RiIgCiigpL/AiJS9ePNKe2iwHLV7lkP5wuM2ViFzGediQDiVzXAWhzASP9i88Akn7jwez89PNYDIG7iCBK+jyC5ksqt23CEnp1XNwwgxCCyVJM2AzePnE3AhnuVEoNFCPSFxcRkKlq+7aRn5VFhx5ZaOTIWq9S0Y7dBfTq3qlci5/BJa8C3aMO9zjDr5PETR47s27RqQt0IwLFgT7vlg9pVLZwtUvHbaOL6IICTxd3+xdHxoSL41WT99wxriX8xMyelJq7LhvMV2534dCZ+xcyZAEaDo6O6a4Cq4FdIN3phNXwsO36tDSYipFYpemx8HxFSKTZ0am8o9eeuTDj+r5B4bGKfUFKr9Bk5Gy1RCQwP3Y7hfTIg/kTDjLa912OggofKomndC6ZgDMwHNbvuDkQNTx2DVjQtiyZTSg3EUaLrzuwI3hqNjzSri/kJmBmlSpY+62qgHilFLnRo5cdoWxcgbND8XphHQtyZzq1UQCTzNArnxWTwuBk4z9yRke0iAWNMXt+8JHH0678S8whl7aJW2RClXD+61kCN9u03qnjlGLunZQlUbWJY5okYRq12G+IRz5pcal8DHy1qMSY7ilC0w7KiqEdKkXu9WiBxoynZCQMhU6/pTTGPhPibg7spwaFEmZA8uP+QITiPwI7P7BRDapX+XRd6p8zf1jkXKog/o0+bTahXjl53h5bHSNno0GZbAN7Veze6UUqiFmANeqzPhHik5PtqcitMzEzwW3Tw4rKoR0LEp9ntffgNylCq6YBZmyYtbYF5BHy1rU1SXME6XUYMGzywS6ua+RNCp47GeWVcuNlxxeyx3evkKVWjYVmSr13snWPur80rAJQb37rbtjgIKPFkoXdmTf6ulugCHBlbV6+SP339Jcdv/tIK80gkw4Y/FxYAicnZYOCC89/+8cONT01QvBaK3vrr7OrDV198/+2t3eMa5g4hCsV7Jefsm3cmd6yY2eFXENJSgQCSqzlTQUhbdeDMVEhjAFZQOCBoAQAAsAcAnQEqLgAwAD5hLJBGJCKhoSc4DbCADAlnAM1WIz3lBfw9TuqAjAKzWtNs/LE1IFQbqzRoI46A8EDyrjRv2IPxL82vCAD+/BIf/5CxVg4Btnmq/dh8wl0HqRufBXVLjoH/bpa2vmPbKNuelK2/lTKFvhKCQYQrP4+D4iWZG9vMtd1a433S37/fPAXL2AF4l/FpXhW/fQP1SqBB9/zBko/NACeakQuE8gaUHBHI+tbIGClxgVAbM4CxUa/97yulB7kV+1I2rr9ocbPw88TKK8XPxZSHQzpNHGogNMrP3N4f4L4hey60I7/U7QU00F0ITkNrXiLAibR6CTSPvubLKn1b81rnamTl//vonG5nqkC63VWqp/hE7f7y5S7eQ0LrH0vmdjFwA58iigjassLtkzHdyfe3aL7HpXkKwuZnnfM38hN2zSi/8ACUd+bv5GOicGSnex7qYV/uSbVdtHTDTIAdAGrgAAAA''/>{{content}}</div>'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'TT_T09Conversa_Conteudo'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T09 · Tooltip conversa · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

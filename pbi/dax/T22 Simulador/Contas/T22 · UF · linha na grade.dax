@@ -1,0 +1,6 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0
+@descricao: Linha do quadrado da UF no mapa de quadrados (0 = Roraima, Amapá e o exterior).
+*/
+SELECTEDVALUE ( 'UF'[GradeLinha] )

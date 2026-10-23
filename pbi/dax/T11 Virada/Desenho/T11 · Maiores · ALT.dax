@@ -1,0 +1,26 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Texto alternativo da lista das maiores que viraram.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _lista =
+    ADDCOLUMNS ( VALUES ( 'Município'[CodIBGE] ), "@s", [T11 · situação] )
+VAR _viradas =
+    FILTER ( _lista, [@s] = 2 || [@s] = 3 ) /* lista */
+VAR _top =
+    TOPN (
+        3,
+        ADDCOLUMNS ( _viradas, "@pop", [T11 · população], "@nome", [T11 · município · nome] ),
+        [@pop], DESC,
+        'Município'[CodIBGE], ASC
+    )
+-- 2 · Textos
+VAR _nomes = CONCATENATEX ( _top, [@nome], ", ", [@pop], DESC )
+RETURN
+    IF (
+        ISBLANK ( _nomes ) || _nomes = "",
+        "Nenhum município trocou de lado neste recorte.",
+        "As maiores cidades que trocaram Lula por Flávio: " & _nomes & "."
+    )

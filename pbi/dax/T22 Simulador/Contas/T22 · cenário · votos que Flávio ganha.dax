@@ -1,0 +1,16 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: #,0
+@descricao: Votos dos outros candidatos que vão para Flávio no cenário (o resto dos que votam, ou o cruzamento da pesquisa em uso).
+@oraculo: mockup/data/eleicoes.json › Simulador › cenarios
+*/
+VAR _pesquisa = [T22 · pesquisa em uso]
+VAR _controles =
+    [T22 · votos dos outros] * ( 1 - [T22 · parte que não vota] ) * ( 1 - [T22 · parte para Lula] )
+VAR _segundo =
+    [T22 · votos de Cury] * [T22 · pesquisa · Flávio entre os eleitores de Cury]
+        + [T22 · votos de Renan] * [T22 · pesquisa · Flávio entre os eleitores de Renan]
+        + [T22 · votos de Caiado] * [T22 · pesquisa · Flávio entre os eleitores de Caiado]
+        + [T22 · votos dos demais] * [T22 · pesquisa · Flávio entre os eleitores de demais]
+RETURN
+    IF ( ISBLANK ( _pesquisa ), _controles, _segundo )

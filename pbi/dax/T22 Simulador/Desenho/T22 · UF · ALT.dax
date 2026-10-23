@@ -1,0 +1,11 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Texto alternativo do mapa de quadrados.
+*/
+-- 1 · Leituras
+VAR _ufL = [T22 · cenário · UFs com Lula à frente]
+VAR _ufF = [T22 · cenário · UFs com Flávio à frente]
+RETURN
+    "Mapa de quadrados das UFs no cenário: Lula à frente em " & _ufL & ", Flávio em " & _ufF
+        & ". Passe o mouse num estado para ver o detalhe."

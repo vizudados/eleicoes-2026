@@ -1,0 +1,10 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Locais de votação de Contagem em 2026 no contexto (112 sem filtro).
+@oraculo: mockup/data/eleicoes.json › Escola › locais_2026 (112)
+*/
+COALESCE (
+    COUNTROWS ( 'T20 Local' ),
+    0
+)

@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: #,0
+@descricao: Municípios do recorte que trocaram Lula (2022) por Flávio (2026).
+@oraculo: 711 (Virada › viraram)
+*/
+COALESCE (
+    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · virou] = 1 ) ),
+    0
+)

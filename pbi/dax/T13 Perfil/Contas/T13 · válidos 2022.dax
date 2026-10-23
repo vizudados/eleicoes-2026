@@ -1,0 +1,10 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: #,0
+@descricao: Votos válidos em 2022, somados nas cidades do contexto.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+CALCULATE (
+    SUM ( 'Município ano'[Validos] ),
+    'Município ano'[Ano] = 2022
+)

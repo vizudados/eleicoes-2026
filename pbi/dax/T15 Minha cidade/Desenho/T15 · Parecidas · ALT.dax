@@ -1,0 +1,15 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Texto alternativo das cidades parecidas.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _cid = [T15 · cidade]
+VAR _n = [T15 · parecidas · quantidade]
+VAR _pos = [T15 · parecidas · posição]
+VAR _vg = [T15 · parecidas · variação do grupo]
+-- 2 · Textos
+RETURN
+    _cid & ": " & FORMAT ( _pos, "0" ) & "ª maior queda de margem entre " & FORMAT ( _n, "#,0" )
+        & " cidades parecidas; o grupo variou " & FORMAT ( _vg * 100, "+0.0;−0.0;0.0" ) & " pontos."

@@ -1,0 +1,7 @@
+/*
+@pasta: T21 20 anos\Contas
+@formato: 0.0%
+@descricao: Margem do PT em 2022 no contexto (o ponto do município no mapa dos 20 anos); vazio quando o município ainda não existia.
+@oraculo: mockup/data/eleicoes.json › 20 anos › mapa
+*/
+CALCULATE ( [T21 · margem], 'Ano'[Ano] = 2022 )

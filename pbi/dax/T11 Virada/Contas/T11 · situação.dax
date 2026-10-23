@@ -1,0 +1,18 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: 0
+@descricao: Situação do município, para o mapa: 0 Lula à frente em 2026, 1 Flávio à frente, 2 trocou Lula por Flávio, 3 trocou Flávio por Lula, 4 empate. Lida no grão do município (o Deneb pinta o ponto).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+VAR _d22 = [T11 · saldo 2022]
+VAR _d26 = [T11 · saldo 2026]
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _d26 ), BLANK (),
+        _d22 > 0 && _d26 < 0, 2,
+        _d22 < 0 && _d26 > 0, 3,
+        _d26 > 0, 0,
+        _d26 < 0, 1,
+        4
+    )

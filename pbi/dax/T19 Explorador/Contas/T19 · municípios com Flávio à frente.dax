@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: #,0
+@descricao: Municípios do recorte em que Flávio ficou à frente em 2026 (margem < 0).
+@oraculo: 2.906 (Virada › flavio_venceu_2026)
+*/
+COALESCE (
+    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T19 · margem 2026] < 0 ) ),
+    0
+)

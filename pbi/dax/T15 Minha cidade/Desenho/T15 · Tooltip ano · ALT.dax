@@ -1,0 +1,14 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê da eleição na cidade.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _cid = [T15 · cidade]
+VAR _ano = [T15 · ano]
+VAR _pt = [T15 · PT % no ano]
+VAR _adv = [T15 · adversário % no ano]
+-- 2 · Textos
+RETURN
+    _cid & " em " & _ano & ": PT " & FORMAT ( _pt, "0.0%" ) & ", adversário " & FORMAT ( _adv, "0.0%" ) & "."

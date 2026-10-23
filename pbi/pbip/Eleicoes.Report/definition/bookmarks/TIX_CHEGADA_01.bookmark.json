@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "TIX_CHEGADA_01",
+  "displayName": "Chegada · Sumário",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "TIX_Sumario_Html"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "TIX",
+    "sections": {
+      "TIX": {
+        "visualContainers": {
+          "TIX_Sumario_Html": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: População do município escolhido (Censo 2022).
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › populacao = 621.863
+@gerado: pbi/scripts/desenho_t15.py
+*/
+SUM ( 'Município'[População] )

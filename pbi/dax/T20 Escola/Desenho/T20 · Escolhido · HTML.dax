@@ -1,0 +1,34 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: O anel à mão em volta do local da ficha, na camada atrás dos pontos (recebe a escolha do filtro, do mapa e da lista), com o nome do local.
+*/
+-- 1 · Leituras
+VAR _esc = [T20 · local escolhido]
+VAR _ha = [T20 · há escolha]
+VAR _px = CALCULATE ( [T20 · posição x], 'T20 Local'[Local] = _esc )
+VAR _py = CALCULATE ( [T20 · posição y], 'T20 Local'[Local] = _esc )
+-- 2 · Textos
+VAR _nome0 = _esc
+VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
+-- 3 · Geometria
+VAR _x = _px / 100 * 692 -- geometria
+VAR _y = _py / 100 * 860 -- geometria
+VAR _direita = _x > 692 * 0.62 -- geometria
+VAR _xr = IF ( _direita, _x - 22, _x + 22 ) -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        ISBLANK ( _px ),
+        "<div class='tela t20e'><div class='sem'>" & _nome & ": sem endereço no mapa</div></div>",
+        "<div class='tela t20e'>"
+            & "<div class='anel' style='left:" & FORMAT ( _x - 26, "0.0##", "en-US" ) & "px;top:"
+            & FORMAT ( _y - 24, "0.0##", "en-US" ) & "px'>"
+            & "<svg width='52' height='48' viewBox='0 0 52 48'><path class='traco' pathLength='1' filter='url(#rbe)' "
+            & "d='M8,28 C2,10 30,-2 44,10 C54,20 46,42 26,44 C8,46 2,30 12,16 C18,8 30,6 38,9'/></svg></div>"
+            & "<div class='nome sobe d4" & IF ( _direita, " dir", "" ) & "' style='left:"
+            & FORMAT ( _xr, "0.0##", "en-US" ) & "px;top:" & FORMAT ( _y - 12, "0.0##", "en-US" ) & "px'>"
+            & _nome & "</div>"
+        & "</div>"
+    )

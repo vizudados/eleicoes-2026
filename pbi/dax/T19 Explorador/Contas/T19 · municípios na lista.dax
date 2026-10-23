@@ -1,0 +1,7 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0
+@descricao: Quantos municípios a lista mostra: os 14 com mais votos válidos do recorte (ou todos, quando o recorte tem menos).
+@oraculo: 12 no mockup (a tela do Power BI mostra 14)
+*/
+MIN ( 14, [T19 · municípios no recorte] )

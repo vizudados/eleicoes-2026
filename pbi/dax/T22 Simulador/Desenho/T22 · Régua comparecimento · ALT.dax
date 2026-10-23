@@ -1,0 +1,6 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Texto alternativo da régua de comparecimento.
+*/
+"Controle: comparecimento " & FORMAT ( [T22 · mudança no comparecimento] * 100, "+0;−0;0" ) & " pontos sobre o 1º turno."

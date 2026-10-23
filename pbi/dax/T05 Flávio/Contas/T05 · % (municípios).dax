@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0.0%
+@descricao: Parcela de Flávio nos válidos de 2026 dos municípios do contexto (0–1).
+*/
+DIVIDE ( [T05 · votos (municípios)], [T05 · válidos (municípios)] )

@@ -1,0 +1,37 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: texto
+@descricao: Lista 'n1|n2|…|n20': quantas cidades parecidas caem em cada uma de 20 faixas iguais de variação da margem, da menor à maior. Alimenta o histograma.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _p = SELECTEDVALUE ( 'Município'[Porte] )
+VAR _q = SELECTEDVALUE ( 'Município'[Quinto de renda] )
+VAR _t =
+    CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( 'Município'[CodIBGE] ), "@d", [T15 · variação] ),
+        REMOVEFILTERS ( 'Município' ),
+        REMOVEFILTERS ( 'UF' ),
+        'Município'[Porte] = _p,
+        'Município'[Quinto de renda] = _q
+    )
+VAR _ok =
+    FILTER ( _t, NOT ISBLANK ( [@d] ) )
+VAR _min = MINX ( _ok, [@d] )
+VAR _max = MAXX ( _ok, [@d] )
+VAR _passo = ( _max - _min ) / 20
+RETURN
+    IF (
+        NOT ISBLANK ( _min ),
+        CONCATENATEX (
+            GENERATESERIES ( 0, 19 ),
+            VAR _i = [Value]
+            VAR _a = _min + _i * _passo
+            VAR _b = _a + _passo
+            RETURN
+                COUNTROWS (
+                    FILTER ( _ok, [@d] >= _a && ( [@d] < _b || ( _i = 19 && [@d] <= _max ) ) )
+                ) + 0,
+            "|",
+            [Value], ASC
+        )
+    )

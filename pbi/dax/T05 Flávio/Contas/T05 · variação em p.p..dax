@@ -1,0 +1,7 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0.0
+@descricao: Variação do % do PL de 2022 para 2026, em pontos percentuais.
+@oraculo: paginas[5].comparacao_2022.variacao_pp_txt
+*/
+( [T05 · %] - [T05 · % 2022] ) * 100

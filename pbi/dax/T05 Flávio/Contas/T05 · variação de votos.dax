@@ -1,0 +1,7 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: #,0
+@descricao: Votos do PL em 2026 menos 2022, no recorte.
+@oraculo: paginas[5].comparacao_2022.variacao_votos_txt
+*/
+[T05 · votos] - [T05 · votos 2022]

@@ -1,0 +1,7 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Texto alternativo da lista das pesquisas.
+*/
+"Lista das " & [T22 · pesquisas · quantas] & " pesquisas com o cruzamento dos eleitores dos outros candidatos: a parte "
+    & "que vai para Lula e o 2º turno que isso daria. Clique numa linha para ver o cenário no mapa."

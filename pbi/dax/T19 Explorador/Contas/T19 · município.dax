@@ -1,0 +1,7 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: texto
+@descricao: Nome do município com a UF, como as listas mostram: 'Contagem (MG)'.
+@oraculo: mockup/data/eleicoes.json › Explorador › municipio
+*/
+SELECTEDVALUE ( 'Município'[Rótulo] )

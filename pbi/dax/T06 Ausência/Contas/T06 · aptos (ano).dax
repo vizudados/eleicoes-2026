@@ -1,0 +1,6 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: #,0
+@descricao: Eleitores aptos no ano do contexto: Brasil oficial ('Comparecimento ano') sem filtro; soma dos municípios com o filtro de UF.
+*/
+IF ( [T06 · com UF] = 1, SUM ( 'Município ano'[Aptos] ), SUM ( 'Comparecimento ano'[Aptos] ) )

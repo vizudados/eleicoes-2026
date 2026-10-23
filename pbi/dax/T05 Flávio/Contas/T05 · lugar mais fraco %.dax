@@ -1,0 +1,16 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0.0%
+@descricao: % do candidato nos válidos do lugar mais fraco (0–1).
+@oraculo: paginas[5].uf_mais_fraca.pct_txt
+*/
+VAR _ufs =
+    ADDCOLUMNS ( CALCULATETABLE ( VALUES ( 'UF'[Nome] ), 'UF'[Tipo] = "UF" ), "@p", [T05 · %] )
+VAR _mun =
+    ADDCOLUMNS (
+        FILTER ( VALUES ( 'Município'[Rótulo] ), [T05 · com UF] = 1 && [T05 · válidos (municípios)] > 0 ),
+        "@p", [T05 · % (municípios)]
+    )
+VAR _uf = [T05 · com UF] = 1
+RETURN
+    IF ( _uf, MINX ( _mun, [@p] ), MINX ( _ufs, [@p] ) )

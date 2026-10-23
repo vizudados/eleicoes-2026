@@ -1,0 +1,9 @@
+/*
+@pasta: T04 Flávio · quem é\Contas
+@formato: 0.00
+@descricao: Momento do marco da linha em anos decimais (ano + fração do ano; meio do ano quando a fonte só dá o ano). Posição do ponto na régua.
+*/
+VAR _a = [T04 · Trajetória · ano]
+VAR _d = [T04 · Trajetória · data]
+RETURN
+    IF ( ISBLANK ( _d ), _a + 0.5, _a + DIVIDE ( _d - DATE ( _a, 1, 1 ), 365 ) )

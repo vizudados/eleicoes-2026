@@ -1,0 +1,82 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, a Escola Estadual Nova Contagem-I.
+*/
+-- 1 · Leituras
+VAR _esc = [T20 · local escolhido]
+VAR _ha = [T20 · há escolha]
+VAR _bairro = CALCULATE ( [T20 · bairro], 'T20 Local'[Local] = _esc )
+VAR _secoes = CALCULATE ( [T20 · seções], 'T20 Local'[Local] = _esc )
+VAR _val = CALCULATE ( [T20 · válidos 2026], 'T20 Local'[Local] = _esc )
+VAR _lula = CALCULATE ( [T20 · Lula % 2026], 'T20 Local'[Local] = _esc )
+VAR _flavio = CALCULATE ( [T20 · Flávio % 2026], 'T20 Local'[Local] = _esc )
+VAR _m18 = CALCULATE ( [T20 · margem 2018], 'T20 Local'[Local] = _esc )
+VAR _m22 = CALCULATE ( [T20 · margem 2022], 'T20 Local'[Local] = _esc )
+VAR _m26 = CALCULATE ( [T20 · margem 2026], 'T20 Local'[Local] = _esc )
+VAR _virou = CALCULATE ( [T20 · virou], 'T20 Local'[Local] = _esc )
+-- 2 · Textos
+VAR _nome0 = _esc
+VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
+VAR _sobre = IF ( _ha = 1, "A escola escolhida", "Um exemplo · Nova Contagem" )
+VAR _sub =
+    _bairro & " · " & _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" )
+        & " votos válidos em 2026"
+VAR _t18 = IF ( ISBLANK ( _m18 ), "—", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
+VAR _t22 = IF ( ISBLANK ( _m22 ), "—", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
+VAR _t26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
+VAR _c18 = IF ( _m18 > 0, "lula", IF ( _m18 < 0, "flavio", "" ) )
+VAR _c22 = IF ( _m22 > 0, "lula", IF ( _m22 < 0, "flavio", "" ) )
+VAR _c26 = IF ( _m26 > 0, "lula", "flavio" )
+VAR _nota =
+    SWITCH (
+        TRUE (),
+        _ha = 0, "onde o documentário começa",
+        _virou = 1, "virou em 2026",
+        _m26 > 0, "segue com Lula",
+        "Flávio à frente"
+    )
+VAR _selo = IF ( _virou = 1, "<div class='selo'>virou</div>", "" )
+-- 3 · Geometria
+VAR _base = { ( 0, 70, _m18 ), ( 1, 230, _m22 ), ( 2, 390, _m26 ) } /* lista */
+VAR _yy =
+    SELECTCOLUMNS (
+        FILTER ( _base, NOT ISBLANK ( [Value3] ) ) /* lista */,
+        "i", [Value1], "x", [Value2], "y", 34 - MAX ( -0.3, MIN ( 0.3, [Value3] ) ) / 0.3 * 28
+    ) -- geometria
+VAR _primeiro = MINX ( _yy, [i] ) /* lista */
+VAR _d =
+    CONCATENATEX (
+        _yy, IF ( [i] = _primeiro, "M", "L" ) & [x] & "," & FORMAT ( [y], "0.0##", "en-US" ), " ", [i], ASC
+    ) /* lista */
+VAR _bolas =
+    CONCATENATEX (
+        _yy,
+        "<circle cx='" & [x] & "' cy='" & FORMAT ( [y], "0.0##", "en-US" ) & "' r='5'/>",
+        "",
+        [i], ASC
+    ) /* lista */
+-- 4 · Marcação
+RETURN
+    "<div class='tela t20f'>"
+        & "<div class='rot sobe'>" & _sobre & "</div>"
+        & "<div class='nm sobe d1'>" & _nome & "</div>"
+        & "<div class='sub sobe d2'>" & _sub & "</div>"
+        & "<div class='duelo sobe d3'>"
+            & "<div class='lado lula'><span class='num'>" & FORMAT ( _lula, "0.0%" ) & "</span><span class='r'>Lula</span></div>"
+            & "<div class='lado flavio'><span class='num'>" & FORMAT ( _flavio, "0.0%" ) & "</span><span class='r'>Flávio</span></div>"
+        & "</div>"
+        & "<div class='rot cap sobe d4'>Margem de Lula, em pontos</div>"
+        & "<div class='serie sobe d5'>"
+            & "<div class='c c0'><span class='a'>2018</span><span class='num " & _c18 & "'>" & _t18 & "</span></div>"
+            & "<div class='c c1'><span class='a'>2022</span><span class='num " & _c22 & "'>" & _t22 & "</span></div>"
+            & "<div class='c c2'><span class='a'>2026</span><span class='num " & _c26 & "'>" & _t26 & "</span></div>"
+            & "<svg class='linha' width='460' height='70' viewBox='0 0 460 70'>"
+                & "<line class='zero' x1='20' x2='440' y1='34' y2='34'/>"
+                & "<path class='traco' pathLength='1' d='" & _d & "'/>" & _bolas
+            & "</svg>"
+        & "</div>"
+        & _selo
+        & "<div class='mao'>" & _nota & "</div>"
+    & "</div>"

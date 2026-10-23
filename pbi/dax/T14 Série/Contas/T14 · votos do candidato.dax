@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: #,0
+@descricao: Votos do candidato no 1º turno (nacional, com o exterior).
+@gerado: pbi/scripts/desenho_t14.py
+*/
+SUM ( 'Candidato ano'[Votos] )

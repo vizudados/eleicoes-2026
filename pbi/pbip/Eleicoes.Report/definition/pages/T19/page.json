@@ -54,5 +54,82 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T19_Dispersao_Pontos",
+      "target": "T19_Busca_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Dispersao_Pontos",
+      "target": "T19_Estado_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Dispersao_Pontos",
+      "target": "T19_Porte_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Dispersao_Pontos",
+      "target": "T19_Regiao_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Dispersao_Pontos",
+      "target": "T19_Renda_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Dispersao_Pontos",
+      "target": "T19_Virou_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Busca_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Dispersao_Fundo",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Dispersao_Pontos",
+      "type": "HighlightFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Estado_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Porte_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Regiao_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Renda_Seletor",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Resumo_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T19_Lista_Html",
+      "target": "T19_Virou_Seletor",
+      "type": "NoFilter"
+    }
+  ]
 }

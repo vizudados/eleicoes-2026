@@ -1,0 +1,8 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0.0%
+@descricao: Variação da margem de Lula de 2022 para 2026 nas cidades do contexto (a célula, a linha, a coluna).
+@oraculo: mockup/data/eleicoes.json › paginas[13] › celulas › variacao (até 10 mil × mais ricas = −16,5 p.p.)
+@gerado: pbi/scripts/desenho_t13.py
+*/
+[T13 · margem 2026] - [T13 · margem 2022]

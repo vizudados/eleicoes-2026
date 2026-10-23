@@ -1,0 +1,101 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Bloco da esquerda da tela 01: a diferença (com o laço à mão), a manchete, o duelo Flávio × Lula (o mais votado à esquerda) e a legenda dos outros candidatos. Só lê as contas 'T01 · …'.
+*/
+-- 1 · Leituras
+VAR _comUF = [T01 · com UF]
+VAR _recorte = [T01 · recorte]
+VAR _val = [T01 · válidos]
+VAR _fv = [T01 · Flávio votos]
+VAR _lv = [T01 · Lula votos]
+VAR _fp = [T01 · Flávio %]
+VAR _lp = [T01 · Lula %]
+VAR _dif = [T01 · diferença]
+VAR _difpp = [T01 · diferença em p.p.]
+VAR _venc = [T01 · vencedor]
+VAR _dv = [T01 · demais votos]
+VAR _dp = [T01 · demais parte]
+VAR _dq = [T01 · demais quantidade]
+VAR _dn = [T01 · demais nomes]
+VAR _lista =
+    ADDCOLUMNS (
+        VALUES ( 'Candidato UF'[Candidato] ),
+        "@v", [T01 · votos do candidato],
+        "@p", [T01 · parte dos válidos],
+        "@pos", [T01 · posição do candidato],
+        "@par", [T01 · partido do candidato]
+    )
+VAR _c3 = FILTER ( _lista, [@pos] = 3 ) /* lista */
+VAR _c4 = FILTER ( _lista, [@pos] = 4 ) /* lista */
+-- 2 · Textos
+VAR _txtDif = SWITCH ( TRUE (), ABS ( _dif ) >= 1000000, FORMAT ( _dif / 1000000, "0.00" ) & " mi", ABS ( _dif ) >= 1000, FORMAT ( _dif / 1000, "0.0" ) & " mil", FORMAT ( _dif, "#,0" ) )
+VAR _txtDifCheio = FORMAT ( _dif, "#,0" )
+VAR _txtDifPP = FORMAT ( _difpp, "0.0" )
+VAR _txtVal = FORMAT ( _val, "#,0" )
+VAR _txtRec = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _txtVF = SWITCH ( TRUE (), ABS ( _fv ) >= 1000000, FORMAT ( _fv / 1000000, "0.00" ) & " mi", ABS ( _fv ) >= 1000, FORMAT ( _fv / 1000, "0.0" ) & " mil", FORMAT ( _fv, "#,0" ) )
+VAR _txtVL = SWITCH ( TRUE (), ABS ( _lv ) >= 1000000, FORMAT ( _lv / 1000000, "0.00" ) & " mi", ABS ( _lv ) >= 1000, FORMAT ( _lv / 1000, "0.0" ) & " mil", FORMAT ( _lv, "#,0" ) )
+VAR _txtPF = FORMAT ( _fp, "0.0%" )
+VAR _txtPL = FORMAT ( _lp, "0.0%" )
+VAR _txtDV = SWITCH ( TRUE (), ABS ( _dv ) >= 1000000, FORMAT ( _dv / 1000000, "0.00" ) & " mi", ABS ( _dv ) >= 1000, FORMAT ( _dv / 1000, "0.0" ) & " mil", FORMAT ( _dv, "#,0" ) )
+VAR _txtDP = FORMAT ( _dp, "0.0%" )
+VAR _ganhou = IF ( _venc = "Lula", "Lula", "Flávio" )
+VAR _perdeu = IF ( _venc = "Lula", "Flávio", "Lula" )
+VAR _manchete =
+    IF (
+        _venc = "empate",
+        "Flávio e Lula empataram",
+        _ganhou & " terminou " & _txtDifCheio & " votos à frente de " & _perdeu
+    )
+VAR _pontos = IF ( _difpp < 2, " ponto percentual", " pontos percentuais" )
+VAR _ext = IF ( _comUF = 1, "", ", com o exterior" )
+VAR _detalhe = _txtDifPP & _pontos & " de vantagem, entre " & _txtVal & " votos válidos" & _ext
+VAR _sobDif = "A diferença · " & _txtRec
+VAR _lugarF = IF ( _venc = "Lula", "2º", "1º" )
+VAR _lugarL = IF ( _venc = "Lula", "1º", "2º" )
+VAR _txtOutros = IF ( _dq = 1, "Outro candidato", "Outros " & _dq )
+-- 4 · Marcação
+VAR _cardF =
+    "<div class='cand sobe d4'><div class='rt rt-f'><span class='selo'>" & _lugarF & "</span></div>"
+        & "<div class='rot flavio-esc'>FLÁVIO BOLSONARO · PL · 22</div>"
+        & "<div class='v flavio'>" & _txtVF & "</div>"
+        & "<div class='p'><span class='pn'>" & _txtPF & "</span> dos votos válidos</div>"
+    & "</div>"
+VAR _cardL =
+    "<div class='cand sobe d4'><div class='rt rt-l'><span class='selo'>" & _lugarL & "</span></div>"
+        & "<div class='rot lula-esc'>LULA · PT · 13</div>"
+        & "<div class='v lula'>" & _txtVL & "</div>"
+        & "<div class='p'><span class='pn'>" & _txtPL & "</span> dos votos válidos</div>"
+    & "</div>"
+VAR _duelo = IF ( _venc = "Lula", _cardL & _cardF, _cardF & _cardL )
+VAR _linha3 =
+    CONCATENATEX (
+        _c3,
+    "<div class='ln'><i class='sw s3'></i><span class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( 'Candidato UF'[Candidato], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & [@par]
+        & "</span><span class='vv'>" & SWITCH ( TRUE (), ABS ( [@v] ) >= 1000000, FORMAT ( [@v] / 1000000, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( [@v] / 1000, "0.0" ) & " mil", FORMAT ( [@v], "#,0" ) ) & "</span><span class='pp'>" & FORMAT ( [@p], "0.0%" ) & "</span></div>"
+    )
+VAR _linha4 =
+    CONCATENATEX (
+        _c4,
+    "<div class='ln'><i class='sw s4'></i><span class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( 'Candidato UF'[Candidato], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & [@par]
+        & "</span><span class='vv'>" & SWITCH ( TRUE (), ABS ( [@v] ) >= 1000000, FORMAT ( [@v] / 1000000, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( [@v] / 1000, "0.0" ) & " mil", FORMAT ( [@v], "#,0" ) ) & "</span><span class='pp'>" & FORMAT ( [@p], "0.0%" ) & "</span></div>"
+    )
+VAR _linhaD =
+    IF (
+        _dq > 0,
+        "<div class='ln dm'><i class='sw s5'></i><span class='nm'>" & _txtOutros & " · <em>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _dn, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+            & "</em></span><span class='vv'>" & _txtDV & "</span><span class='pp'>" & _txtDP & "</span></div>"
+    )
+VAR _html =
+    "<div class='tela t1'>"
+        & "<div class='sob sobe'>" & _sobDif & "</div>"
+        & "<div class='dn'><span class='dnum sobe d1'>" & _txtDif & "</span>" & [T01 · laço · SVG] & "</div>"
+        & "<div class='mm sobe d3'><div class='man m1'>" & _manchete & "</div>"
+        & "<div class='txt m2'>" & _detalhe & "</div></div>"
+        & "<div class='duelo'>" & _duelo & "</div>"
+        & "<div class='rot vtit sobe d6'>Votos válidos · " & _txtVal & "</div>"
+        & "<div class='leg sobe d8'>" & _linha3 & _linha4 & _linhaD & "</div>"
+    & "</div>"
+RETURN
+    _html

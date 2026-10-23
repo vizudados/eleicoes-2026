@@ -1,0 +1,26 @@
+/*
+@pasta: T04 Flávio · quem é\Contas
+@formato: texto
+@descricao: Crédito curto do desenho e da foto original do marco da linha. Fonte: dados/bruto/trajetoria/desenhos.csv; na falta, autor e licença da tabela Trajetória.
+*/
+VAR _f = [T04 · Trajetória · foto]
+VAR _reserva =
+    "Desenho a partir de foto de " & SELECTEDVALUE ( 'Trajetória'[Autor da foto] ) & " ("
+        & SELECTEDVALUE ( 'Trajetória'[Licença da foto] ) & ")"
+RETURN
+    IF (
+        _f <> "",
+        SWITCH (
+            _f,
+        "flavio-2002-alerj", "Desenho CC BY-SA 4.0 a partir de foto de Governo do Estado do RJ/Seap (CC BY 2.0 BR)",
+        "flavio-2016-prefeitura", "Desenho CC BY-SA 4.0 a partir de foto de Família Bolsonaro/Flickr (domínio público)",
+        "flavio-2018-senado", "Desenho CC BY-SA 4.0 a partir de foto do Consulado dos EUA no Rio (domínio público)",
+        "flavio-2019-posse", "Desenho CC BY-SA 4.0 a partir de foto de Edilson Rodrigues/Agência Senado (CC BY 2.0)",
+        "flavio-2020-denuncia", "Desenho CC BY-SA 4.0 a partir de foto de Pedro França/Agência Senado (CC BY 2.0)",
+        "flavio-2022-arquivamento", "Desenho CC BY-SA 4.0 a partir de foto de Edilson Rodrigues/Agência Senado (CC BY 2.0)",
+        "flavio-2025-csp", "Desenho CC BY-SA 4.0 a partir de foto de Edilson Rodrigues/Agência Senado (CC BY-SA 4.0)",
+        "flavio-2025-precandidatura", "Desenho CC BY-SA 4.0 a partir de foto de Andressa Anholete/Agência Senado (CC BY-SA 4.0)",
+        "flavio-2026-primeiro-turno", "Desenho CC BY-SA 4.0 a partir de foto de Carlos Moura/Agência Senado (CC BY-SA 4.0)",
+            _reserva
+        )
+    )

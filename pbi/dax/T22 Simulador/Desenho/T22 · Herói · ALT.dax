@@ -1,0 +1,11 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Texto alternativo da resposta do simulador.
+*/
+-- 1 · Leituras
+VAR _emp = [T22 · empate sem abstenção]
+VAR _outros = [T22 · votos dos outros]
+RETURN
+    "Para empatar, Lula precisaria de " & FORMAT ( _emp * 100, "0" ) & "% dos " & FORMAT ( _outros / 1000000, "0.00" ) & " mi"
+        & " de votos dos outros candidatos. Simulação, não previsão."

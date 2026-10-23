@@ -1,0 +1,21 @@
+/*
+@pasta: T19 Explorador\Desenho
+@formato: texto
+@descricao: Manchete da dispersão, no fundo HTML atrás dos pontos: em quantos municípios do recorte Lula perdeu margem de 2022 para 2026.
+*/
+-- 1 · Leituras
+VAR _perdeu = [T19 · municípios em que Lula perdeu margem]
+VAR _com = [T19 · municípios com as duas eleições]
+-- 2 · Textos
+VAR _txtPerdeu = FORMAT ( _perdeu, "#,0" )
+VAR _txtCom = FORMAT ( _com, "#,0" )
+VAR _frase =
+    IF (
+        _com = 1,
+        IF ( _perdeu = 1, "Neste município, Lula perdeu margem", "Neste município, Lula não perdeu margem" ),
+        "Lula perdeu margem em <b class='num'>" & _txtPerdeu & "</b> dos <b class='num'>" & _txtCom
+            & "</b> municípios do recorte"
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t19m'><div class='man sobe d2'>" & _frase & "</div></div>"

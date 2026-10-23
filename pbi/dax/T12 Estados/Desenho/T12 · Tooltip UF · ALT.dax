@@ -1,0 +1,15 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Texto alternativo do dossiê da unidade.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _nome = [T12 · nome da unidade]
+VAR _l26 = [T12 · Lula % 2026]
+VAR _a26 = [T12 · PL % 2026]
+VAR _vir = [T12 · municípios que viraram]
+-- 2 · Textos
+RETURN
+    _nome & ": em 2026, Lula " & FORMAT ( _l26, "0.0%" ) & " e Flávio " & FORMAT ( _a26, "0.0%" ) & "; "
+        & FORMAT ( _vir, "#,0" ) & " municípios trocaram Lula por Flávio."

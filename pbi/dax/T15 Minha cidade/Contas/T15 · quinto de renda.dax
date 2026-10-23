@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: texto
+@descricao: Quinto de renda do município escolhido.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › quinto
+@gerado: pbi/scripts/desenho_t15.py
+*/
+SELECTEDVALUE ( 'Município'[Quinto de renda] )

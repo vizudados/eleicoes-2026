@@ -1,0 +1,6 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0
+@descricao: Coluna do quadrado da UF no mapa de quadrados (0 = Acre).
+*/
+SELECTEDVALUE ( 'UF'[GradeColuna] )

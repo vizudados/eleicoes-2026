@@ -1,0 +1,24 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: texto
+@descricao: Crédito curto do desenho e da foto original do marco da linha. Fonte: dados/bruto/trajetoria/desenhos.csv; na falta, autor e licença da tabela Trajetória.
+*/
+VAR _f = [T02 · Trajetória · foto]
+VAR _reserva =
+    "Desenho a partir de foto de " & SELECTEDVALUE ( 'Trajetória'[Autor da foto] ) & " ("
+        & SELECTEDVALUE ( 'Trajetória'[Licença da foto] ) & ")"
+RETURN
+    IF (
+        _f <> "",
+        SWITCH (
+            _f,
+        "lula-1986-constituinte", "Desenho CC BY-SA 4.0 a partir de foto de Senado Federal/Agência Senado (CC BY 2.0)",
+        "lula-2002-posse", "Desenho CC BY-SA 4.0 a partir de foto de Marcello Casal Jr./Agência Brasil (CC BY 3.0 BR)",
+        "lula-2006-reeleicao", "Desenho CC BY-SA 4.0 a partir de foto de Marcello Casal Jr./Agência Brasil (CC BY 3.0 BR)",
+        "lula-2018-prisao", "Desenho CC BY-SA 4.0 a partir de foto de Ricardo Stuckert/Lula Oficial (CC BY-SA 4.0)",
+        "lula-2021-anulacao", "Desenho CC BY-SA 4.0 a partir de foto de Ricardo Stuckert/Lula Oficial (CC BY-SA 4.0)",
+        "lula-2022-eleicao", "Desenho CC BY-SA 4.0 a partir de foto de Ricardo Stuckert/Lula Oficial (CC BY-SA 4.0)",
+        "lula-2026-primeiro-turno", "Desenho CC BY-SA 4.0 a partir de foto de Ricardo Stuckert/Lula Oficial (CC BY-SA 4.0)",
+            _reserva
+        )
+    )

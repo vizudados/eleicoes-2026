@@ -1,0 +1,50 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Uma linha por unidade (granularidade UF): o ponto de 2022, a seta até 2026 (que desliza na entrada), a variação e a marca de quem mudou de lado. Posição vertical pela conta 'T12 · posição'.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _pos = [T12 · posição]
+VAR _nome = [T12 · nome da unidade]
+VAR _m22 = [T12 · margem 2022]
+VAR _m26 = [T12 · margem 2026]
+VAR _d = [T12 · variação]
+-- 2 · Textos
+VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _mud = _m22 > 0 && _m26 < 0
+VAR _mudL = _m22 < 0 && _m26 > 0
+VAR _clsLinha =
+    "lin" & IF ( _mud || _mudL, " mud", "" ) & IF ( _d > 0, " sobe-m", "" ) & IF ( _nome = "Exterior", " ext", "" )
+VAR _cor26 = IF ( _m26 < 0, "var(--azul)", "var(--vermelho)" )
+VAR _cor22 = IF ( _m22 < 0, "var(--azul)", "var(--vermelho)" )
+VAR _marca =
+    SWITCH ( TRUE (), _mud, "<span class='mm'>mudou de lado</span>", _mudL, "<span class='mm vm'>mudou de lado</span>", "" )
+-- 3 · Geometria (eixo de −60 a +60 p.p. em 680 px, a partir de x 210; zero em 550)
+VAR _y = 18 + ( _pos - 1 ) * 25.4
+VAR _x22 = ( 210 + 680 * ( MAX ( -0.6, MIN ( 0.6, _m22 ) ) + 0.6 ) / 1.2 )
+VAR _x26 = ( 210 + 680 * ( MAX ( -0.6, MIN ( 0.6, _m26 ) ) + 0.6 ) / 1.2 )
+VAR _sy = FORMAT ( _y, "0.0", "en-US" )
+VAR _atraso = 250 + _pos * 45
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _pos ),
+        "<div class='tela " & _clsLinha & "'>"
+            & "<div class='alvo' style='top:" & FORMAT ( _y - 12, "0.0", "en-US" ) & "px'></div>"
+            & "<div class='nm sobe' style='top:" & FORMAT ( _y - 11, "0.0", "en-US" ) & "px;animation-delay:"
+                & _atraso & "ms'>" & _txtNome & _marca & "</div>"
+            & "<svg class='sv' width='1010' height='760' viewBox='0 0 1010 760'>"
+                & "<line class='traco' pathLength='1' style='animation-delay:" & ( _atraso + 500 ) & "ms' x1='"
+                    & FORMAT ( _x22, "0.0", "en-US" ) & "' x2='" & FORMAT ( _x26, "0.0", "en-US" ) & "' y1='" & _sy
+                    & "' y2='" & _sy & "'/>"
+                & "<circle cx='" & FORMAT ( _x22, "0.0", "en-US" ) & "' cy='" & _sy & "' r='5.5' class='m22' stroke='"
+                    & _cor22 & "' style='animation-delay:" & _atraso & "ms'/>"
+                & "<circle class='vai' style='--dx:" & FORMAT ( _x22 - _x26, "0.0", "en-US" ) & "px;animation-delay:"
+                    & ( _atraso + 500 ) & "ms' cx='" & FORMAT ( _x26, "0.0", "en-US" ) & "' cy='" & _sy
+                    & "' r='7' fill='" & _cor26 & "'/>"
+            & "</svg>"
+            & "<div class='dv entra' style='top:" & FORMAT ( _y - 11, "0.0", "en-US" ) & "px;animation-delay:"
+                & ( _atraso + 900 ) & "ms'>" & FORMAT ( _d * 100, "+0.0;−0.0;0.0" ) & "</div>"
+        & "</div>"
+    )

@@ -1,0 +1,7 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: 0
+@descricao: Quantos marcos de Lula têm foto da época redesenhada.
+@oraculo: Lula 7 · Flávio 9 (dados/pbi/trajetoria.csv)
+*/
+CALCULATE ( COUNTROWS ( 'Trajetória' ), REMOVEFILTERS ( 'Trajetória' ), 'Trajetória'[Candidato] = "Lula", 'Trajetória'[Foto] <> "" )

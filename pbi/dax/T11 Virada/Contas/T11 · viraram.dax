@@ -1,0 +1,14 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Municípios em que Lula estava à frente em 2022 e Flávio ficou à frente em 2026. Conta município a município no recorte.
+@oraculo: mockup/data/eleicoes.json › paginas[11] › viraram = 711
+@gerado: pbi/scripts/desenho_t11.py
+*/
+SUMX (
+    VALUES ( 'Município'[CodIBGE] ),
+        VAR _d22 = [T11 · saldo 2022]
+        VAR _d26 = [T11 · saldo 2026]
+        RETURN
+            IF ( _d22 > 0 && _d26 < 0, 1 )
+) + 0

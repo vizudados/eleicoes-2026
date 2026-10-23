@@ -1,0 +1,9 @@
+/*
+@pasta: T04 Flávio · quem é\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê do marco.
+*/
+LEFT (
+    [T04 · Trajetória · ano] & " · " & [T04 · Trajetória · título] & ": " & [T04 · Trajetória · texto do marco],
+    250
+)

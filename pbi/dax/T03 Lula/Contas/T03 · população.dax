@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: População (Censo 2022) do município da linha.
+*/
+SUM ( 'Município'[População] )

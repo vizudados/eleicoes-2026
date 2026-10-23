@@ -1,0 +1,10 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do mapa da abstenção.
+*/
+LEFT (
+    "Mapa da abstenção de 2026 por município, " & [T06 · recorte]
+        & ": cada ponto é um município, mais escuro onde mais gente faltou. Passe o mouse num ponto para ver a cidade.",
+    250
+)

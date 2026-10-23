@@ -1,0 +1,13 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Texto alternativo do mapa de pontos (Deneb).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _vir = [T11 · viraram]
+VAR _tot = [T11 · municípios]
+-- 2 · Textos
+RETURN
+    "Mapa de pontos, um por município (" & FORMAT ( _tot, "#,0" ) & "). Em azul forte, os " & FORMAT ( _vir, "#,0" )
+        & " que trocaram Lula por Flávio; em tons claros, quem ficou à frente em 2026. Passe o mouse para o dossiê."

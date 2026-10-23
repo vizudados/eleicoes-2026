@@ -1,0 +1,12 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do mapa de pontos.
+*/
+LEFT (
+    "Mapa de " & [T03 · recorte] & " com um ponto por município: Lula ficou à frente em "
+        & [T03 · municípios à frente] & " de " & [T03 · municípios]
+        & IF ( [T03 · municípios] = 1, " município", " municípios" ) & ". Passe o mouse num ponto "
+        & "para ver a cidade.",
+    250
+)

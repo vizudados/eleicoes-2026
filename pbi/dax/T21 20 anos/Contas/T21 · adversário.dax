@@ -1,0 +1,7 @@
+/*
+@pasta: T21 20 anos\Contas
+@formato: texto
+@descricao: Principal adversário (o mais votado fora do PT) no ano do contexto.
+@oraculo: mockup/data/eleicoes.json › 20 anos › anos[].adversario
+*/
+SELECTEDVALUE ( 'Ano'[Adversário] )

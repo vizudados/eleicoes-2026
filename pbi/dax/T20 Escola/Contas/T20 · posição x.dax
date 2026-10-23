@@ -1,0 +1,7 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0.00
+@descricao: Posição horizontal do local no mapa (% da largura); vazio sem coordenada.
+@oraculo: mockup/data/eleicoes.json › Escola › pos_mapa_pct.x
+*/
+SELECTEDVALUE ( 'T20 Local'[PX] )

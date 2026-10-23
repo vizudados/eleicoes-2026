@@ -1,0 +1,37 @@
+/*
+@pasta: T21 20 anos\Desenho
+@formato: texto
+@descricao: Fundo da tela 21 (atrás do Deneb, mesma caixa): a manchete com os municípios com o PT à frente em 2006 e em 2026 e, na régua, quem disputou cada eleição.
+*/
+-- 1 · Leituras
+VAR _n06 = CALCULATE ( [T21 · municípios com o PT à frente], 'Ano'[Ano] = 2006 )
+VAR _n26 = CALCULATE ( [T21 · municípios com o PT à frente], 'Ano'[Ano] = 2026 )
+VAR _pt06 = CALCULATE ( [T21 · candidato do PT], 'Ano'[Ano] = 2006 )
+VAR _adv06 = CALCULATE ( [T21 · adversário], 'Ano'[Ano] = 2006 )
+VAR _pt10 = CALCULATE ( [T21 · candidato do PT], 'Ano'[Ano] = 2010 )
+VAR _adv10 = CALCULATE ( [T21 · adversário], 'Ano'[Ano] = 2010 )
+VAR _pt14 = CALCULATE ( [T21 · candidato do PT], 'Ano'[Ano] = 2014 )
+VAR _adv14 = CALCULATE ( [T21 · adversário], 'Ano'[Ano] = 2014 )
+VAR _pt18 = CALCULATE ( [T21 · candidato do PT], 'Ano'[Ano] = 2018 )
+VAR _adv18 = CALCULATE ( [T21 · adversário], 'Ano'[Ano] = 2018 )
+VAR _pt22 = CALCULATE ( [T21 · candidato do PT], 'Ano'[Ano] = 2022 )
+VAR _adv22 = CALCULATE ( [T21 · adversário], 'Ano'[Ano] = 2022 )
+VAR _pt26 = CALCULATE ( [T21 · candidato do PT], 'Ano'[Ano] = 2026 )
+VAR _adv26 = CALCULATE ( [T21 · adversário], 'Ano'[Ano] = 2026 )
+-- 2 · Textos
+VAR _txt06 = FORMAT ( _n06, "#,0" )
+VAR _txt26 = FORMAT ( _n26, "#,0" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t21b'>"
+        & "<div class='man sobe d2'>De <span class='num'>" & _txt06 & "</span> para <span class='num'>" & _txt26
+            & "</span> municípios com o PT à frente, de 2006 a 2026</div>"
+        & "<div class='regua entra d6'>"
+        & "<div class='ano' style='left:106px'><b>2006</b><span>" & SWITCH ( _pt06, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _pt06 ) & " × " & SWITCH ( _adv06, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _adv06 ) & "</span></div>"
+        & "<div class='ano' style='left:200px'><b>2010</b><span>" & SWITCH ( _pt10, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _pt10 ) & " × " & SWITCH ( _adv10, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _adv10 ) & "</span></div>"
+        & "<div class='ano' style='left:294px'><b>2014</b><span>" & SWITCH ( _pt14, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _pt14 ) & " × " & SWITCH ( _adv14, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _adv14 ) & "</span></div>"
+        & "<div class='ano' style='left:388px'><b>2018</b><span>" & SWITCH ( _pt18, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _pt18 ) & " × " & SWITCH ( _adv18, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _adv18 ) & "</span></div>"
+        & "<div class='ano' style='left:482px'><b>2022</b><span>" & SWITCH ( _pt22, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _pt22 ) & " × " & SWITCH ( _adv22, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _adv22 ) & "</span></div>"
+        & "<div class='ano' style='left:576px'><b>2026</b><span>" & SWITCH ( _pt26, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _pt26 ) & " × " & SWITCH ( _adv26, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _adv26 ) & "</span></div>"
+        & "</div>"
+    & "</div>"

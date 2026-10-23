@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Votos de Lula em 2026 menos em 2022 no município.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › votos › variacao_lula_txt = −11.920
+@gerado: pbi/scripts/desenho_t15.py
+*/
+[T15 · votos de Lula 2026] - [T15 · votos de Lula 2022]

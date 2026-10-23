@@ -1,0 +1,13 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Municípios com Jair Bolsonaro à frente em 2022. Conta município a município no recorte.
+@oraculo: mockup/data/eleicoes.json › paginas[11] › 2.191 (motor, 23/10/2026)
+@gerado: pbi/scripts/desenho_t11.py
+*/
+SUMX (
+    VALUES ( 'Município'[CodIBGE] ),
+        VAR _d22 = [T11 · saldo 2022]
+        RETURN
+            IF ( _d22 < 0, 1 )
+) + 0

@@ -1,0 +1,13 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Municípios com empate exato entre Lula e Jair Bolsonaro em 2022. Conta município a município no recorte.
+@oraculo: mockup/data/eleicoes.json › paginas[11] › 4 (motor)
+@gerado: pbi/scripts/desenho_t11.py
+*/
+SUMX (
+    VALUES ( 'Município'[CodIBGE] ),
+        VAR _d22 = [T11 · saldo 2022]
+        RETURN
+            IF ( NOT ISBLANK ( _d22 ) && _d22 = 0, 1 )
+) + 0

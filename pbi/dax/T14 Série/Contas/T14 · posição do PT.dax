@@ -1,0 +1,8 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: Colocação nacional do candidato do PT no 1º turno do ano do contexto.
+@oraculo: 2018 e 2026 = 2
+@gerado: pbi/scripts/desenho_t14.py
+*/
+CALCULATE ( MAX ( 'Candidato ano'[Posição] ), 'Candidato ano'[Partido] = "PT" )

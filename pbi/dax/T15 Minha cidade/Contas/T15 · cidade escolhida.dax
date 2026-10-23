@@ -1,0 +1,7 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0
+@descricao: 1 quando o contexto tem um município só (a cidade do filtro); 0 se não.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+IF ( HASONEVALUE ( 'Município'[CodIBGE] ), 1, 0 )

@@ -1,0 +1,14 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0.0%
+@descricao: A maior queda entre os cinco quintos de renda (o valor mais baixo).
+@oraculo: mockup/data/eleicoes.json › paginas[13] › colunas › 4º quinto −9,8
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _q =
+    ADDCOLUMNS (
+        FILTER ( SUMMARIZE ( 'Município', 'Município'[QuintoOrdem] ), NOT ISBLANK ( 'Município'[QuintoOrdem] ) ),
+        "@v", [T13 · variação]
+    )
+RETURN
+    MINX ( _q, [@v] )

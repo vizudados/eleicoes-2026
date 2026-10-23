@@ -1,0 +1,13 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Texto alternativo do gráfico de linhas.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _k = [T14 · eleições com o PT atrás]
+VAR _uf = [T14 · recorte]
+-- 2 · Textos
+RETURN
+    "Gráfico de linhas, " & IF ( ISBLANK ( _uf ), "Brasil", _uf ) & ": % dos votos válidos do PT e do adversário "
+        & "principal em cada 1º turno de 2006 a 2026; o PT ficou atrás em " & FORMAT ( _k, "0" ) & " delas."

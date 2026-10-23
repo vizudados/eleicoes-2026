@@ -1,0 +1,15 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: texto
+@descricao: Entre as cidades de 100 mil habitantes ou mais do recorte, a de maior % do candidato (vazio se o recorte não tem cidade desse porte).
+@oraculo: paginas[3].cidades_grandes_mais_fortes[0]
+*/
+VAR _gr =
+    ADDCOLUMNS (
+        CALCULATETABLE ( VALUES ( 'Município'[Rótulo] ), 'Município'[População] >= 100000 ),
+        "@p", [T03 · % (municípios)],
+        "@pop", CALCULATE ( SUM ( 'Município'[População] ) )
+    )
+VAR _top = TOPN ( 1, _gr, [@p], DESC, 'Município'[Rótulo], ASC )
+RETURN
+    MAXX ( _top, 'Município'[Rótulo] )

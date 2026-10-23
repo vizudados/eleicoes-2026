@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0.0%
+@descricao: Votos do adversário principal sobre os válidos no ano, no município.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › serie › adv_pct
+@gerado: pbi/scripts/desenho_t15.py
+*/
+DIVIDE ( SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) )

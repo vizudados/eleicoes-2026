@@ -1,0 +1,10 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da série da abstenção.
+*/
+LEFT (
+    "Abstenção no 1º turno, " & [T06 · recorte] & ": " & FORMAT ( [T06 · abstenção % 2006], "0.0%" ) & " em 2006 e "
+        & FORMAT ( [T06 · abstenção %], "0.0%" ) & " em 2026.",
+    250
+)

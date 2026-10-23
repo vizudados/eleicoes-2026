@@ -1,0 +1,10 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0.0%
+@descricao: Margem do PT no local em 2018: (votos do PT − votos do adversário) ÷ válidos; em 2022 e 2018, os votos do mesmo zona + número. Vazio quando o local não existia.
+@oraculo: mockup/data/eleicoes.json › Escola › maiores_quedas[].serie
+*/
+DIVIDE (
+    SUM ( 'T20 Local'[VotosPT2018] ) - SUM ( 'T20 Local'[VotosAdv2018] ),
+    SUM ( 'T20 Local'[Validos2018] )
+)

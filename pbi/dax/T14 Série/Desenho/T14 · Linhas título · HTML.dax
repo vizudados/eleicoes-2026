@@ -1,0 +1,25 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Sobretítulo, manchete do gráfico (melhor e pior ano do PT) e a legenda.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _ma = [T14 · melhor ano do PT]
+VAR _pa = [T14 · pior ano do PT]
+VAR _mv = [T14 · PT % no melhor ano]
+VAR _pv = [T14 · PT % no pior ano]
+VAR _uf = [T14 · recorte]
+-- 2 · Textos
+VAR _man =
+    "O PT teve o melhor resultado em " & _ma & " (" & FORMAT ( _mv, "0.0%" ) & ") e o pior em " & _pa & " ("
+        & FORMAT ( _pv, "0.0%" ) & ")"
+-- 4 · Marcação
+RETURN
+    "<div class='tela t14t'>"
+        & "<div class='rot entra'>% DOS VOTOS VÁLIDOS NO 1º TURNO · PT × ADVERSÁRIO PRINCIPAL"
+            & IF ( ISBLANK ( _uf ), " · BRASIL", " · " & UPPER ( _uf ) ) & "</div>"
+        & "<div class='man sobe d1'>" & _man & "</div>"
+        & "<div class='leg entra d2'><span><i class='pt'></i>PT</span><span><i class='adv'></i>adversário principal: o "
+            & "mais votado fora do PT no ano</span><span><i class='laco'></i>PT atrás</span></div>"
+    & "</div>"

@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: Quantas eleições há na série (seis, de 2006 a 2026).
+@gerado: pbi/scripts/desenho_t14.py
+*/
+COUNTROWS ( ALL ( 'Ano'[Ano] ) )

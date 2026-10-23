@@ -1,0 +1,31 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: texto
+@descricao: Porte da célula de maior queda.
+@oraculo: mockup/data/eleicoes.json › paginas[13] › maior_queda › até 10 mil
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _c =
+    ADDCOLUMNS (
+        FILTER (
+            SUMMARIZE ( 'Município', 'Município'[Porte], 'Município'[Quinto de renda] ),
+            NOT ISBLANK ( 'Município'[Porte] ) && NOT ISBLANK ( 'Município'[Quinto de renda] )
+        ),
+        "@n", [T13 · cidades],
+        "@v", [T13 · variação]
+    )
+VAR _piso =
+    SWITCH (
+        TRUE (),
+        COUNTROWS ( FILTER ( _c, [@n] >= 10 && NOT ISBLANK ( [@v] ) ) ) > 0, 10,
+        COUNTROWS ( FILTER ( _c, [@n] >= 3 && NOT ISBLANK ( [@v] ) ) ) > 0, 3,
+        1
+    )
+VAR _validas =
+    FILTER ( _c, [@n] >= _piso && NOT ISBLANK ( [@v] ) )
+VAR _pior =
+    TOPN ( 1, _validas, [@v], ASC, 'Município'[Porte], ASC, 'Município'[Quinto de renda], ASC )
+VAR _melhor =
+    TOPN ( 1, _validas, [@v], DESC, 'Município'[Porte], ASC, 'Município'[Quinto de renda], ASC )
+RETURN
+    MAXX ( _pior, 'Município'[Porte] )

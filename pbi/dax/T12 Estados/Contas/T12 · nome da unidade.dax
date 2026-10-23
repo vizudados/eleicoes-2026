@@ -1,0 +1,7 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: Nome da UF da linha (Exterior para ZZ).
+@gerado: pbi/scripts/desenho_t12.py
+*/
+SELECTEDVALUE ( 'UF'[Nome] )

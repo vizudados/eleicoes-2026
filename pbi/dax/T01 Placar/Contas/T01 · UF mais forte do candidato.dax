@@ -1,0 +1,13 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: texto
+@descricao: UF (no Brasil todo, sem o filtro) onde o candidato do item teve a maior parcela dos válidos.
+@oraculo: Flávio: Roraima 71,1%
+*/
+VAR _ufs =
+ADDCOLUMNS (
+    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
+    "@p", [T01 · % do candidato na UF]
+)
+RETURN
+    MAXX ( TOPN ( 1, _ufs, [@p], DESC, 'UF'[Nome], ASC ), 'UF'[Nome] )

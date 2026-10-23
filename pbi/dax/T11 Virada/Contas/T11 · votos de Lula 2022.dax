@@ -1,0 +1,10 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Votos de Lula (PT) em 2022, somados no recorte (sem o exterior).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+CALCULATE (
+    SUM ( 'Município ano'[VotosPT] ),
+    'Município ano'[Ano] = 2022
+)

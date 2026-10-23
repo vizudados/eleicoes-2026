@@ -1,0 +1,16 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: 0
+@descricao: Em quantas das seis eleições (2006–2026) o PT ficou à frente no contexto (dossiê do município).
+*/
+COALESCE (
+    COUNTROWS (
+        FILTER (
+            VALUES ( 'Ano'[Ano] ),
+            CALCULATE (
+                SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] )
+            ) > 0
+        )
+    ),
+    0
+)

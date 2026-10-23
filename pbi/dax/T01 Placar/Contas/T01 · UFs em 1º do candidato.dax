@@ -1,0 +1,29 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0
+@descricao: Em quantas das 27 UFs o candidato do item foi o mais votado (no Brasil todo, sem o filtro).
+@oraculo: Flávio 18 · Lula 9 (soma 27)
+*/
+VAR _cand = SELECTEDVALUE ( 'Candidato UF'[Candidato] )
+VAR _ufs =
+    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" )
+VAR _lider =
+    ADDCOLUMNS (
+        _ufs,
+        "@lider",
+            CALCULATE (
+                MAXX (
+                    TOPN (
+                        1,
+                        ADDCOLUMNS (
+                            CALCULATETABLE ( VALUES ( 'Candidato UF'[Candidato] ), REMOVEFILTERS ( 'Candidato UF'[Candidato] ) ),
+                            "@v", [T01 · votos do candidato]
+                        ),
+                        [@v], DESC
+                    ),
+                    'Candidato UF'[Candidato]
+                )
+            )
+    )
+RETURN
+    IF ( NOT ISBLANK ( _cand ), COUNTROWS ( FILTER ( _lider, [@lider] = _cand ) ) + 0 )

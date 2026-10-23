@@ -1,0 +1,10 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0
+@descricao: Primeira eleição com votos no município (2006, salvo municípios novos).
+@gerado: pbi/scripts/desenho_t15.py
+*/
+MINX (
+    FILTER ( ALL ( 'Ano'[Ano] ), NOT ISBLANK ( [T15 · margem no ano] ) ),
+    'Ano'[Ano]
+)

@@ -1,0 +1,11 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê do município.
+*/
+LEFT (
+    [T03 · município] & ": Lula " & FORMAT ( [T03 · % (municípios)], "0.0%" ) & " e Flávio "
+        & FORMAT ( [T03 · adversário % (municípios)], "0.0%" ) & " em 2026; margem do PT de "
+        & FORMAT ( [T03 · margem 2022] * 100, "+0.0;−0.0;0.0" ) & " para " & FORMAT ( [T03 · margem] * 100, "+0.0;−0.0;0.0" ) & " pontos.",
+    250
+)

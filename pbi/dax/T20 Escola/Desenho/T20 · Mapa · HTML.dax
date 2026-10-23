@@ -1,0 +1,37 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: Um ponto do mapa de Contagem (granularidade: T20 Local[Local]): posição PX/PY, tamanho pelos votos válidos, cor pela margem de 2026; brota em onda do oeste para o leste.
+*/
+-- 1 · Leituras
+VAR _px = [T20 · posição x]
+VAR _py = [T20 · posição y]
+VAR _val = [T20 · válidos 2026]
+VAR _maior = [T20 · maior válidos]
+VAR _m26 = [T20 · margem 2026]
+-- 2 · Textos
+VAR _cor =
+    SWITCH (
+        TRUE (),
+        _m26 < -0.2, "#1D3C6E",
+        _m26 < -0.1, "#2B5797",
+        _m26 < -0.03, "#6F8DBE",
+        _m26 < 0.0, "#A9B8CF",
+        _m26 < 0.03, "#E2B3A9",
+        _m26 < 0.1, "#D9877B",
+        "#B8322A"
+    )
+-- 3 · Geometria
+VAR _d = 7 + 15 * SQRT ( DIVIDE ( _val, _maior ) ) -- geometria
+VAR _x = _px / 100 * 692 - _d / 2 -- geometria
+VAR _y = _py / 100 * 860 - _d / 2 -- geometria
+VAR _atraso = 1700 + ROUND ( _px * 14, 0 ) -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _px ),
+        "<div class='tela t20p'><i class='pt' style='left:" & FORMAT ( _x, "0.0##", "en-US" ) & "px;top:"
+            & FORMAT ( _y, "0.0##", "en-US" ) & "px;width:" & FORMAT ( _d, "0.0##", "en-US" ) & "px;height:"
+            & FORMAT ( _d, "0.0##", "en-US" ) & "px;background:" & _cor & ";animation-delay:" & _atraso & "ms'></i>"
+        & "</div>"
+    )

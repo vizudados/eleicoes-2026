@@ -1,0 +1,9 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0
+@descricao: No município da linha: 1 = à frente nos dois anos · 2 = estava à frente em 2022 e ficou atrás em 2026 · 3 = virou a favor · 4 = atrás nos dois anos.
+*/
+VAR _m22 = [T03 · margem 2022]
+VAR _m26 = [T03 · margem]
+RETURN
+    SWITCH ( TRUE (), _m22 > 0 && _m26 > 0, 1, _m22 > 0, 2, _m26 > 0, 3, 4 )

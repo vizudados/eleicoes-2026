@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: #,0
+@descricao: Municípios no recorte da tela (segmentações e seleção na dispersão). Sem filtro, os 5.571.
+@oraculo: 5.571 (Explorador › padrao.recorte_txt)
+*/
+COALESCE (
+    COUNTROWS ( 'Município' ),
+    0
+)

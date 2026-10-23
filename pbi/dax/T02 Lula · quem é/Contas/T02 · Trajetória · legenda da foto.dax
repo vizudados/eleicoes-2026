@@ -1,0 +1,18 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: texto
+@descricao: Onde e quando a foto original do marco da linha foi feita (pode ser de outro momento que o do marco). Fonte: dados/bruto/trajetoria/desenhos.csv.
+*/
+VAR _f = [T02 · Trajetória · foto]
+RETURN
+    SWITCH (
+        _f,
+"lula-1986-constituinte", "Assembleia Nacional Constituinte, Brasília, 1987–1988 (foto de arquivo)",
+"lula-2002-posse", "Posse no Palácio do Planalto, Brasília, 1º de janeiro de 2003",
+"lula-2006-reeleicao", "Depois de votar no 2º turno, São Bernardo do Campo (SP), 29 de outubro de 2006",
+"lula-2018-prisao", "Carregado por apoiadores, São Bernardo do Campo (SP), 7 de abril de 2018",
+"lula-2021-anulacao", "Encontro com movimentos sociais em Pernambuco, 16 de agosto de 2021",
+"lula-2022-eleicao", "Noite da eleição na Av. Paulista, São Paulo, 30 de outubro de 2022",
+"lula-2026-primeiro-turno", "Pronunciamento após o 1º turno, São Paulo, 4 de outubro de 2026",
+        BLANK ()
+    )

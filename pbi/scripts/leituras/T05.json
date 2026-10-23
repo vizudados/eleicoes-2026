@@ -1,0 +1,6 @@
+{"titulo": "Como ler o mapa dos votos de Flávio",
+ "blocos": [
+  ["Como ler", "Cada ponto do mapa é um município: quanto maior, mais votos de Flávio; azul onde ele ficou à frente (mais escuro, maior a vantagem), areia onde Lula ficou à frente. Passe o mouse num ponto para ver a cidade em 2022 e 2026. Escolha uma UF no filtro para aproximar o mapa."],
+  ["De onde vêm os números", "TSE, votação por município no 1º turno de 2022 e 2026 (arquivos de 22/10/2026), e IBGE, Censo 2022 (população). O % e os votos do topo seguem o resultado oficial; regiões e municípios somam as urnas do Brasil, sem o exterior."],
+  ["Para lembrar", "Margem é a diferença entre os votos de Flávio e os de Lula, dividida pelos votos válidos do lugar. Em 2022, o PL concorreu com Jair Bolsonaro: a comparação com 2022 é a do partido."]
+ ]}

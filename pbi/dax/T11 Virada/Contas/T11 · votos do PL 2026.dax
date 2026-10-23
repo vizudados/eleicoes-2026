@@ -1,0 +1,10 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Votos do adversário do PL em 2026 (Flávio Bolsonaro), somados no recorte.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+CALCULATE (
+    SUM ( 'Município ano'[VotosAdversario] ),
+    'Município ano'[Ano] = 2026
+)

@@ -1,0 +1,6 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: #,0
+@descricao: Votos válidos de 2022 somados nos municípios (sem o exterior).
+*/
+CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2022 )

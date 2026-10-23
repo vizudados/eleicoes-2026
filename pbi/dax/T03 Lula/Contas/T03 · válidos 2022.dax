@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: Votos válidos do 1º turno de 2022 no recorte.
+*/
+CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2022 )

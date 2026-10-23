@@ -54,5 +54,42 @@
         }
       }
     ]
-  }
+  },
+  "visualInteractions": [
+    {
+      "source": "T22_Pesquisas_Html",
+      "target": "T22_Heroi_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Pesquisas_Html",
+      "target": "T22_ReguaAbst_Botoes",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Pesquisas_Html",
+      "target": "T22_ReguaAbst_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Pesquisas_Html",
+      "target": "T22_ReguaComp_Botoes",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Pesquisas_Html",
+      "target": "T22_ReguaComp_Html",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Pesquisas_Html",
+      "target": "T22_ReguaLula_Botoes",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T22_Pesquisas_Html",
+      "target": "T22_ReguaLula_Html",
+      "type": "NoFilter"
+    }
+  ]
 }

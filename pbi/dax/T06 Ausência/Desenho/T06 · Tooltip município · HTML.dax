@@ -1,0 +1,48 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Dossiê do município do ponto (ficha presa com fita): a abstenção em 2026 e em 2006, quantas pessoas faltaram e a comparação com o Brasil. Só lê contas.
+*/
+-- 1 · Leituras
+VAR _mun = [T06 · município]
+VAR _reg = [T06 · região do município]
+VAR _p26 = [T06 · abstenção % (município)]
+VAR _p06 = [T06 · abstenção % 2006 (município)]
+VAR _n = [T06 · abstenções (município)]
+VAR _aptos = [T06 · aptos (município)]
+VAR _um = [T06 · um em cada (município)]
+VAR _br = [T06 · abstenção % Brasil]
+-- 2 · Textos
+VAR _nota = IF ( _um > 0, "1 em cada " & _um & " faltou", "" )
+VAR _compara = IF ( _p26 > _br, "acima", IF ( _p26 < _br, "abaixo", "igual" ) )
+-- 4 · Marcação
+VAR _css =
+    "<style>"
+        & ".tt6{position:fixed;inset:0;background:var(--papel)}"
+        & ".tt6 .ficha{position:absolute;left:14px;top:22px;right:14px;bottom:14px;background:var(--branco);"
+        & "border:1.5px solid var(--areia);box-shadow:3px 4px 0 rgba(28,25,21,.07)}"
+        & ".tt6 .fita{position:absolute;left:150px;top:-16px;width:96px;transform:rotate(3deg);opacity:.9}"
+        & ".tt6 .ic{position:absolute;right:16px;top:14px;width:34px}"
+        & ".tt6 .cab{position:absolute;left:18px;top:14px;right:60px}"
+        & ".tt6 .nm{font-size:22px;font-weight:700;line-height:1.15}"
+        & ".tt6 .big{position:absolute;left:18px;top:82px;font-size:44px;font-weight:700;letter-spacing:-.03em}"
+        & ".tt6 .bs{position:absolute;left:178px;top:90px;right:18px;font-size:15px;color:var(--grafite);line-height:1.35}"
+        & ".tt6 .lin{position:absolute;left:18px;right:18px;top:150px;border-top:1px dashed var(--areia);"
+        & "padding-top:8px;font-size:15px;color:var(--grafite)}.tt6 .lin b{color:var(--tinta)}"
+        & ".tt6 .mao{position:absolute;right:18px;bottom:8px;font-size:28px;color:var(--tinta)}"
+    & "</style>"
+VAR _html =
+    _css
+        & "<div class='tt6'><div class='ficha'>"
+        & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/>"
+        & "<img class='ic' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/urna-tinta.png'/>"
+        & "<div class='cab sobe'><div class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mun, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & FORMAT ( _aptos, "#,0" ) & " eleitores</div></div>"
+        & "<div class='big sobe d1'>" & FORMAT ( _p26, "0.0%" ) & "</div>"
+        & "<div class='bs sobe d2'>não foram votar em 2026: <b>" & FORMAT ( _n, "#,0" ) & "</b> pessoas</div>"
+        & "<div class='lin sobe d3'>Em 2006: <b>" & FORMAT ( _p06, "0.0%" ) & "</b> · " & _compara & " da média do Brasil em 2026 (<b>"
+        & FORMAT ( _br, "0.0%" ) & "</b>)</div>"
+        & "<div class='mao entra d5'>" & _nota & "</div>"
+        & "</div></div>"
+RETURN
+    IF ( NOT ISBLANK ( _mun ) && NOT ISBLANK ( _aptos ), _html )

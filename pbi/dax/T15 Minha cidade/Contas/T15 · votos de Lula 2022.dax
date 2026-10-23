@@ -1,0 +1,8 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: #,0
+@descricao: Votos de Lula (PT) em 2022 no município.
+@oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › votos › lula22
+@gerado: pbi/scripts/desenho_t15.py
+*/
+CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Ano'[Ano] = 2022 )

@@ -1,0 +1,8 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0.0%
+@descricao: Votos de Jair Bolsonaro sobre os válidos em 2022.
+@oraculo: mockup/data/eleicoes.json › paginas[12] › ufs › flavio26_txt
+@gerado: pbi/scripts/desenho_t12.py
+*/
+DIVIDE ( [T12 · votos do PL 2022], [T12 · válidos 2022] )

@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: 0.0
+@descricao: Quantas vezes a diferença entre Flávio e Lula cabe nas abstenções de 2026, no recorte.
+@oraculo: paginas[6].vezes_a_diferenca = 15
+*/
+DIVIDE ( [T06 · abstenções], [T06 · diferença Flávio Lula] )

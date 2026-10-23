@@ -1,0 +1,10 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Locais de 2026 em que Flávio teve mais votos que Lula.
+@oraculo: 112 − 12 = 100
+*/
+COALESCE (
+    COUNTROWS ( FILTER ( 'T20 Local', 'T20 Local'[VotosPT2026] < 'T20 Local'[VotosAdv2026] ) ),
+    0
+)

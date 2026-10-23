@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: #,0
+@descricao: Eleitores aptos no 1º turno de 2026, no recorte.
+@oraculo: paginas[6].serie[2026].aptos_txt = 158,7 mi
+*/
+CALCULATE ( [T06 · aptos (ano)], 'Ano'[Ano] = 2026 )

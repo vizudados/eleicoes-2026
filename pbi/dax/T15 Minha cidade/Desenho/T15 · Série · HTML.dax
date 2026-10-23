@@ -1,0 +1,55 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Uma entrada por eleição (granularidade Ano): a barra da margem do PT na cidade (para cima, PT à frente; para baixo, o adversário), o valor, o ano e os percentuais. Na de 2026, a nota à mão com a mudança desde 2022.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _ok = [T15 · cidade escolhida]
+VAR _ano = [T15 · ano]
+VAR _m = [T15 · margem no ano]
+VAR _pt = [T15 · PT % no ano]
+VAR _adv = [T15 · adversário % no ano]
+VAR _esc = [T15 · maior margem absoluta]
+VAR _var = [T15 · variação]
+VAR _troca = [T15 · última troca de lado]
+-- 2 · Textos
+VAR _cls = IF ( _m < 0, "adv", "pt" )
+VAR _nota =
+    IF (
+        _ano = 2026 && NOT ISBLANK ( _var ),
+        "<div class='mao nt entra' style='left:" & FORMAT ( 84 + 5 * 168 - 290, "0", "en-US" ) & "px;top:"
+            & IF ( _m >= 0, "200", "34" ) & "px'>" & IF ( _var < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _var ) * 100, "0.0" )
+            & " desde 2022</div>"
+    )
+VAR _virou =
+    IF ( _ano = _troca, "<div class='mao vr entra' style='left:{X}px;top:{Y}px'>virou aqui</div>" )
+-- 3 · Geometria (anos a cada 168 px; barra de 100 px; zero em y 160; maior margem = 110 px)
+VAR _i = ( _ano - 2006 ) / 4
+VAR _xc = 84 + _i * 168
+VAR _h = 110 * ABS ( _m ) / MAX ( _esc, 0.02 )
+VAR _top = IF ( _m >= 0, 160 - _h, 160 )
+VAR _yRot = IF ( _m >= 0, 160 - _h - 32, 160 + _h + 4 )
+-- 4 · Marcação
+RETURN
+    IF (
+        _ok = 1 && NOT ISBLANK ( _m ),
+        "<div class='tela br'>"
+            & "<div class='alvo' style='left:" & FORMAT ( _xc - 80, "0.0", "en-US" ) & "px'></div>"
+            & "<div class='bar " & _cls & IF ( _m >= 0, " barra-y", " desce" ) & "' style='left:"
+                & FORMAT ( _xc - 50, "0.0", "en-US" ) & "px;top:" & FORMAT ( _top, "0.0", "en-US" ) & "px;height:"
+                & FORMAT ( MAX ( _h, 1.5 ), "0.0", "en-US" ) & "px;animation-delay:" & ( 200 + _i * 120 ) & "ms'></div>"
+            & "<div class='vl " & _cls & " sobe' style='left:" & FORMAT ( _xc - 70, "0.0", "en-US" ) & "px;top:"
+                & FORMAT ( _yRot, "0.0", "en-US" ) & "px;animation-delay:" & ( 500 + _i * 120 ) & "ms'>" & FORMAT ( _m * 100, "+0.0;−0.0;0.0" )
+                & "</div>"
+            & "<div class='xl' style='left:" & FORMAT ( _xc - 84, "0.0", "en-US" ) & "px'><b>" & _ano & "</b><span>"
+                & FORMAT ( _pt, "0.0%" ) & " × " & FORMAT ( _adv, "0.0%" ) & "</span></div>"
+            & IF ( _ano = 2006, "<div class='zero'></div>", "" )
+            & _nota
+            & SUBSTITUTE (
+                SUBSTITUTE ( _virou, "{X}", FORMAT ( _xc - 46, "0.0", "en-US" ) ),
+                "{Y}",
+                FORMAT ( IF ( _m >= 0, _yRot - 30, _yRot + 30 ), "0.0", "en-US" )
+            )
+        & "</div>"
+    )

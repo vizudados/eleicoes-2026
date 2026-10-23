@@ -1,0 +1,11 @@
+/*
+@pasta: T04 Flávio · quem é\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da ficha.
+*/
+LEFT (
+    "Flávio Bolsonaro, na vida pública desde " & [T04 · Trajetória · primeiro ano] & ". No 1º turno de 2026, "
+        & SWITCH ( TRUE (), ABS ( [T04 · votos 2026] ) >= 1000000, FORMAT ( [T04 · votos 2026] / 1000000, "0.00" ) & " mi", ABS ( [T04 · votos 2026] ) >= 1000, FORMAT ( [T04 · votos 2026] / 1000, "0.0" ) & " mil", FORMAT ( [T04 · votos 2026], "#,0" ) ) & " de votos (" & FORMAT ( [T04 · % 2026], "0.0%" ) & "), "
+        & [T04 · posição 2026] & "º lugar.",
+    250
+)

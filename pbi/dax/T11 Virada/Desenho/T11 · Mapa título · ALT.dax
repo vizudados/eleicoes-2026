@@ -1,0 +1,20 @@
+/*
+@pasta: T11 Virada\Desenho
+@formato: texto
+@descricao: Texto alternativo do título do mapa.
+@gerado: pbi/scripts/desenho_t11.py
+*/
+-- 1 · Leituras
+VAR _vir = [T11 · viraram]
+VAR _uf = [T11 · recorte]
+VAR _r1 = [T11 · região com mais viradas]
+VAR _r2 = [T11 · segunda região com mais viradas]
+VAR _n2 = [T11 · viraram nas duas regiões]
+-- 2 · Textos
+RETURN
+    IF (
+        ISBLANK ( _uf ),
+        "A virada se concentra em " & _r1 & " e " & _r2 & ": " & FORMAT ( _n2, "#,0" ) & " dos "
+            & FORMAT ( _vir, "#,0" ) & " municípios que trocaram de lado.",
+        _uf & ": " & FORMAT ( _vir, "#,0" ) & " municípios trocaram Lula por Flávio."
+    )

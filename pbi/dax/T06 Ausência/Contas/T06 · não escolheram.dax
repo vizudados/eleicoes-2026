@@ -1,0 +1,7 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: #,0
+@descricao: Abstenções + brancos + nulos em 2026, no recorte: quem não escolheu nenhum candidato.
+@oraculo: paginas[6].nao_escolheram_2026_txt = 39,4 mi
+*/
+[T06 · abstenções] + [T06 · brancos] + [T06 · nulos]

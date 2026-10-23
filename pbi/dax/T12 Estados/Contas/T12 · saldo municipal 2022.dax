@@ -1,0 +1,10 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: #,0
+@descricao: Votos de Lula menos os do adversário em 2022, pelos municípios (sem exterior).
+@gerado: pbi/scripts/desenho_t12.py
+*/
+CALCULATE (
+    SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ),
+    'Município ano'[Ano] = 2022
+)

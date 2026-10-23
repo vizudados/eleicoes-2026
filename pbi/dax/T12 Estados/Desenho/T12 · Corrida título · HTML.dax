@@ -1,0 +1,27 @@
+/*
+@pasta: T12 Estados\Desenho
+@formato: texto
+@descricao: Título da corrida das unidades: a direção das setas e a legenda.
+@gerado: pbi/scripts/desenho_t12.py
+*/
+-- 1 · Leituras
+VAR _nSubiu = [T12 · unidades onde a margem subiu]
+VAR _subiu = [T12 · onde a margem subiu]
+-- 2 · Textos
+VAR _man =
+    SWITCH (
+        TRUE (),
+        _nSubiu = 0, "Todas as setas apontam para a esquerda, a direção do adversário",
+        _nSubiu = 1, "Quase todas as setas vão para a esquerda; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
+            & _subiu & " foi na direção de Lula",
+        "A maioria das setas vai para a esquerda; " & FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula"
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t12t'>"
+        & "<div class='rot entra'>MARGEM DE LULA EM CADA UNIDADE · 2022 → 2026, DA MAIOR QUEDA À ALTA</div>"
+        & "<div class='man sobe d1'>" & _man & "</div>"
+        & "<div class='leg entra d3'><span><i class='o'></i>2022</span><span><i class='f vm'></i><i class='f az'></i>"
+            & "2026: vermelho, Lula à frente; azul, Flávio</span><span><i class='mud'></i>mudou de lado</span>"
+            & "<span class='dir'>variação, em pontos</span></div>"
+    & "</div>"

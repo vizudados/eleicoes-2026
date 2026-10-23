@@ -1,0 +1,8 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0.0%
+@descricao: Variação da margem de Lula no Brasil, 2022 → 2026, com o exterior.
+@oraculo: +5,2 → −1,9 = −7,1 p.p. (motor)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+[T12 · margem do Brasil 2026] - [T12 · margem do Brasil 2022]

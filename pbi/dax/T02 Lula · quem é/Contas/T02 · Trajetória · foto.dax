@@ -1,0 +1,6 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: texto
+@descricao: Nome do desenho da foto do marco da linha; vazio quando não há foto livre.
+*/
+SELECTEDVALUE ( 'Trajetória'[Foto] )

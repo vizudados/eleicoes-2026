@@ -1,0 +1,7 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Bairro do local.
+@oraculo: mockup/data/eleicoes.json › Escola › bairro
+*/
+SELECTEDVALUE ( 'T20 Local'[Bairro] )

@@ -1,0 +1,8 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: PT % menos adversário % no ano do contexto (negativo: o PT atrás).
+@oraculo: mockup/data/eleicoes.json › paginas[14] › anos › pt_na_frente
+@gerado: pbi/scripts/desenho_t14.py
+*/
+[T14 · PT %] - [T14 · adversário %]

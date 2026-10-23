@@ -1,0 +1,6 @@
+{"titulo": "Do país à escola: Contagem, local por local",
+ "blocos": [
+  ["Como ler", "Cada ponto é um local de votação, quase sempre uma escola: vermelho onde Lula ficou à frente em 2026, azul onde foi Flávio; quanto mais forte a cor, maior a vantagem. Passe o mouse num ponto para ver o post-it da escola e clique para levá-la à ficha. A margem é a diferença entre Lula e o adversário, em pontos dos votos válidos."],
+  ["De onde vêm os números", "Votos de presidente no 1º turno, por seção, do TSE, somados por local de votação, e o cadastro de locais de 2022 para o endereço. Em 2018 e 2022 entram os votos do mesmo local (zona e número); locais novos ficam sem a comparação."],
+  ["Para lembrar", "Em 2022 Contagem votou em 111 locais; em 2026, em 112. Dois locais novos (Escola Estadual Boa Vista e Cefet) ainda não têm endereço no mapa e só aparecem no filtro."]
+ ]}

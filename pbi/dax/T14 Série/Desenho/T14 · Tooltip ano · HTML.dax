@@ -1,0 +1,49 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Dossiê da eleição no tooltip da série: os quatro mais votados no Brasil (com o exterior), a colocação do PT e a abstenção. Só lê contas.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+-- 1 · Leituras
+VAR _ano = [T14 · ano]
+VAR _pos = [T14 · posição do PT]
+VAR _abs = [T14 · abstenção]
+VAR _cand =
+    TOPN (
+        4,
+        ADDCOLUMNS (
+            VALUES ( 'Candidato ano'[Candidato] ),
+            "@v", [T14 · votos do candidato],
+            "@p", [T14 · % do candidato],
+            "@pa", [T14 · partido do candidato]
+        ),
+        [@v], DESC,
+        'Candidato ano'[Candidato], ASC
+    )
+-- 2 · Textos
+VAR _selo = "PT EM " & FORMAT ( _pos, "0" ) & "º"
+VAR _clsSelo = IF ( _pos = 1, "selo vm", "selo az" )
+VAR _mao = IF ( _pos = 1, "o PT venceu o 1º turno", "o PT ficou em " & FORMAT ( _pos, "0" ) & "º" )
+-- 3 · Geometria e 4 · Marcação (barras: 60% = 140 px)
+VAR _maxOutro = MAXX ( FILTER ( _cand, [@pa] <> "PT" ), [@v] ) /* lista */
+VAR _linhas =
+    CONCATENATEX (
+        _cand,
+        VAR _cor = SWITCH ( TRUE (), [@pa] = "PT", "pt", [@v] = _maxOutro, "adv", "o" )
+        VAR _w = MIN ( 140, 140 * [@p] / 0.6 )
+        RETURN
+            "<div class='cl'><span class='nm'>" & 'Candidato ano'[Candidato] & " <i>" & [@pa] & "</i></span>"
+                & "<span class='tr'><b class='barra-x " & _cor & "' style='width:" & FORMAT ( _w, "0.0", "en-US" )
+                & "px'></b></span><span class='pc'>" & FORMAT ( [@p], "0.0%" ) & "</span></div>",
+        "",
+        [@v], DESC
+    )
+RETURN
+    "<div class='tela tt14'><div class='fita'></div>"
+        & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
+        & "<div class='an sobe'>" & _ano & " · 1º turno</div>"
+        & "<div class='rot entra d1'>OS MAIS VOTADOS NO BRASIL</div>"
+        & "<div class='lista entra d2'>" & _linhas & "</div>"
+        & "<div class='nota entra d4'>Faltaram " & FORMAT ( _abs, "0.0%" ) & " dos eleitores. Votos válidos, com o exterior.</div>"
+        & "<div class='mao entra d6'>" & _mao & "</div>"
+    & "</div>"

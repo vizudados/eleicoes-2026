@@ -1,0 +1,15 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0
+@descricao: UFs (as 27, sem o exterior) em que Lula fica à frente no cenário.
+@oraculo: mockup/data/eleicoes.json › Simulador › cenarios[].ufs_lula (13 com o exterior → 12 UFs)
+*/
+COALESCE (
+    COUNTROWS (
+        FILTER (
+            CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" ),
+            [T22 · cenário · votos de Lula] > [T22 · cenário · votos de Flávio]
+        )
+    ),
+    0
+)

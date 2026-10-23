@@ -1,0 +1,6 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: #,0
+@descricao: Votos de Lula em 2026 somados nos municípios do contexto (sem o exterior).
+*/
+CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = 2026 )

@@ -1,0 +1,10 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: #,0
+@descricao: Municípios do recorte com votos em 2022 e em 2026 (a base da variação; 5.570 sem filtro: Boa Esperança do Norte é de 2025).
+@oraculo: manchete da dispersão
+*/
+COALESCE (
+    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), NOT ISBLANK ( [T19 · variação da margem] ) ) ),
+    0
+)

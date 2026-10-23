@@ -1,0 +1,54 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: A régua do controle principal: a barra dividida (Lula à esquerda, Flávio à direita) na posição escolhida, a marca do empate e a faixa onde caem as pesquisas.
+*/
+-- 1 · Leituras
+VAR _a = [T22 · parte para Lula]
+VAR _emp = [T22 · empate com a abstenção escolhida]
+VAR _min = [T22 · pesquisas · menor parte para Lula]
+VAR _max = [T22 · pesquisas · maior parte para Lula]
+VAR _n = [T22 · pesquisas · quantas]
+VAR _pesq0 =
+    ADDCOLUMNS (
+        VALUES ( 'Transferência'[Instituto] ),
+        "@d", [T22 · pesquisa · data],
+        "@a", [T22 · pesquisa · parte para Lula entre os que votam]
+    ) /* lista */
+VAR _pesq = FILTER ( _pesq0, NOT ISBLANK ( [@d] ) ) /* lista */
+-- 2 · Textos
+VAR _txtA = FORMAT ( _a * 100, "0" ) & "% Lula"
+VAR _txtF = FORMAT ( ( 1 - _a ) * 100, "0" ) & "% Flávio"
+VAR _txtEmp = "empate: " & FORMAT ( _emp * 100, "0" ) & "%"
+VAR _txtFaixa =
+    "as " & _n & " pesquisas: de " & FORMAT ( _min * 100, "0" ) & "% a " & FORMAT ( _max * 100, "0" ) & "%"
+-- 3 · Geometria
+VAR _xa = 30 + _a * 100 * 8.0 -- geometria
+VAR _xe = 30 + MIN ( 1, _emp ) * 100 * 8.0 -- geometria
+VAR _x0 = 30 + _min * 100 * 8.0 -- geometria
+VAR _x1 = 30 + _max * 100 * 8.0 -- geometria
+VAR _marcas =
+    CONCATENATEX (
+        _pesq,
+        "<i class='pq' style='left:" & FORMAT ( 30 + [@a] * 100 * 8.0 - 1, "0.0##", "en-US" ) & "px'></i>",
+        ""
+    ) /* lista */
+-- 4 · Marcação
+RETURN
+    "<div class='tela t22a'>"
+        & "<div class='pergunta sobe'>Dos eleitores dos outros candidatos que forem votar, quantos escolhem Lula?</div>"
+        & "<div class='barra entra d2'>"
+            & "<i class='l' style='width:" & FORMAT ( _xa - 30, "0.0##", "en-US" ) & "px'></i>"
+            & "<i class='f' style='left:" & FORMAT ( _xa - 30, "0.0##", "en-US" ) & "px;width:"
+            & FORMAT ( 830 - _xa, "0.0##", "en-US" ) & "px'></i>"
+            & "<span class='tl'>" & IF ( _a >= 0.12, _txtA, "" ) & "</span>"
+            & "<span class='tf'>" & IF ( _a <= 0.88, _txtF, "" ) & "</span>"
+        & "</div>"
+        & "<i class='alca' style='left:" & FORMAT ( _xa - 16, "0.0##", "en-US" ) & "px'></i>"
+        & "<i class='emp' style='left:" & FORMAT ( _xe - 1, "0.0##", "en-US" ) & "px'></i>"
+        & "<span class='emp-t mao' style='left:" & FORMAT ( _xe - 4, "0.0##", "en-US" ) & "px'>" & _txtEmp & "</span>"
+        & "<i class='faixa entra d4' style='left:" & FORMAT ( _x0, "0.0##", "en-US" ) & "px;width:"
+        & FORMAT ( _x1 - _x0, "0.0##", "en-US" ) & "px'></i>" & _marcas
+        & "<span class='faixa-t entra d5' style='left:" & FORMAT ( _x0, "0.0##", "en-US" ) & "px'>" & _txtFaixa
+        & "</span>"
+    & "</div>"

@@ -1,0 +1,19 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0
+@descricao: Quantas vezes o município trocou de lado de uma eleição para a seguinte.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+VAR _t =
+    ADDCOLUMNS ( ALL ( 'Ano'[Ano] ), "@m", [T15 · margem no ano] )
+VAR _trocas =
+    FILTER (
+        _t,
+        VAR _a = 'Ano'[Ano]
+        VAR _m = [@m]
+        VAR _ant = MAXX ( FILTER ( _t, 'Ano'[Ano] = _a - 4 ), [@m] )
+        RETURN
+            NOT ISBLANK ( _ant ) && NOT ISBLANK ( _m ) && _m <> 0 && _ant <> 0 && SIGN ( _ant ) <> SIGN ( _m )
+    )
+RETURN
+    COUNTROWS ( _trocas ) + 0

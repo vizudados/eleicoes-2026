@@ -1,0 +1,10 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê do município (abstenção).
+*/
+LEFT (
+    [T06 · município] & ": " & FORMAT ( [T06 · abstenção % (município)], "0.0%" ) & " não foram votar em 2026 ("
+        & FORMAT ( [T06 · abstenções (município)], "#,0" ) & " pessoas); em 2006, " & FORMAT ( [T06 · abstenção % 2006 (município)], "0.0%" ) & ".",
+    250
+)

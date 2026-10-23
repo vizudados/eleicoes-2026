@@ -1,0 +1,9 @@
+/*
+@pasta: T22 Simulador\Contas
+@formato: 0.0%
+@descricao: Na pesquisa em uso, dos eleitores dos outros que vão votar em alguém, a parte que escolhe Lula (o número que a régua do controle compara).
+*/
+DIVIDE (
+    [T22 · cenário · votos que Lula ganha],
+    [T22 · cenário · votos que Lula ganha] + [T22 · cenário · votos que Flávio ganha]
+)

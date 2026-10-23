@@ -1,0 +1,12 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela da coluna do resumo.
+*/
+LEFT (
+    "Lula, " & [T03 · recorte] & ": " & FORMAT ( [T03 · %], "0.0%" ) & " dos válidos, " & SWITCH ( TRUE (), ABS ( [T03 · votos] ) >= 1000000, FORMAT ( [T03 · votos] / 1000000, "0.00" ) & " mi", ABS ( [T03 · votos] ) >= 1000, FORMAT ( [T03 · votos] / 1000, "0.0" ) & " mil", FORMAT ( [T03 · votos], "#,0" ) )
+        & " de votos; à frente em " & [T03 · municípios à frente] & " de " & [T03 · municípios]
+        & IF ( [T03 · municípios] = 1, " município", " municípios" ) & ". Mais forte: " & [T03 · lugar mais forte]
+        & "; mais fraco: " & [T03 · lugar mais fraco] & ".",
+    250
+)

@@ -1,0 +1,10 @@
+/*
+@pasta: T11 Virada\Contas
+@formato: #,0
+@descricao: Votos válidos em 2026, somados no recorte (sem o exterior).
+@gerado: pbi/scripts/desenho_t11.py
+*/
+CALCULATE (
+    SUM ( 'Município ano'[Validos] ),
+    'Município ano'[Ano] = 2026
+)

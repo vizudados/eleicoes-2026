@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: Texto alternativo do anel do local escolhido.
+*/
+"Local em destaque no mapa: " & [T20 · local escolhido]

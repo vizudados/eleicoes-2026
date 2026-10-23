@@ -1,0 +1,118 @@
+/*
+@pasta: T15 Minha cidade\Desenho
+@formato: texto
+@descricao: Ficha da cidade escolhida: quem venceu e com quanto, a manchete da mudança desde 2022, os dados da cidade e os votos de Lula e do PL em 2022 e 2026. Sem cidade escolhida, o convite para escolher. Só lê contas.
+@gerado: pbi/scripts/desenho_t15.py
+*/
+-- 1 · Leituras
+VAR _ok = [T15 · cidade escolhida]
+VAR _cid = [T15 · cidade]
+VAR _uf = [T15 · UF da cidade]
+VAR _pop = [T15 · população]
+VAR _renda = [T15 · renda per capita]
+VAR _porte = [T15 · porte]
+VAR _quinto = [T15 · quinto de renda]
+VAR _l26 = [T15 · Lula % 2026]
+VAR _p26 = [T15 · PL % 2026]
+VAR _m26 = [T15 · margem 2026]
+VAR _var = [T15 · variação]
+VAR _vl22 = [T15 · votos de Lula 2022]
+VAR _vl26 = [T15 · votos de Lula 2026]
+VAR _vp22 = [T15 · votos do PL 2022]
+VAR _vp26 = [T15 · votos do PL 2026]
+VAR _dl = [T15 · variação de votos de Lula]
+VAR _dp = [T15 · variação de votos do PL]
+VAR _m22 = [T15 · margem 2022]
+VAR _ufNome = [T15 · nome da UF]
+VAR _u22 = [T15 · margem 2022 na UF]
+VAR _u26 = [T15 · margem 2026 na UF]
+VAR _b22 = [T15 · margem do Brasil 2022]
+VAR _b26 = [T15 · margem do Brasil 2026]
+-- 2 · Textos
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cid, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
+VAR _flavio = _m26 < 0
+VAR _empate = _m26 = 0
+VAR _venc = IF ( _flavio, "Flávio", "Lula" )
+VAR _pVenc = IF ( _flavio, _p26, _l26 )
+VAR _clsVenc = IF ( _flavio, "flavio", "lula" )
+VAR _txtVenc = IF ( _flavio, "para Flávio Bolsonaro", "para Lula" )
+VAR _txtOutro =
+    IF ( _flavio, "<span class='lula'>Lula " & FORMAT ( _l26, "0.0%" ) & "</span>",
+        "<span class='flavio'>Flávio " & FORMAT ( _p26, "0.0%" ) & "</span>" )
+VAR _txtMuda =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _var ), "a cidade não votou em 2022",
+        _var < 0, "a margem de Lula caiu " & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p. desde 2022",
+        _var > 0, "a margem de Lula subiu " & FORMAT ( _var * 100, "0.0" ) & " p.p. desde 2022",
+        "a margem de Lula ficou igual à de 2022"
+    )
+VAR _man =
+    IF (
+        _empate,
+        "Em " & _nome & ", Lula e Flávio empataram; " & _txtMuda,
+        "Em " & _nome & ", " & _venc & " venceu com " & FORMAT ( _pVenc, "0.0%" ) & "; " & _txtMuda
+    )
+VAR _txtQuinto =
+    SWITCH ( _quinto, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres",
+        "no " & _quinto & " de renda" )
+VAR _fatos =
+    _nome & " (" & _uf & ") · " & FORMAT ( _pop, "#,0" ) & " habitantes · renda por pessoa de R$ "
+        & FORMAT ( _renda, "#,0" ) & " por mês · porte " & _porte & " · " & _txtQuinto
+VAR _fmtD = "+#,0;−#,0;0"
+-- 3 · Geometria (três mini setas num eixo de ±escala em 300 px, zero em x 150)
+VAR _esc = MAX ( 0.08, MAX ( MAX ( ABS ( _m22 ), ABS ( _m26 ) ), MAX ( MAX ( ABS ( _u22 ), ABS ( _u26 ) ), MAX ( ABS ( _b22 ), ABS ( _b26 ) ) ) ) * 1.15 ) /* geometria */
+VAR _comp =
+    CONCATENATEX (
+        DATATABLE (
+            "o", INTEGER,
+            {
+                { 1 }, { 2 }, { 3 }
+            }
+        ),
+        VAR _o = [o]
+        VAR _rot = SWITCH ( _o, 1, _nome, 2, _ufNome, "Brasil" )
+        VAR _sub = SWITCH ( _o, 1, "a cidade", 2, "o estado", "o país, com o exterior" )
+        VAR _a = SWITCH ( _o, 1, _m22, 2, _u22, _b22 )
+        VAR _b = SWITCH ( _o, 1, _m26, 2, _u26, _b26 )
+        VAR _xa = 150 + 140 * _a / _esc
+        VAR _xb = 150 + 140 * _b / _esc
+        VAR _cor = IF ( _b < 0, "var(--azul)", "var(--vermelho)" )
+        RETURN
+            "<div class='cp sobe d" & ( 9 + _o ) & "'><div class='nm'><b>" & _rot & "</b><span>" & _sub & "</span></div>"
+                & "<svg width='300' height='24' viewBox='0 0 300 24'><line x1='150' x2='150' y1='0' y2='24' class='zero'/>"
+                & "<line class='traco-rapido' pathLength='1' style='animation-delay:" & ( 1300 + _o * 120 ) & "ms' x1='"
+                & FORMAT ( _xa, "0.0", "en-US" ) & "' x2='" & FORMAT ( _xb, "0.0", "en-US" ) & "' y1='12' y2='12'/>"
+                & "<circle cx='" & FORMAT ( _xa, "0.0", "en-US" ) & "' cy='12' r='5' class='m22'/>"
+                & "<circle class='brota' style='animation-delay:" & ( 1600 + _o * 120 ) & "ms' cx='"
+                & FORMAT ( _xb, "0.0", "en-US" ) & "' cy='12' r='6.5' fill='" & _cor & "'/></svg>"
+                & "<div class='vv'>" & FORMAT ( _a * 100, "+0.0;−0.0;0.0" ) & " → " & FORMAT ( _b * 100, "+0.0;−0.0;0.0" )
+                & "</div></div>",
+        "",
+        [o], ASC
+    )
+-- 4 · Marcação
+VAR _html =
+    "<div class='tela t15f'>"
+        & "<div class='topo'><span class='num g " & _clsVenc & " sobe'>" & FORMAT ( _pVenc, "0.0%" ) & "</span>"
+            & "<span class='quem sobe d2'><b class='" & _clsVenc & "'>" & _txtVenc & "</b>" & _txtOutro & "</span></div>"
+        & "<div class='man m sobe d3'>" & _man & "</div>"
+        & "<div class='nota fatos entra d5'>" & _fatos & "</div>"
+        & "<div class='votos'>"
+            & "<div class='rot entra d6'>VOTOS NO 1º TURNO · 2022 → 2026</div>"
+            & "<div class='lv sobe d7'><i class='q lula-q'></i><div class='nm'><b>Lula · PT</b><span>"
+                & FORMAT ( _vl22, "#,0" ) & " → " & FORMAT ( _vl26, "#,0" ) & "</span></div><div class='num dv lula'>"
+                & FORMAT ( _dl, _fmtD ) & "</div></div>"
+            & "<div class='lv sobe d8'><i class='q flavio-q'></i><div class='nm'><b>Bolsonaro → Flávio · PL</b><span>"
+                & FORMAT ( _vp22, "#,0" ) & " → " & FORMAT ( _vp26, "#,0" ) & "</span></div><div class='num dv flavio'>"
+                & FORMAT ( _dp, _fmtD ) & "</div></div>"
+            & "<div class='nota entra d9'>Votos na cidade; a diferença é de 2026 para 2022.</div>"
+        & "</div>"
+        & "<div class='comp'>"
+            & "<div class='rot entra d9'>A CIDADE, O ESTADO E O PAÍS · MARGEM DE LULA 2022 → 2026</div>"
+            & _comp
+            & "<div class='nota entra d13'>Círculo vazado: 2022; cheio: 2026. À direita do traço, Lula à frente.</div>"
+        & "</div>"
+    & "</div>"
+RETURN
+    IF ( _ok = 1, _html, "<div class='tela t15v'><div class='ic entra'></div><div class='rot entra'>ESCOLHA UMA CIDADE</div><div class='man sobe d1'>Digite o nome da sua cidade no campo <b>Município</b>, lá em cima, à direita.</div><div class='txt entra d3'>São os 5.571 municípios do Brasil. A tela mostra como ela votou de 2006 a 2026 e como se compara com as cidades parecidas.</div></div>" )

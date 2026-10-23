@@ -1,0 +1,31 @@
+/*
+@pasta: T13 Perfil\Contas
+@formato: 0.0%
+@descricao: Variação da margem na célula de menor queda (só células com 10 cidades ou mais; com menos no recorte, 3 ou 1).
+@oraculo: mockup/data/eleicoes.json › paginas[13] › menor_queda = −3,0 p.p.
+@gerado: pbi/scripts/desenho_t13.py
+*/
+VAR _c =
+    ADDCOLUMNS (
+        FILTER (
+            SUMMARIZE ( 'Município', 'Município'[Porte], 'Município'[Quinto de renda] ),
+            NOT ISBLANK ( 'Município'[Porte] ) && NOT ISBLANK ( 'Município'[Quinto de renda] )
+        ),
+        "@n", [T13 · cidades],
+        "@v", [T13 · variação]
+    )
+VAR _piso =
+    SWITCH (
+        TRUE (),
+        COUNTROWS ( FILTER ( _c, [@n] >= 10 && NOT ISBLANK ( [@v] ) ) ) > 0, 10,
+        COUNTROWS ( FILTER ( _c, [@n] >= 3 && NOT ISBLANK ( [@v] ) ) ) > 0, 3,
+        1
+    )
+VAR _validas =
+    FILTER ( _c, [@n] >= _piso && NOT ISBLANK ( [@v] ) )
+VAR _pior =
+    TOPN ( 1, _validas, [@v], ASC, 'Município'[Porte], ASC, 'Município'[Quinto de renda], ASC )
+VAR _melhor =
+    TOPN ( 1, _validas, [@v], DESC, 'Município'[Porte], ASC, 'Município'[Quinto de renda], ASC )
+RETURN
+    MINX ( _melhor, [@v] )

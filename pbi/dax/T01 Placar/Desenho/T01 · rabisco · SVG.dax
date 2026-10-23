@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Desenho
+@formato: texto
+@descricao: Filtro do traço tremido de caneta (defs) para os SVG da tela 01. Desenho fixo.
+*/
+"<defs><filter id='rb' x='-5%' y='-5%' width='110%' height='110%'><feTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='2' seed='7' result='r'/><feDisplacementMap in='SourceGraphic' in2='r' scale='2.2' xChannelSelector='R' yChannelSelector='G'/></filter></defs>"

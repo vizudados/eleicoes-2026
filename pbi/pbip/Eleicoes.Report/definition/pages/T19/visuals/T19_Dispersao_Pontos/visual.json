@@ -1,0 +1,397 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "T19_Dispersao_Pontos",
+  "position": {
+    "x": 890,
+    "y": 222,
+    "z": 321,
+    "height": 778,
+    "width": 880,
+    "tabOrder": 210
+  },
+  "visual": {
+    "visualType": "STANDALONEdeneb7E15AEF80B9E4D4F8E12924291ECE89A",
+    "query": {
+      "queryState": {
+        "dataset": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Município"
+                    }
+                  },
+                  "Property": "CodIBGE"
+                }
+              },
+              "queryRef": "Município.CodIBGE",
+              "nativeQueryRef": "cod",
+              "displayName": "cod"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Município"
+                    }
+                  },
+                  "Property": "Renda per capita"
+                }
+              },
+              "queryRef": "Município.Renda per capita",
+              "nativeQueryRef": "renda",
+              "displayName": "renda"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T19 · variação da margem"
+                }
+              },
+              "queryRef": "_Medidas.T19 · variação da margem",
+              "nativeQueryRef": "var",
+              "displayName": "var"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T19 · margem 2026"
+                }
+              },
+              "queryRef": "_Medidas.T19 · margem 2026",
+              "nativeQueryRef": "m26",
+              "displayName": "m26"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T19 · válidos 2026"
+                }
+              },
+              "queryRef": "_Medidas.T19 · válidos 2026",
+              "nativeQueryRef": "val",
+              "displayName": "val"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "vega": [
+        {
+          "properties": {
+            "jsonSpec": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\n  \"$schema\": \"https://vega.github.io/schema/vega/v6.json\",\n  \"description\": \"T19 · dispersão: renda (log) × mudança da margem de Lula 2022 → 2026, um ponto por município; arrastar desenha um retângulo que filtra a página (pbiCrossFilterApply); clique num ponto filtra só ele; clique no vazio limpa. Eixos, textos e legenda no HTML atrás (mesma geometria).\",\n  \"width\": {\n    \"signal\": \"pbiContainerWidth\"\n  },\n  \"height\": {\n    \"signal\": \"pbiContainerHeight\"\n  },\n  \"padding\": 0,\n  \"autosize\": {\n    \"type\": \"none\",\n    \"contains\": \"padding\"\n  },\n  \"background\": null,\n  \"config\": {\n    \"view\": {\n      \"stroke\": null\n    }\n  },\n  \"signals\": [\n    {\n      \"name\": \"estatico\",\n      \"init\": \"!(windowSize()[0] > 0)\"\n    },\n    {\n      \"name\": \"fim\",\n      \"value\": 1900\n    },\n    {\n      \"name\": \"t0\",\n      \"init\": \"now()\"\n    },\n    {\n      \"name\": \"t\",\n      \"init\": \"estatico ? fim : 0\",\n      \"on\": [\n        {\n          \"events\": \"timer{16}\",\n          \"update\": \"estatico ? fim : min(now() - t0, fim)\"\n        }\n      ]\n    },\n    {\n      \"name\": \"entrada\",\n      \"update\": \"clamp(t / 1500, 0, 1)\"\n    },\n    {\n      \"name\": \"p0\",\n      \"value\": [\n        0,\n        0\n      ],\n      \"on\": [\n        {\n          \"events\": \"mousedown\",\n          \"update\": \"xy()\"\n        }\n      ]\n    },\n    {\n      \"name\": \"p1\",\n      \"value\": [\n        0,\n        0\n      ],\n      \"on\": [\n        {\n          \"events\": \"mousedown\",\n          \"update\": \"xy()\"\n        },\n        {\n          \"events\": \"[mousedown, window:mouseup] > window:mousemove\",\n          \"update\": \"xy()\"\n        }\n      ]\n    },\n    {\n      \"name\": \"arrastando\",\n      \"value\": false,\n      \"on\": [\n        {\n          \"events\": \"mousedown\",\n          \"update\": \"true\"\n        },\n        {\n          \"events\": \"window:mouseup\",\n          \"update\": \"false\"\n        }\n      ]\n    },\n    {\n      \"name\": \"grande_o_bastante\",\n      \"update\": \"abs(p1[0] - p0[0]) > 6 && abs(p1[1] - p0[1]) > 6\"\n    },\n    {\n      \"name\": \"ret\",\n      \"value\": null,\n      \"on\": [\n        {\n          \"events\": \"[mousedown, window:mouseup] > window:mousemove\",\n          \"update\": \"grande_o_bastante ? {x0: min(p0[0], p1[0]), x1: max(p0[0], p1[0]), y0: min(p0[1], p1[1]), y1: max(p0[1], p1[1])} : null\"\n        },\n        {\n          \"events\": \"mousedown\",\n          \"update\": \"null\"\n        }\n      ]\n    },\n    {\n      \"name\": \"lr0\",\n      \"update\": \"ret ? invert(''x'', ret.x0) : 0\"\n    },\n    {\n      \"name\": \"lr1\",\n      \"update\": \"ret ? invert(''x'', ret.x1) : 0\"\n    },\n    {\n      \"name\": \"lv0\",\n      \"update\": \"ret ? invert(''y'', ret.y1) : 0\"\n    },\n    {\n      \"name\": \"lv1\",\n      \"update\": \"ret ? invert(''y'', ret.y0) : 0\"\n    },\n    {\n      \"name\": \"arrastou\",\n      \"value\": false,\n      \"on\": [\n        {\n          \"events\": \"window:mouseup\",\n          \"update\": \"ret != null\"\n        }\n      ]\n    },\n    {\n      \"name\": \"estado\",\n      \"value\": \"neutro\",\n      \"on\": [\n        {\n          \"events\": \"window:mouseup\",\n          \"update\": \"ret == null ? estado : (length(data(''laco'')) > 2500 ? ''grande'' : (length(data(''laco'')) == 0 ? ''vazio'' : [pbiCrossFilterApply(event, ''_{renda}_ >= '' + lr0 + '' && _{renda}_ <= '' + lr1 + '' && _{var}_ >= '' + lv0 + '' && _{var}_ <= '' + lv1, {limit: 2500}), ''laco''][1]))\"\n        },\n        {\n          \"events\": \"@pontos:click\",\n          \"filter\": [\n            \"!event.ctrlKey\"\n          ],\n          \"update\": \"arrastou ? estado : [pbiCrossFilterApply(event), ''ponto''][1]\"\n        },\n        {\n          \"events\": \"click\",\n          \"update\": \"arrastou || (event.item && event.item.mark && event.item.mark.name == ''pontos'') ? estado : [pbiCrossFilterClear(), ''neutro''][1]\"\n        }\n      ]\n    },\n    {\n      \"name\": \"ret_fixo\",\n      \"value\": null,\n      \"on\": [\n        {\n          \"events\": \"window:mouseup\",\n          \"update\": \"ret != null ? ret : ret_fixo\"\n        },\n        {\n          \"events\": \"click\",\n          \"update\": \"arrastou ? ret_fixo : null\"\n        }\n      ]\n    },\n    {\n      \"name\": \"sobre\",\n      \"value\": null,\n      \"on\": [\n        {\n          \"events\": \"@pontos:mouseover\",\n          \"update\": \"datum\"\n        },\n        {\n          \"events\": \"@pontos:mouseout\",\n          \"update\": \"null\"\n        }\n      ]\n    }\n  ],\n  \"data\": [\n    {\n      \"name\": \"dataset\"\n    },\n    {\n      \"name\": \"pts\",\n      \"source\": \"dataset\",\n      \"transform\": [\n        {\n          \"type\": \"filter\",\n          \"expr\": \"isValid(datum.renda) && datum.renda > 0 && isValid(datum[''var''])\"\n        },\n        {\n          \"type\": \"collect\",\n          \"sort\": {\n            \"field\": \"val\",\n            \"order\": \"descending\"\n          }\n        }\n      ]\n    },\n    {\n      \"name\": \"laco\",\n      \"source\": \"pts\",\n      \"transform\": [\n        {\n          \"type\": \"filter\",\n          \"expr\": \"ret != null && datum.renda >= lr0 && datum.renda <= lr1 && datum[''var''] >= lv0 && datum[''var''] <= lv1\"\n        }\n      ]\n    }\n  ],\n  \"scales\": [\n    {\n      \"name\": \"x\",\n      \"type\": \"log\",\n      \"domain\": [\n        250.0,\n        5000.0\n      ],\n      \"range\": [\n        {\n          \"signal\": \"84*width/880\"\n        },\n        {\n          \"signal\": \"856*width/880\"\n        }\n      ],\n      \"clamp\": true\n    },\n    {\n      \"name\": \"y\",\n      \"type\": \"linear\",\n      \"domain\": [\n        -0.48,\n        0.16\n      ],\n      \"range\": [\n        {\n          \"signal\": \"676*height/778\"\n        },\n        {\n          \"signal\": \"112*height/778\"\n        }\n      ],\n      \"clamp\": true,\n      \"zero\": false,\n      \"nice\": false\n    },\n    {\n      \"name\": \"tamanho\",\n      \"type\": \"sqrt\",\n      \"domain\": [\n        0,\n        6600000\n      ],\n      \"range\": [\n        0,\n        520\n      ],\n      \"clamp\": true\n    },\n    {\n      \"name\": \"cor\",\n      \"type\": \"linear\",\n      \"domain\": [\n        -0.6,\n        -0.3,\n        -0.12,\n        0.0,\n        0.12,\n        0.3,\n        0.6\n      ],\n      \"range\": [\n        \"#1D3C6E\",\n        \"#2B5797\",\n        \"#8FA8CF\",\n        \"#CBBDA2\",\n        \"#D9877B\",\n        \"#B8322A\",\n        \"#8E2620\"\n      ],\n      \"clamp\": true,\n      \"interpolate\": \"rgb\"\n    }\n  ],\n  \"marks\": [\n    {\n      \"type\": \"rect\",\n      \"name\": \"fundo_clique\",\n      \"interactive\": true,\n      \"encode\": {\n        \"enter\": {\n          \"x\": {\n            \"value\": 0\n          },\n          \"y\": {\n            \"value\": 0\n          },\n          \"fill\": {\n            \"value\": \"transparent\"\n          }\n        },\n        \"update\": {\n          \"width\": {\n            \"signal\": \"width\"\n          },\n          \"height\": {\n            \"signal\": \"height\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"symbol\",\n      \"name\": \"pontos\",\n      \"from\": {\n        \"data\": \"pts\"\n      },\n      \"encode\": {\n        \"enter\": {\n          \"shape\": {\n            \"value\": \"circle\"\n          },\n          \"stroke\": {\n            \"value\": \"#F1EBDF\"\n          }\n        },\n        \"update\": {\n          \"x\": {\n            \"scale\": \"x\",\n            \"field\": \"renda\"\n          },\n          \"y\": {\n            \"scale\": \"y\",\n            \"field\": \"var\"\n          },\n          \"size\": {\n            \"signal\": \"max(7, scale(''tamanho'', datum.val))\"\n          },\n          \"fill\": {\n            \"scale\": \"cor\",\n            \"field\": \"m26\"\n          },\n          \"strokeWidth\": [\n            {\n              \"test\": \"datum.__selected__ == ''on'' || (sobre && sobre.cod == datum.cod)\",\n              \"value\": 1.4\n            },\n            {\n              \"value\": 0.5\n            }\n          ],\n          \"stroke\": [\n            {\n              \"test\": \"datum.__selected__ == ''on'' || (sobre && sobre.cod == datum.cod)\",\n              \"value\": \"#1C1915\"\n            },\n            {\n              \"value\": \"#F1EBDF\"\n            }\n          ],\n          \"opacity\": {\n            \"signal\": \"(datum.__selected__ == ''off'' || datum[''val__highlightStatus''] == ''off'' ? 0.13 : 0.86) * clamp(entrada * 1.7 - (scale(''x'', datum.renda) / width) * 0.7, 0, 1)\"\n          },\n          \"cursor\": {\n            \"value\": \"pointer\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"rect\",\n      \"name\": \"retangulo\",\n      \"interactive\": false,\n      \"encode\": {\n        \"update\": {\n          \"x\": {\n            \"signal\": \"(ret || ret_fixo || {x0: 0}).x0\"\n          },\n          \"x2\": {\n            \"signal\": \"(ret || ret_fixo || {x1: 0}).x1\"\n          },\n          \"y\": {\n            \"signal\": \"(ret || ret_fixo || {y0: 0}).y0\"\n          },\n          \"y2\": {\n            \"signal\": \"(ret || ret_fixo || {y1: 0}).y1\"\n          },\n          \"fill\": {\n            \"value\": \"#1C1915\"\n          },\n          \"fillOpacity\": {\n            \"value\": 0.05\n          },\n          \"stroke\": {\n            \"value\": \"#1C1915\"\n          },\n          \"strokeWidth\": {\n            \"value\": 1.4\n          },\n          \"strokeDash\": {\n            \"value\": [\n              5,\n              4\n            ]\n          },\n          \"opacity\": {\n            \"signal\": \"ret || ret_fixo ? 1 : 0\"\n          }\n        }\n      }\n    },\n    {\n      \"type\": \"text\",\n      \"name\": \"aviso\",\n      \"interactive\": false,\n      \"encode\": {\n        \"update\": {\n          \"x\": {\n            \"signal\": \"470.0*width/880\"\n          },\n          \"y\": {\n            \"signal\": \"130*height/778\"\n          },\n          \"align\": {\n            \"value\": \"center\"\n          },\n          \"text\": {\n            \"signal\": \"estado == ''grande'' ? ''Seleção grande demais (mais de 2.500 cidades): use as segmentações acima'' : estado == ''vazio'' ? ''Nenhum município nesse retângulo'' : ''''\"\n          },\n          \"fill\": {\n            \"value\": \"#8E2620\"\n          },\n          \"font\": {\n            \"value\": \"Sora Eleicoes, Segoe UI, sans-serif\"\n          },\n          \"fontSize\": {\n            \"value\": 15\n          },\n          \"fontWeight\": {\n            \"value\": 600\n          }\n        }\n      }\n    }\n  ]\n}'"
+                }
+              }
+            },
+            "jsonConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{}'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'vega'"
+                }
+              }
+            },
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6.4.0'"
+                }
+              }
+            },
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'canvas'"
+                }
+              }
+            },
+            "enableTooltips": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableSelection": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "selectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'advanced'"
+                }
+              }
+            },
+            "selectionMaxDataPoints": {
+              "expr": {
+                "Literal": {
+                  "Value": "2500D"
+                }
+              }
+            },
+            "enableHighlight": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stateManagement": [
+        {
+          "properties": {
+            "viewportHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "778D"
+                }
+              }
+            },
+            "viewportWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "880D"
+                }
+              }
+            },
+            "supportFieldConfiguration": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"cod\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"renda\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"var\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"m26\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"val\":{\"highlight\":true,\"highlightStatus\":true,\"highlightComparator\":true,\"format\":true,\"formatted\":true,\"names\":false}}'"
+                }
+              }
+            },
+            "denebMetaVersion": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2'"
+                }
+              }
+            },
+            "consolidateFieldParameters": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "developer": [
+        {
+          "properties": {
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2.0.0.0'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dataLimit": [
+        {
+          "properties": {
+            "enableIncrementalDataUpdates": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'T19_Dispersao_Pontos'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            },
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ttT19Municipio'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T19 · Dispersão · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

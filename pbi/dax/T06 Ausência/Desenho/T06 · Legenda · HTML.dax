@@ -1,0 +1,9 @@
+/*
+@pasta: T06 Ausência\Desenho
+@formato: texto
+@descricao: Legenda do mapa da abstenção.
+*/
+"<div class='tela lgm entra d6'>"
+    & "<span class='it'><i class='bol'></i>cada ponto é um município; o tamanho segue quantos faltaram</span>"
+    & "<span class='it'><span>12%</span><i class='esc'></i><span>30% ou mais faltaram</span></span>"
+& "</div>"

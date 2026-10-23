@@ -1,0 +1,7 @@
+/*
+@pasta: T15 Minha cidade\Contas
+@formato: 0
+@descricao: Ano do contexto (a eleição).
+@gerado: pbi/scripts/desenho_t15.py
+*/
+SELECTEDVALUE ( 'Ano'[Ano] )

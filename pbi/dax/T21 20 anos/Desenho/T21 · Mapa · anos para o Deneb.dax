@@ -1,0 +1,20 @@
+/*
+@pasta: T21 20 anos\Desenho
+@formato: texto
+@descricao: Os seis anos num texto só, para o Deneb: 'ano|municípios com o PT à frente|margem nacional' separados por ';' (o mesmo em todas as linhas do mapa). Só lê as contas.
+*/
+-- 1 · Leituras e 2 · Textos (uma linha por ano)
+VAR _anos =
+    ADDCOLUMNS (
+        VALUES ( 'Ano'[Ano] ),
+        "@n", CALCULATE ( [T21 · municípios com o PT à frente], 'Ano'[Ano] = EARLIER ( 'Ano'[Ano] ) ),
+        "@m", CALCULATE ( [T21 · margem nacional], 'Ano'[Ano] = EARLIER ( 'Ano'[Ano] ) )
+    ) /* lista */
+-- 4 · Marcação
+RETURN
+    CONCATENATEX (
+        _anos,
+        'Ano'[Ano] & "|" & [@n] & "|" & FORMAT ( [@m], "0.0000", "en-US" ),
+        ";",
+        'Ano'[Ano], ASC
+    ) /* lista */

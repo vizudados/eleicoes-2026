@@ -1,0 +1,8 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: 0.0%
+@descricao: Margem de Lula em 2022: (Lula − Jair Bolsonaro) ÷ válidos. Positivo, Lula à frente.
+@oraculo: mockup/data/eleicoes.json › paginas[12] › ufs › margem22
+@gerado: pbi/scripts/desenho_t12.py
+*/
+DIVIDE ( [T12 · votos de Lula 2022] - [T12 · votos do PL 2022], [T12 · válidos 2022] )
