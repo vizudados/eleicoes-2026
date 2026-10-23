@@ -1,0 +1,19 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0
+@descricao: Pesquisas do 2º turno (votos totais, registradas no TSE) com o campo que atravessa o dia do debate da Globo (ficam fora das médias).
+@oraculo: 0
+*/
+VAR _band = [T26 · Band · data]
+VAR _globo = [T26 · debate · dia]
+RETURN
+    CALCULATE (
+        COUNTROWS ( Pesquisa ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "totais",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Campo início] <= _globo,
+        Pesquisa[Campo fim] >= _globo
+    ) + 0

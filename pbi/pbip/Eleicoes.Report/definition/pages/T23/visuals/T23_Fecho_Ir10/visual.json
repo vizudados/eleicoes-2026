@@ -3,9 +3,9 @@
   "name": "T23_Fecho_Ir10",
   "position": {
     "x": 140,
-    "y": 600,
+    "y": 619,
     "z": 1020,
-    "height": 37,
+    "height": 35,
     "width": 1020,
     "tabOrder": 210
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 11: Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
+                  "Value": "'Voltar à tela 12: Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 11: Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
+                  "Value": "'Voltar à tela 12: Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
                 }
               }
             },

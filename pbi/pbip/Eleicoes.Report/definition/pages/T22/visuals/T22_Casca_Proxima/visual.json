@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 25 Encerramento — O que os números dizem, afinal?'"
+                  "Value": "'Próxima: 26 Encerramento — E o que fica desta eleição?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 25 Encerramento — O que os números dizem, afinal?'"
+                  "Value": "'Próxima: 26 Encerramento — E o que fica desta eleição?'"
                 }
               }
             },

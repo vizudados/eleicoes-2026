@@ -31,8 +31,8 @@ capa/remotion/out/
 # Claude Code: ajustes locais desta máquina
 .claude/settings.local.json
 
-# material de trabalho do vídeo da Lia (testes, referências de outros projetos, amostras de voz): fica só na máquina
+# material de trabalho do vídeo da Lia (testes, referências de outros projetos, amostras de voz, pesquisa e roteiro):
+# fica só na máquina. A pasta docs/ é o site do GitHub Pages: o que entrasse aqui viraria página pública
 arte/ref/lia/
 arte/candidatas/lia-*
-docs/video/amostras-voz/
-docs/video/aprovacao/
+docs/video/

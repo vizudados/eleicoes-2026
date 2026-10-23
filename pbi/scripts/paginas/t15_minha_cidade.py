@@ -1,13 +1,15 @@
 # -*- coding: utf-8 -*-
 """15 · Minha cidade — como votou a minha cidade? (dono: agente das telas 11–15). Filtro de município, declarado aqui.
 
-Padrão: Contagem (MG) — Flávio venceu com 50,3%; a margem de Lula caiu 5,4 p.p. desde 2022.
+Padrão: Ananindeua (PA), a cidade grande (mais de 150 mil votos válidos) que votou mais perto do Brasil em 2026
+(Lula 45,0% × Flávio 46,2%; no país, 45,2% × 47,0%), e que virou de Lula para Flávio. Até 23/10/2026 era Contagem,
+onde o documentário de referência começa: o dono pediu para variar e não copiar.
 
-  T15_Filtro_Pilula     a pílula fechada do filtro (HTML): "MUNICÍPIO · Contagem (MG)", com o funil e a seta, no lugar
+  T15_Filtro_Pilula     a pílula fechada do filtro (HTML): "MUNICÍPIO · Ananindeua (PA)", com o funil e a seta, no lugar
                         do filtro de UF das outras telas (1282, 60, 424 × 48)
   T15_Filtro_Abre       botão nativo sobre a pílula: abre o filtro (marcador T15_FILTRO_ABRE_01)
   T15_Filtro_Municipio  VizuFilter alto (424 × 626), oculto, já aberto (alwaysOpen): Município[Rótulo] (os 5.571,
-                        "Nome (UF)"), busca, seleção única, sem "todos". Cidade inicial Contagem (MG) por dois caminhos:
+                        "Nome (UF)"), busca, seleção única, sem "todos". Cidade inicial Ananindeua (PA) por dois caminhos:
                         o filtro gravado no PBIR (general.filter, L109) e a seleção padrão do visual (defaultSelection)
   T15_Filtro_Fora       véu da tela inteira por baixo do filtro aberto: o clique fora fecha (T15_FILTRO_FECHA_01)
   T15_Ficha_Html        a eleição escolhida na cidade (sem clique, 2026 contra 2022): quem ficou à frente e com quanto
@@ -44,7 +46,7 @@ FICHA = (150, 140, 560, 860)
 SERIE_TITULO = (760, 140, 1010, 96)
 SERIE = (760, 236, 1010, 384)
 PARECIDAS = (760, 650, 1010, 350)
-CIDADE_INICIAL = "Contagem (MG)"
+CIDADE_INICIAL = "Ananindeua (PA)"
 # páginas de tooltip: ordem 100 + número da tela para o leitor × 10 (o número sai do roteiro e anda com ele)
 ORDEM_TT = 100 + int(roteiro.numero(P)) * 10
 

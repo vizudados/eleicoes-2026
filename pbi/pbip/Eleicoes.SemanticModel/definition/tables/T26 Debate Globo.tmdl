@@ -1,0 +1,209 @@
+/// O debate da Globo de 23/10/2026 (2º turno): uma linha por fato ou número, com a situação, a hora esperada e a fonte. Vazio = ainda não chegou; nada estimado.
+table 'T26 Debate Globo'
+	isHidden
+	lineageTag: 9256c34d-1acd-5b05-b1ba-f224c8162313
+
+	/// Identificador estável da linha (debate, presenca_lula, audiencia_previa…).
+	column Chave
+		dataType: string
+		lineageTag: 1f812ba5-d084-52b3-8e8f-b93ec856af35
+		summarizeBy: none
+		sourceColumn: Chave
+
+		annotation SummarizationSetBy = Automatic
+
+	/// debate · regra · presenca · metrica.
+	column Grupo
+		dataType: string
+		isHidden
+		lineageTag: a2fa5090-809c-5e44-a80b-0478b3d71366
+		summarizeBy: none
+		sourceColumn: Grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cartão da noite a que a métrica pertence (buscas, audiencia, streaming, redes, pesquisas); vazio fora das métricas.
+	column 'Cartão'
+		dataType: string
+		lineageTag: 0a7f48ce-c2d4-58ad-af9c-c08824f26aec
+		summarizeBy: none
+		sourceColumn: Cartão
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem da linha (a dos cartões sai da menor ordem de cada um).
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: aaaab39f-cfb6-5f7a-ad98-6df655283f25
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Lula ou Flávio nas linhas de um candidato; vazio nas outras.
+	column Candidato
+		dataType: string
+		isHidden
+		lineageTag: 1750d41d-b72b-5e52-97b7-cf12f9a94d65
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Título que a tela mostra.
+	column 'Rótulo'
+		dataType: string
+		isHidden
+		lineageTag: 76edebc2-9b71-509a-a278-5066ce082736
+		summarizeBy: none
+		sourceColumn: Rótulo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// O que exatamente o número mede (a linha sob o título).
+	column Medida
+		dataType: string
+		isHidden
+		lineageTag: de71799f-1e4d-553a-bd97-0b9f38744380
+		summarizeBy: none
+		sourceColumn: Medida
+
+		annotation SummarizationSetBy = Automatic
+
+	/// debate: marcado, no_ar, realizado, adiado, cancelado · presenca: confirmada, a_confirmar, ausente · metrica: aguardando, publicado, nao_divulgado.
+	column 'Situação'
+		dataType: string
+		isHidden
+		lineageTag: 40df0f47-faa8-5c64-ae5f-ebaa0dbc737c
+		summarizeBy: none
+		sourceColumn: Situação
+
+		annotation SummarizationSetBy = Automatic
+
+	/// O número publicado (vazio enquanto não chega).
+	column Valor
+		dataType: double
+		isHidden
+		formatString: #,0.0#
+		lineageTag: 95bd8f6a-3899-5d7d-8f40-687b8c70fbbd
+		summarizeBy: none
+		sourceColumn: Valor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Texto do fato (mediação, regras, histórico da presença, motivo de cancelamento ou ausência).
+	column Texto
+		dataType: string
+		isHidden
+		lineageTag: f90d411f-d7d2-555a-aefd-f89579bf5e1b
+		summarizeBy: none
+		sourceColumn: Texto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Unidade do valor.
+	column Unidade
+		dataType: string
+		isHidden
+		lineageTag: aee9149c-b896-589b-8f64-419669c8a397
+		summarizeBy: none
+		sourceColumn: Unidade
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quando o número deve chegar, como a tela escreve.
+	column Esperado
+		dataType: string
+		isHidden
+		lineageTag: 75bfc419-1976-52f8-9cdd-c4d2e5473af3
+		summarizeBy: none
+		sourceColumn: Esperado
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora prevista (aaaa-mm-dd hh:mm, Brasília), como no CSV.
+	column PrevistoTexto
+		dataType: string
+		isHidden
+		lineageTag: a2259f91-7757-578c-9206-b8d155c65c21
+		summarizeBy: none
+		sourceColumn: PrevistoTexto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora prevista (início do debate, fim, chegada do número).
+	column Previsto
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy HH:mm
+		lineageTag: 7f8000ad-a45b-53ca-95e4-2a5c96c968e8
+		summarizeBy: none
+		sourceColumn: Previsto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// De onde o número deve vir.
+	column 'Fonte esperada'
+		dataType: string
+		isHidden
+		lineageTag: ca38ef4c-e74a-53a6-b140-7338e520b626
+		summarizeBy: none
+		sourceColumn: Fonte esperada
+
+		annotation SummarizationSetBy = Automatic
+
+	/// De onde veio (veículo e hora), quando chegou.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 2af7b59e-2e99-58c7-ab46-cd508a97baf5
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Link(s) da fonte, separados por ' , '.
+	column URL
+		dataType: string
+		isHidden
+		lineageTag: 66949ce4-42ab-53a1-98c2-e5734e4084a1
+		summarizeBy: none
+		sourceColumn: URL
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quando a linha foi atualizada (dd/mm/aaaa hh:mm).
+	column Atualizado
+		dataType: string
+		isHidden
+		lineageTag: f6cc4444-c585-5ce5-b3bb-fdb822154b6b
+		summarizeBy: none
+		sourceColumn: Atualizado
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ressalva de leitura (vai para o dossiê).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: cec2a411-1c09-506b-9946-0349b003758d
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T26 Debate Globo' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/debate_globo.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"chave", "grupo", "cartao", "ordem", "candidato", "rotulo", "medida", "situacao", "valor", "texto", "unidade", "esperado", "previsto_para", "fonte_esperada", "fonte", "fonte_url", "atualizado_em", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"chave", type text}, {"grupo", type text}, {"cartao", type text}, {"ordem", Int64.Type}, {"candidato", type text}, {"rotulo", type text}, {"medida", type text}, {"situacao", type text}, {"valor", type number}, {"texto", type text}, {"unidade", type text}, {"esperado", type text}, {"previsto_para", type text}, {"fonte_esperada", type text}, {"fonte", type text}, {"fonte_url", type text}, {"atualizado_em", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"chave", "Chave"}, {"grupo", "Grupo"}, {"cartao", "Cartão"}, {"ordem", "Ordem"}, {"candidato", "Candidato"}, {"rotulo", "Rótulo"}, {"medida", "Medida"}, {"situacao", "Situação"}, {"valor", "Valor"}, {"texto", "Texto"}, {"unidade", "Unidade"}, {"esperado", "Esperado"}, {"previsto_para", "PrevistoTexto"}, {"fonte_esperada", "Fonte esperada"}, {"fonte", "Fonte"}, {"fonte_url", "URL"}, {"atualizado_em", "Atualizado"}, {"observacao", "Observação"}}),
+				    Final = Table.AddColumn(Nomes, "Previsto", each if [PrevistoTexto] = null or [PrevistoTexto] = "" then null else DateTime.FromText([PrevistoTexto], [Format = "yyyy-MM-dd HH:mm", Culture = "en-US"]), type nullable datetime)
+				in
+				    Final
+
+	annotation PBI_ResultType = Table

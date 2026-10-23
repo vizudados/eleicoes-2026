@@ -231,7 +231,7 @@ def tmdl_expressoes(extras):
 def tmdl_modelo(tabelas, extras):
     ordem = ([p[0] for p in PARAMETROS] + [f[0] for f in FUNCOES] + [e[0] for e in extras]
              + [t["nome"] for t in tabelas])
-    linhas = [doc("Eleições 2026 · o que os números dizem (Vizu Dados). Dados lidos do repositório público "
+    linhas = [doc("Eleições 2026 · o voto de perto (Vizu Dados). Dados lidos do repositório público "
                   "vizudados/eleicoes-2026 no GitHub (dados/pbi e dados/apuracao). Gerado por "
                   "pbi/scripts/gerar_modelo.py; medidas em pbi/dax."),
               "model Model", "\tculture: pt-BR", "\tdefaultPowerBIDataSourceVersion: powerBI_V3",

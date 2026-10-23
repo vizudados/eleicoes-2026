@@ -1,0 +1,15 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0
+@descricao: Posição do cartão do contexto na fita (1 = o primeiro a chegar), pela Ordem.
+@oraculo: buscas 1 · audiência 2 · streaming 3 · redes 4 · pesquisas 5
+*/
+VAR _o = [T26 · cartão · ordem]
+VAR _todos =
+    CALCULATETABLE (
+        ADDCOLUMNS ( VALUES ( 'T26 Debate Globo'[Cartão] ), "@o", CALCULATE ( MIN ( 'T26 Debate Globo'[Ordem] ) ) ),
+        REMOVEFILTERS ( 'T26 Debate Globo' ),
+        'T26 Debate Globo'[Grupo] = "metrica"
+    )
+RETURN
+    IF ( NOT ISBLANK ( _o ), COUNTROWS ( FILTER ( _todos, [@o] <= _o ) ) )

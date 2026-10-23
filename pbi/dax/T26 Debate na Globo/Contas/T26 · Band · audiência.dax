@@ -1,0 +1,9 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0.0
+@descricao: Audiência do debate da Band de 18/10 na Grande SP: consolidado Kantar IBOPE divulgado pela Band (pontos).
+@oraculo: 15
+*/
+VAR _d = [T26 · Band · data]
+RETURN
+    CALCULATE ( MAX ( Debate[Audiência] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )

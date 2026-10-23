@@ -345,7 +345,7 @@ def tela_cidade(d):
     guia = ficha_cidade(d, *CIDADE_GUIA)
     outras = [ficha_cidade(d, n, u) for n, u in [("São Paulo", "SP"), ("Salvador", "BA"), ("Chapecó", "SC")]]
     return {"tela": 7, "nome": "Minha cidade", "pergunta": "Como votou a minha cidade?",
-            "manchete": guia["manchete"], "proxima_pergunta": "O que os números dizem, afinal?",
+            "manchete": guia["manchete"], "proxima_pergunta": "E o que fica desta eleição?",
             "cidade_guia": guia, "outras_cidades": outras,
             "busca_exemplo": {"digitado": "Cont", "sugestoes": [f"{r.nome} ({r.uf})" for r in
                                                                  d[d.nome.str.startswith("Cont")].sort_values(
@@ -745,7 +745,7 @@ def tela_escola():
         "municipio": "Contagem (MG)", "locais_2026": int(len(a26)),
         "lula_frente_2022": lula22, "lula_frente_2026": lula26, "locais_que_viraram": int(len(viraram)),
         "nova_contagem": {"locais": int(len(nova)), "serie": nova_serie,
-                          "texto": "Nova Contagem, onde o documentário começa: a margem de Lula foi de "
+                          "texto": "Nova Contagem: a margem de Lula foi de "
                                    f"{nova_serie[1]['margem_txt']} em 2022 a {nova_serie[2]['margem_txt']} em 2026"
                           if len(nova_serie) == 3 else ""},
         "maiores_quedas": [ficha(r) for _, r in maiores_quedas.iterrows()],
@@ -913,7 +913,7 @@ def main():
     redes = pendente("Redes", "Quem dominou as redes?", "digital")
     flavio, lula = placar["candidatos"][0], placar["candidatos"][1]
     capa = {"nome": "Capa", "pergunta": "Afinal, qual Brasil foi às urnas no 1º turno?",
-            "titulo": "O que os números dizem.",
+            "titulo": "Do placar à escola.",
             "sobretitulo": "ELEIÇÕES 2026 · 1º TURNO PRESIDENCIAL",
             "linhas": [f"Flávio Bolsonaro {flavio['votos_txt']} · {flavio['pct_txt']} dos válidos",
                        f"Lula {lula['votos_txt']} · {lula['pct_txt']}",
@@ -922,8 +922,8 @@ def main():
             "legenda_mapa_sub": "cor pela margem de 2026: vermelho, Lula à frente; azul, Flávio à frente",
             "manchete": f"Flávio {flavio['pct_txt']} × Lula {lula['pct_txt']}: {virada['viraram']} municípios mudaram de lado",
             "mapa": "arte/mapas/capa-pontos.png"}
-    encerramento = {"nome": "Encerramento", "pergunta": "O que os números dizem, afinal?",
-                    "titulo": "O que os números dizem.",
+    encerramento = {"nome": "Encerramento", "pergunta": "E o que fica desta eleição?",
+                    "titulo": "Do placar à escola.",
                     "fontes": ["TSE · votação, comparecimento e perfil do eleitor, 1º turno de 2006 a 2026 (arquivos de "
                                "22/10/2026)",
                                "IBGE · Censo 2022: população e rendimento domiciliar per capita; malha municipal",
@@ -957,7 +957,7 @@ def main():
                 "municipio_mais_longo": max(d.nome, key=len) + " (" + d.loc[d.nome.map(len).idxmax(), "uf"] + ")",
                 "uf_mais_longa": "Rio Grande do Norte"}
     saida = {
-        "meta": {"titulo": "Eleições 2026 · o que os números dizem", "gerado_em": datetime.now().isoformat(timespec="seconds"),
+        "meta": {"titulo": "Eleições 2026 · o voto de perto", "gerado_em": datetime.now().isoformat(timespec="seconds"),
                  "data_base": "TSE · 22/10/2026", "rodape": "Fonte: TSE e IBGE · resultado de 22/10/2026",
                  "aviso_dados": "Dados reais: TSE (1º turno de 2006 a 2026) e IBGE (Censo 2022). Nada ilustrativo.",
                  "recorte": "Margem = (Lula ou candidato do PT − adversário principal) ÷ votos válidos, em p.p.; "

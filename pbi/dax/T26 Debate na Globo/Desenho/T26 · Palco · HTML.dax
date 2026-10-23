@@ -1,0 +1,52 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Um púlpito por candidato (grão 'T26 Debate Globo'[Chave]; só as linhas de presença): o nome na cor dele, o púlpito em traço (vazio e tracejado se faltar ou se o debate cair) e a situação. Alvo do dossiê ttT26Presenca.
+*/
+-- 1 · Leituras (contas de T26 Debate na Globo\Contas)
+VAR _grupo = [T26 · linha · grupo]
+VAR _cand = [T26 · linha · candidato]
+VAR _rot = [T26 · linha · rótulo]
+VAR _pres = [T26 · presença · situação]
+VAR _sit = [T26 · debate · situação]
+-- 2 · Textos
+VAR _l = _cand = "Lula"
+VAR _p = SEARCH ( " · ", _rot, 1, 0 )
+VAR _nome = IF ( _p > 0, LEFT ( _rot, _p - 1 ), _rot )
+VAR _resto = IF ( _p > 0, MID ( _rot, _p + 3, 40 ), "" )
+VAR _fora = _sit IN { "cancelado", "adiado" }
+VAR _cls =
+    SWITCH ( TRUE (), _fora || _pres = "ausente", "vazio", _pres = "a_confirmar", "duvida", "ok" )
+VAR _status =
+    SWITCH (
+        TRUE (),
+        _sit = "cancelado", "debate cancelado",
+        _sit = "adiado", "debate adiado",
+        _pres = "ausente", IF ( _sit = "realizado", "não foi ao debate", "não vai ao debate" ),
+        _pres = "a_confirmar", "presença a confirmar",
+        _sit = "realizado", "esteve no debate",
+        "presença confirmada"
+    )
+VAR _icone =
+    SWITCH (
+        _cls,
+        "ok", "<i class='ok'></i>",
+        "duvida", "<i class='qq'>?</i>",
+        "<svg class='xx' width='18' height='18' viewBox='0 0 18 18'><path d='M3.5 3 L15 15.5 M15 3.5 L3 15'/></svg>"
+    )
+-- 3 · Geometria
+VAR _x = IF ( _l, 20, 430 ) -- geometria
+VAR _atraso = IF ( _l, 200, 450 ) -- geometria
+-- 4 · Marcação
+RETURN
+    IF (
+        _grupo = "presenca",
+        "<div class='tela t26p'>"
+            & "<div class='pu " & _cls & IF ( _l, " l", " f" ) & "' style='left:" & _x & "px'>"
+                & "<div class='nm sobe' style='animation-delay:" & _atraso & "ms'><span class='" & IF ( _l, "lula-esc", "flavio-esc" ) & "'>"
+                    & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span><small class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _resto, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</small></div>"
+                & "<svg class='pul' width='150' height='150' viewBox='0 0 150 150'>" & "<g filter='url(#rbu)'><path class='tampo' pathLength='1' d='M18 44 L132 44 L124 62 L26 62 Z'/><path class='corpo' pathLength='1' d='M34 62 L116 62 L110 134 L40 134 Z'/><path class='base' pathLength='1' d='M26 134 L124 134 L124 144 L26 144 Z'/><path class='filete' pathLength='1' d='M50 82 L100 82 M52 92 L98 92'/><path class='mic' pathLength='1' d='M75 44 L75 24 C 75 16, 82 12, 90 12'/></g>" & "</svg>"
+                & "<div class='st sobe' style='animation-delay:" & _atraso + 500 & "ms'>" & _icone & "<span>" & _status & "</span></div>"
+            & "</div>"
+        & "</div>"
+    )

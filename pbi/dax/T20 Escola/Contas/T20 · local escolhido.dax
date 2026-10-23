@@ -2,7 +2,7 @@
 @pasta: T20 Escola\Contas
 @formato: texto
 @descricao: Nome do local da ficha (Id escolhido).
-@oraculo: mockup/data/eleicoes.json › Escola › exemplo_tooltip (Escola Estadual Nova Contagem-I sem escolha)
+@oraculo: dados/pbi/t20_locais.csv › nome do id 815 (Escola Municipal Aleksander Henryks Laks, no Rio, sem escolha)
 */
 VAR _id = [T20 · id escolhido]
 RETURN

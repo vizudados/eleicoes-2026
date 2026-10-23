@@ -1,0 +1,26 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Os debates marcados no 2º turno (tabela Debate), um por linha, com o que houve para o candidato da linha do contexto: esteve, não esteve, cancelado ou não aconteceu. Separados por |.
+@oraculo: 11/10 · Record: cancelado | 15/10 · SBT e consórcio: não aconteceu | 18/10 · Band: esteve
+*/
+VAR _cand = [T26 · linha · candidato]
+RETURN
+    CONCATENATEX (
+        CALCULATETABLE ( VALUES ( Debate[Data] ), REMOVEFILTERS ( Debate ), Debate[Turno] = 2 ),
+        VAR _d = Debate[Data]
+        VAR _emi = CALCULATE ( MAX ( Debate[Emissora] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )
+        VAR _obs = UPPER ( CALCULATE ( MAX ( Debate[Observação] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d ) )
+        VAR _part = CALCULATE ( MAX ( Debate[Participantes] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )
+        VAR _curta = IF ( CONTAINSSTRING ( _emi, "," ), LEFT ( _emi, SEARCH ( ",", _emi ) - 1 ) & " e consórcio", _emi )
+        VAR _st =
+            SWITCH (
+                TRUE (),
+                LEFT ( _obs, 9 ) = "REALIZADO", IF ( _cand <> "" && CONTAINSSTRING ( _part, _cand ), "esteve", "não esteve" ),
+                LEFT ( _obs, 9 ) = "CANCELADO", "cancelado",
+                "não aconteceu"
+            )
+        RETURN FORMAT ( _d, "dd/MM" ) & " · " & _curta & ": " & _st,
+        "|",
+        Debate[Data], ASC
+    )

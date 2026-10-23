@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
-"""23 · Encerramento — o que os números dizem, afinal? (dono: main). Tela escura, sem filtro.
+"""23 · Encerramento — e o que fica desta eleição? (dono: main). Tela escura, sem filtro.
+
+O título é "Do placar à escola." (o caminho que o painel fez); a capa abre com "O voto, de perto." Os dois substituem
+"o que os números dizem", que é o título do documentário de referência (pedido do dono, 23/10/2026: nada de cópia).
 
   T23_Fecho_Html    o título que se sublinha à mão, os achados de cada ato (cada linha leva à tela de onde veio), a
                     urna em traço que se revela, o convite para a apuração ao vivo, fontes e créditos
@@ -26,7 +29,8 @@ ACHADOS = [
     ("I · O RESULTADO", [("T01", "Flávio terminou 2,22 mi de votos à frente de Lula."),
                          ("T06", "33,5 milhões não foram votar: 15 vezes a diferença entre os dois."),
                          ("T25", "Quem tem 70 anos ou mais falta 3,9 vezes mais que quem tem 16 ou 17.")]),
-    ("II · A CAMPANHA", [("T07", "O único frente a frente, na Band, não mexeu nas pesquisas."),
+    ("II · A CAMPANHA", [("T07", "O primeiro frente a frente, na Band, não mexeu nas pesquisas."),
+                         ("T26", "O último debate, na Globo em 23/10: o que se soube dele, número a número."),
                          ("T10", "Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.")]),
     ("III · O MAPA", [("T11", "711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso."),
                       ("T13", "Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno."),
@@ -34,7 +38,9 @@ ACHADOS = [
                       ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
     ("IV · E AGORA", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.")]),
 ]
-X0, Y_ACHADOS, LINHA, GRUPO = 150, 384, 37, 34           # geometria da lista (o botão de cada linha segue a mesma)
+# geometria da lista (o botão de cada linha segue a mesma). Com a linha da T26 (23/10/2026), a linha passou de 37 para
+# 35 px e o grupo de 34 para 30: a lista mantém a altura e as fontes não descem para o rodapé.
+X0, Y_ACHADOS, LINHA, GRUPO = 150, 384, 35, 30
 
 
 def _linhas():
@@ -95,7 +101,7 @@ def corpo() -> str:
     urna = estilo.imagem_b64("arte/limpos/urna-creme.png", 940)
     return (
         f"<style>{css}</style><div class='tela fx' style='left:{X0}px;top:150px;right:150px;bottom:80px'>"
-        "<div class='tg sobe'>O que os números <span class='sub'>dizem." + sublinhado + "</span></div>"
+        "<div class='tg sobe'>Do placar à <span class='sub'>escola." + sublinhado + "</span></div>"
         f"<div class='ach'><div class='rot entra d2'>OS ACHADOS, POR ATO · CLIQUE PARA VOLTAR À TELA</div>{''.join(lista)}</div>"
         f"<img class='urna' alt='' src='{urna}'/>"
         "<div class='convite sobe d12'><div class='mao'>domingo, 25/10, 17h</div>"
@@ -114,7 +120,7 @@ def corpo() -> str:
 def declarar(ctx):
     itens = [Visual(P, lib.visual_html(
         "T23_Fecho_Html", 0, 0, lib.LARGURA, lib.ALTURA, "Casca · vazio", folha_de_estilo=CSS, modelo_corpo=corpo(),
-        alt="O que os números dizem: os achados de cada ato, as fontes e o convite para a apuração ao vivo.",
+        alt="Do placar à escola: os achados de cada ato, as fontes e o convite para a apuração ao vivo.",
         z=lib.CAMADAS["conteudo"], tab=100))]
     for cod, texto, y in _linhas():
         itens.append(Visual(P, lib.visual_botao(

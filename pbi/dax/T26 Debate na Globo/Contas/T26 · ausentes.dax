@@ -1,0 +1,10 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Quem não vai (ou não foi) ao debate: Lula, Flávio, Lula e Flávio, ou vazio.
+@oraculo: vazio
+*/
+VAR _l = [T26 · presença · Lula] = "ausente"
+VAR _f = [T26 · presença · Flávio] = "ausente"
+RETURN
+    SWITCH ( TRUE (), _l && _f, "Lula e Flávio", _l, "Lula", _f, "Flávio", "" )

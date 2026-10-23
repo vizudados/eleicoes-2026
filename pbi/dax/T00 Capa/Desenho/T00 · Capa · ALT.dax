@@ -3,6 +3,6 @@
 @formato: texto
 @descricao: Texto alternativo da capa.
 */
-"Eleições 2026, 1º turno presidencial: o que os números dizem. Flávio Bolsonaro " & FORMAT ( [T00 · Flávio %], "0.0%" )
+"Eleições 2026, 1º turno presidencial: o voto, de perto. Flávio Bolsonaro " & FORMAT ( [T00 · Flávio %], "0.0%" )
     & " dos válidos, Lula " & FORMAT ( [T00 · Lula %], "0.0%" ) & "; " & FORMAT ( [T00 · municípios que viraram], "#,0" )
     & " municípios mudaram de lado."

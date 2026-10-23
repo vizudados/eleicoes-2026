@@ -1,0 +1,8 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Texto puro do palco.
+*/
+"No palco, os púlpitos: Lula " & SWITCH ( [T26 · presença · Lula], "confirmada", "com presença confirmada", "ausente", "ausente", "com presença a confirmar" )
+    & "; Flávio " & SWITCH ( [T26 · presença · Flávio], "confirmada", "com presença confirmada", "ausente", "ausente", "com presença a confirmar" )
+    & ". Passe o mouse em cada um para o histórico e a fonte."

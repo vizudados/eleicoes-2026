@@ -1,0 +1,7 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Quando a situação do debate foi atualizada no arquivo.
+@oraculo: 23/10/2026 19:45
+*/
+CALCULATE ( MAX ( 'T26 Debate Globo'[Atualizado] ), REMOVEFILTERS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Chave] = "debate" )

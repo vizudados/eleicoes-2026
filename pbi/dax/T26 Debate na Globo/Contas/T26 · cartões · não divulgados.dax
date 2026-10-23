@@ -1,0 +1,12 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0
+@descricao: Quantos cartões ficaram sem número (não divulgado).
+@oraculo: 0
+*/
+COUNTROWS (
+    FILTER (
+        CALCULATETABLE ( VALUES ( 'T26 Debate Globo'[Cartão] ), REMOVEFILTERS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Grupo] = "metrica" ),
+        CALCULATE ( [T26 · cartão · estado] ) = "nao_divulgado"
+    )
+) + 0

@@ -20,7 +20,7 @@ VAR _txtDia = FORMAT ( _dia, "dd/MM" )
 -- 4 · Marcação
 RETURN
     "<div class='tela t07a'>"
-        & "<div class='sob sobe'>" & _txtDia & " · Band · o único frente a frente</div>"
+        & "<div class='sob sobe'>" & _txtDia & " · Band · o primeiro frente a frente</div>"
         & "<div class='linha'>"
             & "<div class='hero sobe d1'><span class='num'>" & _txtAud & "</span><span class='u'>pontos</span></div>"
             & "<div class='tri'>"

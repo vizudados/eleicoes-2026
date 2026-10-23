@@ -2,7 +2,7 @@
   "name": "capa-eleicoes-2026",
   "version": "1.0.0",
   "private": true,
-  "description": "Capa animada do painel Eleições 2026 · o que os números dizem (Vizu Dados), em Remotion.",
+  "description": "Capa animada do painel Eleições 2026 · o voto de perto (Vizu Dados), em Remotion.",
   "scripts": {
     "estudio": "remotion studio src/index.ts",
     "dados": "python -I -X utf8 scripts/preparar_dados.py && python -I -X utf8 scripts/preparar_arte.py",

@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 08 Debate'"
+                  "Value": "'Voltar: 09 Debate Globo'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 08 Debate'"
+                  "Value": "'Voltar: 09 Debate Globo'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T07_CHEGADA_01'"
+                  "Value": "'T26_CHEGADA_01'"
                 }
               }
             }

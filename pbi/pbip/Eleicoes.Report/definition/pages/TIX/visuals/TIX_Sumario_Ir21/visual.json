@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'23 · 20 anos: Como o mapa mudou em 20 anos?'"
+                  "Value": "'24 · 20 anos: Como o mapa mudou em 20 anos?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'23 · 20 anos: Como o mapa mudou em 20 anos?'"
+                  "Value": "'24 · 20 anos: Como o mapa mudou em 20 anos?'"
                 }
               }
             },

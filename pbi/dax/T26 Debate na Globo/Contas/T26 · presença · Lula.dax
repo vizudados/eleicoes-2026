@@ -1,0 +1,9 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Situação da presença de Lula: confirmada, a_confirmar ou ausente (vazio ou outro texto = a_confirmar).
+@oraculo: confirmada (23/10/2026, 19h45)
+*/
+VAR _s = LOWER ( TRIM ( CALCULATE ( MAX ( 'T26 Debate Globo'[Situação] ), REMOVEFILTERS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Chave] = "presenca_lula" ) ) )
+RETURN
+    SWITCH ( TRUE (), _s = "confirmada", "confirmada", _s IN { "ausente", "não vai", "nao_vai" }, "ausente", "a_confirmar" )

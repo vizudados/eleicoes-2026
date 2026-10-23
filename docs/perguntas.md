@@ -1,4 +1,4 @@
-# Eleições 2026 · o que os números dizem — roteiro (uma pergunta por tela)
+# Eleições 2026 · o voto de perto — roteiro (uma pergunta por tela)
 
 Painel no estilo apresentação (linguagem visual da casa, versão de 21/10/2026), contando o 1º turno
 presidencial de 2026 como o documentário da Spotniks: do placar ao porquê, do país à cidade de quem assiste.
@@ -31,14 +31,23 @@ presidencial de 2026 como o documentário da Spotniks: do placar ao porquê, do 
 | 10 | III | Como cada estado se moveu? | Lula perdeu margem em 26 das 27 unidades; Minas Gerais e Tocantins mudaram de lado | TSE |
 | 11 | III | Em que tipo de cidade Lula perdeu mais? | Nas cidades de até 10 mil habitantes e de renda mais alta, a margem de Lula caiu 16,5 p.p. | TSE × IBGE |
 | 12 | III | Como o PT chegou até aqui, de 2006 a 2026? | Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo lugar | TSE |
-| 13 | IV · E agora | Como votou a minha cidade? | Em Contagem, Flávio venceu com 50,3%; a margem de Lula caiu 5,4 p.p. desde 2022 | TSE + IBGE |
+| 13 | IV · E agora | Como votou a minha cidade? | Em Ananindeua (PA), a cidade grande que votou mais perto do Brasil, Flávio venceu com 46,2%; a margem de Lula caiu 2,9 p.p. desde 2022 | TSE + IBGE |
 | 14 | IV · E agora | E agora, o que as pesquisas dizem do 2º turno? | Desde 05/10, Flávio lidera 34 de 39 pesquisas do 2º turno | pesquisas |
-| 15 | IV · E agora | O que os números dizem, afinal? (encerramento) | os achados de cada ato + fontes + créditos das fotos | — |
+| 15 | IV · E agora | E o que fica desta eleição? (encerramento) | os achados de cada ato + fontes + créditos das fotos | — |
 
 Tela 22 · Escola (código T20, capítulo V): **Como votou cada escola da cidade?** — os locais de votação de 34 cidades
-(as 27 capitais, as 6 maiores que trocaram Lula por Flávio de 2022 para 2026 e Contagem, onde o documentário começa e
-onde a tela abre), escolhidas no filtro do topo. Resposta em Contagem: Lula à frente em 12 dos 112 locais em 2026
-(eram 27 dos 111 em 2022); 14 viraram de Lula para Flávio. TSE (seções e cadastro de locais) × malha do IBGE.
+(as 27 capitais, as 6 maiores que trocaram Lula por Flávio de 2022 para 2026 e Contagem; a tela abre no Rio de
+Janeiro), escolhidas no filtro do topo. Resposta no Rio: 1.449 locais de votação; 31 viraram de Lula para Flávio
+e 35 de Flávio para Lula, com a margem da cidade quase parada (−3,6 → −4,0 pontos). TSE (seções e cadastro de locais)
+× malha do IBGE.
+
+Tela 20 · Debate na Globo (código T26, capítulo IV, entre a 19 · 2º turno e a 21 · Apuração; o painel passa a ter 27
+telas): **O último debate mudou alguma coisa?** — o debate da TV Globo de 23/10/2026, o último antes do 2º turno,
+numa tela pronta antes dos números: a ficha da noite, os dois púlpitos com a presença de cada um e cinco números que
+chegam ao longo da noite e do sábado (buscas, audiência, transmissão na internet, redes e pesquisas com o campo inteiro
+depois do debate), cada um com a régua do debate da Band de 18/10. Resposta antes do debate: ainda não dá para dizer.
+Base: `dados/pbi/debate_globo.csv` (emissora, imprensa, Kantar IBOPE, Google Trends, Bites) e pesquisas registradas no
+TSE.
 
 Decisões do Alisson (22/10/2026): fazer tudo; arquivo novo no Figma; linguagem visual da casa (21/10) "mesmo traço, mas
 puxado um pouco mais pra desenho e rabisco", com liberdade criativa; paleta bege com pontos entre vermelho e azul; tela

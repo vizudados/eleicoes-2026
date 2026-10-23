@@ -1,0 +1,13 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: #,0
+@descricao: Interações com Lula nas 24 horas depois do debate da Band (Bites, via Poder360; tabela Monitoramento).
+@oraculo: 25.500.000
+*/
+CALCULATE (
+    MAX ( Monitoramento[Valor] ),
+    REMOVEFILTERS ( Monitoramento ),
+    Monitoramento[Estudo] = "Bites (agência de dados)",
+    Monitoramento[Métrica] = "interações nas 24h após o debate da Band",
+    Monitoramento[Candidato] = "Lula"
+)

@@ -1,0 +1,39 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Dossiê da presença: a situação, o histórico com fonte e os debates do 2º turno antes deste, com o que houve para o candidato.
+*/
+-- 1 · Leituras (contas de T26 Debate na Globo\Contas)
+VAR _grupo = [T26 · linha · grupo]
+VAR _rot = [T26 · linha · rótulo]
+VAR _txt = [T26 · linha · texto]
+VAR _fonte = [T26 · linha · fonte]
+VAR _atu = [T26 · linha · atualizado]
+VAR _pres = [T26 · presença · situação]
+VAR _sit = [T26 · debate · situação]
+VAR _hist = [T26 · 2º turno · debates]
+VAR _real = [T26 · 2º turno · realizados]
+VAR _cand = [T26 · linha · candidato]
+-- 2 · Textos
+VAR _tit =
+    SWITCH (
+        TRUE (),
+        _sit = "cancelado", "O debate foi cancelado",
+        _pres = "ausente", IF ( _sit = "realizado", "Não foi ao debate", "Não vai ao debate" ),
+        _pres = "a_confirmar", "Presença a confirmar",
+        _sit = "realizado", "Esteve no debate",
+        "Presença confirmada"
+    )
+VAR _linhas = "<div class='li'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _hist, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ), "|", "</div><div class='li'>" ) & "</div>"
+VAR _mao = IF ( _real = 1, "antes, só um debate", FORMAT ( _real, "0" ) & " debates antes" )
+-- 4 · Marcação
+RETURN
+    IF (
+        _grupo = "presenca",
+        "<div class='sob sobe" & IF ( _cand = "Lula", " lula-esc", " flavio-esc" ) & "'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( UPPER ( _rot ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+            & "<div class='tt sobe'>" & _tit & "</div>"
+            & "<div class='txt sobe'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+            & "<div class='nota sobe'>Fontes: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _fonte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · atualizado em " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _atu, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+            & "<hr/><div class='rot sobe'>DEBATES DO 2º TURNO, ANTES DESTE</div><div class='txt lis sobe'>" & _linhas & "</div>"
+            & "<div class='mao ti'>" & _mao & "</div>"
+    )

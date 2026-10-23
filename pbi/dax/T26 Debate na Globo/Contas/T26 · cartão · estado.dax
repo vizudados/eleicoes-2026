@@ -1,0 +1,31 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Estado do cartão do contexto ('T26 Debate Globo'[Cartão]): aguardando, parcial, publicado, previa, consolidado (audiência), nao_divulgado, ou a situação do debate quando ele foi cancelado ou adiado. O valor no arquivo vence a coluna situação; as pesquisas contam pela tabela Pesquisa.
+@oraculo: aguardando nos cinco (23/10/2026, 19h45)
+*/
+VAR _c = SELECTEDVALUE ( 'T26 Debate Globo'[Cartão] )
+VAR _sit = [T26 · debate · situação]
+VAR _linhas = CALCULATE ( COUNTROWS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Grupo] = "metrica" )
+VAR _com = CALCULATE ( COUNTROWS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Grupo] = "metrica", NOT ISBLANK ( 'T26 Debate Globo'[Valor] ) )
+VAR _nd = CALCULATE ( COUNTROWS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Grupo] = "metrica", 'T26 Debate Globo'[Situação] = "nao_divulgado" )
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _c ) || _c = "" || ISBLANK ( _linhas ), BLANK (),
+        _sit IN { "cancelado", "adiado" }, _sit,
+        _c = "pesquisas",
+            IF ( [T26 · pesquisas · depois · n] > 0, "publicado", IF ( _nd > 0, "nao_divulgado", "aguardando" ) ),
+        _c = "audiencia",
+            SWITCH (
+                TRUE (),
+                NOT ISBLANK ( [T26 · audiência · consolidado] ), "consolidado",
+                NOT ISBLANK ( [T26 · audiência · prévia] ), "previa",
+                _nd >= _linhas, "nao_divulgado",
+                "aguardando"
+            ),
+        _com >= _linhas, "publicado",
+        _com > 0, "parcial",
+        _nd > 0, "nao_divulgado",
+        "aguardando"
+    )

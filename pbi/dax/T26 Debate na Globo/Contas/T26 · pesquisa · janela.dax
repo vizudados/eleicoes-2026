@@ -1,0 +1,25 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Janela da pesquisa do contexto (Pesquisa[Id]) em relação aos debates: antes, atravessa ou depois; vazio fora do 2º turno em votos totais ou antes da Band.
+*/
+VAR _band = [T26 · Band · data]
+VAR _globo = [T26 · debate · dia]
+VAR _ini = MIN ( Pesquisa[Campo início] )
+VAR _fim = MAX ( Pesquisa[Campo fim] )
+VAR _ok =
+    HASONEVALUE ( Pesquisa[Id] )
+        && SELECTEDVALUE ( Pesquisa[Cenário] ) = "2º turno"
+        && SELECTEDVALUE ( Pesquisa[Tipo] ) = "totais"
+        && NOT ISBLANK ( MAX ( Pesquisa[Lula] ) )
+        && NOT ISBLANK ( MAX ( Pesquisa[Flavio] ) )
+RETURN
+    IF (
+        _ok,
+        SWITCH (
+            TRUE (),
+            _ini > _globo, "depois",
+            _ini > _band && _fim < _globo, "antes",
+            _ini <= _globo && _fim >= _globo, "atravessa"
+        )
+    )

@@ -95,7 +95,7 @@ table 'T20 Cidade'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Id do local da ficha quando nada foi escolhido: em Contagem, a Escola Estadual Nova Contagem-I; nas outras, a escola que virou com mais votos válidos (ou, sem nenhuma que virou, a de maior queda).
+	/// Id do local da ficha quando nada foi escolhido: a escola que virou com mais votos válidos (ou, sem nenhuma que virou, a de maior queda).
 	column IdExemplo
 		dataType: int64
 		isHidden
@@ -106,7 +106,7 @@ table 'T20 Cidade'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Por que o exemplo: começo, virou ou queda.
+	/// Por que o exemplo: virou ou queda.
 	column Exemplo
 		dataType: string
 		isHidden

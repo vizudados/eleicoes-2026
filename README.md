@@ -1,4 +1,4 @@
-# Eleições 2026 · o que os números dizem
+# Eleições 2026 · o voto de perto
 
 Repositório: https://github.com/vizudados/eleicoes-2026 · Painel em Power BI no estilo apresentação (Vizu Dados), que conta o 1º turno presidencial de 2026 do placar ao porquê,
 do país à escola, e acompanha a apuração do 2º turno ao vivo. Inspirado no documentário "Lula vs Flávio: o que os
@@ -62,8 +62,9 @@ python -I -X utf8 pipeline/exportar_t20.py
 
 ## O painel no Power BI (`pbi/`)
 
-26 telas a 1920 × 1080 (00 Capa … 25 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos; a
-15 · Quem vota cruza o voto com renda, escolaridade, Bolsa Família e IDH (`pipeline/extrair_social.py`). Abra
+27 telas a 1920 × 1080 (00 Capa … 26 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos; a
+15 · Quem vota cruza o voto com renda, escolaridade, Bolsa Família e IDH (`pipeline/extrair_social.py`), e a
+20 · Debate na Globo acompanha o último debate do 2º turno pelo arquivo `dados/pbi/debate_globo.csv` (abaixo). Abra
 `pbi/pbip/Eleicoes.pbip` no Power BI Desktop; o modelo lê os CSV de `dados/pbi` e de `dados/apuracao` pelo endereço raw
 deste repositório (parâmetro `pRepositorioRaw`), então funciona em qualquer máquina e no Service sem gateway.
 
@@ -118,6 +119,14 @@ Teste local:
 ```bash
 python -I apuracao/coletar.py --eleicao 6257 --saida dados/apuracao/ensaio-1turno
 ```
+
+## Debate da Globo (2º turno, 23/10/2026)
+
+A tela 20 · Debate na Globo (código T26) ficou pronta antes do debate e se preenche quando
+`dados/pbi/debate_globo.csv` muda no repositório: uma linha por fato ou número (situação do debate, presença de cada
+candidato, regras e os cinco números da noite: buscas, audiência, transmissão na internet, redes e pesquisas). Campo
+vazio aparece como "aguardando", com a hora e a fonte esperadas; nada é estimado. O que é cada campo, de onde vem e
+como atualizar está em `dados/bruto/debate/FONTES.md` (seção "Debate da Globo, 23/10/2026").
 
 ## Fontes
 

@@ -1,0 +1,32 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Fundo da faixa da noite: título, a fita do tempo do início do debate à eleição de domingo.
+*/
+-- 1 · Leituras (contas de T26 Debate na Globo\Contas)
+VAR _sit = [T26 · debate · situação]
+VAR _ini = [T26 · debate · início]
+VAR _tot = [T26 · cartões · total]
+-- 2 · Textos
+VAR _txt =
+    SWITCH (
+        TRUE (),
+        [T26 · arquivo · linhas] = 0, "Os números da noite aparecem aqui quando o arquivo do debate for lido.",
+        _sit IN { "cancelado", "adiado" },
+        "Sem debate, sem números da noite: os espaços ficam marcados como estavam.",
+        FORMAT ( _tot, "0" ) & IF ( _tot = 1, " número conta", " números contam" )
+            & " como foi o debate. Cada um chega numa hora; até lá, o lugar dele fica marcado, com a fonte esperada."
+    )
+VAR _iniTxt = IF ( ISBLANK ( _ini ), "", UPPER ( FORMAT ( _ini, "ddd dd/MM" ) ) & " · " & FORMAT ( _ini, "HH" ) & "H" & FORMAT ( _ini, "nn" ) & " · COMEÇA O DEBATE" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t26n'>"
+        & "<div class='cab'><div class='sob sobe'>A NOITE EM NÚMEROS · E A RÉGUA DA BAND, 18/10</div>"
+        & "<div class='txt sobe d1'>" & _txt & "</div></div>"
+        & "<div class='ini rot entra d3'>" & _iniTxt & "</div>"
+        & "<div class='fimr rot entra d6'>DOM 25/10 · A ELEIÇÃO</div>"
+        & "<svg class='fita' width='1620' height='24' viewBox='0 0 1620 24'><path class='traco' pathLength='1' "
+        & "d='M8 12 C 300 10, 700 14, 1000 11 S 1450 13, 1560 12'/>"
+        & "<circle class='brota' cx='8' cy='12' r='6'/></svg>"
+        & "<div class='urna entra d8'></div>"
+    & "</div>"

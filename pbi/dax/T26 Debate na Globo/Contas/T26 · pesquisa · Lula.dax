@@ -1,0 +1,6 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0.0
+@descricao: Lula da pesquisa do contexto (Pesquisa[Id]).
+*/
+MAX ( Pesquisa[Lula] )

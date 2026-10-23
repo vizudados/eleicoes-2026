@@ -4,7 +4,7 @@
     python -X utf8 pbi/scripts/desenho_t15.py
 
 Grava pbi/dax/T15 Minha cidade/{Contas,Desenho}/*.dax. Tudo responde ao filtro de município da tela (VizuFilter sobre
-Município[Rótulo], cidade inicial Contagem (MG)). As contas da cidade somam Município ano (sem o exterior, que não tem
+Município[Rótulo], cidade inicial Ananindeua (PA)). As contas da cidade somam Município ano (sem o exterior, que não tem
 município). "Entre as cidades parecidas" = mesmo porte e mesmo quinto de renda, em todo o Brasil (ignora o filtro).
 
 Viagem no tempo (23/10/2026): clicar numa barra da série filtra o Ano; a ficha e as parecidas passam a contar a eleição

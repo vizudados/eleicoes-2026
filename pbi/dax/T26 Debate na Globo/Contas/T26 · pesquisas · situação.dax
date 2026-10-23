@@ -1,0 +1,7 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Situação do cartão das pesquisas no arquivo do debate (aguardando ou nao_divulgado): os números vêm da tabela Pesquisa.
+@oraculo: aguardando
+*/
+LOWER ( TRIM ( CALCULATE ( MAX ( 'T26 Debate Globo'[Situação] ), REMOVEFILTERS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Chave] = "pesquisas_depois" ) ) )

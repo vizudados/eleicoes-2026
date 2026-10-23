@@ -3,7 +3,7 @@
   "name": "TIX_Sumario_Ir08",
   "position": {
     "x": 473,
-    "y": 310,
+    "y": 404,
     "z": 1020,
     "height": 86,
     "width": 316,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'09 · Buscas: O que o Brasil perguntou ao Google?'"
+                  "Value": "'10 · Buscas: O que o Brasil perguntou ao Google?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'09 · Buscas: O que o Brasil perguntou ao Google?'"
+                  "Value": "'10 · Buscas: O que o Brasil perguntou ao Google?'"
                 }
               }
             },

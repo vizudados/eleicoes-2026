@@ -1,0 +1,98 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Dossiê do cartão: o que mede, a ressalva, quando e de onde chega cada número e a mesma medida no debate da Band (nas pesquisas, a lista do antes e do depois).
+*/
+-- 1 · Leituras (contas de T26 Debate na Globo\Contas)
+VAR _c = SELECTEDVALUE ( 'T26 Debate Globo'[Cartão] )
+VAR _est = [T26 · cartão · estado]
+VAR _rot = [T26 · linha · rótulo]
+VAR _med = [T26 · linha · medida]
+VAR _obs = [T26 · linha · observação]
+VAR _band = [T26 · Band · data]
+VAR _bandC = [T26 · Band · audiência]
+VAR _bandP = [T26 · Band · audiência prévia]
+VAR _bandFonte = [T26 · Band · audiência · fonte]
+VAR _bandS = [T26 · Band · pico streaming]
+VAR _bandBL = [T26 · Band · buscas · Lula]
+VAR _bandBF = [T26 · Band · buscas · Flávio]
+VAR _bandRL = [T26 · Band · redes · Lula]
+VAR _bandRF = [T26 · Band · redes · Flávio]
+VAR _aN = [T26 · pesquisas · antes · n]
+VAR _pN = [T26 · pesquisas · depois · n]
+VAR _xN = [T26 · pesquisas · atravessam · n]
+-- as linhas do cartão: o que se espera de cada uma (a audiência tem duas: prévia e consolidado)
+VAR _linhas =
+    CONCATENATEX (
+        FILTER ( VALUES ( 'T26 Debate Globo'[Chave] ), [T26 · linha · grupo] = "metrica" && [T26 · linha · candidato] <> "Flávio" ),
+        VAR _v = [T26 · linha · valor]
+        VAR _ch = [T26 · linha · chave]
+        VAR _nome = SWITCH ( _ch, "audiencia_previa", "Prévia", "audiencia_consolidado", "Consolidado", "" )
+        RETURN
+            "<div class='li'>" & IF ( _nome <> "", "<b>" & _nome & "</b> · ", "" )
+                & SWITCH (
+                    TRUE (),
+                    _ch = "pesquisas_depois" && _pN > 0,
+                        "chegaram " & FORMAT ( _pN, "0" ) & IF ( _pN = 1, " pesquisa", " pesquisas" ) & " com o campo inteiro depois do debate.",
+                    _ch = "pesquisas_depois",
+                        "esperadas " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · linha · esperado], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ", de " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · linha · fonte esperada], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ".",
+                    ISBLANK ( _v ),
+                        "esperado " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · linha · esperado], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ", de " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · linha · fonte esperada], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ".",
+                    "chegou: " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · linha · fonte], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+                        & IF ( LEN ( [T26 · linha · atualizado] ) > 0, " (" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · linha · atualizado], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ")", "" ) & "."
+                ) & "</div>",
+        "",
+        [T26 · linha · ordem], ASC
+    )
+VAR _lista =
+    CONCATENATEX (
+        FILTER ( ALL ( Pesquisa[Id] ), [T26 · pesquisa · janela] IN { "antes", "depois" } ),
+        "<div class='ps" & IF ( [T26 · pesquisa · janela] = "depois", " dep", "" ) & "'><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T26 · pesquisa · instituto], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · "
+            & FORMAT ( [T26 · pesquisa · campo início], "dd" ) & "–" & FORMAT ( [T26 · pesquisa · campo fim], "dd/MM" )
+            & IF ( [T26 · pesquisa · janela] = "depois", " · depois", "" ) & "</span><b class='lula-esc'>" & FORMAT ( [T26 · pesquisa · Lula], "0.0" )
+            & "</b><b class='flavio-esc'>" & FORMAT ( [T26 · pesquisa · Flávio], "0.0" ) & "</b></div>",
+        "",
+        [T26 · pesquisa · campo fim], ASC
+    )
+-- 2 · Textos
+VAR _bandTxt =
+    SWITCH (
+        _c,
+        "buscas", "Na noite de " & FORMAT ( _band, "dd/MM" ) & ", das 20h à meia-noite, o pico foi " & FORMAT ( _bandBL, "0" ) & " para Lula e "
+            & FORMAT ( _bandBF, "0" ) & " para Flávio (Google Trends, tópicos, a consulta hora a hora do levantamento). Só a proporção entre os dois se compara.",
+        "audiencia", "Consolidado: " & IF ( _bandC = INT ( _bandC ), FORMAT ( _bandC, "0" ), FORMAT ( _bandC, "0.0" ) ) & " pontos; prévia: " & IF ( _bandP = INT ( _bandP ), FORMAT ( _bandP, "0" ), FORMAT ( _bandP, "0.0" ) ) & ". Fonte: " & _bandFonte & ".",
+        "streaming", FORMAT ( _bandS, "#,0" ) & " aparelhos ao mesmo tempo, só no canal da Band no YouTube (Poder360).",
+        "redes", "Lula " & FORMAT ( _bandRL, "#,0" ) & " e Flávio " & FORMAT ( _bandRF, "#,0" ) & " interações nas 24 horas depois do debate (Bites, via Poder360).",
+        ""
+    )
+VAR _rotRef = IF ( _c = "pesquisas", "AS PESQUISAS · LULA × FLÁVIO, VOTOS TOTAIS (%)", "NA BAND, " & FORMAT ( _band, "dd/MM" ) & " · A MESMA MEDIDA" )
+VAR _mao =
+    SWITCH (
+        _est,
+        "publicado", "chegou",
+        "consolidado", "chegou o consolidado",
+        "previa", "falta o consolidado",
+        "parcial", "falta um dos dois",
+        "nao_divulgado", "não saiu",
+        "cancelado", "sem debate",
+        "adiado", "debate adiado",
+        "ainda não chegou"
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _est ),
+        "<div class='sob sobe'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( UPPER ( _rot ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+            & "<div class='tt sobe'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+            & IF ( LEN ( _obs ) > 0, "<div class='txt sobe'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _obs, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ".</div>", "" )
+            & "<hr/><div class='rot sobe'>QUANDO E DE ONDE</div><div class='txt lis sobe'>" & _linhas & "</div>"
+            & "<hr/><div class='rot sobe'>" & _rotRef & "</div>"
+            & IF (
+                _c = "pesquisas",
+                "<div class='lst sobe'>" & _lista & "</div><div class='nota sobe'>Antes: " & FORMAT ( _aN, "0" ) & " com o campo inteiro entre os dois debates"
+                    & IF ( _xN > 0, "; " & FORMAT ( _xN, "0" ) & " atravessa" & IF ( _xN = 1, "", "m" ) & " o dia do debate e fica" & IF ( _xN = 1, "", "m" ) & " fora", "" )
+                    & ". Cada instituto mede do seu jeito: compare cada um com ele mesmo.</div>",
+                "<div class='txt sobe'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _bandTxt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+            )
+            & "<div class='mao ti'>" & _mao & "</div>"
+    )

@@ -1,0 +1,19 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: dd/MM
+@descricao: Último dia de campo entre as pesquisas com o campo inteiro entre os dois debates (começa depois da Band, termina antes do dia da Globo).
+@oraculo: 22/10
+*/
+VAR _band = [T26 · Band · data]
+VAR _globo = [T26 · debate · dia]
+RETURN
+    CALCULATE (
+        MAX ( Pesquisa[Campo fim] ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "totais",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Campo início] > _band,
+        Pesquisa[Campo fim] < _globo
+    )

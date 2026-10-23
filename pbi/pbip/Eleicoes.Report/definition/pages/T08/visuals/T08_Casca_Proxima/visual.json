@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 10 Redes — Quem dominou as redes?'"
+                  "Value": "'Próxima: 11 Redes — Quem dominou as redes?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 10 Redes — Quem dominou as redes?'"
+                  "Value": "'Próxima: 11 Redes — Quem dominou as redes?'"
                 }
               }
             },

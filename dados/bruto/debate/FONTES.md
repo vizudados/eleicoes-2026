@@ -6,7 +6,7 @@ Levantamento feito entre a noite de 22/10/2026 e a madrugada de 23/10/2026 para 
 
 - `debates.csv`: 11 linhas, uma por debate presidencial do 1º e do 2º turno marcado até 22/10/2026, inclusive os cancelados. Separador `;`, UTF-8 sem BOM, datas AAAA-MM-DD, ponto decimal. Nenhum campo contém `;`. A `observacao` abre com o status (`REALIZADO`, `CANCELADO`, `NÃO REALIZADO`), e as notas vêm separadas por ` | `. Em `fonte_url`, mais de um link vai separado por ` , `.
 - `debate_band.json`: tudo sobre os dois debates da Band: identificação, formato, momentos com trecho curto e fonte, temas, direitos de resposta, audiência, repercussão digital, "quem venceu", pesquisas antes × depois (com as listas usadas) e atribuições. Quando um campo não foi confirmado, ele fica `null` e a razão vai no `*_obs` correspondente.
-- O debate da Globo de 23/10 (2º turno) ainda não tinha acontecido e ficou fora do CSV. Ele aparece só em `proximo_debate`, no JSON.
+- O debate da Globo de 23/10 (2º turno) ainda não tinha acontecido e ficou fora do CSV. Ele aparece em `proximo_debate`, no JSON, e tem arquivo próprio, `dados/pbi/debate_globo.csv` (seção "Debate da Globo, 23/10/2026", no fim deste arquivo).
 
 ## Escolha de foco (ler antes de montar a tela)
 
@@ -161,3 +161,121 @@ Para Lula × Flávio, o efeito só pode ser medido no debate de 18/10. O de 23/0
 ## Conteúdo da web com instruções
 
 Nenhuma página consultada trouxe instruções dirigidas ao agente.
+
+---
+
+# Debate da Globo, 23/10/2026 (2º turno) · tela 20 · Debate na Globo (código T26)
+
+Levantamento de 23/10/2026, das 19h às 19h45 (Brasília), para a tela "O último debate mudou alguma coisa?". O debate é
+hoje, sexta, 23/10, às 21h20, e a tela fica pronta antes de haver qualquer número: ela se preenche sozinha quando o
+arquivo abaixo muda no repositório (o modelo lê o CSV pelo endereço raw do GitHub, como a apuração ao vivo).
+
+## Arquivo
+
+- `dados/pbi/debate_globo.csv` (não `dados/bruto`: é escrito à mão, já no formato que o Power BI lê). Separador
+  vírgula, UTF-8 sem BOM, ponto decimal, aspas só onde o texto tem vírgula. Uma linha por fato ou por número. Campo
+  vazio = ainda não chegou: a tela mostra "aguardando", com a hora e a fonte esperadas. **Nada estimado**: número só
+  entra com fonte publicada.
+- No modelo: tabela `T26 Debate Globo` (`pbi/modelo/t26_debate_globo.py`), sem relação com as outras; as contas leem a
+  linha pela `chave` (`pbi/scripts/desenho_t26.py` → `pbi/dax/T26 Debate na Globo`).
+- O debate **não** entra em `debates.csv` / `dados/pbi/debate.csv` por enquanto: as telas 08 (T07) e 19 (T17) acham "o
+  debate em que Lula e Flávio estiveram" pelo `MAX(Data)` das linhas com os dois em `participantes`
+  (`T07 · debate · data`, `T17 · debate · data`). Uma linha da Globo com os dois faria essas telas trocarem a Band pela
+  Globo. Para juntar as duas fontes, primeiro fixe a Band nessas duas contas.
+
+## Colunas
+
+| coluna | o que é |
+|---|---|
+| `chave` | identificador estável da linha; as contas procuram por ela (não renomeie) |
+| `grupo` | `debate` (fatos do evento), `regra` (os blocos), `presenca` (um por candidato), `metrica` (os números da noite) |
+| `cartao` | nas métricas, o cartão da tela: `buscas`, `audiencia`, `streaming`, `redes`, `pesquisas`; vazio nos outros grupos |
+| `ordem` | ordem da linha; a dos cartões na fita sai da menor ordem de cada cartão |
+| `candidato` | `Lula` ou `Flávio` nas linhas de um candidato; vazio nas outras |
+| `rotulo` | o título que a tela mostra |
+| `medida` | o que o número mede, exatamente (a linha sob o título do cartão); nos blocos, a quantidade de rodadas |
+| `situacao` | `debate`: `marcado`, `no_ar`, `realizado`, `adiado`, `cancelado` · `presenca`: `confirmada`, `a_confirmar`, `ausente` · `metrica`: `aguardando`, `publicado`, `nao_divulgado` |
+| `valor` | o número publicado (ponto decimal, sem separador de milhar); vazio enquanto não chega. O valor manda: com ele, o cartão aparece como publicado mesmo que `situacao` tenha ficado `aguardando` |
+| `texto` | o fato em texto: mediação, onde passa, regras, o histórico da presença; em `adiado`, `cancelado` ou `ausente`, o motivo, com a fonte |
+| `unidade` | unidade do valor (`pontos`, `aparelhos`, `interações`, `índice 0 a 100`, `%`; nos blocos, `min cada, por rodada`) |
+| `esperado` | quando o número deve chegar, como a tela escreve |
+| `previsto_para` | hora prevista (`aaaa-mm-dd hh:mm`, Brasília); na linha `debate`, o início; na `fim`, o fim previsto |
+| `fonte_esperada` | de onde o número deve vir (a tela mostra enquanto ele não chega) |
+| `fonte` | de onde veio, com veículo e hora (a tela mostra quando ele chega) |
+| `fonte_url` | link(s) da fonte, separados por ` , ` |
+| `atualizado_em` | quando a linha foi atualizada (`dd/mm/aaaa hh:mm`, Brasília); na linha `debate`, é a "situação em" da tela |
+| `observacao` | ressalva para o leitor (vai para o dossiê do cartão); escreva para quem lê a tela, não para quem mantém |
+
+## As métricas: fonte e hora esperadas
+
+| chave | cartão | o que é | fonte esperada | quando | régua da Band (18/10), já no modelo |
+|---|---|---|---|---|---|
+| `buscas_lula`, `buscas_flavio` | buscas | pico de cada um na noite, 0 a 100 | Google Trends, coleta própria: tópicos Lula (`/m/0pc9q`) e Flávio Bolsonaro (`/g/122pdhqd`), Brasil, hora a hora, numa consulta só que cubra a noite (como a H2 de `trends_tempo`) | sexta, depois das 23h30 | `Trends tempo`, consulta H2, 18/10 das 20h à meia-noite: Lula 100 (21h), Flávio 91 (22h) |
+| `audiencia_previa` | audiência | pontos na Grande SP, prévia | Kantar IBOPE (prévia), via imprensa (colunas de TV, Folha, UOL) | sexta, perto da meia-noite | 13 (Folha via CartaCapital; a TV Pop deu 13,39), da observação de `debates.csv` |
+| `audiencia_consolidado` | audiência | pontos na Grande SP, consolidado | Kantar IBOPE (consolidado), divulgado pela Globo ou pela imprensa | sábado à tarde (ou segunda, 26/10) | 15 (consolidado divulgado pela Band, `debates.csv`) |
+| `streaming_pico` | streaming | pico de aparelhos assistindo ao mesmo tempo | balanço da Globo (g1, Globoplay, YouTube) ou contador da transmissão; anote a plataforma em `fonte` | sexta, fim do debate ou madrugada | 5.385.394 aparelhos no YouTube da Band (Poder360, `debates.csv`) |
+| `redes_lula`, `redes_flavio` | redes | interações nas 24 horas depois do debate | Bites, via imprensa (a mesma medida usada depois da Band). Se só sair outra medida (IPD Quaest, Ativaweb), troque `medida`, `unidade` e `fonte` para ela: a régua da Band vale só para a mesma medida da mesma agência | sábado à noite | `Monitoramento`, Bites: Lula 25,5 mi, Flávio 5,0 mi |
+| `pesquisas_depois` | pesquisas | média das pesquisas com o campo inteiro depois do debate (votos totais) | institutos com registro no TSE | sábado à noite ou domingo cedo | "antes": as 5 pesquisas com o campo inteiro entre os dois debates (19 a 22/10): Lula 45,98%, Flávio 48,02% |
+
+As pesquisas não têm número nesta linha: o cartão conta pela tabela `Pesquisa`, com a regra da tela 08 (campo inteiro
+depois = começa depois do dia do debate; quem atravessa o dia fica fora das médias). Basta lançar a pesquisa em
+`dados/bruto/pesquisas/pesquisas_2turno.csv`, como as outras, e exportar (`pipeline/exportar_pbi.py`). Como a eleição é
+no domingo, o campo teria de caber no sábado: provavelmente só as últimas de sábado, talvez nenhuma. Se nenhuma sair,
+marque `situacao = nao_divulgado` nesta linha.
+
+## O que já está preenchido (fatos de 23/10/2026, 19h45)
+
+| linha | valor | fonte |
+|---|---|---|
+| `debate` | marcado; sexta, 23/10, 21h20, depois do Jornal Nacional | [CNN Brasil, 22/10 17h48](https://www.cnnbrasil.com.br/eleicoes/globo-limita-espaco-de-flavio-e-lula-no-estudio-em-ultimo-debate-entenda/); [Exame, 23/10 07h02](https://exame.com/brasil/que-horas-termina-o-debate-da-globo-veja-duracao-do-encontro-entre-lula-e-flavio-bolsonaro/); [Diário do Pará, 23/10 11h06](https://diariodopara.com.br/eleicoes-2026/lula-e-flavio-bolsonaro-fazem-ultimo-debate-na-globo-hoje-veja-o-horario-regras-transmissao-e-como-sera-a-checagem-de-informacoes/) |
+| `fim` | a Globo não informou; o Jornal da Globo está previsto para as 23h30 (pelo menos duas horas de debate) | Exame, 23/10 |
+| `transmissao` | TV Globo, GloboNews e g1 (e Globoplay) | Exame; [NSC Total, 23/10 10h](https://www.nsctotal.com.br/politica/quem-vai-mediar-debate-globo-segundo-turno-2026) |
+| `mediacao`, `local` | César Tralli · Estúdios Globo, Rio de Janeiro | CNN Brasil; Exame |
+| `checagem` | Fato ou Fake do g1, durante e depois (cerca de 30 jornalistas, com O Globo, Extra, Valor e CBN; sem correção ao vivo na TV) | CNN Brasil; Diário do Pará |
+| `bloco1` a `bloco4`, `finais` | quatro blocos e as considerações finais: 1, as regiões do país e um tema nacional (seis rodadas); 2 e 3, temas escolhidos num telão; 3 min por rodada para cada um, divididos entre pergunta e réplica ou resposta e tréplica; 4, tema livre, 8 min para cada um, sem limite de intervenções; depois, até 10 min de entrevista para cada um, na ordem sorteada | CNN Brasil; Exame; Diário do Pará |
+| `presenca_lula` | confirmada. Em 20/10, as duas campanhas assinaram a ata com as regras, e Lula disse em Juazeiro (BA) que só haveria debate se Flávio autorizasse a quebra dos próprios sigilos; em 22/10, a equipe de comunicação do PT confirmou a presença dele; em 23/10, o ministro Sidônio Palmeira disse que Lula vai tratar de propostas no debate | [Diário do Nordeste, com a Folha, 20/10](https://diariodonordeste.verdesmares.com.br/pontopoder/flavio-bolsonaro-e-lula-confirmam-presenca-em-debate-na-globo-veja-regras-1.3799938); [Poder360, 20/10 19h51](https://www.poder360.com.br/poder-eleicoes-2026/lula-condiciona-debate-na-globo-a-abertura-de-sigilo-de-flavio/); [ND Mais, 22/10 19h28](https://ndmais.com.br/politica/lula-vai-no-debate-da-globo/); [Metrópoles, 23/10 14h56](https://www.metropoles.com/brasil/lula-fara-debate-propositivo-e-nao-vai-aceitar-provocacoes-diz-sidonio) |
+| `presenca_flavio` | confirmada. Em 20/10, as duas campanhas assinaram a ata com as regras; em 21/10, Flávio disse que aceitaria abrir os próprios sigilos, com condições; em 23/10, o Metrópoles registra que as duas campanhas aceitaram as regras de circulação no palco | Diário do Nordeste, com a Folha, 20/10; [CNN Brasil, 21/10 13h47](https://www.cnnbrasil.com.br/eleicoes/flavio-impoe-condicoes-para-aceitar-desafio-de-lula-sobre-sigilo/); Metrópoles, 23/10 |
+| métricas | vazias, `aguardando` | — |
+
+Conferência (não entrou no CSV): [Congresso em Foco, 21/10 8h57](https://www.congressoemfoco.com.br/noticia/123448/lula-condiciona-ida-ao-debate-na-globo-a-abertura-de-sigilos-de-flavio)
+repete a condição de Lula; [Metrópoles, 23/10 12h45](https://www.metropoles.com/brasil/lula-se-reune-com-coordenacao-de-campanha-em-dia-de-debate-da-globo)
+relata a reunião de Lula com a coordenação da campanha para acertar os últimos detalhes do debate.
+
+## Divergências registradas
+
+- **Data:** a NSC Total (23/10) fala, num trecho, em "domingo (25)" e, no resto, em sexta (23); o Diário do Nordeste
+  escreveu "sexta-feira (22)"; a ND Mais (20/10) chegou a dar 25/10. Vale sexta, 23/10, como em CNN Brasil, Exame,
+  Diário do Pará e Metrópoles. O domingo, 25/10, é o 2º turno.
+- **Formato:** em 20/10 (ND Mais, Diário do Nordeste), o formato era de três blocos (regiões sorteadas, seis de dez
+  temas no telão, tema livre). A versão de 22 e 23/10 (CNN Brasil, Exame, Diário do Pará) tem quatro blocos e as
+  considerações finais; o arquivo usa esta.
+- **Presença de Lula:** a condição dele (20/10) é do mesmo dia em que as campanhas assinaram a ata das regras. Nenhuma
+  fonte de 23/10 diz que a condição foi atendida ou retirada; o que há é a confirmação do PT (22/10) e a fala do
+  ministro da Secom (23/10). Se Lula ou Flávio não for, troque `situacao` para `ausente` e escreva o motivo em `texto`,
+  com a fonte.
+
+## Como atualizar (sexta à noite e sábado)
+
+Edite `dados/pbi/debate_globo.csv` (planilha ou editor de texto; mantenha a vírgula como separador e o ponto decimal),
+faça commit e push e atualize o modelo (o Service com atualização agendada, ou "Atualizar" no Desktop). O raw do
+GitHub guarda cópia por até 5 minutos.
+
+1. **Começou (21h20):** linha `debate`, `situacao = no_ar` (opcional) e `atualizado_em`. Se alguém faltar: a linha de
+   presença dele com `situacao = ausente` e o motivo em `texto`, com `fonte` e `fonte_url`.
+2. **Acabou (~23h30):** `debate`, `situacao = realizado`, `atualizado_em`.
+3. **Buscas (depois das 23h30):** consulta no Google Trends com os dois tópicos juntos, Brasil, hora a hora, cobrindo a
+   noite; o maior índice de cada um entre 21h e meia-noite vai em `valor` de `buscas_lula` e `buscas_flavio` (os dois
+   da mesma consulta), com `fonte` (ex.: "Google Trends, coleta de 24/10, 00h10") e `atualizado_em`.
+4. **Audiência, prévia (perto da meia-noite):** `audiencia_previa`, `valor` em pontos (ex.: `16.4`), `fonte` com o
+   veículo e a hora.
+5. **Pico na internet:** `streaming_pico`, `valor` em aparelhos (número inteiro), `fonte` com a plataforma.
+6. **Redes (sábado):** `redes_lula` e `redes_flavio`, a mesma medida para os dois.
+7. **Audiência, consolidado (sábado à tarde ou segunda):** `audiencia_consolidado`.
+8. **Pesquisas (sábado à noite ou domingo cedo):** lance cada pesquisa nova em `pesquisas_2turno.csv` e exporte; se não
+   sair nenhuma com o campo inteiro depois do debate, `pesquisas_depois` com `situacao = nao_divulgado`.
+9. Número que não sair até a eleição: `situacao = nao_divulgado` na linha (a tela troca "aguardando" por "não
+   divulgado"). Se o debate cair: `debate`, `situacao = cancelado` (ou `adiado`), o motivo em `texto`, com fonte.
+
+## Conteúdo da web com instruções
+
+Nenhuma página consultada para esta seção trouxe instruções dirigidas ao agente.

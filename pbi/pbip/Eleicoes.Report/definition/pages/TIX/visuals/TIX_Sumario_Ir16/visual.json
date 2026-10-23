@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'18 · Os outros: Para onde vão os votos dos outros candidatos?'"
+                  "Value": "'19 · Os outros: Para onde vão os votos dos outros candidatos?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'18 · Os outros: Para onde vão os votos dos outros candidatos?'"
+                  "Value": "'19 · Os outros: Para onde vão os votos dos outros candidatos?'"
                 }
               }
             },

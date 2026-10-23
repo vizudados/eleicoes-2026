@@ -1,6 +1,6 @@
 {
  "meta": {
-  "titulo": "Eleições 2026 · o que os números dizem",
+  "titulo": "Eleições 2026 · o voto de perto",
   "gerado_em": "2026-10-23T00:14:58",
   "data_base": "TSE · 22/10/2026",
   "rodape": "Fonte: TSE e IBGE · resultado de 22/10/2026",
@@ -200,7 +200,7 @@
     "tela": 23,
     "ato": "Fim",
     "nome": "Encerramento",
-    "pergunta": "O que os números dizem, afinal?",
+    "pergunta": "E o que fica desta eleição?",
     "filtro": null,
     "pendente": false
    }
@@ -210,7 +210,7 @@
   {
    "nome": "Capa",
    "pergunta": "Afinal, qual Brasil foi às urnas no 1º turno?",
-   "titulo": "O que os números dizem.",
+   "titulo": "Do placar à escola.",
    "sobretitulo": "ELEIÇÕES 2026 · 1º TURNO PRESIDENCIAL",
    "linhas": [
     "Flávio Bolsonaro 56,10 mi · 47,0% dos válidos",
@@ -6655,7 +6655,7 @@
       "margem_txt": "+1,3 p.p."
      }
     ],
-    "texto": "Nova Contagem, onde o documentário começa: a margem de Lula foi de +10,8 p.p. em 2022 a +1,3 p.p. em 2026"
+    "texto": "Nova Contagem: a margem de Lula foi de +10,8 p.p. em 2022 a +1,3 p.p. em 2026"
    },
    "maiores_quedas": [
     {
@@ -8185,12 +8185,12 @@
    "ato": "IV · Explore você mesmo",
    "tela": 22,
    "filtro": null,
-   "proxima_pergunta": "O que os números dizem, afinal?"
+   "proxima_pergunta": "E o que fica desta eleição?"
   },
   {
    "nome": "Encerramento",
-   "pergunta": "O que os números dizem, afinal?",
-   "titulo": "O que os números dizem.",
+   "pergunta": "E o que fica desta eleição?",
+   "titulo": "Do placar à escola.",
    "fontes": [
     "TSE · votação, comparecimento e perfil do eleitor, 1º turno de 2006 a 2026 (arquivos de 22/10/2026)",
     "IBGE · Censo 2022: população e rendimento domiciliar per capita; malha municipal",

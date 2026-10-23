@@ -1,0 +1,6 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0.0
+@descricao: Flávio da pesquisa do contexto (Pesquisa[Id]).
+*/
+MAX ( Pesquisa[Flavio] )

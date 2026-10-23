@@ -1,0 +1,8 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Texto puro do dossiê do cartão.
+*/
+VAR _rot = [T26 · linha · rótulo]
+RETURN
+    "Dossiê do cartão " & _rot & ": o que mede, quando e de onde o número chega, e a mesma medida no debate da Band."

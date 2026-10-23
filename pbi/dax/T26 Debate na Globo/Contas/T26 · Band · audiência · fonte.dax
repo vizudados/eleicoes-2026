@@ -1,0 +1,8 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: De onde vem a audiência da Band (coluna da tabela Debate).
+*/
+VAR _d = [T26 · Band · data]
+RETURN
+    CALCULATE ( MAX ( Debate[Fonte da audiência] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """smoke_medidas — avalia no motor do Desktop aberto cada medida de desenho (HTML/CSS/JS) em três contextos: sem
-filtro, com uma UF (Minas Gerais, que mudou de lado), com a UF menor (Roraima) e com um município (Contagem/MG). Reprova
+filtro, com uma UF (Minas Gerais, que mudou de lado), com a UF menor (Roraima) e com um município (Ananindeua/PA, a cidade inicial da tela Minha cidade). Reprova
 erro do motor e texto acima de 32.760 caracteres (L048, por precaução). L039: erro de motor para tudo.
 
 **VAZIO não é erro.** O visual com granularidade (a tira da T06, a escada da T03, os alvos do filtro cruzado) só tem
@@ -25,7 +25,7 @@ DAX_DIR = AQUI.parent / "dax"
 GRAOS: list[tuple[str, str]] = []
 # contextos de prova: sem filtro, a UF que mudou de lado, a menor UF e um município
 FILTROS = ["", 'TREATAS ( { "Minas Gerais" }, UF[Nome] )', 'TREATAS ( { "Roraima" }, UF[Nome] )',
-           "TREATAS ( { \"Contagem (MG)\" }, 'Município'[Rótulo] )"]
+           "TREATAS ( { \"Ananindeua (PA)\" }, 'Município'[Rótulo] )"]
 
 
 def nomes(prefixo: str) -> list[str]:

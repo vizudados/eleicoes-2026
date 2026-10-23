@@ -1,0 +1,18 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0.0
+@descricao: Média simples de Flávio (votos totais, %) nas pesquisas com o campo inteiro depois do debate da Globo (começa depois do dia do debate).
+@oraculo: vazio
+*/
+VAR _band = [T26 · Band · data]
+VAR _globo = [T26 · debate · dia]
+RETURN
+    CALCULATE (
+        AVERAGE ( Pesquisa[Flavio] ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "totais",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Campo início] > _globo
+    )

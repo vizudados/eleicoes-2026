@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 08 Debate — O que mudou depois do debate na Band?'"
+                  "Value": "'Próxima: 08 Debate Band — O que mudou depois do debate na Band?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 08 Debate — O que mudou depois do debate na Band?'"
+                  "Value": "'Próxima: 08 Debate Band — O que mudou depois do debate na Band?'"
                 }
               }
             },

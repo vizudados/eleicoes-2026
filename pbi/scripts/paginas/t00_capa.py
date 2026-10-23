@@ -66,7 +66,7 @@ def corpo() -> str:
         "</video>"
         f"<img class='poster' alt='' src='{MIDIA}/capa/capa-final.jpg'/>"
         "<div class='topo'><div class='sob sobe d1'>ELEIÇÕES 2026 · 1º TURNO PRESIDENCIAL</div>"
-        "<div class='tg sobe d2'>O que os números dizem.</div>"
+        "<div class='tg sobe d2'>O voto, de perto.</div>"
         "<div class='q sobe d4'>Afinal, qual Brasil foi às urnas no 1º turno?</div></div>"
         "<div class='comecar entra d14'>começar</div>"
         "<div class='sumario entra d14'><span>☰</span> sumário</div>"

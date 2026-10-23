@@ -1,0 +1,9 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: dd/MM/yyyy
+@descricao: Dia do debate (sem a hora): a fronteira das pesquisas antes e depois.
+@oraculo: 23/10/2026
+*/
+VAR _i = [T26 · debate · início]
+RETURN
+    IF ( NOT ISBLANK ( _i ), DATE ( YEAR ( _i ), MONTH ( _i ), DAY ( _i ) ) )

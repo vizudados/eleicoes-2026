@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Contas
 @formato: dd/MM
-@descricao: Dia do debate da Band, o único com Lula e Flávio frente a frente (linha da tabela Debate em que os dois participaram).
+@descricao: Dia do debate da Band, o primeiro com Lula e Flávio frente a frente (linha da tabela Debate em que os dois participaram).
 @oraculo: 18/10
 */
 CALCULATE (

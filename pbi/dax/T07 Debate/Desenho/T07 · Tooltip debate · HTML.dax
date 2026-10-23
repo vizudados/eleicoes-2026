@@ -25,7 +25,7 @@ VAR _txt =
         _sit = "realizado", "Aconteceu sem Lula e sem Flávio. Foram: " & _escPart & ".",
         _escMot & "."
     )
-VAR _mao = SWITCH ( TRUE (), _ff = "Sim", "o único frente a frente", _sit = "realizado", "os dois faltaram", "não aconteceu" )
+VAR _mao = SWITCH ( TRUE (), _ff = "Sim", "frente a frente", _sit = "realizado", "os dois faltaram", "não aconteceu" )
 -- 4 · Marcação
 RETURN
     IF (

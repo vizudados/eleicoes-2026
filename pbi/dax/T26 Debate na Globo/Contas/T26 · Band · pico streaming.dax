@@ -1,0 +1,9 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: #,0
+@descricao: Pico de aparelhos no YouTube da Band durante o debate de 18/10 (21h30, Poder360; tabela Debate).
+@oraculo: 5385394
+*/
+VAR _d = [T26 · Band · data]
+RETURN
+    CALCULATE ( MAX ( Debate[Pico no streaming] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )

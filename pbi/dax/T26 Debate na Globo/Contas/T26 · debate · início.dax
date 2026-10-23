@@ -1,0 +1,7 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: dd/MM/yyyy HH:mm
+@descricao: Data e hora marcadas para o debate (Brasília).
+@oraculo: 23/10/2026 21:20
+*/
+CALCULATE ( MAX ( 'T26 Debate Globo'[Previsto] ), REMOVEFILTERS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Chave] = "debate" )

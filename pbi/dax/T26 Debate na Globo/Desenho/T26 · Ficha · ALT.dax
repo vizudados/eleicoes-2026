@@ -1,0 +1,16 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Texto puro da ficha para leitor de tela.
+*/
+VAR _sit = [T26 · debate · situação]
+VAR _ini = [T26 · debate · início]
+VAR _aus = [T26 · ausentes]
+VAR _n = [T26 · cartões · chegaram]
+VAR _tot = [T26 · cartões · total]
+RETURN
+    "Debate da Globo, 2º turno: " & SWITCH ( _sit, "cancelado", "cancelado", "adiado", "adiado", "no_ar", "no ar", "realizado", "realizado", "marcado" )
+        & IF ( ISBLANK ( _ini ), "", " para " & FORMAT ( _ini, "dd/MM" ) & ", " & FORMAT ( _ini, "HH" ) & "h" & FORMAT ( _ini, "nn" ) )
+        & ", com mediação de " & [T26 · mediação] & ". "
+        & IF ( _aus <> "", "Ausente: " & _aus & ". ", "" )
+        & "Números da noite: " & FORMAT ( _n, "0" ) & " de " & FORMAT ( _tot, "0" ) & "."

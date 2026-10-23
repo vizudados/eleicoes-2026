@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T26_CHEGADA_01",
+  "displayName": "Chegada · 09 Debate Globo",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T26_Casca_InfoAbre",
+      "T26_Casca_InfoFecha",
+      "T26_Casca_InfoFora",
+      "T26_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T26",
+    "sections": {
+      "T26": {
+        "visualContainers": {
+          "T26_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T26_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T26_Casca_InfoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T26_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

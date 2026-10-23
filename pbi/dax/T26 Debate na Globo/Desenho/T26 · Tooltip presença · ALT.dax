@@ -1,0 +1,6 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Texto puro do dossiê da presença.
+*/
+"Dossiê da presença de " & [T26 · linha · rótulo] & ": a situação, o histórico com a fonte e os debates do 2º turno antes deste."

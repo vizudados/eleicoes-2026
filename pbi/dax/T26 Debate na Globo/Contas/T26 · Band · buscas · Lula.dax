@@ -1,0 +1,15 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0
+@descricao: Pico de Lula na noite do debate da Band (18/10, das 20h à meia-noite) no Google Trends, consulta H2 (tópicos, hora a hora, 15 a 22/10).
+@oraculo: 100 (21h)
+*/
+VAR _d = [T26 · Band · data]
+RETURN
+    CALCULATE (
+        MAX ( 'Trends tempo'[Índice] ),
+        REMOVEFILTERS ( 'Trends tempo' ),
+        'Trends tempo'[Série] = "Lula [tópico | H2]",
+        'Trends tempo'[Momento] >= _d + TIME ( 20, 0, 0 ),
+        'Trends tempo'[Momento] < _d + 1
+    )

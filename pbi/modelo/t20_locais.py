@@ -1,5 +1,5 @@
 """Tabelas da tela 20 · Escola (dono: tela 20), em 34 cidades desde 23/10/2026 (as 27 capitais, as 6 maiores que
-trocaram Lula por Flávio e Contagem, onde o documentário começa). Leem dados/pbi/t20_locais.csv e
+trocaram Lula por Flávio e Contagem; a tela abre no Rio de Janeiro). Leem dados/pbi/t20_locais.csv e
 dados/pbi/t20_cidades.csv (pipeline/exportar_t20.py). As três ficam sem relação, de propósito:
 
 - T20 Local: um local de votação de 2026 por linha (11.881), com os votos de 2026, 2022 e 2018 do mesmo local e a
@@ -8,11 +8,12 @@ dados/pbi/t20_cidades.csv (pipeline/exportar_t20.py). As três ficam sem relaç�
 - T20 Cidade: uma linha por cidade com o que a tela lê por cidade (locais de 2022, a escola de exemplo, a moldura do
   mapa, o contorno simplificado e os rótulos de bairro).
 - T20 Filtro: o filtro da tela, uma árvore só (VizuFilter em modo caminho; regra do dono de 23/10/2026: "se resolve a
-  questão da hierarquia jogando o filtro no último na hierarquia"): uma linha por local, "Cidade e escola › Contagem
-  (MG) › Escola Estadual Nova Contagem-I". O filtro cai na escola (a folha): marcar a cidade (o nó) marca todas as
-  escolas dela = a tela vai para a cidade; marcar uma escola = a cidade dela e a escola na ficha; uma cidade por vez
-  (exclusiveRoots). As medidas leem a escolha ([T20 · cidade (código)], [T20 · escola do filtro], [T20 · escolas no
-  filtro]); a cidade filtra os locais pela medida (o local fora da cidade devolve vazio), não por relação.
+  questão da hierarquia jogando o filtro no último na hierarquia"): uma linha por local, "Cidade e escola › Rio de
+  Janeiro (RJ) › Escola Municipal Aleksander Henryks Laks". O filtro cai na escola (a folha): marcar a cidade (o nó)
+  marca todas as escolas dela = a tela vai para a cidade; marcar uma escola = a cidade dela e a escola na ficha; uma
+  cidade por vez (exclusiveRoots). As medidas leem a escolha ([T20 · cidade (código)], [T20 · escola do filtro],
+  [T20 · escolas no filtro]); a cidade filtra os locais pela medida (o local fora da cidade devolve vazio), não por
+  relação.
 """
 
 from gerar_modelo import col, tabela, tabela_csv
@@ -110,10 +111,10 @@ TABELAS = [
              "listou naquele ano.", oculta=True),
          col("lula_2022", "Lula2022", tipo="int", descricao="Locais de 2022 (os do próprio ano) em que Lula teve mais "
              "votos que Jair Bolsonaro.", oculta=True),
-         col("id_exemplo", "IdExemplo", tipo="int", descricao="Id do local da ficha quando nada foi escolhido: em "
-             "Contagem, a Escola Estadual Nova Contagem-I; nas outras, a escola que virou com mais votos válidos (ou, "
-             "sem nenhuma que virou, a de maior queda).", oculta=True, formato="0"),
-         col("exemplo", "Exemplo", descricao="Por que o exemplo: começo, virou ou queda.", oculta=True),
+         col("id_exemplo", "IdExemplo", tipo="int", descricao="Id do local da ficha quando nada foi escolhido: a "
+             "escola que virou com mais votos válidos (ou, sem nenhuma que virou, a de maior queda).", oculta=True,
+             formato="0"),
+         col("exemplo", "Exemplo", descricao="Por que o exemplo: virou ou queda.", oculta=True),
          col("recorte", "Recorte", tipo="int", descricao="1 quando o mapa mostra só a mancha urbana (cidade de "
              "território grande), com o mapinha da cidade inteira no canto.", oculta=True, formato="0"),
          col("espaco", "Espaço", tipo="number", descricao="Mediana da distância entre locais vizinhos no mapa, em % da "

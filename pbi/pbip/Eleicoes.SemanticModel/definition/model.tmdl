@@ -1,4 +1,4 @@
-/// Eleições 2026 · o que os números dizem (Vizu Dados). Dados lidos do repositório público vizudados/eleicoes-2026 no GitHub (dados/pbi e dados/apuracao). Gerado por pbi/scripts/gerar_modelo.py; medidas em pbi/dax.
+/// Eleições 2026 · o voto de perto (Vizu Dados). Dados lidos do repositório público vizudados/eleicoes-2026 no GitHub (dados/pbi e dados/apuracao). Gerado por pbi/scripts/gerar_modelo.py; medidas em pbi/dax.
 model Model
 	culture: pt-BR
 	defaultPowerBIDataSourceVersion: powerBI_V3
@@ -11,7 +11,7 @@ model Model
 
 annotation __PBI_TimeIntelligenceEnabled = 0
 
-annotation PBI_QueryOrder = ["pRepositorioRaw","pPastaApuracao","fxCsv","fxJson","fxHora","Apuração Brasil","Apuração UF","Apuração histórico","Apuração exterior","Apuração status","UF","Ano","Município","Município ano","Candidato ano","Candidato UF","Comparecimento ano","Abstenção perfil","Pesquisa","Debate","Trends tempo","Trends UF","Seguidores","Monitoramento","Anúncios","Trajetória","Transferência","Rejeição","Apoio","Local Contagem","Exterior país","T13 Célula","T19 Filtro","T20 Local","T20 Cidade","T20 Filtro","T22 Para Lula","T22 Não votam","T22 Comparecimento","Social município","T24 Lente","T24 Degrau","Perfil pesquisa","T25 Faixa","T25 Abstenção faixa","T25 Abstenção exterior"]
+annotation PBI_QueryOrder = ["pRepositorioRaw","pPastaApuracao","fxCsv","fxJson","fxHora","Apuração Brasil","Apuração UF","Apuração histórico","Apuração exterior","Apuração status","UF","Ano","Município","Município ano","Candidato ano","Candidato UF","Comparecimento ano","Abstenção perfil","Pesquisa","Debate","Trends tempo","Trends UF","Seguidores","Monitoramento","Anúncios","Trajetória","Transferência","Rejeição","Apoio","Local Contagem","Exterior país","T13 Célula","T19 Filtro","T20 Local","T20 Cidade","T20 Filtro","T22 Para Lula","T22 Não votam","T22 Comparecimento","Social município","T24 Lente","T24 Degrau","Perfil pesquisa","T25 Faixa","T25 Abstenção faixa","T25 Abstenção exterior","T26 Debate Globo"]
 
 annotation PBI_ProTooling = ["DevMode"]
 
@@ -56,6 +56,7 @@ ref table 'Perfil pesquisa'
 ref table 'T25 Faixa'
 ref table 'T25 Abstenção faixa'
 ref table 'T25 Abstenção exterior'
+ref table 'T26 Debate Globo'
 ref table _Medidas
 
 ref cultureInfo pt-BR

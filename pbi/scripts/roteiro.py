@@ -1,4 +1,4 @@
-"""roteiro — as 26 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
+"""roteiro — as 27 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
 
 Cada tela: código (nome da página no PBIR e prefixo de visuais e medidas), nome curto, pergunta (o título da tela, na
 voz de quem assiste), ato, se é escura (capa e encerramento), o filtro que a tela tem (só onde muda a leitura, pedido
@@ -7,7 +7,10 @@ do Alisson em 23/10/2026) e a linha de fonte do rodapé.
 O número que o leitor vê ("14 · Quem vota") é a posição na lista, não o código: a tela T24 (quem vota em quem, pedida
 em 23/10/2026 como tela própria para não poluir a 13) entra depois da T13 e as seguintes andam uma casa, sem trocar os
 códigos de páginas, visuais, medidas e marcadores que já existem. Do mesmo jeito, a T25 (quem falta e onde, o segundo
-painel da ausência com filtro cruzado, pedido em 23/10/2026) entra logo depois da T06 e vira a 07.
+painel da ausência com filtro cruzado, pedido em 23/10/2026) entra logo depois da T06 e vira a 07. A T26 (o debate da
+Globo de 23/10, o último do 2º turno, pedido no próprio dia: uma tela que fica pronta antes dos números e se preenche
+pelo arquivo dados/pbi/debate_globo.csv) entra logo depois da T07, o debate da Band: as duas telas de debate ficam
+coladas, com as abas "Debate Band" e "Debate Globo" (pedido do dono, 23/10/2026).
 """
 
 from dataclasses import dataclass
@@ -46,8 +49,11 @@ TELAS = [
          fonte="Fonte: TSE · comparecimento, brancos e nulos do 1º turno, 2006 a 2026"),
     Tela("T25", "Quem falta", "Quem mais falta às urnas, e onde?", "I · O resultado", filtro="UF",
          fonte="Fonte: TSE · comparecimento por município (2006 a 2026) e perfil do eleitor por idade (2014 a 2026)"),
-    Tela("T07", "Debate", "O que mudou depois do debate na Band?", "II · A campanha",
+    Tela("T07", "Debate Band", "O que mudou depois do debate na Band?", "II · A campanha",
          fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
+    Tela("T26", "Debate Globo", "O último debate mudou alguma coisa?", "II · A campanha",
+         fonte="Fontes: TV Globo e imprensa (fatos do debate), Kantar IBOPE, Google Trends, Bites e pesquisas registradas "
+               "no TSE · cada número com a hora em que chegou"),
     Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "II · A campanha",
          fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22/10/2026"),
     Tela("T09", "Redes", "Quem dominou as redes?", "II · A campanha",
@@ -76,7 +82,7 @@ TELAS = [
     Tela("T21", "20 anos", "Como o mapa mudou em 20 anos?", "V · Explore você mesmo"),
     Tela("T22", "Simulador", "E se os eleitores dos outros candidatos escolherem?", "V · Explore você mesmo",
          fonte="Simulação a partir do 1º turno (TSE); não é previsão"),
-    Tela("T23", "Encerramento", "O que os números dizem, afinal?", "Fim", escura=True,
+    Tela("T23", "Encerramento", "E o que fica desta eleição?", "Fim", escura=True,
          fonte="Vizu Dados · vizudados.com.br · dados e código em github.com/vizudados/eleicoes-2026"),
 ]
 POR_CODIGO = {t.codigo: t for t in TELAS}

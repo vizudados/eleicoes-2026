@@ -1,0 +1,8 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Coluna Situação da linha do contexto ('T26 Debate Globo'); com mais de uma linha (um cartão), a de menor Ordem. Vazio sem linha.
+*/
+VAR _o = MIN ( 'T26 Debate Globo'[Ordem] )
+RETURN
+    CALCULATE ( MAX ( 'T26 Debate Globo'[Situação] ), 'T26 Debate Globo'[Ordem] = _o )

@@ -1,0 +1,7 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0
+@descricao: Quantas linhas o arquivo do debate trouxe (dados/pbi/debate_globo.csv). Zero = a tabela existe, mas o arquivo ainda não foi lido: a tela diz isso em vez de mostrar campos vazios.
+@oraculo: 21 (23/10/2026, 19h45)
+*/
+COUNTROWS ( ALL ( 'T26 Debate Globo' ) ) + 0

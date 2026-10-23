@@ -1,0 +1,8 @@
+/*
+@pasta: T26 Debate na Globo\Desenho
+@formato: texto
+@descricao: Texto puro dos cartões.
+*/
+"Os " & FORMAT ( [T26 · cartões · total], "0" ) & " números da noite (buscas, audiência, transmissão na internet, redes e pesquisas), cada um com a hora e a fonte esperadas e a régua do debate da Band; "
+    & FORMAT ( [T26 · cartões · chegaram], "0" ) & IF ( [T26 · cartões · chegaram] = 1, " já chegou", " já chegaram" )
+    & ". Passe o mouse num cartão para o detalhe."

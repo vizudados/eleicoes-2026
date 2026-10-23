@@ -1,0 +1,8 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: texto
+@descricao: Situação da presença da linha do contexto (confirmada, a_confirmar ou ausente), com a mesma regra das duas contas por candidato.
+*/
+VAR _s = LOWER ( TRIM ( [T26 · linha · situação] ) )
+RETURN
+    SWITCH ( TRUE (), _s = "confirmada", "confirmada", _s IN { "ausente", "não vai", "nao_vai" }, "ausente", "a_confirmar" )

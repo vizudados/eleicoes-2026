@@ -23,12 +23,24 @@ C = estilo.COR
 # colunas do sumário: (rótulo, códigos)
 COLUNAS = [
     ("ABERTURA · I · O RESULTADO", ["T00", "T01", "T02", "T03", "T04", "T05", "T06", "T25"]),
-    ("II · A CAMPANHA", ["T07", "T08", "T09", "T10"]),
+    ("II · A CAMPANHA", ["T07", "T26", "T08", "T09", "T10"]),
     ("III · O MAPA", ["T11", "T12", "T13", "T24", "T14"]),
     ("IV · E AGORA", ["T15", "T16", "T17", "T18"]),
     ("V · EXPLORE VOCÊ MESMO · FIM", ["T19", "T20", "T21", "T22", "T23"]),
 ]
 X0, Y0, LARGURA_COL, VAO, ALTURA_ITEM = 150, 172, 304, 25, 94
+
+
+def _x_coluna(cod: str) -> int:
+    """x da coluna onde está a tela `cod`."""
+    i = next(i for i, (_, cods) in enumerate(COLUNAS) if cod in cods)
+    return X0 + i * (LARGURA_COL + VAO)
+
+
+def _y_nota() -> int:
+    """A nota à mão da apuração fica logo abaixo da última tela da coluna da T18 (a coluna cresceu com a T26)."""
+    cods = next(c for _, c in COLUNAS if "T18" in c)
+    return Y0 + 44 + len(cods) * ALTURA_ITEM + 6
 
 
 def _itens():
@@ -54,7 +66,8 @@ def corpo() -> str:
         ".sm .it .nm{font-size:19px;font-weight:600}"
         ".sm .it .pg{font-size:14px;color:var(--grafite);margin-top:6px;line-height:1.35}"
         ".sm .it.ao{background:linear-gradient(90deg,rgba(184,50,42,.08),transparent)}"
-        ".sm .nota{position:absolute;left:1137px;top:600px;width:300px;font-family:var(--mao);font-size:26px;"
+        f".sm .nota{{position:absolute;left:{_x_coluna('T18')}px;top:{_y_nota()}px;width:300px;font-family:var(--mao);"
+        "font-size:26px;"
         "line-height:1.1;color:var(--vermelho-escuro);transform:rotate(-2deg)}"
         f".sm .pe{{position:absolute;left:150px;right:150px;top:1014px;height:28px;display:flex;align-items:center;"
         f"justify-content:space-between;color:{C['marrom']}}}"

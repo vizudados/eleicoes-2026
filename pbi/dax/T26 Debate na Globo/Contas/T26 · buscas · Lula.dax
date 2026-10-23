@@ -1,0 +1,7 @@
+/*
+@pasta: T26 Debate na Globo\Contas
+@formato: 0
+@descricao: Pico de Lula no Google Trends na noite do debate (0 a 100). Vazio enquanto não chega (linha 'buscas_lula' do arquivo).
+@oraculo: vazio em 23/10/2026, 19h45
+*/
+CALCULATE ( MAX ( 'T26 Debate Globo'[Valor] ), REMOVEFILTERS ( 'T26 Debate Globo' ), 'T26 Debate Globo'[Chave] = "buscas_lula" )

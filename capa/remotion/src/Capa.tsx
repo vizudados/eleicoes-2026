@@ -1,4 +1,4 @@
-// Capa animada · Eleições 2026 · o que os números dizem (Vizu Dados).
+// Capa animada · Eleições 2026 · o voto de perto (Vizu Dados).
 // "O céu da bandeira vira o mapa do voto": as 27 estrelas da bandeira (uma por UF) desenham a bandeira,
 // voam para os seus estados, o Brasil se desenha à volta delas, os 5.570 municípios acendem pela margem de 2026
 // e o horizonte de Norte a Sul se desenha na base. Toca uma vez e para no quadro final.
