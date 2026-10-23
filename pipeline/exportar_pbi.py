@@ -12,6 +12,7 @@ Também grava a geometria que os desenhos usam (pbi/assets/mapas/): os contornos
 
 import json
 import math
+import re
 from pathlib import Path
 
 import numpy as np
@@ -301,6 +302,62 @@ def exterior():
     return d.sort_values(["ano", "validos"], ascending=[True, False])
 
 
+# Lentes da tela "quem vota em quem" (pedido do Alisson, 23/10/2026): coluna de dados/saida/social_municipio.csv
+LENTES = [("Renda", "renda_pc"), ("Escolaridade", "escol_medio"), ("Bolsa Família", "bf_100dom"), ("IDH", "idhm")]
+
+
+def social():
+    """Município × lente: o valor do indicador e o degrau (1 a 5) em que o município cai quando os municípios são
+    postos em fila pelo indicador e a fila é cortada em cinco partes com o mesmo número de eleitores (aptos de 2026).
+    O município fica inteiro no degrau em que cai o meio dos seus eleitores; sem o indicador, fica fora da lente."""
+    s = pd.read_csv(SAIDA_DADOS / "social_municipio.csv", dtype={"cd_ibge": str})
+    aptos = pd.read_csv(SAIDA_DADOS / "comparecimento_municipio.csv", dtype={"cd_ibge": str})
+    aptos = aptos[aptos.ano == 2026][["cd_ibge", "aptos"]]
+    s = s.merge(aptos, on="cd_ibge", how="inner")
+    partes = []
+    for ordem, (lente, coluna) in enumerate(LENTES, 1):
+        d = s[["cd_ibge", coluna, "aptos"]].dropna().sort_values([coluna, "cd_ibge"]).rename(columns={coluna: "valor"})
+        meio = d.aptos.cumsum() - d.aptos / 2
+        d["degrau"] = np.minimum(5, np.floor(5 * meio / d.aptos.sum()) + 1).astype(int)
+        d["lente"], d["lente_ordem"] = lente, ordem
+        partes.append(d[["cd_ibge", "lente", "lente_ordem", "valor", "degrau"]])
+    return pd.concat(partes, ignore_index=True)
+
+
+LENTE_DA_DIMENSAO = {"renda": "Renda", "escolaridade": "Escolaridade", "bolsa_familia": "Bolsa Família"}
+# A tela mostra uma pesquisa só: o Datafolha de 29/09 a 01/10/2026 (BR-08039/2026), a última rodada do instituto com as
+# três lentes (a de 02 e 03/10 não publicou Bolsa Família). As outras rodadas ficam no levantamento bruto.
+PESQUISA_NA_TELA = ("Datafolha", "2026-10-01")
+ROTULO_FAIXA = {"até 2 SM": "até 2 salários mínimos", "mais de 2 a 5 SM": "de 2 a 5 salários",
+                "mais de 5 SM": "mais de 5 salários", "beneficiário": "recebe (ou mora com quem recebe)",
+                "não beneficiário": "não recebe", "fundamental": "até o fundamental", "médio": "ensino médio",
+                "superior": "ensino superior"}
+
+
+def perfil_pesquisa():
+    """Intenção de voto de Lula e Flávio por faixa (renda, escolaridade, Bolsa Família) da pesquisa da tela, do
+    levantamento dados/bruto/pesquisas/perfil_lula_flavio.csv: a lente, a ordem da faixa (a do instituto) e o campo com
+    o registro no TSE, tirados da observação."""
+    d = pd.read_csv(BRUTO / "pesquisas" / "perfil_lula_flavio.csv", sep=";", dtype=str)
+    d = d[(d.instituto == PESQUISA_NA_TELA[0]) & (d.divulgacao == PESQUISA_NA_TELA[1])
+          & d.dimensao.isin(LENTE_DA_DIMENSAO)].copy()
+    d["lente"] = d.dimensao.map(LENTE_DA_DIMENSAO)
+    d["percentual"] = d.percentual.astype(float)
+    d["categoria_ordem"] = d.groupby("dimensao").categoria.transform(
+        lambda c: c.map({v: i + 1 for i, v in enumerate(dict.fromkeys(c))}))
+    d["categoria"] = d.categoria.map(lambda c: ROTULO_FAIXA.get(c, c))
+
+    def campo(obs):
+        m = re.search(r"campo (\d{4})-(\d{2})-(\d{2}) a (\d{4})-(\d{2})-(\d{2})", str(obs))
+        r = re.search(r"BR-\d+/\d{4}", str(obs))
+        datas = f"campo {m[3]}/{m[2]} a {m[6]}/{m[5]}/{m[4]}" if m else ""
+        return " · ".join(x for x in (datas, r[0] if r else "") if x)
+
+    d["campo"] = d.observacao.map(campo)
+    return d[["instituto", "divulgacao", "campo", "candidato", "lente", "categoria", "categoria_ordem", "percentual",
+              "fonte_url"]]
+
+
 def main():
     m = municipios()
     gravar(m, "municipio")
@@ -318,6 +375,8 @@ def main():
     gravar(copiar(BRUTO / "digital" / "anuncios.csv"), "anuncios")
     gravar(trajetoria(), "trajetoria")
     gravar(exterior(), "exterior_pais")
+    gravar(social(), "municipio_social")
+    gravar(perfil_pesquisa(), "perfil_pesquisa")
     for nome in ("transferencia", "rejeicao", "apoios"):
         gravar(copiar(BRUTO / "transferencia" / f"{nome}.csv"), nome if nome != "apoios" else "apoio")
     locais = pd.read_csv(SAIDA_DADOS / "locais_contagem.csv")

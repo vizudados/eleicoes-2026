@@ -506,3 +506,45 @@ O índice tinha erros pontuais, todos corrigidos nos CSVs:
 - **Revista Oeste, Gerp 14–16/10:** o resumo automático no topo da matéria repete números da rodada anterior (55/45). O CSV usa o texto da matéria e o PDF (50/45 nos totais, 52/48 nos válidos).
 - Nenhuma outra página trouxe instruções. Nada baixado foi executado. Os PDFs foram lidos só como texto ou imagem.
 
+## Perfil dos eleitores de Lula e Flávio (perfil_lula_flavio.csv)
+
+Levantamento feito em 23/10/2026 para a tela "quem vota em quem". O arquivo traz a intenção de voto no 1º turno (estimulada, votos totais) em Lula e Flávio por renda familiar, escolaridade e Bolsa Família, mais uma linha `dimensao=total` por rodada. São 54 linhas, com as mesmas colunas de `..\transferencia\perfil_outros.csv`. Todas as linhas são `leitura=intencao_no_segmento | base=totais`: nenhum desses cruzamentos foi publicado em votos válidos.
+
+**Rodadas usadas**
+
+| Instituto | Divulgação | Campo | Registro | n | O que tem | Fonte |
+|---|---|---|---|---|---|---|
+| Datafolha | 01/10 | 29/09–01/10 | BR-08039/2026 | 2.506 | renda, escolaridade e Bolsa Família | relatório oficial: <https://www.pollingdata.com.br/links/relatorio_BR-08039-2026_Datafolha.pdf> (tabelas p.9–10 de 33; Bolsa Família no texto da p.5) |
+| Datafolha | 03/10 | 02/10–03/10 | BR-01708/2026 | 4.006 | renda e escolaridade (sem Bolsa Família) | relatório oficial: <https://www.pollingdata.com.br/links/relatorio_BR-01708-2026_Datafolha.pdf> (tabelas p.9–10 de 16) |
+| AtlasIntel | 03/10 | 27/09–02/10 | BR-00999/2026 | 4.945 | renda e escolaridade | relatório oficial: <https://www.pollingdata.com.br/links/relatorio_BR-00999-2026_AtlasIntel.pdf> (p.17), o mesmo que a CNN hospeda |
+| Quaest (fallback) | 28/09 | 24/09–27/09 | BR-06520/2026 | 2.004 | só renda até 2 SM e beneficiários do Bolsa Família | Estadão Conteúdo na Folha de Pernambuco: <https://www.folhape.com.br/politica/quaest-lula-amplia-vantagem-entre-eleitores-de-baixa-renda-e/515221/> |
+
+- **Datafolha tem duas rodadas.** A BR-08039 foi pedida como principal porque é a única com Bolsa Família. A BR-01708 (02 e 03/10) é a última antes do 1º turno e cruza renda e escolaridade. As duas estão no CSV, separadas pela `divulgacao`.
+- **Campo da BR-08039:** o relatório oficial diz 29/09 a 01/10, como o índice. O pedido citava 28/09, data que aparece só em matérias de terceiros.
+- **Bolsa Família no Datafolha:** o número está só no texto do relatório (p.5), sem tabela cruzada. O segmento é "recebe Bolsa Família ou mora numa residência com beneficiários"; o oposto é "não beneficiado direta ou indiretamente". O relatório não publica o tamanho nem a margem do segmento.
+
+**O que não foi encontrado**
+
+- **Quaest 03/10 (BR-02197/2026), a última antes do 1º turno:** o relatório está no PollingData (`relatorio_BR-02197-2026_Quaest.pdf`), mas o arquivo passa de 10 MB, o limite da ferramenta de leitura. A rodada de 28/09 tem o mesmo problema. As matérias de g1, CNN e Gazeta do Povo sobre a de 03/10 não trazem cruzamentos. Por isso a Quaest entra só com a rodada de 28/09, marcada `FALLBACK`.
+  - Da rodada de 28/09 faltam as outras faixas de renda, a escolaridade e os não beneficiários do Bolsa Família.
+  - Pela busca, o site da Quaest só entrega o relatório completo mediante cadastro (não verificado). A busca não achou cópia no Poder360.
+- **AtlasIntel:** o relatório não cruza Bolsa Família.
+- **Datafolha 03/10:** sem Bolsa Família.
+- **Ipec:** sem pesquisa nacional de presidente no período (ver "Lacunas" acima).
+
+**Diferenças de faixa entre institutos**
+
+- **Renda:**
+  - Datafolha usa salários mínimos: até 2, mais de 2 a 5 e mais de 5.
+  - AtlasIntel usa reais: R$0-2.000, 2.000-3.000, 3.000-5.000, 5.000-10.000 e acima de 10.000.
+  - Quaest: só "até 2 SM" foi publicado.
+  - As faixas de Datafolha e AtlasIntel não se correspondem e não devem ser comparadas uma a uma.
+- **Escolaridade:** o Datafolha tem três grupos (fundamental, médio e superior). A AtlasIntel tem dois (até ensino médio e ensino superior).
+- **Fatia do segmento:**
+  - Datafolha: base ponderada em entrevistas e % do perfil da amostra.
+  - AtlasIntel: só a % do perfil da amostra, sem n nem margem por segmento.
+  - Quaest: só a margem do segmento.
+
+**Alerta de leitura:** a AtlasIntel mostra Lula à frente entre quem tem ensino superior (57,3 a 29,4) e nas rendas acima de R$5.000 (51,8 a 40,8 e 51,9 a 35,4). O Datafolha mostra o contrário: Flávio à frente no superior e acima de 2 SM. Os números são os publicados pelos dois institutos, conferidos na imagem das páginas. Nos dois relatórios, a média ponderada pelos segmentos reproduz o total. A diferença vem dos institutos (método online da Atlas com faixas em reais × presencial do Datafolha), não de erro de transcrição.
+
+**Como foi lido:** os PDFs foram abertos pela ferramenta de leitura web, que salvou uma cópia local. O texto foi extraído com `pdftotext`, e as páginas das tabelas foram renderizadas em imagem para conferir cada número. Nenhuma página trouxe instruções, e nada foi executado.

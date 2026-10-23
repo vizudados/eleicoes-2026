@@ -1,6 +1,9 @@
 # Brutos do TSE e do IBGE: grandes e regeráveis (pipeline/extrair_*.py). Os levantamentos feitos à mão ficam no repo.
 dados/bruto/tse/
 dados/bruto/ibge/
+# Indicadores sociais (tela Quem vota): brutos grandes, e o do Bolsa Família tem dado pessoal; só o FONTES.md entra
+dados/bruto/social/*
+!dados/bruto/social/FONTES.md
 # Rascunhos de imagem do Codex e logs de geração (as artes limpas em arte/limpos e arte/mapas ficam).
 arte/candidatas/
 arte/logs/
