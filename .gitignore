@@ -30,3 +30,9 @@ capa/remotion/out/
 
 # Claude Code: ajustes locais desta máquina
 .claude/settings.local.json
+
+# material de trabalho do vídeo da Lia (testes, referências de outros projetos, amostras de voz): fica só na máquina
+arte/ref/lia/
+arte/candidatas/lia-*
+docs/video/amostras-voz/
+docs/video/aprovacao/

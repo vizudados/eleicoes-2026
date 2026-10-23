@@ -200,7 +200,7 @@
             "triggerLabel": {
               "expr": {
                 "Literal": {
-                  "Value": "'Contagem (MG)'"
+                  "Value": "'Rio de Janeiro (RJ)'"
                 }
               }
             },
