@@ -50,14 +50,17 @@ jobs:
         run: |
           git config user.name "apuracao-bot"
           git config user.email "apuracao-bot@users.noreply.github.com"
+          hora_tse() { python -I -c "import json;print(json.load(open('dados/apuracao/ultimo.json',encoding='utf-8')).get('atualizado_tse',''))" 2>/dev/null; }
           for i in $(seq 1 "$REPETIR"); do
+            antes="$(hora_tse)"
             python -I apuracao/coletar.py --eleicao "$ELEICAO"
             git add dados/apuracao
             if ! git diff --cached --quiet; then
               git commit -m "apuração: $(date -u +%H:%M) UTC" --quiet
               git pull --rebase --quiet && git push --quiet
-              echo "ATUALIZOU=1" >> "$GITHUB_ENV"
             fi
+            # o Power BI só é atualizado quando o TSE divulga números novos (a hora de totalização muda)
+            if [ "$(hora_tse)" != "$antes" ]; then echo "ATUALIZOU=1" >> "$GITHUB_ENV"; fi
             if [ "$i" -lt "$REPETIR" ]; then sleep 60; fi
           done
 
