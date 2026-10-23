@@ -5,7 +5,7 @@
     "x": 1282,
     "y": 60,
     "z": 5000,
-    "height": 626,
+    "height": 780,
     "width": 424,
     "tabOrder": 6
   },
@@ -20,16 +20,34 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "T20 Local"
+                      "Entity": "T20 Filtro"
                     }
                   },
-                  "Property": "Local"
+                  "Property": "Caminho"
                 }
               },
-              "queryRef": "T20 Local.Local",
-              "nativeQueryRef": "Local",
+              "queryRef": "T20 Filtro.Caminho",
+              "nativeQueryRef": "Caminho",
               "active": true,
-              "displayName": "Escola"
+              "displayName": "Filtro"
+            }
+          ]
+        },
+        "itemSort": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T20 · filtro · ordem"
+                }
+              },
+              "queryRef": "_Medidas.T20 · filtro · ordem",
+              "nativeQueryRef": "T20 · filtro · ordem"
             }
           ]
         }
@@ -46,24 +64,52 @@
                 }
               }
             },
-            "singleSelect": {
+            "treeCategoryHeader": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
             },
-            "singleSelectAllowAll": {
+            "listLayout": {
+              "expr": {
+                "Literal": {
+                  "Value": "'standard'"
+                }
+              }
+            },
+            "pathMode": {
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "pathSeparator": {
+              "expr": {
+                "Literal": {
+                  "Value": "' › '"
+                }
+              }
+            },
+            "singleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "exclusiveRoots": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cidade e escola'"
                 }
               }
             },
             "sortAscending": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -88,6 +134,27 @@
                 }
               }
             },
+            "searchScope": {
+              "expr": {
+                "Literal": {
+                  "Value": "'list'"
+                }
+              }
+            },
+            "searchPlaceholder": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Buscar cidade ou escola'"
+                }
+              }
+            },
+            "categoryHeaderStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'natural'"
+                }
+              }
+            },
             "showSelectAll": {
               "expr": {
                 "Literal": {
@@ -98,7 +165,7 @@
             "showReset": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -112,14 +179,35 @@
             "showSelectedValue": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
-            "selectedValueOnly": {
+            "triggerMode": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "'count'"
+                }
+              }
+            },
+            "triggerCountStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'text'"
+                }
+              }
+            },
+            "triggerLabel": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Contagem (MG)'"
+                }
+              }
+            },
+            "triggerCountFormat": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Cidade e escola em uso'"
                 }
               }
             },
@@ -127,55 +215,6 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
-                }
-              }
-            },
-            "triggerMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "'value'"
-                }
-              }
-            },
-            "triggerLabel": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Escola'"
-                }
-              }
-            },
-            "placeholderText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Escolha uma escola'"
-                }
-              }
-            },
-            "allOptionText": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Nenhuma (volta ao exemplo)'"
-                }
-              }
-            },
-            "searchPlaceholder": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Buscar escola pelo nome'"
-                }
-              }
-            },
-            "searchScope": {
-              "expr": {
-                "Literal": {
-                  "Value": "'list'"
-                }
-              }
-            },
-            "pathMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
                 }
               }
             }
@@ -209,7 +248,7 @@
             "dropdownHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "572D"
+                  "Value": "726D"
                 }
               }
             },
@@ -223,14 +262,14 @@
             "optionHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "40D"
+                  "Value": "36D"
                 }
               }
             },
             "searchHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "44D"
+                  "Value": "40D"
                 }
               }
             },
@@ -251,14 +290,14 @@
             "checkboxSize": {
               "expr": {
                 "Literal": {
-                  "Value": "14D"
+                  "Value": "16D"
                 }
               }
             },
             "checkboxRadius": {
               "expr": {
                 "Literal": {
-                  "Value": "2D"
+                  "Value": "3D"
                 }
               }
             },
@@ -394,7 +433,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E5DBC8'"
+                      "Value": "'#F1EBDF'"
                     }
                   }
                 }
@@ -460,7 +499,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#1C1915'"
+                      "Value": "'#FBF8F2'"
                     }
                   }
                 }
@@ -471,7 +510,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#CBBDA2'"
+                      "Value": "'#6B6357'"
                     }
                   }
                 }
@@ -560,6 +599,24 @@
                   "expr": {
                     "Literal": {
                       "Value": "'#48423A'"
+                    }
+                  }
+                }
+              }
+            },
+            "openCategoryHighlight": {
+              "expr": {
+                "Literal": {
+                  "Value": "'pill'"
+                }
+              }
+            },
+            "openCategoryBackgroundColor": {
+              "solid": {
+                "color": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "'#F1EBDF'"
                     }
                   }
                 }
@@ -695,7 +752,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Filtro de escola: escolha um local de votação de Contagem para a ficha'"
+                  "Value": "'Filtro em árvore: a cidade (as 27 capitais, as 6 maiores que viraram e Contagem) e, dentro dela, as escolas, com busca pelo nome; marcar a cidade leva a tela a ela, marcar uma escola a leva à ficha'"
                 }
               }
             }

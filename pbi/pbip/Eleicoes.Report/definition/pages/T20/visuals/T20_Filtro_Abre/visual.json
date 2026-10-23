@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Escolher uma escola pelo nome'"
+                  "Value": "'Escolher a cidade (34) ou uma escola pelo nome'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Escolher uma escola pelo nome'"
+                  "Value": "'Escolher a cidade (34) ou uma escola pelo nome'"
                 }
               }
             },
