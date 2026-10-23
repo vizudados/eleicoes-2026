@@ -355,8 +355,19 @@ def perfil_pesquisa():
         return " · ".join(x for x in (datas, r[0] if r else "") if x)
 
     d["campo"] = d.observacao.map(campo)
+
+    def fatia(linha):
+        """Fatia do grupo na amostra: a base ponderada do segmento sobre o n total (vazia se o instituto não publicou);
+        a linha do total vale 1."""
+        if linha.dimensao == "total":
+            return 1.0
+        seg = re.search(r"base ponderada (\d+) entrevistas", str(linha.observacao))
+        n = re.search(r"n=(\d+)", str(linha.observacao))
+        return round(int(seg[1]) / int(n[1]), 4) if seg and n else None
+
+    d["fatia"] = d.apply(fatia, axis=1)
     return d[["instituto", "divulgacao", "campo", "candidato", "lente", "categoria", "categoria_ordem", "percentual",
-              "fonte_url"]]
+              "fatia", "fonte_url"]]
 
 
 def main():
