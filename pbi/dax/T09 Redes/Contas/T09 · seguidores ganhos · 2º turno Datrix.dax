@@ -1,0 +1,11 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Seguidores ganhos de 03 a 19/10 em Instagram, X, Facebook e YouTube, segundo a Datrix (via Exame); no contexto do candidato.
+@oraculo: Lula 2,7 mi × Flávio 3,1 mi
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "seguidores ganhos (IG, X, FB, YT)",
+    Monitoramento[Início] = DATE ( 2026, 10, 3 )
+)

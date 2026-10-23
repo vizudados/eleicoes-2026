@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Último dia com IPD da Quaest divulgado (19/10, dia seguinte ao debate).
+@oraculo: 19/10
+*/
+CALCULATE ( MAX ( Monitoramento[Início] ), REMOVEFILTERS ( Monitoramento ), Monitoramento[Métrica] IN { "IPD", "IPD (patamar máximo)" } )

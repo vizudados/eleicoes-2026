@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: texto
+@descricao: Nome curto do candidato da linha (Monitoramento[Candidato]): Lula ou Flávio; vazio para os outros.
+*/
+SWITCH (
+    SELECTEDVALUE ( Monitoramento[Candidato] ),
+    "Lula", "Lula",
+    "Flávio Bolsonaro", "Flávio"
+)

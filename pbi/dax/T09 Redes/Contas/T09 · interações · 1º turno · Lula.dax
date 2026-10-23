@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações de Lula nos perfis oficiais na campanha do 1º turno, 16/08 a 04/10 (Bites).
+@oraculo: FONTES digital: 83,8 mi
+*/
+CALCULATE ( [T09 · interações · 1º turno], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula" )

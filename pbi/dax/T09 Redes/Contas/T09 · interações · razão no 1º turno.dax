@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.00
+@descricao: Quantas vezes as interações de Lula foram as de Flávio na campanha do 1º turno (16/08 a 04/10, Bites).
+@oraculo: 83,8 ÷ 73,7 = 1,14
+*/
+DIVIDE ( [T09 · interações · 1º turno · Lula], [T09 · interações · 1º turno · Flávio] )

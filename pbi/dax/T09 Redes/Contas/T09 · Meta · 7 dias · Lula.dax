@@ -1,0 +1,13 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Reais gastos em anúncios pela página de Lula na Meta (Facebook e Instagram), 2026-10-13 a 2026-10-19 (7 dias), segundo o Relatório da Biblioteca de Anúncios. Não se soma aos pagamentos declarados ao TSE (outra base).
+@oraculo: R$ 0,91 mi
+*/
+CALCULATE (
+    SUM ( 'Anúncios'[Valor] ),
+    REMOVEFILTERS ( 'Anúncios' ),
+    'Anúncios'[Anunciante] = "Lula (página 'Lula', rótulo da campanha)",
+    'Anúncios'[Plataforma] = "Meta (Facebook/Instagram)",
+    'Anúncios'[Período] = "2026-10-13 a 2026-10-19 (7 dias)"
+)

@@ -1,0 +1,34 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: O número da tela (quantas vezes as interações de um foram as do outro no 2º turno, contador), a frase ao lado, a manchete (quem dominou as interações no 2º turno e quem ganhou mais seguidores na campanha do 1º) e o que é interação. Só lê contas 'T09 · …'.
+*/
+-- 1 · Leituras
+VAR _l2 = [T09 · interações · 2º turno · Lula]
+VAR _f2 = [T09 · interações · 2º turno · Flávio]
+VAR _r2 = [T09 · interações · razão no 2º turno]
+VAR _ini2 = [T09 · 2º turno · início]
+VAR _fim2 = [T09 · 2º turno · fim]
+VAR _sL = [T09 · seguidores ganhos · campanha · Lula]
+VAR _sF = [T09 · seguidores ganhos · campanha · Flávio]
+-- 2 · Textos
+VAR _quemI = IF ( _l2 >= _f2, "Lula", "Flávio" )
+VAR _outroI = IF ( _quemI = "Lula", "Flávio", "Lula" )
+VAR _vezes = IF ( _l2 >= _f2, _r2, DIVIDE ( 1, _r2 ) )
+VAR _quemS = IF ( _sF >= _sL, "Flávio", "Lula" )
+VAR _txtMan =
+    "No 2º turno, as redes foram de " & _quemI & "; na campanha do 1º, quem ganhou mais seguidores foi " & _quemS
+VAR _txtSob =
+    "2º turno · " & FORMAT ( _ini2, "dd/MM" ) & " a " & FORMAT ( _fim2, "dd/MM" ) & " · interações nos perfis oficiais"
+-- 4 · Marcação
+RETURN
+    "<div class='tela t09a'>"
+        & "<div class='sob sobe'>" & _txtSob & "</div>"
+        & "<div class='linha'>"
+            & "<div class='hero sobe d1'><span class='num'>" & FORMAT ( _vezes, "0.0" ) & "</span><span class='u'>vezes</span></div>"
+            & "<div class='lado sobe d3'>mais interações para " & _quemI & " do que para " & _outroI & "</div>"
+        & "</div>"
+        & "<div class='man sobe d5'>" & _txtMan & "</div>"
+        & "<div class='txt sobe d6'>Interação é toda reação a uma publicação: curtida, comentário, compartilhamento. "
+            & "Mostra o alcance nas redes, não a intenção de voto.</div>"
+    & "</div>"

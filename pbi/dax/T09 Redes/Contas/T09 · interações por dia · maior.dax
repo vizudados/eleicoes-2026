@@ -1,0 +1,11 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: A maior média diária entre os quatro balões (os dois candidatos nas duas janelas): a escala da área.
+*/
+VAR _l1 = CALCULATE ( [T09 · interações por dia · 1º turno], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula" )
+VAR _f1 = CALCULATE ( [T09 · interações por dia · 1º turno], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )
+VAR _l2 = CALCULATE ( [T09 · interações por dia · 2º turno], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula" )
+VAR _f2 = CALCULATE ( [T09 · interações por dia · 2º turno], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )
+RETURN
+    MAX ( MAX ( _l1, _f1 ), MAX ( _l2, _f2 ) )

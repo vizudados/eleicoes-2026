@@ -1,0 +1,6 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: O maior ganho de seguidores entre os dois na campanha do 1º turno: a escala das barras.
+*/
+MAX ( [T09 · seguidores ganhos · campanha · Lula], [T09 · seguidores ganhos · campanha · Flávio] )

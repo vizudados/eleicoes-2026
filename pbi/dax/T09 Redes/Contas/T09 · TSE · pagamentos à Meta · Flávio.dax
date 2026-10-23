@@ -1,0 +1,13 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Pagamentos da campanha de Flávio à Meta declarados ao TSE, até cerca de 20/10 (NSC, SBT e g1). Outra base: mede o que a campanha pagou, não o que a página veiculou.
+@oraculo: R$ 7,45 mi
+*/
+CALCULATE (
+    SUM ( 'Anúncios'[Valor] ),
+    REMOVEFILTERS ( 'Anúncios' ),
+    'Anúncios'[Anunciante] = "Flávio Bolsonaro",
+    'Anúncios'[Plataforma] = "Meta (pagamentos declarados ao TSE)",
+    'Anúncios'[Período] = "campanha até ~20/10/2026"
+)

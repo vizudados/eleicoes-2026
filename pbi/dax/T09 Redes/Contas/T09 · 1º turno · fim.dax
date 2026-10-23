@@ -1,0 +1,6 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Último dia da janela de interações da Bites na campanha do 1º turno, 16/08 a 04/10.
+*/
+CALCULATE ( MAX ( Monitoramento[Fim] ), REMOVEFILTERS ( Monitoramento ), Monitoramento[Métrica] = "interações nos perfis oficiais (X, Instagram, Facebook, TikTok, YouTube)", Monitoramento[Início] = DATE ( 2026, 8, 16 ) )

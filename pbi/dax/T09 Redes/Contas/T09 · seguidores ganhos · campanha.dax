@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Seguidores ganhos de 16/08 a 03/10 em Instagram, Facebook, TikTok e YouTube (Bites, via CNN); no contexto do candidato.
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "seguidores ganhos - total 4 redes",
+    Monitoramento[Início] = DATE ( 2026, 8, 16 )
+)

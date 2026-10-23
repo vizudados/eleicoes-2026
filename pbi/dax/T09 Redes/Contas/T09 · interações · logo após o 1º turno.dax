@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações de 04 a 08/10, logo depois do 1º turno (Bites, via CNN); no contexto do candidato (Monitoramento[Candidato]).
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "interações nos perfis oficiais",
+    Monitoramento[Início] = DATE ( 2026, 10, 4 )
+)

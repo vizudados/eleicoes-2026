@@ -1,0 +1,9 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Índice de Popularidade Digital da Quaest (0–100) no contexto de candidato e data (Monitoramento[Início]); de 08 a 11/10 o ponto de Lula é o patamar máximo do período.
+*/
+CALCULATE (
+    AVERAGE ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] IN { "IPD", "IPD (patamar máximo)" }
+)

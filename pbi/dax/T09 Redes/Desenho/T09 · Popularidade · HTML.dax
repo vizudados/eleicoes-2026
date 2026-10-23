@@ -1,0 +1,109 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: O índice de popularidade digital da Quaest de 04/10 a 19/10: as duas linhas se desenham pelos pontos divulgados e se cruzam; rótulos do primeiro e do último dia com contador, a marca do debate e a nota à mão. Lê 'T09 · IPD' por data (lista de Monitoramento[Início]) e as contas de início e fim.
+*/
+-- 1 · Leituras
+VAR _ini = [T09 · IPD · primeiro dia]
+VAR _fim = [T09 · IPD · último dia]
+VAR _deb = [T09 · debate · data]
+VAR _lI = [T09 · IPD · Lula · início]
+VAR _lF = [T09 · IPD · Lula · fim]
+VAR _fI = [T09 · IPD · Flávio · início]
+VAR _fF = [T09 · IPD · Flávio · fim]
+VAR _vantagemFim = [T09 · IPD · vantagem de Lula no fim]
+VAR _todos =
+    ADDCOLUMNS (
+        VALUES ( Monitoramento[Início] ),
+        "@l", CALCULATE ( [T09 · IPD], Monitoramento[Candidato] = "Lula" ),
+        "@f", CALCULATE ( [T09 · IPD], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+    )
+VAR _pts = FILTER ( _todos, NOT ISBLANK ( [@l] ) || NOT ISBLANK ( [@f] ) ) /* lista */
+-- 2 · Textos
+VAR _lider0 = IF ( _fI >= _lI, "Flávio", "Lula" )
+VAR _lider1 = IF ( _lF >= _fF, "Lula", "Flávio" )
+VAR _txtMan =
+    "No dia do 1º turno, " & _lider0 & " liderava; em " & FORMAT ( _fim, "dd/MM" ) & ", " & _lider1 & " estava "
+        & FORMAT ( ABS ( _vantagemFim ), "0.0" ) & " pontos à frente"
+-- 3 · Geometria (x: primeiro a último dia em 130–600; y: 68 a 86 pontos em 140–10; o svg começa em y 86)
+VAR _dias = DATEDIFF ( _ini, _fim, DAY ) -- geometria
+VAR _f = "0.0"
+VAR _xy =
+    ADDCOLUMNS (
+        _pts,
+        "@x", 130 + DATEDIFF ( _ini, Monitoramento[Início], DAY ) / _dias * 470,
+        "@yl", 140 - ( [@l] - 68 ) / 18 * 130,
+        "@yf", 140 - ( [@f] - 68 ) / 18 * 130
+    ) -- geometria
+VAR _linhaL =
+    CONCATENATEX (
+        FILTER ( _xy, NOT ISBLANK ( [@l] ) ) /* lista */,
+        FORMAT ( [@x], _f, "en-US" ) & "," & FORMAT ( [@yl], _f, "en-US" ),
+        " ",
+        Monitoramento[Início], ASC
+    )
+VAR _linhaF =
+    CONCATENATEX (
+        FILTER ( _xy, NOT ISBLANK ( [@f] ) ) /* lista */,
+        FORMAT ( [@x], _f, "en-US" ) & "," & FORMAT ( [@yf], _f, "en-US" ),
+        " ",
+        Monitoramento[Início], ASC
+    )
+VAR _pontos =
+    CONCATENATEX (
+        _xy,
+        IF ( NOT ISBLANK ( [@l] ), "<circle cx='" & FORMAT ( [@x], _f, "en-US" ) & "' cy='" & FORMAT ( [@yl], _f, "en-US" )
+            & "' r='5.5' class='pl brota' style='animation-delay:" & ( 600 + DATEDIFF ( _ini, Monitoramento[Início], DAY ) * 110 ) & "ms'/>" )
+            & IF ( NOT ISBLANK ( [@f] ), "<circle cx='" & FORMAT ( [@x], _f, "en-US" ) & "' cy='" & FORMAT ( [@yf], _f, "en-US" )
+            & "' r='5.5' class='pf brota' style='animation-delay:" & ( 650 + DATEDIFF ( _ini, Monitoramento[Início], DAY ) * 110 ) & "ms'/>" ),
+        "",
+        Monitoramento[Início], ASC
+    )
+VAR _xDeb = 130 + DATEDIFF ( _ini, _deb, DAY ) / _dias * 470 -- geometria
+VAR _yLI = 140 - ( _lI - 68 ) / 18 * 130 -- geometria
+VAR _yFI = 140 - ( _fI - 68 ) / 18 * 130 -- geometria
+VAR _yLF = 140 - ( _lF - 68 ) / 18 * 130 -- geometria
+VAR _yFF = 140 - ( _fF - 68 ) / 18 * 130 -- geometria
+VAR _grade =
+    CONCATENATEX (
+        { 70, 75, 80, 85 },
+        "<line x1='130' x2='600' y1='" & FORMAT ( 140 - ( [Value] - 68 ) / 18 * 130, _f, "en-US" ) & "' y2='"
+            & FORMAT ( 140 - ( [Value] - 68 ) / 18 * 130, _f, "en-US" ) & "' class='g'/>",
+        ""
+    )
+VAR _datas =
+    CONCATENATEX (
+        ADDCOLUMNS ( { 0, 7, _dias }, "@d", _ini + [Value] ),
+        "<text x='" & FORMAT ( 130 + DATEDIFF ( _ini, [@d], DAY ) / _dias * 470, _f, "en-US" ) & "' y='164' class='ex' text-anchor='"
+            & SWITCH ( TRUE (), [Value] = 0, "start", [Value] = _dias, "end", "middle" ) & "'>" & FORMAT ( [@d], "dd/MM" )
+            & IF ( [Value] = 0, " · 1º turno", "" ) & "</text>",
+        ""
+    )
+-- 4 · Marcação
+VAR _svg =
+    "<svg width='760' height='176' viewBox='0 0 760 176'>"
+        & _grade & _datas
+        & "<line x1='" & FORMAT ( _xDeb, _f, "en-US" ) & "' x2='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y1='4' y2='146' class='deb'/>"
+        & "<text x='" & FORMAT ( _xDeb - 6, _f, "en-US" ) & "' y='154' class='ex' text-anchor='end'>debate</text>"
+        & "<polyline points='" & _linhaF & "' pathLength='1' class='lf traco' filter='url(#rbu)' style='animation-delay:.4s'/>"
+        & "<polyline points='" & _linhaL & "' pathLength='1' class='ll traco' filter='url(#rbu)' style='animation-delay:.4s'/>"
+        & _pontos
+    & "</svg>"
+VAR _rotulos =
+    "<div class='rotulo e flavio-esc entra d6' style='right:" & FORMAT ( 760 - 116, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 86 + _yFI - 13, _f, "en-US" ) & "px'>Flávio " & FORMAT ( _fI, "0.0" ) & "</div>"
+        & "<div class='rotulo e lula-esc entra d6' style='right:" & FORMAT ( 760 - 116, _f, "en-US" ) & "px;top:"
+        & FORMAT ( 86 + _yLI - 13, _f, "en-US" ) & "px'>Lula " & FORMAT ( _lI, "0.0" ) & "</div>"
+        & "<div class='rotulo lula-esc entra d14' style='left:614px;top:" & FORMAT ( 86 + _yLF - 13, _f, "en-US" ) & "px'>Lula "
+        & FORMAT ( _lF, "0.0" ) & "</div>"
+        & "<div class='rotulo flavio-esc entra d14' style='left:614px;top:" & FORMAT ( 86 + _yFF - 13, _f, "en-US" ) & "px'>Flávio "
+        & FORMAT ( _fF, "0.0" ) & "</div>"
+RETURN
+    "<div class='tela t09i'>"
+        & "<div class='sob sobe'>Popularidade digital · índice Quaest, de 0 a 100</div>"
+        & "<div class='man sobe d2'>" & _txtMan & "</div>"
+        & _svg & _rotulos
+        & "<div class='mao entra d14' style='left:262px;top:148px'>virou</div>"
+        & "<div class='nota entra d10'>Soma 175 sinais de redes, Google e Wikipédia · mede popularidade, não voto · Folha, "
+        & FORMAT ( _ini, "dd/MM" ) & " a " & FORMAT ( _fim, "dd/MM" ) & "</div>"
+    & "</div>"

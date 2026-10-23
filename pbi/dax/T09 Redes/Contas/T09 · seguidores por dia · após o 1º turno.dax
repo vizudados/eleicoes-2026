@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Média de seguidores ganhos por dia de 04 a 08/10, logo depois do 1º turno (Bites, 4 redes); no contexto do candidato.
+@oraculo: Lula 191,7 mil · Flávio 348,8 mil
+*/
+DIVIDE ( [T09 · seguidores ganhos · após o 1º turno], [T09 · seguidores · após o 1º turno · dias] )

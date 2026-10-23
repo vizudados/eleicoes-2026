@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações em janeiro e fevereiro de 2026, antes da campanha (Bites); no contexto do candidato (Monitoramento[Candidato]).
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "interações nos perfis oficiais",
+    Monitoramento[Início] = DATE ( 2026, 1, 1 )
+)

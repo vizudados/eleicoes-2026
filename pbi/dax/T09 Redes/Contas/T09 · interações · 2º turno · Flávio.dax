@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações de Flávio nos perfis oficiais na 2º turno, 05 a 17/10 (Bites).
+@oraculo: FONTES digital: 31,3 mi
+*/
+CALCULATE ( [T09 · interações · 2º turno], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )

@@ -1,0 +1,12 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Data do debate da Band com Lula e Flávio frente a frente (marca no gráfico do índice de popularidade).
+@oraculo: 18/10
+*/
+CALCULATE (
+    MAX ( Debate[Data] ),
+    REMOVEFILTERS ( Debate ),
+    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+)

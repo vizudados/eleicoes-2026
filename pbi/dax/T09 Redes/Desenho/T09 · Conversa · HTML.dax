@@ -1,0 +1,44 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Fundo do protagonista (as interações nas duas janelas da Bites): título, a frase com a média por dia de cada um antes e depois, os nomes das janelas, o chão dos balões, a divisória e as notas à mão. Os balões são outro visual (T09 · Balões · HTML), na mesma caixa.
+*/
+-- 1 · Leituras
+VAR _ini1 = [T09 · 1º turno · início]
+VAR _fim1 = [T09 · 1º turno · fim]
+VAR _ini2 = [T09 · 2º turno · início]
+VAR _fim2 = [T09 · 2º turno · fim]
+VAR _d1 = [T09 · 1º turno · dias]
+VAR _d2 = [T09 · 2º turno · dias]
+VAR _r1 = [T09 · interações · razão no 1º turno]
+VAR _l1 = CALCULATE ( [T09 · interações por dia · 1º turno], Monitoramento[Candidato] = "Lula" )
+VAR _f1 = CALCULATE ( [T09 · interações por dia · 1º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+VAR _l2 = CALCULATE ( [T09 · interações por dia · 2º turno], Monitoramento[Candidato] = "Lula" )
+VAR _f2 = CALCULATE ( [T09 · interações por dia · 2º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+-- 2 · Textos
+VAR _txtMan =
+    "Por dia, Flávio passou de " & FORMAT ( _f1 / 1000000, "0.0" ) & " para " & FORMAT ( _f2 / 1000000, "0.0" )
+        & " milhões de interações; Lula, de " & FORMAT ( _l1 / 1000000, "0.0" ) & " para " & FORMAT ( _l2 / 1000000, "0.0" )
+        & " milhões"
+VAR _txtJan1 =
+    "Campanha do 1º turno · " & FORMAT ( _ini1, "dd/MM" ) & " a " & FORMAT ( _fim1, "dd/MM" ) & " · " & _d1 & " dias"
+VAR _txtJan2 =
+    "2º turno · " & FORMAT ( _ini2, "dd/MM" ) & " a " & FORMAT ( _fim2, "dd/MM" ) & " · " & _d2 & " dias"
+VAR _txtNota1 = IF ( _r1 >= 0.8 && _r1 <= 1.25, "quase empate", "um à frente" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t09c'>"
+        & "<div class='sob sobe'>Interações nos perfis oficiais · X, Instagram, Facebook, TikTok e YouTube · Bites</div>"
+        & "<div class='man sobe d2'>" & _txtMan & "</div>"
+        & "<div class='jan sob sobe d3' style='left:0'>" & _txtJan1 & "</div>"
+        & "<div class='jan sob sobe d4' style='left:560px'>" & _txtJan2 & "</div>"
+        & "<svg width='1040' height='530' viewBox='0 0 1040 530'>"
+            & "<path d='M10 410 H500' pathLength='1' class='chao traco' filter='url(#rbu)'/>"
+            & "<path d='M560 410 H1030' pathLength='1' class='chao traco' filter='url(#rbu)' style='animation-delay:.3s'/>"
+            & "<line x1='530' x2='530' y1='104' y2='500' class='div'/>"
+        & "</svg>"
+        & "<div class='mao entra d14' style='left:168px;top:196px'>" & _txtNota1 & "</div>"
+        & "<div class='mao entra d16' style='left:812px;top:138px'>a distância abriu</div>"
+        & "<div class='seta entra d16' style='left:748px;top:166px;width:70px'></div>"
+        & "<div class='nota entra d12'>Tamanho do balão: a média de interações por dia, para comparar janelas de tamanhos diferentes</div>"
+    & "</div>"

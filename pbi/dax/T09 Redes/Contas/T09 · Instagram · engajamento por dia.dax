@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Engajamento médio por dia no Instagram de 05 a 16/10 (DSC Lab, via Lauro Jardim/O Globo); no contexto do candidato.
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "engajamento médio diário no Instagram",
+    Monitoramento[Início] = DATE ( 2026, 10, 5 )
+)

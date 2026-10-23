@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Seguidores que Flávio ganhou de 16/08 a 03/10 em quatro redes (Bites).
+@oraculo: +2,19 mi (2.187.705)
+*/
+CALCULATE ( [T09 · seguidores ganhos · campanha], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )

@@ -1,0 +1,6 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Média de interações por dia na 2º turno, 05 a 17/10 (total ÷ dias), no contexto do candidato: o tamanho do balão, que deixa comparar janelas de tamanhos diferentes.
+*/
+DIVIDE ( [T09 · interações · 2º turno], [T09 · 2º turno · dias] )

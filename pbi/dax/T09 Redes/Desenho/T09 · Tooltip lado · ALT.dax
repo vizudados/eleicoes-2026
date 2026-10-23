@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do dossiê de seguidores e anúncios (grão Monitoramento[Candidato]).
+*/
+IF (
+    NOT ISBLANK ( [T09 · candidato] ),
+    [T09 · candidato] & ": seguidores ganhos e atuais rede a rede, o ganho no 2º turno segundo duas fontes e os pagamentos à Meta declarados ao TSE, R$ "
+        & FORMAT ( [T09 · TSE · pagamentos à Meta] / 1000000, "0.00" ) & " mi."
+)

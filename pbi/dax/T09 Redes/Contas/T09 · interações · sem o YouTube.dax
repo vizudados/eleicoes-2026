@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações de 06 a 15/10, sem o YouTube (Bites); no contexto do candidato (Monitoramento[Candidato]).
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "interações (Instagram, Facebook, TikTok, X)",
+    Monitoramento[Início] = DATE ( 2026, 10, 6 )
+)

@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Pagamentos à Meta declarados ao TSE pela campanha do candidato de Monitoramento[Candidato].
+*/
+SWITCH (
+    SELECTEDVALUE ( Monitoramento[Candidato] ),
+    "Lula", [T09 · TSE · pagamentos à Meta · Lula],
+    "Flávio Bolsonaro", [T09 · TSE · pagamentos à Meta · Flávio]
+)

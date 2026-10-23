@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações nas 24 horas depois do debate da Band, até o meio-dia de 19/10 (Bites, via Vermelho); no contexto do candidato (Monitoramento[Candidato]).
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "interações nas 24h após o debate da Band",
+    Monitoramento[Início] = DATE ( 2026, 10, 18 )
+)

@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do fundo do protagonista (as duas janelas).
+*/
+"Interações nos perfis oficiais em duas janelas da Bites: a campanha do 1º turno (" & [T09 · 1º turno · dias] & " dias) e o 2º turno ("
+    & [T09 · 2º turno · dias] & " dias). O tamanho de cada balão é a média de interações por dia."

@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Gasto na Meta da página do candidato de Monitoramento[Candidato], 2026-07-22 a 2026-10-19 (90 dias) (Biblioteca de Anúncios).
+*/
+SWITCH (
+    SELECTEDVALUE ( Monitoramento[Candidato] ),
+    "Lula", [T09 · Meta · 90 dias · Lula],
+    "Flávio Bolsonaro", [T09 · Meta · 90 dias · Flávio]
+)

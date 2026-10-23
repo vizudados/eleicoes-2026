@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: Dias da janela de seguidores ganhos da Bites (16/08 a 03/10, campanha do 1º turno), extremos inclusos.
+@oraculo: 49
+*/
+DATEDIFF ( [T09 · seguidores · campanha · início], [T09 · seguidores · campanha · fim], DAY ) + 1

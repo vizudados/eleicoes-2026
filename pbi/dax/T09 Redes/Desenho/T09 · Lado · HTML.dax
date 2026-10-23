@@ -1,0 +1,34 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Fundo da coluna da direita, só seguidores (os anúncios na Meta foram para o dossiê ttT09Lado): título, frase e fonte dos seguidores ganhos na campanha do 1º turno; o bloco do ritmo logo depois do 1º turno (mesma fonte e mesmas quatro redes, ganho por dia) e a nota de que depois de 08/10 as fontes divergem. As barras e os números de cada um são outro visual (T09 · Linhas · HTML), na mesma caixa.
+*/
+-- 1 · Leituras
+VAR _sL = [T09 · seguidores ganhos · campanha · Lula]
+VAR _sF = [T09 · seguidores ganhos · campanha · Flávio]
+VAR _ini1 = [T09 · seguidores · campanha · início]
+VAR _fim1 = [T09 · seguidores · campanha · fim]
+VAR _d1 = [T09 · seguidores · campanha · dias]
+VAR _ini2 = [T09 · seguidores · após o 1º turno · início]
+VAR _fim2 = [T09 · seguidores · após o 1º turno · fim]
+VAR _d2 = [T09 · seguidores · após o 1º turno · dias]
+-- 2 · Textos
+VAR _quemS = IF ( _sF >= _sL, "Flávio", "Lula" )
+VAR _txtJan1 = FORMAT ( _ini1, "dd/MM" ) & " a " & FORMAT ( _fim1, "dd/MM" ) & ", " & _d1 & " dias"
+VAR _txtJan2 = FORMAT ( _ini2, "dd/MM" ) & " a " & FORMAT ( _fim2, "dd/MM" ) & ", " & _d2 & IF ( _d2 = 1, " dia", " dias" )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t09l'>"
+        & "<div class='bloco' style='top:0'>"
+            & "<div class='sob sobe'>Seguidores ganhos em quatro redes</div>"
+            & "<div class='man sobe d2'>Na campanha do 1º turno, quem mais ganhou seguidores foi " & _quemS & "</div>"
+            & "<div class='nota sobe d3'>" & _txtJan1 & " · Instagram, Facebook, TikTok e YouTube · Bites</div>"
+        & "</div>"
+        & "<hr class='entra d8'/>"
+        & "<div class='bloco' style='top:322px'>"
+            & "<div class='sob sobe d8'>O ritmo logo depois do 1º turno</div>"
+            & "<div class='txt sobe d9'>Ganho médio por dia, mesma fonte e mesmas redes: de " & _txtJan1 & ", e de " & _txtJan2 & ".</div>"
+        & "</div>"
+        & "<div class='ress entra d14'>Depois de 08/10, Bites e Datrix contam redes e dias diferentes e não concordam. "
+            & "Passe o mouse num nome: redes uma a uma e anúncios na Meta.</div>"
+    & "</div>"

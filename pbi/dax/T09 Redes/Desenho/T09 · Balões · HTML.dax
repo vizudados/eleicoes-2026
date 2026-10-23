@@ -1,0 +1,75 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Os dois balões de fala de um candidato (grão Monitoramento[Candidato]; vazio para quem não é Lula nem Flávio): área proporcional à média de interações por dia na campanha do 1º turno e no 2º turno, sobre o chão do fundo (y 410). Embaixo, o total da janela (contador) e os dias. Cada balão é alvo do dossiê ttT09Conversa.
+*/
+-- 1 · Leituras
+VAR _c = [T09 · candidato]
+VAR _i1 = [T09 · interações · 1º turno]
+VAR _i2 = [T09 · interações · 2º turno]
+VAR _p1 = [T09 · interações por dia · 1º turno]
+VAR _p2 = [T09 · interações por dia · 2º turno]
+VAR _max = [T09 · interações por dia · maior]
+VAR _d1 = [T09 · 1º turno · dias]
+VAR _d2 = [T09 · 2º turno · dias]
+-- 2 · Textos
+VAR _cls = IF ( _c = "Lula", "l", "f" )
+VAR _clsTxt = IF ( _c = "Lula", "lula-esc", "flavio-esc" )
+VAR _txt1 = FORMAT ( _i1 / 1000000, "0.0" ) & " mi"
+VAR _txt2 = FORMAT ( _i2 / 1000000, "0.0" ) & " mi"
+-- 3 · Geometria (raio até 132 px; área ∝ média por dia; chão em y 410)
+VAR _cx1 = IF ( _c = "Lula", 140, 370 ) -- geometria
+VAR _cx2 = IF ( _c = "Lula", 700, 940 ) -- geometria
+VAR _r1 = 132 * SQRT ( DIVIDE ( _p1, _max ) ) -- geometria
+VAR _r2 = 132 * SQRT ( DIVIDE ( _p2, _max ) ) -- geometria
+VAR _f = "0.0"
+VAR _balao =
+    "<g class='bal #K'>"
+        & "<path class='miolo cor' style='animation-delay:#Tms' d='M#X0 #CY a#R #R 0 1 0 #D 0 a#R #R 0 1 0 -#D 0 Z M#A1 #B1 L#A2 #B2 L#A3 #B3 Z'/>"
+        & "<path class='aro traco' pathLength='1' filter='url(#rbu)' style='animation-delay:#Sms' d='M#A1 #B1 L#A2 #B2 L#A3 #B3'/>"
+        & "<path class='aro traco' pathLength='1' filter='url(#rbu)' style='animation-delay:#Sms' d='M#X0 #CY a#R #R 0 1 0 #D 0 a#R #R 0 1 0 -#D 0'/>"
+    & "</g>"
+VAR _b1 =
+    SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE (
+        _balao,
+        "#K", _cls ),
+        "#T", "1300" ),
+        "#S", IF ( _c = "Lula", "300", "450" ) ),
+        "#X0", FORMAT ( _cx1 - _r1, _f, "en-US" ) ),
+        "#CY", FORMAT ( 410 - _r1, _f, "en-US" ) ),
+        "#R", FORMAT ( _r1, _f, "en-US" ) ),
+        "#D", FORMAT ( 2 * _r1, _f, "en-US" ) ),
+        "#A1", FORMAT ( _cx1 - 0.87 * _r1, _f, "en-US" ) & " " & FORMAT ( 410 - _r1 + 0.5 * _r1, _f, "en-US" ) ),
+        "#B1", "" ),
+        "#A2", FORMAT ( _cx1 - _r1 - 16, _f, "en-US" ) & " 408" ),
+        "#B2", "" ),
+        "#A3", FORMAT ( _cx1 - 0.55 * _r1, _f, "en-US" ) & " " & FORMAT ( 410 - _r1 + 0.83 * _r1, _f, "en-US" ) )
+VAR _b1b = SUBSTITUTE ( _b1, "#B3", "" )
+VAR _b2 =
+    SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE (
+        _balao,
+        "#K", _cls ),
+        "#T", "1900" ),
+        "#S", IF ( _c = "Lula", "1000", "1150" ) ),
+        "#X0", FORMAT ( _cx2 - _r2, _f, "en-US" ) ),
+        "#CY", FORMAT ( 410 - _r2, _f, "en-US" ) ),
+        "#R", FORMAT ( _r2, _f, "en-US" ) ),
+        "#D", FORMAT ( 2 * _r2, _f, "en-US" ) ),
+        "#A1", FORMAT ( _cx2 - 0.87 * _r2, _f, "en-US" ) & " " & FORMAT ( 410 - _r2 + 0.5 * _r2, _f, "en-US" ) ),
+        "#B1", "" ),
+        "#A2", FORMAT ( _cx2 - _r2 - 16, _f, "en-US" ) & " 408" ),
+        "#B2", "" ),
+        "#A3", FORMAT ( _cx2 - 0.55 * _r2, _f, "en-US" ) & " " & FORMAT ( 410 - _r2 + 0.83 * _r2, _f, "en-US" ) ),
+        "#B3", "" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _c ) && NOT ISBLANK ( _i1 ),
+        "<div class='tela t09b'>"
+            & "<svg width='1040' height='530' viewBox='0 0 1040 530'>" & _b1b & _b2 & "</svg>"
+            & "<div class='lab sobe d8' style='left:" & _cx1 & "px;top:420px'><b class='" & _clsTxt & "'>" & _c & "</b>"
+                & "<span class='num " & _clsTxt & "'>" & _txt1 & "</span><span class='sub'>em " & _d1 & " dias</span></div>"
+            & "<div class='lab sobe d12' style='left:" & _cx2 & "px;top:420px'><b class='" & _clsTxt & "'>" & _c & "</b>"
+                & "<span class='num " & _clsTxt & "'>" & _txt2 & "</span><span class='sub'>em " & _d2 & " dias</span></div>"
+        & "</div>"
+    )

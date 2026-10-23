@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: Quantos dias tem a janela de interações da Bites na 2º turno, 05 a 17/10 (os dois extremos inclusos).
+@oraculo: 13
+*/
+DATEDIFF ( [T09 · 2º turno · início], [T09 · 2º turno · fim], DAY ) + 1

@@ -1,0 +1,12 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Data da contagem mais recente de seguidores do candidato (Monitoramento[Candidato]) na rede (Seguidores[Plataforma]) do contexto.
+*/
+VAR _cand = SELECTEDVALUE ( Monitoramento[Candidato] )
+RETURN
+    CALCULATE (
+        MAX ( Seguidores[Data] ),
+        Seguidores[Candidato] = _cand,
+        NOT ISBLANK ( Seguidores[Seguidores] )
+    )

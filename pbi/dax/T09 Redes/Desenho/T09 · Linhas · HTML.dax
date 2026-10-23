@@ -1,0 +1,38 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: A linha de um candidato na coluna da direita (grão Monitoramento[Candidato]; vazio para os outros): a barra larga dos seguidores ganhos na campanha do 1º turno (cresce) com o número grande, e o ritmo por dia antes e logo depois do 1º turno (mesma fonte, mesmas redes). As duas linhas são alvo do dossiê ttT09Lado (seguidores rede a rede e anúncios na Meta).
+*/
+-- 1 · Leituras
+VAR _c = [T09 · candidato]
+VAR _s = [T09 · seguidores ganhos · campanha]
+VAR _sMax = [T09 · seguidores ganhos · maior]
+VAR _p1 = [T09 · seguidores por dia · campanha]
+VAR _p2 = [T09 · seguidores por dia · após o 1º turno]
+-- 2 · Textos
+VAR _cls = IF ( _c = "Lula", "l", "f" )
+VAR _clsTxt = IF ( _c = "Lula", "lula-esc", "flavio-esc" )
+VAR _txtS = "+" & FORMAT ( _s / 1000000, "0.00" ) & " mi"
+VAR _txtP1 = FORMAT ( _p1 / 1000, "0" ) & " mil"
+VAR _txtP2 = FORMAT ( _p2 / 1000, "0" ) & " mil"
+-- 3 · Geometria (barra até 290 px; Lula em cima, Flávio embaixo)
+VAR _y = IF ( _c = "Lula", 130, 220 ) -- geometria
+VAR _yR = IF ( _c = "Lula", 404, 448 ) -- geometria
+VAR _larg = DIVIDE ( _s, _sMax ) * 290 -- geometria
+VAR _f = "0.0"
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _c ) && NOT ISBLANK ( _s ),
+        "<div class='tela t09r'>"
+            & "<div class='alvo' style='left:-8px;top:" & _y - 8 & "px;width:546px;height:88px'></div>"
+            & "<div class='nome " & _clsTxt & " sobe d4' style='left:0;top:" & _y & "px'>" & _c & "</div>"
+            & "<div class='barra " & _cls & " barra-x' style='left:0;top:" & _y + 36 & "px;width:" & FORMAT ( _larg, _f, "en-US" ) & "px'></div>"
+            & "<div class='num grande " & _clsTxt & " entra d8' style='left:" & FORMAT ( _larg + 16, _f, "en-US" ) & "px;top:" & _y + 22 & "px'>"
+            & _txtS & "</div>"
+            & "<div class='alvo' style='left:-8px;top:" & _yR - 6 & "px;width:546px;height:42px'></div>"
+            & "<div class='nome " & _clsTxt & " sobe d10' style='left:0;top:" & _yR + 4 & "px'>" & _c & "</div>"
+            & "<div class='ritmo sobe d11' style='left:96px;top:" & _yR & "px'><span class='num'>" & _txtP1 & "</span>"
+            & "<i class='seta-r'></i><span class='num " & _clsTxt & "'>" & _txtP2 & "</span><span class='sub'>por dia</span></div>"
+        & "</div>"
+    )

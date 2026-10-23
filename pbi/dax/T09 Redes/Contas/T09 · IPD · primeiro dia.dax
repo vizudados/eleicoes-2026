@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Primeiro dia com IPD da Quaest divulgado (04/10, dia do 1º turno).
+@oraculo: 04/10
+*/
+CALCULATE ( MIN ( Monitoramento[Início] ), REMOVEFILTERS ( Monitoramento ), Monitoramento[Métrica] IN { "IPD", "IPD (patamar máximo)" } )

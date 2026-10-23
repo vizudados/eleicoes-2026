@@ -1,0 +1,8 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do número da tela das redes (≤ 250 caracteres).
+*/
+"No 2º turno, Lula teve " & FORMAT ( [T09 · interações · razão no 2º turno], "0.0" ) & " vezes as interações de Flávio nos perfis oficiais ("
+    & FORMAT ( [T09 · interações · 2º turno · Lula] / 1000000, "0.0" ) & " mi contra " & FORMAT ( [T09 · interações · 2º turno · Flávio] / 1000000, "0.0" )
+    & " mi, Bites). Na campanha do 1º turno, Flávio ganhou mais seguidores."

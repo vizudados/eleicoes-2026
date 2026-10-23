@@ -1,0 +1,9 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela dos balões (um par por candidato).
+*/
+"Campanha do 1º turno: Lula " & FORMAT ( [T09 · interações · 1º turno · Lula] / 1000000, "0.0" ) & " mi e Flávio "
+    & FORMAT ( [T09 · interações · 1º turno · Flávio] / 1000000, "0.0" ) & " mi de interações. 2º turno: Lula "
+    & FORMAT ( [T09 · interações · 2º turno · Lula] / 1000000, "0.0" ) & " mi e Flávio "
+    & FORMAT ( [T09 · interações · 2º turno · Flávio] / 1000000, "0.0" ) & " mi."

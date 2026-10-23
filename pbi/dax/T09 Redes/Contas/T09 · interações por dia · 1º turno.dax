@@ -1,0 +1,6 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Média de interações por dia na campanha do 1º turno, 16/08 a 04/10 (total ÷ dias), no contexto do candidato: o tamanho do balão, que deixa comparar janelas de tamanhos diferentes.
+*/
+DIVIDE ( [T09 · interações · 1º turno], [T09 · 1º turno · dias] )

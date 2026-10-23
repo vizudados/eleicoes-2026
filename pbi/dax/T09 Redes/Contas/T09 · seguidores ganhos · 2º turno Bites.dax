@@ -1,0 +1,11 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Seguidores ganhos de 05 a 17/10 nos perfis oficiais, segundo a Bites; no contexto do candidato.
+@oraculo: Lula 2,3 mi × Flávio 1,5 mi
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "seguidores ganhos",
+    Monitoramento[Início] = DATE ( 2026, 10, 5 )
+)

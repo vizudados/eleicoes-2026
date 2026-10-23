@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Quantas vezes as interações de Lula foram as de Flávio no 2º turno (05 a 17/10, Bites).
+@oraculo: 110,7 ÷ 31,3 = 3,5
+*/
+DIVIDE ( [T09 · interações · 2º turno · Lula], [T09 · interações · 2º turno · Flávio] )

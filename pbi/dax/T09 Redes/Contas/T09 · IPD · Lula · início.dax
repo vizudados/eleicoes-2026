@@ -1,0 +1,9 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: IPD da Quaest de Lula no primeiro dia da série.
+@oraculo: 70,7
+*/
+VAR _d = [T09 · IPD · primeiro dia]
+RETURN
+    CALCULATE ( [T09 · IPD], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula", Monitoramento[Início] = _d )

@@ -1,0 +1,70 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Dossiê da coluna da direita (ttT09Lado, grão Monitoramento[Candidato]), em duas colunas. À esquerda, os seguidores do candidato rede a rede (quanto ganhou na campanha do 1º turno, Bites, e quantos tem hoje, Social Blade e Datrix) e o 2º turno com as duas fontes que divergem. À direita, os anúncios da página na Meta (Biblioteca de Anúncios: 90 dias e última semana) e, à parte e rotulados como outra base, os pagamentos à Meta declarados ao TSE — nunca somados nem comparados com a Biblioteca.
+*/
+-- 1 · Leituras
+VAR _c = [T09 · candidato]
+VAR _redes =
+    DATATABLE (
+        "Ordem", INTEGER, "Rede", STRING,
+        { { 1, "Instagram" }, { 2, "Facebook" }, { 3, "TikTok" }, { 4, "YouTube" }, { 5, "X" } }
+    )
+VAR _lista =
+    ADDCOLUMNS (
+        _redes,
+        "@g",
+            VAR _r = [Rede]
+            RETURN
+                CALCULATE ( [T09 · seguidores ganhos · rede], Seguidores[Plataforma] = _r ),
+        "@h",
+            VAR _r = [Rede]
+            RETURN
+                CALCULATE ( [T09 · seguidores hoje · rede], Seguidores[Plataforma] = _r )
+    )
+VAR _bites2 = [T09 · seguidores ganhos · 2º turno Bites]
+VAR _datrix2 = [T09 · seguidores ganhos · 2º turno Datrix]
+VAR _a90 = [T09 · Meta · 90 dias]
+VAR _a7 = [T09 · Meta · 7 dias]
+VAR _tse = [T09 · TSE · pagamentos à Meta]
+-- 2 · Textos
+VAR _clsTxt = IF ( _c = "Lula", "lula-esc", "flavio-esc" )
+VAR _linhas =
+    CONCATENATEX (
+        _lista,
+        "<div class='r'>" & [Rede] & "</div><div class='v'>"
+            & IF ( ISBLANK ( [@g] ), "—", "+" & FORMAT ( [@g] / 1000000, "0.00" ) & " mi" ) & "</div><div class='v " & _clsTxt & "'>"
+            & IF ( ISBLANK ( [@h] ), "—", FORMAT ( [@h] / 1000000, "0.00" ) & " mi" ) & "</div>",
+        "",
+        [Ordem], ASC
+    )
+VAR _txt2 =
+    "No 2º turno, as fontes divergem: a Bites dá +" & FORMAT ( _bites2 / 1000000, "0.0" ) & " mi de 05 a 17/10; a Datrix, +"
+        & FORMAT ( _datrix2 / 1000000, "0.0" ) & " mi de 03 a 19/10, com o X e sem o TikTok."
+VAR _txtA90 = "R$ " & FORMAT ( _a90 / 1000000, "0.00" ) & " mi"
+VAR _txtA7 = "R$ " & FORMAT ( _a7 / 1000000, "0.00" ) & " mi"
+VAR _txtTse = "R$ " & FORMAT ( _tse / 1000000, "0.00" ) & " mi"
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _c ),
+        "<div class='tt9l'>"
+            & "<div class='col'>"
+                & "<div class='sob sobe'>" & _c & " · seguidores rede a rede</div>"
+                & "<div class='tab sobe d2'><div></div><div class='h'>ganhou de<br>16/08 a 03/10</div><div class='h'>tem<br>hoje</div>"
+                & _linhas & "</div>"
+                & "<div class='nota sobe d3'>Ganho: Bites. Hoje: Social Blade (22 e 23/10); X: Datrix (19/10).</div>"
+                & "<div class='txt sobe d4'>" & _txt2 & "</div>"
+                & "<div class='mao ti entra d8'>duas réguas, duas ordens</div>"
+            & "</div>"
+            & "<div class='col'>"
+                & "<div class='sob sobe d2'>Anúncios na Meta</div>"
+                & "<div class='ad sobe d3'><b class='" & _clsTxt & "'>" & _txtA90 & "</b><span>em 90 dias (22/07 a 19/10)</span></div>"
+                & "<div class='ad sobe d4'><b class='" & _clsTxt & "'>" & _txtA7 & "</b><span>na última semana (13 a 19/10)</span></div>"
+                & "<div class='nota sobe d4'>Página do candidato · Biblioteca de Anúncios</div>"
+                & "<div class='outra sobe d5'><div class='rot'>Outra base · não se soma</div>"
+                & "Pagamentos à Meta declarados ao TSE até cerca de 20/10: <b>" & _txtTse & "</b>. Medem o que a campanha pagou, "
+                & "não o que a página veiculou.</div>"
+            & "</div>"
+        & "</div>"
+    )

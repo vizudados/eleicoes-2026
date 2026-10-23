@@ -1,0 +1,6 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Primeiro dia da janela de seguidores ganhos da Bites (04 a 08/10, logo depois do 1º turno).
+*/
+CALCULATE ( MIN ( Monitoramento[Início] ), REMOVEFILTERS ( Monitoramento ), Monitoramento[Métrica] = "seguidores ganhos - total 4 redes", Monitoramento[Início] = DATE ( 2026, 10, 4 ) )

@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: Dias da janela de seguidores ganhos da Bites (04 a 08/10, logo depois do 1º turno), extremos inclusos.
+@oraculo: 5
+*/
+DATEDIFF ( [T09 · seguidores · após o 1º turno · início], [T09 · seguidores · após o 1º turno · fim], DAY ) + 1

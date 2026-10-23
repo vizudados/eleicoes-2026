@@ -1,0 +1,9 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do gráfico do índice de popularidade digital.
+*/
+"Índice de popularidade digital da Quaest, de 0 a 100: em " & FORMAT ( [T09 · IPD · primeiro dia], "dd/MM" ) & ", Flávio "
+    & FORMAT ( [T09 · IPD · Flávio · início], "0.0" ) & " e Lula " & FORMAT ( [T09 · IPD · Lula · início], "0.0" ) & "; em "
+    & FORMAT ( [T09 · IPD · último dia], "dd/MM" ) & ", Lula " & FORMAT ( [T09 · IPD · Lula · fim], "0.0" ) & " e Flávio "
+    & FORMAT ( [T09 · IPD · Flávio · fim], "0.0" ) & ". Mede popularidade nas redes, não voto."

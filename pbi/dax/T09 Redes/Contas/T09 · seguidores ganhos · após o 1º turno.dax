@@ -1,0 +1,11 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Seguidores ganhos de 04 a 08/10, logo depois do 1º turno, em Instagram, Facebook, TikTok e YouTube (Bites, via CNN); no contexto do candidato.
+@oraculo: Lula +0,96 mi · Flávio +1,74 mi
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "seguidores ganhos - total 4 redes",
+    Monitoramento[Início] = DATE ( 2026, 10, 4 )
+)

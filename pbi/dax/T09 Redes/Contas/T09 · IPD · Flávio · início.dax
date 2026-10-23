@@ -1,0 +1,9 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: IPD da Quaest de Flávio no primeiro dia da série.
+@oraculo: 80,0
+*/
+VAR _d = [T09 · IPD · primeiro dia]
+RETURN
+    CALCULATE ( [T09 · IPD], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro", Monitoramento[Início] = _d )

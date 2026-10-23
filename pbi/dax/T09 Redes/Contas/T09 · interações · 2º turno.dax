@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações nos perfis oficiais (X, Instagram, Facebook, TikTok, YouTube) na 2º turno, 05 a 17/10, segundo a Bites; no contexto do candidato (Monitoramento[Candidato]).
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Métrica] = "interações nos perfis oficiais (X, Instagram, Facebook, TikTok, YouTube)",
+    Monitoramento[Início] = DATE ( 2026, 10, 5 )
+)

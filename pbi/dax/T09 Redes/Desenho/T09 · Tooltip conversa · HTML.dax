@@ -1,0 +1,42 @@
+/*
+@pasta: T09 Redes\Desenho
+@formato: texto
+@descricao: Dossiê dos balões (ttT09Conversa, grão Monitoramento[Candidato]): as interações dos dois em outras janelas — antes da campanha (jan e fev), logo após o 1º turno, de 06 a 15/10 sem o YouTube, nas 24 h depois do debate — e o engajamento por dia no Instagram (DSC Lab), com a coluna do candidato sob o mouse em destaque. Camada nova: o tempo antes e depois das duas janelas da tela.
+*/
+-- 1 · Leituras
+VAR _c = [T09 · candidato]
+VAR _janL = CALCULATE ( [T09 · interações · jan e fev], Monitoramento[Candidato] = "Lula" )
+VAR _janF = CALCULATE ( [T09 · interações · jan e fev], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+VAR _posL = CALCULATE ( [T09 · interações · logo após o 1º turno], Monitoramento[Candidato] = "Lula" )
+VAR _posF = CALCULATE ( [T09 · interações · logo após o 1º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+VAR _semL = CALCULATE ( [T09 · interações · sem o YouTube], Monitoramento[Candidato] = "Lula" )
+VAR _semF = CALCULATE ( [T09 · interações · sem o YouTube], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+VAR _debL = CALCULATE ( [T09 · interações · 24 h após o debate], Monitoramento[Candidato] = "Lula" )
+VAR _debF = CALCULATE ( [T09 · interações · 24 h após o debate], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+VAR _igL = CALCULATE ( [T09 · Instagram · engajamento por dia], Monitoramento[Candidato] = "Lula" )
+VAR _igF = CALCULATE ( [T09 · Instagram · engajamento por dia], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+-- 2 · Textos
+VAR _onL = IF ( _c = "Lula", " on", "" )
+VAR _onF = IF ( _c = "Flávio", " on", "" )
+VAR _linha =
+    "<div class='j'>#J</div><div class='v lula-esc" & _onL & "'>#L</div><div class='v flavio-esc" & _onF & "'>#F</div>"
+VAR _mi = "0.0"
+VAR _linhas =
+    SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _linha, "#J", "Jan e fev, pré-campanha" ), "#L", FORMAT ( _janL / 1000000, _mi ) & " mi" ), "#F", FORMAT ( _janF / 1000000, _mi ) & " mi" )
+        & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _linha, "#J", "04 a 08/10, pós-1º turno" ), "#L", FORMAT ( _posL / 1000000, _mi ) & " mi" ), "#F", FORMAT ( _posF / 1000000, _mi ) & " mi" )
+        & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _linha, "#J", "06 a 15/10, sem YouTube" ), "#L", FORMAT ( _semL / 1000000, _mi ) & " mi" ), "#F", FORMAT ( _semF / 1000000, _mi ) & " mi" )
+        & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _linha, "#J", "24 h depois do debate" ), "#L", FORMAT ( _debL / 1000000, _mi ) & " mi" ), "#F", FORMAT ( _debF / 1000000, _mi ) & " mi" )
+        & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _linha, "#J", "Instagram, por dia (DSC Lab)" ), "#L", FORMAT ( _igL / 1000000, _mi ) & " mi" ), "#F", FORMAT ( _igF / 1000000, _mi ) & " mi" )
+VAR _mao = IF ( _janF > _janL, "no começo do ano, o contrário", "a frente se manteve" )
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _c ),
+        "<div class='tt9c'>"
+            & "<div class='sob sobe'>As interações em outras janelas</div>"
+            & "<div class='tab sobe d2'><div></div><div class='h lula-esc'>Lula</div><div class='h flavio-esc'>Flávio</div>"
+            & _linhas & "</div>"
+            & "<div class='nota sobe d4'>Bites, perfis oficiais (as redes contadas mudam de uma janela para outra). Instagram: DSC Lab, 05 a 16/10.</div>"
+            & "<div class='mao ti entra d6'>" & _mao & "</div>"
+        & "</div>"
+    )

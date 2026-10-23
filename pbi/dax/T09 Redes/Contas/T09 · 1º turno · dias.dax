@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: Quantos dias tem a janela de interações da Bites na campanha do 1º turno, 16/08 a 04/10 (os dois extremos inclusos).
+@oraculo: 50
+*/
+DATEDIFF ( [T09 · 1º turno · início], [T09 · 1º turno · fim], DAY ) + 1
