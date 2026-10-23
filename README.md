@@ -1,6 +1,6 @@
 # Eleições 2026 · o que os números dizem
 
-Painel em Power BI no estilo apresentação (Vizu Dados), que conta o 1º turno presidencial de 2026 do placar ao porquê,
+Repositório: https://github.com/vizudados/eleicoes-2026 · Painel em Power BI no estilo apresentação (Vizu Dados), que conta o 1º turno presidencial de 2026 do placar ao porquê,
 do país à escola, e acompanha a apuração do 2º turno ao vivo. Inspirado no documentário "Lula vs Flávio: o que os
 números dizem" (Spotniks). Mockup no Figma: arquivo `f6nFM7Go5USMK1tXc46uxP` ("Eleições 2026 · Mockup").
 

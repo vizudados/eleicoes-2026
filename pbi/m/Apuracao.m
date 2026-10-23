@@ -1,5 +1,5 @@
 // Apuração ao vivo — lê os arquivos que o GitHub Actions grava em dados/apuracao/ (apuracao/coletar.py).
-// Parâmetro pRepositorioRaw: "https://raw.githubusercontent.com/<conta>/<repositorio>/main" (repositório público).
+// Parâmetro pRepositorioRaw = "https://raw.githubusercontent.com/vizudados/eleicoes-2026/main" (repositório público).
 // O raw do GitHub tem cache de ~5 min; o parâmetro de carimbo evita cache do lado do Power BI.
 // Três consultas: ApuracaoUF (uma linha por UF + BR), ApuracaoHistorico (curva da noite) e ApuracaoStatus.
 

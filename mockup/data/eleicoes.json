@@ -1,7 +1,7 @@
 {
  "meta": {
   "titulo": "Eleições 2026 · o que os números dizem",
-  "gerado_em": "2026-10-23T00:09:06",
+  "gerado_em": "2026-10-23T00:14:58",
   "data_base": "TSE · 22/10/2026",
   "rodape": "Fonte: TSE e IBGE · resultado de 22/10/2026",
   "aviso_dados": "Dados reais: TSE (1º turno de 2006 a 2026) e IBGE (Censo 2022). Nada ilustrativo.",
@@ -930,715 +930,18 @@
   {
    "nome": "Debate",
    "pergunta": "O que mudou depois do debate na Band?",
-   "manchete": "Sem Lula e Flávio no 1º debate, Cury foi de 1,8% a 9,1% nas pesquisas; terminou com 2,9%",
-   "primeiro_turno": {
-    "data_txt": "23/08",
-    "participantes": [
-     "Ronaldo Caiado",
-     "Renan Santos",
-     "Augusto Cury"
-    ],
-    "ausentes": [
-     "Lula",
-     "Flávio Bolsonaro",
-     "Romeu Zema"
-    ],
-    "palco": "púlpitos dos ausentes mantidos vazios no estúdio, por regra acertada com as campanhas",
-    "cury_antes_txt": "1,8%",
-    "cury_antes_n": 4,
-    "cury_depois_txt": "9,1%",
-    "cury_depois_n": 10,
-    "cury_urna_txt": "2,9%",
-    "serie_cury": [
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-08-03",
-      "divulgacao_txt": "03/08",
-      "cury": 1.0
-     },
-     {
-      "instituto": "Ideia",
-      "divulgacao": "2026-08-05",
-      "divulgacao_txt": "05/08",
-      "cury": 1.7
-     },
-     {
-      "instituto": "Quaest",
-      "divulgacao": "2026-08-05",
-      "divulgacao_txt": "05/08",
-      "cury": 1.0
-     },
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-08-10",
-      "divulgacao_txt": "10/08",
-      "cury": 1.0
-     },
-     {
-      "instituto": "Palver",
-      "divulgacao": "2026-08-10",
-      "divulgacao_txt": "10/08",
-      "cury": 0.0
-     },
-     {
-      "instituto": "Futura",
-      "divulgacao": "2026-08-11",
-      "divulgacao_txt": "11/08",
-      "cury": 1.2
-     },
-     {
-      "instituto": "Gerp",
-      "divulgacao": "2026-08-11",
-      "divulgacao_txt": "11/08",
-      "cury": 1.0
-     },
-     {
-      "instituto": "MDA",
-      "divulgacao": "2026-08-11",
-      "divulgacao_txt": "11/08",
-      "cury": 1.2
-     },
-     {
-      "instituto": "PoderData",
-      "divulgacao": "2026-08-13",
-      "divulgacao_txt": "13/08",
-      "cury": 3.0
-     },
-     {
-      "instituto": "Quaest",
-      "divulgacao": "2026-08-14",
-      "divulgacao_txt": "14/08",
-      "cury": 2.0
-     },
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-08-17",
-      "divulgacao_txt": "17/08",
-      "cury": 1.0
-     },
-     {
-      "instituto": "Datafolha",
-      "divulgacao": "2026-08-21",
-      "divulgacao_txt": "21/08",
-      "cury": 2.0
-     },
-     {
-      "instituto": "Veritá",
-      "divulgacao": "2026-08-21",
-      "divulgacao_txt": "21/08",
-      "cury": 2.2
-     },
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-08-24",
-      "divulgacao_txt": "24/08",
-      "cury": 2.0
-     },
-     {
-      "instituto": "Gerp",
-      "divulgacao": "2026-08-26",
-      "divulgacao_txt": "26/08",
-      "cury": 1.0
-     },
-     {
-      "instituto": "Indexa",
-      "divulgacao": "2026-08-26",
-      "divulgacao_txt": "26/08",
-      "cury": 1.0
-     },
-     {
-      "instituto": "PoderData",
-      "divulgacao": "2026-08-27",
-      "divulgacao_txt": "27/08",
-      "cury": 4.0
-     },
-     {
-      "instituto": "Vox Brasil",
-      "divulgacao": "2026-08-29",
-      "divulgacao_txt": "29/08",
-      "cury": 2.6
-     },
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-08-31",
-      "divulgacao_txt": "31/08",
-      "cury": 11.0
-     },
-     {
-      "instituto": "AtlasIntel",
-      "divulgacao": "2026-08-31",
-      "divulgacao_txt": "31/08",
-      "cury": 7.8
-     },
-     {
-      "instituto": "Real Time Big Data",
-      "divulgacao": "2026-09-01",
-      "divulgacao_txt": "01/09",
-      "cury": 11.0
-     },
-     {
-      "instituto": "Quaest",
-      "divulgacao": "2026-09-02",
-      "divulgacao_txt": "02/09",
-      "cury": 10.0
-     },
-     {
-      "instituto": "Datafolha",
-      "divulgacao": "2026-09-03",
-      "divulgacao_txt": "03/09",
-      "cury": 8.0
-     },
-     {
-      "instituto": "Futura",
-      "divulgacao": "2026-09-03",
-      "divulgacao_txt": "03/09",
-      "cury": 9.9
-     },
-     {
-      "instituto": "PoderData",
-      "divulgacao": "2026-09-03",
-      "divulgacao_txt": "03/09",
-      "cury": 10.0
-     },
-     {
-      "instituto": "Veritá",
-      "divulgacao": "2026-09-06",
-      "divulgacao_txt": "06/09",
-      "cury": 12.2
-     },
-     {
-      "instituto": "Quaest",
-      "divulgacao": "2026-09-07",
-      "divulgacao_txt": "07/09",
-      "cury": 8.0
-     },
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-09-08",
-      "divulgacao_txt": "08/09",
-      "cury": 9.0
-     },
-     {
-      "instituto": "Palver",
-      "divulgacao": "2026-09-09",
-      "divulgacao_txt": "09/09",
-      "cury": 4.0
-     },
-     {
-      "instituto": "Gerp",
-      "divulgacao": "2026-09-09",
-      "divulgacao_txt": "09/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "Ideia",
-      "divulgacao": "2026-09-09",
-      "divulgacao_txt": "09/09",
-      "cury": 6.6
-     },
-     {
-      "instituto": "AtlasIntel",
-      "divulgacao": "2026-09-10",
-      "divulgacao_txt": "10/09",
-      "cury": 6.6
-     },
-     {
-      "instituto": "PoderData",
-      "divulgacao": "2026-09-10",
-      "divulgacao_txt": "10/09",
-      "cury": 10.0
-     },
-     {
-      "instituto": "Datafolha",
-      "divulgacao": "2026-09-11",
-      "divulgacao_txt": "11/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "Futura",
-      "divulgacao": "2026-09-11",
-      "divulgacao_txt": "11/09",
-      "cury": 6.9
-     },
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-09-14",
-      "divulgacao_txt": "14/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "Quaest",
-      "divulgacao": "2026-09-14",
-      "divulgacao_txt": "14/09",
-      "cury": 7.0
-     },
-     {
-      "instituto": "Indexa",
-      "divulgacao": "2026-09-15",
-      "divulgacao_txt": "15/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "MDA",
-      "divulgacao": "2026-09-15",
-      "divulgacao_txt": "15/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "DataTrends",
-      "divulgacao": "2026-09-16",
-      "divulgacao_txt": "16/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "AtlasIntel",
-      "divulgacao": "2026-09-17",
-      "divulgacao_txt": "17/09",
-      "cury": 3.5
-     },
-     {
-      "instituto": "Datafolha",
-      "divulgacao": "2026-09-17",
-      "divulgacao_txt": "17/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "Futura",
-      "divulgacao": "2026-09-17",
-      "divulgacao_txt": "17/09",
-      "cury": 6.5
-     },
-     {
-      "instituto": "Gerp",
-      "divulgacao": "2026-09-17",
-      "divulgacao_txt": "17/09",
-      "cury": 7.0
-     },
-     {
-      "instituto": "PoderData",
-      "divulgacao": "2026-09-17",
-      "divulgacao_txt": "17/09",
-      "cury": 8.0
-     },
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-09-21",
-      "divulgacao_txt": "21/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "Palver",
-      "divulgacao": "2026-09-21",
-      "divulgacao_txt": "21/09",
-      "cury": 5.0
-     },
-     {
-      "instituto": "Palver",
-      "divulgacao": "2026-09-21",
-      "divulgacao_txt": "21/09",
-      "cury": 2.0
-     },
-     {
-      "instituto": "Quaest",
-      "divulgacao": "2026-09-21",
-      "divulgacao_txt": "21/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "AtlasIntel",
-      "divulgacao": "2026-09-23",
-      "divulgacao_txt": "23/09",
-      "cury": 2.1
-     },
-     {
-      "instituto": "American Analytics",
-      "divulgacao": "2026-09-23",
-      "divulgacao_txt": "23/09",
-      "cury": 5.0
-     },
-     {
-      "instituto": "Alfa Inteligência",
-      "divulgacao": "2026-09-24",
-      "divulgacao_txt": "24/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "Datafolha",
-      "divulgacao": "2026-09-24",
-      "divulgacao_txt": "24/09",
-      "cury": 5.0
-     },
-     {
-      "instituto": "Futura",
-      "divulgacao": "2026-09-24",
-      "divulgacao_txt": "24/09",
-      "cury": 5.6
-     },
-     {
-      "instituto": "Palver",
-      "divulgacao": "2026-09-24",
-      "divulgacao_txt": "24/09",
-      "cury": 2.0
-     },
-     {
-      "instituto": "PoderData",
-      "divulgacao": "2026-09-24",
-      "divulgacao_txt": "24/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "Real Time Big Data",
-      "divulgacao": "2026-09-24",
-      "divulgacao_txt": "24/09",
-      "cury": 6.0
-     },
-     {
-      "instituto": "Nexus",
-      "divulgacao": "2026-09-28",
-      "divulgacao_txt": "28/09",
-      "cury": 5.0
-     },
-     {
-      "instituto": "Quaest",
-      "divulgacao": "2026-09-28",
-      "divulgacao_txt": "28/09",
-      "cury": 4.0
-     },
-     {
-      "instituto": "Vox Brasil",
-      "divulgacao": "2026-09-29",
-      "divulgacao_txt": "29/09",
-      "cury": 2.2
-     },
-     {
-      "instituto": "Palver",
-      "divulgacao": "2026-09-29",
-      "divulgacao_txt": "29/09",
-      "cury": 1.0
-     },
-     {
-      "instituto": "AtlasIntel",
-      "divulgacao": "2026-09-29",
-      "divulgacao_txt": "29/09",
-      "cury": 2.0
-     },
-     {
-      "instituto": "Gerp",
-      "divulgacao": "2026-09-29",
-      "divulgacao_txt": "29/09",
-      "cury": 5.0
-     },
-     {
-      "instituto": "Futura",
-      "divulgacao": "2026-09-30",
-      "divulgacao_txt": "30/09",
-      "cury": 3.8
-     },
-     {
-      "instituto": "Ideia",
-      "divulgacao": "2026-09-30",
-      "divulgacao_txt": "30/09",
-      "cury": 6.7
-     },
-     {
-      "instituto": "Indexa",
-      "divulgacao": "2026-09-30",
-      "divulgacao_txt": "30/09",
-      "cury": 4.0
-     },
-     {
-      "instituto": "Datafolha",
-      "divulgacao": "2026-10-01",
-      "divulgacao_txt": "01/10",
-      "cury": 4.0
-     },
-     {
-      "instituto": "Real Time Big Data",
-      "divulgacao": "2026-10-01",
-      "divulgacao_txt": "01/10",
-      "cury": 3.0
-     },
-     {
-      "instituto": "DataTrends",
-      "divulgacao": "2026-10-02",
-      "divulgacao_txt": "02/10",
-      "cury": 4.0
-     },
-     {
-      "instituto": "Vox Brasil",
-      "divulgacao": "2026-10-02",
-      "divulgacao_txt": "02/10",
-      "cury": 1.2
-     },
-     {
-      "instituto": "PoderData",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 3.0
-     },
-     {
-      "instituto": "Palver",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 1.0
-     },
-     {
-      "instituto": "MDA",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 3.2
-     },
-     {
-      "instituto": "Instituto França (IFP)",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 4.52
-     },
-     {
-      "instituto": "AtlasIntel",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 2.1
-     },
-     {
-      "instituto": "Futura",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 3.9
-     },
-     {
-      "instituto": "Datafolha",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 3.0
-     },
-     {
-      "instituto": "Gerp",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 4.0
-     },
-     {
-      "instituto": "Quaest",
-      "divulgacao": "2026-10-03",
-      "divulgacao_txt": "03/10",
-      "cury": 3.0
-     }
-    ],
-    "marcos": [
-     {
-      "data": "2026-08-23",
-      "rotulo": "debate da Band"
-     },
-     {
-      "data": "2026-08-28",
-      "rotulo": "começa o horário eleitoral"
-     },
-     {
-      "data": "2026-08-29",
-      "rotulo": "sabatina de Cury no Jornal Nacional"
-     },
-     {
-      "data": "2026-10-04",
-      "rotulo": "urna: 2,89% dos válidos"
-     }
-    ],
-    "ressalva": "A alta coincide com o debate, o início do horário eleitoral (28/08) e a sabatina de Cury no JN (29/08); coincidência no tempo não prova causa.",
-    "audiencia_txt": "cerca de 2 pontos na Grande SP (prévia; fontes divergem entre 1,9 e 2,2)",
-    "trends_diario": [
-     {
-      "periodo_brt": "2026-08-15",
-      "Lula": 29,
-      "Flávio Bolsonaro": 14,
-      "Augusto Cury": 2,
-      "Renan Santos": 4,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-16",
-      "Lula": 34,
-      "Flávio Bolsonaro": 9,
-      "Augusto Cury": 3,
-      "Renan Santos": 6,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-17",
-      "Lula": 31,
-      "Flávio Bolsonaro": 8,
-      "Augusto Cury": 3,
-      "Renan Santos": 7,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-18",
-      "Lula": 34,
-      "Flávio Bolsonaro": 9,
-      "Augusto Cury": 2,
-      "Renan Santos": 6,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-19",
-      "Lula": 29,
-      "Flávio Bolsonaro": 6,
-      "Augusto Cury": 2,
-      "Renan Santos": 5,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-20",
-      "Lula": 32,
-      "Flávio Bolsonaro": 5,
-      "Augusto Cury": 3,
-      "Renan Santos": 5,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-21",
-      "Lula": 33,
-      "Flávio Bolsonaro": 7,
-      "Augusto Cury": 3,
-      "Renan Santos": 5,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-22",
-      "Lula": 43,
-      "Flávio Bolsonaro": 7,
-      "Augusto Cury": 7,
-      "Renan Santos": 7,
-      "Ronaldo Caiado": 2
-     },
-     {
-      "periodo_brt": "2026-08-23",
-      "Lula": 48,
-      "Flávio Bolsonaro": 7,
-      "Augusto Cury": 16,
-      "Renan Santos": 16,
-      "Ronaldo Caiado": 2
-     },
-     {
-      "periodo_brt": "2026-08-24",
-      "Lula": 41,
-      "Flávio Bolsonaro": 6,
-      "Augusto Cury": 16,
-      "Renan Santos": 10,
-      "Ronaldo Caiado": 2
-     },
-     {
-      "periodo_brt": "2026-08-25",
-      "Lula": 38,
-      "Flávio Bolsonaro": 9,
-      "Augusto Cury": 51,
-      "Renan Santos": 17,
-      "Ronaldo Caiado": 7
-     },
-     {
-      "periodo_brt": "2026-08-26",
-      "Lula": 47,
-      "Flávio Bolsonaro": 9,
-      "Augusto Cury": 81,
-      "Renan Santos": 17,
-      "Ronaldo Caiado": 2
-     },
-     {
-      "periodo_brt": "2026-08-27",
-      "Lula": 100,
-      "Flávio Bolsonaro": 15,
-      "Augusto Cury": 53,
-      "Renan Santos": 8,
-      "Ronaldo Caiado": 2
-     },
-     {
-      "periodo_brt": "2026-08-28",
-      "Lula": 65,
-      "Flávio Bolsonaro": 24,
-      "Augusto Cury": 29,
-      "Renan Santos": 6,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-29",
-      "Lula": 39,
-      "Flávio Bolsonaro": 10,
-      "Augusto Cury": 29,
-      "Renan Santos": 6,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-30",
-      "Lula": 38,
-      "Flávio Bolsonaro": 9,
-      "Augusto Cury": 16,
-      "Renan Santos": 29,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-08-31",
-      "Lula": 39,
-      "Flávio Bolsonaro": 7,
-      "Augusto Cury": 12,
-      "Renan Santos": 25,
-      "Ronaldo Caiado": 6
-     },
-     {
-      "periodo_brt": "2026-09-01",
-      "Lula": 39,
-      "Flávio Bolsonaro": 6,
-      "Augusto Cury": 9,
-      "Renan Santos": 8,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-09-02",
-      "Lula": 31,
-      "Flávio Bolsonaro": 6,
-      "Augusto Cury": 7,
-      "Renan Santos": 5,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-09-03",
-      "Lula": 34,
-      "Flávio Bolsonaro": 6,
-      "Augusto Cury": 6,
-      "Renan Santos": 5,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-09-04",
-      "Lula": 36,
-      "Flávio Bolsonaro": 13,
-      "Augusto Cury": 5,
-      "Renan Santos": 5,
-      "Ronaldo Caiado": 1
-     },
-     {
-      "periodo_brt": "2026-09-05",
-      "Lula": 37,
-      "Flávio Bolsonaro": 12,
-      "Augusto Cury": 5,
-      "Renan Santos": 4,
-      "Ronaldo Caiado": 1
-     }
-    ],
-    "citacao": {
-     "quem": "Augusto Cury",
-     "trecho": "Lula tinha que estar aqui para responder sobre o caos que está a educação"
-    }
-   },
-   "segundo_turno": {
+   "manchete": "No único frente a frente, em 18/10, a audiência foi de 15 pontos e as pesquisas não se moveram",
+   "frente_a_frente": {
     "data_txt": "18/10",
-    "titulo": "O único frente a frente da campanha",
+    "emissora": "Band (pool com Estadão, TV Cultura, TV Gazeta e Jovem Pan News)",
+    "mediacao": "Adriana Araújo e Eduardo Oinegue",
+    "duracao_txt": "20h15 às 22h10",
     "audiencia_txt": "15 pontos",
     "pico_txt": "16,5 de pico",
     "share_txt": "24% de share",
     "pessoas_txt": "2,7 milhões de pessoas na Grande SP",
-    "audiencia_nota": "Kantar IBOPE, Grande SP, divulgado pela Band; a maior audiência de debate em 20 anos, segundo a emissora",
+    "audiencia_nota": "Kantar IBOPE, Grande SP, divulgado pela Band; a emissora diz ser a maior audiência de debate em 20 anos",
     "youtube_pico_txt": "5,39 mi de aparelhos ao mesmo tempo no YouTube (Poder360)",
-    "pesquisas_txt": "Lula 45,6% → 46,0%; Flávio 48,0% → 48,0% (19 pesquisas antes, 5 depois; dentro da margem)",
-    "pesquisas_nota": "Janela 'depois' de só 4 dias; 10 pesquisas com campo atravessando 18/10 ficaram fora.",
     "citacoes": [
      {
       "quem": "Lula",
@@ -1651,11 +954,383 @@
     ],
     "qualitativa": {
      "instituto": "Quaest",
-     "metodo": "qualitativa durante o debate: 30 grupos de 8 a 12 eleitores (de Lula, de Flávio e indecisos), nota de 0 a 100",
      "flavio": 82,
      "lula": 79,
-     "leitura": "Quaest (30 grupos de eleitores): nota 82 para Flávio e 79 para Lula; sem virada"
+     "leitura": "Quaest, durante o debate (30 grupos de 8 a 12 eleitores, nota de 0 a 100): 82 para Flávio e 79 para Lula; o instituto não viu virada"
     }
+   },
+   "pesquisas": {
+    "antes": {
+     "lula_txt": "45,5%",
+     "flavio_txt": "47,9%",
+     "pesquisas": 24
+    },
+    "depois": {
+     "lula_txt": "46,0%",
+     "flavio_txt": "48,0%",
+     "pesquisas": 5
+    },
+    "atravessa": 10,
+    "leitura": "Média antes: Lula 45,5% × Flávio 47,9% (24 pesquisas); depois: 46,0% × 48,0% (5); variações dentro das margens de erro",
+    "serie": [
+     {
+      "instituto": "Datafolha",
+      "divulgacao": "2026-10-08",
+      "divulgacao_txt": "08/10",
+      "campo": "06/10–07/10",
+      "janela": "antes",
+      "lula": 45.0,
+      "flavio": 49.0
+     },
+     {
+      "instituto": "PoderData",
+      "divulgacao": "2026-10-08",
+      "divulgacao_txt": "08/10",
+      "campo": "05/10–07/10",
+      "janela": "antes",
+      "lula": 44.0,
+      "flavio": 49.0
+     },
+     {
+      "instituto": "AtlasIntel",
+      "divulgacao": "2026-10-09",
+      "divulgacao_txt": "09/10",
+      "campo": "03/10–08/10",
+      "janela": "antes",
+      "lula": 45.7,
+      "flavio": 51.1
+     },
+     {
+      "instituto": "Vox Brasil",
+      "divulgacao": "2026-10-09",
+      "divulgacao_txt": "09/10",
+      "campo": "05/10–07/10",
+      "janela": "antes",
+      "lula": 44.2,
+      "flavio": 42.7
+     },
+     {
+      "instituto": "Ipespe",
+      "divulgacao": "2026-10-10",
+      "divulgacao_txt": "10/10",
+      "campo": "06/10–08/10",
+      "janela": "antes",
+      "lula": 44.0,
+      "flavio": 49.0
+     },
+     {
+      "instituto": "DataTrends",
+      "divulgacao": "2026-10-11",
+      "divulgacao_txt": "11/10",
+      "campo": "07/10–09/10",
+      "janela": "antes",
+      "lula": 44.0,
+      "flavio": 50.0
+     },
+     {
+      "instituto": "Nexus",
+      "divulgacao": "2026-10-13",
+      "divulgacao_txt": "13/10",
+      "campo": "10/10–12/10",
+      "janela": "antes",
+      "lula": 45.0,
+      "flavio": 48.0
+     },
+     {
+      "instituto": "PoderData",
+      "divulgacao": "2026-10-13",
+      "divulgacao_txt": "13/10",
+      "campo": "10/10–12/10",
+      "janela": "antes",
+      "lula": 46.0,
+      "flavio": 48.0
+     },
+     {
+      "instituto": "Futura",
+      "divulgacao": "2026-10-13",
+      "divulgacao_txt": "13/10",
+      "campo": "07/10–10/10",
+      "janela": "antes",
+      "lula": 46.6,
+      "flavio": 50.0
+     },
+     {
+      "instituto": "Gerp",
+      "divulgacao": "2026-10-13",
+      "divulgacao_txt": "13/10",
+      "campo": "08/10–12/10",
+      "janela": "antes",
+      "lula": 44.0,
+      "flavio": 53.0
+     },
+     {
+      "instituto": "Quaest",
+      "divulgacao": "2026-10-14",
+      "divulgacao_txt": "14/10",
+      "campo": "10/10–13/10",
+      "janela": "antes",
+      "lula": 44.0,
+      "flavio": 46.0
+     },
+     {
+      "instituto": "Datafolha",
+      "divulgacao": "2026-10-15",
+      "divulgacao_txt": "15/10",
+      "campo": "13/10–14/10",
+      "janela": "antes",
+      "lula": 45.0,
+      "flavio": 47.0
+     },
+     {
+      "instituto": "Indexa",
+      "divulgacao": "2026-10-15",
+      "divulgacao_txt": "15/10",
+      "campo": "13/10–14/10",
+      "janela": "antes",
+      "lula": 42.0,
+      "flavio": 44.0
+     },
+     {
+      "instituto": "Palver",
+      "divulgacao": "2026-10-15",
+      "divulgacao_txt": "15/10",
+      "campo": "10/10–13/10",
+      "janela": "antes",
+      "lula": 49.0,
+      "flavio": 50.0
+     },
+     {
+      "instituto": "PoderData",
+      "divulgacao": "2026-10-16",
+      "divulgacao_txt": "16/10",
+      "campo": "13/10–15/10",
+      "janela": "antes",
+      "lula": 47.0,
+      "flavio": 47.0
+     },
+     {
+      "instituto": "Futura",
+      "divulgacao": "2026-10-16",
+      "divulgacao_txt": "16/10",
+      "campo": "14/10–15/10",
+      "janela": "antes",
+      "lula": 47.5,
+      "flavio": 49.0
+     },
+     {
+      "instituto": "Gerp",
+      "divulgacao": "2026-10-16",
+      "divulgacao_txt": "16/10",
+      "campo": "14/10–16/10",
+      "janela": "antes",
+      "lula": 45.0,
+      "flavio": 50.0
+     },
+     {
+      "instituto": "MDA",
+      "divulgacao": "2026-10-16",
+      "divulgacao_txt": "16/10",
+      "campo": "13/10–15/10",
+      "janela": "antes",
+      "lula": 45.9,
+      "flavio": 46.8
+     },
+     {
+      "instituto": "Ipespe",
+      "divulgacao": "2026-10-17",
+      "divulgacao_txt": "17/10",
+      "campo": "13/10–15/10",
+      "janela": "antes",
+      "lula": 46.0,
+      "flavio": 48.0
+     },
+     {
+      "instituto": "Vox Brasil",
+      "divulgacao": "2026-10-18",
+      "divulgacao_txt": "18/10",
+      "campo": "15/10–17/10",
+      "janela": "antes",
+      "lula": 46.4,
+      "flavio": 44.6
+     },
+     {
+      "instituto": "AtlasIntel",
+      "divulgacao": "2026-10-19",
+      "divulgacao_txt": "19/10",
+      "campo": "13/10–18/10",
+      "janela": "atravessa",
+      "lula": 47.6,
+      "flavio": 49.8
+     },
+     {
+      "instituto": "DataTrends",
+      "divulgacao": "2026-10-19",
+      "divulgacao_txt": "19/10",
+      "campo": "15/10–17/10",
+      "janela": "antes",
+      "lula": 46.0,
+      "flavio": 49.0
+     },
+     {
+      "instituto": "Futura",
+      "divulgacao": "2026-10-19",
+      "divulgacao_txt": "19/10",
+      "campo": "16/10–17/10",
+      "janela": "antes",
+      "lula": 47.5,
+      "flavio": 48.3
+     },
+     {
+      "instituto": "Instituto Phoenix",
+      "divulgacao": "2026-10-19",
+      "divulgacao_txt": "19/10",
+      "campo": "13/10–16/10",
+      "janela": "antes",
+      "lula": 47.59,
+      "flavio": 45.21
+     },
+     {
+      "instituto": "Nexus",
+      "divulgacao": "2026-10-19",
+      "divulgacao_txt": "19/10",
+      "campo": "16/10–18/10",
+      "janela": "atravessa",
+      "lula": 45.9,
+      "flavio": 46.5
+     },
+     {
+      "instituto": "PoderData",
+      "divulgacao": "2026-10-19",
+      "divulgacao_txt": "19/10",
+      "campo": "16/10–18/10",
+      "janela": "atravessa",
+      "lula": 46.0,
+      "flavio": 49.0
+     },
+     {
+      "instituto": "Instituto Ranking",
+      "divulgacao": "2026-10-20",
+      "divulgacao_txt": "20/10",
+      "campo": "14/10–16/10",
+      "janela": "antes",
+      "lula": 45.4,
+      "flavio": 44.6
+     },
+     {
+      "instituto": "Real Time Big Data",
+      "divulgacao": "2026-10-20",
+      "divulgacao_txt": "20/10",
+      "campo": "15/10–19/10",
+      "janela": "atravessa",
+      "lula": 45.0,
+      "flavio": 48.0
+     },
+     {
+      "instituto": "Alfa Inteligência",
+      "divulgacao": "2026-10-20",
+      "divulgacao_txt": "20/10",
+      "campo": "15/10–19/10",
+      "janela": "atravessa",
+      "lula": 45.9,
+      "flavio": 48.8
+     },
+     {
+      "instituto": "Instituto França (IFP)",
+      "divulgacao": "2026-10-20",
+      "divulgacao_txt": "20/10",
+      "campo": "16/10–20/10",
+      "janela": "atravessa",
+      "lula": 39.65,
+      "flavio": 40.95
+     },
+     {
+      "instituto": "Futura",
+      "divulgacao": "2026-10-21",
+      "divulgacao_txt": "21/10",
+      "campo": "19/10–20/10",
+      "janela": "depois",
+      "lula": 46.8,
+      "flavio": 48.9
+     },
+     {
+      "instituto": "Gerp",
+      "divulgacao": "2026-10-21",
+      "divulgacao_txt": "21/10",
+      "campo": "19/10–21/10",
+      "janela": "depois",
+      "lula": 45.0,
+      "flavio": 50.0
+     },
+     {
+      "instituto": "Ideia",
+      "divulgacao": "2026-10-21",
+      "divulgacao_txt": "21/10",
+      "campo": "15/10–19/10",
+      "janela": "atravessa",
+      "lula": 46.0,
+      "flavio": 48.0
+     },
+     {
+      "instituto": "Palver",
+      "divulgacao": "2026-10-21",
+      "divulgacao_txt": "21/10",
+      "campo": "18/10–20/10",
+      "janela": "atravessa",
+      "lula": 48.0,
+      "flavio": 50.0
+     },
+     {
+      "instituto": "Quaest",
+      "divulgacao": "2026-10-21",
+      "divulgacao_txt": "21/10",
+      "campo": "17/10–20/10",
+      "janela": "atravessa",
+      "lula": 44.0,
+      "flavio": 45.0
+     },
+     {
+      "instituto": "Veritá",
+      "divulgacao": "2026-10-21",
+      "divulgacao_txt": "21/10",
+      "campo": "15/10–19/10",
+      "janela": "atravessa",
+      "lula": 48.2,
+      "flavio": 49.7
+     },
+     {
+      "instituto": "Indexa",
+      "divulgacao": "2026-10-22",
+      "divulgacao_txt": "22/10",
+      "campo": "20/10–21/10",
+      "janela": "depois",
+      "lula": 44.1,
+      "flavio": 45.2
+     },
+     {
+      "instituto": "Datafolha",
+      "divulgacao": "2026-10-22",
+      "divulgacao_txt": "22/10",
+      "campo": "20/10–22/10",
+      "janela": "depois",
+      "lula": 46.0,
+      "flavio": 47.0
+     },
+     {
+      "instituto": "PoderData",
+      "divulgacao": "2026-10-22",
+      "divulgacao_txt": "22/10",
+      "campo": "19/10–21/10",
+      "janela": "depois",
+      "lula": 48.0,
+      "flavio": 49.0
+     }
+    ],
+    "nota": "Votos totais. Antes: campo encerrado até 17/10; depois: campo iniciado a partir de 19/10; as pesquisas com campo atravessando 18/10 aparecem, mas ficam fora das médias."
+   },
+   "primeiro_turno": {
+    "texto": "No 1º turno, Lula e Flávio não foram a nenhum debate: 5 aconteceram sem os dois e 3 foram cancelados",
+    "sem_os_dois": 5,
+    "cancelados": 3
    },
    "linha_do_tempo": [
     {
@@ -1663,131 +1338,118 @@
      "data_txt": "23/08",
      "turno": 1,
      "emissora": "Band",
-     "participantes": "Ronaldo Caiado (PSD), Renan Santos (Missão), Augusto Cury (Avante)",
-     "ausentes": "Lula (PT), Flávio Bolsonaro (PL), Romeu Zema (Novo)",
      "status": "realizado",
-     "audiencia_gsp": 2.2,
-     "observacao": "REALIZADO | 1º debate presidencial de 2026, remarcado de 16/08 | púlpitos vazios para os ausentes | Lula deu entrevista à Record no mesmo horário | audiência divergente: Vermelho 1,9 média/2,9 pico (s"
+     "lula_e_flavio": false,
+     "rotulo": "sem Lula e Flávio",
+     "motivo": ""
     },
     {
      "data": "2026-09-14",
      "data_txt": "14/09",
      "turno": 1,
      "emissora": "CNN Brasil, SBT e consórcio 'O Momento da Decisão'",
-     "participantes": "",
-     "ausentes": "",
      "status": "cancelado",
-     "audiencia_gsp": "",
-     "observacao": "CANCELADO em 08/09: Lula e Flávio não confirmaram até o prazo de 07/09 | Cury, Renan, Caiado e Zema tinham confirmado"
+     "lula_e_flavio": false,
+     "rotulo": "cancelado",
+     "motivo": "CANCELADO em 08/09: Lula e Flávio não confirmaram até o prazo de 07/09"
     },
     {
      "data": "2026-09-18",
      "data_txt": "18/09",
      "turno": 1,
      "emissora": "Podcast Inteligência Ltda, Metrópoles e G4 (internet)",
-     "participantes": "Romeu Zema (Novo), Augusto Cury (Avante), Samara Martins (UP)",
-     "ausentes": "Lula (PT), Flávio Bolsonaro (PL), Ronaldo Caiado (PSD), Renan Santos (Missão)",
      "status": "realizado",
-     "audiencia_gsp": "",
-     "observacao": "REALIZADO | debate fora da TV aberta, na sede do G4 em São Paulo | audiência não encontrada"
+     "lula_e_flavio": false,
+     "rotulo": "sem Lula e Flávio",
+     "motivo": ""
     },
     {
      "data": "2026-09-21",
      "data_txt": "21/09",
      "turno": 1,
      "emissora": "Flow Podcast e Kwai (internet)",
-     "participantes": "Romeu Zema (Novo), Ronaldo Caiado (PSD), Augusto Cury (Avante)",
-     "ausentes": "Lula (PT), Flávio Bolsonaro (PL), Renan Santos (Missão)",
      "status": "realizado",
-     "audiencia_gsp": "",
-     "observacao": "REALIZADO | transmitido no YouTube | perguntas com vídeos de Lula e Flávio | audiência não encontrada"
+     "lula_e_flavio": false,
+     "rotulo": "sem Lula e Flávio",
+     "motivo": ""
     },
     {
      "data": "2026-09-23",
      "data_txt": "23/09",
      "turno": 1,
      "emissora": "Veja (Veja+TV)",
-     "participantes": "Ronaldo Caiado (PSD), Romeu Zema (Novo)",
-     "ausentes": "Lula (PT), Flávio Bolsonaro (PL), Renan Santos (Missão), Augusto Cury (Avante)",
      "status": "realizado",
-     "audiencia_gsp": "",
-     "observacao": "REALIZADO | Cury cancelou para ir a Belo Horizonte | emissora parceira e mediação não confirmadas em segunda fonte | audiência não encontrada"
+     "lula_e_flavio": false,
+     "rotulo": "sem Lula e Flávio",
+     "motivo": ""
     },
     {
      "data": "2026-09-26",
      "data_txt": "26/09",
      "turno": 1,
      "emissora": "MyNews, Kritikê Podcast e Podcast 3 Irmãos (internet)",
-     "participantes": "Hertz Dias (PSTU), Clariana Barão (DC), Rui Costa Pimenta (PCO), Wilson Grassi (Democrata), Samara Martins (UP)",
-     "ausentes": "Lula (PT), Flávio Bolsonaro (PL), Renan Santos (Missão), Edmilson Costa (PCB), Romeu Zema (Novo), Ronaldo Caiado (PSD), Augusto Cury (Avante)",
-     "status": "realizado (fonte única)",
-     "audiencia_gsp": "",
-     "observacao": "REALIZADO segundo a Wikipédia | FONTE ÚNICA, não confirmado em segunda fonte | audiência não encontrada"
+     "status": "realizado",
+     "lula_e_flavio": false,
+     "rotulo": "sem Lula e Flávio",
+     "motivo": ""
     },
     {
      "data": "2026-09-27",
      "data_txt": "27/09",
      "turno": 1,
      "emissora": "Record",
-     "participantes": "",
-     "ausentes": "",
      "status": "cancelado",
-     "audiencia_gsp": "",
-     "observacao": "CANCELADO em 23/09: Lula e Flávio informaram que não iriam"
+     "lula_e_flavio": false,
+     "rotulo": "cancelado",
+     "motivo": "CANCELADO em 23/09: Lula e Flávio informaram que não iriam"
     },
     {
      "data": "2026-10-01",
      "data_txt": "01/10",
      "turno": 1,
      "emissora": "Globo",
-     "participantes": "",
-     "ausentes": "",
      "status": "cancelado",
-     "audiencia_gsp": "",
-     "observacao": "CANCELADO no próprio dia por 'insegurança jurídica': TSE (Estela Aranha) proibiu o púlpito vazio de Lula e STF (Gilmar Mendes) mandou incluir Renan | Lula avisou em 30/09 que não iria e Flávio desisti"
+     "lula_e_flavio": false,
+     "rotulo": "cancelado",
+     "motivo": "CANCELADO no próprio dia por 'insegurança jurídica': TSE (Estela Aranha) proibiu o púlpito vazio de Lula e STF (Gilmar Mendes) mandou incluir Renan"
     },
     {
      "data": "2026-10-11",
      "data_txt": "11/10",
      "turno": 2,
      "emissora": "Record",
-     "participantes": "",
-     "ausentes": "",
      "status": "cancelado",
-     "audiencia_gsp": "",
-     "observacao": "CANCELADO: Record alegou incompatibilidade de agendas de Lula e Flávio"
+     "lula_e_flavio": false,
+     "rotulo": "cancelado",
+     "motivo": "CANCELADO: Record alegou incompatibilidade de agendas de Lula e Flávio"
     },
     {
      "data": "2026-10-15",
      "data_txt": "15/10",
      "turno": 2,
      "emissora": "SBT, CNN Brasil e consórcio 'O Momento da Decisão'",
-     "participantes": "",
-     "ausentes": "",
      "status": "não realizado",
-     "audiencia_gsp": "",
-     "observacao": "NÃO REALIZADO: Wikipédia lista como cancelado | Correio (citando a Folha, 09/10) disse que 'deve ser cancelado' | comunicado oficial não encontrado | a Band chama o debate de 18/10 de primeiro confron"
+     "lula_e_flavio": false,
+     "rotulo": "não realizado",
+     "motivo": "NÃO REALIZADO: Wikipédia lista como cancelado"
     },
     {
      "data": "2026-10-18",
      "data_txt": "18/10",
      "turno": 2,
      "emissora": "Band",
-     "participantes": "Lula (PT), Flávio Bolsonaro (PL)",
-     "ausentes": "",
      "status": "realizado",
-     "audiencia_gsp": 15.0,
-     "observacao": "REALIZADO | único confronto Lula × Flávio até 22/10, remarcado de 11/10 | prévias: 13 média e 15 pico (Folha via CartaCapital), 13,39 e 15,21 (TV Pop) | pico_streaming = aparelhos no YouTube da Band à"
+     "lula_e_flavio": true,
+     "rotulo": "Lula e Flávio frente a frente",
+     "motivo": ""
     }
    ],
-   "debates_realizados": 6,
-   "debates_cancelados": 5,
    "artes": {
-    "palco_vazio": "debate-palco",
     "frente_a_frente": "debate-frente",
+    "palco_vazio": "debate-palco",
     "icone": "tv-debate"
    },
-   "nota": "Pesquisas: votos totais, média simples por janela (antes: campo encerrado até 22/08; depois: de 24/08 a 06/09). Audiência e repercussão: fontes no levantamento (dados/bruto/debate/FONTES.md).",
+   "nota": "Audiência e repercussão: fontes por registro em dados/bruto/debate/FONTES.md.",
    "ato": "II · A campanha",
    "tela": 7,
    "filtro": null,

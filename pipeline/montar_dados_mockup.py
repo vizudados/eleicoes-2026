@@ -760,70 +760,79 @@ DEBATE = RAIZ / "dados" / "bruto" / "debate"
 
 
 def tela_debate():
-    """Os dois debates da Band: 23/08 (Lula e Flávio faltaram; Cury subiu e caiu) e 18/10 (o único frente a frente)."""
+    """O debate da Band de 18/10, o único frente a frente de Lula e Flávio, e o que as pesquisas mostraram em volta dele.
+
+    Foco só em Lula e Flávio (pedido do Alisson, 23/10/2026): os debates do 1º turno entram como contexto — os dois não
+    foram a nenhum. Pesquisas do 2º turno (votos totais) classificadas pelo campo: antes (terminou até 17/10), depois
+    (começou a partir de 19/10) ou atravessando o dia do debate.
+    """
     bruto = json.loads((DEBATE / "debate_band.json").read_text(encoding="utf-8"))
-    d1, d2 = bruto["debate_1turno_2026_08_23"], bruto["debate_2turno_2026_10_18"]
-    p1 = d1["pesquisas_antes_depois"]["primeiro_turno_votos_totais"]
-    cury_antes, cury_depois = p1["antes"]["cury"], p1["depois"]["cury"]
-    p1t = pd.read_csv(PESQUISAS / "pesquisas_1turno.csv", sep=";")
-    cury = p1t[(p1t.tipo == "totais")].dropna(subset=["cury"]).sort_values("divulgacao")
-    serie_cury = [{"instituto": r.instituto, "divulgacao": r.divulgacao, "divulgacao_txt": data_txt(r.divulgacao),
-                   "cury": float(r.cury)} for r in cury.itertuples()]
-    trends = d1["repercussao_digital"]["google_trends_coletado"]["diario_16ago_06set"]
+    d2 = bruto["debate_2turno_2026_10_18"]
     tv2 = d2["audiencia"]["tv"][0]
-    ad2 = d2["pesquisas_antes_depois"] if "pesquisas_antes_depois" in d2 else {}
+    q2 = d2["quem_venceu"]["pesquisas_qualitativas"][0]
+    p2 = pd.read_csv(PESQUISAS / "pesquisas_2turno.csv", sep=";")
+    p2 = p2[(p2.tipo == "totais") & (p2.momento == "apos_1turno")].dropna(subset=["lula", "flavio"])
+    p2 = p2[~p2.observacao.fillna("").str.contains("retirad", case=False)].sort_values("divulgacao")
+    p2["janela"] = np.where(p2.campo_fim < "2026-10-18", "antes",
+                            np.where(p2.campo_inicio >= "2026-10-19", "depois", "atravessa"))
+    medias = {j: {"lula": float(g.lula.mean()), "flavio": float(g.flavio.mean()), "pesquisas": int(len(g))}
+              for j, g in p2.groupby("janela")}
+    a, dp = medias["antes"], medias["depois"]
+    serie = [{"instituto": r.instituto, "divulgacao": r.divulgacao, "divulgacao_txt": data_txt(r.divulgacao),
+              "campo": f"{data_txt(r.campo_inicio)}–{data_txt(r.campo_fim)}", "janela": r.janela,
+              "lula": float(r.lula), "flavio": float(r.flavio)} for r in p2.itertuples()]
     debates = pd.read_csv(DEBATE / "debates.csv", sep=";").fillna("")
     linha_tempo = []
     for r in debates.itertuples():
         obs = str(r.observacao)
         abre = obs.upper()
         status = ("cancelado" if abre.startswith("CANCELADO") else
-                  "não realizado" if abre.startswith("NÃO REALIZADO") else
-                  "realizado (fonte única)" if "FONTE ÚNICA" in abre else "realizado")
+                  "não realizado" if abre.startswith("NÃO REALIZADO") else "realizado")
+        com_os_dois = "Lula" in r.participantes and "Flávio" in r.participantes
         linha_tempo.append({"data": r.data, "data_txt": data_txt(r.data), "turno": int(r.turno), "emissora": r.emissora,
-                            "participantes": r.participantes, "ausentes": r.ausentes, "status": status,
-                            "audiencia_gsp": r.audiencia_pontos_gsp, "observacao": obs[:200]})
-    q2 = d2["quem_venceu"]["pesquisas_qualitativas"][0]
+                            "status": status, "lula_e_flavio": com_os_dois,
+                            "rotulo": ("Lula e Flávio frente a frente" if com_os_dois else
+                                       "sem Lula e Flávio" if status == "realizado" else
+                                       "cancelado" if status == "cancelado" else "não realizado"),
+                            "motivo": obs.split("|")[0].strip()[:160] if status != "realizado" else ""})
+    t1 = [x for x in linha_tempo if x["turno"] == 1]
+    sem_os_dois_1t = sum(x["status"] == "realizado" for x in t1)
+    cancelados_1t = sum(x["status"] != "realizado" for x in t1)
     return {
         "nome": "Debate", "pergunta": "O que mudou depois do debate na Band?",
-        "manchete": f"Sem Lula e Flávio no 1º debate, Cury foi de {dec(cury_antes['media'])}% a {dec(cury_depois['media'])}% "
-                    f"nas pesquisas; terminou com 2,9%",
-        "primeiro_turno": {
-            "data_txt": "23/08", "participantes": ["Ronaldo Caiado", "Renan Santos", "Augusto Cury"],
-            "ausentes": ["Lula", "Flávio Bolsonaro", "Romeu Zema"],
-            "palco": "púlpitos dos ausentes mantidos vazios no estúdio, por regra acertada com as campanhas",
-            "cury_antes_txt": f"{dec(cury_antes['media'])}%", "cury_antes_n": cury_antes["n"],
-            "cury_depois_txt": f"{dec(cury_depois['media'])}%", "cury_depois_n": cury_depois["n"],
-            "cury_urna_txt": "2,9%", "serie_cury": serie_cury,
-            "marcos": [{"data": "2026-08-23", "rotulo": "debate da Band"},
-                       {"data": "2026-08-28", "rotulo": "começa o horário eleitoral"},
-                       {"data": "2026-08-29", "rotulo": "sabatina de Cury no Jornal Nacional"},
-                       {"data": "2026-10-04", "rotulo": "urna: 2,89% dos válidos"}],
-            "ressalva": "A alta coincide com o debate, o início do horário eleitoral (28/08) e a sabatina de Cury no JN "
-                        "(29/08); coincidência no tempo não prova causa.",
-            "audiencia_txt": "cerca de 2 pontos na Grande SP (prévia; fontes divergem entre 1,9 e 2,2)",
-            "trends_diario": trends,
-            "citacao": {"quem": "Augusto Cury", "trecho": "Lula tinha que estar aqui para responder sobre o caos que "
-                                                           "está a educação"}},
-        "segundo_turno": {
-            "data_txt": "18/10", "titulo": "O único frente a frente da campanha",
+        "manchete": f"No único frente a frente, em 18/10, a audiência foi de {dec(tv2['valor_pontos'], 0)} pontos e "
+                    f"as pesquisas não se moveram",
+        "frente_a_frente": {
+            "data_txt": "18/10", "emissora": "Band (pool com Estadão, TV Cultura, TV Gazeta e Jovem Pan News)",
+            "mediacao": "Adriana Araújo e Eduardo Oinegue", "duracao_txt": "20h15 às 22h10",
             "audiencia_txt": f"{dec(tv2['valor_pontos'], 0)} pontos", "pico_txt": f"{dec(tv2['pico_pontos'])} de pico",
             "share_txt": f"{tv2['share_pct']}% de share", "pessoas_txt": f"{tv2['pessoas']} de pessoas na Grande SP",
-            "audiencia_nota": "Kantar IBOPE, Grande SP, divulgado pela Band; a maior audiência de debate em 20 anos, "
-                              "segundo a emissora",
+            "audiencia_nota": "Kantar IBOPE, Grande SP, divulgado pela Band; a emissora diz ser a maior audiência de "
+                              "debate em 20 anos",
             "youtube_pico_txt": "5,39 mi de aparelhos ao mesmo tempo no YouTube (Poder360)",
-            "pesquisas_txt": "Lula 45,6% → 46,0%; Flávio 48,0% → 48,0% (19 pesquisas antes, 5 depois; dentro da margem)",
-            "pesquisas_nota": "Janela 'depois' de só 4 dias; 10 pesquisas com campo atravessando 18/10 ficaram fora.",
             "citacoes": [{"quem": "Lula", "trecho": "Eu desafio você. Amanhã abrimos a nossa conta bancária"},
                          {"quem": "Flávio Bolsonaro", "trecho": "Aqui é o Flávio, não é o Jair."}],
-            "qualitativa": {"instituto": q2["instituto"], "metodo": q2["metodo"], "flavio": 82, "lula": 79,
-                            "leitura": "Quaest (30 grupos de eleitores): nota 82 para Flávio e 79 para Lula; sem virada"}},
+            "qualitativa": {"instituto": q2["instituto"], "flavio": 82, "lula": 79,
+                            "leitura": "Quaest, durante o debate (30 grupos de 8 a 12 eleitores, nota de 0 a 100): "
+                                       "82 para Flávio e 79 para Lula; o instituto não viu virada"}},
+        "pesquisas": {
+            "antes": {"lula_txt": pct(a["lula"] / 100), "flavio_txt": pct(a["flavio"] / 100), "pesquisas": a["pesquisas"]},
+            "depois": {"lula_txt": pct(dp["lula"] / 100), "flavio_txt": pct(dp["flavio"] / 100),
+                       "pesquisas": dp["pesquisas"]},
+            "atravessa": medias.get("atravessa", {}).get("pesquisas", 0),
+            "leitura": f"Média antes: Lula {pct(a['lula'] / 100)} × Flávio {pct(a['flavio'] / 100)} "
+                       f"({a['pesquisas']} pesquisas); depois: {pct(dp['lula'] / 100)} × {pct(dp['flavio'] / 100)} "
+                       f"({dp['pesquisas']}); variações dentro das margens de erro",
+            "serie": serie,
+            "nota": "Votos totais. Antes: campo encerrado até 17/10; depois: campo iniciado a partir de 19/10; as "
+                    "pesquisas com campo atravessando 18/10 aparecem, mas ficam fora das médias."},
+        "primeiro_turno": {
+            "texto": f"No 1º turno, Lula e Flávio não foram a nenhum debate: {sem_os_dois_1t} aconteceram sem os dois e "
+                     f"{cancelados_1t} foram cancelados",
+            "sem_os_dois": sem_os_dois_1t, "cancelados": cancelados_1t},
         "linha_do_tempo": linha_tempo,
-        "debates_realizados": sum(x["status"].startswith("realizado") for x in linha_tempo),
-        "debates_cancelados": sum(not x["status"].startswith("realizado") for x in linha_tempo),
-        "artes": {"palco_vazio": "debate-palco", "frente_a_frente": "debate-frente", "icone": "tv-debate"},
-        "nota": "Pesquisas: votos totais, média simples por janela (antes: campo encerrado até 22/08; depois: de 24/08 a "
-                "06/09). Audiência e repercussão: fontes no levantamento (dados/bruto/debate/FONTES.md).",
+        "artes": {"frente_a_frente": "debate-frente", "palco_vazio": "debate-palco", "icone": "tv-debate"},
+        "nota": "Audiência e repercussão: fontes por registro em dados/bruto/debate/FONTES.md.",
     }
 
 
