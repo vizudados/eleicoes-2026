@@ -28,6 +28,7 @@ import difflib
 import re
 import shutil
 import sys
+import textwrap
 import uuid
 from pathlib import Path
 
@@ -70,6 +71,10 @@ def ler(p: Path) -> dict:
         raise ErroEntrada(f"{p}: expressão vazia")
     if any("\t" in l for l in linhas):
         raise ErroEntrada(f"{p}: tab na expressão — use espaços (o TMDL usa tab como estrutura)")
+    # recuo comum fora e 1ª linha sem recuo: no TMDL a 1ª linha da expressão fixa a margem, e uma linha seguinte com
+    # menos recuo quebra o arquivo inteiro (caso real, 23/10/2026: "    VAR _a =" seguido de "VAR _b =")
+    linhas = textwrap.dedent("\n".join(linhas)).split("\n")
+    linhas[0] = linhas[0].lstrip()
     nome = cab.get("nome") or p.stem
     return {"nome": nome, "pasta": cab["pasta"], "formato": cab["formato"], "descricao": cab["descricao"],
             "oculta": bool(cab.get("oculta")) and cab.get("oculta", "").lower() not in ("não", "nao", "no", "false", "0"),
