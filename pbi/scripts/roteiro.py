@@ -70,8 +70,9 @@ TELAS = [
     Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "IV · E agora", filtro="UF",
          fonte="Fonte: TSE · API pública de divulgação dos resultados, coletada a cada minuto"),
     Tela("T19", "Explorador", "Onde está a minha pergunta? Explore os 5.571 municípios", "V · Explore você mesmo"),
-    Tela("T20", "Escola", "Como votou cada escola de Contagem?", "V · Explore você mesmo", filtro="Local",
-         fonte="Fonte: TSE · votação por seção e locais de votação de Contagem (MG)"),
+    Tela("T20", "Escola", "Como votou cada escola da cidade?", "V · Explore você mesmo", filtro="Local",
+         fonte="Fontes: TSE (votação por seção e cadastro de locais de votação) e IBGE (malha municipal) · "
+               "27 capitais, as 6 maiores que viraram e Contagem (MG)"),
     Tela("T21", "20 anos", "Como o mapa mudou em 20 anos?", "V · Explore você mesmo"),
     Tela("T22", "Simulador", "E se os eleitores dos outros candidatos escolherem?", "V · Explore você mesmo",
          fonte="Simulação a partir do 1º turno (TSE); não é previsão"),

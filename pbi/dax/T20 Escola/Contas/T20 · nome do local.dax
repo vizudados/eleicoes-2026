@@ -4,4 +4,4 @@
 @descricao: Nome legível do local (escola).
 @oraculo: mockup/data/eleicoes.json › Escola › local
 */
-SELECTEDVALUE ( 'T20 Local'[Local] )
+SELECTEDVALUE ( 'T20 Local'[Nome] )

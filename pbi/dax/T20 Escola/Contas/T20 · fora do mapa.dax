@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Por que o local não está no mapa: 'sem endereço' ou 'fora do recorte'; vazio no mapa.
+*/
+SELECTEDVALUE ( 'T20 Local'[Fora do mapa] )

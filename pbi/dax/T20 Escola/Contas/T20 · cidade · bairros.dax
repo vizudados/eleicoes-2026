@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Rótulos de bairro do mapa da cidade da tela (até 4 com mais locais): NOME@x@y separados por |, em % da moldura; vazio quando poluiriam.
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Bairros], 'T20 Cidade'[CodIBGE], _cod )

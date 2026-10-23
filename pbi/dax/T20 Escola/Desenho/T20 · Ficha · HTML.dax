@@ -1,43 +1,55 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, a Escola Estadual Nova Contagem-I.
+@descricao: A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo da cidade: em Contagem, a Escola Estadual Nova Contagem-I (onde o documentário começa); nas outras, a escola que virou com mais votos válidos (ou a de maior queda).
 */
 -- 1 · Leituras
-VAR _esc = [T20 · local escolhido]
+VAR _id = [T20 · id escolhido]
 VAR _ha = [T20 · há escolha]
-VAR _bairro = CALCULATE ( [T20 · bairro], 'T20 Local'[Local] = _esc )
-VAR _secoes = CALCULATE ( [T20 · seções], 'T20 Local'[Local] = _esc )
-VAR _val = CALCULATE ( [T20 · válidos 2026], 'T20 Local'[Local] = _esc )
-VAR _lula = CALCULATE ( [T20 · Lula % 2026], 'T20 Local'[Local] = _esc )
-VAR _flavio = CALCULATE ( [T20 · Flávio % 2026], 'T20 Local'[Local] = _esc )
-VAR _m18 = CALCULATE ( [T20 · margem 2018], 'T20 Local'[Local] = _esc )
-VAR _m22 = CALCULATE ( [T20 · margem 2022], 'T20 Local'[Local] = _esc )
-VAR _m26 = CALCULATE ( [T20 · margem 2026], 'T20 Local'[Local] = _esc )
-VAR _virou = CALCULATE ( [T20 · virou], 'T20 Local'[Local] = _esc )
+VAR _exemplo = [T20 · exemplo]
+VAR _bairroL = CALCULATE ( [T20 · bairro], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _secoes = CALCULATE ( [T20 · seções], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _val = CALCULATE ( [T20 · válidos 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _lula = CALCULATE ( [T20 · Lula % 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _flavio = CALCULATE ( [T20 · Flávio % 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _m18 = CALCULATE ( [T20 · margem 2018], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _m22 = CALCULATE ( [T20 · margem 2022], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _m26 = CALCULATE ( [T20 · margem 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _virou = CALCULATE ( [T20 · virou], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _virouLula = CALCULATE ( [T20 · virou para Lula], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
 -- 2 · Textos
-VAR _nome0 = _esc
+VAR _nome0 = [T20 · local escolhido]
 VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
 VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
-VAR _sobre = IF ( _ha = 1, "A escola escolhida", "Um exemplo · Nova Contagem" )
+VAR _bairro0 = _bairroL
+VAR _bairro1 = SUBSTITUTE ( SUBSTITUTE ( _bairro0, "&", "&amp;" ), "<", "&lt;" )
+VAR _bairro = SUBSTITUTE ( SUBSTITUTE ( _bairro1, ">", "&gt;" ), "'", "&#39;" )
+VAR _cidade0 = [T20 · cidade (nome)]
+VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
+VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
+VAR _sobre = IF ( _ha = 1, "A escola escolhida", "Um exemplo · " & IF ( _bairro <> "", _bairro, _cidade ) )
 VAR _sub =
-    _bairro & " · " & _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" )
-        & " votos válidos em 2026"
+    _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" ) & " votos válidos em 2026"
+        & IF ( _bairro <> "" && _ha = 1, " · " & _bairro, "" )
 VAR _t18 = IF ( ISBLANK ( _m18 ), "—", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
 VAR _t22 = IF ( ISBLANK ( _m22 ), "—", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
 VAR _t26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
 VAR _c18 = IF ( _m18 > 0, "lula", IF ( _m18 < 0, "flavio", "" ) )
 VAR _c22 = IF ( _m22 > 0, "lula", IF ( _m22 < 0, "flavio", "" ) )
-VAR _c26 = IF ( _m26 > 0, "lula", "flavio" )
+VAR _c26 = IF ( _m26 > 0, "lula", IF ( _m26 < 0, "flavio", "" ) )
 VAR _nota =
     SWITCH (
         TRUE (),
-        _ha = 0, "onde o documentário começa",
-        _virou = 1, "virou em 2026",
-        _m26 > 0, "segue com Lula",
-        "Flávio à frente"
+        _ha = 0 && _exemplo = "começo", "onde o documentário começa",
+        _ha = 0 && _exemplo = "virou", "a maior escola que virou",
+        _ha = 0, "a maior queda da cidade",
+        _virou = 1, "virou para Flávio",
+        _virouLula = 1, "virou para Lula",
+        _m26 > 0, "Lula à frente",
+        _m26 < 0, "Flávio à frente",
+        "empate"
     )
-VAR _selo = IF ( _virou = 1, "<div class='selo'>virou</div>", "" )
+VAR _selo = IF ( _virou + _virouLula = 1, "<div class='selo'>virou</div>", "" )
 -- 3 · Geometria
 VAR _base = { ( 0, 70, _m18 ), ( 1, 230, _m22 ), ( 2, 390, _m26 ) } /* lista */
 VAR _yy =
@@ -59,13 +71,14 @@ VAR _bolas =
     ) /* lista */
 -- 4 · Marcação
 RETURN
-    "<div class='tela t20f'>"
+    "<div class='tela t20f'><div class='fl'>"
         & "<div class='rot sobe'>" & _sobre & "</div>"
         & "<div class='nm sobe d1'>" & _nome & "</div>"
         & "<div class='sub sobe d2'>" & _sub & "</div>"
         & "<div class='duelo sobe d3'>"
             & "<div class='lado lula'><span class='num'>" & FORMAT ( _lula, "0.0%" ) & "</span><span class='r'>Lula</span></div>"
             & "<div class='lado flavio'><span class='num'>" & FORMAT ( _flavio, "0.0%" ) & "</span><span class='r'>Flávio</span></div>"
+            & _selo
         & "</div>"
         & "<div class='rot cap sobe d4'>Margem de Lula, em pontos</div>"
         & "<div class='serie sobe d5'>"
@@ -77,6 +90,6 @@ RETURN
                 & "<path class='traco' pathLength='1' d='" & _d & "'/>" & _bolas
             & "</svg>"
         & "</div>"
-        & _selo
+        & "</div>"
         & "<div class='mao'>" & _nota & "</div>"
     & "</div>"

@@ -1,0 +1,13 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: Id do local clicado no mapa ou na lista (filtro cruzado em T20 Local), se for da cidade da tela; vazio sem clique.
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    IF (
+        ( ISFILTERED ( 'T20 Local'[Local] ) || ISFILTERED ( 'T20 Local'[Id] ) )
+            && HASONEVALUE ( 'T20 Local'[Id] )
+            && SELECTEDVALUE ( 'T20 Local'[CodIBGE] ) = _cod,
+        SELECTEDVALUE ( 'T20 Local'[Id] )
+    )

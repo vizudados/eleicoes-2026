@@ -28,7 +28,7 @@ SPEC = PBI / "spec" / "t19_dispersao.json"
 PASTA = r"T19 Explorador\Desenho"
 
 # ---------------------------------------------------------------------------------------------------- geometria
-# sem a faixa de seis segmentações (23/10/2026: o filtro virou um acordeão na pílula do canto), a lista e a dispersão
+# sem a faixa de seis segmentações (23/10/2026: o filtro virou uma árvore na pílula do canto), a lista e a dispersão
 # sobem 80 px e crescem: 16 linhas em vez de 14 e a dispersão 82 px mais alta
 LISTA_LINHAS = 16
 LISTA_CAB = 36            # altura do cabeçalho da lista
@@ -101,7 +101,7 @@ def medidas() -> None:
     # --- pílula do filtro do recorte (o mesmo desenho da pílula de UF da casca: Casca · filtro · pílula · HTML)
     gravar("T19 · Filtro · pílula · HTML", "O botão fechado do filtro do recorte (a pílula, na caixa do filtro da "
            "casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 "
-           "mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre o acordeão "
+           "mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre a árvore "
            "(VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não "
            "mexem nela).", f"""
 -- 1 · Leituras
@@ -126,14 +126,14 @@ RETURN
     & "</div>"
 """)
     gravar("T19 · Filtro · ALT", "Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o "
-           "acordeão oferece.", r"""
+           "filtro oferece.", r"""
 -- 1 · Leituras
 VAR _n = [T19 · filtro · escolhas]
 VAR _uso = [T19 · filtro em uso]
 -- 2 · Textos
 RETURN
     "Filtro do recorte: " & IF ( _n = 0, "todos os municípios", LEFT ( _uso, 150 ) )
-        & ". Abre a lista de região, estado, tamanho, renda, virada e cidade."
+        & ". Abre a árvore de região, estado e cidade, tamanho, renda e virada."
 """)
     # --- resumo do recorte (contadores)
     gravar("T19 · Resumo · HTML", "Faixa do recorte acima da lista: os filtros em uso e quantos municípios, com Lula à "
@@ -584,7 +584,8 @@ def corpo_lista() -> str:
     c = COL
     cab = (f"<div class='t19c entra'><span style='left:{c['nome']}px'>Município</span>"
            f"<span style='left:{c['lula']}px'>Lula 26</span><span style='left:{c['flavio']}px'>Flávio 26</span>"
-           f"<span style='left:{c['serie']}px'>2006 → 2026</span>"
+           # centrado na coluna da série (o svg da linha tem 136 px a partir de c['serie'])
+           f"<span style='left:{c['serie']}px;width:136px;text-align:center'>2006 → 2026</span>"
            f"<span style='left:{c['var'] - 4}px'>Mudou</span>"
            f"<span style='left:{c['virou']}px'>Virou</span></div>")
     return f"<style>{css_lista()}</style>{cab}{{{{content}}}}"

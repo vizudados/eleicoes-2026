@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Nome da cidade da tela, sem a UF: Contagem.
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Nome], 'T20 Cidade'[CodIBGE], _cod )

@@ -1,0 +1,13 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: Id do último local da cidade da tela no mapa: o ponto que leva os rótulos de bairro (o último a ser desenhado fica por cima).
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    CALCULATE (
+        MAX ( 'T20 Local'[Id] ),
+        REMOVEFILTERS ( 'T20 Local' ),
+        'T20 Local'[CodIBGE] = _cod,
+        NOT ISBLANK ( 'T20 Local'[PX] )
+    )

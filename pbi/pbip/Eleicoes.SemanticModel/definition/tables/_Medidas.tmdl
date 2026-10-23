@@ -57,7 +57,8 @@ table _Medidas
 			    & "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"
 			    & "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"
 			    & "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"
-			    & "Ybp261zn79rftOZsJ+4X3GMgeo8WHe37d7v3SBT7tm9aLsq/sldYqzW5o66205u5spf7rhgdht+09pwwzqBfm1GTfL/R1v+cHb7gPH0zjaIuNXHgvCpRwbe97QwIMjGWmNNNIukNdpQw5g8xlc6398M636OF3EJmfRhC6EZ6BpDWuBc/N9Cuny4Gp0JevYFRLhKm332r9ZV+2euOszzpVh6IYXo+M3AM4WQH8AwIFbuBq7/YDdRNl/mHzH4i4KUCIZ3g/bR1TzW+ZAvq170zSeW5gRp6dbQ6RyWwHG4OaehD6xV8MCVMCDdjAOGImvdfeNirAHaJdvs5v/2H8g8e69livo6dZHkm+zm+Na/30gueGt91CiN1/+PUdA8gP20FkeY49dEp8UUmvdF5C+p3vjJD9gDz/SmFYkYPe62YN+9nAlxoAmxhet9gpK0noiSZoo38O/XX7AHkLyGD1Jmqwl994fMn9ABOwh2XDsE0zl5vdugoyHtzQmXh+0wXXQc0YB9EePU2eMr5o9Xru4z5IHDtoo6HFt+0puzzZ/8q/p5ElOl05qGjgVae5kfZKBiZf3/0e13S94H3TO5G/pwCTb9r7eZ6gd9kLTNb12kjlbFrSe4ZVT93iedJ+Q7e9n/nP2HDz/mrZNcto1qdInZGv0bs2e6HKlJDlJzfB213d3d81kwVAlwgbaLT+rrB9DgB1iCnlQ+SSmFfJfZTrSJgUsl2ugdHeV6aU6WEe/ToRIpSZ7mlNlWl8HY6KM2M/1O3dKZlV+heKR5EENe3q8yvR+HdJlTbH3+rVz9nsONpLSi1WmL+qw0qZO2uF1lntq2Gw3P+3CbM+5rjz53xLfTDdO+xww63XS5xcP9tO2/tnxp5l5Cxa+mp/f5PubgCAvWffd9T6CFX+a+/7fxv8/5vBU/B/19Va6i2eMOWtbmv03UX42Dz/s+ybvSH5zylf2Xz/i0HiUBNpyV0Eey2sgn6rGmbGEVSR4mVwSmrcK6h2v2cM57Rwo1GrPvZQfyuZNUvc/VG8SNUt4PYTkq4KMy9s8dq+vCcst9dL3JtdS6uU35px1eaymvN1rhzqqtRSQne+ub+eUxGd6UFj2CKY/vf502a8m+dKTyT8LJSRFfEKkRStlM4fuzfMF5KZkIzj9gxL/iq7uxlQItl20XxH1EJ8zUnNMcnIlJV385pJS1uOitExdx/LweyeblAUsEiI/5XK2DwqRVwzsJp48sTu8fVs+ePlsYhdI7UoTc54uFyiqo0iqFTGzO8e0DDZQSfvyazOkOaOm5ai9+c3LcsDJKDwAu9ZcHL4Vy89NgaEE63NQy+jOdUr4Sc0bLcRV/jv3Z13j1U8JTbX5uDmJX/pVWVGZ1Y2alyOsaS0kqDVhdi/Mmb8hux5ScqStu3lGW1X3hI20anS3hQx8uVPdU8Vvu3Einv/gBHnIhj1UIobnem6luOBKGrO8pN65ovabZ6acZROkT6n0zhRVGd8M6E6jhozr2jc0czLBUuuJ4y2iP1vr4oUh4ARAznnNG655VG4nvbWyhase+edBrBzI5sv7Fj4859Ckutbfy5tjCOIQAdwCamsEX26tUfy5v8aQ69Aah1j/r3EjOqQ17sRGtMZP+FGs9ie/abeCAL7aRf3EPNStlC9Xnkp8kufX6crwxVh2rNXSVT+e3maRrbLE5LydWStVqWxYSW0V5vZ8Ga00Lb25uipXfuPVq2SYIJNedJtFK1l1oWw5x4pVq6gPzBQdd9Bg0dFyrSyUvi6VmEB8Mh/ZEqUHa/n0TXD53GyZj1/Fybbh+YoO4IvsObM45fnmo85IyWdIyPGaRvFRyQqjZeZWvMpsWceqNlmUx0rPa4MgobGKUNrTEBgPZcJ5qHrc5KwjHCUfVIm1Kl2+nSpDYUOsGZc0iXylFFXLKrw3DVc/VRUyw+Olw8voFZw2YVP+/HcVQSe0d3u87FCeh3A4I9c3EgA=) format('woff2')}:root{--papel:#F1EBDF;--creme:#E5DBC8;--areia:#CBBDA2;--tinta:#1C1915;--grafite:#48423A;--cinza:#6B6357;--vermelho:#B8322A;--vermelho-escuro:#8E2620;--rosa:#D9877B;--azul:#2B5797;--azul-escuro:#1D3C6E;--azul-claro:#8FA8CF;--marrom:#7A5A43;--branco:#FBF8F2;--fonte:'Sora Eleicoes','Segoe UI',sans-serif;--mao:'Caveat Eleicoes','Segoe Print',cursive}html,body{margin:0;padding:0;background:transparent;overflow:hidden}body,#htmlViewer,#htmlContent{font-family:var(--fonte);color:var(--tinta);-webkit-font-smoothing:antialiased;font-feature-settings:'kern' 1,'lnum' 1;text-rendering:geometricPrecision}.tela{position:fixed;inset:0;will-change:transform}*{box-sizing:border-box}svg{overflow:visible}.tnum{font-variant-numeric:tabular-nums lining-nums}.sob{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--grafite)}.tit{font-size:30px;font-weight:600;letter-spacing:-.012em;line-height:1.18}.man{font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.25}.txt{font-size:17px;font-weight:400;line-height:1.45;color:var(--grafite)}.rot{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cinza)}.nota{font-size:13px;font-weight:400;color:var(--cinza);line-height:1.4}.num{font-weight:700;letter-spacing:-.025em;line-height:1;font-variant-numeric:tabular-nums lining-nums}.mao{font-family:var(--mao);font-size:26px;font-weight:600;line-height:1.05}.lula{color:var(--vermelho)}.flavio{color:var(--azul)}.lula-esc{color:var(--vermelho-escuro)}.flavio-esc{color:var(--azul-escuro)}.escuro{color:var(--creme)}.escuro .sob,.escuro .rot,.escuro .nota{color:var(--areia)}.escuro .txt{color:var(--creme)}@keyframes uSobe{from{opacity:0;transform:translateY(14px)}}@keyframes uEntra{from{opacity:0}}@keyframes uCresceX{from{transform:scaleX(0)}}@keyframes uCresceY{from{transform:scaleY(0)}}@keyframes eTraco{from{stroke-dashoffset:1}}@keyframes eCor{from{fill:var(--creme);fill-opacity:.35}}@keyframes eCorEsc{from{fill:var(--tinta);fill-opacity:.2}}@keyframes eEscala{from{opacity:0;transform:scale(.4)}}.sobe{animation:uSobe .7s cubic-bezier(.2,.7,.2,1) both}.entra{animation:uEntra .8s ease-out both}.barra-x{transform-origin:left center;animation:uCresceX 1s cubic-bezier(.2,.7,.2,1) .3s both}.barra-x-dir{transform-origin:right center;animation:uCresceX 1s cubic-bezier(.2,.7,.2,1) .3s both}.barra-y{transform-origin:center bottom;animation:uCresceY 1s cubic-bezier(.2,.7,.2,1) .3s both}.traco{stroke-dasharray:1;stroke-dashoffset:0;animation:eTraco 1.8s cubic-bezier(.45,.05,.3,1) both}.traco-rapido{stroke-dasharray:1;stroke-dashoffset:0;animation:eTraco .9s cubic-bezier(.45,.05,.3,1) both}.cor{animation:eCor 1.4s ease-out 1.2s both}.cor-esc{animation:eCorEsc 1.4s ease-out 1.2s both}.esmaece{animation:uEntra 1.2s ease-out .9s both}.brota{transform-box:fill-box;transform-origin:center;animation:eEscala .6s cubic-bezier(.2,.9,.3,1.3) both}.d1{animation-delay:80ms!important}.d2{animation-delay:160ms!important}.d3{animation-delay:240ms!important}.d4{animation-delay:320ms!important}.d5{animation-delay:400ms!important}.d6{animation-delay:480ms!important}.d7{animation-delay:560ms!important}.d8{animation-delay:640ms!important}.d9{animation-delay:720ms!important}.d10{animation-delay:800ms!important}.d11{animation-delay:880ms!important}.d12{animation-delay:960ms!important}.d13{animation-delay:1040ms!important}.d14{animation-delay:1120ms!important}.d15{animation-delay:1200ms!important}.d16{animation-delay:1280ms!important}.realce>*{transition:opacity .18s ease}.realce:has(>:hover)>:not(:hover){opacity:.42}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}"
+			    & "Ybp261zn79rftOZsJ+4X3GMgeo8WHe37d7v3SBT7tm9aLsq/sldYqzW5o66205u5spf7rhgdht+09pwwzqBfm1GTfL/R1v+cHb7gPH0zjaIuNXHgvCpRwbe97QwIMjGWmNNNIukNdpQw5g8xlc6398M636OF3EJmfRhC6EZ6BpDWuBc/N9Cuny4Gp0JevYFRLhKm332r9ZV+2euOszzpVh6IYXo+M3AM4WQH8AwIFbuBq7/YDdRNl/mHzH4i4KUCIZ3g/bR1TzW+ZAvq170zSeW5gRp6dbQ6RyWwHG4OaehD6xV8MCVMCDdjAOGImvdfeNirAHaJdvs5v/2H8g8e69livo6dZHkm+zm+Na/30gueGt91CiN1/+PUdA8gP20FkeY49dEp8UUmvdF5C+p3vjJD9gDz/SmFYkYPe62YN+9nAlxoAmxhet9gpK0noiSZoo38O/XX7AHkLyGD1Jmqwl994fMn9ABOwh2XDsE0zl5vdugoyHtzQmXh+0wXXQc0YB9EePU2eMr5o9Xru4z5IHDtoo6HFt+0puzzZ/8q/p5ElOl05qGjgVae5kfZKBiZf3/0e13S94H3TO5G/pwCTb9r7eZ6gd9kLTNb12kjlbFrSe4ZVT93iedJ+Q7e9n/nP2HDz/mrZNcto1qdInZGv0bs2e6HKlJDlJzfB213d3d81kwVAlwgbaLT+rrB9DgB1iCnlQ+SSmFfJfZTrSJgUsl2ugdHeV6aU6WEe/ToRIpSZ7mlNlWl8HY6KM2M/1O3dKZlV+heKR5EENe3q8yvR+HdJlTbH3+rVz9nsONpLSi1WmL+qw0qZO2uF1lntq2Gw3P+3CbM+5rjz53xLfTDdO+xww63XS5xcP9tO2/tnxp5l5Cxa+mp/f5PubgCAvWffd9T6CFX+a+/7fxv8/5vBU/B/19Va6i2eMOWtbmv03UX42Dz/s+ybvSH5zylf2Xz/i0HiUBNpyV0Eey2sgn6rGmbGEVSR4mVwSmrcK6h2v2cM57Rwo1GrPvZQfyuZNUvc/VG8SNUt4PYTkq4KMy9s8dq+vCcst9dL3JtdS6uU35px1eaymvN1rhzqqtRSQne+ub+eUxGd6UFj2CKY/vf502a8m+dKTyT8LJSRFfEKkRStlM4fuzfMF5KZkIzj9gxL/iq7uxlQItl20XxH1EJ8zUnNMcnIlJV385pJS1uOitExdx/LweyeblAUsEiI/5XK2DwqRVwzsJp48sTu8fVs+ePlsYhdI7UoTc54uFyiqo0iqFTGzO8e0DDZQSfvyazOkOaOm5ai9+c3LcsDJKDwAu9ZcHL4Vy89NgaEE63NQy+jOdUr4Sc0bLcRV/jv3Z13j1U8JTbX5uDmJX/pVWVGZ1Y2alyOsaS0kqDVhdi/Mmb8hux5ScqStu3lGW1X3hI20anS3hQx8uVPdU8Vvu3Einv/gBHnIhj1UIobnem6luOBKGrO8pN65ovabZ6acZROkT6n0zhRVGd8M6E6jhozr2jc0czLBUuuJ4y2iP1vr4oUh4ARAznnNG655VG4nvbWyhase+edBrBzI5sv7Fj4859Ckutbfy5tjCOIQAdwCamsEX26tUfy5v8aQ69Aah1j/r3EjOqQ17sRGtMZP+FGs9ie/abeCAL7aRf3EPNStlC9Xnkp8kufX6crwxVh2rNXSVT+e3maRrbLE5LydWStVqWxYSW0V5vZ8Ga00Lb25uipXfuPVq2SYIJNedJtFK1l1oWw5x4pVq6gPzBQdd9Bg0dFyrSyUvi6VmEB8Mh/ZEqUHa/n0TXD53GyZj1/Fybbh+YoO4IvsObM45fnmo85IyWdIyPGaRvFRyQqjZeZWvMpsWceqNlmUx0rPa4MgobGKUNrTEBgPZcJ5qHrc5KwjHCUfVIm1Kl2+nSpDYUOsGZc0iXylFFXLKrw3DVc/VRUyw+Olw8voFZw2YVP+/HcVQSe0d3u87FCeh3A4I9c3EgA=) format('woff2')}@font-face{font-family:'Sora Setas';font-style:normal;font-weight:300 550;font-display:block;src:url(data:font/woff2;base64,d09GMgABAAAAAALEAAoAAAAABdAAAAJ7AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAATAqCUIIAATYCJAMWCxIABCAFhAcHdRu3BCAuCmxj6tBFiKE867gl02IRDe3L73j4GqO9v7unksT6RU0mIak2MWS6pcQlhgzJG5l6FbyZXK3pflK87yTCrgyxqgyz2xDtz10RxgML9ZF1uroyskSTO9I3fG2LNZESslS5wv9//nJ6azYEHjaED/H9xhgghVvTD3yUeNv2MI+yiLLNhmPZoyCHntcKAqHPPlFOV0GFwjwCfX5jsd0G3OnLd/7fNeVVTIBd0geQkNHOKtzLtowC1aol9OWt//v/wPXc//UH4ppBQyXIiqQCVINmoBVYAI4BKADyYFnKa2t2rfGoWW5o9UpL2aDpuFFrQmvq/W1RtuCogJrzLb1iXaI69bTWuDoYC6gbo8fWsDYaasJ4WzobvMhfrEUP6qYZM6/qvj18vr7Up1kRaz7BJqwvvvHlZD5vjC1vj5v8Zre6xwlzPL51giBX3r7o05b98Gt1zu/grXb4h3ulOVvpS3qILIHgI2XzIIFJ2gjWn/3CL1LW78E++UqgWr0MEtvV6JEAoZYQkiq1kDVogaJRD1SoMEBX0nY3mBJkFaVGaKcEkkb3IevwAUWXH6hQ6zVdKbsa3PGmxpKwNjwitTwXYqQPeSOBACGKZyXoC9hb8aEariaMhvwy5JTR0ZxeHGOcBqycP2tpWl+/MiEZxXESf0ctk8dSMo+Lg04f1DCJYOAeOnIr1cGxYwtEksI6Mq+IgMDtSUzXg3zupQFxQ8rQygRDBulf41PoUoemqQvHUBwZYIqTnKRHdJI+tgRxKkyh0vgaUce+ICMPlSS5pE0gyMnHwi6tRo4UOUpURGVU1e5IyadlKL4fYTGK7/bCsQFicRIPCJe3YYYg) format('woff2')}@font-face{font-family:'Sora Setas';font-style:normal;font-weight:551 800;font-display:block;src:url(data:font/woff2;base64,d09GMgABAAAAAALUAAoAAAAABdQAAAKLAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAABmAATAqCUIIKATYCJAMWCxIABCAFhAoHdRvEBEAuBtzdDVHHqmlfKg7qvzkLdxDxHjzf79fOlfdXREPZrmnTdkdsOp3ppAwNUrNG2go+Xf9vTi8lFHJfllgPuYT3GixdcMByDlgowORNyMkZOyHnysO38/0uksADrbs0kHiyZVNoguuBkPB/DQDlVP/nL6c3VlGBtB82hAtlzKln0QL7wNESHGPaBkssyiLKOpn/bUNlXm73v0Q8kT4RS1daQVbO1AT0/cZ61IroTL888vu/w3+ZRCbsm6zAQJmZoMsshhBxcQr65cbHx6JLH9537AgKRACMUwFAHEAeoggxh7iAAHCKWNObvfrAL9nzUqFItZKy4iN3g2QJlSm+a036CetybXzfkgqHEnKvy0lcieZcpCZyxwFTZhkqyUJXtglGZJ79+u3WdSPdAO10nxe04NEs9F8rDT1DN3R2ij9XvaE1jfrD6XiP33PS+WHkJPXG6cPLAAQI6utJbfunj2MvgGeK/UM7Okv60g/AqHXWpxWy6sfm6xCs3HzDd0zIz45/XxEQl2YAlO7KuiEARBIzUHFJMBlFcFk9CIIBGkXtzphJMZOcQJSpAirvHEzTI7i2bwiS7tBIzsm49JR/ZAx5RsVKnhkK3xWaOUttiOYSiQAXjGQylrCrZhmFGfEERPlBlAUCgZJwoMEspokSfG0L4D/tJ3ksDw9cQzeQX1qFjflVGJ0MxlAeIcMAixkqqSwaEkwjBugoR+9YVE5CYr0PvJmkWPn3CbMYCsYIjwAi2b9NJiBAQInggAbMwmiEIgiIMBkGsC5iSISN8DAZwOAuJgfkLVkFNswjs/QgKSjGxC6NAwsVE5cgkcSSZ7JMdlOSxzkxJyaPvUY1kTMnKtpjCSV9ZoeFAA==) format('woff2')}:root{--papel:#F1EBDF;--creme:#E5DBC8;--areia:#CBBDA2;--tinta:#1C1915;--grafite:#48423A;--cinza:#6B6357;--vermelho:#B8322A;--vermelho-escuro:#8E2620;--rosa:#D9877B;--azul:#2B5797;--azul-escuro:#1D3C6E;--azul-claro:#8FA8CF;--marrom:#7A5A43;--branco:#FBF8F2;--fonte:'Sora Eleicoes','Sora Setas','Segoe UI',sans-serif;--mao:'Caveat Eleicoes','Sora Setas','Segoe Print',cursive}html,body{margin:0;padding:0;background:transparent;overflow:hidden}body,#htmlViewer,#htmlContent{font-family:var(--fonte);color:var(--tinta);-webkit-font-smoothing:antialiased;font-feature-settings:'kern' 1,'lnum' 1;text-rendering:geometricPrecision}.tela{position:fixed;inset:0;will-change:transform}*{box-sizing:border-box}svg{overflow:visible}.tnum{font-variant-numeric:tabular-nums lining-nums}.sob{font-size:15px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--grafite)}.tit{font-size:30px;font-weight:600;letter-spacing:-.012em;line-height:1.18}.man{font-size:24px;font-weight:600;letter-spacing:-.01em;line-height:1.25}.txt{font-size:17px;font-weight:400;line-height:1.45;color:var(--grafite)}.rot{font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--cinza)}.nota{font-size:13px;font-weight:400;color:var(--cinza);line-height:1.4}.num{font-weight:700;letter-spacing:-.025em;line-height:1;font-variant-numeric:tabular-nums lining-nums}.mao{font-family:var(--mao);font-size:26px;font-weight:600;line-height:1.05}.lula{color:var(--vermelho)}.flavio{color:var(--azul)}.lula-esc{color:var(--vermelho-escuro)}.flavio-esc{color:var(--azul-escuro)}.escuro{color:var(--creme)}.escuro .sob,.escuro .rot,.escuro .nota{color:var(--areia)}.escuro .txt{color:var(--creme)}@keyframes uSobe{from{opacity:0;transform:translateY(14px)}}@keyframes uEntra{from{opacity:0}}@keyframes uCresceX{from"
+			    & "{transform:scaleX(0)}}@keyframes uCresceY{from{transform:scaleY(0)}}@keyframes eTraco{from{stroke-dashoffset:1}}@keyframes eCor{from{fill:var(--creme);fill-opacity:.35}}@keyframes eCorEsc{from{fill:var(--tinta);fill-opacity:.2}}@keyframes eEscala{from{opacity:0;transform:scale(.4)}}.sobe{animation:uSobe .7s cubic-bezier(.2,.7,.2,1) both}.entra{animation:uEntra .8s ease-out both}.barra-x{transform-origin:left center;animation:uCresceX 1s cubic-bezier(.2,.7,.2,1) .3s both}.barra-x-dir{transform-origin:right center;animation:uCresceX 1s cubic-bezier(.2,.7,.2,1) .3s both}.barra-y{transform-origin:center bottom;animation:uCresceY 1s cubic-bezier(.2,.7,.2,1) .3s both}.traco{stroke-dasharray:1;stroke-dashoffset:0;animation:eTraco 1.8s cubic-bezier(.45,.05,.3,1) both}.traco-rapido{stroke-dasharray:1;stroke-dashoffset:0;animation:eTraco .9s cubic-bezier(.45,.05,.3,1) both}.cor{animation:eCor 1.4s ease-out 1.2s both}.cor-esc{animation:eCorEsc 1.4s ease-out 1.2s both}.esmaece{animation:uEntra 1.2s ease-out .9s both}.brota{transform-box:fill-box;transform-origin:center;animation:eEscala .6s cubic-bezier(.2,.9,.3,1.3) both}.d1{animation-delay:80ms!important}.d2{animation-delay:160ms!important}.d3{animation-delay:240ms!important}.d4{animation-delay:320ms!important}.d5{animation-delay:400ms!important}.d6{animation-delay:480ms!important}.d7{animation-delay:560ms!important}.d8{animation-delay:640ms!important}.d9{animation-delay:720ms!important}.d10{animation-delay:800ms!important}.d11{animation-delay:880ms!important}.d12{animation-delay:960ms!important}.d13{animation-delay:1040ms!important}.d14{animation-delay:1120ms!important}.d15{animation-delay:1200ms!important}.d16{animation-delay:1280ms!important}.realce>*{transition:opacity .18s ease}.realce:has(>:hover)>:not(:hover){opacity:.42}@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}"
 		displayFolder: _Estilo
 		lineageTag: c39ff336-6310-50ae-828f-8469d205e251
 
@@ -19510,102 +19511,134 @@ table _Medidas
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 88b744f2-9347-5372-8eee-a95516e14073
 
-	/// O filtro do recorte em poucas palavras, para a pílula: um pedaço por grupo com escolha, na ordem do acordeão ('Nordeste · até 10 mil hab.'; 'Minas Gerais · Virou para Flávio'); com vários itens no mesmo grupo, a contagem ('3 estados', '2 faixas de renda'). Vazio sem filtro.
+	/// O filtro do recorte em poucas palavras, para a pílula: um pedaço por grupo com escolha, na ordem da árvore ('Nordeste · até 10 mil hab.'; 'MG · Virou para Flávio'); o lugar vem resumido de cima para baixo ([T19 · filtro · lugar]: regiões inteiras, estados inteiros, cidades soltas); com vários itens nos outros grupos, a contagem ('2 faixas de renda'). Vazio sem filtro.
 	measure 'T19 · filtro em uso' =
-			-- 1 · Escolhas por grupo (RaizOrdem: 1 Região, 2 Estado, 3 Tamanho da cidade, 4 Renda, 5 Virou?, 6 Cidade)
+			-- 1 · Escolhas por grupo (RaizOrdem: 1 o lugar, 2 Tamanho da cidade, 3 Renda, 4 Virou?)
 			VAR _f = ISFILTERED ( 'T19 Filtro'[Caminho] )
-			VAR _t1 =
-			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
-			        'T19 Filtro'[RaizOrdem] = 1
-			    )
 			VAR _t2 =
 			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
 			        'T19 Filtro'[RaizOrdem] = 2
 			    )
 			VAR _t3 =
 			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
 			        'T19 Filtro'[RaizOrdem] = 3
 			    )
 			VAR _t4 =
 			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
 			        'T19 Filtro'[RaizOrdem] = 4
 			    )
-			VAR _t5 =
-			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
-			        'T19 Filtro'[RaizOrdem] = 5
-			    )
-			VAR _t6 =
-			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Valor], 'T19 Filtro'[Curto] ),
-			        'T19 Filtro'[RaizOrdem] = 6
-			    )
-			VAR _n1 = IF ( _f, COUNTROWS ( _t1 ), 0 )
 			VAR _n2 = IF ( _f, COUNTROWS ( _t2 ), 0 )
 			VAR _n3 = IF ( _f, COUNTROWS ( _t3 ), 0 )
 			VAR _n4 = IF ( _f, COUNTROWS ( _t4 ), 0 )
-			VAR _n5 = IF ( _f, COUNTROWS ( _t5 ), 0 )
-			VAR _n6 = IF ( _f, COUNTROWS ( _t6 ), 0 )
 			-- 2 · Um pedaço por grupo: o valor quando é um só; a contagem quando são vários
-			VAR _p1 =
-			    SWITCH (
-			        TRUE (),
-			        _n1 = 1, CONCATENATEX ( _t1, 'T19 Filtro'[Valor], ", " ),
-			        _n1 > 1, _n1 & " regiões"
-			    )
+			VAR _p1 = [T19 · filtro · lugar]
 			VAR _p2 =
 			    SWITCH (
 			        TRUE (),
-			        _n2 = 1, CONCATENATEX ( _t2, 'T19 Filtro'[Valor], ", " ),
-			        _n2 > 1, _n2 & " estados"
+			        _n2 = 1, CONCATENATEX ( _t2, 'T19 Filtro'[Valor], ", " ) & " hab.",
+			        _n2 > 1, _n2 & " tamanhos de cidade"
 			    )
 			VAR _p3 =
 			    SWITCH (
 			        TRUE (),
-			        _n3 = 1, CONCATENATEX ( _t3, 'T19 Filtro'[Valor], ", " ) & " hab.",
-			        _n3 > 1, _n3 & " tamanhos de cidade"
+			        _n3 = 1, "renda: " & CONCATENATEX ( _t3, 'T19 Filtro'[Curto], ", " ),
+			        _n3 > 1, _n3 & " faixas de renda"
 			    )
 			VAR _p4 =
 			    SWITCH (
 			        TRUE (),
-			        _n4 = 1, "renda: " & CONCATENATEX ( _t4, 'T19 Filtro'[Curto], ", " ),
-			        _n4 > 1, _n4 & " faixas de renda"
+			        _n4 = 1, CONCATENATEX ( _t4, 'T19 Filtro'[Valor], ", " ),
+			        _n4 > 1, _n4 & " situações"
 			    )
-			VAR _p5 =
-			    SWITCH (
-			        TRUE (),
-			        _n5 = 1, CONCATENATEX ( _t5, 'T19 Filtro'[Valor], ", " ),
-			        _n5 > 1, _n5 & " situações"
-			    )
-			VAR _p6 =
-			    SWITCH (
-			        TRUE (),
-			        _n6 = 1, CONCATENATEX ( _t6, 'T19 Filtro'[Valor], ", " ),
-			        _n6 > 1, FORMAT ( _n6, "#,0" ) & " cidades"
-			    )
-			VAR _partes =
-			    {
-			        ( 1, _p1 ), ( 2, _p2 ), ( 3, _p3 ), ( 4, _p4 ), ( 5, _p5 ), ( 6, _p6 )
-			    }
+			VAR _partes = { ( 1, _p1 ), ( 2, _p2 ), ( 3, _p3 ), ( 4, _p4 ) }
 			RETURN
 			    CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], " · ", [Value1], ASC )
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 116a0e0f-2cc5-5ceb-9bb3-858606a8e6fe
 
-	/// Quantos itens estão marcados no filtro do recorte (T19 Filtro[Caminho]), somando todos os grupos; 0 sem filtro. A pílula usa para o ponto vermelho e para "N filtros".
+	/// Quantos grupos do filtro do recorte têm escolha (o lugar, tamanho, renda, virou); 0 sem filtro. A pílula usa para o ponto vermelho e para "N filtros" quando o texto não cabe (no lugar, marcar uma região marca centenas de cidades: contar os itens marcados não diria nada ao leitor).
 	measure 'T19 · filtro · escolhas' =
 			IF (
 			    ISFILTERED ( 'T19 Filtro'[Caminho] ),
-			    COUNTROWS ( VALUES ( 'T19 Filtro'[Caminho] ) ),
+			    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ),
 			    0
 			)
 		formatString: 0
 		displayFolder: T19 Explorador\Contas
 		lineageTag: a56f2bd9-2843-5299-9d95-bbae0e83b9fe
+
+	/// O lugar escolhido no filtro, em poucas palavras. A árvore filtra sempre no último nível (a cidade): marcar uma região ou um estado marca as cidades de dentro. Aqui a escolha volta a ser lida de cima para baixo: as regiões inteiras pelo nome ("Nordeste"), os estados inteiros fora delas pela sigla ("MG"), e as cidades soltas pelo nome (até duas) ou pela contagem ("3 cidades"). Vazio sem escolha no lugar.
+	measure 'T19 · filtro · lugar' =
+			-- 1 · As cidades escolhidas (folhas do lugar) e todas as do lugar
+			VAR _f = ISFILTERED ( 'T19 Filtro'[Caminho] )
+			VAR _sel =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Regiao], 'T19 Filtro'[UF], 'T19 Filtro'[Valor], 'T19 Filtro'[Ordem] ),
+			        'T19 Filtro'[RaizOrdem] = 1
+			    )
+			VAR _tot =
+			    CALCULATETABLE (
+			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Regiao], 'T19 Filtro'[UF], 'T19 Filtro'[Valor] ),
+			        REMOVEFILTERS ( 'T19 Filtro' ),
+			        'T19 Filtro'[RaizOrdem] = 1
+			    )
+			VAR _nSel = IF ( _f, COUNTROWS ( _sel ), 0 )
+			-- 2 · Regiões inteiras
+			VAR _regioes =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'T19 Filtro'[Regiao] ) ),
+			        "@s", COUNTROWS ( FILTER ( _sel, 'T19 Filtro'[Regiao] = [@r] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'T19 Filtro'[Regiao] = [@r] ) ),
+			        "@o", MINX ( FILTER ( _sel, 'T19 Filtro'[Regiao] = [@r] ), 'T19 Filtro'[Ordem] )
+			    )
+			VAR _cheias = FILTER ( _regioes, [@s] = [@t] )
+			VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+			-- 3 · Estados inteiros fora das regiões inteiras
+			VAR _resto = FILTER ( _sel, NOT ( 'T19 Filtro'[Regiao] IN _nomesCheias ) )
+			VAR _ufs =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _resto, "@u", 'T19 Filtro'[UF] ) ),
+			        "@s", COUNTROWS ( FILTER ( _resto, 'T19 Filtro'[UF] = [@u] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'T19 Filtro'[UF] = [@u] ) ),
+			        "@o", MINX ( FILTER ( _resto, 'T19 Filtro'[UF] = [@u] ), 'T19 Filtro'[Ordem] )
+			    )
+			VAR _ufCheias = FILTER ( _ufs, [@s] = [@t] )
+			VAR _siglasCheias = SELECTCOLUMNS ( _ufCheias, "@u", [@u] )
+			-- 4 · Cidades soltas
+			VAR _cidades = FILTER ( _resto, NOT ( 'T19 Filtro'[UF] IN _siglasCheias ) )
+			VAR _nR = COUNTROWS ( _cheias ) + 0
+			VAR _nU = COUNTROWS ( _ufCheias ) + 0
+			VAR _nC = COUNTROWS ( _cidades ) + 0
+			VAR _tR =
+			    IF (
+			        _nR > 0,
+			        IF ( _nR <= 3, CONCATENATEX ( _cheias, [@r], ", ", [@o], ASC ), _nR & " regiões" )
+			    )
+			VAR _tU =
+			    IF (
+			        _nU > 0,
+			        IF ( _nU <= 4, CONCATENATEX ( _ufCheias, [@u], ", ", [@o], ASC ), _nU & " estados" )
+			    )
+			VAR _tC =
+			    IF (
+			        _nC > 0,
+			        IF (
+			            _nC <= 2,
+			            CONCATENATEX ( _cidades, 'T19 Filtro'[Valor], ", ", 'T19 Filtro'[Ordem], ASC ),
+			            FORMAT ( _nC, "#,0" ) & " cidades"
+			        )
+			    )
+			VAR _partes = { ( 1, _tR ), ( 2, _tU ), ( 3, _tC ) }
+			RETURN
+			    IF (
+			        _nSel > 0,
+			        CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], ", ", [Value1], ASC )
+			    )
+		displayFolder: T19 Explorador\Contas
+		lineageTag: 32239d0c-fc75-5ca5-b942-d0adefd42e1a
 
 	/// Ordem do caminho no acordeão do filtro (papel itemSort do VizuFilter: a raiz vai pela menor ordem das suas linhas, de Região a Cidade).
 	measure 'T19 · filtro · ordem' =
@@ -19867,7 +19900,7 @@ table _Medidas
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 46c4f418-1ee9-502f-a66f-e44ffcb50ae8
 
-	/// Quantos grupos do filtro do recorte (Região, Estado, Tamanho da cidade, Renda, Virou?, Cidade) têm alguma escolha no VizuFilter da tela (T19 Filtro[Caminho]); 0 sem filtro. É o número de condições E de [T19 · no recorte].
+	/// Quantos grupos do filtro do recorte (o lugar, Região › Estado › Cidade; Tamanho da cidade; Renda; Virou?) têm alguma escolha no VizuFilter da tela (T19 Filtro[Caminho]); 0 sem filtro. É o número de condições E de [T19 · no recorte].
 	measure 'T19 · raízes escolhidas' =
 			IF (
 			    ISFILTERED ( 'T19 Filtro'[Caminho] ),
@@ -19878,15 +19911,10 @@ table _Medidas
 		displayFolder: T19 Explorador\Contas
 		lineageTag: 21e522c6-54c0-5ae9-9724-834d2902b7d3
 
-	/// O recorte em palavras, para a faixa do resumo e os textos alternativos: um pedaço por grupo do filtro com escolha, na ordem do acordeão ('Sudeste · 10 a 50 mil hab. · seleção na dispersão'; 'MG, SP · renda: mais pobres'), com a contagem quando são muitos itens ('6 estados', '12 cidades escolhidas'); 'Todo o Brasil' sem filtro.
+	/// O recorte em palavras, para a faixa do resumo e os textos alternativos: um pedaço por grupo do filtro com escolha, na ordem da árvore ('Sudeste · 10 a 50 mil hab. · seleção na dispersão'; 'MG, SP · renda: mais pobres'); o lugar vem resumido de cima para baixo ([T19 · filtro · lugar]), os outros grupos com a contagem quando são vários itens; 'Todo o Brasil' sem filtro.
 	measure 'T19 · recorte em uso' =
-			-- 1 · Escolhas por grupo (RaizOrdem: 1 Região, 2 Estado, 3 Tamanho da cidade, 4 Renda, 5 Virou?, 6 Cidade)
+			-- 1 · Escolhas por grupo (RaizOrdem: 1 o lugar, 2 Tamanho da cidade, 3 Renda, 4 Virou?)
 			VAR _f = ISFILTERED ( 'T19 Filtro'[Caminho] )
-			VAR _t1 =
-			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
-			        'T19 Filtro'[RaizOrdem] = 1
-			    )
 			VAR _t2 =
 			    CALCULATETABLE (
 			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
@@ -19902,75 +19930,36 @@ table _Medidas
 			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
 			        'T19 Filtro'[RaizOrdem] = 4
 			    )
-			VAR _t5 =
-			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
-			        'T19 Filtro'[RaizOrdem] = 5
-			    )
-			VAR _t6 =
-			    CALCULATETABLE (
-			        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
-			        'T19 Filtro'[RaizOrdem] = 6
-			    )
-			VAR _n1 = IF ( _f, COUNTROWS ( _t1 ), 0 )
 			VAR _n2 = IF ( _f, COUNTROWS ( _t2 ), 0 )
 			VAR _n3 = IF ( _f, COUNTROWS ( _t3 ), 0 )
 			VAR _n4 = IF ( _f, COUNTROWS ( _t4 ), 0 )
-			VAR _n5 = IF ( _f, COUNTROWS ( _t5 ), 0 )
-			VAR _n6 = IF ( _f, COUNTROWS ( _t6 ), 0 )
 			-- 2 · Um pedaço por grupo: os itens (poucos) ou a contagem (muitos)
-			VAR _regiao =
-			    IF (
-			        _n1 > 0,
-			        IF (
-			            _n1 <= 3,
-			            CONCATENATEX ( _t1, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-			            _n1 & " regiões"
-			        )
-			    )
-			VAR _uf =
+			VAR _lugar = [T19 · filtro · lugar]
+			VAR _porte =
 			    IF (
 			        _n2 > 0,
 			        IF (
-			            _n2 <= 4,
-			            CONCATENATEX ( _t2, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-			            _n2 & " estados"
-			        )
-			    )
-			VAR _porte =
-			    IF (
-			        _n3 > 0,
-			        IF (
-			            _n3 <= 2,
-			            CONCATENATEX ( _t3, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ) & " hab.",
-			            _n3 & " tamanhos de cidade"
+			            _n2 <= 2,
+			            CONCATENATEX ( _t2, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ) & " hab.",
+			            _n2 & " tamanhos de cidade"
 			        )
 			    )
 			VAR _quinto =
 			    IF (
-			        _n4 > 0,
+			        _n3 > 0,
 			        IF (
-			            _n4 <= 2,
-			            "renda: " & CONCATENATEX ( _t4, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-			            _n4 & " faixas de renda"
+			            _n3 <= 2,
+			            "renda: " & CONCATENATEX ( _t3, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+			            _n3 & " faixas de renda"
 			        )
 			    )
 			VAR _lado =
 			    IF (
-			        _n5 > 0,
+			        _n4 > 0,
 			        IF (
-			            _n5 <= 2,
-			            CONCATENATEX ( _t5, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-			            _n5 & " situações"
-			        )
-			    )
-			VAR _cidade =
-			    IF (
-			        _n6 > 0,
-			        IF (
-			            _n6 <= 3,
-			            CONCATENATEX ( _t6, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-			            FORMAT ( _n6, "#,0" ) & " cidades escolhidas"
+			            _n4 <= 2,
+			            CONCATENATEX ( _t4, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+			            _n4 & " situações"
 			        )
 			    )
 			-- 3 · A seleção por retângulo na dispersão (filtro cruzado no código do município)
@@ -19978,7 +19967,7 @@ table _Medidas
 			    IF ( ISFILTERED ( 'Município'[CodIBGE] ), "seleção na dispersão" )
 			VAR _partes =
 			    {
-			        ( 1, _regiao ), ( 2, _uf ), ( 3, _porte ), ( 4, _quinto ), ( 5, _lado ), ( 6, _cidade ), ( 7, _laco )
+			        ( 1, _lugar ), ( 2, _porte ), ( 3, _quinto ), ( 4, _lado ), ( 5, _laco )
 			    }
 			VAR _texto =
 			    CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], " · ", [Value1], ASC )
@@ -20187,7 +20176,7 @@ table _Medidas
 		displayFolder: T19 Explorador\Desenho
 		lineageTag: 288bf525-b442-511b-9590-827b4de48f3a
 
-	/// Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o acordeão oferece.
+	/// Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o filtro oferece.
 	measure 'T19 · Filtro · ALT' =
 			-- 1 · Leituras
 			VAR _n = [T19 · filtro · escolhas]
@@ -20195,11 +20184,11 @@ table _Medidas
 			-- 2 · Textos
 			RETURN
 			    "Filtro do recorte: " & IF ( _n = 0, "todos os municípios", LEFT ( _uso, 150 ) )
-			        & ". Abre a lista de região, estado, tamanho, renda, virada e cidade."
+			        & ". Abre a árvore de região, estado e cidade, tamanho, renda e virada."
 		displayFolder: T19 Explorador\Desenho
 		lineageTag: ecad9809-72a1-5da2-a558-ed54ed0283ab
 
-	/// O botão fechado do filtro do recorte (a pílula, na caixa do filtro da casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre o acordeão (VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não mexem nela).
+	/// O botão fechado do filtro do recorte (a pílula, na caixa do filtro da casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre a árvore (VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não mexem nela).
 	measure 'T19 · Filtro · pílula · HTML' =
 			-- 1 · Leituras
 			VAR _n = [T19 · filtro · escolhas]
@@ -20370,6 +20359,144 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: f19b18e6-b580-53df-bcc1-506a1bf5c00e
 
+	/// Nome da cidade da tela com a UF: Contagem (MG).
+	measure 'T20 · cidade' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Cidade], 'T20 Cidade'[CodIBGE], _cod )
+		displayFolder: T20 Escola\Contas
+		lineageTag: a2136f1a-2919-5a6c-b4ae-addb4e0b6926
+
+	/// Código IBGE da cidade da tela: a cidade das escolas marcadas no filtro (uma cidade por vez, pelo exclusiveRoots do VizuFilter; marcar a cidade marca todas as escolas dela); sem escolha, Contagem (3118601), onde o documentário começa.
+	measure 'T20 · cidade (código)' =
+			VAR _codigos = VALUES ( 'T20 Filtro'[CodIBGE] )
+			RETURN
+			    IF (
+			        ISFILTERED ( 'T20 Filtro' ) && COUNTROWS ( _codigos ) = 1,
+			        MAXX ( _codigos, 'T20 Filtro'[CodIBGE] ),
+			        "3118601"
+			    )
+		displayFolder: T20 Escola\Contas
+		lineageTag: d5d0ef2a-b7b1-5b8e-9514-8d3371d8e08c
+
+	/// Nome da cidade da tela, sem a UF: Contagem.
+	measure 'T20 · cidade (nome)' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Nome], 'T20 Cidade'[CodIBGE], _cod )
+		displayFolder: T20 Escola\Contas
+		lineageTag: 4e9c9d7f-824c-5374-a0d9-36a87696ca0c
+
+	/// Rótulos de bairro do mapa da cidade da tela (até 4 com mais locais): NOME@x@y separados por |, em % da moldura; vazio quando poluiriam.
+	measure 'T20 · cidade · bairros' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Bairros], 'T20 Cidade'[CodIBGE], _cod )
+		displayFolder: T20 Escola\Contas
+		lineageTag: b8b20a8f-e14b-599a-8c18-71cbd42c7f48
+
+	/// Canto do mapa com menos pontos, onde fica o mapinha: so, se, no ou ne.
+	measure 'T20 · cidade · canto do mapinha' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Canto], 'T20 Cidade'[CodIBGE], _cod )
+		displayFolder: T20 Escola\Contas
+		lineageTag: d3faa488-ee9b-5414-8910-0e423c93d12f
+
+	/// Caminho SVG do contorno da cidade da tela, em % da moldura do mapa (viewBox 0 0 100 100; a moldura tem a proporção da caixa do mapa).
+	measure 'T20 · cidade · contorno' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Contorno], 'T20 Cidade'[CodIBGE], _cod )
+		displayFolder: T20 Escola\Contas
+		lineageTag: f54daf56-e4e6-5bb2-b066-922af83bd93b
+
+	/// Mediana da distância entre locais vizinhos no mapa da cidade da tela, em % da largura da moldura: dá o tamanho dos pontos (São Paulo, 0,47 %; Contagem, 2,65 %).
+	measure 'T20 · cidade · espaço entre locais' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Espaço], 'T20 Cidade'[CodIBGE], _cod )
+		formatString: 0.00
+		displayFolder: T20 Escola\Contas
+		lineageTag: d5660250-a34a-5e2a-afd9-539f5f65ab57
+
+	/// Caminho SVG da cidade inteira no mapinha do recorte (viewBox 0 0 100 100).
+	measure 'T20 · cidade · mapinha' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Inteiro], 'T20 Cidade'[CodIBGE], _cod )
+		displayFolder: T20 Escola\Contas
+		lineageTag: 36b3a317-7748-5259-b98b-f20a4b0c3b8d
+
+	/// O retângulo do recorte no mapinha: 'x y largura altura' (0–100).
+	measure 'T20 · cidade · moldura do mapinha' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Moldura], 'T20 Cidade'[CodIBGE], _cod )
+		displayFolder: T20 Escola\Contas
+		lineageTag: 7339c42c-0fff-5be8-a403-2a2938e3dc0e
+
+	/// 1 quando o mapa da cidade da tela mostra só a mancha urbana (território grande), com o mapinha da cidade inteira.
+	measure 'T20 · cidade · recorte' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE ( LOOKUPVALUE ( 'T20 Cidade'[Recorte], 'T20 Cidade'[CodIBGE], _cod ), 0 )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 3373096b-6a46-5f39-96e2-142801a13684
+
+	/// Id do local clicado no mapa ou na lista (filtro cruzado em T20 Local), se for da cidade da tela; vazio sem clique.
+	measure 'T20 · escola clicada' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    IF (
+			        ( ISFILTERED ( 'T20 Local'[Local] ) || ISFILTERED ( 'T20 Local'[Id] ) )
+			            && HASONEVALUE ( 'T20 Local'[Id] )
+			            && SELECTEDVALUE ( 'T20 Local'[CodIBGE] ) = _cod,
+			        SELECTEDVALUE ( 'T20 Local'[Id] )
+			    )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: f8fc2c8e-ce60-5e73-a2b8-afeea401fdf2
+
+	/// Id da escola escolhida no filtro: quando há exatamente uma folha marcada e ela não é a cidade inteira; vazio com a cidade inteira, com várias escolas ou sem escolha.
+	measure 'T20 · escola do filtro' =
+			VAR _n = [T20 · escolas no filtro]
+			RETURN
+			    IF ( _n = 1 && [T20 · locais] > 1, SELECTEDVALUE ( 'T20 Filtro'[IdLocal] ) )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 423a014c-9783-5650-90f2-23e32ab6eb0b
+
+	/// Escolas (folhas) marcadas no filtro; 0 sem escolha. Igual a [T20 · locais] quando a cidade inteira foi marcada.
+	measure 'T20 · escolas no filtro' =
+			IF ( ISFILTERED ( 'T20 Filtro' ), COUNTROWS ( VALUES ( 'T20 Filtro'[Caminho] ) ), 0 )
+		formatString: #,0
+		displayFolder: T20 Escola\Contas
+		lineageTag: e1b71af6-0b2a-55a1-a2b1-5416a875187d
+
+	/// Por que o exemplo da ficha: começo (Contagem), virou ou queda.
+	measure 'T20 · exemplo' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[Exemplo], 'T20 Cidade'[CodIBGE], _cod )
+		displayFolder: T20 Escola\Contas
+		lineageTag: b2e1bb9b-be05-5447-a0e9-255e22b18114
+
+	/// 1 quando o filtro da tela tem uma escolha (cidade ou escola): o ponto vermelho da pílula.
+	measure 'T20 · filtro em uso' =
+			IF ( ISFILTERED ( 'T20 Filtro' ), 1, 0 )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 471f46fb-9f34-51b1-b807-34a5546960fe
+
+	/// Ordem do caminho na árvore do filtro (papel itemSort do VizuFilter): as cidades na ordem do filtro (Contagem primeiro) e as escolas em ordem alfabética.
+	measure 'T20 · filtro · ordem' =
+			MIN ( 'T20 Filtro'[Ordem] )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: a5030ea6-5637-533f-a35f-6ca2747491d3
+
 	/// Votos de Flávio ÷ válidos no local, 2026.
 	measure 'T20 · Flávio % 2026' =
 			DIVIDE ( SUM ( 'T20 Local'[VotosAdv2026] ), SUM ( 'T20 Local'[Validos2026] ) )
@@ -20377,101 +20504,194 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: bd911e3f-035b-507d-ace4-3c549201adea
 
-	/// 1 quando um local foi escolhido (no filtro do topo, no mapa ou na lista); 0 quando a ficha mostra o exemplo da história.
+	/// Por que o local não está no mapa: 'sem endereço' ou 'fora do recorte'; vazio no mapa.
+	measure 'T20 · fora do mapa' =
+			SELECTEDVALUE ( 'T20 Local'[Fora do mapa] )
+		displayFolder: T20 Escola\Contas
+		lineageTag: 3628144b-f14f-5437-9279-0f1b5ff26540
+
+	/// 1 quando um local foi escolhido (no filtro do topo, no mapa ou na lista); 0 quando a ficha mostra o exemplo da cidade.
 	measure 'T20 · há escolha' =
-			IF ( ISFILTERED ( 'T20 Local'[Local] ) && HASONEVALUE ( 'T20 Local'[Local] ), 1, 0 )
+			IF ( NOT ISBLANK ( [T20 · escola clicada] ) || NOT ISBLANK ( [T20 · escola do filtro] ), 1, 0 )
 		formatString: 0
 		displayFolder: T20 Escola\Contas
 		lineageTag: c9a30977-7657-594f-82ff-a43640b15bc0
 
-	/// Locais de votação de Contagem em 2026 no contexto (112 sem filtro).
+	/// Id do local da ficha quando nada foi escolhido: em Contagem, a Escola Estadual Nova Contagem-I (onde o documentário começa); nas outras cidades, a escola que virou com mais votos válidos (ou, se nenhuma virou, a de maior queda da margem de Lula).
+	measure 'T20 · id do exemplo' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    LOOKUPVALUE ( 'T20 Cidade'[IdExemplo], 'T20 Cidade'[CodIBGE], _cod )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 43482c55-167b-5dbe-b444-614b49d91af0
+
+	/// Id do local da linha.
+	measure 'T20 · id do local' =
+			SELECTEDVALUE ( 'T20 Local'[Id] )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: a88ab651-c21e-5d2d-a54a-796c4b4f0629
+
+	/// Id do local da ficha e do anel do mapa: o clicado no mapa ou na lista; senão o escolhido no filtro; senão o exemplo da cidade.
+	measure 'T20 · id escolhido' =
+			COALESCE ( [T20 · escola clicada], [T20 · escola do filtro], [T20 · id do exemplo] )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 753bd49c-750c-571b-8aac-d5a2a3239f4e
+
+	/// Locais de votação da cidade da tela em 2026 (112 em Contagem).
 	measure 'T20 · locais' =
-			COALESCE (
-			    COUNTROWS ( 'T20 Local' ),
-			    0
-			)
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE (
+			        CALCULATE ( COUNTROWS ( 'T20 Local' ), REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod ),
+			        0
+			    )
 		formatString: #,0
 		displayFolder: T20 Escola\Contas
 		lineageTag: 994b5cac-bdfa-51b7-b998-ce552b7f36c9
 
-	/// Locais de 2026 em que Flávio teve mais votos que Lula.
+	/// Locais de 2026 da cidade da tela em que Flávio teve mais votos que Lula.
 	measure 'T20 · locais com Flávio à frente' =
-			COALESCE (
-			    COUNTROWS ( FILTER ( 'T20 Local', 'T20 Local'[VotosPT2026] < 'T20 Local'[VotosAdv2026] ) ),
-			    0
-			)
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE (
+			        CALCULATE (
+			            COUNTROWS ( FILTER ( 'T20 Local', 'T20 Local'[VotosPT2026] < 'T20 Local'[VotosAdv2026] ) ),
+			            REMOVEFILTERS ( 'T20 Local' ),
+			            'T20 Local'[CodIBGE] = _cod
+			        ),
+			        0
+			    )
 		formatString: #,0
 		displayFolder: T20 Escola\Contas
 		lineageTag: 03c0e890-95df-5030-8272-5f93bf7da2bc
 
-	/// Locais de 2026 em que Lula teve mais votos que Flávio.
+	/// Locais de 2026 da cidade da tela em que Lula teve mais votos que Flávio.
 	measure 'T20 · locais com Lula à frente' =
-			COALESCE (
-			    COUNTROWS ( FILTER ( 'T20 Local', 'T20 Local'[VotosPT2026] > 'T20 Local'[VotosAdv2026] ) ),
-			    0
-			)
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE (
+			        CALCULATE (
+			            COUNTROWS ( FILTER ( 'T20 Local', 'T20 Local'[VotosPT2026] > 'T20 Local'[VotosAdv2026] ) ),
+			            REMOVEFILTERS ( 'T20 Local' ),
+			            'T20 Local'[CodIBGE] = _cod
+			        ),
+			        0
+			    )
 		formatString: #,0
 		displayFolder: T20 Escola\Contas
 		lineageTag: 14b9d522-1265-5479-90ad-2821da324255
 
-	/// Locais de 2022 (os do próprio ano) em que Lula teve mais votos que Jair Bolsonaro.
+	/// Locais de 2022 da cidade da tela (os do próprio ano) em que Lula teve mais votos que Jair Bolsonaro (calculado no pipeline).
 	measure 'T20 · locais com Lula à frente em 2022' =
-			VAR _locais =
-			    SUMMARIZE (
-			        FILTER ( 'Local Contagem', 'Local Contagem'[Ano] = 2022 ),
-			        'Local Contagem'[Zona], 'Local Contagem'[Local], 'Local Contagem'[Nome do local]
-			    )
+			VAR _cod = [T20 · cidade (código)]
 			RETURN
-			    COUNTROWS (
-			        FILTER (
-			            _locais,
-			            CALCULATE (
-			                MAX ( 'Local Contagem'[VotosPT] ) - MAX ( 'Local Contagem'[VotosAdversario] ),
-			                'Local Contagem'[Ano] = 2022
-			            ) > 0
-			        )
-			    )
+			    COALESCE ( LOOKUPVALUE ( 'T20 Cidade'[Lula2022], 'T20 Cidade'[CodIBGE], _cod ), 0 )
 		formatString: #,0
 		displayFolder: T20 Escola\Contas
 		lineageTag: 45147b3e-c8b1-5ba8-a6ce-6faa513f58d4
 
-	/// Locais de votação de Contagem em 2022, como o TSE os listou naquele ano (zona, número e nome; a Local Contagem traz o 1350 da zona 91 em dobro, por isso a contagem é de distintos).
+	/// Locais de votação da cidade da tela em 2022, como o TSE os listou naquele ano (zona, número, nome e endereço; calculado no pipeline).
 	measure 'T20 · locais em 2022' =
-			COALESCE (
-			    COUNTROWS (
-			        SUMMARIZE (
-			            FILTER ( 'Local Contagem', 'Local Contagem'[Ano] = 2022 ),
-			            'Local Contagem'[Zona], 'Local Contagem'[Local], 'Local Contagem'[Nome do local]
-			        )
-			    ),
-			    0
-			)
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE ( LOOKUPVALUE ( 'T20 Cidade'[Locais2022], 'T20 Cidade'[CodIBGE], _cod ), 0 )
 		formatString: #,0
 		displayFolder: T20 Escola\Contas
 		lineageTag: 05fc0525-df3d-530f-9ec3-5097dd11fd10
 
-	/// Locais de 2026 em que Lula ficou à frente em 2022 (mesmo zona + número) e Flávio em 2026.
+	/// Locais de 2026 da cidade da tela longe da mancha urbana, fora do recorte do mapa (só nas cidades de território grande): entram nas contas e na lista.
+	measure 'T20 · locais fora do recorte' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE (
+			        CALCULATE (
+			            COUNTROWS ( 'T20 Local' ),
+			            REMOVEFILTERS ( 'T20 Local' ),
+			            'T20 Local'[CodIBGE] = _cod,
+			            'T20 Local'[Fora do mapa] = "fora do recorte"
+			        ),
+			        0
+			    )
+		formatString: #,0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 2b2f0c5b-a6f2-5586-8092-ff1589423780
+
+	/// Locais de 2026 da cidade da tela em que Lula ficou à frente em 2022 (mesmo zona + número) e Flávio em 2026.
 	measure 'T20 · locais que viraram' =
-			COALESCE (
-			    COUNTROWS (
-			        FILTER (
-			            'T20 Local',
-			            'T20 Local'[VotosPT2022] > 'T20 Local'[VotosAdv2022] && 'T20 Local'[VotosPT2026] < 'T20 Local'[VotosAdv2026]
-			        )
-			    ),
-			    0
-			)
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE (
+			        CALCULATE (
+			            COUNTROWS (
+			                FILTER (
+			                    'T20 Local',
+			                    'T20 Local'[VotosPT2022] > 'T20 Local'[VotosAdv2022]
+			                        && 'T20 Local'[VotosPT2026] < 'T20 Local'[VotosAdv2026]
+			                )
+			            ),
+			            REMOVEFILTERS ( 'T20 Local' ),
+			            'T20 Local'[CodIBGE] = _cod
+			        ),
+			        0
+			    )
 		formatString: #,0
 		displayFolder: T20 Escola\Contas
 		lineageTag: 9b264b0b-b7de-51b3-9fbd-585704f64bdc
 
-	/// O local da ficha: o escolhido (filtro, mapa ou lista) ou, sem escolha, a Escola Estadual Nova Contagem-I, onde o documentário começa.
+	/// Locais de 2026 da cidade da tela em que Jair Bolsonaro ficou à frente em 2022 (mesmo zona + número) e Lula em 2026: o caminho inverso, contado com a mesma regra.
+	measure 'T20 · locais que viraram para Lula' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE (
+			        CALCULATE (
+			            COUNTROWS (
+			                FILTER (
+			                    'T20 Local',
+			                    'T20 Local'[VotosPT2022] < 'T20 Local'[VotosAdv2022]
+			                        && 'T20 Local'[VotosPT2026] > 'T20 Local'[VotosAdv2026]
+			                )
+			            ),
+			            REMOVEFILTERS ( 'T20 Local' ),
+			            'T20 Local'[CodIBGE] = _cod
+			        ),
+			        0
+			    )
+		formatString: #,0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 8452b92a-1943-5a1e-8060-70a4b6d7c214
+
+	/// Locais de 2026 da cidade da tela sem coordenada no cadastro de locais do TSE (2022, por zona + número e, sem par, pelo nome): entram nas contas e na lista, ficam fora do mapa.
+	measure 'T20 · locais sem endereço' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    COALESCE (
+			        CALCULATE (
+			            COUNTROWS ( 'T20 Local' ),
+			            REMOVEFILTERS ( 'T20 Local' ),
+			            'T20 Local'[CodIBGE] = _cod,
+			            'T20 Local'[Fora do mapa] = "sem endereço"
+			        ),
+			        0
+			    )
+		formatString: #,0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 60a30334-93b4-5f1b-ae0d-40e9f8297bed
+
+	/// Id do local da ficha sem contar o clique no mapa ou na lista: o escolhido no filtro ou, sem ele, o exemplo da cidade. O mapa (que não enxerga o próprio clique) põe o nome dessa escola na camada da frente.
+	measure 'T20 · local da ficha sem clique' =
+			COALESCE ( [T20 · escola do filtro], [T20 · id do exemplo] )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 63353e18-0538-5908-b62d-8ad1e48ea53b
+
+	/// Nome do local da ficha (Id escolhido).
 	measure 'T20 · local escolhido' =
-			IF (
-			    [T20 · há escolha] = 1,
-			    VALUES ( 'T20 Local'[Local] ),
-			    "Escola Estadual Nova Contagem-I"
-			)
+			VAR _id = [T20 · id escolhido]
+			RETURN
+			    CALCULATE ( SELECTEDVALUE ( 'T20 Local'[Nome] ), REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
 		displayFolder: T20 Escola\Contas
 		lineageTag: beaddb07-7150-5d05-8f0b-c8aa9c246286
 
@@ -20482,9 +20702,11 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: 6f7e1b72-2aee-566d-b2e9-ea91a2836ab9
 
-	/// Maior número de votos válidos entre os 112 locais (escala do tamanho dos pontos no mapa; ignora a escolha de local).
+	/// Maior número de votos válidos entre os locais da cidade da tela (escala do tamanho dos pontos; ignora a escolha de local).
 	measure 'T20 · maior válidos' =
-			CALCULATE ( MAXX ( VALUES ( 'T20 Local'[Local] ), [T20 · válidos 2026] ), REMOVEFILTERS ( 'T20 Local' ) )
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    CALCULATE ( MAX ( 'T20 Local'[Validos2026] ), REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod )
 		formatString: #,0
 		displayFolder: T20 Escola\Contas
 		lineageTag: 740c4ec1-4007-5639-ab90-bf4461bbb691
@@ -20519,18 +20741,22 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: 8dd8503b-3187-599a-8e9d-1ecfb82fb77e
 
+	/// 1 quando o local da linha é da cidade da tela: o mapa e a lista só desenham esses.
+	measure 'T20 · na cidade' =
+			IF ( SELECTEDVALUE ( 'T20 Local'[CodIBGE] ) = [T20 · cidade (código)], 1, 0 )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 2b8fc13d-3cf3-5c9c-9074-ba7c9b620d26
+
 	/// Nome legível do local (escola).
 	measure 'T20 · nome do local' =
-			SELECTEDVALUE ( 'T20 Local'[Local] )
+			SELECTEDVALUE ( 'T20 Local'[Nome] )
 		displayFolder: T20 Escola\Contas
 		lineageTag: 8d1eedad-239a-5a3a-83ae-60526e4b20a9
 
-	/// Posição do local entre os da lista das maiores quedas (1 = maior queda). O Power BI põe a coluna de ordenação ('T20 Local'[Id]) no grão do visual: o RANKX percorre as duas colunas, senão cada linha só vê a si mesma e todas saem 1 (L-armadilha da coluna de ordenação, como na tela 13).
+	/// Posição do local na lista da cidade, da maior queda da margem de Lula 2022 → 2026 à maior alta, com os locais novos (sem 2022) no fim, por nome; calculada no pipeline por cidade (pipeline/exportar_t20.py), o que poupa um RANKX por linha nas 2.060 de São Paulo.
 	measure 'T20 · posição na queda' =
-			IF (
-			    HASONEVALUE ( 'T20 Local'[Local] ),
-			    RANKX ( ALLSELECTED ( 'T20 Local'[Local], 'T20 Local'[Id] ), [T20 · queda da margem], , DESC, SKIP )
-			)
+			SELECTEDVALUE ( 'T20 Local'[PosQueda] )
 		formatString: 0
 		displayFolder: T20 Escola\Contas
 		lineageTag: a6d68a8b-39c1-5486-af73-f47f92906263
@@ -20583,6 +20809,16 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: 62777fab-ab4b-59f6-84fd-884aad0b4d8a
 
+	/// 1 quando Jair Bolsonaro estava à frente no local em 2022 e Lula em 2026 (o caminho inverso de [T20 · virou]).
+	measure 'T20 · virou para Lula' =
+			VAR _m22 = [T20 · margem 2022]
+			VAR _m26 = [T20 · margem 2026]
+			RETURN
+			    IF ( _m22 < 0 && _m26 > 0, 1, 0 )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: 6b045c79-a3ca-5ad9-8179-70a3da27f8e0
+
 	/// Votos válidos no local em 2026 (dá o tamanho do ponto no mapa).
 	measure 'T20 · válidos 2026' =
 			SUM ( 'T20 Local'[Validos2026] )
@@ -20590,99 +20826,189 @@ table _Medidas
 		displayFolder: T20 Escola\Contas
 		lineageTag: cf6796d0-cffa-565c-86e9-df511af6b052
 
+	/// Id do último local da cidade da tela no mapa: o ponto que leva os rótulos de bairro (o último a ser desenhado fica por cima).
+	measure 'T20 · último local do mapa' =
+			VAR _cod = [T20 · cidade (código)]
+			RETURN
+			    CALCULATE (
+			        MAX ( 'T20 Local'[Id] ),
+			        REMOVEFILTERS ( 'T20 Local' ),
+			        'T20 Local'[CodIBGE] = _cod,
+			        NOT ISBLANK ( 'T20 Local'[PX] )
+			    )
+		formatString: 0
+		displayFolder: T20 Escola\Contas
+		lineageTag: c30621b1-ef44-5239-b724-bab206cb1e76
+
+	/// Texto alternativo do cartão 'como explorar'.
+	measure 'T20 · Como · ALT' =
+			"Como explorar: passe o mouse num ponto para ver a escola; clique num ponto ou numa linha para levá-la à ficha; o filtro do topo troca a cidade e procura a escola. "
+			    & IF ( [T20 · locais sem endereço] + [T20 · locais fora do recorte] > 0,
+			        FORMAT ( [T20 · locais sem endereço] + [T20 · locais fora do recorte], "#,0" ) & " locais não aparecem no mapa.", "" )
+		displayFolder: T20 Escola\Desenho
+		lineageTag: 509b4caf-a673-5691-8ddc-f68b05320395
+
+	/// O aviso do cartão 'como explorar', por cidade: quantos locais não aparecem no mapa (sem endereço no cadastro do TSE ou fora do recorte da mancha urbana) e que eles entram nas contas e na lista.
+	measure 'T20 · Como · HTML' =
+			-- 1 · Leituras
+			VAR _sem = [T20 · locais sem endereço]
+			VAR _fora = [T20 · locais fora do recorte]
+			-- 2 · Textos
+			VAR _txtSem = FORMAT ( _sem, "#,0" ) & IF ( _sem = 1, " local sem endereço", " locais sem endereço" )
+			VAR _txtFora = FORMAT ( _fora, "#,0" ) & IF ( _fora = 1, " local fora do recorte", " locais fora do recorte" )
+			VAR _quem =
+			    SWITCH (
+			        TRUE (),
+			        _sem > 0 && _fora > 0, _txtSem & " e " & FORMAT ( _fora, "#,0" ) & " fora do recorte não aparecem no mapa",
+			        _sem > 0, _txtSem & IF ( _sem = 1, " não aparece no mapa", " não aparecem no mapa" ),
+			        _fora > 0, _txtFora & IF ( _fora = 1, " não aparece no mapa", " não aparecem no mapa" )
+			    )
+			VAR _nota =
+			    IF (
+			        _sem + _fora > 0,
+			        _quem & IF ( _sem + _fora = 1, ", mas entra nas contas e na lista.", ", mas entram nas contas e na lista." ),
+			        "Todos os locais da cidade estão no mapa."
+			    )
+			-- 4 · Marcação
+			RETURN
+			    "<div class='tela t20n'><div class='nota entra d6'>" & _nota & "</div></div>"
+		displayFolder: T20 Escola\Desenho
+		lineageTag: 3d8d6f05-7a95-5f14-abf5-b99079e4c242
+
 	/// Texto alternativo do anel do local escolhido.
 	measure 'T20 · Escolhido · ALT' =
-			"Local em destaque no mapa: " & [T20 · local escolhido]
+			"Mapa de " & [T20 · cidade] & "; local em destaque: " & [T20 · local escolhido]
 		displayFolder: T20 Escola\Desenho
 		lineageTag: fa071ec2-b80d-586a-9b83-39955d17f13f
 
-	/// O anel à mão em volta do local da ficha, na camada atrás dos pontos (recebe a escolha do filtro, do mapa e da lista), com o nome do local.
+	/// A camada atrás dos pontos: o contorno da cidade escolhida (rabisco que se desenha, o creme esmaece), o mapinha da cidade inteira quando o mapa é um recorte e o anel à mão em volta do local da ficha (recebe a escolha do filtro, do mapa e da lista); o nome vai ao lado só quando a escola veio de um clique (com clique, os outros pontos esmaecem e o nome aparece; sem clique, o nome vai na camada da frente, em T20 · Mapa · HTML).
 	measure 'T20 · Escolhido · HTML' =
 			-- 1 · Leituras
-			VAR _esc = [T20 · local escolhido]
-			VAR _ha = [T20 · há escolha]
-			VAR _px = CALCULATE ( [T20 · posição x], 'T20 Local'[Local] = _esc )
-			VAR _py = CALCULATE ( [T20 · posição y], 'T20 Local'[Local] = _esc )
+			VAR _contorno = [T20 · cidade · contorno]
+			VAR _recorte = [T20 · cidade · recorte]
+			VAR _mapinha = [T20 · cidade · mapinha]
+			VAR _moldura = SUBSTITUTE ( [T20 · cidade · moldura do mapinha], " ", "|" )
+			VAR _canto = [T20 · cidade · canto do mapinha]
+			VAR _id = [T20 · id escolhido]
+			VAR _px = CALCULATE ( [T20 · posição x], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _py = CALCULATE ( [T20 · posição y], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _fora = CALCULATE ( [T20 · fora do mapa], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _clique = NOT ISBLANK ( [T20 · escola clicada] )
 			-- 2 · Textos
-			VAR _nome0 = _esc
+			VAR _nome0 = [T20 · local escolhido]
 			VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
 			VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
+			VAR _motivo = IF ( _fora = "fora do recorte", ": fora do recorte do mapa", ": sem endereço no mapa" )
 			-- 3 · Geometria
 			VAR _x = _px / 100 * 692 -- geometria
 			VAR _y = _py / 100 * 860 -- geometria
 			VAR _direita = _x > 692 * 0.62 -- geometria
 			VAR _xr = IF ( _direita, _x - 22, _x + 22 ) -- geometria
+			VAR _mx = IF ( _canto = "so" || _canto = "no", 10, 550 ) -- geometria
+			VAR _my = IF ( _canto = "no" || _canto = "ne", 10, 682 ) -- geometria
 			-- 4 · Marcação
-			RETURN
+			VAR _mapa =
+			    "<svg class='mapa" & IF ( _recorte = 1, " rec", "" ) & "' width='692' height='860' viewBox='0 0 100 100' "
+			        & "preserveAspectRatio='none'>"
+			        & "<path class='fundo' d='" & _contorno & "'/>"
+			        & "<path class='borda traco' pathLength='1' filter='url(#rb20)' d='" & _contorno & "'/>"
+			        & IF ( _recorte = 1, "<rect class='quadro' x='0' y='0' width='100' height='100'/>" )
+			    & "</svg>"
+			VAR _mini =
+			    IF (
+			        _recorte = 1,
+			        "<div class='mini entra d8' style='left:" & _mx & "px;top:" & _my & "px'>"
+			            & "<svg width='132' height='132' viewBox='0 0 100 100'><path class='mf' d='" & _mapinha & "'/>"
+			            & "<rect class='mr' x='" & PATHITEM ( _moldura, 1 ) & "' y='" & PATHITEM ( _moldura, 2 ) & "' width='"
+			            & PATHITEM ( _moldura, 3 ) & "' height='" & PATHITEM ( _moldura, 4 ) & "'/></svg>"
+			            & "<span>a cidade inteira</span>"
+			        & "</div>"
+			    )
+			VAR _anel =
 			    IF (
 			        ISBLANK ( _px ),
-			        "<div class='tela t20e'><div class='sem'>" & _nome & ": sem endereço no mapa</div></div>",
-			        "<div class='tela t20e'>"
-			            & "<div class='anel' style='left:" & FORMAT ( _x - 26, "0.0##", "en-US" ) & "px;top:"
+			        "<div class='sem'>" & _nome & _motivo & "</div>",
+			        "<div class='anel' style='left:" & FORMAT ( _x - 26, "0.0##", "en-US" ) & "px;top:"
 			            & FORMAT ( _y - 24, "0.0##", "en-US" ) & "px'>"
 			            & "<svg width='52' height='48' viewBox='0 0 52 48'><path class='traco' pathLength='1' filter='url(#rbe)' "
 			            & "d='M8,28 C2,10 30,-2 44,10 C54,20 46,42 26,44 C8,46 2,30 12,16 C18,8 30,6 38,9'/></svg></div>"
-			            & "<div class='nome sobe d4" & IF ( _direita, " dir", "" ) & "' style='left:"
-			            & FORMAT ( _xr, "0.0##", "en-US" ) & "px;top:" & FORMAT ( _y - 12, "0.0##", "en-US" ) & "px'>"
-			            & _nome & "</div>"
-			        & "</div>"
+			            & IF (
+			                _clique,
+			                "<div class='nome sobe d4" & IF ( _direita, " dir", "" ) & "' style='left:"
+			                    & FORMAT ( _xr, "0.0##", "en-US" ) & "px;top:" & FORMAT ( _y - 12, "0.0##", "en-US" ) & "px'>"
+			                    & _nome & "</div>"
+			            )
 			    )
+			RETURN
+			    "<div class='tela t20e'>" & _mapa & _mini & _anel & "</div>"
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 234cc51b-20aa-53eb-9125-6d325eed1cfc
 
 	/// Texto alternativo da ficha do local.
 	measure 'T20 · Ficha · ALT' =
 			-- 1 · Leituras
-			VAR _esc = [T20 · local escolhido]
-			VAR _m18 = CALCULATE ( [T20 · margem 2018], 'T20 Local'[Local] = _esc )
-			VAR _m22 = CALCULATE ( [T20 · margem 2022], 'T20 Local'[Local] = _esc )
-			VAR _m26 = CALCULATE ( [T20 · margem 2026], 'T20 Local'[Local] = _esc )
+			VAR _id = [T20 · id escolhido]
+			VAR _m18 = CALCULATE ( [T20 · margem 2018], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _m22 = CALCULATE ( [T20 · margem 2022], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _m26 = CALCULATE ( [T20 · margem 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
 			-- 2 · Textos
 			VAR _t18 = IF ( ISBLANK ( _m18 ), "sem dado", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
 			VAR _t22 = IF ( ISBLANK ( _m22 ), "sem dado", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
 			RETURN
-			    "Ficha: " & _esc & ". Margem de Lula em pontos: 2018 " & _t18 & "; 2022 " & _t22 & "; 2026 "
-			        & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & "."
+			    "Ficha: " & [T20 · local escolhido] & " (" & [T20 · cidade] & "). Margem de Lula em pontos: 2018 " & _t18
+			        & "; 2022 " & _t22 & "; 2026 " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & "."
 		displayFolder: T20 Escola\Desenho
 		lineageTag: d7e95492-c879-524c-be08-21c5b5ddc05c
 
-	/// A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, a Escola Estadual Nova Contagem-I.
+	/// A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo da cidade: em Contagem, a Escola Estadual Nova Contagem-I (onde o documentário começa); nas outras, a escola que virou com mais votos válidos (ou a de maior queda).
 	measure 'T20 · Ficha · HTML' =
 			-- 1 · Leituras
-			VAR _esc = [T20 · local escolhido]
+			VAR _id = [T20 · id escolhido]
 			VAR _ha = [T20 · há escolha]
-			VAR _bairro = CALCULATE ( [T20 · bairro], 'T20 Local'[Local] = _esc )
-			VAR _secoes = CALCULATE ( [T20 · seções], 'T20 Local'[Local] = _esc )
-			VAR _val = CALCULATE ( [T20 · válidos 2026], 'T20 Local'[Local] = _esc )
-			VAR _lula = CALCULATE ( [T20 · Lula % 2026], 'T20 Local'[Local] = _esc )
-			VAR _flavio = CALCULATE ( [T20 · Flávio % 2026], 'T20 Local'[Local] = _esc )
-			VAR _m18 = CALCULATE ( [T20 · margem 2018], 'T20 Local'[Local] = _esc )
-			VAR _m22 = CALCULATE ( [T20 · margem 2022], 'T20 Local'[Local] = _esc )
-			VAR _m26 = CALCULATE ( [T20 · margem 2026], 'T20 Local'[Local] = _esc )
-			VAR _virou = CALCULATE ( [T20 · virou], 'T20 Local'[Local] = _esc )
+			VAR _exemplo = [T20 · exemplo]
+			VAR _bairroL = CALCULATE ( [T20 · bairro], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _secoes = CALCULATE ( [T20 · seções], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _val = CALCULATE ( [T20 · válidos 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _lula = CALCULATE ( [T20 · Lula % 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _flavio = CALCULATE ( [T20 · Flávio % 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _m18 = CALCULATE ( [T20 · margem 2018], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _m22 = CALCULATE ( [T20 · margem 2022], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _m26 = CALCULATE ( [T20 · margem 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _virou = CALCULATE ( [T20 · virou], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+			VAR _virouLula = CALCULATE ( [T20 · virou para Lula], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
 			-- 2 · Textos
-			VAR _nome0 = _esc
+			VAR _nome0 = [T20 · local escolhido]
 			VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
 			VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
-			VAR _sobre = IF ( _ha = 1, "A escola escolhida", "Um exemplo · Nova Contagem" )
+			VAR _bairro0 = _bairroL
+			VAR _bairro1 = SUBSTITUTE ( SUBSTITUTE ( _bairro0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _bairro = SUBSTITUTE ( SUBSTITUTE ( _bairro1, ">", "&gt;" ), "'", "&#39;" )
+			VAR _cidade0 = [T20 · cidade (nome)]
+			VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
+			VAR _sobre = IF ( _ha = 1, "A escola escolhida", "Um exemplo · " & IF ( _bairro <> "", _bairro, _cidade ) )
 			VAR _sub =
-			    _bairro & " · " & _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" )
-			        & " votos válidos em 2026"
+			    _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" ) & " votos válidos em 2026"
+			        & IF ( _bairro <> "" && _ha = 1, " · " & _bairro, "" )
 			VAR _t18 = IF ( ISBLANK ( _m18 ), "—", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
 			VAR _t22 = IF ( ISBLANK ( _m22 ), "—", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
 			VAR _t26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
 			VAR _c18 = IF ( _m18 > 0, "lula", IF ( _m18 < 0, "flavio", "" ) )
 			VAR _c22 = IF ( _m22 > 0, "lula", IF ( _m22 < 0, "flavio", "" ) )
-			VAR _c26 = IF ( _m26 > 0, "lula", "flavio" )
+			VAR _c26 = IF ( _m26 > 0, "lula", IF ( _m26 < 0, "flavio", "" ) )
 			VAR _nota =
 			    SWITCH (
 			        TRUE (),
-			        _ha = 0, "onde o documentário começa",
-			        _virou = 1, "virou em 2026",
-			        _m26 > 0, "segue com Lula",
-			        "Flávio à frente"
+			        _ha = 0 && _exemplo = "começo", "onde o documentário começa",
+			        _ha = 0 && _exemplo = "virou", "a maior escola que virou",
+			        _ha = 0, "a maior queda da cidade",
+			        _virou = 1, "virou para Flávio",
+			        _virouLula = 1, "virou para Lula",
+			        _m26 > 0, "Lula à frente",
+			        _m26 < 0, "Flávio à frente",
+			        "empate"
 			    )
-			VAR _selo = IF ( _virou = 1, "<div class='selo'>virou</div>", "" )
+			VAR _selo = IF ( _virou + _virouLula = 1, "<div class='selo'>virou</div>", "" )
 			-- 3 · Geometria
 			VAR _base = { ( 0, 70, _m18 ), ( 1, 230, _m22 ), ( 2, 390, _m26 ) } /* lista */
 			VAR _yy =
@@ -20704,13 +21030,14 @@ table _Medidas
 			    ) /* lista */
 			-- 4 · Marcação
 			RETURN
-			    "<div class='tela t20f'>"
+			    "<div class='tela t20f'><div class='fl'>"
 			        & "<div class='rot sobe'>" & _sobre & "</div>"
 			        & "<div class='nm sobe d1'>" & _nome & "</div>"
 			        & "<div class='sub sobe d2'>" & _sub & "</div>"
 			        & "<div class='duelo sobe d3'>"
 			            & "<div class='lado lula'><span class='num'>" & FORMAT ( _lula, "0.0%" ) & "</span><span class='r'>Lula</span></div>"
 			            & "<div class='lado flavio'><span class='num'>" & FORMAT ( _flavio, "0.0%" ) & "</span><span class='r'>Flávio</span></div>"
+			            & _selo
 			        & "</div>"
 			        & "<div class='rot cap sobe d4'>Margem de Lula, em pontos</div>"
 			        & "<div class='serie sobe d5'>"
@@ -20722,33 +21049,57 @@ table _Medidas
 			                & "<path class='traco' pathLength='1' d='" & _d & "'/>" & _bolas
 			            & "</svg>"
 			        & "</div>"
-			        & _selo
+			        & "</div>"
 			        & "<div class='mao'>" & _nota & "</div>"
 			    & "</div>"
 		displayFolder: T20 Escola\Desenho
 		lineageTag: a5c52298-5a39-543d-86ba-3a3d554519d6
 
-	/// Texto alternativo do filtro de escola: a escolha em uso.
+	/// Texto alternativo do filtro da tela: a cidade e a escola em uso.
 	measure 'T20 · Filtro · ALT' =
 			-- 1 · Leituras
-			VAR _ha = [T20 · há escolha]
+			VAR _escola = [T20 · escola do filtro]
+			VAR _marcadas = [T20 · escolas no filtro]
+			VAR _locais = [T20 · locais]
+			VAR _id = _escola
 			RETURN
-			    IF ( _ha = 1, "Filtro de escola: " & [T20 · nome do local], "Filtro de escola: nenhuma escolhida" )
+			    "Filtro de cidade e escola: " & [T20 · cidade]
+			        & SWITCH (
+			            TRUE (),
+			            NOT ISBLANK ( _escola ), " · " & CALCULATE ( [T20 · nome do local], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id ),
+			            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, "#,0" ) & " escolas marcadas",
+			            " (nenhuma escola escolhida)"
+			        )
 		displayFolder: T20 Escola\Desenho
 		lineageTag: a4a2825d-700a-526f-a110-2f7eaa2152a9
 
-	/// O botão fechado do filtro de escola (a pílula, na caixa do filtro da casca): a escola escolhida no filtro ou 'Escolha uma escola', com o funil (ponto vermelho quando há escolha) e a seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01); fechado, só a pílula ocupa a tela. Recebe só o filtro de escola (o clique no mapa e na lista não mexe nela).
+	/// O botão fechado do filtro da tela (a pílula, na caixa do filtro da casca): a cidade em uso ('Contagem (MG)' sem escolha); com uma escola marcada, ' · escola'; com várias da mesma cidade (não todas), ' · N escolas'; com o funil (ponto vermelho quando o filtro está em uso) e a seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01). Recebe só o filtro (o clique no mapa e na lista não mexe nela).
 	measure 'T20 · Filtro · pílula · HTML' =
 			-- 1 · Leituras
-			VAR _ha = [T20 · há escolha]
-			VAR _nome0 = [T20 · nome do local]
-			VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
-			VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
+			VAR _uso = [T20 · filtro em uso]
+			VAR _escola = [T20 · escola do filtro]
+			VAR _marcadas = [T20 · escolas no filtro]
+			VAR _locais = [T20 · locais]
+			VAR _id = _escola
+			VAR _nomeEscolaL = IF ( NOT ISBLANK ( _escola ), CALCULATE ( [T20 · nome do local], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id ) )
 			-- 2 · Textos
-			VAR _txt = IF ( _ha = 1, _nome, "Escolha uma escola" )
+			VAR _cidade0 = [T20 · cidade]
+			VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
+			VAR _nomeEscola0 = _nomeEscolaL
+			VAR _nomeEscola1 = SUBSTITUTE ( SUBSTITUTE ( _nomeEscola0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _nomeEscola = SUBSTITUTE ( SUBSTITUTE ( _nomeEscola1, ">", "&gt;" ), "'", "&#39;" )
+			VAR _txt =
+			    _cidade
+			        & SWITCH (
+			            TRUE (),
+			            NOT ISBLANK ( _escola ), " · " & _nomeEscola,
+			            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, "#,0" ) & " escolas",
+			            ""
+			        )
 			-- 4 · Marcação
 			RETURN
-			    "<div class='tela pl" & IF ( _ha = 1, " ativo", "" ) & "'><span class='fu'><svg width='16' height='16' "
+			    "<div class='tela pl" & IF ( _uso = 1, " ativo", "" ) & "'><span class='fu'><svg width='16' height='16' "
 			        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
 			        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><b>" & _txt & "</b>"
 			        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
@@ -20761,21 +21112,32 @@ table _Medidas
 			-- 1 · Leituras
 			VAR _n = [T20 · locais]
 			VAR _lula = [T20 · locais com Lula à frente]
+			VAR _fora = [T20 · locais sem endereço] + [T20 · locais fora do recorte]
 			RETURN
-			    "Mapa de Contagem com os " & _n & " locais de votação: " & _lula & IF ( _lula = 1, " com Lula à frente", " com Lula à frente" )
-			        & " (vermelho) e os outros com Flávio (azul). Passe o mouse num ponto para ver a escola; clique para pôr na ficha."
+			    "Mapa de " & [T20 · cidade] & " com " & FORMAT ( _n - _fora, "#,0" ) & " dos " & FORMAT ( _n, "#,0" )
+			        & " locais de votação: " & FORMAT ( _lula, "#,0" ) & " com Lula à frente (vermelho) e os outros com Flávio "
+			        & "(azul). Passe o mouse num ponto para ver a escola; clique para pôr na ficha."
 		displayFolder: T20 Escola\Desenho
 		lineageTag: aa1ebfe6-813c-53ff-9078-a8577df80ed2
 
-	/// Um ponto do mapa de Contagem (granularidade: T20 Local[Local]): posição PX/PY, tamanho pelos votos válidos, cor pela margem de 2026; brota em onda do oeste para o leste.
+	/// Um ponto do mapa da cidade escolhida (granularidade: T20 Local[Local]; local de outra cidade ou sem posição devolve vazio): posição PX/PY em % da moldura, tamanho pelos votos válidos e pelo espaço entre locais da cidade (São Paulo não vira mancha), cor pela margem de 2026; brota em onda do oeste para o leste. O último local da cidade no mapa leva também os rótulos de bairro, e o local da ficha sem clique (a escola do filtro ou o exemplo) leva o nome dele, numa camada por cima dos pontos (z-index na entrada: não depende da ordem em que o visual entrega as linhas; em São Paulo o nome atrás dos pontos sumia).
 	measure 'T20 · Mapa · HTML' =
 			-- 1 · Leituras
+			VAR _na = [T20 · na cidade]
 			VAR _px = [T20 · posição x]
 			VAR _py = [T20 · posição y]
 			VAR _val = [T20 · válidos 2026]
 			VAR _maior = [T20 · maior válidos]
 			VAR _m26 = [T20 · margem 2026]
+			VAR _espaco = [T20 · cidade · espaço entre locais]
+			VAR _id = [T20 · id do local]
+			VAR _ultimo = [T20 · último local do mapa] = _id
+			VAR _bairros = IF ( _ultimo, [T20 · cidade · bairros] )
+			VAR _alvo = [T20 · local da ficha sem clique] = _id
 			-- 2 · Textos
+			VAR _nome0 = IF ( _alvo, [T20 · nome do local] )
+			VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
 			VAR _cor =
 			    SWITCH (
 			        TRUE (),
@@ -20785,20 +21147,52 @@ table _Medidas
 			        _m26 < 0.0, "#A9B8CF",
 			        _m26 < 0.03, "#E2B3A9",
 			        _m26 < 0.1, "#D9877B",
-			        "#B8322A"
+			        _m26 < 0.2, "#B8322A",
+			        "#8E2620"
 			    )
-			-- 3 · Geometria
-			VAR _d = 7 + 15 * SQRT ( DIVIDE ( _val, _maior ) ) -- geometria
+			VAR _rotulos =
+			    IF (
+			        _ultimo && NOT ISBLANK ( _bairros ) && _bairros <> "",
+			        CONCATENATEX (
+			            GENERATESERIES ( 1, PATHLENGTH ( _bairros ) ),
+			            VAR _item = SUBSTITUTE ( PATHITEM ( _bairros, [Value] ), "@", "|" )
+			            VAR _nome0 = PATHITEM ( _item, 1 )
+			            VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" ), "'", "&#39;" )
+			            RETURN
+			                "<span class='bairro entra d" & ( 10 + [Value] ) & "' style='left:" & PATHITEM ( _item, 2 ) & "%;top:"
+			                    & PATHITEM ( _item, 3 ) & "%'>" & _nome & "</span>",
+			            "",
+			            [Value], ASC
+			        ) /* lista */
+			    )
+			-- 3 · Geometria (diâmetro: o maior ponto ocupa ~2,2 vezes o espaço típico entre vizinhos, de 4,5 a 16 px: raio de
+			-- até 8 px, para o ponto grande não pesar nas cidades de pouca escola)
+			VAR _dmax = MIN ( 16, MAX ( 4.5, 2.2 * _espaco / 100 * 692 ) ) -- geometria
+			VAR _dmin = MAX ( 2.5, _dmax * 0.35 ) -- geometria
+			VAR _d = _dmin + ( _dmax - _dmin ) * SQRT ( DIVIDE ( _val, _maior ) ) -- geometria
+			VAR _borda = MIN ( 1.2, _d / 6 ) -- geometria
 			VAR _x = _px / 100 * 692 - _d / 2 -- geometria
 			VAR _y = _py / 100 * 860 - _d / 2 -- geometria
 			VAR _atraso = 1700 + ROUND ( _px * 14, 0 ) -- geometria
+			VAR _cx = _px / 100 * 692 -- geometria
+			VAR _direita = _cx > 692 * 0.62 -- geometria
+			VAR _xr = IF ( _direita, _cx - 22, _cx + 22 ) -- geometria
 			-- 4 · Marcação
+			VAR _rotuloEscola =
+			    IF (
+			        _alvo,
+			        "<div class='nome sobe d4" & IF ( _direita, " dir", "" ) & "' style='left:" & FORMAT ( _xr, "0.0##", "en-US" )
+			            & "px;top:" & FORMAT ( _py / 100 * 860 - 12, "0.0##", "en-US" ) & "px'>" & _nome & "</div>"
+			    )
 			RETURN
 			    IF (
-			        NOT ISBLANK ( _px ),
-			        "<div class='tela t20p'><i class='pt' style='left:" & FORMAT ( _x, "0.0##", "en-US" ) & "px;top:"
+			        _na = 1 && NOT ISBLANK ( _px ),
+			        "<div class='tela t20p" & IF ( _ultimo || _alvo, " topo", "" ) & "'><i class='pt' style='left:"
+			            & FORMAT ( _x, "0.0##", "en-US" ) & "px;top:"
 			            & FORMAT ( _y, "0.0##", "en-US" ) & "px;width:" & FORMAT ( _d, "0.0##", "en-US" ) & "px;height:"
-			            & FORMAT ( _d, "0.0##", "en-US" ) & "px;background:" & _cor & ";animation-delay:" & _atraso & "ms'></i>"
+			            & FORMAT ( _d, "0.0##", "en-US" ) & "px;border-width:" & FORMAT ( _borda, "0.0##", "en-US" )
+			            & "px;background:" & _cor & ";animation-delay:" & _atraso & "ms'></i>"
+			            & _rotulos & _rotuloEscola
 			        & "</div>"
 			    )
 		displayFolder: T20 Escola\Desenho
@@ -20806,39 +21200,44 @@ table _Medidas
 
 	/// Texto alternativo da lista dos locais pela queda.
 	measure 'T20 · Quedas · ALT' =
-			VAR _n = COUNTROWS ( FILTER ( ALL ( 'T20 Local'[Local], 'T20 Local'[Id] ), NOT ISBLANK ( [T20 · queda da margem] ) ) )
-			RETURN
-			    "Os " & _n & " locais de votação de Contagem, da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a escola na ficha."
+			"Os " & FORMAT ( [T20 · locais], "#,0" ) & " locais de votação de " & [T20 · cidade]
+			    & ", da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a escola na ficha."
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 8d3a2f9d-5e51-5e84-ab67-c6e5da56f7f8
 
-	/// Uma linha da lista de todos os locais, da maior queda à maior alta da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local], ordenada pela queda): posição, nome, bairro e seções, a variação e o selo. As linhas vêm em fluxo, na ordem do visual, e a lista rola dentro da caixa.
+	/// Uma linha da lista de todos os locais da cidade escolhida, da maior queda à maior alta da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local]; local de outra cidade devolve vazio): posição, nome, bairro e seções, a variação (ou 'novo', sem 2022) e o selo de quem virou. A ordem vem da posição (order no CSS, com quatro dígitos: a lista não depende da ordem em que o visual entrega as linhas) e a lista rola dentro da caixa.
 	measure 'T20 · Quedas · HTML' =
 			-- 1 · Leituras
+			VAR _na = [T20 · na cidade]
 			VAR _pos = [T20 · posição na queda]
-			VAR _bairro = [T20 · bairro]
+			VAR _bairroL = [T20 · bairro]
 			VAR _secoes = [T20 · seções]
 			VAR _var = [T20 · variação da margem]
-			VAR _virou = [T20 · virou]
+			VAR _virou = [T20 · virou] + [T20 · virou para Lula]
 			-- 2 · Textos
 			VAR _nome0 = [T20 · nome do local]
 			VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
 			VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
-			VAR _txtVar = FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " p.p."
-			VAR _sub = _bairro & " · " & _secoes & IF ( _secoes = 1, " seção", " seções" )
+			VAR _bairro0 = _bairroL
+			VAR _bairro1 = SUBSTITUTE ( SUBSTITUTE ( _bairro0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _bairro = SUBSTITUTE ( SUBSTITUTE ( _bairro1, ">", "&gt;" ), "'", "&#39;" )
+			VAR _txtVar = IF ( ISBLANK ( _var ), "novo", FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " p.p." )
+			VAR _sub =
+			    IF ( _bairro <> "", _bairro & " · ", "" ) & _secoes & IF ( _secoes = 1, " seção", " seções" )
 			VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
-			VAR _cor = IF ( _var < 0, "flavio", "lula" )
-			-- 3 · Geometria (só a cascata de entrada das primeiras linhas; a posição vem da ordem do visual)
+			VAR _cor = IF ( ISBLANK ( _var ), "novo", IF ( _var < 0, "flavio", "lula" ) )
+			-- 3 · Geometria (a ordem na lista e a cascata de entrada das primeiras linhas)
+			VAR _ordem = FORMAT ( _pos, "0000" ) -- geometria
 			VAR _d = MIN ( _pos + 2, 12 ) -- geometria
 			-- 4 · Marcação
 			RETURN
 			    IF (
-			        NOT ISBLANK ( _pos ),
-			        "<div class='t20q'><div class='ln sobe d" & _d & "' data-p='" & _pos & "'>"
+			        _na = 1 && NOT ISBLANK ( _pos ),
+			        "<div class='t20q' style='order:" & _ordem & "'><div class='ln sobe d" & _d & "' data-p='" & _pos & "'>"
 			            & "<span class='p'>" & _pos & "</span>"
+			            & "<span class='dir'>" & _selo & "<span class='v " & _cor & " tnum'>" & _txtVar & "</span></span>"
 			            & "<span class='nm'>" & _nome & "</span>"
 			            & "<span class='sb'>" & _sub & "</span>"
-			            & "<span class='v " & _cor & " tnum'>" & _txtVar & "</span>" & _selo
 			        & "</div></div>"
 			    )
 		displayFolder: T20 Escola\Desenho
@@ -20850,14 +21249,18 @@ table _Medidas
 			VAR _lula = [T20 · locais com Lula à frente]
 			VAR _n = [T20 · locais]
 			VAR _lula22 = [T20 · locais com Lula à frente em 2022]
+			VAR _n22 = [T20 · locais em 2022]
 			VAR _viraram = [T20 · locais que viraram]
+			VAR _paraLula = [T20 · locais que viraram para Lula]
 			RETURN
-			    "Lula ficou à frente em " & _lula & " dos " & _n & " locais de votação de Contagem em 2026; em 2022, eram "
-			        & _lula22 & ". " & _viraram & IF ( _viraram = 1, " local virou", " locais viraram" ) & " de Lula para Flávio."
+			    [T20 · cidade] & ": Lula ficou à frente em " & FORMAT ( _lula, "#,0" ) & " dos " & FORMAT ( _n, "#,0" )
+			        & " locais de votação em 2026; em 2022, em " & FORMAT ( _lula22, "#,0" ) & " dos " & FORMAT ( _n22, "#,0" )
+			        & ". " & FORMAT ( _viraram, "#,0" ) & IF ( _viraram = 1, " local virou", " locais viraram" )
+			        & " de Lula para Flávio e " & FORMAT ( _paraLula, "#,0" ) & " de Flávio para Lula."
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 17adf2d2-f94d-59fd-a6b4-ed407fc2b7c1
 
-	/// A resposta da tela: '12 de 112' locais com Lula à frente (contador), a manchete com o número de 2022 e quantos viraram.
+	/// A resposta da tela na cidade escolhida: '12 de 112' locais de votação com Lula à frente em 2026 (contador), quantos eram em 2022 e quantos viraram, nos dois sentidos.
 	measure 'T20 · Resposta · HTML' =
 			-- 1 · Leituras
 			VAR _lula = [T20 · locais com Lula à frente]
@@ -20865,19 +21268,45 @@ table _Medidas
 			VAR _lula22 = [T20 · locais com Lula à frente em 2022]
 			VAR _n22 = [T20 · locais em 2022]
 			VAR _viraram = [T20 · locais que viraram]
+			VAR _paraLula = [T20 · locais que viraram para Lula]
 			-- 2 · Textos
+			VAR _cidade0 = [T20 · cidade]
+			VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
 			VAR _rotLocal = IF ( _lula = 1, "local de votação com Lula à frente em 2026", "locais de votação com Lula à frente em 2026" )
+			VAR _antes =
+			    SWITCH (
+			        TRUE (),
+			        _lula22 = 0 && _lula = 0, "Em 2022, também nenhum",
+			        _lula22 = 0, "Em 2022, nenhum",
+			        _lula22 = 1, "Em 2022, <span class='num'>1</span>",
+			        "Em 2022, eram <span class='num'>" & FORMAT ( _lula22, "#,0" ) & "</span>"
+			    ) & IF ( _n22 = 1, " no único local.", " dos " & FORMAT ( _n22, "#,0" ) & " locais." )
 			VAR _txtViraram =
-			    IF ( _viraram = 1, "1 local virou", _viraram & " locais viraram" ) & " de Lula para Flávio."
+			    SWITCH (
+			        TRUE (),
+			        _viraram = 0, "Nenhum local virou de Lula para Flávio",
+			        _viraram = 1, "1 local virou de Lula para Flávio",
+			        FORMAT ( _viraram, "#,0" ) & " locais viraram de Lula para Flávio"
+			    ) & SWITCH (
+			        TRUE (),
+			        _paraLula = 0, ".",
+			        _paraLula = 1, "; 1 fez o caminho inverso.",
+			        "; " & FORMAT ( _paraLula, "#,0" ) & " fizeram o caminho inverso."
+			    )
+			-- 3 · Geometria (com milhar, o número grande desce de 96 para 72 px e cabe na caixa)
+			VAR _classe = IF ( _n >= 1000, "grande g4", "grande" ) -- geometria
 			-- 4 · Marcação
 			RETURN
 			    "<div class='tela t20r'>"
-			        & "<div class='grande sobe'><span class='num'>" & _lula & "</span> de <span class='num'>" & _n & "</span></div>"
-			        & "<div class='rotulo sobe d2'>" & _rotLocal & "</div>"
-			        & "<div class='man sobe d3'>Lula ficou à frente em " & _lula & " dos " & _n
-			            & IF ( _n = 1, " local", " locais" ) & " de votação de Contagem; em 2022, eram <span class='num'>"
-			            & _lula22 & "</span></div>"
-			        & "<div class='txt sobe d4'>" & _txtViraram & " Em 2022, a cidade votava em " & _n22 & " locais.</div>"
+			        & "<div class='rot cid sobe'>" & _cidade & "</div>"
+			        & "<div class='" & _classe & " sobe d1'><span class='num'>" & FORMAT ( _lula, "#,0" ) & "</span> de "
+			            & "<span class='num'>" & FORMAT ( _n, "#,0" ) & "</span></div>"
+			        & "<div class='fluxo'>"
+			            & "<div class='rotulo sobe d2'>" & _rotLocal & "</div>"
+			            & "<div class='man sobe d3'>" & _antes & "</div>"
+			            & "<div class='txt sobe d4'>" & _txtViraram & "</div>"
+			        & "</div>"
 			    & "</div>"
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 352a859b-5127-539a-aa5b-067cc9bcdb70
@@ -20898,7 +21327,7 @@ table _Medidas
 	/// Post-it do local sob o mouse (página de tooltip ttT20Escola): bairro, seções, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026.
 	measure 'T20 · Tooltip escola · HTML' =
 			-- 1 · Leituras
-			VAR _bairro = [T20 · bairro]
+			VAR _bairroL = [T20 · bairro]
 			VAR _secoes = [T20 · seções]
 			VAR _val = [T20 · válidos 2026]
 			VAR _lula = [T20 · Lula % 2026]
@@ -20907,18 +21336,30 @@ table _Medidas
 			VAR _m22 = [T20 · margem 2022]
 			VAR _m26 = [T20 · margem 2026]
 			VAR _virou = [T20 · virou]
+			VAR _virouLula = [T20 · virou para Lula]
 			-- 2 · Textos
 			VAR _nome0 = [T20 · nome do local]
 			VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
 			VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
+			VAR _bairro0 = _bairroL
+			VAR _bairro1 = SUBSTITUTE ( SUBSTITUTE ( _bairro0, "&", "&amp;" ), "<", "&lt;" )
+			VAR _bairro = SUBSTITUTE ( SUBSTITUTE ( _bairro1, ">", "&gt;" ), "'", "&#39;" )
 			VAR _sub =
-			    _bairro & " · " & _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" ) & " válidos"
+			    IF ( _bairro <> "", _bairro & " · ", "" ) & _secoes & IF ( _secoes = 1, " seção · ", " seções · " )
+			        & FORMAT ( _val, "#,0" ) & " válidos"
 			VAR _t18 = IF ( ISBLANK ( _m18 ), "—", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
 			VAR _t22 = IF ( ISBLANK ( _m22 ), "—", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
 			VAR _t26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
 			VAR _nota =
-			    SWITCH ( TRUE (), _virou = 1, "virou em 2026", _m26 > 0, "Lula à frente", "Flávio à frente" )
-			VAR _selo = IF ( _virou = 1, "<div class='selo'>virou</div>", "" )
+			    SWITCH (
+			        TRUE (),
+			        _virou = 1, "virou para Flávio",
+			        _virouLula = 1, "virou para Lula",
+			        _m26 > 0, "Lula à frente",
+			        _m26 < 0, "Flávio à frente",
+			        "empate"
+			    )
+			VAR _selo = IF ( _virou + _virouLula = 1, "<div class='selo'>virou</div>", "" )
 			-- 4 · Marcação
 			RETURN
 			    IF (

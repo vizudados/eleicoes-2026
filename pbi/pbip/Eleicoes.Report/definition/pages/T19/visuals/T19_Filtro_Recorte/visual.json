@@ -74,7 +74,7 @@
             "listLayout": {
               "expr": {
                 "Literal": {
-                  "Value": "'accordion'"
+                  "Value": "'standard'"
                 }
               }
             },
@@ -130,14 +130,21 @@
             "searchScope": {
               "expr": {
                 "Literal": {
-                  "Value": "'category'"
+                  "Value": "'list'"
                 }
               }
             },
             "searchPlaceholder": {
               "expr": {
                 "Literal": {
-                  "Value": "'Digite para buscar'"
+                  "Value": "'Buscar região, estado ou cidade'"
+                }
+              }
+            },
+            "categoryHeaderStyle": {
+              "expr": {
+                "Literal": {
+                  "Value": "'natural'"
                 }
               }
             },
@@ -738,7 +745,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Filtro do recorte em acordeão: região, estado, tamanho da cidade, renda, quem virou e cidade (com busca); vários itens no mesmo grupo somam, grupos diferentes se combinam'"
+                  "Value": "'Filtro do recorte em árvore: região, estado e cidade numa hierarquia só, tamanho da cidade, renda e quem virou (com busca); vários itens no mesmo grupo somam, grupos diferentes se combinam'"
                 }
               }
             }

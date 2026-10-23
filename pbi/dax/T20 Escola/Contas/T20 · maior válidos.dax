@@ -1,7 +1,9 @@
 /*
 @pasta: T20 Escola\Contas
 @formato: #,0
-@descricao: Maior número de votos válidos entre os 112 locais (escala do tamanho dos pontos no mapa; ignora a escolha de local).
-@oraculo: 7.884
+@descricao: Maior número de votos válidos entre os locais da cidade da tela (escala do tamanho dos pontos; ignora a escolha de local).
+@oraculo: 7.884 em Contagem
 */
-CALCULATE ( MAXX ( VALUES ( 'T20 Local'[Local] ), [T20 · válidos 2026] ), REMOVEFILTERS ( 'T20 Local' ) )
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    CALCULATE ( MAX ( 'T20 Local'[Validos2026] ), REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod )

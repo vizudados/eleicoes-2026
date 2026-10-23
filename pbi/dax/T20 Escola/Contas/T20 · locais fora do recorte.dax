@@ -1,0 +1,17 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Locais de 2026 da cidade da tela longe da mancha urbana, fora do recorte do mapa (só nas cidades de território grande): entram nas contas e na lista.
+@oraculo: 0 em Contagem
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    COALESCE (
+        CALCULATE (
+            COUNTROWS ( 'T20 Local' ),
+            REMOVEFILTERS ( 'T20 Local' ),
+            'T20 Local'[CodIBGE] = _cod,
+            'T20 Local'[Fora do mapa] = "fora do recorte"
+        ),
+        0
+    )

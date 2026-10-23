@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Caminho SVG da cidade inteira no mapinha do recorte (viewBox 0 0 100 100).
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Inteiro], 'T20 Cidade'[CodIBGE], _cod )

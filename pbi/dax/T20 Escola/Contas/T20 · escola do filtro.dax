@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: Id da escola escolhida no filtro: quando há exatamente uma folha marcada e ela não é a cidade inteira; vazio com a cidade inteira, com várias escolas ou sem escolha.
+*/
+VAR _n = [T20 · escolas no filtro]
+RETURN
+    IF ( _n = 1 && [T20 · locais] > 1, SELECTEDVALUE ( 'T20 Filtro'[IdLocal] ) )

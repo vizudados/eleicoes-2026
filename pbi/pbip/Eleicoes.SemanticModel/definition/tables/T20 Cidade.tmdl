@@ -1,0 +1,202 @@
+/// As 34 cidades da tela 20, uma por linha: os locais de 2022 (os do próprio ano), a escola de exemplo da ficha e o mapa (moldura, contorno da malha do IBGE simplificado, mapinha do recorte, rótulos de bairro).
+table 'T20 Cidade'
+	lineageTag: 9a7be56e-df3e-5604-bd24-1e9861d62188
+
+	/// Código IBGE da cidade.
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: bb2dcdbe-44bc-5536-9306-936170f966f9
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Código do município no TSE.
+	column CodTSE
+		dataType: string
+		isHidden
+		lineageTag: cad56af5-96f8-530d-a906-16df39575c4b
+		summarizeBy: none
+		sourceColumn: CodTSE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla da UF.
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 8d20bf29-cb02-555c-8f10-a07740f9eb13
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome da cidade, sem a UF.
+	column Nome
+		dataType: string
+		isHidden
+		lineageTag: 22cf89f5-2772-5fde-835d-c289e9dbf815
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome da cidade com a UF: Contagem (MG).
+	column Cidade
+		dataType: string
+		lineageTag: 76757f31-e980-5341-b8b1-4fb445bb280d
+		summarizeBy: none
+		sourceColumn: Cidade
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Por que a cidade está na tela: capital, virou (uma das 6 maiores que trocaram Lula por Flávio) ou início (Contagem).
+	column Grupo
+		dataType: string
+		isHidden
+		lineageTag: d617c359-ed89-5eea-9f89-2085e22bb332
+		summarizeBy: none
+		sourceColumn: Grupo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem no filtro: Contagem primeiro, as outras em ordem alfabética.
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9835f657-3905-5d12-b71f-a987a5fbdbc1
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Locais de votação da cidade em 2022, como o TSE os listou naquele ano.
+	column Locais2022
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 14220944-9ba4-5d0d-88f8-cd10f2b952bc
+		summarizeBy: none
+		sourceColumn: Locais2022
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Locais de 2022 (os do próprio ano) em que Lula teve mais votos que Jair Bolsonaro.
+	column Lula2022
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 27d95619-db20-5e4d-a633-f4d43d62b92f
+		summarizeBy: none
+		sourceColumn: Lula2022
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Id do local da ficha quando nada foi escolhido: em Contagem, a Escola Estadual Nova Contagem-I; nas outras, a escola que virou com mais votos válidos (ou, sem nenhuma que virou, a de maior queda).
+	column IdExemplo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 98e895fa-c510-52c0-bd3d-3426000724b2
+		summarizeBy: none
+		sourceColumn: IdExemplo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Por que o exemplo: começo, virou ou queda.
+	column Exemplo
+		dataType: string
+		isHidden
+		lineageTag: 9206e965-2222-5f3b-a9a5-d5aa5e7abaff
+		summarizeBy: none
+		sourceColumn: Exemplo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// 1 quando o mapa mostra só a mancha urbana (cidade de território grande), com o mapinha da cidade inteira no canto.
+	column Recorte
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 12e6bc13-4f3c-5b63-a76b-814b94960599
+		summarizeBy: none
+		sourceColumn: Recorte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mediana da distância entre locais vizinhos no mapa, em % da largura da moldura (dá o tamanho dos pontos).
+	column 'Espaço'
+		dataType: double
+		isHidden
+		formatString: 0.00
+		lineageTag: 3ba33e5d-370e-51ab-b4cf-31319d47f0c0
+		summarizeBy: none
+		sourceColumn: Espaço
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Canto do mapinha do recorte (so, se, no, ne).
+	column Canto
+		dataType: string
+		isHidden
+		lineageTag: 121adc41-5ea1-5dc5-b5bd-0a362649cb82
+		summarizeBy: none
+		sourceColumn: Canto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rótulos de bairro do mapa: NOME@x@y separados por |, em % da moldura.
+	column Bairros
+		dataType: string
+		isHidden
+		lineageTag: eef56564-d262-5dfa-a612-136696cfcf9a
+		summarizeBy: none
+		sourceColumn: Bairros
+
+		annotation SummarizationSetBy = Automatic
+
+	/// O retângulo do recorte no mapinha: x y largura altura (0–100).
+	column Moldura
+		dataType: string
+		isHidden
+		lineageTag: 323bd260-cd0b-5a46-851c-eec2db898151
+		summarizeBy: none
+		sourceColumn: Moldura
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Caminho SVG do contorno da cidade em % da moldura (viewBox 0 0 100 100).
+	column Contorno
+		dataType: string
+		isHidden
+		lineageTag: 93315ea2-5a4e-5420-ada8-269507356f13
+		summarizeBy: none
+		sourceColumn: Contorno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Caminho SVG da cidade inteira no mapinha (viewBox 0 0 100 100); vazio fora do recorte.
+	column Inteiro
+		dataType: string
+		isHidden
+		lineageTag: 4bd8f3d5-92f7-55d6-a388-9a7cf4d6c5b5
+		summarizeBy: none
+		sourceColumn: Inteiro
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T20 Cidade' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/t20_cidades.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"cod_ibge", "cod_tse", "uf", "nome", "cidade", "grupo", "ordem", "locais_2022", "lula_2022", "id_exemplo", "exemplo", "recorte", "espaco", "canto", "bairros", "moldura", "contorno", "inteiro"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"cod_ibge", type text}, {"cod_tse", type text}, {"uf", type text}, {"nome", type text}, {"cidade", type text}, {"grupo", type text}, {"ordem", Int64.Type}, {"locais_2022", Int64.Type}, {"lula_2022", Int64.Type}, {"id_exemplo", Int64.Type}, {"exemplo", type text}, {"recorte", Int64.Type}, {"espaco", type number}, {"canto", type text}, {"bairros", type text}, {"moldura", type text}, {"contorno", type text}, {"inteiro", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"cod_ibge", "CodIBGE"}, {"cod_tse", "CodTSE"}, {"uf", "UF"}, {"nome", "Nome"}, {"cidade", "Cidade"}, {"grupo", "Grupo"}, {"ordem", "Ordem"}, {"locais_2022", "Locais2022"}, {"lula_2022", "Lula2022"}, {"id_exemplo", "IdExemplo"}, {"exemplo", "Exemplo"}, {"recorte", "Recorte"}, {"espaco", "Espaço"}, {"canto", "Canto"}, {"bairros", "Bairros"}, {"moldura", "Moldura"}, {"contorno", "Contorno"}, {"inteiro", "Inteiro"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

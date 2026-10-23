@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: 1 quando o mapa da cidade da tela mostra só a mancha urbana (território grande), com o mapinha da cidade inteira.
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    COALESCE ( LOOKUPVALUE ( 'T20 Cidade'[Recorte], 'T20 Cidade'[CodIBGE], _cod ), 0 )

@@ -35,6 +35,11 @@ presidencial de 2026 como o documentário da Spotniks: do placar ao porquê, do 
 | 14 | IV · E agora | E agora, o que as pesquisas dizem do 2º turno? | Desde 05/10, Flávio lidera 34 de 39 pesquisas do 2º turno | pesquisas |
 | 15 | IV · E agora | O que os números dizem, afinal? (encerramento) | os achados de cada ato + fontes + créditos das fotos | — |
 
+Tela 22 · Escola (código T20, capítulo V): **Como votou cada escola da cidade?** — os locais de votação de 34 cidades
+(as 27 capitais, as 6 maiores que trocaram Lula por Flávio de 2022 para 2026 e Contagem, onde o documentário começa e
+onde a tela abre), escolhidas no filtro do topo. Resposta em Contagem: Lula à frente em 12 dos 112 locais em 2026
+(eram 27 dos 111 em 2022); 14 viraram de Lula para Flávio. TSE (seções e cadastro de locais) × malha do IBGE.
+
 Decisões do Alisson (22/10/2026): fazer tudo; arquivo novo no Figma; linguagem visual da casa (21/10) "mesmo traço, mas
 puxado um pouco mais pra desenho e rabisco", com liberdade criativa; paleta bege com pontos entre vermelho e azul; tela
 de pesquisas "antes e agora"; depois, pediu narrativa coesa e rica com pesquisas de redes sociais, assuntos mais

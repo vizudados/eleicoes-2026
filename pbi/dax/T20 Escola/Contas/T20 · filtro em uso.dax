@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: 1 quando o filtro da tela tem uma escolha (cidade ou escola): o ponto vermelho da pílula.
+*/
+IF ( ISFILTERED ( 'T20 Filtro' ), 1, 0 )

@@ -1,0 +1,71 @@
+/// O filtro da tela 20 (VizuFilter em árvore, um campo só): uma linha por local de votação, Cidade e escola › Contagem (MG) › nome. O filtro cai na escola; marcar a cidade marca as escolas dela. Sem relação: as medidas leem a escolha.
+table 'T20 Filtro'
+	lineageTag: f8e6b3a3-eb73-55d5-a295-ba0aedc3a387
+
+	/// Cidade e escola › cidade › escola: o campo do VizuFilter em modo caminho.
+	column Caminho
+		dataType: string
+		lineageTag: 3b04514d-b03b-5e23-9ef0-1ece1f76a7d4
+		summarizeBy: none
+		sourceColumn: Caminho
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Código IBGE da cidade do local.
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: 674a230f-2b1f-5845-8be8-c80711e81746
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Id do local (T20 Local[Id]).
+	column IdLocal
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5df7bfcb-9b4d-5699-befe-54e14cd0a477
+		summarizeBy: none
+		sourceColumn: IdLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem do caminho na árvore: as cidades na ordem do filtro (Contagem primeiro) e as escolas em ordem alfabética dentro da cidade.
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5d7dd38d-6ba0-5f2f-b9a3-1142b8e1b0dd
+		summarizeBy: none
+		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T20 Filtro' = m
+		mode: import
+		source =
+				let
+				    LocFonte = fxCsv("dados/pbi/t20_locais.csv", ","),
+				    Loc = Table.TransformColumnTypes(
+				        Table.SelectColumns(LocFonte, {"id", "cod_ibge", "nome", "ordem_nome"}, MissingField.UseNull),
+				        {{"id", Int64.Type}, {"cod_ibge", type text}, {"nome", type text}, {"ordem_nome", Int64.Type}}, "en-US"),
+				    CidFonte = fxCsv("dados/pbi/t20_cidades.csv", ","),
+				    Cid = Table.TransformColumnTypes(
+				        Table.SelectColumns(CidFonte, {"cod_ibge", "cidade", "ordem"}, MissingField.UseNull),
+				        {{"cod_ibge", type text}, {"cidade", type text}, {"ordem", Int64.Type}}, "en-US"),
+				    // uma folha por local: a cidade é o nó do meio (Contagem primeiro, as outras em ordem alfabética) e as escolas,
+				    // em ordem alfabética dentro dela
+				    ComCidade = Table.Join(Loc, "cod_ibge", Table.RenameColumns(Cid, {{"cod_ibge", "cod_cidade"}}), "cod_cidade",
+				        JoinKind.Inner),
+				    Escolas = Table.FromRecords(List.Transform(Table.ToRecords(ComCidade), each [
+				        Caminho = "Cidade e escola › " & [cidade] & " › " & [nome], CodIBGE = [cod_ibge], IdLocal = [id],
+				        Ordem = [ordem] * 10000 + [ordem_nome]])),
+				    Final = Table.TransformColumnTypes(Escolas, {{"Caminho", type text}, {"CodIBGE", type text},
+				        {"IdLocal", Int64.Type}, {"Ordem", Int64.Type}})
+				in
+				    Final
+
+	annotation PBI_ResultType = Table

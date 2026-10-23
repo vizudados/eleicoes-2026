@@ -1,9 +1,18 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: Texto alternativo do filtro de escola: a escolha em uso.
+@descricao: Texto alternativo do filtro da tela: a cidade e a escola em uso.
 */
 -- 1 · Leituras
-VAR _ha = [T20 · há escolha]
+VAR _escola = [T20 · escola do filtro]
+VAR _marcadas = [T20 · escolas no filtro]
+VAR _locais = [T20 · locais]
+VAR _id = _escola
 RETURN
-    IF ( _ha = 1, "Filtro de escola: " & [T20 · nome do local], "Filtro de escola: nenhuma escolhida" )
+    "Filtro de cidade e escola: " & [T20 · cidade]
+        & SWITCH (
+            TRUE (),
+            NOT ISBLANK ( _escola ), " · " & CALCULATE ( [T20 · nome do local], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id ),
+            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, "#,0" ) & " escolas marcadas",
+            " (nenhuma escola escolhida)"
+        )

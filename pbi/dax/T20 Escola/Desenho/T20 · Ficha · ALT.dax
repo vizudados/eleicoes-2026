@@ -4,13 +4,13 @@
 @descricao: Texto alternativo da ficha do local.
 */
 -- 1 · Leituras
-VAR _esc = [T20 · local escolhido]
-VAR _m18 = CALCULATE ( [T20 · margem 2018], 'T20 Local'[Local] = _esc )
-VAR _m22 = CALCULATE ( [T20 · margem 2022], 'T20 Local'[Local] = _esc )
-VAR _m26 = CALCULATE ( [T20 · margem 2026], 'T20 Local'[Local] = _esc )
+VAR _id = [T20 · id escolhido]
+VAR _m18 = CALCULATE ( [T20 · margem 2018], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _m22 = CALCULATE ( [T20 · margem 2022], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
+VAR _m26 = CALCULATE ( [T20 · margem 2026], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )
 -- 2 · Textos
 VAR _t18 = IF ( ISBLANK ( _m18 ), "sem dado", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
 VAR _t22 = IF ( ISBLANK ( _m22 ), "sem dado", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
 RETURN
-    "Ficha: " & _esc & ". Margem de Lula em pontos: 2018 " & _t18 & "; 2022 " & _t22 & "; 2026 "
-        & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & "."
+    "Ficha: " & [T20 · local escolhido] & " (" & [T20 · cidade] & "). Margem de Lula em pontos: 2018 " & _t18
+        & "; 2022 " & _t22 & "; 2026 " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & "."

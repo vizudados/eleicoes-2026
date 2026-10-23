@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: 1 quando o local da linha é da cidade da tela: o mapa e a lista só desenham esses.
+*/
+IF ( SELECTEDVALUE ( 'T20 Local'[CodIBGE] ) = [T20 · cidade (código)], 1, 0 )

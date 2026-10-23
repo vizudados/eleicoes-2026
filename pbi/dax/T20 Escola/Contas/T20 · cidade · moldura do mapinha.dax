@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: O retângulo do recorte no mapinha: 'x y largura altura' (0–100).
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Moldura], 'T20 Cidade'[CodIBGE], _cod )

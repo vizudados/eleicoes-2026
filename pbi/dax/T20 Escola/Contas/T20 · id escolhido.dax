@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: Id do local da ficha e do anel do mapa: o clicado no mapa ou na lista; senão o escolhido no filtro; senão o exemplo da cidade.
+*/
+COALESCE ( [T20 · escola clicada], [T20 · escola do filtro], [T20 · id do exemplo] )

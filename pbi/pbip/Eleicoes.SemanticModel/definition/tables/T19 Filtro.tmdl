@@ -1,4 +1,4 @@
-/// O filtro do recorte da tela 19 (acordeão do VizuFilter, um campo só): uma linha por município × grupo (Região, Estado, Tamanho da cidade, Renda, Virou?, Cidade). Sem relação ativa com o Município: a medida [T19 · no recorte] aplica E entre os grupos e OU dentro do mesmo grupo.
+/// O filtro do recorte da tela 19 (árvore do VizuFilter, um campo só): uma linha por município × grupo (o lugar, Região › Estado › Cidade; Tamanho da cidade; Renda; Virou?). Sem relação ativa com o Município: a medida [T19 · no recorte] aplica E entre os grupos e OU dentro do mesmo grupo.
 table 'T19 Filtro'
 	lineageTag: 83a40b84-1951-5cea-b83e-a0ffc3de0bad
 
@@ -12,7 +12,7 @@ table 'T19 Filtro'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// O grupo do filtro: Região, Estado, Tamanho da cidade, Renda (quinto), Virou? ou Cidade.
+	/// O grupo do filtro: Região, estado e cidade; Tamanho da cidade; Renda (quinto); Virou?.
 	column Raiz
 		dataType: string
 		isHidden
@@ -23,7 +23,7 @@ table 'T19 Filtro'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Ordem do grupo no acordeão (1 = Região … 6 = Cidade); as medidas leem o grupo por ela.
+	/// Ordem do grupo (1 = o lugar, 2 = tamanho, 3 = renda, 4 = virou); as medidas leem o grupo por ela.
 	column RaizOrdem
 		dataType: int64
 		isHidden
@@ -34,7 +34,7 @@ table 'T19 Filtro'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// O valor escolhível dentro do grupo (Nordeste, Minas Gerais, até 10 mil, 1º quinto (mais pobres), Virou para Flávio, Contagem (MG)…).
+	/// O valor escolhido na folha (a cidade, 'Contagem (MG)'; até 10 mil; 1º quinto (mais pobres); Virou para Flávio…).
 	column Valor
 		dataType: string
 		isHidden
@@ -44,7 +44,7 @@ table 'T19 Filtro'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Forma curta do valor para o texto do recorte (sigla da UF; o quinto como no Município).
+	/// Forma curta do valor para o texto do recorte (o quinto como no Município).
 	column Curto
 		dataType: string
 		isHidden
@@ -54,7 +54,7 @@ table 'T19 Filtro'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Grupo › valor: o campo do VizuFilter em modo caminho (uma raiz por grupo).
+	/// Grupo › níveis › folha: o campo do VizuFilter em modo caminho (o lugar com três níveis: região, estado e cidade).
 	column Caminho
 		dataType: string
 		lineageTag: d42a2ef3-7570-51c0-9a33-8f4723b6ab88
@@ -64,7 +64,7 @@ table 'T19 Filtro'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Ordem do caminho no acordeão: grupo × 10.000 + a ordem do valor.
+	/// Ordem do caminho: grupo × 10⁷ + a ordem dentro do grupo (no lugar, região × 10⁶ + estado × 10⁴ + cidade).
 	column Ordem
 		dataType: int64
 		isHidden
@@ -72,6 +72,26 @@ table 'T19 Filtro'
 		lineageTag: a1da7324-d423-58e9-8646-779e11816feb
 		summarizeBy: none
 		sourceColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Região da cidade (só nas linhas do lugar): para resumir a escolha ('Nordeste').
+	column Regiao
+		dataType: string
+		isHidden
+		lineageTag: 110aedeb-9838-5b03-ad86-c8fd168009ba
+		summarizeBy: none
+		sourceColumn: Regiao
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla da UF da cidade (só nas linhas do lugar): para resumir a escolha ('MG').
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 69ac0b27-ae7b-5244-8669-3738185ae809
+		summarizeBy: none
+		sourceColumn: UF
 
 		annotation SummarizationSetBy = Automatic
 
@@ -100,26 +120,35 @@ table 'T19 Filtro'
 				    Nomes = List.Sort(List.Distinct(Base[rotulo]), Comparer.FromCulture("pt-BR", true)),
 				    OrdemCidade = Table.FromColumns({Nomes, {1..List.Count(Nomes)}},
 				        type table [rotulo_k = text, cidade_ordem = Int64.Type]),
-				    Tudo = Table.Join(Base, "rotulo", OrdemCidade, "rotulo_k", JoinKind.LeftOuter),
+				    Tudo = Table.Buffer(Table.Join(Base, "rotulo", OrdemCidade, "rotulo_k", JoinKind.LeftOuter)),
 				    N = Table.RowCount(Tudo),
 				    Quinto = List.Transform(Tudo[quinto_ordem], each if _ = null then null else Text.From(_) & "º quinto"
 				        & (if _ = 1 then " (mais pobres)" else if _ = 5 then " (mais ricas)" else "")),
-				    Raiz = (ordem as number, raiz as text, valores as list, curtos as list, ordens as list) as table =>
+				    Nulos = List.Repeat({null}, N),
+				    Raiz = (ordem as number, raiz as text, valores as list, niveis as list, curtos as list, ordens as list,
+				             regioes as list, ufs as list) as table =>
 				        Table.FromColumns(
-				            {Tudo[cd_ibge], List.Repeat({raiz}, N), List.Repeat({ordem}, N), valores, curtos, ordens},
-				            type table [CodIBGE = text, Raiz = text, RaizOrdem = Int64.Type, Valor = text, Curto = text,
-				                        ValorOrdem = Int64.Type]),
+				            {Tudo[cd_ibge], List.Repeat({raiz}, N), List.Repeat({ordem}, N), valores, niveis, curtos, ordens,
+				              regioes, ufs},
+				            type table [CodIBGE = text, Raiz = text, RaizOrdem = Int64.Type, Valor = text, Niveis = text,
+				                        Curto = text, ValorOrdem = Int64.Type, Regiao = text, UF = text]),
+				    // o lugar: Região › Estado › Cidade num caminho só (a folha é a cidade); a ordem segue a hierarquia. Colunas
+				    // da própria tabela (Table.AddColumn): ler Tudo[col]{i} linha a linha refaria a tabela a cada linha
+				    ComLugar = Table.Buffer(Table.AddColumn(
+				        Table.AddColumn(Tudo, "lugar", each [regiao] & " › " & [uf_nome] & " › " & [rotulo], type text),
+				        "lugar_ordem", each [regiao_ordem] * 1000000 + [uf_ordem] * 10000 + [cidade_ordem], Int64.Type)),
 				    Todas = Table.Combine({
-				        Raiz(1, "Região", Tudo[regiao], Tudo[regiao], Tudo[regiao_ordem]),
-				        Raiz(2, "Estado", Tudo[uf_nome], Tudo[uf], Tudo[uf_ordem]),
-				        Raiz(3, "Tamanho da cidade", Tudo[porte], Tudo[porte], Tudo[porte_ordem]),
-				        Raiz(4, "Renda (quinto)", Quinto, Tudo[quinto], Tudo[quinto_ordem]),
-				        Raiz(5, "Virou?", Tudo[lado], Tudo[lado], Tudo[lado_ordem]),
-				        Raiz(6, "Cidade", Tudo[rotulo], Tudo[rotulo], Tudo[cidade_ordem])}),
-				    ComValor = Table.SelectRows(Todas, each [Valor] <> null and [Valor] <> "" and [ValorOrdem] <> null),
-				    Caminho = Table.AddColumn(ComValor, "Caminho", each [Raiz] & " › " & [Valor], type text),
-				    Ordem = Table.AddColumn(Caminho, "Ordem", each [RaizOrdem] * 10000 + [ValorOrdem], Int64.Type),
-				    Final = Table.SelectColumns(Ordem, {"CodIBGE", "Raiz", "RaizOrdem", "Valor", "Curto", "Caminho", "Ordem"})
+				        Raiz(1, "Região, estado e cidade", Tudo[rotulo], ComLugar[lugar], Tudo[rotulo], ComLugar[lugar_ordem], Tudo[regiao],
+				             Tudo[uf]),
+				        Raiz(2, "Tamanho da cidade", Tudo[porte], Tudo[porte], Tudo[porte], Tudo[porte_ordem], Nulos, Nulos),
+				        Raiz(3, "Renda (quinto)", Quinto, Quinto, Tudo[quinto], Tudo[quinto_ordem], Nulos, Nulos),
+				        Raiz(4, "Virou?", Tudo[lado], Tudo[lado], Tudo[lado], Tudo[lado_ordem], Nulos, Nulos)}),
+				    ComValor = Table.SelectRows(Todas, each [Valor] <> null and [Valor] <> "" and [ValorOrdem] <> null
+				        and [Niveis] <> null),
+				    Caminho = Table.AddColumn(ComValor, "Caminho", each [Raiz] & " › " & [Niveis], type text),
+				    Ordem = Table.AddColumn(Caminho, "Ordem", each [RaizOrdem] * 10000000 + [ValorOrdem], Int64.Type),
+				    Final = Table.SelectColumns(Ordem, {"CodIBGE", "Raiz", "RaizOrdem", "Valor", "Curto", "Caminho", "Ordem",
+				        "Regiao", "UF"})
 				in
 				    Final
 

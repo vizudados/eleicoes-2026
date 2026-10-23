@@ -40,6 +40,7 @@ COR = {
     "azul_escuro": "#1D3C6E", "azul_claro": "#8FA8CF", "marrom": "#7A5A43", "branco": "#FBF8F2",
 }
 FAMILIA = "Sora Eleicoes"
+SETAS = "Sora Setas"
 FAMILIA_MAO = "Caveat Eleicoes"
 CARACTERES = ("".join(chr(c) for c in range(0x20, 0x7F)) + "".join(chr(c) for c in range(0xA0, 0x100))
               + "–—‘’‚“”„•…‰′″‹›€−×÷→←↑↓↗↘·•●○◆◇■□▲▼✓✗✔✕★☆№ºª")
@@ -86,7 +87,8 @@ def woff2(nome: str) -> bytes:
 
 
 def font_face(familia: str, nome: str, pesos: str) -> str:
-    b64 = base64.b64encode(woff2(nome)).decode("ascii")
+    b64 = base64.b64encode(woff2(nome) if not nome.startswith("sora-setas") else (FONTES / f"{nome}.woff2").read_bytes()
+                           ).decode("ascii")
     return (f"@font-face{{font-family:'{familia}';font-style:normal;font-weight:{pesos};font-display:block;"
             f"src:url(data:font/woff2;base64,{b64}) format('woff2')}}")
 
@@ -99,7 +101,12 @@ def css_base() -> str:
     return "".join([
         font_face(FAMILIA, "sora-eleicoes", "300 800"),
         font_face(FAMILIA_MAO, "caveat-eleicoes", "400 700"),
-        f":root{{{tokens};--fonte:'{FAMILIA}','Segoe UI',sans-serif;--mao:'{FAMILIA_MAO}','Segoe Print',cursive}}",
+        # as setas que a Sora e a Caveat não têm (→ ← ↑ ↓ ↗ ↘), com as métricas da Sora (scripts/setas.py); sem elas o
+        # "→" caía no Segoe UI, menor e fora da linha de base
+        font_face(SETAS, "sora-setas-400", "300 550"),
+        font_face(SETAS, "sora-setas-600", "551 800"),
+        f":root{{{tokens};--fonte:'{FAMILIA}','{SETAS}','Segoe UI',sans-serif;"
+        f"--mao:'{FAMILIA_MAO}','{SETAS}','Segoe Print',cursive}}",
         "html,body{margin:0;padding:0;background:transparent;overflow:hidden}",
         "body,#htmlViewer,#htmlContent{font-family:var(--fonte);color:var(--tinta);-webkit-font-smoothing:antialiased;"
         "font-feature-settings:'kern' 1,'lnum' 1;text-rendering:geometricPrecision}",

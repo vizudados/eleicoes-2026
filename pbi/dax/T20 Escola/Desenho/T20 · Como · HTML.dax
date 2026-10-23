@@ -1,0 +1,27 @@
+/*
+@pasta: T20 Escola\Desenho
+@formato: texto
+@descricao: O aviso do cartão 'como explorar', por cidade: quantos locais não aparecem no mapa (sem endereço no cadastro do TSE ou fora do recorte da mancha urbana) e que eles entram nas contas e na lista.
+*/
+-- 1 · Leituras
+VAR _sem = [T20 · locais sem endereço]
+VAR _fora = [T20 · locais fora do recorte]
+-- 2 · Textos
+VAR _txtSem = FORMAT ( _sem, "#,0" ) & IF ( _sem = 1, " local sem endereço", " locais sem endereço" )
+VAR _txtFora = FORMAT ( _fora, "#,0" ) & IF ( _fora = 1, " local fora do recorte", " locais fora do recorte" )
+VAR _quem =
+    SWITCH (
+        TRUE (),
+        _sem > 0 && _fora > 0, _txtSem & " e " & FORMAT ( _fora, "#,0" ) & " fora do recorte não aparecem no mapa",
+        _sem > 0, _txtSem & IF ( _sem = 1, " não aparece no mapa", " não aparecem no mapa" ),
+        _fora > 0, _txtFora & IF ( _fora = 1, " não aparece no mapa", " não aparecem no mapa" )
+    )
+VAR _nota =
+    IF (
+        _sem + _fora > 0,
+        _quem & IF ( _sem + _fora = 1, ", mas entra nas contas e na lista.", ", mas entram nas contas e na lista." ),
+        "Todos os locais da cidade estão no mapa."
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t20n'><div class='nota entra d6'>" & _nota & "</div></div>"

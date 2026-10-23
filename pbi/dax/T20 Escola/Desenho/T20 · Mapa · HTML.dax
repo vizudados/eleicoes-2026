@@ -1,15 +1,24 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: Um ponto do mapa de Contagem (granularidade: T20 Local[Local]): posição PX/PY, tamanho pelos votos válidos, cor pela margem de 2026; brota em onda do oeste para o leste.
+@descricao: Um ponto do mapa da cidade escolhida (granularidade: T20 Local[Local]; local de outra cidade ou sem posição devolve vazio): posição PX/PY em % da moldura, tamanho pelos votos válidos e pelo espaço entre locais da cidade (São Paulo não vira mancha), cor pela margem de 2026; brota em onda do oeste para o leste. O último local da cidade no mapa leva também os rótulos de bairro, e o local da ficha sem clique (a escola do filtro ou o exemplo) leva o nome dele, numa camada por cima dos pontos (z-index na entrada: não depende da ordem em que o visual entrega as linhas; em São Paulo o nome atrás dos pontos sumia).
 */
 -- 1 · Leituras
+VAR _na = [T20 · na cidade]
 VAR _px = [T20 · posição x]
 VAR _py = [T20 · posição y]
 VAR _val = [T20 · válidos 2026]
 VAR _maior = [T20 · maior válidos]
 VAR _m26 = [T20 · margem 2026]
+VAR _espaco = [T20 · cidade · espaço entre locais]
+VAR _id = [T20 · id do local]
+VAR _ultimo = [T20 · último local do mapa] = _id
+VAR _bairros = IF ( _ultimo, [T20 · cidade · bairros] )
+VAR _alvo = [T20 · local da ficha sem clique] = _id
 -- 2 · Textos
+VAR _nome0 = IF ( _alvo, [T20 · nome do local] )
+VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
 VAR _cor =
     SWITCH (
         TRUE (),
@@ -19,19 +28,51 @@ VAR _cor =
         _m26 < 0.0, "#A9B8CF",
         _m26 < 0.03, "#E2B3A9",
         _m26 < 0.1, "#D9877B",
-        "#B8322A"
+        _m26 < 0.2, "#B8322A",
+        "#8E2620"
     )
--- 3 · Geometria
-VAR _d = 7 + 15 * SQRT ( DIVIDE ( _val, _maior ) ) -- geometria
+VAR _rotulos =
+    IF (
+        _ultimo && NOT ISBLANK ( _bairros ) && _bairros <> "",
+        CONCATENATEX (
+            GENERATESERIES ( 1, PATHLENGTH ( _bairros ) ),
+            VAR _item = SUBSTITUTE ( PATHITEM ( _bairros, [Value] ), "@", "|" )
+            VAR _nome0 = PATHITEM ( _item, 1 )
+            VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" ), "'", "&#39;" )
+            RETURN
+                "<span class='bairro entra d" & ( 10 + [Value] ) & "' style='left:" & PATHITEM ( _item, 2 ) & "%;top:"
+                    & PATHITEM ( _item, 3 ) & "%'>" & _nome & "</span>",
+            "",
+            [Value], ASC
+        ) /* lista */
+    )
+-- 3 · Geometria (diâmetro: o maior ponto ocupa ~2,2 vezes o espaço típico entre vizinhos, de 4,5 a 16 px: raio de
+-- até 8 px, para o ponto grande não pesar nas cidades de pouca escola)
+VAR _dmax = MIN ( 16, MAX ( 4.5, 2.2 * _espaco / 100 * 692 ) ) -- geometria
+VAR _dmin = MAX ( 2.5, _dmax * 0.35 ) -- geometria
+VAR _d = _dmin + ( _dmax - _dmin ) * SQRT ( DIVIDE ( _val, _maior ) ) -- geometria
+VAR _borda = MIN ( 1.2, _d / 6 ) -- geometria
 VAR _x = _px / 100 * 692 - _d / 2 -- geometria
 VAR _y = _py / 100 * 860 - _d / 2 -- geometria
 VAR _atraso = 1700 + ROUND ( _px * 14, 0 ) -- geometria
+VAR _cx = _px / 100 * 692 -- geometria
+VAR _direita = _cx > 692 * 0.62 -- geometria
+VAR _xr = IF ( _direita, _cx - 22, _cx + 22 ) -- geometria
 -- 4 · Marcação
+VAR _rotuloEscola =
+    IF (
+        _alvo,
+        "<div class='nome sobe d4" & IF ( _direita, " dir", "" ) & "' style='left:" & FORMAT ( _xr, "0.0##", "en-US" )
+            & "px;top:" & FORMAT ( _py / 100 * 860 - 12, "0.0##", "en-US" ) & "px'>" & _nome & "</div>"
+    )
 RETURN
     IF (
-        NOT ISBLANK ( _px ),
-        "<div class='tela t20p'><i class='pt' style='left:" & FORMAT ( _x, "0.0##", "en-US" ) & "px;top:"
+        _na = 1 && NOT ISBLANK ( _px ),
+        "<div class='tela t20p" & IF ( _ultimo || _alvo, " topo", "" ) & "'><i class='pt' style='left:"
+            & FORMAT ( _x, "0.0##", "en-US" ) & "px;top:"
             & FORMAT ( _y, "0.0##", "en-US" ) & "px;width:" & FORMAT ( _d, "0.0##", "en-US" ) & "px;height:"
-            & FORMAT ( _d, "0.0##", "en-US" ) & "px;background:" & _cor & ";animation-delay:" & _atraso & "ms'></i>"
+            & FORMAT ( _d, "0.0##", "en-US" ) & "px;border-width:" & FORMAT ( _borda, "0.0##", "en-US" )
+            & "px;background:" & _cor & ";animation-delay:" & _atraso & "ms'></i>"
+            & _rotulos & _rotuloEscola
         & "</div>"
     )

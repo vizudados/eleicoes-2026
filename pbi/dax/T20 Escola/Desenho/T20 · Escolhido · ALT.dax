@@ -3,4 +3,4 @@
 @formato: texto
 @descricao: Texto alternativo do anel do local escolhido.
 */
-"Local em destaque no mapa: " & [T20 · local escolhido]
+"Mapa de " & [T20 · cidade] & "; local em destaque: " & [T20 · local escolhido]

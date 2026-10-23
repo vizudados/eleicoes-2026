@@ -1,10 +1,10 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: 0
-@descricao: Quantos itens estão marcados no filtro do recorte (T19 Filtro[Caminho]), somando todos os grupos; 0 sem filtro. A pílula usa para o ponto vermelho e para "N filtros".
+@descricao: Quantos grupos do filtro do recorte têm escolha (o lugar, tamanho, renda, virou); 0 sem filtro. A pílula usa para o ponto vermelho e para "N filtros" quando o texto não cabe (no lugar, marcar uma região marca centenas de cidades: contar os itens marcados não diria nada ao leitor).
 */
 IF (
     ISFILTERED ( 'T19 Filtro'[Caminho] ),
-    COUNTROWS ( VALUES ( 'T19 Filtro'[Caminho] ) ),
+    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ),
     0
 )

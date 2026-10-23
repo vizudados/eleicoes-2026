@@ -1,15 +1,9 @@
 /*
 @pasta: T20 Escola\Contas
 @formato: #,0
-@descricao: Locais de votação de Contagem em 2022, como o TSE os listou naquele ano (zona, número e nome; a Local Contagem traz o 1350 da zona 91 em dobro, por isso a contagem é de distintos).
-@oraculo: 111 (dados/saida/locais_contagem.csv, 2022)
+@descricao: Locais de votação da cidade da tela em 2022, como o TSE os listou naquele ano (zona, número, nome e endereço; calculado no pipeline).
+@oraculo: 111 em Contagem (dados/saida/locais_contagem.csv)
 */
-COALESCE (
-    COUNTROWS (
-        SUMMARIZE (
-            FILTER ( 'Local Contagem', 'Local Contagem'[Ano] = 2022 ),
-            'Local Contagem'[Zona], 'Local Contagem'[Local], 'Local Contagem'[Nome do local]
-        )
-    ),
-    0
-)
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    COALESCE ( LOOKUPVALUE ( 'T20 Cidade'[Locais2022], 'T20 Cidade'[CodIBGE], _cod ), 0 )

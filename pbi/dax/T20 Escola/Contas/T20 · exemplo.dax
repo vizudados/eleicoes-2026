@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Por que o exemplo da ficha: começo (Contagem), virou ou queda.
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Exemplo], 'T20 Cidade'[CodIBGE], _cod )

@@ -1,10 +1,16 @@
 /*
 @pasta: T20 Escola\Contas
 @formato: #,0
-@descricao: Locais de 2026 em que Lula teve mais votos que Flávio.
+@descricao: Locais de 2026 da cidade da tela em que Lula teve mais votos que Flávio.
 @oraculo: mockup/data/eleicoes.json › Escola › lula_frente_2026 (12)
 */
-COALESCE (
-    COUNTROWS ( FILTER ( 'T20 Local', 'T20 Local'[VotosPT2026] > 'T20 Local'[VotosAdv2026] ) ),
-    0
-)
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    COALESCE (
+        CALCULATE (
+            COUNTROWS ( FILTER ( 'T20 Local', 'T20 Local'[VotosPT2026] > 'T20 Local'[VotosAdv2026] ) ),
+            REMOVEFILTERS ( 'T20 Local' ),
+            'T20 Local'[CodIBGE] = _cod
+        ),
+        0
+    )

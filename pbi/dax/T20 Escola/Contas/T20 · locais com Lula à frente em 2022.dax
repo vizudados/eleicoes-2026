@@ -1,21 +1,9 @@
 /*
 @pasta: T20 Escola\Contas
 @formato: #,0
-@descricao: Locais de 2022 (os do próprio ano) em que Lula teve mais votos que Jair Bolsonaro.
+@descricao: Locais de 2022 da cidade da tela (os do próprio ano) em que Lula teve mais votos que Jair Bolsonaro (calculado no pipeline).
 @oraculo: mockup/data/eleicoes.json › Escola › lula_frente_2022 (27)
 */
-VAR _locais =
-    SUMMARIZE (
-        FILTER ( 'Local Contagem', 'Local Contagem'[Ano] = 2022 ),
-        'Local Contagem'[Zona], 'Local Contagem'[Local], 'Local Contagem'[Nome do local]
-    )
+VAR _cod = [T20 · cidade (código)]
 RETURN
-    COUNTROWS (
-        FILTER (
-            _locais,
-            CALCULATE (
-                MAX ( 'Local Contagem'[VotosPT] ) - MAX ( 'Local Contagem'[VotosAdversario] ),
-                'Local Contagem'[Ano] = 2022
-            ) > 0
-        )
-    )
+    COALESCE ( LOOKUPVALUE ( 'T20 Cidade'[Lula2022], 'T20 Cidade'[CodIBGE], _cod ), 0 )

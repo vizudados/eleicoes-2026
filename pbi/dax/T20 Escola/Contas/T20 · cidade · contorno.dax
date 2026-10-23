@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Caminho SVG do contorno da cidade da tela, em % da moldura do mapa (viewBox 0 0 100 100; a moldura tem a proporção da caixa do mapa).
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Contorno], 'T20 Cidade'[CodIBGE], _cod )

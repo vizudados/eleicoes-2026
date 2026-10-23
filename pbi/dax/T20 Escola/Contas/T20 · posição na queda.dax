@@ -1,10 +1,7 @@
 /*
 @pasta: T20 Escola\Contas
 @formato: 0
-@descricao: Posição do local entre os da lista das maiores quedas (1 = maior queda). O Power BI põe a coluna de ordenação ('T20 Local'[Id]) no grão do visual: o RANKX percorre as duas colunas, senão cada linha só vê a si mesma e todas saem 1 (L-armadilha da coluna de ordenação, como na tela 13).
+@descricao: Posição do local na lista da cidade, da maior queda da margem de Lula 2022 → 2026 à maior alta, com os locais novos (sem 2022) no fim, por nome; calculada no pipeline por cidade (pipeline/exportar_t20.py), o que poupa um RANKX por linha nas 2.060 de São Paulo.
 @oraculo: mockup/data/eleicoes.json › Escola › maiores_quedas (ordem)
 */
-IF (
-    HASONEVALUE ( 'T20 Local'[Local] ),
-    RANKX ( ALLSELECTED ( 'T20 Local'[Local], 'T20 Local'[Id] ), [T20 · queda da margem], , DESC, SKIP )
-)
+SELECTEDVALUE ( 'T20 Local'[PosQueda] )

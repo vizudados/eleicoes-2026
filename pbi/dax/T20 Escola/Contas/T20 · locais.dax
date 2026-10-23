@@ -1,10 +1,12 @@
 /*
 @pasta: T20 Escola\Contas
 @formato: #,0
-@descricao: Locais de votação de Contagem em 2026 no contexto (112 sem filtro).
+@descricao: Locais de votação da cidade da tela em 2026 (112 em Contagem).
 @oraculo: mockup/data/eleicoes.json › Escola › locais_2026 (112)
 */
-COALESCE (
-    COUNTROWS ( 'T20 Local' ),
-    0
-)
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    COALESCE (
+        CALCULATE ( COUNTROWS ( 'T20 Local' ), REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod ),
+        0
+    )

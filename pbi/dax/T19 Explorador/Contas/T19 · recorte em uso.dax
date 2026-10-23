@@ -1,16 +1,11 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: texto
-@descricao: O recorte em palavras, para a faixa do resumo e os textos alternativos: um pedaço por grupo do filtro com escolha, na ordem do acordeão ('Sudeste · 10 a 50 mil hab. · seleção na dispersão'; 'MG, SP · renda: mais pobres'), com a contagem quando são muitos itens ('6 estados', '12 cidades escolhidas'); 'Todo o Brasil' sem filtro.
+@descricao: O recorte em palavras, para a faixa do resumo e os textos alternativos: um pedaço por grupo do filtro com escolha, na ordem da árvore ('Sudeste · 10 a 50 mil hab. · seleção na dispersão'; 'MG, SP · renda: mais pobres'); o lugar vem resumido de cima para baixo ([T19 · filtro · lugar]), os outros grupos com a contagem quando são vários itens; 'Todo o Brasil' sem filtro.
 @oraculo: mockup/data/eleicoes.json › Explorador › padrao.recorte_txt
 */
--- 1 · Escolhas por grupo (RaizOrdem: 1 Região, 2 Estado, 3 Tamanho da cidade, 4 Renda, 5 Virou?, 6 Cidade)
+-- 1 · Escolhas por grupo (RaizOrdem: 1 o lugar, 2 Tamanho da cidade, 3 Renda, 4 Virou?)
 VAR _f = ISFILTERED ( 'T19 Filtro'[Caminho] )
-VAR _t1 =
-    CALCULATETABLE (
-        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
-        'T19 Filtro'[RaizOrdem] = 1
-    )
 VAR _t2 =
     CALCULATETABLE (
         SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
@@ -26,75 +21,36 @@ VAR _t4 =
         SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
         'T19 Filtro'[RaizOrdem] = 4
     )
-VAR _t5 =
-    CALCULATETABLE (
-        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
-        'T19 Filtro'[RaizOrdem] = 5
-    )
-VAR _t6 =
-    CALCULATETABLE (
-        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Curto], 'T19 Filtro'[Ordem] ),
-        'T19 Filtro'[RaizOrdem] = 6
-    )
-VAR _n1 = IF ( _f, COUNTROWS ( _t1 ), 0 )
 VAR _n2 = IF ( _f, COUNTROWS ( _t2 ), 0 )
 VAR _n3 = IF ( _f, COUNTROWS ( _t3 ), 0 )
 VAR _n4 = IF ( _f, COUNTROWS ( _t4 ), 0 )
-VAR _n5 = IF ( _f, COUNTROWS ( _t5 ), 0 )
-VAR _n6 = IF ( _f, COUNTROWS ( _t6 ), 0 )
 -- 2 · Um pedaço por grupo: os itens (poucos) ou a contagem (muitos)
-VAR _regiao =
-    IF (
-        _n1 > 0,
-        IF (
-            _n1 <= 3,
-            CONCATENATEX ( _t1, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-            _n1 & " regiões"
-        )
-    )
-VAR _uf =
+VAR _lugar = [T19 · filtro · lugar]
+VAR _porte =
     IF (
         _n2 > 0,
         IF (
-            _n2 <= 4,
-            CONCATENATEX ( _t2, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-            _n2 & " estados"
-        )
-    )
-VAR _porte =
-    IF (
-        _n3 > 0,
-        IF (
-            _n3 <= 2,
-            CONCATENATEX ( _t3, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ) & " hab.",
-            _n3 & " tamanhos de cidade"
+            _n2 <= 2,
+            CONCATENATEX ( _t2, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ) & " hab.",
+            _n2 & " tamanhos de cidade"
         )
     )
 VAR _quinto =
     IF (
-        _n4 > 0,
+        _n3 > 0,
         IF (
-            _n4 <= 2,
-            "renda: " & CONCATENATEX ( _t4, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-            _n4 & " faixas de renda"
+            _n3 <= 2,
+            "renda: " & CONCATENATEX ( _t3, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+            _n3 & " faixas de renda"
         )
     )
 VAR _lado =
     IF (
-        _n5 > 0,
+        _n4 > 0,
         IF (
-            _n5 <= 2,
-            CONCATENATEX ( _t5, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-            _n5 & " situações"
-        )
-    )
-VAR _cidade =
-    IF (
-        _n6 > 0,
-        IF (
-            _n6 <= 3,
-            CONCATENATEX ( _t6, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
-            FORMAT ( _n6, "#,0" ) & " cidades escolhidas"
+            _n4 <= 2,
+            CONCATENATEX ( _t4, 'T19 Filtro'[Curto], ", ", 'T19 Filtro'[Ordem], ASC ),
+            _n4 & " situações"
         )
     )
 -- 3 · A seleção por retângulo na dispersão (filtro cruzado no código do município)
@@ -102,7 +58,7 @@ VAR _laco =
     IF ( ISFILTERED ( 'Município'[CodIBGE] ), "seleção na dispersão" )
 VAR _partes =
     {
-        ( 1, _regiao ), ( 2, _uf ), ( 3, _porte ), ( 4, _quinto ), ( 5, _lado ), ( 6, _cidade ), ( 7, _laco )
+        ( 1, _lugar ), ( 2, _porte ), ( 3, _quinto ), ( 4, _lado ), ( 5, _laco )
     }
 VAR _texto =
     CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], " · ", [Value1], ASC )

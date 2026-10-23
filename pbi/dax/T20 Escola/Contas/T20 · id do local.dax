@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: Id do local da linha.
+*/
+SELECTEDVALUE ( 'T20 Local'[Id] )

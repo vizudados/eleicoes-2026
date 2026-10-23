@@ -1,0 +1,17 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Locais de 2026 da cidade da tela sem coordenada no cadastro de locais do TSE (2022, por zona + número e, sem par, pelo nome): entram nas contas e na lista, ficam fora do mapa.
+@oraculo: 2 em Contagem
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    COALESCE (
+        CALCULATE (
+            COUNTROWS ( 'T20 Local' ),
+            REMOVEFILTERS ( 'T20 Local' ),
+            'T20 Local'[CodIBGE] = _cod,
+            'T20 Local'[Fora do mapa] = "sem endereço"
+        ),
+        0
+    )

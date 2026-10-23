@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: Ordem do caminho na árvore do filtro (papel itemSort do VizuFilter): as cidades na ordem do filtro (Contagem primeiro) e as escolas em ordem alfabética.
+*/
+MIN ( 'T20 Filtro'[Ordem] )

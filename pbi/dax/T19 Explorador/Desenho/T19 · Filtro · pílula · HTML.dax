@@ -1,7 +1,7 @@
 /*
 @pasta: T19 Explorador\Desenho
 @formato: texto
-@descricao: O botão fechado do filtro do recorte (a pílula, na caixa do filtro da casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre o acordeão (VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não mexem nela).
+@descricao: O botão fechado do filtro do recorte (a pílula, na caixa do filtro da casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre a árvore (VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não mexem nela).
 */
 -- 1 · Leituras
 VAR _n = [T19 · filtro · escolhas]

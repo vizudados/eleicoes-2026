@@ -1,11 +1,9 @@
 /*
 @pasta: T20 Escola\Contas
 @formato: texto
-@descricao: O local da ficha: o escolhido (filtro, mapa ou lista) ou, sem escolha, a Escola Estadual Nova Contagem-I, onde o documentário começa.
-@oraculo: mockup/data/eleicoes.json › Escola › exemplo_tooltip
+@descricao: Nome do local da ficha (Id escolhido).
+@oraculo: mockup/data/eleicoes.json › Escola › exemplo_tooltip (Escola Estadual Nova Contagem-I sem escolha)
 */
-IF (
-    [T20 · há escolha] = 1,
-    VALUES ( 'T20 Local'[Local] ),
-    "Escola Estadual Nova Contagem-I"
-)
+VAR _id = [T20 · id escolhido]
+RETURN
+    CALCULATE ( SELECTEDVALUE ( 'T20 Local'[Nome] ), REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id )

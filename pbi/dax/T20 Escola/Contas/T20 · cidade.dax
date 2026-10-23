@@ -1,0 +1,9 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Nome da cidade da tela com a UF: Contagem (MG).
+@oraculo: Contagem (MG) sem filtro
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Cidade], 'T20 Cidade'[CodIBGE], _cod )

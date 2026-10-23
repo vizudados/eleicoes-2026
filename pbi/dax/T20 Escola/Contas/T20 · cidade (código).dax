@@ -1,0 +1,13 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Código IBGE da cidade da tela: a cidade das escolas marcadas no filtro (uma cidade por vez, pelo exclusiveRoots do VizuFilter; marcar a cidade marca todas as escolas dela); sem escolha, Contagem (3118601), onde o documentário começa.
+@oraculo: 3118601 sem filtro
+*/
+VAR _codigos = VALUES ( 'T20 Filtro'[CodIBGE] )
+RETURN
+    IF (
+        ISFILTERED ( 'T20 Filtro' ) && COUNTROWS ( _codigos ) = 1,
+        MAXX ( _codigos, 'T20 Filtro'[CodIBGE] ),
+        "3118601"
+    )

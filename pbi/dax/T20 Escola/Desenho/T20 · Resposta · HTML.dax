@@ -1,7 +1,7 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: A resposta da tela: '12 de 112' locais com Lula à frente (contador), a manchete com o número de 2022 e quantos viraram.
+@descricao: A resposta da tela na cidade escolhida: '12 de 112' locais de votação com Lula à frente em 2026 (contador), quantos eram em 2022 e quantos viraram, nos dois sentidos.
 */
 -- 1 · Leituras
 VAR _lula = [T20 · locais com Lula à frente]
@@ -9,17 +9,43 @@ VAR _n = [T20 · locais]
 VAR _lula22 = [T20 · locais com Lula à frente em 2022]
 VAR _n22 = [T20 · locais em 2022]
 VAR _viraram = [T20 · locais que viraram]
+VAR _paraLula = [T20 · locais que viraram para Lula]
 -- 2 · Textos
+VAR _cidade0 = [T20 · cidade]
+VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
+VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
 VAR _rotLocal = IF ( _lula = 1, "local de votação com Lula à frente em 2026", "locais de votação com Lula à frente em 2026" )
+VAR _antes =
+    SWITCH (
+        TRUE (),
+        _lula22 = 0 && _lula = 0, "Em 2022, também nenhum",
+        _lula22 = 0, "Em 2022, nenhum",
+        _lula22 = 1, "Em 2022, <span class='num'>1</span>",
+        "Em 2022, eram <span class='num'>" & FORMAT ( _lula22, "#,0" ) & "</span>"
+    ) & IF ( _n22 = 1, " no único local.", " dos " & FORMAT ( _n22, "#,0" ) & " locais." )
 VAR _txtViraram =
-    IF ( _viraram = 1, "1 local virou", _viraram & " locais viraram" ) & " de Lula para Flávio."
+    SWITCH (
+        TRUE (),
+        _viraram = 0, "Nenhum local virou de Lula para Flávio",
+        _viraram = 1, "1 local virou de Lula para Flávio",
+        FORMAT ( _viraram, "#,0" ) & " locais viraram de Lula para Flávio"
+    ) & SWITCH (
+        TRUE (),
+        _paraLula = 0, ".",
+        _paraLula = 1, "; 1 fez o caminho inverso.",
+        "; " & FORMAT ( _paraLula, "#,0" ) & " fizeram o caminho inverso."
+    )
+-- 3 · Geometria (com milhar, o número grande desce de 96 para 72 px e cabe na caixa)
+VAR _classe = IF ( _n >= 1000, "grande g4", "grande" ) -- geometria
 -- 4 · Marcação
 RETURN
     "<div class='tela t20r'>"
-        & "<div class='grande sobe'><span class='num'>" & _lula & "</span> de <span class='num'>" & _n & "</span></div>"
-        & "<div class='rotulo sobe d2'>" & _rotLocal & "</div>"
-        & "<div class='man sobe d3'>Lula ficou à frente em " & _lula & " dos " & _n
-            & IF ( _n = 1, " local", " locais" ) & " de votação de Contagem; em 2022, eram <span class='num'>"
-            & _lula22 & "</span></div>"
-        & "<div class='txt sobe d4'>" & _txtViraram & " Em 2022, a cidade votava em " & _n22 & " locais.</div>"
+        & "<div class='rot cid sobe'>" & _cidade & "</div>"
+        & "<div class='" & _classe & " sobe d1'><span class='num'>" & FORMAT ( _lula, "#,0" ) & "</span> de "
+            & "<span class='num'>" & FORMAT ( _n, "#,0" ) & "</span></div>"
+        & "<div class='fluxo'>"
+            & "<div class='rotulo sobe d2'>" & _rotLocal & "</div>"
+            & "<div class='man sobe d3'>" & _antes & "</div>"
+            & "<div class='txt sobe d4'>" & _txtViraram & "</div>"
+        & "</div>"
     & "</div>"

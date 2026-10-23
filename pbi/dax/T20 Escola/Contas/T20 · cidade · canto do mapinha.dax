@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: texto
+@descricao: Canto do mapa com menos pontos, onde fica o mapinha: so, se, no ou ne.
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Canto], 'T20 Cidade'[CodIBGE], _cod )

@@ -1,7 +1,7 @@
 /*
 @pasta: T19 Explorador\Desenho
 @formato: texto
-@descricao: Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o acordeão oferece.
+@descricao: Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o filtro oferece.
 */
 -- 1 · Leituras
 VAR _n = [T19 · filtro · escolhas]
@@ -9,4 +9,4 @@ VAR _uso = [T19 · filtro em uso]
 -- 2 · Textos
 RETURN
     "Filtro do recorte: " & IF ( _n = 0, "todos os municípios", LEFT ( _uso, 150 ) )
-        & ". Abre a lista de região, estado, tamanho, renda, virada e cidade."
+        & ". Abre a árvore de região, estado e cidade, tamanho, renda e virada."

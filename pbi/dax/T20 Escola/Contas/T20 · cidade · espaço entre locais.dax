@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0.00
+@descricao: Mediana da distância entre locais vizinhos no mapa da cidade da tela, em % da largura da moldura: dá o tamanho dos pontos (São Paulo, 0,47 %; Contagem, 2,65 %).
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    LOOKUPVALUE ( 'T20 Cidade'[Espaço], 'T20 Cidade'[CodIBGE], _cod )

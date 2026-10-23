@@ -48,6 +48,18 @@ python -I -X utf8 pipeline/mapas.py
 python -I -X utf8 pipeline/montar_dados_mockup.py
 ```
 
+Tela Escola (34 cidades: as 27 capitais, as 6 maiores que viraram e Contagem): votos por seção e cadastro de locais
+do TSE numa passada por ano (cache em `dados/bruto/tse`), depois `dados/pbi/t20_locais.csv` e `dados/pbi/t20_cidades.csv`
+com a prova dos totais por cidade contra o TSE:
+
+```bash
+python -I -X utf8 pipeline/extrair_secoes.py --t20
+```
+
+```bash
+python -I -X utf8 pipeline/exportar_t20.py
+```
+
 ## O painel no Power BI (`pbi/`)
 
 26 telas a 1920 × 1080 (00 Capa … 25 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos; a

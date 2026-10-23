@@ -1,0 +1,71 @@
+/*
+@pasta: T19 Explorador\Contas
+@formato: texto
+@descricao: O lugar escolhido no filtro, em poucas palavras. A árvore filtra sempre no último nível (a cidade): marcar uma região ou um estado marca as cidades de dentro. Aqui a escolha volta a ser lida de cima para baixo: as regiões inteiras pelo nome ("Nordeste"), os estados inteiros fora delas pela sigla ("MG"), e as cidades soltas pelo nome (até duas) ou pela contagem ("3 cidades"). Vazio sem escolha no lugar.
+@oraculo: pandas sobre dados/pbi/municipio.csv (Nordeste = 1.794 cidades; Minas Gerais = 853)
+*/
+-- 1 · As cidades escolhidas (folhas do lugar) e todas as do lugar
+VAR _f = ISFILTERED ( 'T19 Filtro'[Caminho] )
+VAR _sel =
+    CALCULATETABLE (
+        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Regiao], 'T19 Filtro'[UF], 'T19 Filtro'[Valor], 'T19 Filtro'[Ordem] ),
+        'T19 Filtro'[RaizOrdem] = 1
+    )
+VAR _tot =
+    CALCULATETABLE (
+        SUMMARIZE ( 'T19 Filtro', 'T19 Filtro'[Regiao], 'T19 Filtro'[UF], 'T19 Filtro'[Valor] ),
+        REMOVEFILTERS ( 'T19 Filtro' ),
+        'T19 Filtro'[RaizOrdem] = 1
+    )
+VAR _nSel = IF ( _f, COUNTROWS ( _sel ), 0 )
+-- 2 · Regiões inteiras
+VAR _regioes =
+    ADDCOLUMNS (
+        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'T19 Filtro'[Regiao] ) ),
+        "@s", COUNTROWS ( FILTER ( _sel, 'T19 Filtro'[Regiao] = [@r] ) ),
+        "@t", COUNTROWS ( FILTER ( _tot, 'T19 Filtro'[Regiao] = [@r] ) ),
+        "@o", MINX ( FILTER ( _sel, 'T19 Filtro'[Regiao] = [@r] ), 'T19 Filtro'[Ordem] )
+    )
+VAR _cheias = FILTER ( _regioes, [@s] = [@t] )
+VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+-- 3 · Estados inteiros fora das regiões inteiras
+VAR _resto = FILTER ( _sel, NOT ( 'T19 Filtro'[Regiao] IN _nomesCheias ) )
+VAR _ufs =
+    ADDCOLUMNS (
+        DISTINCT ( SELECTCOLUMNS ( _resto, "@u", 'T19 Filtro'[UF] ) ),
+        "@s", COUNTROWS ( FILTER ( _resto, 'T19 Filtro'[UF] = [@u] ) ),
+        "@t", COUNTROWS ( FILTER ( _tot, 'T19 Filtro'[UF] = [@u] ) ),
+        "@o", MINX ( FILTER ( _resto, 'T19 Filtro'[UF] = [@u] ), 'T19 Filtro'[Ordem] )
+    )
+VAR _ufCheias = FILTER ( _ufs, [@s] = [@t] )
+VAR _siglasCheias = SELECTCOLUMNS ( _ufCheias, "@u", [@u] )
+-- 4 · Cidades soltas
+VAR _cidades = FILTER ( _resto, NOT ( 'T19 Filtro'[UF] IN _siglasCheias ) )
+VAR _nR = COUNTROWS ( _cheias ) + 0
+VAR _nU = COUNTROWS ( _ufCheias ) + 0
+VAR _nC = COUNTROWS ( _cidades ) + 0
+VAR _tR =
+    IF (
+        _nR > 0,
+        IF ( _nR <= 3, CONCATENATEX ( _cheias, [@r], ", ", [@o], ASC ), _nR & " regiões" )
+    )
+VAR _tU =
+    IF (
+        _nU > 0,
+        IF ( _nU <= 4, CONCATENATEX ( _ufCheias, [@u], ", ", [@o], ASC ), _nU & " estados" )
+    )
+VAR _tC =
+    IF (
+        _nC > 0,
+        IF (
+            _nC <= 2,
+            CONCATENATEX ( _cidades, 'T19 Filtro'[Valor], ", ", 'T19 Filtro'[Ordem], ASC ),
+            FORMAT ( _nC, "#,0" ) & " cidades"
+        )
+    )
+VAR _partes = { ( 1, _tR ), ( 2, _tU ), ( 3, _tC ) }
+RETURN
+    IF (
+        _nSel > 0,
+        CONCATENATEX ( FILTER ( _partes, NOT ISBLANK ( [Value2] ) ), [Value2], ", ", [Value1], ASC )
+    )

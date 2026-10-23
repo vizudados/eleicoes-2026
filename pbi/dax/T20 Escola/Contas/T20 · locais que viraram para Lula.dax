@@ -1,0 +1,22 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Locais de 2026 da cidade da tela em que Jair Bolsonaro ficou à frente em 2022 (mesmo zona + número) e Lula em 2026: o caminho inverso, contado com a mesma regra.
+@oraculo: 0 em Contagem; 33 em Belém
+*/
+VAR _cod = [T20 · cidade (código)]
+RETURN
+    COALESCE (
+        CALCULATE (
+            COUNTROWS (
+                FILTER (
+                    'T20 Local',
+                    'T20 Local'[VotosPT2022] < 'T20 Local'[VotosAdv2022]
+                        && 'T20 Local'[VotosPT2026] > 'T20 Local'[VotosAdv2026]
+                )
+            ),
+            REMOVEFILTERS ( 'T20 Local' ),
+            'T20 Local'[CodIBGE] = _cod
+        ),
+        0
+    )

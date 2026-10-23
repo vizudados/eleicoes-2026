@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: 0
+@descricao: Id do local da ficha sem contar o clique no mapa ou na lista: o escolhido no filtro ou, sem ele, o exemplo da cidade. O mapa (que não enxerga o próprio clique) põe o nome dessa escola na camada da frente.
+*/
+COALESCE ( [T20 · escola do filtro], [T20 · id do exemplo] )

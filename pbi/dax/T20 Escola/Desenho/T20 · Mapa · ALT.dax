@@ -6,6 +6,8 @@
 -- 1 · Leituras
 VAR _n = [T20 · locais]
 VAR _lula = [T20 · locais com Lula à frente]
+VAR _fora = [T20 · locais sem endereço] + [T20 · locais fora do recorte]
 RETURN
-    "Mapa de Contagem com os " & _n & " locais de votação: " & _lula & IF ( _lula = 1, " com Lula à frente", " com Lula à frente" )
-        & " (vermelho) e os outros com Flávio (azul). Passe o mouse num ponto para ver a escola; clique para pôr na ficha."
+    "Mapa de " & [T20 · cidade] & " com " & FORMAT ( _n - _fora, "#,0" ) & " dos " & FORMAT ( _n, "#,0" )
+        & " locais de votação: " & FORMAT ( _lula, "#,0" ) & " com Lula à frente (vermelho) e os outros com Flávio "
+        & "(azul). Passe o mouse num ponto para ver a escola; clique para pôr na ficha."

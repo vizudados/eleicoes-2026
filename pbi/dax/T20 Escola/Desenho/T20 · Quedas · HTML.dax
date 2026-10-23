@@ -1,32 +1,38 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: Uma linha da lista de todos os locais, da maior queda à maior alta da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local], ordenada pela queda): posição, nome, bairro e seções, a variação e o selo. As linhas vêm em fluxo, na ordem do visual, e a lista rola dentro da caixa.
+@descricao: Uma linha da lista de todos os locais da cidade escolhida, da maior queda à maior alta da margem de Lula, 2022 → 2026 (granularidade T20 Local[Local]; local de outra cidade devolve vazio): posição, nome, bairro e seções, a variação (ou 'novo', sem 2022) e o selo de quem virou. A ordem vem da posição (order no CSS, com quatro dígitos: a lista não depende da ordem em que o visual entrega as linhas) e a lista rola dentro da caixa.
 */
 -- 1 · Leituras
+VAR _na = [T20 · na cidade]
 VAR _pos = [T20 · posição na queda]
-VAR _bairro = [T20 · bairro]
+VAR _bairroL = [T20 · bairro]
 VAR _secoes = [T20 · seções]
 VAR _var = [T20 · variação da margem]
-VAR _virou = [T20 · virou]
+VAR _virou = [T20 · virou] + [T20 · virou para Lula]
 -- 2 · Textos
 VAR _nome0 = [T20 · nome do local]
 VAR _nome1 = SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" )
 VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome1, ">", "&gt;" ), "'", "&#39;" )
-VAR _txtVar = FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " p.p."
-VAR _sub = _bairro & " · " & _secoes & IF ( _secoes = 1, " seção", " seções" )
+VAR _bairro0 = _bairroL
+VAR _bairro1 = SUBSTITUTE ( SUBSTITUTE ( _bairro0, "&", "&amp;" ), "<", "&lt;" )
+VAR _bairro = SUBSTITUTE ( SUBSTITUTE ( _bairro1, ">", "&gt;" ), "'", "&#39;" )
+VAR _txtVar = IF ( ISBLANK ( _var ), "novo", FORMAT ( _var * 100, "+0.0;−0.0;0.0" ) & " p.p." )
+VAR _sub =
+    IF ( _bairro <> "", _bairro & " · ", "" ) & _secoes & IF ( _secoes = 1, " seção", " seções" )
 VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
-VAR _cor = IF ( _var < 0, "flavio", "lula" )
--- 3 · Geometria (só a cascata de entrada das primeiras linhas; a posição vem da ordem do visual)
+VAR _cor = IF ( ISBLANK ( _var ), "novo", IF ( _var < 0, "flavio", "lula" ) )
+-- 3 · Geometria (a ordem na lista e a cascata de entrada das primeiras linhas)
+VAR _ordem = FORMAT ( _pos, "0000" ) -- geometria
 VAR _d = MIN ( _pos + 2, 12 ) -- geometria
 -- 4 · Marcação
 RETURN
     IF (
-        NOT ISBLANK ( _pos ),
-        "<div class='t20q'><div class='ln sobe d" & _d & "' data-p='" & _pos & "'>"
+        _na = 1 && NOT ISBLANK ( _pos ),
+        "<div class='t20q' style='order:" & _ordem & "'><div class='ln sobe d" & _d & "' data-p='" & _pos & "'>"
             & "<span class='p'>" & _pos & "</span>"
+            & "<span class='dir'><span class='v " & _cor & " tnum'>" & _txtVar & "</span></span>"
             & "<span class='nm'>" & _nome & "</span>"
-            & "<span class='sb'>" & _sub & "</span>"
-            & "<span class='v " & _cor & " tnum'>" & _txtVar & "</span>" & _selo
+            & "<span class='sb'><span class='bt'>" & _sub & "</span>" & _selo & "</span>"
         & "</div></div>"
     )

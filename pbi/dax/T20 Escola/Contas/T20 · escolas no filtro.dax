@@ -1,0 +1,6 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Escolas (folhas) marcadas no filtro; 0 sem escolha. Igual a [T20 · locais] quando a cidade inteira foi marcada.
+*/
+IF ( ISFILTERED ( 'T20 Filtro' ), COUNTROWS ( VALUES ( 'T20 Filtro'[Caminho] ) ), 0 )

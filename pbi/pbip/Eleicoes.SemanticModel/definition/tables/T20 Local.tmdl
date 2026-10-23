@@ -1,8 +1,8 @@
-/// Os 112 locais de votação de Contagem (MG) em 2026, com os votos de presidente (1º turno) de 2026, 2022 e 2018 do mesmo local e a posição no mapa da tela 20. Nome legível no lugar das maiúsculas do TSE; o mesmo prédio com dois números ganha o número no nome.
+/// Os locais de votação de 2026 das 34 cidades da tela 20 (as 27 capitais, as 6 maiores que trocaram Lula por Flávio e Contagem), um por linha, com os votos de presidente (1º turno) de 2026, 2022 e 2018 do mesmo local (zona + número) e a posição no mapa da própria cidade. Nome legível no lugar das maiúsculas do TSE.
 table 'T20 Local'
 	lineageTag: f15c0fad-7fd0-5b66-9863-dba21bdbcd5b
 
-	/// Identificador do local (1…112).
+	/// Identificador do local (Contagem primeiro: 1…112).
 	column Id
 		dataType: int64
 		isHidden
@@ -13,7 +13,36 @@ table 'T20 Local'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Nome do local de votação (escola), legível; único.
+	/// Código IBGE da cidade do local.
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: 399ccad7-9e05-5109-afe3-2bbd5ad69bfe
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cidade do local, com a UF: Contagem (MG).
+	column Cidade
+		dataType: string
+		lineageTag: b2508642-bbd6-5136-ae46-d9c8d79bb29a
+		summarizeBy: none
+		sourceColumn: Cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla da UF da cidade.
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 67edb9b4-a2ae-5320-9ffa-7449f2fe04cd
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Chave do local, única no modelo inteiro: o nome; repetido em outra cidade, com a cidade junto. A tela mostra Nome.
 	column Local
 		dataType: string
 		lineageTag: ad90088b-1eeb-5237-a97a-a0f4db40885a
@@ -23,13 +52,12 @@ table 'T20 Local'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Nome como o TSE escreve em 2026.
-	column 'Nome TSE'
+	/// Nome legível do local (escola); único na cidade (repetido ganha o número).
+	column Nome
 		dataType: string
-		isHidden
-		lineageTag: 0f1ccdde-aef4-5e22-a8c3-161cba92b7fe
+		lineageTag: bf071db7-7c5c-5e2b-b203-7c2117c58908
 		summarizeBy: none
-		sourceColumn: Nome TSE
+		sourceColumn: Nome
 
 		annotation SummarizationSetBy = Automatic
 
@@ -39,16 +67,6 @@ table 'T20 Local'
 		lineageTag: bb2d7431-fe72-5157-9a81-05485c5c98e7
 		summarizeBy: none
 		sourceColumn: Bairro
-
-		annotation SummarizationSetBy = Automatic
-
-	/// Endereço do local.
-	column 'Endereço'
-		dataType: string
-		isHidden
-		lineageTag: 1f1941a2-e9a9-55e7-ad4c-4c0a1448f9ed
-		summarizeBy: none
-		sourceColumn: Endereço
 
 		annotation SummarizationSetBy = Automatic
 
@@ -184,7 +202,7 @@ table 'T20 Local'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Posição horizontal no mapa da tela (% da largura).
+	/// Posição horizontal no mapa da cidade (% da moldura); vazio fora do mapa.
 	column PX
 		dataType: double
 		isHidden
@@ -195,7 +213,7 @@ table 'T20 Local'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Posição vertical no mapa da tela (% da altura).
+	/// Posição vertical no mapa da cidade (% da moldura); vazio fora do mapa.
 	column PY
 		dataType: double
 		isHidden
@@ -206,15 +224,51 @@ table 'T20 Local'
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Por que o local não aparece no mapa: 'sem endereço' (sem coordenada no cadastro do TSE) ou 'fora do recorte' (longe da mancha urbana, nas cidades em recorte); vazio no mapa.
+	column 'Fora do mapa'
+		dataType: string
+		isHidden
+		lineageTag: 74b0e3a0-9026-5c4f-9fb3-7b0e0875e698
+		summarizeBy: none
+		sourceColumn: Fora do mapa
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Posição do local na lista da cidade, da maior queda da margem de Lula 2022 → 2026 à maior alta (os locais novos no fim, por nome).
+	column PosQueda
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 835ade54-604b-5908-acea-152e6fe11f9b
+		summarizeBy: none
+		sourceColumn: PosQueda
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem alfabética do local na cidade (o filtro).
+	column OrdemNome
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 4048ce56-5f59-541e-8a3c-00a64130d3be
+		summarizeBy: none
+		sourceColumn: OrdemNome
+
+		annotation SummarizationSetBy = Automatic
+
 	partition 'T20 Local' = m
 		mode: import
 		source =
 				let
 				    Fonte = fxCsv("dados/pbi/t20_locais.csv", ","),
-				    Colunas = Table.SelectColumns(Fonte, {"id", "local", "nome_tse", "bairro", "endereco", "zona", "numero", "secoes", "pt_2026", "adv_2026", "validos_2026", "pt_2022", "adv_2022", "validos_2022", "pt_2018", "adv_2018", "validos_2018", "px", "py"}, MissingField.UseNull),
-				    Tipos = Table.TransformColumnTypes(Colunas, {{"id", Int64.Type}, {"local", type text}, {"nome_tse", type text}, {"bairro", type text}, {"endereco", type text}, {"zona", Int64.Type}, {"numero", Int64.Type}, {"secoes", Int64.Type}, {"pt_2026", Int64.Type}, {"adv_2026", Int64.Type}, {"validos_2026", Int64.Type}, {"pt_2022", Int64.Type}, {"adv_2022", Int64.Type}, {"validos_2022", Int64.Type}, {"pt_2018", Int64.Type}, {"adv_2018", Int64.Type}, {"validos_2018", Int64.Type}, {"px", type number}, {"py", type number}}, "en-US"),
-				    Nomes = Table.RenameColumns(Tipos, {{"id", "Id"}, {"local", "Local"}, {"nome_tse", "Nome TSE"}, {"bairro", "Bairro"}, {"endereco", "Endereço"}, {"zona", "Zona"}, {"numero", "Número"}, {"secoes", "Seções"}, {"pt_2026", "VotosPT2026"}, {"adv_2026", "VotosAdv2026"}, {"validos_2026", "Validos2026"}, {"pt_2022", "VotosPT2022"}, {"adv_2022", "VotosAdv2022"}, {"validos_2022", "Validos2022"}, {"pt_2018", "VotosPT2018"}, {"adv_2018", "VotosAdv2018"}, {"validos_2018", "Validos2018"}, {"px", "PX"}, {"py", "PY"}})
+				    Colunas = Table.SelectColumns(Fonte, {"id", "cod_ibge", "cidade", "uf", "local", "nome", "bairro", "zona", "numero", "secoes", "pt_2026", "adv_2026", "validos_2026", "pt_2022", "adv_2022", "validos_2022", "pt_2018", "adv_2018", "validos_2018", "px", "py", "fora_mapa", "pos_queda", "ordem_nome"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"id", Int64.Type}, {"cod_ibge", type text}, {"cidade", type text}, {"uf", type text}, {"local", type text}, {"nome", type text}, {"bairro", type text}, {"zona", Int64.Type}, {"numero", Int64.Type}, {"secoes", Int64.Type}, {"pt_2026", Int64.Type}, {"adv_2026", Int64.Type}, {"validos_2026", Int64.Type}, {"pt_2022", Int64.Type}, {"adv_2022", Int64.Type}, {"validos_2022", Int64.Type}, {"pt_2018", Int64.Type}, {"adv_2018", Int64.Type}, {"validos_2018", Int64.Type}, {"px", type number}, {"py", type number}, {"fora_mapa", type text}, {"pos_queda", Int64.Type}, {"ordem_nome", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"id", "Id"}, {"cod_ibge", "CodIBGE"}, {"cidade", "Cidade"}, {"uf", "UF"}, {"local", "Local"}, {"nome", "Nome"}, {"bairro", "Bairro"}, {"zona", "Zona"}, {"numero", "Número"}, {"secoes", "Seções"}, {"pt_2026", "VotosPT2026"}, {"adv_2026", "VotosAdv2026"}, {"validos_2026", "Validos2026"}, {"pt_2022", "VotosPT2022"}, {"adv_2022", "VotosAdv2022"}, {"validos_2022", "Validos2022"}, {"pt_2018", "VotosPT2018"}, {"adv_2018", "VotosAdv2018"}, {"validos_2018", "Validos2018"}, {"px", "PX"}, {"py", "PY"}, {"fora_mapa", "Fora do mapa"}, {"pos_queda", "PosQueda"}, {"ordem_nome", "OrdemNome"}}),
+				    ComChave = Table.AddColumn(Nomes, "LocalChave",
+				        each if [Local] = null or [Local] = "" then [Nome] else [Local], type text),
+				    SemVazia = Table.RemoveColumns(ComChave, {"Local"}),
+				    Final = Table.RenameColumns(SemVazia, {{"LocalChave", "Local"}})
 				in
-				    Nomes
+				    Final
 
 	annotation PBI_ResultType = Table
