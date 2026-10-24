@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir19",
   "position": {
-    "x": 1460,
+    "x": 1131,
     "y": 216,
     "z": 1020,
-    "height": 86,
+    "height": 80,
     "width": 316,
     "tabOrder": 219
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'22 · Explorador: Onde está a minha pergunta? Explore os 5.571 municípios'"
+                  "Value": "'15 · Explorador: Onde está a minha pergunta? Explore os 5.571 municípios'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'22 · Explorador: Onde está a minha pergunta? Explore os 5.571 municípios'"
+                  "Value": "'15 · Explorador: Onde está a minha pergunta? Explore os 5.571 municípios'"
                 }
               }
             },

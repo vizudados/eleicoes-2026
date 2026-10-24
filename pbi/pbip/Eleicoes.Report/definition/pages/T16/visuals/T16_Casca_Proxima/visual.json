@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 16 2º turno — E agora, o que as pesquisas dizem do 2º turno?'"
+                  "Value": "'Próxima: 20 2º turno — E agora, o que as pesquisas dizem do 2º turno?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 16 2º turno — E agora, o que as pesquisas dizem do 2º turno?'"
+                  "Value": "'Próxima: 20 2º turno — E agora, o que as pesquisas dizem do 2º turno?'"
                 }
               }
             },

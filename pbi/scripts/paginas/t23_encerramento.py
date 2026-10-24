@@ -25,7 +25,8 @@ P = "T23"
 CSS = "Estilo · CSS"
 C = estilo.COR
 
-# os grupos seguem os atos do roteiro (ordem nova de 23/10/2026: antes da urna, 1º turno, mapa, 2º turno)
+# os grupos seguem os atos do roteiro (ordem de 23/10/2026: antes da urna, 1º turno, mapa, explore, 2º turno; o
+# explore não tem achado próprio)
 ACHADOS = [
     ("I · ANTES DA URNA", [("T10", "Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.")]),
     ("II · O 1º TURNO", [("T01", "Flávio terminou 2,22 mi de votos à frente de Lula."),
@@ -35,7 +36,7 @@ ACHADOS = [
                       ("T13", "Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno."),
                       ("T24", "Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%."),
                       ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
-    ("IV · O 2º TURNO", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno."),
+    ("V · O 2º TURNO", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno."),
                          ("T07", "O primeiro frente a frente, na Band, não mexeu nas pesquisas."),
                          ("T26", "O último debate, na Globo em 23/10: o que se soube dele, número a número.")]),
 ]

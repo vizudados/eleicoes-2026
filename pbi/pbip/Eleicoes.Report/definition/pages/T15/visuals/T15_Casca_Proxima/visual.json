@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 15 Os outros — Para onde vão os votos dos outros candidatos?'"
+                  "Value": "'Próxima: 15 Explorador — Onde está a minha pergunta? Explore os 5.571 municípios'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 15 Os outros — Para onde vão os votos dos outros candidatos?'"
+                  "Value": "'Próxima: 15 Explorador — Onde está a minha pergunta? Explore os 5.571 municípios'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T16_CHEGADA_01'"
+                  "Value": "'T19_CHEGADA_01'"
                 }
               }
             }

@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir16",
   "position": {
-    "x": 1131,
+    "x": 1460,
     "y": 216,
     "z": 1020,
-    "height": 86,
+    "height": 80,
     "width": 316,
     "tabOrder": 216
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'15 · Os outros: Para onde vão os votos dos outros candidatos?'"
+                  "Value": "'19 · Os outros: Para onde vão os votos dos outros candidatos?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'15 · Os outros: Para onde vão os votos dos outros candidatos?'"
+                  "Value": "'19 · Os outros: Para onde vão os votos dos outros candidatos?'"
                 }
               }
             },

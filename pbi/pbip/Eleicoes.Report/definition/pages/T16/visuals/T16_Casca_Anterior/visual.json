@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 14 Minha cidade'"
+                  "Value": "'Voltar: 18 Simulador'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 14 Minha cidade'"
+                  "Value": "'Voltar: 18 Simulador'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T15_CHEGADA_01'"
+                  "Value": "'T22_CHEGADA_01'"
                 }
               }
             }

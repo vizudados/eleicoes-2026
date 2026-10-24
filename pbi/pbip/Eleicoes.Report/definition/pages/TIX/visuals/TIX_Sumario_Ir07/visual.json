@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir07",
   "position": {
-    "x": 1131,
-    "y": 404,
+    "x": 1460,
+    "y": 392,
     "z": 1020,
-    "height": 86,
+    "height": 80,
     "width": 316,
     "tabOrder": 207
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'17 · Debate Band: O que mudou depois do debate na Band?'"
+                  "Value": "'21 · Debate Band: O que mudou depois do debate na Band?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'17 · Debate Band: O que mudou depois do debate na Band?'"
+                  "Value": "'21 · Debate Band: O que mudou depois do debate na Band?'"
                 }
               }
             },

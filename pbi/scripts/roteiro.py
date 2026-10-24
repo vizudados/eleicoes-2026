@@ -16,7 +16,8 @@ Ordem em cinco atos, do antes para o depois (23/10/2026, aprovada pelo dono: "re
 que foi pré primeiro turno, pós, e então os debates"): I · Antes da urna (quem são os dois e as pesquisas), II · O 1º
 turno (o resultado), III · O mapa, IV · O 2º turno (os votos dos outros, as pesquisas, os dois debates colados, buscas,
 redes e a apuração) e V · Explore você mesmo. Buscas e Redes vêm depois dos debates porque o filtro de período delas
-é contado em volta dos dois.
+é contado em volta dos dois. Ajuste do mesmo dia (pedido do dono: "o segundo turno deve ficar por último, pós
+simulador e antes do encerramento"): o Explore você mesmo vira o ato IV e o 2º turno, o V, logo antes do encerramento.
 """
 
 from dataclasses import dataclass
@@ -69,30 +70,30 @@ TELAS = [
                "Família, ago/2026), Atlas do Desenvolvimento Humano (IDHM 2010) e Datafolha"),
     Tela("T14", "Série", "Como o PT chegou até aqui, de 2006 a 2026?", "III · O mapa", filtro="UF"),
     Tela("T15", "Minha cidade", "Como votou a minha cidade?", "III · O mapa", filtro="Município"),
-    # IV · O 2º turno: os votos dos outros, as pesquisas, os dois debates colados, buscas e redes, a apuração
-    Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "IV · O 2º turno",
-         fonte="Fontes: pesquisas registradas no TSE que publicaram o cruzamento · imprensa (apoios)"),
-    Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "IV · O 2º turno", filtro="Período",
-         fonte="Fonte: pesquisas registradas no TSE e relatórios dos institutos (rejeição) · levantamento de 22/10/2026"),
-    Tela("T07", "Debate Band", "O que mudou depois do debate na Band?", "IV · O 2º turno",
-         fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
-    Tela("T26", "Debate Globo", "O último debate mudou alguma coisa?", "IV · O 2º turno",
-         fonte="Fontes: TV Globo e imprensa (fatos do debate), Kantar IBOPE, Google Trends, Bites e pesquisas registradas "
-               "no TSE · cada número com a hora em que chegou"),
-    Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "IV · O 2º turno", filtro="Período",
-         fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22 e 23/10/2026"),
-    Tela("T09", "Redes", "Quem dominou as redes?", "IV · O 2º turno", filtro="Período",
-         fonte="Fontes: Bites, Quaest, Social Blade, Datrix e Biblioteca de Anúncios da Meta"),
-    Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "IV · O 2º turno", filtro="UF",
-         fonte="Fonte: TSE · API pública de divulgação dos resultados, coletada a cada minuto"),
-    # V · Explore você mesmo
-    Tela("T19", "Explorador", "Onde está a minha pergunta? Explore os 5.571 municípios", "V · Explore você mesmo"),
-    Tela("T20", "Escola", "Como votou cada escola da cidade?", "V · Explore você mesmo", filtro="Local",
+    # IV · Explore você mesmo
+    Tela("T19", "Explorador", "Onde está a minha pergunta? Explore os 5.571 municípios", "IV · Explore você mesmo"),
+    Tela("T20", "Escola", "Como votou cada escola da cidade?", "IV · Explore você mesmo", filtro="Local",
          fonte="Fontes: TSE (votação por seção e cadastro de locais de votação) e IBGE (malha municipal) · "
                "27 capitais, as 6 maiores que viraram e Contagem (MG)"),
-    Tela("T21", "20 anos", "Como o mapa mudou em 20 anos?", "V · Explore você mesmo"),
-    Tela("T22", "Simulador", "E se os eleitores dos outros candidatos escolherem?", "V · Explore você mesmo",
+    Tela("T21", "20 anos", "Como o mapa mudou em 20 anos?", "IV · Explore você mesmo"),
+    Tela("T22", "Simulador", "E se os eleitores dos outros candidatos escolherem?", "IV · Explore você mesmo",
          fonte="Simulação a partir do 1º turno (TSE); não é previsão"),
+    # V · O 2º turno: os votos dos outros, as pesquisas, os dois debates colados, buscas e redes, a apuração
+    Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "V · O 2º turno",
+         fonte="Fontes: pesquisas registradas no TSE que publicaram o cruzamento · imprensa (apoios)"),
+    Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "V · O 2º turno", filtro="Período",
+         fonte="Fonte: pesquisas registradas no TSE e relatórios dos institutos (rejeição) · levantamento de 22/10/2026"),
+    Tela("T07", "Debate Band", "O que mudou depois do debate na Band?", "V · O 2º turno",
+         fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
+    Tela("T26", "Debate Globo", "O último debate mudou alguma coisa?", "V · O 2º turno",
+         fonte="Fontes: TV Globo e imprensa (fatos do debate), Kantar IBOPE, Google Trends, Bites e pesquisas registradas "
+               "no TSE · cada número com a hora em que chegou"),
+    Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "V · O 2º turno", filtro="Período",
+         fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22 e 23/10/2026"),
+    Tela("T09", "Redes", "Quem dominou as redes?", "V · O 2º turno", filtro="Período",
+         fonte="Fontes: Bites, Quaest, Social Blade, Datrix e Biblioteca de Anúncios da Meta"),
+    Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "V · O 2º turno", filtro="UF",
+         fonte="Fonte: TSE · API pública de divulgação dos resultados, coletada a cada minuto"),
     Tela("T23", "Encerramento", "E o que fica desta eleição?", "Fim", escura=True,
          fonte="Vizu Dados · vizudados.com.br · dados e código em github.com/vizudados/eleicoes-2026"),
 ]

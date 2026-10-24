@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 18: O último debate, na Globo em 23/10: o que se soube dele, número a número.'"
+                  "Value": "'Voltar à tela 22: O último debate, na Globo em 23/10: o que se soube dele, número a número.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 18: O último debate, na Globo em 23/10: o que se soube dele, número a número.'"
+                  "Value": "'Voltar à tela 22: O último debate, na Globo em 23/10: o que se soube dele, número a número.'"
                 }
               }
             },
