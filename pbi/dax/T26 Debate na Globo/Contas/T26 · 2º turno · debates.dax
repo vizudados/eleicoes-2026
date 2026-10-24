@@ -1,13 +1,19 @@
 /*
 @pasta: T26 Debate na Globo\Contas
 @formato: texto
-@descricao: Os debates marcados no 2º turno (tabela Debate), um por linha, com o que houve para o candidato da linha do contexto: esteve, não esteve, cancelado ou não aconteceu. Separados por |.
+@descricao: Os debates marcados no 2º turno ANTES deste (tabela Debate, data anterior ao dia do debate da Globo), um por linha, com o que houve para o candidato da linha do contexto: esteve, não esteve, cancelado ou não aconteceu. Separados por |. Desde 24/10/2026 a própria Globo (23/10) é linha da tabela Debate: o filtro de data a deixa fora da lista do 'antes deste'.
 @oraculo: 11/10 · Record: cancelado | 15/10 · SBT e consórcio: não aconteceu | 18/10 · Band: esteve
 */
 VAR _cand = [T26 · linha · candidato]
+VAR _globo = [T26 · debate · dia]
 RETURN
     CONCATENATEX (
-        CALCULATETABLE ( VALUES ( Debate[Data] ), REMOVEFILTERS ( Debate ), Debate[Turno] = 2 ),
+        CALCULATETABLE (
+            VALUES ( Debate[Data] ),
+            REMOVEFILTERS ( Debate ),
+            Debate[Turno] = 2,
+            Debate[Data] < _globo || ISBLANK ( _globo )
+        ),
         VAR _d = Debate[Data]
         VAR _emi = CALCULATE ( MAX ( Debate[Emissora] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )
         VAR _obs = UPPER ( CALCULATE ( MAX ( Debate[Observação] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d ) )

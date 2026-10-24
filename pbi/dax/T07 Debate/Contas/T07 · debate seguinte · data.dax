@@ -1,0 +1,15 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: dd/MM
+@descricao: Data do frente a frente seguinte ao da Band: a menor data da tabela Debate com Lula e Flávio entre os participantes, depois do debate da Band (a Globo, 23/10). Fecha a janela 'depois' das pesquisas da tela: a pesquisa que termina nesse dia ou depois já pegou o debate seguinte e fica fora (é da tela do debate da Globo). Vazio enquanto a tabela não tiver esse debate, e aí não há limite.
+@oraculo: 23/10 (com a linha da Globo em debate.csv)
+*/
+VAR _band = [T07 · debate · data]
+RETURN
+    CALCULATE (
+        MIN ( Debate[Data] ),
+        REMOVEFILTERS ( Debate ),
+        Debate[Data] > _band,
+        CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+        CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+    )

@@ -3,5 +3,6 @@
 @formato: texto
 @descricao: Texto para leitor de tela das marcas dos debates (uma por debate marcado).
 */
-"Uma marca por debate marcado (" & [T07 · debates marcados]
-    & "), de 23/08 a 18/10: círculo vazio quando aconteceu sem os dois, × quando caiu. Passe o mouse para ver quem foi."
+"Uma marca por debate marcado (" & [T07 · debates marcados] & "), de " & FORMAT ( [T07 · debates · primeiro dia], "dd/MM" )
+    & " a " & FORMAT ( [T07 · debates · último dia], "dd/MM" )
+    & ": círculo vazio quando aconteceu sem os dois, × quando caiu, vermelho e azul quando Lula e Flávio estiveram. Passe o mouse para ver quem foi."

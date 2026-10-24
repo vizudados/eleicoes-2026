@@ -10,8 +10,14 @@ voltou mais. A rejeição não forma série entre institutos (cada um pergunta d
   T17_Rejeicao_Html     cabeçalho da rejeição: "8 de 10 institutos" e como ler os quadrinhos
   T17_Rejeicao_Paineis  um quadrinho por instituto comparável (granularidade 'Rejeição'[Instituto]): a última medição
                         antes do 1º turno → a última depois, Lula e Flávio; dossiê ttT17Rejeicao (a série do instituto)
-  T17_Curva_Html        fundo da curva: zonas "Flávio à frente" e "Lula à frente", grade, datas, 1º turno, debate e
-                        2º turno, a média móvel de 10 dias (traço que se desenha) e a nota à mão na virada
+  T17_Curva_Html        fundo da curva: zonas "Flávio à frente" e "Lula à frente", grade, datas, 1º turno, os dois
+                        debates do 2º turno (Band, 18/10, e Globo, 23/10: uma linha pontilhada e o nome de cada um) e
+                        o 2º turno, a média móvel de 10 dias (traço que se desenha) e a nota à mão na virada.
+                        Decisão de 24/10/2026: a Globo ganhou marca porque o filtro Período já se organiza em volta dos
+                        dois debates (antes e depois de cada um) e as pesquisas divulgadas depois de 23/10 vão cair à
+                        direita dela; sem a linha, pareceriam "depois do debate" da Band. A Band é a regra explícita
+                        'T17 · debate · data' (Emissora = Band, Turno = 2) e a Globo, 'T17 · debate da Globo · data'
+                        (Emissora = Globo, Turno = 2), nunca o MAX(Data) das linhas com os dois.
   T17_Curva_Pontos      um ponto por pesquisa (granularidade Pesquisa[Id]): vazado = simulação antes do 1º turno,
                         cheio = depois; dossiê ttT17Pesquisa (instituto, campo, a anterior do mesmo instituto, a média)
 

@@ -1,7 +1,7 @@
 /*
 @pasta: T07 Debate\Contas
 @formato: 0
-@descricao: Debates do 2º turno marcados até 22/10 que não aconteceram (cancelados ou não realizados).
+@descricao: Debates do 2º turno que não aconteceram (cancelados ou não realizados); os dois do 2º turno que aconteceram, Band e Globo, tiveram Lula e Flávio.
 @oraculo: linha_do_tempo: 11/10 e 15/10 = 2
 */
 CALCULATE (

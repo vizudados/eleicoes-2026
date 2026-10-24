@@ -6070,7 +6070,7 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: ab8a2978-9978-5997-8f02-8dae8725c9e8
 
-	/// Debates do 2º turno marcados até 22/10 que não aconteceram (cancelados ou não realizados).
+	/// Debates do 2º turno que não aconteceram (cancelados ou não realizados); os dois do 2º turno que aconteceram, Band e Globo, tiveram Lula e Flávio.
 	measure 'T07 · 2º turno · desmarcados' =
 			CALCULATE (
 			    COUNTROWS ( Debate ),
@@ -6081,6 +6081,24 @@ table _Medidas
 		formatString: 0
 		displayFolder: T07 Debate\Contas
 		lineageTag: e4891253-db51-5447-a0c1-3d0b07e5b8d4
+
+	/// As emissoras dos debates do 2º turno em que Lula e Flávio estiveram, na ordem das datas, em lista ("Band e Globo").
+	measure 'T07 · 2º turno · frente a frente · emissoras' =
+			VAR _t =
+			    CALCULATETABLE (
+			        SUMMARIZE ( Debate, Debate[Data], Debate[Emissora] ),
+			        REMOVEFILTERS ( Debate ),
+			        Debate[Turno] = 2,
+			        CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+			        CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+			    )
+			VAR _ult = MAXX ( _t, Debate[Data] )
+			VAR _antes = CONCATENATEX ( FILTER ( _t, Debate[Data] < _ult ), Debate[Emissora], ", ", Debate[Data], ASC )
+			VAR _fim = MAXX ( FILTER ( _t, Debate[Data] = _ult ), Debate[Emissora] )
+			RETURN
+			    IF ( _antes = "", _fim, _antes & " e " & _fim )
+		displayFolder: T07 Debate\Contas
+		lineageTag: 47efa87b-4e03-542c-998d-499af65938eb
 
 	/// Flávio − Lula, em pontos, na média das pesquisas com campo terminado antes do dia do debate.
 	measure 'T07 · antes · diferença' =
@@ -6179,9 +6197,10 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: a1713f16-a904-5a97-808b-2bceadee8fa0
 
-	/// Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) tiveram o campo atravessando o dia do debate (fora das médias).
+	/// Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) tiveram o campo atravessando o dia do debate (fora das médias), entre as que terminaram antes do debate seguinte (Globo, 23/10).
 	measure 'T07 · atravessa · pesquisas' =
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    CALCULATE (
 			        COUNTROWS ( Pesquisa ),
@@ -6192,7 +6211,8 @@ table _Medidas
 			        NOT ISBLANK ( Pesquisa[Lula] ),
 			        NOT ISBLANK ( Pesquisa[Flavio] ),
 			        Pesquisa[Campo fim] >= _d,
-			        Pesquisa[Campo início] <= _d
+			        Pesquisa[Campo início] <= _d,
+			        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			    ) + 0
 		formatString: 0
 		displayFolder: T07 Debate\Contas
@@ -6249,19 +6269,45 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: 9b0c56c3-25a3-521b-ab69-ecfca61b44f2
 
+	/// Data do frente a frente seguinte ao da Band: a menor data da tabela Debate com Lula e Flávio entre os participantes, depois do debate da Band (a Globo, 23/10). Fecha a janela 'depois' das pesquisas da tela: a pesquisa que termina nesse dia ou depois já pegou o debate seguinte e fica fora (é da tela do debate da Globo). Vazio enquanto a tabela não tiver esse debate, e aí não há limite.
+	measure 'T07 · debate seguinte · data' =
+			VAR _band = [T07 · debate · data]
+			RETURN
+			    CALCULATE (
+			        MIN ( Debate[Data] ),
+			        REMOVEFILTERS ( Debate ),
+			        Debate[Data] > _band,
+			        CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+			        CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+			    )
+		formatString: dd/MM
+		displayFolder: T07 Debate\Contas
+		lineageTag: efb175e6-7b69-572e-9751-c9c479e1637e
+
+	/// Emissora do frente a frente seguinte ao da Band (T07 · debate seguinte · data): a Globo. Vazio enquanto a tabela Debate não tiver esse debate.
+	measure 'T07 · debate seguinte · emissora' =
+			VAR _g = [T07 · debate seguinte · data]
+			RETURN
+			    IF (
+			        NOT ISBLANK ( _g ),
+			        CALCULATE ( MAX ( Debate[Emissora] ), REMOVEFILTERS ( Debate ), Debate[Data] = _g )
+			    )
+		displayFolder: T07 Debate\Contas
+		lineageTag: 35d6b42c-5755-50a2-a0ab-fdd1549668d3
+
 	/// Quem faltou ao debate da linha.
 	measure 'T07 · debate · ausentes' =
 			IF ( HASONEVALUE ( Debate[Data] ), SELECTEDVALUE ( Debate[Ausentes] ) )
 		displayFolder: T07 Debate\Contas
 		lineageTag: acf9f1b9-8c3e-5649-ba75-3a15d44db1c4
 
-	/// Data do debate da Band, o primeiro com Lula e Flávio frente a frente (linha da tabela Debate em que os dois participaram).
+	/// Data do debate da Band no 2º turno, o primeiro frente a frente de Lula e Flávio, de que a tela fala. Regra explícita e neutra (24/10/2026): a linha da tabela Debate com Emissora = "Band" e Turno = 2. Não usa o MAX(Data) das linhas com os dois nos participantes: com o debate da Globo (23/10) na tabela, esse máximo passaria a ser a Globo.
 	measure 'T07 · debate · data' =
 			CALCULATE (
 			    MAX ( Debate[Data] ),
 			    REMOVEFILTERS ( Debate ),
-			    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
-			    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+			    Debate[Emissora] = "Band",
+			    Debate[Turno] = 2
 			)
 		formatString: dd/MM
 		displayFolder: T07 Debate\Contas
@@ -6305,6 +6351,15 @@ table _Medidas
 			    IF ( [T07 · debate · situação] <> "realizado", _cab )
 		displayFolder: T07 Debate\Contas
 		lineageTag: 5d9ba7aa-710d-527f-8367-4efe086a2574
+
+	/// Sim quando a linha do contexto (grão Debate[Data]) é o debate da Band no 2º turno, o da tela (T07 · debate · data); Não nas outras. O palco e o dossiê do palco só desenham essa linha: com a Globo, a tabela tem dois frente a frente.
+	measure 'T07 · debate · o da Band' =
+			IF (
+			    HASONEVALUE ( Debate[Data] ),
+			    IF ( SELECTEDVALUE ( Debate[Data] ) = [T07 · debate · data], "Sim", "Não" )
+			)
+		displayFolder: T07 Debate\Contas
+		lineageTag: 805afa81-28b8-5e15-a1d0-67eb2c462729
 
 	/// Posição do debate da linha na ordem das datas (1 = o primeiro marcado, 23/08).
 	measure 'T07 · debate · ordem' =
@@ -6357,12 +6412,26 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: 1b42e359-8f07-564b-a2b7-7054602fc5ef
 
-	/// Debates presidenciais marcados por emissoras de 23/08 a 22/10, inclusive os cancelados.
+	/// Debates presidenciais marcados por emissoras na campanha, de 23/08 a 23/10 (o da Globo), inclusive os cancelados.
 	measure 'T07 · debates marcados' =
 			CALCULATE ( COUNTROWS ( Debate ), REMOVEFILTERS ( Debate ) ) + 0
 		formatString: 0
 		displayFolder: T07 Debate\Contas
 		lineageTag: 8b55bd72-1bcf-56a4-b4df-c939950050fd
+
+	/// Data do primeiro debate marcado na campanha (tabela Debate): o começo do eixo da linha dos debates.
+	measure 'T07 · debates · primeiro dia' =
+			CALCULATE ( MIN ( Debate[Data] ), REMOVEFILTERS ( Debate ) )
+		formatString: dd/MM
+		displayFolder: T07 Debate\Contas
+		lineageTag: b03f1493-e99d-5757-b71f-1ba0a0be4259
+
+	/// Data do último debate marcado na campanha (tabela Debate): o fim do eixo da linha dos debates.
+	measure 'T07 · debates · último dia' =
+			CALCULATE ( MAX ( Debate[Data] ), REMOVEFILTERS ( Debate ) )
+		formatString: dd/MM
+		displayFolder: T07 Debate\Contas
+		lineageTag: 3ad58c67-d511-5ade-b6cc-35bd5b61e28e
 
 	/// Flávio − Lula, em pontos, na média das pesquisas com campo começado depois do dia do debate.
 	measure 'T07 · depois · diferença' =
@@ -6371,9 +6440,10 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: 18479f60-fe9e-5c92-a4d1-056ad9d9cb2e
 
-	/// Média simples de Flávio (votos totais, %) nas pesquisas do 2º turno feitas depois do 1º turno com campo começado depois do dia do debate (18/10).
+	/// Média simples de Flávio (votos totais, %) nas pesquisas do 2º turno feitas depois do 1º turno com campo começado depois do dia do debate (18/10) e terminado antes do debate seguinte (Globo, 23/10): a que chega ao dia da Globo já pegou os dois debates e fica fora.
 	measure 'T07 · depois · Flávio' =
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    CALCULATE (
 			        AVERAGE ( Pesquisa[Flavio] ),
@@ -6383,15 +6453,17 @@ table _Medidas
 			        Pesquisa[Momento] = "apos_1turno",
 			        NOT ISBLANK ( Pesquisa[Lula] ),
 			        NOT ISBLANK ( Pesquisa[Flavio] ),
-			        Pesquisa[Campo início] > _d
+			        Pesquisa[Campo início] > _d,
+			        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			    )
 		formatString: 0.0
 		displayFolder: T07 Debate\Contas
 		lineageTag: 0294f4ef-ef4d-5074-b140-2ba7103cc5a8
 
-	/// Média simples de Lula (votos totais, %) nas pesquisas do 2º turno feitas depois do 1º turno com campo começado depois do dia do debate (18/10).
+	/// Média simples de Lula (votos totais, %) nas pesquisas do 2º turno feitas depois do 1º turno com campo começado depois do dia do debate (18/10) e terminado antes do debate seguinte (Globo, 23/10): a que chega ao dia da Globo já pegou os dois debates e fica fora.
 	measure 'T07 · depois · Lula' =
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    CALCULATE (
 			        AVERAGE ( Pesquisa[Lula] ),
@@ -6401,15 +6473,17 @@ table _Medidas
 			        Pesquisa[Momento] = "apos_1turno",
 			        NOT ISBLANK ( Pesquisa[Lula] ),
 			        NOT ISBLANK ( Pesquisa[Flavio] ),
-			        Pesquisa[Campo início] > _d
+			        Pesquisa[Campo início] > _d,
+			        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			    )
 		formatString: 0.0
 		displayFolder: T07 Debate\Contas
 		lineageTag: 549514b4-4a5d-5e53-af14-33adf9de3dff
 
-	/// Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) tiveram campo começado depois do dia do debate.
+	/// Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) tiveram campo começado depois do dia do debate e terminado antes do debate seguinte (Globo, 23/10).
 	measure 'T07 · depois · pesquisas' =
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    CALCULATE (
 			        COUNTROWS ( Pesquisa ),
@@ -6419,15 +6493,17 @@ table _Medidas
 			        Pesquisa[Momento] = "apos_1turno",
 			        NOT ISBLANK ( Pesquisa[Lula] ),
 			        NOT ISBLANK ( Pesquisa[Flavio] ),
-			        Pesquisa[Campo início] > _d
+			        Pesquisa[Campo início] > _d,
+			        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			    ) + 0
 		formatString: 0
 		displayFolder: T07 Debate\Contas
 		lineageTag: 0d0c30cd-cf64-5283-b25e-08186bacae3c
 
-	/// Primeiro último-dia-de-campo entre as pesquisas da janela 'depois' (a extensão da linha da média no gráfico).
+	/// Primeiro último-dia-de-campo entre as pesquisas da janela 'depois' (até a véspera do debate seguinte) (a extensão da linha da média no gráfico).
 	measure 'T07 · depois · primeiro campo' =
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    CALCULATE (
 			        MIN ( Pesquisa[Campo fim] ),
@@ -6437,15 +6513,17 @@ table _Medidas
 			        Pesquisa[Momento] = "apos_1turno",
 			        NOT ISBLANK ( Pesquisa[Lula] ),
 			        NOT ISBLANK ( Pesquisa[Flavio] ),
-			        Pesquisa[Campo início] > _d
+			        Pesquisa[Campo início] > _d,
+			        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			    )
 		formatString: dd/MM
 		displayFolder: T07 Debate\Contas
 		lineageTag: 2404ccbe-f986-5c1f-a8f5-1099c8df4def
 
-	/// Último último-dia-de-campo entre as pesquisas da janela 'depois' (a extensão da linha da média no gráfico).
+	/// Último último-dia-de-campo entre as pesquisas da janela 'depois' (até a véspera do debate seguinte) (a extensão da linha da média no gráfico).
 	measure 'T07 · depois · último campo' =
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    CALCULATE (
 			        MAX ( Pesquisa[Campo fim] ),
@@ -6455,7 +6533,8 @@ table _Medidas
 			        Pesquisa[Momento] = "apos_1turno",
 			        NOT ISBLANK ( Pesquisa[Lula] ),
 			        NOT ISBLANK ( Pesquisa[Flavio] ),
-			        Pesquisa[Campo início] > _d
+			        Pesquisa[Campo início] > _d,
+			        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			    )
 		formatString: dd/MM
 		displayFolder: T07 Debate\Contas
@@ -6507,10 +6586,11 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: f70790c1-f686-5553-99d6-909e72464b9f
 
-	/// Quantas pesquisas do instituto clicado tiveram campo no dia do debate (fora da comparação antes × depois).
+	/// Quantas pesquisas do instituto clicado tiveram campo no dia do debate (fora da comparação antes × depois), entre as que terminaram antes do debate seguinte (Globo, 23/10).
 	measure 'T07 · escolha · atravessa' =
 			VAR _inst = [T07 · escolha · instituto]
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    IF (
 			        NOT ISBLANK ( _inst ),
@@ -6524,17 +6604,19 @@ table _Medidas
 			            NOT ISBLANK ( Pesquisa[Flavio] ),
 			            Pesquisa[Instituto] = _inst,
 			            Pesquisa[Campo fim] >= _d,
-			            Pesquisa[Campo início] <= _d
+			            Pesquisa[Campo início] <= _d,
+			            Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			        ) + 0
 			    )
 		formatString: 0
 		displayFolder: T07 Debate\Contas
 		lineageTag: f3c2e153-a3d5-5e8e-9925-bfb46ee7338e
 
-	/// Último dia de campo da primeira pesquisa do instituto clicado que começou depois do debate (janela 'depois'); vazio se ele não voltou a campo.
+	/// Último dia de campo da primeira pesquisa do instituto clicado que começou depois do debate (janela 'depois', até a véspera do debate seguinte); vazio se ele não voltou a campo.
 	measure 'T07 · escolha · depois · data' =
 			VAR _inst = [T07 · escolha · instituto]
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    IF (
 			        NOT ISBLANK ( _inst ),
@@ -6547,7 +6629,8 @@ table _Medidas
 			            NOT ISBLANK ( Pesquisa[Lula] ),
 			            NOT ISBLANK ( Pesquisa[Flavio] ),
 			            Pesquisa[Instituto] = _inst,
-			            Pesquisa[Campo início] > _d
+			            Pesquisa[Campo início] > _d,
+			            Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			        )
 			    )
 		formatString: dd/MM
@@ -6559,6 +6642,7 @@ table _Medidas
 			VAR _inst = [T07 · escolha · instituto]
 			VAR _dt = [T07 · escolha · depois · data]
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    IF (
 			        NOT ISBLANK ( _dt ),
@@ -6572,7 +6656,8 @@ table _Medidas
 			            NOT ISBLANK ( Pesquisa[Flavio] ),
 			            Pesquisa[Instituto] = _inst,
 			            Pesquisa[Campo início] > _d,
-			            Pesquisa[Campo fim] = _dt
+			            Pesquisa[Campo fim] = _dt,
+			            Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			        )
 			    )
 		formatString: 0.0
@@ -6597,9 +6682,10 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: 34960be5-ebe1-5f20-adfc-5b5137e14d3d
 
-	/// Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) o instituto clicado fez, em qualquer janela.
+	/// Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) o instituto clicado fez, em qualquer janela do gráfico (campo terminado antes do debate seguinte, Globo, 23/10).
 	measure 'T07 · escolha · pesquisas' =
 			VAR _inst = [T07 · escolha · instituto]
+			VAR _g = [T07 · debate seguinte · data]
 			RETURN
 			    IF (
 			        NOT ISBLANK ( _inst ),
@@ -6611,7 +6697,8 @@ table _Medidas
 			            Pesquisa[Momento] = "apos_1turno",
 			            NOT ISBLANK ( Pesquisa[Lula] ),
 			            NOT ISBLANK ( Pesquisa[Flavio] ),
-			            Pesquisa[Instituto] = _inst
+			            Pesquisa[Instituto] = _inst,
+			            Pesquisa[Campo fim] < _g || ISBLANK ( _g )
 			        ) + 0
 			    )
 		formatString: 0
@@ -6738,9 +6825,10 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: e0137097-2739-5767-a95e-30b4e30907b1
 
-	/// Em que janela a pesquisa da linha cai em relação ao debate: antes, depois ou atravessa; vazio quando a linha não é pesquisa do 2º turno (votos totais, depois do 1º turno).
+	/// Em que janela a pesquisa da linha cai em relação ao debate: antes, depois ou atravessa; vazio quando a linha não é pesquisa do 2º turno (votos totais, depois do 1º turno) ou quando o campo chega ao dia do debate seguinte (Globo, 23/10): essa já pegou os dois debates e é da tela do debate da Globo.
 	measure 'T07 · pesquisa · janela' =
 			VAR _d = [T07 · debate · data]
+			VAR _g = [T07 · debate seguinte · data]
 			VAR _ok =
 			    HASONEVALUE ( Pesquisa[Id] )
 			        && SELECTEDVALUE ( Pesquisa[Cenário] ) = "2º turno"
@@ -6752,7 +6840,7 @@ table _Medidas
 			VAR _fim = SELECTEDVALUE ( Pesquisa[Campo fim] )
 			RETURN
 			    IF (
-			        _ok,
+			        _ok && ( ISBLANK ( _g ) || _fim < _g ),
 			        SWITCH ( TRUE (), _fim < _d, "antes", _ini > _d, "depois", "atravessa" )
 			    )
 		displayFolder: T07 Debate\Contas
@@ -6822,17 +6910,20 @@ table _Medidas
 		displayFolder: T07 Debate\Contas
 		lineageTag: fbf500a5-2a91-5b6a-a003-52db2d770f5b
 
-	/// Pesquisas do 2º turno (votos totais) divulgadas depois do 1º turno, com Lula e Flávio publicados.
+	/// Pesquisas do 2º turno (votos totais) divulgadas depois do 1º turno, com Lula e Flávio publicados e campo terminado antes do debate seguinte ao da Band (Globo, 23/10): as que a tela desenha.
 	measure 'T07 · pesquisas do 2º turno' =
-			CALCULATE (
-			    COUNTROWS ( Pesquisa ),
-			    REMOVEFILTERS ( Pesquisa ),
-			    Pesquisa[Cenário] = "2º turno",
-			    Pesquisa[Tipo] = "totais",
-			    Pesquisa[Momento] = "apos_1turno",
-			    NOT ISBLANK ( Pesquisa[Lula] ),
-			    NOT ISBLANK ( Pesquisa[Flavio] )
-			) + 0
+			VAR _g = [T07 · debate seguinte · data]
+			RETURN
+			    CALCULATE (
+			        COUNTROWS ( Pesquisa ),
+			        REMOVEFILTERS ( Pesquisa ),
+			        Pesquisa[Cenário] = "2º turno",
+			        Pesquisa[Tipo] = "totais",
+			        Pesquisa[Momento] = "apos_1turno",
+			        NOT ISBLANK ( Pesquisa[Lula] ),
+			        NOT ISBLANK ( Pesquisa[Flavio] ),
+			        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
+			    ) + 0
 		formatString: 0
 		displayFolder: T07 Debate\Contas
 		lineageTag: 4c130740-bd65-5cce-b51f-f7f597bcff9b
@@ -6912,20 +7003,23 @@ table _Medidas
 			        & "</div>"
 			        & "<div class='man sobe d6'>O debate parou a TV, mas não mexeu nas pesquisas</div>"
 			        & "<div class='txt sobe d7'>Audiência na Grande SP: cerca de " & _txtPessoas
-			            & " assistiram. Segundo a Band, foi o debate mais visto em 20 anos.</div>"
+			            & " assistiram. Segundo a Band, foi o debate mais visto em 20 anos até então.</div>"
 			    & "</div>"
 		displayFolder: T07 Debate\Desenho
 		lineageTag: 7a168888-839c-5eb1-9cdd-51c6ce623cae
 
 	/// Texto para leitor de tela da linha dos debates da campanha.
 	measure 'T07 · Debates · ALT' =
-			[T07 · debates marcados] & " debates marcados na campanha; " & [T07 · debates frente a frente]
-			    & " reuniu Lula e Flávio. No 1º turno, " & [T07 · 1º turno · sem os dois] & " aconteceram sem os dois e "
-			    & [T07 · 1º turno · cancelados] & " foram cancelados."
+			VAR _um = [T07 · debates frente a frente]
+			RETURN
+			    [T07 · debates marcados] & " debates marcados na campanha; " & _um & IF ( _um = 1, " reuniu", " reuniram" )
+			        & " Lula e Flávio (" & [T07 · 2º turno · frente a frente · emissoras] & "). No 1º turno, "
+			        & [T07 · 1º turno · sem os dois] & " aconteceram sem os dois e " & [T07 · 1º turno · cancelados]
+			        & " foram cancelados; no 2º turno, " & [T07 · 2º turno · desmarcados] & " caíram."
 		displayFolder: T07 Debate\Desenho
 		lineageTag: 4b022f86-99c0-5ba4-9c27-7b3dfc632d19
 
-	/// Os debates marcados na campanha: '1 de 11' (contadores), o resumo do 1º e do 2º turno, o eixo de 23/08 a 18/10 com o corte do 1º turno e a legenda. As marcas de cada debate são outro visual (T07 · Marcas · HTML), na mesma caixa.
+	/// Os debates marcados na campanha: '2 de 12' (contadores), o resumo do 1º e do 2º turno (no 2º, os que caíram e as emissoras dos frente a frente, Band e Globo), o eixo do primeiro ao último debate da tabela (23/08 a 23/10) com o corte do 1º turno e a legenda. As marcas de cada debate são outro visual (T07 · Marcas · HTML), na mesma caixa e na mesma escala.
 	measure 'T07 · Debates · HTML' =
 			-- 1 · Leituras
 			VAR _n = [T07 · debates marcados]
@@ -6933,14 +7027,20 @@ table _Medidas
 			VAR _sem = [T07 · 1º turno · sem os dois]
 			VAR _can = [T07 · 1º turno · cancelados]
 			VAR _des = [T07 · 2º turno · desmarcados]
+			VAR _emis = [T07 · 2º turno · frente a frente · emissoras]
+			VAR _dia0 = [T07 · debates · primeiro dia]
+			VAR _dia1 = [T07 · debates · último dia]
 			-- 2 · Textos
+			-- "Band e Globo" → "à Band e à Globo"
+			VAR _txtEmis = "à " & SUBSTITUTE ( SUBSTITUTE ( _emis, ", ", ", à " ), " e ", " e à " )
 			VAR _txtResumo =
 			    "No 1º turno, Lula e Flávio faltaram a todos: " & _sem & IF ( _sem = 1, " aconteceu", " aconteceram" )
 			        & " sem eles e " & _can & IF ( _can = 1, " foi cancelado", " foram cancelados" ) & ". No 2º turno, "
-			        & _des & IF ( _des = 1, " caiu", " caíram" ) & " antes do da Band."
-			-- 3 · Geometria (eixo: 22/08 a 19/10 em x 600–1600)
-			VAR _ini = DATE ( 2026, 8, 22 )
-			VAR _xCorte = 600 + DATEDIFF ( _ini, DATE ( 2026, 10, 4 ), DAY ) / 58 * 1000 -- geometria
+			        & _des & IF ( _des = 1, " caiu", " caíram" ) & " e os dois foram " & _txtEmis & "."
+			-- 3 · Geometria (eixo: da véspera do primeiro debate ao dia seguinte ao último, em x 600–1600)
+			VAR _ini = _dia0 - 1
+			VAR _span = DATEDIFF ( _ini, _dia1 + 1, DAY ) -- geometria
+			VAR _xCorte = 600 + DATEDIFF ( _ini, DATE ( 2026, 10, 4 ), DAY ) / _span * 1000 -- geometria
 			VAR _fC = FORMAT ( _xCorte, "0.0", "en-US" )
 			-- 4 · Marcação
 			RETURN
@@ -6967,18 +7067,21 @@ table _Medidas
 
 	/// Texto para leitor de tela das marcas dos debates (uma por debate marcado).
 	measure 'T07 · Marcas · ALT' =
-			"Uma marca por debate marcado (" & [T07 · debates marcados]
-			    & "), de 23/08 a 18/10: círculo vazio quando aconteceu sem os dois, × quando caiu. Passe o mouse para ver quem foi."
+			"Uma marca por debate marcado (" & [T07 · debates marcados] & "), de " & FORMAT ( [T07 · debates · primeiro dia], "dd/MM" )
+			    & " a " & FORMAT ( [T07 · debates · último dia], "dd/MM" )
+			    & ": círculo vazio quando aconteceu sem os dois, × quando caiu, vermelho e azul quando Lula e Flávio estiveram. Passe o mouse para ver quem foi."
 		displayFolder: T07 Debate\Desenho
 		lineageTag: a6ff88d9-e98b-5f08-833f-486e5062a058
 
-	/// Uma marca por debate marcado (grão Debate[Data]) no eixo de T07 · Debates · HTML: círculo vazio = aconteceu sem Lula e Flávio; × = cancelado ou não realizado; círculo vermelho e azul = frente a frente. Data acima ou abaixo, alternando para não encostar. Alvo do dossiê ttT07Debate.
+	/// Uma marca por debate marcado (grão Debate[Data]) no eixo de T07 · Debates · HTML (do primeiro ao último debate da tabela, 23/08 a 23/10): círculo vazio = aconteceu sem Lula e Flávio; × = cancelado ou não realizado; círculo vermelho e azul = frente a frente (Band, 18/10, e Globo, 23/10). Data acima ou abaixo, alternando para não encostar. Alvo do dossiê ttT07Debate.
 	measure 'T07 · Marcas · HTML' =
 			-- 1 · Leituras
 			VAR _sit = [T07 · debate · situação]
 			VAR _ff = [T07 · debate · frente a frente]
 			VAR _dia = [T07 · debate · dia]
 			VAR _ord = [T07 · debate · ordem]
+			VAR _dia0 = [T07 · debates · primeiro dia]
+			VAR _dia1 = [T07 · debates · último dia]
 			-- 2 · Textos
 			VAR _cls = SWITCH ( TRUE (), _ff = "Sim", "ff", _sit = "realizado", "re", "ca" )
 			VAR _marca =
@@ -6989,8 +7092,11 @@ table _Medidas
 			        ""
 			    )
 			VAR _txtDia = FORMAT ( _dia, "dd/MM" )
-			-- 3 · Geometria (eixo: 22/08 a 19/10 em x 600–1600, linha em y 58)
-			VAR _x = 600 + DATEDIFF ( DATE ( 2026, 8, 22 ), _dia, DAY ) / 58 * 1000 -- geometria
+			-- 3 · Geometria (o eixo de T07 · Debates · HTML: da véspera do primeiro debate ao dia seguinte ao último, em x
+			-- 600–1600, linha em y 58)
+			VAR _ini = _dia0 - 1
+			VAR _span = DATEDIFF ( _ini, _dia1 + 1, DAY ) -- geometria
+			VAR _x = 600 + DATEDIFF ( _ini, _dia, DAY ) / _span * 1000 -- geometria
 			VAR _tam = SWITCH ( _cls, "ff", 24, "ca", 18, 16 ) -- geometria
 			VAR _yDia = IF ( _cls = "ff" || MOD ( _ord, 2 ) = 1, 76, 26 ) -- geometria
 			VAR _atraso = 900 + _ord * 120 -- geometria
@@ -7016,25 +7122,30 @@ table _Medidas
 		displayFolder: T07 Debate\Desenho
 		lineageTag: c6c29c42-176f-5292-9747-3b4aeaed537a
 
-	/// Legenda do palco em traço (a arte fica no bodyTemplate) e o alvo do mouse que abre o dossiê ttT07Palco. Uma entrada só: a linha do debate em que Lula e Flávio estiveram frente a frente (grão Debate[Data]).
+	/// Legenda do palco em traço (a arte fica no bodyTemplate) e o alvo do mouse que abre o dossiê ttT07Palco. Uma entrada só: a linha do debate da Band no 2º turno (grão Debate[Data], T07 · debate · o da Band), o primeiro frente a frente; a legenda diz onde os dois voltaram a se encontrar (a Globo, 23/10), quando a tabela tem esse debate.
 	measure 'T07 · Palco · HTML' =
 			-- 1 · Leituras
-			VAR _ff = [T07 · debate · frente a frente]
+			VAR _band = [T07 · debate · o da Band]
 			VAR _dia = [T07 · debate · dia]
 			VAR _emi = [T07 · debate · emissora]
 			VAR _med = [T07 · debate · mediação]
+			VAR _prox = [T07 · debate seguinte · data]
+			VAR _proxEmi = [T07 · debate seguinte · emissora]
 			-- 2 · Textos
 			VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _emi, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 			VAR _escMed = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+			VAR _escProx = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _proxEmi, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 			VAR _txtDia = FORMAT ( _dia, "dd/MM" )
+			VAR _txtProx =
+			    IF ( NOT ISBLANK ( _prox ), " Voltaram a se encontrar na " & _escProx & ", em " & FORMAT ( _prox, "dd/MM" ) & "." )
 			-- 4 · Marcação
 			RETURN
 			    IF (
-			        _ff = "Sim",
+			        _band = "Sim",
 			        "<div class='tela t07s'>"
 			            & "<div class='leg'>"
 			                & "<div class='sob sobe d2'>" & _txtDia & " · " & _esc & "</div>"
-			                & "<div class='txt sobe d3'>Pela primeira e única vez na campanha, Lula e Flávio no mesmo palco.</div>"
+			                & "<div class='txt sobe d3'>Pela primeira vez na campanha, Lula e Flávio no mesmo palco." & _txtProx & "</div>"
 			                & "<div class='nota sobe d4'>Mediação de " & _escMed & "</div>"
 			            & "</div>"
 			            & "<div class='dica entra d10'>passe o mouse no palco</div>"
@@ -7325,7 +7436,7 @@ table _Medidas
 		displayFolder: T07 Debate\Desenho
 		lineageTag: cb76bb6b-1477-58fa-bf27-56a47dbe479a
 
-	/// Dossiê de um debate marcado na campanha (ttT07Debate, grão Debate[Data]): data, turno e situação, a emissora, quem foi (ou por que caiu) e a nota à mão. Foco em Lula e Flávio: nos debates sem os dois, só a lista de quem foi.
+	/// Dossiê de um debate marcado na campanha (ttT07Debate, grão Debate[Data]): data, turno e situação, a emissora, quem foi (ou por que caiu) e a nota à mão. Foco em Lula e Flávio: nos debates sem os dois, só a lista de quem foi; no frente a frente seguinte ao da Band (a Globo, 23/10), o aviso de que os números da noite estão na tela dele.
 	measure 'T07 · Tooltip debate · HTML' =
 			-- 1 · Leituras
 			VAR _sit = [T07 · debate · situação]
@@ -7336,6 +7447,7 @@ table _Medidas
 			VAR _part = [T07 · debate · participantes]
 			VAR _med = [T07 · debate · mediação]
 			VAR _motivo = [T07 · debate · motivo]
+			VAR _seg = [T07 · debate seguinte · data]
 			-- 2 · Textos
 			VAR _escEmi = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _emi, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 			VAR _escPart = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _part, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
@@ -7345,7 +7457,9 @@ table _Medidas
 			VAR _txt =
 			    SWITCH (
 			        TRUE (),
-			        _ff = "Sim", "Lula e Flávio frente a frente, com mediação de " & _escMed & ".",
+			        _ff = "Sim",
+			            "Lula e Flávio frente a frente, com mediação de " & _escMed & "."
+			                & IF ( NOT ISBLANK ( _seg ) && _dia = _seg, " Os números da noite estão na tela própria deste debate." ),
 			        _sit = "realizado", "Aconteceu sem Lula e sem Flávio. Foram: " & _escPart & ".",
 			        _escMot & "."
 			    )
@@ -7367,17 +7481,17 @@ table _Medidas
 	/// Texto para leitor de tela do dossiê do palco.
 	measure 'T07 · Tooltip palco · ALT' =
 			IF (
-			    [T07 · debate · frente a frente] = "Sim",
+			    [T07 · debate · o da Band] = "Sim",
 			    "Lula: Eu desafio você, amanhã abrimos a nossa conta bancária. Flávio: Aqui é o Flávio, não é o Jair. Quaest: nota "
 			        & [T07 · Quaest · nota Flávio] & " para Flávio e " & [T07 · Quaest · nota Lula] & " para Lula."
 			)
 		displayFolder: T07 Debate\Desenho
 		lineageTag: 351c4279-5f75-5f04-942d-b74ddb0f899f
 
-	/// Dossiê do palco (ttT07Palco, linha do debate de 18/10): uma frase de cada um (Aos Fatos, Congresso em Foco, Agência Brasil), a nota dos grupos da Quaest e a audiência dos debates da Band em 2022 e 2026 (barras que crescem). Só lê contas 'T07 · …'.
+	/// Dossiê do palco (ttT07Palco, linha do debate da Band de 18/10, T07 · debate · o da Band): uma frase de cada um (Aos Fatos, Congresso em Foco, Agência Brasil), a nota dos grupos da Quaest e a audiência dos debates da Band em 2022 e 2026 (barras que crescem). Só lê contas 'T07 · …'.
 	measure 'T07 · Tooltip palco · HTML' =
 			-- 1 · Leituras
-			VAR _ff = [T07 · debate · frente a frente]
+			VAR _band = [T07 · debate · o da Band]
 			VAR _dia = [T07 · debate · dia]
 			VAR _qF = [T07 · Quaest · nota Flávio]
 			VAR _qL = [T07 · Quaest · nota Lula]
@@ -7409,7 +7523,7 @@ table _Medidas
 			-- 4 · Marcação
 			RETURN
 			    IF (
-			        _ff = "Sim",
+			        _band = "Sim",
 			        "<div class='tt7s'>"
 			            & "<div class='sob sobe'>" & FORMAT ( _dia, "dd/MM" ) & " · uma frase de cada um</div>"
 			            & "<div class='cit l sobe d2'>“Eu desafio você. Amanhã abrimos a nossa conta bancária.”"
@@ -7501,6 +7615,13 @@ table _Medidas
 		displayFolder: T07 Debate\Desenho
 		lineageTag: eab504a0-80ae-5cd8-a1db-8e79a4ccccc1
 
+	/// Início oficial da campanha de 2026: 16/08, o primeiro dia de propaganda eleitoral (Lei 9.504/97, art. 36: só depois de 15 de agosto do ano da eleição). É a marca '16/08 · campanha' da curva e o começo da conta dos dias da campanha; a curva começa antes, em 01/08, no começo da consulta T2 do Google Trends.
+	measure 'T08 · campanha · início' =
+			DATE ( 2026, 8, 16 )
+		formatString: dd/MM
+		displayFolder: T08 Buscas\Contas
+		lineageTag: 48be3999-7e75-5766-a44c-daa640df8b8e
+
 	/// Parte do interesse de busca de Flávio entre os dois nos últimos 30 dias (22/09 a 22/10), no resumo da Central Google Trends Eleições 2026. Constante: dados/bruto/digital/FONTES.md e a Observação das linhas C1.
 	measure 'T08 · Central · Flávio' =
 			0.44
@@ -7515,6 +7636,17 @@ table _Medidas
 		displayFolder: T08 Buscas\Contas
 		lineageTag: 9a7260cc-a1b4-5654-ba03-9c2830fcfe5b
 
+	/// Dias da curva diária (série T2, 01/08 a 22/10; a curva do estado usa os mesmos dias): uma faixa por dia.
+	measure 'T08 · curva · dias' =
+			CALCULATE (
+			    COUNTROWS ( VALUES ( 'Trends tempo'[DataTexto] ) ),
+			    REMOVEFILTERS ( 'Trends tempo' ),
+			    'Trends tempo'[Série] = "Lula [tópico | T2]"
+			) + 0
+		formatString: 0
+		displayFolder: T08 Buscas\Contas
+		lineageTag: 64011c68-aeb2-5622-be33-d55577ee3b0e
+
 	/// Último dia da curva (o fim da série T2, 22/10): a curva do estado usa os mesmos dias.
 	measure 'T08 · curva · último dia' =
 			CALCULATE (
@@ -7526,13 +7658,13 @@ table _Medidas
 		displayFolder: T08 Buscas\Contas
 		lineageTag: ecce4fc8-1dd3-582b-8735-99d5eb359cc9
 
-	/// Data do debate de Lula e Flávio na Band (linha da tabela Debate em que os dois participaram).
+	/// Data do debate da Band no 2º turno, o primeiro frente a frente de Lula e Flávio (a marca 'debate' da curva das buscas, que vai até 22/10). Regra explícita e neutra (24/10/2026): a linha da tabela Debate com Emissora = "Band" e Turno = 2. Não usa o MAX(Data) das linhas com os dois nos participantes: com o debate da Globo (23/10) na tabela, esse máximo passaria a ser a Globo.
 	measure 'T08 · debate · data' =
 			CALCULATE (
 			    MAX ( Debate[Data] ),
 			    REMOVEFILTERS ( Debate ),
-			    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
-			    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+			    Debate[Emissora] = "Band",
+			    Debate[Turno] = 2
 			)
 		formatString: dd/MM
 		displayFolder: T08 Buscas\Contas
@@ -7847,9 +7979,11 @@ table _Medidas
 		displayFolder: T08 Buscas\Contas
 		lineageTag: b7b56977-a191-5fdc-bac9-60db9d339cc2
 
-	/// Posição do dia entre os dias da curva pelo índice de Flávio (1 = o dia de mais buscas por ele), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2).
+	/// Posição do dia entre os dias da campanha (de 16/08 ao fim da curva) pelo índice de Flávio (1 = o dia de mais buscas por ele na campanha), na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias). Vazio fora da campanha (01 a 15/08): a manchete do dia só diz 'na campanha' de um dia da campanha.
 	measure 'T08 · dia · posição Flávio' =
 			VAR _v = [T08 · dia · Flávio]
+			VAR _d = [T08 · dia · data]
+			VAR _ini = [T08 · campanha · início]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -7857,17 +7991,20 @@ table _Medidas
 			            REMOVEFILTERS ( 'Trends tempo' ),
 			            'Trends tempo'[Série] = "Lula [tópico | T2]"
 			        ),
+			        "@d", [T08 · dia · data],
 			        "@v", [T08 · dia · Flávio]
 			    )
 			RETURN
-			    IF ( NOT ISBLANK ( _v ), COUNTROWS ( FILTER ( _dias, [@v] > _v ) ) + 1 )
+			    IF ( NOT ISBLANK ( _v ) && _d >= _ini, COUNTROWS ( FILTER ( _dias, [@d] >= _ini && [@v] > _v ) ) + 1 )
 		formatString: 0
 		displayFolder: T08 Buscas\Contas
 		lineageTag: 672accad-0e4b-5aba-9fb9-6a4c72c3e972
 
-	/// Posição do dia entre os dias da curva pelo índice de Lula (1 = o dia de mais buscas por ele), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2).
+	/// Posição do dia entre os dias da campanha (de 16/08 ao fim da curva) pelo índice de Lula (1 = o dia de mais buscas por ele na campanha), na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias). Vazio fora da campanha (01 a 15/08): a manchete do dia só diz 'na campanha' de um dia da campanha.
 	measure 'T08 · dia · posição Lula' =
 			VAR _v = [T08 · dia · Lula]
+			VAR _d = [T08 · dia · data]
+			VAR _ini = [T08 · campanha · início]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -7875,92 +8012,131 @@ table _Medidas
 			            REMOVEFILTERS ( 'Trends tempo' ),
 			            'Trends tempo'[Série] = "Lula [tópico | T2]"
 			        ),
+			        "@d", [T08 · dia · data],
 			        "@v", [T08 · dia · Lula]
 			    )
 			RETURN
-			    IF ( NOT ISBLANK ( _v ), COUNTROWS ( FILTER ( _dias, [@v] > _v ) ) + 1 )
+			    IF ( NOT ISBLANK ( _v ) && _d >= _ini, COUNTROWS ( FILTER ( _dias, [@d] >= _ini && [@v] > _v ) ) + 1 )
 		formatString: 0
 		displayFolder: T08 Buscas\Contas
 		lineageTag: df920617-dac4-5dda-8c6c-ccd375bc9fb1
 
-	/// Dias da série diária T2 (01/08 a 22/10).
+	/// Dias da campanha na curva: de 16/08 (T08 · campanha · início) ao último dia da curva (22/10). Antes de 24/10/2026 a conta começava em 01/08, o começo da consulta, e dava 83.
 	measure 'T08 · dias' =
-			COUNTROWS (
-			    FILTER (
-			        ADDCOLUMNS (
-			            CALCULATETABLE ( VALUES ( 'Trends tempo'[DataTexto] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@l", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@f", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+			VAR _ini = [T08 · campanha · início]
+			VAR _dias =
+			    ADDCOLUMNS (
+			        CALCULATETABLE (
+			            VALUES ( 'Trends tempo'[DataTexto] ),
+			            REMOVEFILTERS ( 'Trends tempo' ),
+			            'Trends tempo'[Série] = "Lula [tópico | T2]"
 			        ),
-			        TRUE ()
+			        "@d", [T08 · dia · data],
+			        "@l", [T08 · dia · Lula],
+			        "@f", [T08 · dia · Flávio]
 			    )
-			) + 0
+			RETURN
+			    COUNTROWS ( FILTER ( _dias, [@d] >= _ini ) ) + 0
 		formatString: 0
 		displayFolder: T08 Buscas\Contas
 		lineageTag: 185c1455-0c3d-5628-a54e-f0ef7dbf56fb
 
-	/// Dias em que Flávio teve índice maior que Lula na série T2 (05/08, 13/08, 19/10 e 22/10).
+	/// Dias da campanha (de 16/08 ao fim da curva) em que Flávio teve índice maior que Lula, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias).
 	measure 'T08 · dias com Flávio à frente' =
-			COUNTROWS (
-			    FILTER (
-			        ADDCOLUMNS (
-			            CALCULATETABLE ( VALUES ( 'Trends tempo'[DataTexto] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@l", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@f", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+			VAR _ini = [T08 · campanha · início]
+			VAR _dias =
+			    ADDCOLUMNS (
+			        CALCULATETABLE (
+			            VALUES ( 'Trends tempo'[DataTexto] ),
+			            REMOVEFILTERS ( 'Trends tempo' ),
+			            'Trends tempo'[Série] = "Lula [tópico | T2]"
 			        ),
-			        [@f] > [@l]
+			        "@d", [T08 · dia · data],
+			        "@l", [T08 · dia · Lula],
+			        "@f", [T08 · dia · Flávio]
 			    )
-			) + 0
+			RETURN
+			    COUNTROWS ( FILTER ( _dias, [@d] >= _ini && [@f] > [@l] ) ) + 0
 		formatString: 0
 		displayFolder: T08 Buscas\Contas
 		lineageTag: c439765d-4484-51fc-b7a0-b850f2ca1378
 
-	/// Dias depois do debate de 18/10 em que Flávio teve índice T2 maior que Lula (19/10 e 22/10; 22/10 é dia parcial na coleta).
+	/// Dias da curva depois do debate da Band (18/10) em que Flávio teve índice maior que Lula, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias). A mesma conta para os dois: a manchete usa a de quem ficou na frente em menos dias da campanha.
 	measure 'T08 · dias com Flávio à frente depois do debate' =
 			VAR _deb = [T08 · debate · data]
-			RETURN
-			    COUNTROWS (
-			        FILTER (
-			        ADDCOLUMNS (
-			            CALCULATETABLE ( VALUES ( 'Trends tempo'[Momento] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@l", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Momento] = EARLIER ( 'Trends tempo'[Momento] ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@f", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Momento] = EARLIER ( 'Trends tempo'[Momento] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+			VAR _dias =
+			    ADDCOLUMNS (
+			        CALCULATETABLE (
+			            VALUES ( 'Trends tempo'[DataTexto] ),
+			            REMOVEFILTERS ( 'Trends tempo' ),
+			            'Trends tempo'[Série] = "Lula [tópico | T2]"
 			        ),
-			        'Trends tempo'[Momento] > _deb && [@f] > [@l]
+			        "@d", [T08 · dia · data],
+			        "@l", [T08 · dia · Lula],
+			        "@f", [T08 · dia · Flávio]
 			    )
-			    ) + 0
+			RETURN
+			    COUNTROWS ( FILTER ( _dias, [@d] > _deb && [@f] > [@l] ) ) + 0
 		formatString: 0
 		displayFolder: T08 Buscas\Contas
 		lineageTag: 3542f3e3-1e24-5140-86a5-26463be05b47
 
-	/// Dias em que Lula teve índice maior que Flávio na série T2.
+	/// Dias da campanha (de 16/08 ao fim da curva) em que Lula teve índice maior que Flávio, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias).
 	measure 'T08 · dias com Lula à frente' =
-			COUNTROWS (
-			    FILTER (
-			        ADDCOLUMNS (
-			            CALCULATETABLE ( VALUES ( 'Trends tempo'[DataTexto] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@l", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@f", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+			VAR _ini = [T08 · campanha · início]
+			VAR _dias =
+			    ADDCOLUMNS (
+			        CALCULATETABLE (
+			            VALUES ( 'Trends tempo'[DataTexto] ),
+			            REMOVEFILTERS ( 'Trends tempo' ),
+			            'Trends tempo'[Série] = "Lula [tópico | T2]"
 			        ),
-			        [@l] > [@f]
+			        "@d", [T08 · dia · data],
+			        "@l", [T08 · dia · Lula],
+			        "@f", [T08 · dia · Flávio]
 			    )
-			) + 0
+			RETURN
+			    COUNTROWS ( FILTER ( _dias, [@d] >= _ini && [@l] > [@f] ) ) + 0
 		formatString: 0
 		displayFolder: T08 Buscas\Contas
 		lineageTag: 02f44705-e554-5eeb-8b0b-54a0ae627665
 
-	/// Dias em que os dois tiveram o mesmo índice na série T2.
-	measure 'T08 · dias empatados' =
-			COUNTROWS (
-			    FILTER (
-			        ADDCOLUMNS (
-			            CALCULATETABLE ( VALUES ( 'Trends tempo'[DataTexto] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@l", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-			            "@f", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+	/// Dias da curva depois do debate da Band (18/10) em que Lula teve índice maior que Flávio, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias). A mesma conta para os dois: a manchete usa a de quem ficou na frente em menos dias da campanha.
+	measure 'T08 · dias com Lula à frente depois do debate' =
+			VAR _deb = [T08 · debate · data]
+			VAR _dias =
+			    ADDCOLUMNS (
+			        CALCULATETABLE (
+			            VALUES ( 'Trends tempo'[DataTexto] ),
+			            REMOVEFILTERS ( 'Trends tempo' ),
+			            'Trends tempo'[Série] = "Lula [tópico | T2]"
 			        ),
-			        [@f] = [@l]
+			        "@d", [T08 · dia · data],
+			        "@l", [T08 · dia · Lula],
+			        "@f", [T08 · dia · Flávio]
 			    )
-			) + 0
+			RETURN
+			    COUNTROWS ( FILTER ( _dias, [@d] > _deb && [@l] > [@f] ) ) + 0
+		formatString: 0
+		displayFolder: T08 Buscas\Contas
+		lineageTag: d2f03742-225f-5f7d-a136-649e97b274bc
+
+	/// Dias da campanha (de 16/08 ao fim da curva) em que os dois tiveram o mesmo índice (no estado, 0 a 0 é busca abaixo do mínimo do Google, não empate de verdade), na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias).
+	measure 'T08 · dias empatados' =
+			VAR _ini = [T08 · campanha · início]
+			VAR _dias =
+			    ADDCOLUMNS (
+			        CALCULATETABLE (
+			            VALUES ( 'Trends tempo'[DataTexto] ),
+			            REMOVEFILTERS ( 'Trends tempo' ),
+			            'Trends tempo'[Série] = "Lula [tópico | T2]"
+			        ),
+			        "@d", [T08 · dia · data],
+			        "@l", [T08 · dia · Lula],
+			        "@f", [T08 · dia · Flávio]
+			    )
+			RETURN
+			    COUNTROWS ( FILTER ( _dias, [@d] >= _ini && [@l] = [@f] ) ) + 0
 		formatString: 0
 		displayFolder: T08 Buscas\Contas
 		lineageTag: 2e35cc6c-f7bf-5d99-86ee-5f174521c562
@@ -9027,6 +9203,7 @@ table _Medidas
 			VAR _zF = [T08 · zeros · Flávio]
 			VAR _lac = [T08 · lacuna · nota]
 			VAR _uNome = [T08 · UF · nome]
+			VAR _camp = [T08 · campanha · início]
 			VAR _noUf = NOT ISBLANK ( _uf )
 			VAR _per = [Período · escolhido]
 			VAR _pNome = [Período · nome]
@@ -9145,7 +9322,7 @@ table _Medidas
 			            & "' y='372' class='ex' text-anchor='middle'>" & FORMAT ( [Value], "dd/MM" ) & "</text>",
 			        ""
 			    )
-			VAR _xCamp = 40 + DATEDIFF ( _ini, DATE ( 2026, 8, 16 ), DAY ) / 82 * 1050 -- geometria
+			VAR _xCamp = 40 + DATEDIFF ( _ini, _camp, DAY ) / 82 * 1050 -- geometria
 			-- 4 · Marcação
 			VAR _lacuna =
 			    IF (
@@ -9189,7 +9366,7 @@ table _Medidas
 			VAR _svg =
 			    "<svg width='1130' height='400' viewBox='0 0 1130 400'>"
 			        & _grade & _datas & _lacuna & _faixa
-			        & "<text x='" & FORMAT ( _xCamp, _f, "en-US" ) & "' y='372' class='ex' text-anchor='middle'>16/08 · campanha</text>"
+			        & "<text x='" & FORMAT ( _xCamp, _f, "en-US" ) & "' y='372' class='ex' text-anchor='middle'>" & FORMAT ( _camp, "dd/MM" ) & " · campanha</text>"
 			        & "<line x1='" & FORMAT ( _xT1, _f, "en-US" ) & "' x2='" & FORMAT ( _xT1, _f, "en-US" ) & "' y1='22' y2='350' class='ev'/>"
 			        & "<text x='" & FORMAT ( _xT1, _f, "en-US" ) & "' y='372' class='ex b' text-anchor='middle'>1º turno · "
 			            & FORMAT ( _t1, "dd/MM" ) & "</text>"
@@ -9261,8 +9438,8 @@ table _Medidas
 	measure 'T08 · Dias · ALT' =
 			IF (
 			    ISBLANK ( [T08 · escolha · UF] ),
-			    "Uma faixa por dia da curva (" & [T08 · dias] & " dias): passe o mouse para ver o índice de cada um no dia e, em outubro, a curva hora a hora.",
-			    "Uma faixa por dia da curva de " & [T08 · UF · nome] & " (" & [T08 · dias] & " dias): passe o mouse para ver o índice de cada um no dia, de 0 a 100 dentro do estado."
+			    "Uma faixa por dia da curva (" & [T08 · curva · dias] & " dias): passe o mouse para ver o índice de cada um no dia e, em outubro, a curva hora a hora.",
+			    "Uma faixa por dia da curva de " & [T08 · UF · nome] & " (" & [T08 · curva · dias] & " dias): passe o mouse para ver o índice de cada um no dia, de 0 a 100 dentro do estado."
 			)
 		displayFolder: T08 Buscas\Desenho
 		lineageTag: 5e606e93-2f50-5128-844a-358071a32046
@@ -9398,7 +9575,7 @@ table _Medidas
 		displayFolder: T08 Buscas\Desenho
 		lineageTag: dbe60636-9a59-5f5c-9e85-0dd8097abd22
 
-	/// Texto para leitor de tela da abertura das buscas (≤ 250 caracteres): o resumo dos 30 dias, o dia clicado na curva ou o estado clicado no mapa.
+	/// Texto para leitor de tela da abertura das buscas (≤ 250 caracteres): o resumo dos 30 dias com os dias da campanha (desde 16/08), o dia clicado na curva ou o estado clicado no mapa (com os dias da campanha na série do estado).
 	measure 'T08 · Placar · ALT' =
 			VAR _dia = [T08 · escolha · dia]
 			VAR _uf = [T08 · escolha · UF]
@@ -9421,15 +9598,16 @@ table _Medidas
 			                & [T08 · período · dias com Flávio à frente] & ".",
 			        NOT ISBLANK ( _uf ),
 			            [T08 · UF · nome] & ", 2º turno: Lula " & FORMAT ( [T08 · UF · parte Lula], "0%" ) & " e Flávio "
-			                & FORMAT ( [T08 · UF · parte Flávio], "0%" ) & " das buscas pelos dois.",
+			                & FORMAT ( [T08 · UF · parte Flávio], "0%" ) & " das buscas pelos dois. Na campanha, desde 16/08, Lula foi mais buscado em "
+			                & [T08 · dias com Lula à frente] & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & ".",
 			        "Central do Google, últimos 30 dias: Lula " & FORMAT ( [T08 · Central · Lula], "0%" ) & " e Flávio "
-			            & FORMAT ( [T08 · Central · Flávio], "0%" ) & " do interesse. Lula foi mais buscado em " & [T08 · dias com Lula à frente]
-			            & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & "."
+			            & FORMAT ( [T08 · Central · Flávio], "0%" ) & " do interesse. Na campanha, desde 16/08, Lula foi mais buscado em "
+			            & [T08 · dias com Lula à frente] & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & "."
 			    )
 		displayFolder: T08 Buscas\Desenho
 		lineageTag: 6d6e1793-47e0-5eb0-9bef-62f212a20620
 
-	/// Abertura da tela das buscas. Sem clique: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias em que cada um foi mais buscado (consulta T2) e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Com um dia clicado na curva (filtro cruzado de 'Trends tempo'[DataTexto]): a parte de cada um na soma dos dois índices daquele dia, quem foi mais buscado e se foi um dos dias de mais buscas. Com um estado clicado no mapa (filtro cruzado de UF[UF]): a parte de cada um nas buscas do estado no 2º turno e o aviso de que a curva abaixo passou a ser a do estado (100 = o pico dentro do próprio estado; o índice não se compara entre estados). Com estado e dia (Ctrl+clique), o dia é o do estado. Com um período escolhido no filtro Período (sem dia clicado): no Brasil, a parte de cada um na soma dos índices diários da consulta T2 no período e quantos dias cada um ficou na frente; no estado, a parte de cada um pela consulta U2 do estado no período; Depois da Globo, a espera honesta (os números com traço, nunca zero). Só lê contas 'T08 · …' e 'Período · …'.
+	/// Abertura da tela das buscas. Sem clique: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias da campanha (desde 16/08, T08 · campanha · início; a curva começa em 01/08) em que cada um foi mais buscado (consulta T2), quem ficou na frente em mais dias abrindo a frase e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Com um dia clicado na curva (filtro cruzado de 'Trends tempo'[DataTexto]): a parte de cada um na soma dos dois índices daquele dia, quem foi mais buscado e se foi um dos dias de mais buscas. Com um estado clicado no mapa (filtro cruzado de UF[UF]): a parte de cada um nas buscas do estado no 2º turno, a mesma frase dos dias da campanha na série do estado (consulta U2, desde 16/08) e o aviso de que a curva abaixo passou a ser a do estado (100 = o pico dentro do próprio estado; o índice não se compara entre estados). Com estado e dia (Ctrl+clique), o dia é o do estado. Com um período escolhido no filtro Período (sem dia clicado): no Brasil, a parte de cada um na soma dos índices diários da consulta T2 no período e quantos dias cada um ficou na frente; no estado, a parte de cada um pela consulta U2 do estado no período; Depois da Globo, a espera honesta (os números com traço, nunca zero). Só lê contas 'T08 · …' e 'Período · …'.
 	measure 'T08 · Placar · HTML' =
 			-- 1 · Leituras
 			VAR _dia = [T08 · escolha · dia]
@@ -9440,6 +9618,7 @@ table _Medidas
 			VAR _dL = [T08 · dias com Lula à frente]
 			VAR _dF = [T08 · dias com Flávio à frente]
 			VAR _dFdep = [T08 · dias com Flávio à frente depois do debate]
+			VAR _dLdep = [T08 · dias com Lula à frente depois do debate]
 			VAR _iL = [T08 · dia · Lula]
 			VAR _iF = [T08 · dia · Flávio]
 			VAR _pdL = [T08 · dia · parte Lula]
@@ -9454,7 +9633,6 @@ table _Medidas
 			VAR _ufF = [T08 · UF · Flávio]
 			VAR _upL = [T08 · UF · parte Lula]
 			VAR _upF = [T08 · UF · parte Flávio]
-			VAR _nivel = [T08 · UF · nível de interesse]
 			VAR _per = [Período · escolhido]
 			VAR _pNome = [Período · nome]
 			VAR _pRot = [Período · rótulo]
@@ -9471,17 +9649,30 @@ table _Medidas
 			VAR _noPer = NOT ISBLANK ( _per ) && ISBLANK ( _dia ) -- o dia clicado vale mais que o período
 			-- 2 · Textos
 			VAR _modo = SWITCH ( TRUE (), NOT ISBLANK ( _dia ), "dia", NOT ISBLANK ( _ufEsc ), "uf", "brasil" )
+			-- os dias da campanha (desde 16/08, T08 · campanha · início), na série que a curva mostra: a do Brasil ou a do estado
+			-- clicado. Quem ficou na frente em mais dias abre a frase (a mesma regra para os dois; no empate, Lula primeiro, na
+			-- ordem da tela); o outro vem depois, com quantos dos dias dele foram depois do debate da Band
+			VAR _cA = IF ( _dF > _dL, "Flávio", "Lula" )
+			VAR _cB = IF ( _cA = "Lula", "Flávio", "Lula" )
+			VAR _nA = IF ( _cA = "Lula", _dL, _dF )
+			VAR _nB = IF ( _cA = "Lula", _dF, _dL )
+			VAR _kB = IF ( _cA = "Lula", _dFdep, _dLdep )
 			VAR _txtDep =
 			    SWITCH (
-			        _dFdep,
-			        0, "",
-			        1, ", um deles depois do debate",
-			        2, ", dois deles depois do debate",
-			        ", " & _dFdep & " deles depois do debate"
+			        TRUE (),
+			        _kB = 0, "",
+			        _kB = _nB, SWITCH ( _nB, 1, ", depois do debate da Band", 2, ", ambos depois do debate da Band", ", todos depois do debate da Band" ),
+			        _kB = 1, ", um deles depois do debate da Band",
+			        _kB = 2, ", dois deles depois do debate da Band",
+			        ", " & _kB & " deles depois do debate da Band"
 			    )
 			VAR _manBrasil =
-			    "Lula foi mais buscado que Flávio em " & _dL & " dos " & _dias & " dias da campanha; Flávio ficou na frente em "
-			        & _dF & IF ( _dF = 1, " dia", " dias" ) & _txtDep
+			    IF (
+			        _nA = _nB,
+			        "Lula e Flávio foram mais buscados no mesmo número de dias da campanha: " & _nA & " cada um, dos " & _dias,
+			        _cA & " foi mais buscado que " & _cB & " em " & _nA & " dos " & _dias & " dias da campanha; "
+			            & IF ( _nB = 0, _cB & " não ficou na frente em nenhum", _cB & " ficou na frente em " & _nB & IF ( _nB = 1, " dia", " dias" ) & _txtDep )
+			    )
 			-- no dia: quem foi mais buscado e, se for o caso, a posição do dia para quem liderou
 			VAR _lider = SWITCH ( TRUE (), _iL > _iF, "Lula", _iF > _iL, "Flávio", "" )
 			VAR _outro = IF ( _lider = "Lula", "Flávio", "Lula" )
@@ -9490,6 +9681,7 @@ table _Medidas
 			    SWITCH (
 			        TRUE (),
 			        _lider = "", "",
+			        ISBLANK ( _pos ), "", -- dia antes da campanha (01 a 15/08): sem 'na campanha'
 			        _pos = 1, ": o dia de mais buscas por " & _lider & " na campanha",
 			        _pos <= 10, ": um dos 10 dias de mais buscas por " & _lider & " na campanha",
 			        ""
@@ -9497,9 +9689,15 @@ table _Medidas
 			VAR _manDia =
 			    "Em " & FORMAT ( _dia, "dd/MM" ) & ", "
 			        & IF ( _lider = "", "os dois empataram nas buscas", _lider & " foi mais buscado que " & _outro ) & _txtPos
+			-- no estado clicado, a mesma frase dos dias da campanha, na série do estado (consulta U2, desde 16/08), mais curta
+			-- para caber em duas linhas com o nome do estado
 			VAR _manUf =
-			    _uNo & ", " & IF ( _ufL >= _ufF, "Lula", "Flávio" ) & " foi mais buscado no 2º turno"
-			        & SWITCH ( _nivel, "alto", ", num dos estados que mais buscaram os dois", "baixo", ", num dos estados que menos buscaram os dois", "" )
+			    IF (
+			        _nA = _nB,
+			        _uNo & ", Lula e Flávio foram mais buscados em " & _nA & " dos " & _dias & " dias da campanha cada um",
+			        _uNo & ", " & _cA & " foi mais buscado em " & _nA & " dos " & _dias & " dias da campanha; "
+			            & IF ( _nB = 0, _cB & " não ficou na frente em nenhum", _cB & ", em " & _nB & IF ( _nB = 1, " dia", " dias" ) & _txtDep )
+			    )
 			VAR _sob =
 			    SWITCH (
 			        _modo,
@@ -9632,6 +9830,7 @@ table _Medidas
 			VAR _pico = [T08 · pico · data]
 			VAR _zero = [T08 · dia · nota do zero]
 			VAR _d = [T08 · dia · data]
+			VAR _camp = [T08 · campanha · início]
 			VAR _l = [T08 · dia · Lula]
 			VAR _f = [T08 · dia · Flávio]
 			VAR _dif = [T08 · dia · diferença]
@@ -9669,7 +9868,7 @@ table _Medidas
 			VAR _evento =
 			    SWITCH (
 			        _d,
-			        DATE ( 2026, 8, 16 ), "começa a campanha",
+			        _camp, "começa a campanha",
 			        DATE ( 2026, 10, 4 ), "o dia da eleição",
 			        DATE ( 2026, 10, 18 ), "a noite do debate",
 			        DATE ( 2026, 10, 19 ), "o dia seguinte ao debate",
@@ -9936,13 +10135,13 @@ table _Medidas
 		displayFolder: T09 Redes\Contas
 		lineageTag: fcbf34b9-21b0-5408-ad7b-0f1cb9ab1304
 
-	/// Data do debate da Band com Lula e Flávio frente a frente (marca no gráfico do índice de popularidade).
+	/// Data do debate da Band no 2º turno, o primeiro frente a frente de Lula e Flávio (marca no gráfico do índice de popularidade). Regra explícita e neutra (24/10/2026): a linha da tabela Debate com Emissora = "Band" e Turno = 2. Não usa o MAX(Data) das linhas com os dois nos participantes: com o debate da Globo (23/10) na tabela, esse máximo passaria a ser a Globo.
 	measure 'T09 · debate · data' =
 			CALCULATE (
 			    MAX ( Debate[Data] ),
 			    REMOVEFILTERS ( Debate ),
-			    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
-			    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+			    Debate[Emissora] = "Band",
+			    Debate[Turno] = 2
 			)
 		formatString: dd/MM
 		displayFolder: T09 Redes\Contas
@@ -19705,13 +19904,25 @@ table _Medidas
 		displayFolder: T17 2º turno\Contas
 		lineageTag: 39c9bbe7-ff82-5bfa-bd1b-6fbedc58f291
 
-	/// Dia do debate da Band, o primeiro com Lula e Flávio frente a frente (linha da tabela Debate em que os dois participaram).
+	/// Dia do debate da Globo no 2º turno, o segundo e último frente a frente de Lula e Flávio (a segunda marca de debate da curva). A mesma regra da Band: a linha da tabela Debate com Emissora = "Globo" e Turno = 2 (a Globo do 1º turno, 01/10, foi cancelada e é turno 1). Vazio enquanto a tabela não tiver essa linha: a curva fica só com a marca da Band.
+	measure 'T17 · debate da Globo · data' =
+			CALCULATE (
+			    MAX ( Debate[Data] ),
+			    REMOVEFILTERS ( Debate ),
+			    Debate[Emissora] = "Globo",
+			    Debate[Turno] = 2
+			)
+		formatString: dd/MM
+		displayFolder: T17 2º turno\Contas
+		lineageTag: fcfd0793-5703-5369-9dd8-35dd5b6d2070
+
+	/// Dia do debate da Band no 2º turno, o primeiro frente a frente de Lula e Flávio (a primeira das duas marcas de debate da curva). Regra explícita e neutra (24/10/2026): a linha da tabela Debate com Emissora = "Band" e Turno = 2. Não usa o MAX(Data) das linhas com os dois nos participantes: com o debate da Globo (23/10) na tabela, esse máximo passaria a ser a Globo.
 	measure 'T17 · debate · data' =
 			CALCULATE (
 			    MAX ( Debate[Data] ),
 			    REMOVEFILTERS ( Debate ),
-			    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
-			    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+			    Debate[Emissora] = "Band",
+			    Debate[Turno] = 2
 			)
 		formatString: dd/MM
 		displayFolder: T17 2º turno\Contas
@@ -21252,13 +21463,14 @@ table _Medidas
 		displayFolder: T17 2º turno\Desenho
 		lineageTag: 213b9254-11c5-582f-83b1-223b3614d6d4
 
-	/// Fundo da curva do 2º turno: zonas 'Flávio à frente' (em cima) e 'Lula à frente' (embaixo), grade, datas, o 1º turno, o debate e o 2º turno (urna), a média móvel de 10 dias em dois trechos (antes e depois do 1º turno, traço que se desenha), o valor de hoje (contador) e a nota à mão na virada. Com um período escolhido no filtro Período: a faixa do campo do período, a manchete do período (de quanto a quanto foram as pesquisas com o campo inteiro nele, a única, nenhuma ou a espera depois da Globo), a legenda que explica o destaque, e a nota da virada sai (fica fora de qualquer período). Os pontos são outro visual (T17 · Pontos · HTML), na mesma caixa e escala.
+	/// Fundo da curva do 2º turno: zonas 'Flávio à frente' (em cima) e 'Lula à frente' (embaixo), grade, datas, o 1º turno, os dois debates do 2º turno (Band, 18/10, e Globo, 23/10, cada um com a sua linha tracejada e o nome da emissora; a da Globo só quando a tabela Debate tem a linha) e o 2º turno (urna), a média móvel de 10 dias em dois trechos (antes e depois do 1º turno, traço que se desenha), o valor de hoje (contador) e a nota à mão na virada. Com um período escolhido no filtro Período: a faixa do campo do período, a manchete do período (de quanto a quanto foram as pesquisas com o campo inteiro nele, a única, nenhuma ou a espera depois da Globo), a legenda que explica o destaque, e a nota da virada sai (fica fora de qualquer período). Os pontos são outro visual (T17 · Pontos · HTML), na mesma caixa e escala.
 	measure 'T17 · Curva · HTML' =
 			-- 1 · Leituras
 			VAR _n = [T17 · pesquisas]
 			VAR _d1 = [T17 · 1º turno · data]
 			VAR _d2 = [T17 · 2º turno · data]
 			VAR _deb = [T17 · debate · data]
+			VAR _debG = [T17 · debate da Globo · data]
 			VAR _mmIni = [T17 · média móvel · no começo]
 			VAR _mmFim = [T17 · média móvel · agora]
 			VAR _diaFim = [T17 · média móvel · último dia]
@@ -21334,6 +21546,7 @@ table _Medidas
 			    )
 			VAR _x1 = 70 + DATEDIFF ( _ini, _d1, DAY ) / 87 * 1370 -- geometria
 			VAR _xDeb = 70 + DATEDIFF ( _ini, _deb, DAY ) / 87 * 1370 -- geometria
+			VAR _xDebG = 70 + DATEDIFF ( _ini, _debG, DAY ) / 87 * 1370 -- geometria
 			VAR _x2 = 70 + DATEDIFF ( _ini, _d2, DAY ) / 87 * 1370 -- geometria
 			VAR _xVir = 70 + DATEDIFF ( _ini, _vir, DAY ) / 87 * 1370 -- geometria
 			VAR _yVir = 190 - _mmVir / 10 * 170 -- geometria
@@ -21378,7 +21591,14 @@ table _Medidas
 			        & "<text x='" & FORMAT ( _x1, _f, "en-US" ) & "' y='384' class='ex b' text-anchor='middle'>1º turno · "
 			            & FORMAT ( _d1, "dd/MM" ) & "</text>"
 			        & "<line x1='" & FORMAT ( _xDeb, _f, "en-US" ) & "' x2='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y1='14' y2='366' class='mk s'/>"
-			        & "<text x='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y='10' class='ex' text-anchor='middle'>debate</text>"
+			        -- os dois debates: o nome da Band termina na linha dela e o da Globo começa na dela (5 dias = 79 px; centrados,
+			        -- os dois nomes se encostariam)
+			        & "<text x='" & FORMAT ( _xDeb + 3, _f, "en-US" ) & "' y='10' class='ex' text-anchor='end'>debate na Band</text>"
+			        & IF (
+			            NOT ISBLANK ( _debG ),
+			            "<line x1='" & FORMAT ( _xDebG, _f, "en-US" ) & "' x2='" & FORMAT ( _xDebG, _f, "en-US" ) & "' y1='14' y2='366' class='mk s'/>"
+			                & "<text x='" & FORMAT ( _xDebG - 3, _f, "en-US" ) & "' y='10' class='ex' text-anchor='start'>debate na Globo</text>"
+			        )
 			        & "<line x1='" & FORMAT ( _x2, _f, "en-US" ) & "' x2='" & FORMAT ( _x2, _f, "en-US" ) & "' y1='70' y2='366' class='mk'/>"
 			        & "<text x='" & FORMAT ( _x2, _f, "en-US" ) & "' y='384' class='ex b' text-anchor='middle'>2º turno · "
 			            & FORMAT ( _d2, "dd/MM" ) & "</text>"
@@ -28175,12 +28395,18 @@ table _Medidas
 		displayFolder: T25 Quem falta\Desenho
 		lineageTag: d9545b12-68ed-50c7-b674-c6ef799d8813
 
-	/// Os debates marcados no 2º turno (tabela Debate), um por linha, com o que houve para o candidato da linha do contexto: esteve, não esteve, cancelado ou não aconteceu. Separados por |.
+	/// Os debates marcados no 2º turno ANTES deste (tabela Debate, data anterior ao dia do debate da Globo), um por linha, com o que houve para o candidato da linha do contexto: esteve, não esteve, cancelado ou não aconteceu. Separados por |. Desde 24/10/2026 a própria Globo (23/10) é linha da tabela Debate: o filtro de data a deixa fora da lista do 'antes deste'.
 	measure 'T26 · 2º turno · debates' =
 			VAR _cand = [T26 · linha · candidato]
+			VAR _globo = [T26 · debate · dia]
 			RETURN
 			    CONCATENATEX (
-			        CALCULATETABLE ( VALUES ( Debate[Data] ), REMOVEFILTERS ( Debate ), Debate[Turno] = 2 ),
+			        CALCULATETABLE (
+			            VALUES ( Debate[Data] ),
+			            REMOVEFILTERS ( Debate ),
+			            Debate[Turno] = 2,
+			            Debate[Data] < _globo || ISBLANK ( _globo )
+			        ),
 			        VAR _d = Debate[Data]
 			        VAR _emi = CALCULATE ( MAX ( Debate[Emissora] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )
 			        VAR _obs = UPPER ( CALCULATE ( MAX ( Debate[Observação] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d ) )
@@ -28200,9 +28426,17 @@ table _Medidas
 		displayFolder: T26 Debate na Globo\Contas
 		lineageTag: 9ecaeb43-b54b-535d-baa6-5eafc9c88d90
 
-	/// Quantos debates do 2º turno aconteceram antes deste (tabela Debate).
+	/// Quantos debates do 2º turno aconteceram antes deste (tabela Debate, data anterior ao dia do debate da Globo; a própria Globo, linha da tabela desde 24/10/2026, fica fora).
 	measure 'T26 · 2º turno · realizados' =
-			CALCULATE ( COUNTROWS ( Debate ), REMOVEFILTERS ( Debate ), Debate[Turno] = 2, LEFT ( Debate[Observação], 9 ) = "REALIZADO" ) + 0
+			VAR _globo = [T26 · debate · dia]
+			RETURN
+			    CALCULATE (
+			        COUNTROWS ( Debate ),
+			        REMOVEFILTERS ( Debate ),
+			        Debate[Turno] = 2,
+			        LEFT ( Debate[Observação], 9 ) = "REALIZADO",
+			        Debate[Data] < _globo || ISBLANK ( _globo )
+			    ) + 0
 		formatString: 0
 		displayFolder: T26 Debate na Globo\Contas
 		lineageTag: 7de1b19e-7a34-52d1-a5f4-1182327e4010
@@ -28291,7 +28525,7 @@ table _Medidas
 		displayFolder: T26 Debate na Globo\Contas
 		lineageTag: ae9d3fdd-bb10-5145-a127-e6d646973ccb
 
-	/// Dia do debate da Band no 2º turno (tabela Debate: Band, turno 2).
+	/// Dia do debate da Band no 2º turno, o primeiro frente a frente (tabela Debate: Emissora = Band, Turno = 2). A mesma regra explícita das telas da Band, das buscas, das redes e do 2º turno: pela emissora e pelo turno, nunca pelo MAX(Data) das linhas com os dois, que com a Globo na tabela seria a Globo.
 	measure 'T26 · Band · data' =
 			CALCULATE ( MAX ( Debate[Data] ), REMOVEFILTERS ( Debate ), Debate[Emissora] = "Band", Debate[Turno] = 2 )
 		formatString: dd/MM/yyyy

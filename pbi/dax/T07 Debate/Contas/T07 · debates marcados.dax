@@ -1,7 +1,7 @@
 /*
 @pasta: T07 Debate\Contas
 @formato: 0
-@descricao: Debates presidenciais marcados por emissoras de 23/08 a 22/10, inclusive os cancelados.
-@oraculo: 11
+@descricao: Debates presidenciais marcados por emissoras na campanha, de 23/08 a 23/10 (o da Globo), inclusive os cancelados.
+@oraculo: 12 (11 até 22/10; a Globo, 23/10, entrou em 24/10/2026)
 */
 CALCULATE ( COUNTROWS ( Debate ), REMOVEFILTERS ( Debate ) ) + 0

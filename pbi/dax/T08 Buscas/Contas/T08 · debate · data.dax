@@ -1,12 +1,12 @@
 /*
 @pasta: T08 Buscas\Contas
 @formato: dd/MM
-@descricao: Data do debate de Lula e Flávio na Band (linha da tabela Debate em que os dois participaram).
+@descricao: Data do debate da Band no 2º turno, o primeiro frente a frente de Lula e Flávio (a marca 'debate' da curva das buscas, que vai até 22/10). Regra explícita e neutra (24/10/2026): a linha da tabela Debate com Emissora = "Band" e Turno = 2. Não usa o MAX(Data) das linhas com os dois nos participantes: com o debate da Globo (23/10) na tabela, esse máximo passaria a ser a Globo.
 @oraculo: 18/10
 */
 CALCULATE (
     MAX ( Debate[Data] ),
     REMOVEFILTERS ( Debate ),
-    CONTAINSSTRING ( Debate[Participantes], "Lula" ),
-    CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+    Debate[Emissora] = "Band",
+    Debate[Turno] = 2
 )

@@ -1,13 +1,14 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Fundo da curva do 2º turno: zonas 'Flávio à frente' (em cima) e 'Lula à frente' (embaixo), grade, datas, o 1º turno, o debate e o 2º turno (urna), a média móvel de 10 dias em dois trechos (antes e depois do 1º turno, traço que se desenha), o valor de hoje (contador) e a nota à mão na virada. Com um período escolhido no filtro Período: a faixa do campo do período, a manchete do período (de quanto a quanto foram as pesquisas com o campo inteiro nele, a única, nenhuma ou a espera depois da Globo), a legenda que explica o destaque, e a nota da virada sai (fica fora de qualquer período). Os pontos são outro visual (T17 · Pontos · HTML), na mesma caixa e escala.
+@descricao: Fundo da curva do 2º turno: zonas 'Flávio à frente' (em cima) e 'Lula à frente' (embaixo), grade, datas, o 1º turno, os dois debates do 2º turno (Band, 18/10, e Globo, 23/10, cada um com a sua linha tracejada e o nome da emissora; a da Globo só quando a tabela Debate tem a linha) e o 2º turno (urna), a média móvel de 10 dias em dois trechos (antes e depois do 1º turno, traço que se desenha), o valor de hoje (contador) e a nota à mão na virada. Com um período escolhido no filtro Período: a faixa do campo do período, a manchete do período (de quanto a quanto foram as pesquisas com o campo inteiro nele, a única, nenhuma ou a espera depois da Globo), a legenda que explica o destaque, e a nota da virada sai (fica fora de qualquer período). Os pontos são outro visual (T17 · Pontos · HTML), na mesma caixa e escala.
 */
 -- 1 · Leituras
 VAR _n = [T17 · pesquisas]
 VAR _d1 = [T17 · 1º turno · data]
 VAR _d2 = [T17 · 2º turno · data]
 VAR _deb = [T17 · debate · data]
+VAR _debG = [T17 · debate da Globo · data]
 VAR _mmIni = [T17 · média móvel · no começo]
 VAR _mmFim = [T17 · média móvel · agora]
 VAR _diaFim = [T17 · média móvel · último dia]
@@ -83,6 +84,7 @@ VAR _linhaD =
     )
 VAR _x1 = 70 + DATEDIFF ( _ini, _d1, DAY ) / 87 * 1370 -- geometria
 VAR _xDeb = 70 + DATEDIFF ( _ini, _deb, DAY ) / 87 * 1370 -- geometria
+VAR _xDebG = 70 + DATEDIFF ( _ini, _debG, DAY ) / 87 * 1370 -- geometria
 VAR _x2 = 70 + DATEDIFF ( _ini, _d2, DAY ) / 87 * 1370 -- geometria
 VAR _xVir = 70 + DATEDIFF ( _ini, _vir, DAY ) / 87 * 1370 -- geometria
 VAR _yVir = 190 - _mmVir / 10 * 170 -- geometria
@@ -127,7 +129,14 @@ VAR _svg =
         & "<text x='" & FORMAT ( _x1, _f, "en-US" ) & "' y='384' class='ex b' text-anchor='middle'>1º turno · "
             & FORMAT ( _d1, "dd/MM" ) & "</text>"
         & "<line x1='" & FORMAT ( _xDeb, _f, "en-US" ) & "' x2='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y1='14' y2='366' class='mk s'/>"
-        & "<text x='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y='10' class='ex' text-anchor='middle'>debate</text>"
+        -- os dois debates: o nome da Band termina na linha dela e o da Globo começa na dela (5 dias = 79 px; centrados,
+        -- os dois nomes se encostariam)
+        & "<text x='" & FORMAT ( _xDeb + 3, _f, "en-US" ) & "' y='10' class='ex' text-anchor='end'>debate na Band</text>"
+        & IF (
+            NOT ISBLANK ( _debG ),
+            "<line x1='" & FORMAT ( _xDebG, _f, "en-US" ) & "' x2='" & FORMAT ( _xDebG, _f, "en-US" ) & "' y1='14' y2='366' class='mk s'/>"
+                & "<text x='" & FORMAT ( _xDebG - 3, _f, "en-US" ) & "' y='10' class='ex' text-anchor='start'>debate na Globo</text>"
+        )
         & "<line x1='" & FORMAT ( _x2, _f, "en-US" ) & "' x2='" & FORMAT ( _x2, _f, "en-US" ) & "' y1='70' y2='366' class='mk'/>"
         & "<text x='" & FORMAT ( _x2, _f, "en-US" ) & "' y='384' class='ex b' text-anchor='middle'>2º turno · "
             & FORMAT ( _d2, "dd/MM" ) & "</text>"

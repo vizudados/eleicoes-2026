@@ -1,7 +1,7 @@
 /*
 @pasta: T26 Debate na Globo\Contas
 @formato: dd/MM/yyyy
-@descricao: Dia do debate da Band no 2º turno (tabela Debate: Band, turno 2).
+@descricao: Dia do debate da Band no 2º turno, o primeiro frente a frente (tabela Debate: Emissora = Band, Turno = 2). A mesma regra explícita das telas da Band, das buscas, das redes e do 2º turno: pela emissora e pelo turno, nunca pelo MAX(Data) das linhas com os dois, que com a Globo na tabela seria a Globo.
 @oraculo: 18/10/2026
 */
 CALCULATE ( MAX ( Debate[Data] ), REMOVEFILTERS ( Debate ), Debate[Emissora] = "Band", Debate[Turno] = 2 )

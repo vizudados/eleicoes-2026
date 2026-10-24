@@ -1,15 +1,18 @@
 /*
 @pasta: T07 Debate\Contas
 @formato: 0
-@descricao: Pesquisas do 2º turno (votos totais) divulgadas depois do 1º turno, com Lula e Flávio publicados.
+@descricao: Pesquisas do 2º turno (votos totais) divulgadas depois do 1º turno, com Lula e Flávio publicados e campo terminado antes do debate seguinte ao da Band (Globo, 23/10): as que a tela desenha.
 @oraculo: 24 + 10 + 5 = 39
 */
-CALCULATE (
-    COUNTROWS ( Pesquisa ),
-    REMOVEFILTERS ( Pesquisa ),
-    Pesquisa[Cenário] = "2º turno",
-    Pesquisa[Tipo] = "totais",
-    Pesquisa[Momento] = "apos_1turno",
-    NOT ISBLANK ( Pesquisa[Lula] ),
-    NOT ISBLANK ( Pesquisa[Flavio] )
-) + 0
+VAR _g = [T07 · debate seguinte · data]
+RETURN
+    CALCULATE (
+        COUNTROWS ( Pesquisa ),
+        REMOVEFILTERS ( Pesquisa ),
+        Pesquisa[Cenário] = "2º turno",
+        Pesquisa[Tipo] = "totais",
+        Pesquisa[Momento] = "apos_1turno",
+        NOT ISBLANK ( Pesquisa[Lula] ),
+        NOT ISBLANK ( Pesquisa[Flavio] ),
+        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
+    ) + 0

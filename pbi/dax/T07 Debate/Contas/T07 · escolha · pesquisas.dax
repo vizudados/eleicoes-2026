@@ -1,9 +1,10 @@
 /*
 @pasta: T07 Debate\Contas
 @formato: 0
-@descricao: Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) o instituto clicado fez, em qualquer janela.
+@descricao: Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) o instituto clicado fez, em qualquer janela do gráfico (campo terminado antes do debate seguinte, Globo, 23/10).
 */
 VAR _inst = [T07 · escolha · instituto]
+VAR _g = [T07 · debate seguinte · data]
 RETURN
     IF (
         NOT ISBLANK ( _inst ),
@@ -15,6 +16,7 @@ RETURN
             Pesquisa[Momento] = "apos_1turno",
             NOT ISBLANK ( Pesquisa[Lula] ),
             NOT ISBLANK ( Pesquisa[Flavio] ),
-            Pesquisa[Instituto] = _inst
+            Pesquisa[Instituto] = _inst,
+            Pesquisa[Campo fim] < _g || ISBLANK ( _g )
         ) + 0
     )

@@ -6,6 +6,7 @@
 VAR _inst = [T07 · escolha · instituto]
 VAR _dt = [T07 · escolha · depois · data]
 VAR _d = [T07 · debate · data]
+VAR _g = [T07 · debate seguinte · data]
 RETURN
     IF (
         NOT ISBLANK ( _dt ),
@@ -19,6 +20,7 @@ RETURN
             NOT ISBLANK ( Pesquisa[Flavio] ),
             Pesquisa[Instituto] = _inst,
             Pesquisa[Campo início] > _d,
-            Pesquisa[Campo fim] = _dt
+            Pesquisa[Campo fim] = _dt,
+            Pesquisa[Campo fim] < _g || ISBLANK ( _g )
         )
     )

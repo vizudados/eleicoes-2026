@@ -1,0 +1,19 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: As emissoras dos debates do 2º turno em que Lula e Flávio estiveram, na ordem das datas, em lista ("Band e Globo").
+@oraculo: Band e Globo
+*/
+VAR _t =
+    CALCULATETABLE (
+        SUMMARIZE ( Debate, Debate[Data], Debate[Emissora] ),
+        REMOVEFILTERS ( Debate ),
+        Debate[Turno] = 2,
+        CONTAINSSTRING ( Debate[Participantes], "Lula" ),
+        CONTAINSSTRING ( Debate[Participantes], "Flávio" )
+    )
+VAR _ult = MAXX ( _t, Debate[Data] )
+VAR _antes = CONCATENATEX ( FILTER ( _t, Debate[Data] < _ult ), Debate[Emissora], ", ", Debate[Data], ASC )
+VAR _fim = MAXX ( FILTER ( _t, Debate[Data] = _ult ), Debate[Emissora] )
+RETURN
+    IF ( _antes = "", _fim, _antes & " e " & _fim )

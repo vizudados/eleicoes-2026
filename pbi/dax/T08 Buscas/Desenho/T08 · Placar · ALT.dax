@@ -1,7 +1,7 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela da abertura das buscas (≤ 250 caracteres): o resumo dos 30 dias, o dia clicado na curva ou o estado clicado no mapa.
+@descricao: Texto para leitor de tela da abertura das buscas (≤ 250 caracteres): o resumo dos 30 dias com os dias da campanha (desde 16/08), o dia clicado na curva ou o estado clicado no mapa (com os dias da campanha na série do estado).
 */
 VAR _dia = [T08 · escolha · dia]
 VAR _uf = [T08 · escolha · UF]
@@ -24,8 +24,9 @@ RETURN
                 & [T08 · período · dias com Flávio à frente] & ".",
         NOT ISBLANK ( _uf ),
             [T08 · UF · nome] & ", 2º turno: Lula " & FORMAT ( [T08 · UF · parte Lula], "0%" ) & " e Flávio "
-                & FORMAT ( [T08 · UF · parte Flávio], "0%" ) & " das buscas pelos dois.",
+                & FORMAT ( [T08 · UF · parte Flávio], "0%" ) & " das buscas pelos dois. Na campanha, desde 16/08, Lula foi mais buscado em "
+                & [T08 · dias com Lula à frente] & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & ".",
         "Central do Google, últimos 30 dias: Lula " & FORMAT ( [T08 · Central · Lula], "0%" ) & " e Flávio "
-            & FORMAT ( [T08 · Central · Flávio], "0%" ) & " do interesse. Lula foi mais buscado em " & [T08 · dias com Lula à frente]
-            & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & "."
+            & FORMAT ( [T08 · Central · Flávio], "0%" ) & " do interesse. Na campanha, desde 16/08, Lula foi mais buscado em "
+            & [T08 · dias com Lula à frente] & " de " & [T08 · dias] & " dias; Flávio, em " & [T08 · dias com Flávio à frente] & "."
     )

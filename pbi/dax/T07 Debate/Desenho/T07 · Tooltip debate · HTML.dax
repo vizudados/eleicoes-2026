@@ -1,7 +1,7 @@
 /*
 @pasta: T07 Debate\Desenho
 @formato: texto
-@descricao: Dossiê de um debate marcado na campanha (ttT07Debate, grão Debate[Data]): data, turno e situação, a emissora, quem foi (ou por que caiu) e a nota à mão. Foco em Lula e Flávio: nos debates sem os dois, só a lista de quem foi.
+@descricao: Dossiê de um debate marcado na campanha (ttT07Debate, grão Debate[Data]): data, turno e situação, a emissora, quem foi (ou por que caiu) e a nota à mão. Foco em Lula e Flávio: nos debates sem os dois, só a lista de quem foi; no frente a frente seguinte ao da Band (a Globo, 23/10), o aviso de que os números da noite estão na tela dele.
 */
 -- 1 · Leituras
 VAR _sit = [T07 · debate · situação]
@@ -12,6 +12,7 @@ VAR _emi = [T07 · debate · emissora]
 VAR _part = [T07 · debate · participantes]
 VAR _med = [T07 · debate · mediação]
 VAR _motivo = [T07 · debate · motivo]
+VAR _seg = [T07 · debate seguinte · data]
 -- 2 · Textos
 VAR _escEmi = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _emi, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 VAR _escPart = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _part, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
@@ -21,7 +22,9 @@ VAR _escMot = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _
 VAR _txt =
     SWITCH (
         TRUE (),
-        _ff = "Sim", "Lula e Flávio frente a frente, com mediação de " & _escMed & ".",
+        _ff = "Sim",
+            "Lula e Flávio frente a frente, com mediação de " & _escMed & "."
+                & IF ( NOT ISBLANK ( _seg ) && _dia = _seg, " Os números da noite estão na tela própria deste debate." ),
         _sit = "realizado", "Aconteceu sem Lula e sem Flávio. Foram: " & _escPart & ".",
         _escMot & "."
     )

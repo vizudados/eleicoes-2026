@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: dd/MM
+@descricao: Data do último debate marcado na campanha (tabela Debate): o fim do eixo da linha dos debates.
+@oraculo: 23/10 (Globo; era 18/10 antes da linha da Globo)
+*/
+CALCULATE ( MAX ( Debate[Data] ), REMOVEFILTERS ( Debate ) )

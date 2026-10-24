@@ -1,0 +1,9 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: Sim quando a linha do contexto (grão Debate[Data]) é o debate da Band no 2º turno, o da tela (T07 · debate · data); Não nas outras. O palco e o dossiê do palco só desenham essa linha: com a Globo, a tabela tem dois frente a frente.
+*/
+IF (
+    HASONEVALUE ( Debate[Data] ),
+    IF ( SELECTEDVALUE ( Debate[Data] ) = [T07 · debate · data], "Sim", "Não" )
+)

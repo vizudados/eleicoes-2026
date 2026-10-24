@@ -760,11 +760,13 @@ DEBATE = RAIZ / "dados" / "bruto" / "debate"
 
 
 def tela_debate():
-    """O debate da Band de 18/10, o único frente a frente de Lula e Flávio, e o que as pesquisas mostraram em volta dele.
+    """O debate da Band de 18/10, o primeiro frente a frente de Lula e Flávio, e o que as pesquisas mostraram em volta
+    dele. O segundo e último foi na Globo, em 23/10 (linha de debates.csv desde 24/10/2026; tela própria no painel).
 
     Foco só em Lula e Flávio (pedido do Alisson, 23/10/2026): os debates do 1º turno entram como contexto — os dois não
     foram a nenhum. Pesquisas do 2º turno (votos totais) classificadas pelo campo: antes (terminou até 17/10), depois
-    (começou a partir de 19/10) ou atravessando o dia do debate.
+    (começou a partir de 19/10 e terminou antes do debate seguinte, o da Globo) ou atravessando o dia do debate; a
+    pesquisa que chega ao dia do debate da Globo já pegou os dois e fica fora desta tela (a mesma regra da T07).
     """
     bruto = json.loads((DEBATE / "debate_band.json").read_text(encoding="utf-8"))
     d2 = bruto["debate_2turno_2026_10_18"]
@@ -773,6 +775,12 @@ def tela_debate():
     p2 = pd.read_csv(PESQUISAS / "pesquisas_2turno.csv", sep=";")
     p2 = p2[(p2.tipo == "totais") & (p2.momento == "apos_1turno")].dropna(subset=["lula", "flavio"])
     p2 = p2[~p2.observacao.fillna("").str.contains("retirad", case=False)].sort_values("divulgacao")
+    debates = pd.read_csv(DEBATE / "debates.csv", sep=";").fillna("")
+    # o frente a frente seguinte ao da Band (a Globo, 23/10): fecha a janela "depois"
+    frente = debates.participantes.str.contains("Lula") & debates.participantes.str.contains("Flávio")
+    seguinte = debates[frente & (debates.data > "2026-10-18")].data.min()
+    if isinstance(seguinte, str) and seguinte:
+        p2 = p2[p2.campo_fim < seguinte]
     p2["janela"] = np.where(p2.campo_fim < "2026-10-18", "antes",
                             np.where(p2.campo_inicio >= "2026-10-19", "depois", "atravessa"))
     medias = {j: {"lula": float(g.lula.mean()), "flavio": float(g.flavio.mean()), "pesquisas": int(len(g))}
@@ -781,7 +789,6 @@ def tela_debate():
     serie = [{"instituto": r.instituto, "divulgacao": r.divulgacao, "divulgacao_txt": data_txt(r.divulgacao),
               "campo": f"{data_txt(r.campo_inicio)}–{data_txt(r.campo_fim)}", "janela": r.janela,
               "lula": float(r.lula), "flavio": float(r.flavio)} for r in p2.itertuples()]
-    debates = pd.read_csv(DEBATE / "debates.csv", sep=";").fillna("")
     linha_tempo = []
     for r in debates.itertuples():
         obs = str(r.observacao)
@@ -800,7 +807,7 @@ def tela_debate():
     cancelados_1t = sum(x["status"] != "realizado" for x in t1)
     return {
         "nome": "Debate", "pergunta": "O que mudou depois do debate na Band?",
-        "manchete": f"No único frente a frente, em 18/10, a audiência foi de {dec(tv2['valor_pontos'], 0)} pontos e "
+        "manchete": f"No primeiro frente a frente, em 18/10, a audiência foi de {dec(tv2['valor_pontos'], 0)} pontos e "
                     f"as pesquisas não se moveram",
         "frente_a_frente": {
             "data_txt": "18/10", "emissora": "Band (pool com Estadão, TV Cultura, TV Gazeta e Jovem Pan News)",
@@ -824,8 +831,9 @@ def tela_debate():
                        f"({a['pesquisas']} pesquisas); depois: {pct(dp['lula'] / 100)} × {pct(dp['flavio'] / 100)} "
                        f"({dp['pesquisas']}); variações dentro das margens de erro",
             "serie": serie,
-            "nota": "Votos totais. Antes: campo encerrado até 17/10; depois: campo iniciado a partir de 19/10; as "
-                    "pesquisas com campo atravessando 18/10 aparecem, mas ficam fora das médias."},
+            "nota": "Votos totais. Antes: campo encerrado até 17/10; depois: campo iniciado a partir de 19/10 e "
+                    "encerrado antes do debate da Globo (23/10); as pesquisas com campo atravessando 18/10 aparecem, mas "
+                    "ficam fora das médias."},
         "primeiro_turno": {
             "texto": f"No 1º turno, Lula e Flávio não foram a nenhum debate: {sem_os_dois_1t} aconteceram sem os dois e "
                      f"{cancelados_1t} foram cancelados",

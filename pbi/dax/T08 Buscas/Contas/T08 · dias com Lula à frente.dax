@@ -1,16 +1,20 @@
 /*
 @pasta: T08 Buscas\Contas
 @formato: 0
-@descricao: Dias em que Lula teve índice maior que Flávio na série T2.
-@oraculo: 76
+@descricao: Dias da campanha (de 16/08 ao fim da curva) em que Lula teve índice maior que Flávio, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias).
+@oraculo: Brasil 64; Distrito Federal 60
 */
-COUNTROWS (
-    FILTER (
-        ADDCOLUMNS (
-            CALCULATETABLE ( VALUES ( 'Trends tempo'[DataTexto] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-            "@l", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Lula [tópico | T2]" ),
-            "@f", CALCULATE ( MAX ( 'Trends tempo'[Índice] ), REMOVEFILTERS ( 'Trends tempo' ), 'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+VAR _ini = [T08 · campanha · início]
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( 'Trends tempo'[DataTexto] ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            'Trends tempo'[Série] = "Lula [tópico | T2]"
         ),
-        [@l] > [@f]
+        "@d", [T08 · dia · data],
+        "@l", [T08 · dia · Lula],
+        "@f", [T08 · dia · Flávio]
     )
-) + 0
+RETURN
+    COUNTROWS ( FILTER ( _dias, [@d] >= _ini && [@l] > [@f] ) ) + 0

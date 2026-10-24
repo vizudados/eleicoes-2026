@@ -1,0 +1,7 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Início oficial da campanha de 2026: 16/08, o primeiro dia de propaganda eleitoral (Lei 9.504/97, art. 36: só depois de 15 de agosto do ano da eleição). É a marca '16/08 · campanha' da curva e o começo da conta dos dias da campanha; a curva começa antes, em 01/08, no começo da consulta T2 do Google Trends.
+@oraculo: 16/08
+*/
+DATE ( 2026, 8, 16 )

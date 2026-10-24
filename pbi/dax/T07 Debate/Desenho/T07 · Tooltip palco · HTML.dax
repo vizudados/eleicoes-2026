@@ -1,10 +1,10 @@
 /*
 @pasta: T07 Debate\Desenho
 @formato: texto
-@descricao: Dossiê do palco (ttT07Palco, linha do debate de 18/10): uma frase de cada um (Aos Fatos, Congresso em Foco, Agência Brasil), a nota dos grupos da Quaest e a audiência dos debates da Band em 2022 e 2026 (barras que crescem). Só lê contas 'T07 · …'.
+@descricao: Dossiê do palco (ttT07Palco, linha do debate da Band de 18/10, T07 · debate · o da Band): uma frase de cada um (Aos Fatos, Congresso em Foco, Agência Brasil), a nota dos grupos da Quaest e a audiência dos debates da Band em 2022 e 2026 (barras que crescem). Só lê contas 'T07 · …'.
 */
 -- 1 · Leituras
-VAR _ff = [T07 · debate · frente a frente]
+VAR _band = [T07 · debate · o da Band]
 VAR _dia = [T07 · debate · dia]
 VAR _qF = [T07 · Quaest · nota Flávio]
 VAR _qL = [T07 · Quaest · nota Lula]
@@ -36,7 +36,7 @@ VAR _barras =
 -- 4 · Marcação
 RETURN
     IF (
-        _ff = "Sim",
+        _band = "Sim",
         "<div class='tt7s'>"
             & "<div class='sob sobe'>" & FORMAT ( _dia, "dd/MM" ) & " · uma frase de cada um</div>"
             & "<div class='cit l sobe d2'>“Eu desafio você. Amanhã abrimos a nossa conta bancária.”"

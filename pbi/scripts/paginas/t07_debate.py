@@ -1,13 +1,19 @@
 # -*- coding: utf-8 -*-
 """07 · Debate — o que mudou depois do debate na Band? (dono: agente das telas da campanha)
 
-A história: Lula e Flávio só se encontraram uma vez (Band, 18/10). A TV parou para ver (15 pontos na Grande SP) e as
-pesquisas não se mexeram (antes: 24 pesquisas; depois: 5; as 10 com campo atravessando o dia do debate ficam fora).
+A história: o primeiro frente a frente de Lula e Flávio foi na Band, em 18/10 (o segundo e último, na Globo, em 23/10,
+tem tela própria: T26). A TV parou para ver (15 pontos na Grande SP) e as pesquisas não se mexeram (antes: 24
+pesquisas; depois: 5; as 10 com campo atravessando o dia do debate ficam fora). A janela 'depois' fecha na véspera do
+debate da Globo: a pesquisa que chega ao dia 23/10 já pegou os dois debates e fica fora desta tela.
+
+A Band é escolhida pela regra explícita 'T07 · debate · data' (tabela Debate, Emissora = Band, Turno = 2), nunca pelo
+MAX(Data) das linhas com os dois: desde 24/10/2026 a Globo é linha da tabela Debate (12 debates, 2 frente a frente).
 
   T07_Audiencia_Html   o número da noite (15 pontos, contador), o pico, o share, o YouTube e a manchete
   T07_Palco_Html       o palco em traço (debate-frente) no bodyTemplate; a medida desenha a legenda e o alvo do
-                       mouse (granularidade Debate[Data], só a linha de 18/10) → dossiê ttT07Palco: o que se disse,
-                       a nota da Quaest e a audiência dos debates da Band em 2022 e 2026
+                       mouse (granularidade Debate[Data], só a linha da Band de 18/10, 'T07 · debate · o da Band') →
+                       dossiê ttT07Palco: o que se disse, a nota da Quaest e a audiência dos debates da Band em 2022
+                       e 2026; a legenda diz que os dois voltaram a se encontrar na Globo, em 23/10
   T07_Pesquisas_Html   fundo do gráfico: grade, datas, a linha do debate, as médias antes e depois (traço que se
                        desenha) e a nota à mão
   T07_Pesquisas_Pontos um ponto por pesquisa (granularidade Pesquisa[Id]): Lula e Flávio no último dia de campo;
@@ -17,9 +23,10 @@ pesquisas não se mexeram (antes: 24 pesquisas; depois: 5; as 10 com campo atrav
                        linha no tempo e a manchete compara o mesmo instituto antes e depois do debate — a comparação
                        justa, porque médias de institutos diferentes misturam métodos. Os outros pontos esmaecem.
                        NoFilter para a audiência, o palco e os debates (não leem a pesquisa).
-                       Os debates (T07_Debates_Marcas) ficam só com o dossiê: dos 11, um só reuniu os dois, e não há
-                       "antes e depois" de Lula e Flávio num debate a que os dois faltaram.
-  T07_Debates_Html     os 11 debates marcados: o eixo, o corte do 1º turno e "1 de 11"
+                       Os debates (T07_Debates_Marcas) ficam só com o dossiê: dos 12, dois reuniram os dois (Band e
+                       Globo), e não há "antes e depois" de Lula e Flávio num debate a que os dois faltaram.
+  T07_Debates_Html     os 12 debates marcados: o eixo (do primeiro ao último da tabela, 23/08 a 23/10), o corte do 1º
+                       turno e "2 de 12"
   T07_Debates_Marcas   uma marca por debate (granularidade Debate[Data]); dossiê ttT07Debate (quem foi, por que caiu)
 """
 from __future__ import annotations
@@ -117,7 +124,9 @@ CSS_PONTOS = (
 )
 
 CSS_DEBATES = (
-    ".t07d .esq{position:absolute;left:0;top:0;width:520px}"
+    # 570 px (era 520): o resumo ganhou as emissoras dos dois frente a frente e precisa caber em duas linhas; o eixo
+    # começa em x 600
+    ".t07d .esq{position:absolute;left:0;top:0;width:570px}"
     ".t07d .esq .linha{display:flex;align-items:baseline;gap:10px;margin-top:6px}"
     ".t07d .esq .num{font-size:46px}"
     ".t07d .esq .man{font-size:22px}"

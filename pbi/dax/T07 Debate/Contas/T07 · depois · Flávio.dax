@@ -1,10 +1,11 @@
 /*
 @pasta: T07 Debate\Contas
 @formato: 0.0
-@descricao: Média simples de Flávio (votos totais, %) nas pesquisas do 2º turno feitas depois do 1º turno com campo começado depois do dia do debate (18/10).
+@descricao: Média simples de Flávio (votos totais, %) nas pesquisas do 2º turno feitas depois do 1º turno com campo começado depois do dia do debate (18/10) e terminado antes do debate seguinte (Globo, 23/10): a que chega ao dia da Globo já pegou os dois debates e fica fora.
 @oraculo: 48,0%
 */
 VAR _d = [T07 · debate · data]
+VAR _g = [T07 · debate seguinte · data]
 RETURN
     CALCULATE (
         AVERAGE ( Pesquisa[Flavio] ),
@@ -14,5 +15,6 @@ RETURN
         Pesquisa[Momento] = "apos_1turno",
         NOT ISBLANK ( Pesquisa[Lula] ),
         NOT ISBLANK ( Pesquisa[Flavio] ),
-        Pesquisa[Campo início] > _d
+        Pesquisa[Campo início] > _d,
+        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
     )

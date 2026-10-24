@@ -1,0 +1,7 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: dd/MM
+@descricao: Data do primeiro debate marcado na campanha (tabela Debate): o começo do eixo da linha dos debates.
+@oraculo: 23/08
+*/
+CALCULATE ( MIN ( Debate[Data] ), REMOVEFILTERS ( Debate ) )

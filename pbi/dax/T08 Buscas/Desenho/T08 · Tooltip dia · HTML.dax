@@ -9,6 +9,7 @@ VAR _uNome = [T08 · UF · nome]
 VAR _pico = [T08 · pico · data]
 VAR _zero = [T08 · dia · nota do zero]
 VAR _d = [T08 · dia · data]
+VAR _camp = [T08 · campanha · início]
 VAR _l = [T08 · dia · Lula]
 VAR _f = [T08 · dia · Flávio]
 VAR _dif = [T08 · dia · diferença]
@@ -46,7 +47,7 @@ VAR _txtQuem =
 VAR _evento =
     SWITCH (
         _d,
-        DATE ( 2026, 8, 16 ), "começa a campanha",
+        _camp, "começa a campanha",
         DATE ( 2026, 10, 4 ), "o dia da eleição",
         DATE ( 2026, 10, 18 ), "a noite do debate",
         DATE ( 2026, 10, 19 ), "o dia seguinte ao debate",

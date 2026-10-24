@@ -1,0 +1,12 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: dd/MM
+@descricao: Dia do debate da Globo no 2º turno, o segundo e último frente a frente de Lula e Flávio (a segunda marca de debate da curva). A mesma regra da Band: a linha da tabela Debate com Emissora = "Globo" e Turno = 2 (a Globo do 1º turno, 01/10, foi cancelada e é turno 1). Vazio enquanto a tabela não tiver essa linha: a curva fica só com a marca da Band.
+@oraculo: 23/10
+*/
+CALCULATE (
+    MAX ( Debate[Data] ),
+    REMOVEFILTERS ( Debate ),
+    Debate[Emissora] = "Globo",
+    Debate[Turno] = 2
+)

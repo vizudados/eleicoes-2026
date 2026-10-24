@@ -4,7 +4,7 @@
 @descricao: Texto para leitor de tela do dossiê do palco.
 */
 IF (
-    [T07 · debate · frente a frente] = "Sim",
+    [T07 · debate · o da Band] = "Sim",
     "Lula: Eu desafio você, amanhã abrimos a nossa conta bancária. Flávio: Aqui é o Flávio, não é o Jair. Quaest: nota "
         & [T07 · Quaest · nota Flávio] & " para Flávio e " & [T07 · Quaest · nota Lula] & " para Lula."
 )

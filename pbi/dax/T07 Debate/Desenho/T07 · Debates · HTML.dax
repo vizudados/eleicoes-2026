@@ -1,7 +1,7 @@
 /*
 @pasta: T07 Debate\Desenho
 @formato: texto
-@descricao: Os debates marcados na campanha: '1 de 11' (contadores), o resumo do 1º e do 2º turno, o eixo de 23/08 a 18/10 com o corte do 1º turno e a legenda. As marcas de cada debate são outro visual (T07 · Marcas · HTML), na mesma caixa.
+@descricao: Os debates marcados na campanha: '2 de 12' (contadores), o resumo do 1º e do 2º turno (no 2º, os que caíram e as emissoras dos frente a frente, Band e Globo), o eixo do primeiro ao último debate da tabela (23/08 a 23/10) com o corte do 1º turno e a legenda. As marcas de cada debate são outro visual (T07 · Marcas · HTML), na mesma caixa e na mesma escala.
 */
 -- 1 · Leituras
 VAR _n = [T07 · debates marcados]
@@ -9,14 +9,20 @@ VAR _um = [T07 · debates frente a frente]
 VAR _sem = [T07 · 1º turno · sem os dois]
 VAR _can = [T07 · 1º turno · cancelados]
 VAR _des = [T07 · 2º turno · desmarcados]
+VAR _emis = [T07 · 2º turno · frente a frente · emissoras]
+VAR _dia0 = [T07 · debates · primeiro dia]
+VAR _dia1 = [T07 · debates · último dia]
 -- 2 · Textos
+-- "Band e Globo" → "à Band e à Globo"
+VAR _txtEmis = "à " & SUBSTITUTE ( SUBSTITUTE ( _emis, ", ", ", à " ), " e ", " e à " )
 VAR _txtResumo =
     "No 1º turno, Lula e Flávio faltaram a todos: " & _sem & IF ( _sem = 1, " aconteceu", " aconteceram" )
         & " sem eles e " & _can & IF ( _can = 1, " foi cancelado", " foram cancelados" ) & ". No 2º turno, "
-        & _des & IF ( _des = 1, " caiu", " caíram" ) & " antes do da Band."
--- 3 · Geometria (eixo: 22/08 a 19/10 em x 600–1600)
-VAR _ini = DATE ( 2026, 8, 22 )
-VAR _xCorte = 600 + DATEDIFF ( _ini, DATE ( 2026, 10, 4 ), DAY ) / 58 * 1000 -- geometria
+        & _des & IF ( _des = 1, " caiu", " caíram" ) & " e os dois foram " & _txtEmis & "."
+-- 3 · Geometria (eixo: da véspera do primeiro debate ao dia seguinte ao último, em x 600–1600)
+VAR _ini = _dia0 - 1
+VAR _span = DATEDIFF ( _ini, _dia1 + 1, DAY ) -- geometria
+VAR _xCorte = 600 + DATEDIFF ( _ini, DATE ( 2026, 10, 4 ), DAY ) / _span * 1000 -- geometria
 VAR _fC = FORMAT ( _xCorte, "0.0", "en-US" )
 -- 4 · Marcação
 RETURN

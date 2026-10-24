@@ -930,7 +930,7 @@
   {
    "nome": "Debate",
    "pergunta": "O que mudou depois do debate na Band?",
-   "manchete": "No único frente a frente, em 18/10, a audiência foi de 15 pontos e as pesquisas não se moveram",
+   "manchete": "No primeiro frente a frente, em 18/10, a audiência foi de 15 pontos e as pesquisas não se moveram",
    "frente_a_frente": {
     "data_txt": "18/10",
     "emissora": "Band (pool com Estadão, TV Cultura, TV Gazeta e Jovem Pan News)",
@@ -1325,7 +1325,7 @@
       "flavio": 49.0
      }
     ],
-    "nota": "Votos totais. Antes: campo encerrado até 17/10; depois: campo iniciado a partir de 19/10; as pesquisas com campo atravessando 18/10 aparecem, mas ficam fora das médias."
+    "nota": "Votos totais. Antes: campo encerrado até 17/10; depois: campo iniciado a partir de 19/10 e encerrado antes do debate da Globo (23/10); as pesquisas com campo atravessando 18/10 aparecem, mas ficam fora das médias."
    },
    "primeiro_turno": {
     "texto": "No 1º turno, Lula e Flávio não foram a nenhum debate: 5 aconteceram sem os dois e 3 foram cancelados",
@@ -1438,6 +1438,16 @@
      "data_txt": "18/10",
      "turno": 2,
      "emissora": "Band",
+     "status": "realizado",
+     "lula_e_flavio": true,
+     "rotulo": "Lula e Flávio frente a frente",
+     "motivo": ""
+    },
+    {
+     "data": "2026-10-23",
+     "data_txt": "23/10",
+     "turno": 2,
+     "emissora": "Globo",
      "status": "realizado",
      "lula_e_flavio": true,
      "rotulo": "Lula e Flávio frente a frente",

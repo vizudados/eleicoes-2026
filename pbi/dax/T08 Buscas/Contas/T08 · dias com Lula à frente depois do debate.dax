@@ -1,0 +1,20 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Dias da curva depois do debate da Band (18/10) em que Lula teve índice maior que Flávio, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias). A mesma conta para os dois: a manchete usa a de quem ficou na frente em menos dias da campanha.
+@oraculo: Brasil 2 (20 e 21/10); Distrito Federal 1
+*/
+VAR _deb = [T08 · debate · data]
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( 'Trends tempo'[DataTexto] ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            'Trends tempo'[Série] = "Lula [tópico | T2]"
+        ),
+        "@d", [T08 · dia · data],
+        "@l", [T08 · dia · Lula],
+        "@f", [T08 · dia · Flávio]
+    )
+RETURN
+    COUNTROWS ( FILTER ( _dias, [@d] > _deb && [@l] > [@f] ) ) + 0

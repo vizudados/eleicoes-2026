@@ -1,10 +1,11 @@
 /*
 @pasta: T07 Debate\Contas
 @formato: 0
-@descricao: Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) tiveram campo começado depois do dia do debate.
+@descricao: Quantas pesquisas do 2º turno (votos totais, depois do 1º turno) tiveram campo começado depois do dia do debate e terminado antes do debate seguinte (Globo, 23/10).
 @oraculo: 5
 */
 VAR _d = [T07 · debate · data]
+VAR _g = [T07 · debate seguinte · data]
 RETURN
     CALCULATE (
         COUNTROWS ( Pesquisa ),
@@ -14,5 +15,6 @@ RETURN
         Pesquisa[Momento] = "apos_1turno",
         NOT ISBLANK ( Pesquisa[Lula] ),
         NOT ISBLANK ( Pesquisa[Flavio] ),
-        Pesquisa[Campo início] > _d
+        Pesquisa[Campo início] > _d,
+        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
     ) + 0

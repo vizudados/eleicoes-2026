@@ -5,6 +5,6 @@
 */
 IF (
     ISBLANK ( [T08 · escolha · UF] ),
-    "Uma faixa por dia da curva (" & [T08 · dias] & " dias): passe o mouse para ver o índice de cada um no dia e, em outubro, a curva hora a hora.",
-    "Uma faixa por dia da curva de " & [T08 · UF · nome] & " (" & [T08 · dias] & " dias): passe o mouse para ver o índice de cada um no dia, de 0 a 100 dentro do estado."
+    "Uma faixa por dia da curva (" & [T08 · curva · dias] & " dias): passe o mouse para ver o índice de cada um no dia e, em outubro, a curva hora a hora.",
+    "Uma faixa por dia da curva de " & [T08 · UF · nome] & " (" & [T08 · curva · dias] & " dias): passe o mouse para ver o índice de cada um no dia, de 0 a 100 dentro do estado."
 )

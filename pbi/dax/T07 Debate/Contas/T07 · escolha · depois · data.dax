@@ -1,10 +1,11 @@
 /*
 @pasta: T07 Debate\Contas
 @formato: dd/MM
-@descricao: Último dia de campo da primeira pesquisa do instituto clicado que começou depois do debate (janela 'depois'); vazio se ele não voltou a campo.
+@descricao: Último dia de campo da primeira pesquisa do instituto clicado que começou depois do debate (janela 'depois', até a véspera do debate seguinte); vazio se ele não voltou a campo.
 */
 VAR _inst = [T07 · escolha · instituto]
 VAR _d = [T07 · debate · data]
+VAR _g = [T07 · debate seguinte · data]
 RETURN
     IF (
         NOT ISBLANK ( _inst ),
@@ -17,6 +18,7 @@ RETURN
             NOT ISBLANK ( Pesquisa[Lula] ),
             NOT ISBLANK ( Pesquisa[Flavio] ),
             Pesquisa[Instituto] = _inst,
-            Pesquisa[Campo início] > _d
+            Pesquisa[Campo início] > _d,
+            Pesquisa[Campo fim] < _g || ISBLANK ( _g )
         )
     )

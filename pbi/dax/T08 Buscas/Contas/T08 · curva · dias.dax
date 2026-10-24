@@ -1,0 +1,11 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Dias da curva diária (série T2, 01/08 a 22/10; a curva do estado usa os mesmos dias): uma faixa por dia.
+@oraculo: 83
+*/
+CALCULATE (
+    COUNTROWS ( VALUES ( 'Trends tempo'[DataTexto] ) ),
+    REMOVEFILTERS ( 'Trends tempo' ),
+    'Trends tempo'[Série] = "Lula [tópico | T2]"
+) + 0

@@ -33,6 +33,7 @@ VAR _zL = [T08 · zeros · Lula]
 VAR _zF = [T08 · zeros · Flávio]
 VAR _lac = [T08 · lacuna · nota]
 VAR _uNome = [T08 · UF · nome]
+VAR _camp = [T08 · campanha · início]
 VAR _noUf = NOT ISBLANK ( _uf )
 VAR _per = [Período · escolhido]
 VAR _pNome = [Período · nome]
@@ -151,7 +152,7 @@ VAR _datas =
             & "' y='372' class='ex' text-anchor='middle'>" & FORMAT ( [Value], "dd/MM" ) & "</text>",
         ""
     )
-VAR _xCamp = 40 + DATEDIFF ( _ini, DATE ( 2026, 8, 16 ), DAY ) / 82 * 1050 -- geometria
+VAR _xCamp = 40 + DATEDIFF ( _ini, _camp, DAY ) / 82 * 1050 -- geometria
 -- 4 · Marcação
 VAR _lacuna =
     IF (
@@ -195,7 +196,7 @@ VAR _pontosNota =
 VAR _svg =
     "<svg width='1130' height='400' viewBox='0 0 1130 400'>"
         & _grade & _datas & _lacuna & _faixa
-        & "<text x='" & FORMAT ( _xCamp, _f, "en-US" ) & "' y='372' class='ex' text-anchor='middle'>16/08 · campanha</text>"
+        & "<text x='" & FORMAT ( _xCamp, _f, "en-US" ) & "' y='372' class='ex' text-anchor='middle'>" & FORMAT ( _camp, "dd/MM" ) & " · campanha</text>"
         & "<line x1='" & FORMAT ( _xT1, _f, "en-US" ) & "' x2='" & FORMAT ( _xT1, _f, "en-US" ) & "' y1='22' y2='350' class='ev'/>"
         & "<text x='" & FORMAT ( _xT1, _f, "en-US" ) & "' y='372' class='ex b' text-anchor='middle'>1º turno · "
             & FORMAT ( _t1, "dd/MM" ) & "</text>"

@@ -2,7 +2,7 @@
 @pasta: T07 Debate\Contas
 @formato: 0
 @descricao: Debates marcados na campanha que reuniram Lula e Flávio no mesmo palco.
-@oraculo: 1 (18/10)
+@oraculo: 2 (Band 18/10 e Globo 23/10; era 1 até 22/10)
 */
 CALCULATE (
     COUNTROWS ( Debate ),

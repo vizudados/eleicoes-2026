@@ -1,0 +1,12 @@
+/*
+@pasta: T07 Debate\Contas
+@formato: texto
+@descricao: Emissora do frente a frente seguinte ao da Band (T07 · debate seguinte · data): a Globo. Vazio enquanto a tabela Debate não tiver esse debate.
+@oraculo: Globo
+*/
+VAR _g = [T07 · debate seguinte · data]
+RETURN
+    IF (
+        NOT ISBLANK ( _g ),
+        CALCULATE ( MAX ( Debate[Emissora] ), REMOVEFILTERS ( Debate ), Debate[Data] = _g )
+    )

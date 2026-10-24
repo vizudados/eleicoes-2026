@@ -31,5 +31,5 @@ RETURN
         & "</div>"
         & "<div class='man sobe d6'>O debate parou a TV, mas não mexeu nas pesquisas</div>"
         & "<div class='txt sobe d7'>Audiência na Grande SP: cerca de " & _txtPessoas
-            & " assistiram. Segundo a Band, foi o debate mais visto em 20 anos.</div>"
+            & " assistiram. Segundo a Band, foi o debate mais visto em 20 anos até então.</div>"
     & "</div>"

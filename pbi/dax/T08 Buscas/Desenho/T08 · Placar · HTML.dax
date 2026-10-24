@@ -1,7 +1,7 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Abertura da tela das buscas. Sem clique: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias em que cada um foi mais buscado (consulta T2) e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Com um dia clicado na curva (filtro cruzado de 'Trends tempo'[DataTexto]): a parte de cada um na soma dos dois índices daquele dia, quem foi mais buscado e se foi um dos dias de mais buscas. Com um estado clicado no mapa (filtro cruzado de UF[UF]): a parte de cada um nas buscas do estado no 2º turno e o aviso de que a curva abaixo passou a ser a do estado (100 = o pico dentro do próprio estado; o índice não se compara entre estados). Com estado e dia (Ctrl+clique), o dia é o do estado. Com um período escolhido no filtro Período (sem dia clicado): no Brasil, a parte de cada um na soma dos índices diários da consulta T2 no período e quantos dias cada um ficou na frente; no estado, a parte de cada um pela consulta U2 do estado no período; Depois da Globo, a espera honesta (os números com traço, nunca zero). Só lê contas 'T08 · …' e 'Período · …'.
+@descricao: Abertura da tela das buscas. Sem clique: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias da campanha (desde 16/08, T08 · campanha · início; a curva começa em 01/08) em que cada um foi mais buscado (consulta T2), quem ficou na frente em mais dias abrindo a frase e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Com um dia clicado na curva (filtro cruzado de 'Trends tempo'[DataTexto]): a parte de cada um na soma dos dois índices daquele dia, quem foi mais buscado e se foi um dos dias de mais buscas. Com um estado clicado no mapa (filtro cruzado de UF[UF]): a parte de cada um nas buscas do estado no 2º turno, a mesma frase dos dias da campanha na série do estado (consulta U2, desde 16/08) e o aviso de que a curva abaixo passou a ser a do estado (100 = o pico dentro do próprio estado; o índice não se compara entre estados). Com estado e dia (Ctrl+clique), o dia é o do estado. Com um período escolhido no filtro Período (sem dia clicado): no Brasil, a parte de cada um na soma dos índices diários da consulta T2 no período e quantos dias cada um ficou na frente; no estado, a parte de cada um pela consulta U2 do estado no período; Depois da Globo, a espera honesta (os números com traço, nunca zero). Só lê contas 'T08 · …' e 'Período · …'.
 */
 -- 1 · Leituras
 VAR _dia = [T08 · escolha · dia]
@@ -12,6 +12,7 @@ VAR _dias = [T08 · dias]
 VAR _dL = [T08 · dias com Lula à frente]
 VAR _dF = [T08 · dias com Flávio à frente]
 VAR _dFdep = [T08 · dias com Flávio à frente depois do debate]
+VAR _dLdep = [T08 · dias com Lula à frente depois do debate]
 VAR _iL = [T08 · dia · Lula]
 VAR _iF = [T08 · dia · Flávio]
 VAR _pdL = [T08 · dia · parte Lula]
@@ -26,7 +27,6 @@ VAR _ufL = [T08 · UF · Lula]
 VAR _ufF = [T08 · UF · Flávio]
 VAR _upL = [T08 · UF · parte Lula]
 VAR _upF = [T08 · UF · parte Flávio]
-VAR _nivel = [T08 · UF · nível de interesse]
 VAR _per = [Período · escolhido]
 VAR _pNome = [Período · nome]
 VAR _pRot = [Período · rótulo]
@@ -43,17 +43,30 @@ VAR _ppF = [T08 · período · parte Flávio]
 VAR _noPer = NOT ISBLANK ( _per ) && ISBLANK ( _dia ) -- o dia clicado vale mais que o período
 -- 2 · Textos
 VAR _modo = SWITCH ( TRUE (), NOT ISBLANK ( _dia ), "dia", NOT ISBLANK ( _ufEsc ), "uf", "brasil" )
+-- os dias da campanha (desde 16/08, T08 · campanha · início), na série que a curva mostra: a do Brasil ou a do estado
+-- clicado. Quem ficou na frente em mais dias abre a frase (a mesma regra para os dois; no empate, Lula primeiro, na
+-- ordem da tela); o outro vem depois, com quantos dos dias dele foram depois do debate da Band
+VAR _cA = IF ( _dF > _dL, "Flávio", "Lula" )
+VAR _cB = IF ( _cA = "Lula", "Flávio", "Lula" )
+VAR _nA = IF ( _cA = "Lula", _dL, _dF )
+VAR _nB = IF ( _cA = "Lula", _dF, _dL )
+VAR _kB = IF ( _cA = "Lula", _dFdep, _dLdep )
 VAR _txtDep =
     SWITCH (
-        _dFdep,
-        0, "",
-        1, ", um deles depois do debate",
-        2, ", dois deles depois do debate",
-        ", " & _dFdep & " deles depois do debate"
+        TRUE (),
+        _kB = 0, "",
+        _kB = _nB, SWITCH ( _nB, 1, ", depois do debate da Band", 2, ", ambos depois do debate da Band", ", todos depois do debate da Band" ),
+        _kB = 1, ", um deles depois do debate da Band",
+        _kB = 2, ", dois deles depois do debate da Band",
+        ", " & _kB & " deles depois do debate da Band"
     )
 VAR _manBrasil =
-    "Lula foi mais buscado que Flávio em " & _dL & " dos " & _dias & " dias da campanha; Flávio ficou na frente em "
-        & _dF & IF ( _dF = 1, " dia", " dias" ) & _txtDep
+    IF (
+        _nA = _nB,
+        "Lula e Flávio foram mais buscados no mesmo número de dias da campanha: " & _nA & " cada um, dos " & _dias,
+        _cA & " foi mais buscado que " & _cB & " em " & _nA & " dos " & _dias & " dias da campanha; "
+            & IF ( _nB = 0, _cB & " não ficou na frente em nenhum", _cB & " ficou na frente em " & _nB & IF ( _nB = 1, " dia", " dias" ) & _txtDep )
+    )
 -- no dia: quem foi mais buscado e, se for o caso, a posição do dia para quem liderou
 VAR _lider = SWITCH ( TRUE (), _iL > _iF, "Lula", _iF > _iL, "Flávio", "" )
 VAR _outro = IF ( _lider = "Lula", "Flávio", "Lula" )
@@ -62,6 +75,7 @@ VAR _txtPos =
     SWITCH (
         TRUE (),
         _lider = "", "",
+        ISBLANK ( _pos ), "", -- dia antes da campanha (01 a 15/08): sem 'na campanha'
         _pos = 1, ": o dia de mais buscas por " & _lider & " na campanha",
         _pos <= 10, ": um dos 10 dias de mais buscas por " & _lider & " na campanha",
         ""
@@ -69,9 +83,15 @@ VAR _txtPos =
 VAR _manDia =
     "Em " & FORMAT ( _dia, "dd/MM" ) & ", "
         & IF ( _lider = "", "os dois empataram nas buscas", _lider & " foi mais buscado que " & _outro ) & _txtPos
+-- no estado clicado, a mesma frase dos dias da campanha, na série do estado (consulta U2, desde 16/08), mais curta
+-- para caber em duas linhas com o nome do estado
 VAR _manUf =
-    _uNo & ", " & IF ( _ufL >= _ufF, "Lula", "Flávio" ) & " foi mais buscado no 2º turno"
-        & SWITCH ( _nivel, "alto", ", num dos estados que mais buscaram os dois", "baixo", ", num dos estados que menos buscaram os dois", "" )
+    IF (
+        _nA = _nB,
+        _uNo & ", Lula e Flávio foram mais buscados em " & _nA & " dos " & _dias & " dias da campanha cada um",
+        _uNo & ", " & _cA & " foi mais buscado em " & _nA & " dos " & _dias & " dias da campanha; "
+            & IF ( _nB = 0, _cB & " não ficou na frente em nenhum", _cB & ", em " & _nB & IF ( _nB = 1, " dia", " dias" ) & _txtDep )
+    )
 VAR _sob =
     SWITCH (
         _modo,

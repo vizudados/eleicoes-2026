@@ -1,25 +1,30 @@
 /*
 @pasta: T07 Debate\Desenho
 @formato: texto
-@descricao: Legenda do palco em traço (a arte fica no bodyTemplate) e o alvo do mouse que abre o dossiê ttT07Palco. Uma entrada só: a linha do debate em que Lula e Flávio estiveram frente a frente (grão Debate[Data]).
+@descricao: Legenda do palco em traço (a arte fica no bodyTemplate) e o alvo do mouse que abre o dossiê ttT07Palco. Uma entrada só: a linha do debate da Band no 2º turno (grão Debate[Data], T07 · debate · o da Band), o primeiro frente a frente; a legenda diz onde os dois voltaram a se encontrar (a Globo, 23/10), quando a tabela tem esse debate.
 */
 -- 1 · Leituras
-VAR _ff = [T07 · debate · frente a frente]
+VAR _band = [T07 · debate · o da Band]
 VAR _dia = [T07 · debate · dia]
 VAR _emi = [T07 · debate · emissora]
 VAR _med = [T07 · debate · mediação]
+VAR _prox = [T07 · debate seguinte · data]
+VAR _proxEmi = [T07 · debate seguinte · emissora]
 -- 2 · Textos
 VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _emi, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 VAR _escMed = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _med, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _escProx = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _proxEmi, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 VAR _txtDia = FORMAT ( _dia, "dd/MM" )
+VAR _txtProx =
+    IF ( NOT ISBLANK ( _prox ), " Voltaram a se encontrar na " & _escProx & ", em " & FORMAT ( _prox, "dd/MM" ) & "." )
 -- 4 · Marcação
 RETURN
     IF (
-        _ff = "Sim",
+        _band = "Sim",
         "<div class='tela t07s'>"
             & "<div class='leg'>"
                 & "<div class='sob sobe d2'>" & _txtDia & " · " & _esc & "</div>"
-                & "<div class='txt sobe d3'>Pela primeira e única vez na campanha, Lula e Flávio no mesmo palco.</div>"
+                & "<div class='txt sobe d3'>Pela primeira vez na campanha, Lula e Flávio no mesmo palco." & _txtProx & "</div>"
                 & "<div class='nota sobe d4'>Mediação de " & _escMed & "</div>"
             & "</div>"
             & "<div class='dica entra d10'>passe o mouse no palco</div>"

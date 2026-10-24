@@ -3,6 +3,9 @@
 @formato: texto
 @descricao: Texto para leitor de tela da linha dos debates da campanha.
 */
-[T07 · debates marcados] & " debates marcados na campanha; " & [T07 · debates frente a frente]
-    & " reuniu Lula e Flávio. No 1º turno, " & [T07 · 1º turno · sem os dois] & " aconteceram sem os dois e "
-    & [T07 · 1º turno · cancelados] & " foram cancelados."
+VAR _um = [T07 · debates frente a frente]
+RETURN
+    [T07 · debates marcados] & " debates marcados na campanha; " & _um & IF ( _um = 1, " reuniu", " reuniram" )
+        & " Lula e Flávio (" & [T07 · 2º turno · frente a frente · emissoras] & "). No 1º turno, "
+        & [T07 · 1º turno · sem os dois] & " aconteceram sem os dois e " & [T07 · 1º turno · cancelados]
+        & " foram cancelados; no 2º turno, " & [T07 · 2º turno · desmarcados] & " caíram."

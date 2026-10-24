@@ -1,13 +1,15 @@
 /*
 @pasta: T07 Debate\Desenho
 @formato: texto
-@descricao: Uma marca por debate marcado (grão Debate[Data]) no eixo de T07 · Debates · HTML: círculo vazio = aconteceu sem Lula e Flávio; × = cancelado ou não realizado; círculo vermelho e azul = frente a frente. Data acima ou abaixo, alternando para não encostar. Alvo do dossiê ttT07Debate.
+@descricao: Uma marca por debate marcado (grão Debate[Data]) no eixo de T07 · Debates · HTML (do primeiro ao último debate da tabela, 23/08 a 23/10): círculo vazio = aconteceu sem Lula e Flávio; × = cancelado ou não realizado; círculo vermelho e azul = frente a frente (Band, 18/10, e Globo, 23/10). Data acima ou abaixo, alternando para não encostar. Alvo do dossiê ttT07Debate.
 */
 -- 1 · Leituras
 VAR _sit = [T07 · debate · situação]
 VAR _ff = [T07 · debate · frente a frente]
 VAR _dia = [T07 · debate · dia]
 VAR _ord = [T07 · debate · ordem]
+VAR _dia0 = [T07 · debates · primeiro dia]
+VAR _dia1 = [T07 · debates · último dia]
 -- 2 · Textos
 VAR _cls = SWITCH ( TRUE (), _ff = "Sim", "ff", _sit = "realizado", "re", "ca" )
 VAR _marca =
@@ -18,8 +20,11 @@ VAR _marca =
         ""
     )
 VAR _txtDia = FORMAT ( _dia, "dd/MM" )
--- 3 · Geometria (eixo: 22/08 a 19/10 em x 600–1600, linha em y 58)
-VAR _x = 600 + DATEDIFF ( DATE ( 2026, 8, 22 ), _dia, DAY ) / 58 * 1000 -- geometria
+-- 3 · Geometria (o eixo de T07 · Debates · HTML: da véspera do primeiro debate ao dia seguinte ao último, em x
+-- 600–1600, linha em y 58)
+VAR _ini = _dia0 - 1
+VAR _span = DATEDIFF ( _ini, _dia1 + 1, DAY ) -- geometria
+VAR _x = 600 + DATEDIFF ( _ini, _dia, DAY ) / _span * 1000 -- geometria
 VAR _tam = SWITCH ( _cls, "ff", 24, "ca", 18, 16 ) -- geometria
 VAR _yDia = IF ( _cls = "ff" || MOD ( _ord, 2 ) = 1, 76, 26 ) -- geometria
 VAR _atraso = 900 + _ord * 120 -- geometria

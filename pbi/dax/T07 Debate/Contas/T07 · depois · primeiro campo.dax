@@ -1,9 +1,10 @@
 /*
 @pasta: T07 Debate\Contas
 @formato: dd/MM
-@descricao: Primeiro último-dia-de-campo entre as pesquisas da janela 'depois' (a extensão da linha da média no gráfico).
+@descricao: Primeiro último-dia-de-campo entre as pesquisas da janela 'depois' (até a véspera do debate seguinte) (a extensão da linha da média no gráfico).
 */
 VAR _d = [T07 · debate · data]
+VAR _g = [T07 · debate seguinte · data]
 RETURN
     CALCULATE (
         MIN ( Pesquisa[Campo fim] ),
@@ -13,5 +14,6 @@ RETURN
         Pesquisa[Momento] = "apos_1turno",
         NOT ISBLANK ( Pesquisa[Lula] ),
         NOT ISBLANK ( Pesquisa[Flavio] ),
-        Pesquisa[Campo início] > _d
+        Pesquisa[Campo início] > _d,
+        Pesquisa[Campo fim] < _g || ISBLANK ( _g )
     )

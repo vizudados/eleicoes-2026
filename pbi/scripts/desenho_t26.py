@@ -152,12 +152,20 @@ G.conta("T26 · ausentes", "Quem não vai (ou não foi) ao debate: Lula, Flávio
         "RETURN\n"
         '    SWITCH ( TRUE (), _l && _f, "Lula e Flávio", _l, "Lula", _f, "Flávio", "" )', "texto", "vazio")
 G.conta("T26 · 2º turno · debates",
-        "Os debates marcados no 2º turno (tabela Debate), um por linha, com o que houve para o candidato da linha do "
-        "contexto: esteve, não esteve, cancelado ou não aconteceu. Separados por |.",
+        "Os debates marcados no 2º turno ANTES deste (tabela Debate, data anterior ao dia do debate da Globo), um por "
+        "linha, com o que houve para o candidato da linha do contexto: esteve, não esteve, cancelado ou não aconteceu. "
+        "Separados por |. Desde 24/10/2026 a própria Globo (23/10) é linha da tabela Debate: o filtro de data a deixa "
+        "fora da lista do 'antes deste'.",
         "VAR _cand = [T26 · linha · candidato]\n"
+        "VAR _globo = [T26 · debate · dia]\n"
         "RETURN\n"
         "    CONCATENATEX (\n"
-        "        CALCULATETABLE ( VALUES ( Debate[Data] ), REMOVEFILTERS ( Debate ), Debate[Turno] = 2 ),\n"
+        "        CALCULATETABLE (\n"
+        "            VALUES ( Debate[Data] ),\n"
+        "            REMOVEFILTERS ( Debate ),\n"
+        "            Debate[Turno] = 2,\n"
+        "            Debate[Data] < _globo || ISBLANK ( _globo )\n"
+        "        ),\n"
         "        VAR _d = Debate[Data]\n"
         "        VAR _emi = CALCULATE ( MAX ( Debate[Emissora] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d )\n"
         "        VAR _obs = UPPER ( CALCULATE ( MAX ( Debate[Observação] ), REMOVEFILTERS ( Debate ), Debate[Data] = _d ) )\n"
@@ -174,9 +182,18 @@ G.conta("T26 · 2º turno · debates",
         '        "|",\n'
         "        Debate[Data], ASC\n"
         "    )", "texto", "11/10 · Record: cancelado | 15/10 · SBT e consórcio: não aconteceu | 18/10 · Band: esteve")
-G.conta("T26 · 2º turno · realizados", "Quantos debates do 2º turno aconteceram antes deste (tabela Debate).",
-        'CALCULATE ( COUNTROWS ( Debate ), REMOVEFILTERS ( Debate ), Debate[Turno] = 2, '
-        'LEFT ( Debate[Observação], 9 ) = "REALIZADO" ) + 0', "0", "1 (Band, 18/10)")
+G.conta("T26 · 2º turno · realizados",
+        "Quantos debates do 2º turno aconteceram antes deste (tabela Debate, data anterior ao dia do debate da Globo; "
+        "a própria Globo, linha da tabela desde 24/10/2026, fica fora).",
+        "VAR _globo = [T26 · debate · dia]\n"
+        "RETURN\n"
+        "    CALCULATE (\n"
+        "        COUNTROWS ( Debate ),\n"
+        "        REMOVEFILTERS ( Debate ),\n"
+        "        Debate[Turno] = 2,\n"
+        '        LEFT ( Debate[Observação], 9 ) = "REALIZADO",\n'
+        "        Debate[Data] < _globo || ISBLANK ( _globo )\n"
+        "    ) + 0", "0", "1 (Band, 18/10)")
 
 # ------------------------------------------------------------------------------------------------ contas: as regras
 G.conta("T26 · regras · blocos", "Quantos blocos com tempo marcado o arquivo traz (grupo regra, com valor).",
@@ -197,7 +214,10 @@ for nome, chave, desc, fmt in NUMEROS:
             linha(chave, "Valor"), fmt, "vazio em 23/10/2026, 19h45")
 
 # ------------------------------------------------------------------------------------------------ contas: a Band
-G.conta("T26 · Band · data", "Dia do debate da Band no 2º turno (tabela Debate: Band, turno 2).",
+G.conta("T26 · Band · data",
+        "Dia do debate da Band no 2º turno, o primeiro frente a frente (tabela Debate: Emissora = Band, Turno = 2). A "
+        "mesma regra explícita das telas da Band, das buscas, das redes e do 2º turno: pela emissora e pelo turno, "
+        "nunca pelo MAX(Data) das linhas com os dois, que com a Globo na tabela seria a Globo.",
         'CALCULATE ( MAX ( Debate[Data] ), REMOVEFILTERS ( Debate ), Debate[Emissora] = "Band", Debate[Turno] = 2 )',
         "dd/MM/yyyy", "18/10/2026")
 G.conta("T26 · Band · audiência",
