@@ -88,6 +88,8 @@ VAR _antes =
 VAR _txtViraram =
     SWITCH (
         TRUE (),
+        -- sem virada nos dois sentidos, a frase fala dos dois (revisão do vídeo, 24/10/2026)
+        _viraram = 0 && _paraLula = 0, "Nenhuma zona da cidade mudou de lado",
         _viraram = 0, "Nenhuma zona virou de Lula para Flávio",
         _viraram = 1, "1 zona virou de Lula para Flávio",
         FORMAT ( _viraram, {N} ) & " zonas viraram de Lula para Flávio"
@@ -273,7 +275,8 @@ RETURN
 """)
     # --- ficha (post-it)
     gravar("T20 · Ficha · HTML", "A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × "
-           "Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo "
+           "Flávio em 2026 e a margem do PT em 2018 → 2022 → 2026 (Haddad em 2018), com o selo de quem virou. Sem "
+           "escolha, o exemplo "
            "da cidade: em todas, a "
            "escola que virou com mais votos válidos (ou a de maior queda).", ficha())
     gravar("T20 · Ficha · ALT", "Texto alternativo da ficha do local.", rf"""
@@ -286,7 +289,7 @@ VAR _m26 = {_no_local("[T20 · margem 2026]")}
 VAR _t18 = IF ( ISBLANK ( _m18 ), "sem dado", FORMAT ( _m18 * 100, {PP} ) )
 VAR _t22 = IF ( ISBLANK ( _m22 ), "sem dado", FORMAT ( _m22 * 100, {PP} ) )
 RETURN
-    "Ficha: " & [T20 · local escolhido] & " (" & [T20 · cidade] & "). Margem de Lula em pontos: 2018 " & _t18
+    "Ficha: " & [T20 · local escolhido] & " (" & [T20 · cidade] & "). Margem do PT em pontos (Haddad em 2018, Lula em 2022 e 2026): 2018 " & _t18
         & "; 2022 " & _t22 & "; 2026 " & FORMAT ( _m26 * 100, {PP} ) & "."
 """)
     # --- lista dos locais pela queda
@@ -363,7 +366,7 @@ RETURN
 """)
     # --- tooltip (post-it do hover)
     gravar("T20 · Tooltip escola · HTML", "Post-it do local sob o mouse (página de tooltip ttT20Escola): bairro, "
-           "seções, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026.", tooltip())
+           "seções, Lula × Flávio em 2026 e a margem do PT em 2018 → 2022 → 2026 (Haddad em 2018).", tooltip())
     gravar("T20 · Tooltip escola · ALT", "Texto alternativo do post-it do local.", rf"""
 -- 1 · Leituras
 VAR _nome = [T20 · nome do local]
@@ -464,7 +467,7 @@ RETURN
             & "<div class='lado flavio'><span class='num'>" & FORMAT ( _flavio, "0.0%" ) & "</span><span class='r'>Flávio</span></div>"
             & _selo
         & "</div>"
-        & "<div class='rot cap sobe d4'>Margem de Lula, em pontos</div>"
+        & "<div class='rot cap sobe d4'>Margem do PT, em pontos</div>"
         & "<div class='serie sobe d5'>"
             & "<div class='c c0'><span class='a'>2018</span><span class='num " & _c18 & "'>" & _t18 & "</span></div>"
             & "<div class='c c1'><span class='a'>2022</span><span class='num " & _c22 & "'>" & _t22 & "</span></div>"
@@ -521,7 +524,7 @@ RETURN
             & "<div class='sub'>" & _sub & "</div>"
             & "<div class='duelo'><span class='lula'>Lula " & FORMAT ( _lula, "0.0%" ) & "</span>"
             & "<span class='flavio'>Flávio " & FORMAT ( _flavio, "0.0%" ) & "</span></div>"
-            & "<div class='rot'>Margem de Lula · 2018 → 2022 → 2026</div>"
+            & "<div class='rot'>Margem do PT · 2018 → 2022 → 2026</div>"
             & "<div class='serie tnum'>" & _t18 & " <i>→</i> " & _t22 & " <i>→</i> " & _t26 & " p.p.</div>"
             & _selo
             & "<div class='mao'>" & _nota & "</div>"

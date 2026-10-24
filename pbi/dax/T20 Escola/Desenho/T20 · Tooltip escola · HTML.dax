@@ -1,7 +1,7 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: Post-it do local sob o mouse (página de tooltip ttT20Escola): bairro, seções, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026.
+@descricao: Post-it do local sob o mouse (página de tooltip ttT20Escola): bairro, seções, Lula × Flávio em 2026 e a margem do PT em 2018 → 2022 → 2026 (Haddad em 2018).
 */
 -- 1 · Leituras
 VAR _bairroL = [T20 · bairro]
@@ -46,7 +46,7 @@ RETURN
             & "<div class='sub'>" & _sub & "</div>"
             & "<div class='duelo'><span class='lula'>Lula " & FORMAT ( _lula, "0.0%" ) & "</span>"
             & "<span class='flavio'>Flávio " & FORMAT ( _flavio, "0.0%" ) & "</span></div>"
-            & "<div class='rot'>Margem de Lula · 2018 → 2022 → 2026</div>"
+            & "<div class='rot'>Margem do PT · 2018 → 2022 → 2026</div>"
             & "<div class='serie tnum'>" & _t18 & " <i>→</i> " & _t22 & " <i>→</i> " & _t26 & " p.p.</div>"
             & _selo
             & "<div class='mao'>" & _nota & "</div>"

@@ -26,6 +26,8 @@ VAR _antes =
 VAR _txtViraram =
     SWITCH (
         TRUE (),
+        -- sem virada nos dois sentidos, a frase fala dos dois (revisão do vídeo, 24/10/2026)
+        _viraram = 0 && _paraLula = 0, "Nenhuma zona da cidade mudou de lado",
         _viraram = 0, "Nenhuma zona virou de Lula para Flávio",
         _viraram = 1, "1 zona virou de Lula para Flávio",
         FORMAT ( _viraram, "#,0" ) & " zonas viraram de Lula para Flávio"

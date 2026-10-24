@@ -1,7 +1,7 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem de Lula em 2018 → 2022 → 2026, com o selo de quem virou. Sem escolha, o exemplo da cidade: em todas, a escola que virou com mais votos válidos (ou a de maior queda).
+@descricao: A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × Flávio em 2026 e a margem do PT em 2018 → 2022 → 2026 (Haddad em 2018), com o selo de quem virou. Sem escolha, o exemplo da cidade: em todas, a escola que virou com mais votos válidos (ou a de maior queda).
 */
 -- 1 · Leituras
 VAR _id = [T20 · id escolhido]
@@ -80,7 +80,7 @@ RETURN
             & "<div class='lado flavio'><span class='num'>" & FORMAT ( _flavio, "0.0%" ) & "</span><span class='r'>Flávio</span></div>"
             & _selo
         & "</div>"
-        & "<div class='rot cap sobe d4'>Margem de Lula, em pontos</div>"
+        & "<div class='rot cap sobe d4'>Margem do PT, em pontos</div>"
         & "<div class='serie sobe d5'>"
             & "<div class='c c0'><span class='a'>2018</span><span class='num " & _c18 & "'>" & _t18 & "</span></div>"
             & "<div class='c c1'><span class='a'>2022</span><span class='num " & _c22 & "'>" & _t22 & "</span></div>"
