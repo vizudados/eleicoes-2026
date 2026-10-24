@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: texto
+@descricao: Quem está à frente no Brasil (a linha BR do TSE), qualquer que seja o recorte: o eleito quando a fase é 'definido'. Com um estado, uma região ou vários estados no filtro, a frase do placar separa o eleito no Brasil de quem lidera no recorte.
+*/
+CALCULATE ( [Apuração · líder], REMOVEFILTERS ( 'UF' ) )

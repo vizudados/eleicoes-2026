@@ -1,6 +1,6 @@
 {"titulo": "Como ler a ausência",
  "blocos": [
   ["Como ler", "O número grande é quem não foi votar. A barra escura é esse total; a faixa listrada embaixo é a diferença entre os dois mais votados, e os cortes mostram quantas vezes ela cabe ali. À direita, cada coluna soma quem não escolheu ninguém numa eleição: quem faltou, quem anulou e quem votou em branco."],
-  ["De onde vêm os números", "TSE: comparecimento, brancos e nulos do 1º turno de 2006 a 2026. Sem filtro, o total oficial do Brasil, com o exterior; com o filtro de UF, a soma dos municípios da UF."],
+  ["De onde vêm os números", "TSE: comparecimento, brancos e nulos do 1º turno de 2006 a 2026. Sem filtro, o total oficial do Brasil, com o exterior; com o filtro de estado, a soma dos municípios dos estados escolhidos (um estado, uma região inteira ou vários)."],
   ["Para lembrar", "Abstenção é quem estava apto a votar e não foi à urna; somando brancos e nulos, chega-se a quem não escolheu nenhum candidato. Passe o mouse num ano para ver a disputa e quantas vezes a diferença cabia em quem faltou. Onde e quem falta está na tela seguinte."]
  ]}

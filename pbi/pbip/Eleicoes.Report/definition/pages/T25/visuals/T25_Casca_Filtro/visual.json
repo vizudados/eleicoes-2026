@@ -4,10 +4,10 @@
   "position": {
     "x": 1282,
     "y": 60,
-    "z": 5000,
-    "height": 626,
+    "z": 20,
+    "height": 720,
     "width": 424,
-    "tabOrder": 6
+    "tabOrder": 4
   },
   "visual": {
     "visualType": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
@@ -23,31 +23,13 @@
                       "Entity": "UF"
                     }
                   },
-                  "Property": "Nome"
+                  "Property": "Caminho"
                 }
               },
-              "queryRef": "UF.Nome",
-              "nativeQueryRef": "Nome",
+              "queryRef": "UF.Caminho",
+              "nativeQueryRef": "Caminho",
               "active": true,
               "displayName": "Estado"
-            }
-          ]
-        },
-        "itemGroup": {
-          "projections": [
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Medidas"
-                    }
-                  },
-                  "Property": "Casca · filtro · região"
-                }
-              },
-              "queryRef": "_Medidas.Casca · filtro · região",
-              "nativeQueryRef": "Casca · filtro · região"
             }
           ]
         },
@@ -82,38 +64,59 @@
                 }
               }
             },
-            "singleSelect": {
+            "pathMode": {
               "expr": {
                 "Literal": {
                   "Value": "true"
                 }
               }
             },
-            "singleSelectAllowAll": {
+            "pathSeparator": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "' › '"
+                }
+              }
+            },
+            "listLayout": {
+              "expr": {
+                "Literal": {
+                  "Value": "'standard'"
+                }
+              }
+            },
+            "treeCategoryHeader": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "singleSelect": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
                 }
               }
             },
             "sortAscending": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
             "startOpen": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
             "alwaysOpen": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -121,6 +124,20 @@
               "expr": {
                 "Literal": {
                   "Value": "true"
+                }
+              }
+            },
+            "searchScope": {
+              "expr": {
+                "Literal": {
+                  "Value": "'list'"
+                }
+              }
+            },
+            "searchPlaceholder": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Buscar região ou estado'"
                 }
               }
             },
@@ -134,7 +151,7 @@
             "showReset": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
                 }
               }
             },
@@ -176,7 +193,7 @@
             "triggerLabel": {
               "expr": {
                 "Literal": {
-                  "Value": "'UF'"
+                  "Value": "'Estado'"
                 }
               }
             },
@@ -187,31 +204,24 @@
                 }
               }
             },
-            "allOptionText": {
+            "triggerPathSummary": {
               "expr": {
                 "Literal": {
-                  "Value": "'Todo o Brasil'"
+                  "Value": "true"
                 }
               }
             },
-            "searchPlaceholder": {
+            "triggerPathSummaryMax": {
               "expr": {
                 "Literal": {
-                  "Value": "'Buscar estado'"
+                  "Value": "2D"
                 }
               }
             },
-            "searchScope": {
+            "triggerPathSummaryNoun": {
               "expr": {
                 "Literal": {
-                  "Value": "'list'"
-                }
-              }
-            },
-            "pathMode": {
-              "expr": {
-                "Literal": {
-                  "Value": "false"
+                  "Value": "'estado|estados'"
                 }
               }
             }
@@ -245,7 +255,7 @@
             "dropdownHeight": {
               "expr": {
                 "Literal": {
-                  "Value": "572D"
+                  "Value": "666D"
                 }
               }
             },
@@ -607,52 +617,6 @@
       "itemExtras": [
         {
           "properties": {
-            "groupHeaders": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "groupHeaderFontSize": {
-              "expr": {
-                "Literal": {
-                  "Value": "13D"
-                }
-              }
-            },
-            "groupHeaderHeight": {
-              "expr": {
-                "Literal": {
-                  "Value": "30D"
-                }
-              }
-            },
-            "groupHeaderBold": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "groupHeaderUppercase": {
-              "expr": {
-                "Literal": {
-                  "Value": "true"
-                }
-              }
-            },
-            "groupHeaderColor": {
-              "solid": {
-                "color": {
-                  "expr": {
-                    "Literal": {
-                      "Value": "'#6B6357'"
-                    }
-                  }
-                }
-              }
-            },
             "sortDirection": {
               "expr": {
                 "Literal": {
@@ -868,6 +832,5 @@
         "isLockedInViewMode": true
       }
     ]
-  },
-  "isHidden": true
+  }
 }

@@ -13,14 +13,18 @@ também"):
   · Origem (HTML com grão 'UF'[Região], filtro cruzado): de onde vêm os votos. No Brasil, uma entrada por região — a
     fatia da barra e a linha da lista — e o clique numa região leva o mapa e o resumo à região (o mapa enquadra só
     ela). Passar o mouse numa região abre o dossiê da região, estado por estado. Numa UF, as cidades que mais deram
-    votos; com um município clicado, o lugar dele entre as cidades do estado (as duas formas sem clique).
+    votos; com vários estados no filtro de estado (uma região inteira ou estados soltos, 24/10/2026), os estados que
+    mais deram votos; com um município clicado, o lugar dele entre as cidades do estado (as três formas sem clique).
   · Mapa (Deneb, protagonista): um ponto por município, tamanho pelos votos do candidato, cor pela margem dele. O
     contorno das UFs se desenha, depois os pontos brotam em onda a partir do centro de gravidade dos votos. Seleção
     simples do Deneb: o clique num ponto marca o município (anel em tinta, os outros esmaecem, o contorno da UF dele
     engrossa) e filtra o resumo, a origem e a legenda; o clique no vazio desmarca. O grão é só o código IBGE (x, y e UF
     vêm por medida, L072), para o filtro que sai do clique ser só 'Município'[CodIBGE].
 
-Modos (contas "com …"): município clicado > uma UF (filtro da casca) > uma região (clique na origem) > Brasil.
+Modos (contas "com …"): município clicado > vários estados (filtro de estado em árvore: uma região inteira, estados
+soltos, regiões misturadas) > uma UF (filtro da casca) > Brasil (com ou sem região clicada na origem). O nome do recorte
+vem da medida comum [Recorte · nome] (pbi/scripts/desenho_recorte.py): uma região escolhida no filtro e a mesma região
+clicada na origem dão o mesmo texto.
 
 spec_mapa ainda aceita o modo "abstencao" (o mapa antigo da tela 06), sem seleção e igual ao de antes.
 """
@@ -73,26 +77,33 @@ def contas(P: str, L: dict, G: Gravador) -> None:
     n, col, colo = L["numero"], L["col"], L["col_outro"]
     # ---- modos
     ufs = """VAR _ufs = CALCULATE ( DISTINCTCOUNT ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )"""
-    c(f"{P} · com UF", "1 quando o recorte é UMA UF (filtro da casca), 0 no Brasil, numa região ou sem UF.", dax(f"""
+    c(f"{P} · com UF", "1 quando o recorte é UMA UF (filtro de estado da casca), 0 no Brasil, numa região ou com "
+      "vários estados.", dax(f"""
         {ufs}
         RETURN
             IF ( ISCROSSFILTERED ( 'UF' ) && _ufs = 1, 1, 0 )
         """), "0")
-    c(f"{P} · com região", "1 quando o recorte é um grupo de UFs (a região clicada na origem), 0 nos outros casos.",
-      dax(f"""
-        {ufs}
+    c(f"{P} · com região", "1 quando a região foi CLICADA na origem dos votos (filtro cruzado em 'UF'[Região]); 0 nos "
+      "outros casos. O filtro de estado da casca, em árvore, filtra 'UF'[Caminho] e não conta aqui (uma região escolhida "
+      "nele é um recorte de vários estados: [" + P + " · vários estados]).",
+      "INT ( ISFILTERED ( 'UF'[Região] ) || ISFILTERED ( 'UF'[RegiaoOrdem] ) )", "0")
+    c(f"{P} · vários estados", "1 quando o filtro de estado escolheu mais de uma UF (uma região inteira, estados soltos ou "
+      "regiões misturadas): a origem mostra os estados do recorte. Ignora a região da linha da origem (o grão) e a "
+      "região clicada; 0 no Brasil e numa UF.", dax(f"""
+        VAR _com = CALCULATE ( [Recorte · com escolha], REMOVEFILTERS ( {REG} ) )
+        VAR _n = CALCULATE ( [Recorte · UFs], REMOVEFILTERS ( {REG} ) )
         RETURN
-            IF ( ISCROSSFILTERED ( 'UF' ) && _ufs > 1, 1, 0 )
+            IF ( _com = 1 && _n > 1, 1, 0 )
         """), "0")
     c(f"{P} · com município", "1 quando há município marcado (o clique no mapa filtra 'Município'[CodIBGE]).",
       f"INT ( ISFILTERED ( {MU}[CodIBGE] ) || ISFILTERED ( {MU}[Rótulo] ) )", "0")
-    c(f"{P} · recorte", "Nome do recorte: o município marcado, a UF do filtro, a região clicada ou Brasil.", dax(f"""
-        SWITCH (
-            TRUE (),
-            [{P} · com município] = 1, SELECTEDVALUE ( {MU}[Rótulo], "municípios marcados" ),
-            [{P} · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome] ),
-            [{P} · com região] = 1, SELECTEDVALUE ( 'UF'[Região], "UFs escolhidas" ),
-            "Brasil"
+    c(f"{P} · recorte", "Nome do recorte: o município marcado ou o recorte de estado, lido da medida comum "
+      "[Recorte · nome] (Brasil; a UF; a região, escolhida no filtro ou clicada na origem; 'MG e SP'; '3 estados').",
+      dax(f"""
+        IF (
+            [{P} · com município] = 1,
+            SELECTEDVALUE ( {MU}[Rótulo], "municípios marcados" ),
+            [Recorte · nome]
         )
         """), "texto")
     # ---- resultado oficial do recorte ('Candidato UF', com o exterior no Brasil)
@@ -190,8 +201,24 @@ def contas(P: str, L: dict, G: Gravador) -> None:
     # ---- a região da linha (origem no Brasil, uma entrada por região)
     c(f"{P} · região da linha", "Nome da região da linha da origem (grão 'UF'[Região]).",
       "SELECTEDVALUE ( 'UF'[Região] )", "texto")
-    c(f"{P} · UF da linha", "Nome da UF da linha (lista de estados do dossiê da região).",
-      "SELECTEDVALUE ( 'UF'[Nome] )", "texto")
+    c(f"{P} · UF da linha", "Nome da UF da linha (lista de estados do dossiê da região e da origem com vários "
+      "estados).", "SELECTEDVALUE ( 'UF'[Nome] )", "texto")
+    c(f"{P} · linha da primeira região", "1 na entrada da origem (grão 'UF'[Região]) da primeira região do recorte, do "
+      "Norte ao Sul: com vários estados no filtro, só ela desenha a lista de estados (as outras entradas ficam vazias).",
+      dax(f"""
+        VAR _primeira =
+            CALCULATE ( MIN ( 'UF'[RegiaoOrdem] ), REMOVEFILTERS ( {REG} ), 'UF'[Tipo] = "UF" )
+        RETURN
+            INT ( SELECTEDVALUE ( 'UF'[RegiaoOrdem] ) = _primeira )
+        """), "0")
+    c(f"{P} · parte do estado no recorte", f"Parcela dos votos de {L['cand']} no recorte (soma dos municípios) que veio "
+      "da UF da linha (0–1): a lista de estados da origem quando o filtro escolheu vários. Tira só as colunas da UF da "
+      "linha; o recorte do filtro ('UF'[Caminho]) fica.", dax(f"""
+        DIVIDE (
+            [{P} · votos (municípios)],
+            CALCULATE ( [{P} · votos (municípios)], REMOVEFILTERS ( 'UF'[UF], 'UF'[Nome], 'UF'[Ordem] ) )
+        )
+        """), "0%")
     c(f"{P} · ordem da região", f"Colocação da região da linha pelos votos de {L['cand']} (1 = a que mais deu votos), "
       "entre as regiões do recorte.", dax(f"""
         VAR _v = [{P} · votos (municípios)]
@@ -517,7 +544,8 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         """))
     # ---------------------------------------------------------------- origem (grão 'UF'[Região])
     G.desenho(f"{P} · Origem · HTML", f"De onde vêm os votos de {cand}, uma entrada por região: no Brasil, a fatia e a "
-              "linha da região (clicáveis); numa UF, as cidades que mais deram votos; com um município marcado, o "
+              "linha da região (clicáveis); com vários estados no filtro (uma região inteira ou estados soltos), os "
+              "estados que mais deram votos; numa UF, as cidades que mais deram votos; com um município marcado, o "
               "lugar dele entre as cidades do estado. Só escolhe o bloco.", dax(f"""
         VAR _v = [{P} · votos (municípios)]
         RETURN
@@ -525,6 +553,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
                 TRUE (),
                 NOT ( _v > 0 ), BLANK (),
                 [{P} · com município] = 1, [{P} · Origem · bloco município],
+                [{P} · vários estados] = 1, [{P} · Origem · bloco estados],
                 [{P} · com UF] = 1, [{P} · Origem · bloco UF],
                 [{P} · Origem · bloco região]
             )
@@ -618,6 +647,75 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
                 & "<div class='dica entra d14'>clique num ponto do mapa para ver uma cidade</div>"
             & "</div></div>"
         """))
+    G.desenho(f"{P} · Origem · bloco estados", f"Com vários estados no filtro de estado (uma região inteira, estados "
+              f"soltos ou regiões misturadas): os estados que mais deram votos a {cand} na barra (os 5 maiores e os "
+              "demais estados) e na lista — a parte de cada um nos votos dele no recorte, os votos e o % dos válidos. "
+              "Só a entrada da primeira região do recorte desenha (as outras ficam vazias). Sem clique (o clique numa "
+              "cidade é no mapa).", dax(f"""
+        -- 1 · Leituras
+        VAR _primeira = [{P} · linha da primeira região]
+        VAR _n = CALCULATE ( [Recorte · UFs], REMOVEFILTERS ( {REG} ) )
+        VAR _ufsBase =
+            CALCULATETABLE (
+                TOPN (
+                    5,
+                    ADDCOLUMNS (
+                        VALUES ( 'UF'[UF] ),
+                        "@nome", [{P} · UF da linha],
+                        "@v", [{P} · votos (municípios)],
+                        "@p", [{P} · parte do estado no recorte],
+                        "@pv", [{P} · % (municípios)]
+                    ),
+                    [@v], DESC
+                ),
+                REMOVEFILTERS ( {REG} ),
+                'UF'[Tipo] = "UF"
+            )
+        VAR _lista =
+            SELECTCOLUMNS ( FILTER ( _ufsBase, [@v] > 0 ), "@nome", [@nome], "@v", [@v], "@p", [@p], "@pv", [@pv] ) /* lista */
+        -- 3 · Geometria (barra de 620 px; as fatias seguem a ordem dos votos; linhas de 30 px a partir de y 92)
+        VAR _comIni =
+            ADDCOLUMNS (
+                _lista,
+                "@ini", VAR _vv = [@v] RETURN SUMX ( FILTER ( _lista, [@v] > _vv ), [@p] ) + 0, /* lista */
+                "@ord", VAR _vv = [@v] RETURN 1 + COUNTROWS ( FILTER ( _lista, [@v] > _vv ) ) /* lista */
+            )
+        VAR _sobra = ( 1 - SUMX ( _lista, [@p] ) ) * 620 -- geometria (o trilho dos demais estados)
+        VAR _fatias =
+            CONCATENATEX (
+                _comIni,
+                VAR _w = [@p] * 620 -- geometria
+                VAR _cabe = ( LEN ( [@nome] ) + 4 ) * 9.4 + 16 -- geometria (nome e % em Sora 15 semibold)
+                VAR _rot = IF ( _w >= _cabe, [@nome] & " " & @PCT0([@p])@, IF ( _w >= 44, @PCT0([@p])@, "" ) )
+                RETURN
+                    "<div class='fa o" & MIN ( [@ord], 5 ) & " barra-x d" & ( [@ord] + 4 ) & "' style='left:"
+                        & @CSS([@ini] * 620)@ & "px;width:" & @CSS(_w)@ & "px'><span>" & @ESC(_rot)@ & "</span></div>",
+                "",
+                [@v], DESC
+            )
+        VAR _linhas =
+            CONCATENATEX (
+                _comIni,
+                "<div class='li sobe d" & ( [@ord] + 6 ) & "' style='top:" & ( 92 + ( [@ord] - 1 ) * 30 ) & "px'>"
+                    & "<i class='sw o" & MIN ( [@ord], 5 ) & "'></i><span class='nm'>" & @ESC([@nome])@ & "</span>"
+                    & "<span class='a'>" & @PCT0([@p])@ & " dos votos dele · " & @MI([@v])@ & "</span>"
+                    & "<span class='b'>" & @PCT([@pv])@ & " dos válidos</span></div>",
+                "",
+                [@v], DESC
+            )
+        -- 4 · Marcação
+        RETURN
+            IF (
+                _primeira = 1,
+                "<div class='tela og'><div class='oc'>"
+                    & "<div class='rot ro sobe'>De onde vêm os votos · os estados que mais deram votos</div>"
+                    & "<div class='trilho entra d3'></div>"
+                    & IF ( _n > 5 && _sobra >= 136, "<span class='resto entra d9'>demais estados</span>" )
+                    & _fatias & _linhas
+                    & "<div class='dica entra d14'>clique num ponto do mapa para ver uma cidade</div>"
+                & "</div></div>"
+            )
+        """))
     G.desenho(f"{P} · Origem · bloco município", f"Com um município marcado (uma entrada só): o lugar dele entre as "
               f"cidades da UF — a fatia dos votos de {cand} no estado que saiu dele e as posições em votos e em % dos "
               "válidos. Sem clique.", dax(f"""
@@ -685,8 +783,11 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
                 [{P} · com município] = 1,
                     [{P} · município] & ": " & @PCT([{P} · parte do município no estado])@ & " dos votos de {cand} em "
                         & [{P} · estado do município] & ".",
+                [{P} · vários estados] = 1,
+                    "Os estados que mais deram votos a {cand} " & [Recorte · em] & ", com a parte de cada um nos "
+                        & "votos dele.",
                 [{P} · com UF] = 1,
-                    "As cidades que mais deram votos a {cand} em " & [{P} · recorte] & ".",
+                    "As cidades que mais deram votos a {cand} " & [Recorte · em] & ".",
                 "De onde vêm os votos de {cand}, por região. Clique numa região para ver só ela no mapa; passe o mouse "
                     & "para ver os estados dela."
             ),
@@ -1095,7 +1196,10 @@ def _css_resumo(L: dict) -> str:
         ".rv .fato>div:nth-child(2){flex:1;min-width:0}.rv .fato .lg{font-size:18px;font-weight:600;margin-top:2px;"
         "white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
         ".rv .fato .lg small{font-size:14px;font-weight:400;color:var(--cinza);margin-left:6px}"
-        ".rv .fato .vp{font-size:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}"
+        # 4 px de respiro à direita: a tinta do "%" de 28 px passava 2–3 px da borda do visual em alguns valores
+        # ("40,4%", "62,0%" na tela 06 com o Nordeste; cortes.py, 24/10/2026)
+        ".rv .fato .vp{font-size:28px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;"
+        "padding-right:4px}"
         ".rv .ic{width:30px;height:30px;flex:none;background-size:contain;background-repeat:no-repeat;"
         "background-position:center}"
         f".rv .ic.f{{background-image:url({URL_MIDIA}/arte/icones/pino-{c}.png)}}"
@@ -1231,15 +1335,14 @@ def declarar_votos(P: str) -> list:
                             ordem=L["ordem_tt_regiao"], folha_de_estilo=css, modelo_corpo=corpo_tt_regiao),
     ]
     # filtro cruzado (DataFilter explícito: o Deneb aceitaria realce, que deixaria o mapa inteiro com a região só
-    # destacada): o mapa e a origem filtram as outras peças; ninguém filtra o VizuFilter de UF nem a pílula da casca
+    # destacada): o mapa e a origem filtram as outras peças; ninguém filtra o VizuFilter de estado da casca
     pecas = [f"{P}_Mapa_Pontos", f"{P}_Origem_Html"]
     leitores = [f"{P}_Resumo_Html", f"{P}_Mapa_Legenda"]
     for origem in pecas:
         for alvo in pecas + leitores:
             if alvo != origem:
                 itens.append(Interacao(P, origem, alvo, "DataFilter"))
-        for alvo in (f"{P}_Casca_Filtro", f"{P}_Casca_FiltroPilula"):
-            itens.append(Interacao(P, origem, alvo, "NoFilter"))
+        itens.append(Interacao(P, origem, f"{P}_Casca_Filtro", "NoFilter"))
     return itens
 
 

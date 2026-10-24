@@ -68,11 +68,6 @@
     },
     {
       "source": "T25_Anos_Html",
-      "target": "T25_Casca_FiltroPilula",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T25_Anos_Html",
       "target": "T25_Idade_Html",
       "type": "DataFilter"
     },
@@ -113,11 +108,6 @@
     },
     {
       "source": "T25_Idade_Html",
-      "target": "T25_Casca_FiltroPilula",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T25_Idade_Html",
       "target": "T25_Idade_Topo",
       "type": "NoFilter"
     },
@@ -149,11 +139,6 @@
     {
       "source": "T25_Mapa_Pontos",
       "target": "T25_Casca_Filtro",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T25_Mapa_Pontos",
-      "target": "T25_Casca_FiltroPilula",
       "type": "NoFilter"
     },
     {

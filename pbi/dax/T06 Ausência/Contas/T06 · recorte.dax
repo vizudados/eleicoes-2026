@@ -1,6 +1,6 @@
 /*
 @pasta: T06 Ausência\Contas
 @formato: texto
-@descricao: Nome do recorte: Brasil ou o nome da UF escolhida no filtro.
+@descricao: Nome do recorte, da medida comum [Recorte · nome]: 'Brasil', o estado ('Bahia'), a região inteira ('Nordeste') ou vários estados ('MG e SP', '3 estados').
 */
-IF ( [T06 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome], "UFs escolhidas" ), "Brasil" )
+[Recorte · nome]

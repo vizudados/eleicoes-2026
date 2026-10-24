@@ -4,10 +4,10 @@
   "position": {
     "x": 1282,
     "y": 60,
-    "z": 5000,
+    "z": 20,
     "height": 626,
     "width": 424,
-    "tabOrder": 6
+    "tabOrder": 4
   },
   "visual": {
     "visualType": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
@@ -70,14 +70,14 @@
             "startOpen": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
             "alwaysOpen": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -119,7 +119,7 @@
             "selectedValueOnly": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -748,7 +748,7 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "T15 · Filtro · pílula · ALT"
+                  "Property": "T15 · Filtro · ALT"
                 }
               }
             }
@@ -757,6 +757,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "isHidden": true
+  }
 }

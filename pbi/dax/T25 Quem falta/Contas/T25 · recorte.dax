@@ -1,6 +1,6 @@
 /*
 @pasta: T25 Quem falta\Contas
 @formato: texto
-@descricao: Brasil ou a UF do filtro da casca: a área das médias (ignora o município marcado).
+@descricao: A área das médias (ignora o município marcado), da medida comum [Recorte · nome]: 'Brasil', o estado ('Bahia'), a região inteira ('Nordeste') ou vários estados ('MG e SP', '3 estados').
 */
-IF ( [T25 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome], "UFs escolhidas" ), "Brasil" )
+[Recorte · nome]

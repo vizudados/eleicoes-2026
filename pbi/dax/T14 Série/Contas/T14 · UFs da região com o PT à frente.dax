@@ -1,7 +1,7 @@
 /*
 @pasta: T14 Série\Contas
 @formato: 0
-@descricao: Quantas UFs da região do painel tiveram o PT à frente do adversário na eleição em destaque (a clicada ou 2026).
+@descricao: Quantas UFs da região do painel tiveram o PT à frente do adversário na eleição em destaque (a clicada ou 2026); ignora o recorte do filtro de estado, como os painéis.
 @oraculo: Nordeste 2026: 9 de 9 (motor)
 @gerado: pbi/scripts/desenho_t14.py
 */
@@ -12,7 +12,13 @@ RETURN
         FILTER (
             ADDCOLUMNS (
                 FILTER ( ALL ( 'UF'[UF], 'UF'[Região] ), 'UF'[Região] = _r ),
-                "@m", CALCULATE ( [T14 · margem do PT], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )
+                "@m",
+                    CALCULATE (
+                        [T14 · margem do PT],
+                        REMOVEFILTERS ( 'Município'[Região] ),
+                        ALLEXCEPT ( 'UF', 'UF'[UF] ),
+                        'Ano'[Ano] = _a
+                    )
             ),
             [@m] > 0
         )

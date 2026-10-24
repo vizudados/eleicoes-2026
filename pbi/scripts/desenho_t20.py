@@ -374,39 +374,7 @@ VAR _t22 = IF ( ISBLANK ( _m22 ), "sem dado em 2022", FORMAT ( _m22 * 100, {PP} 
 RETURN
     IF ( NOT ISBLANK ( _nome ), _nome & ": margem de Lula " & _t22 & " e " & FORMAT ( _m26 * 100, {PP} ) & " em 2026." )
 """)
-    # --- a pílula do filtro (o mesmo padrão do filtro de UF da casca, pílula + painel)
-    gravar("T20 · Filtro · pílula · HTML", "O botão fechado do filtro da tela (a pílula, na caixa do filtro da casca): "
-           "a cidade em uso ('Rio de Janeiro (RJ)' sem escolha); com uma escola marcada, ' · escola'; com várias da "
-           "mesma cidade (não todas), ' · N escolas'; com o funil (ponto vermelho quando o filtro está em uso) e a "
-           "seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01). Recebe só o filtro (o "
-           "clique no mapa e na lista não mexe nela).", rf"""
--- 1 · Leituras
-VAR _uso = [T20 · filtro em uso]
-VAR _escola = [T20 · escola do filtro]
-VAR _marcadas = [T20 · escolas no filtro]
-VAR _locais = [T20 · locais]
-VAR _id = _escola
-VAR _nomeEscolaL = IF ( NOT ISBLANK ( _escola ), {_no_local("[T20 · nome do local]")} )
--- 2 · Textos
-{_escapa("_cidade", "[T20 · cidade]")}
-{_escapa("_nomeEscola", "_nomeEscolaL")}
-VAR _txt =
-    _cidade
-        & SWITCH (
-            TRUE (),
-            NOT ISBLANK ( _escola ), " · " & _nomeEscola,
-            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, {N} ) & " escolas",
-            ""
-        )
--- 4 · Marcação
-RETURN
-    "<div class='tela pl" & IF ( _uso = 1, " ativo", "" ) & "'><span class='fu'><svg width='16' height='16' "
-        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
-        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><b>" & _txt & "</b>"
-        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
-        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>"
-""")
-    gravar("T20 · Filtro · ALT", "Texto alternativo do filtro da tela: a cidade e a escola em uso.", rf"""
+    gravar("T20 · Filtro · ALT", "Texto alternativo do filtro da tela (o VizuFilter em árvore, com o gatilho dele; sem pílula desde 24/10/2026): a cidade e a escola em uso.", rf"""
 -- 1 · Leituras
 VAR _escola = [T20 · escola do filtro]
 VAR _marcadas = [T20 · escolas no filtro]

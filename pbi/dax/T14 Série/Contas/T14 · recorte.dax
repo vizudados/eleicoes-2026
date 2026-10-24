@@ -1,9 +1,9 @@
 /*
 @pasta: T14 Série\Contas
 @formato: texto
-@descricao: O lugar que a tela conta: a região clicada nos painéis ou a UF do filtro (vazio = Brasil).
+@descricao: O lugar que a tela conta: a região clicada nos painéis ou o recorte do filtro de estado (árvore Região › Estado), pela medida comum [Recorte · nome]: 'Bahia', 'Nordeste', 'MG e SP', '3 estados'; vazio = Brasil.
 @gerado: pbi/scripts/desenho_t14.py
 */
 VAR _reg = [T14 · região clicada]
 RETURN
-    IF ( NOT ISBLANK ( _reg ), _reg, IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) ) )
+    IF ( NOT ISBLANK ( _reg ), _reg, IF ( [Recorte · com escolha] = 1, [Recorte · nome] ) )

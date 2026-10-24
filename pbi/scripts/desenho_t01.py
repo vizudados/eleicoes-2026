@@ -4,7 +4,9 @@
     python -I -X utf8 pbi/scripts/desenho_t01.py        # grava pbi/dax/T01 Placar/{Contas,Desenho}/*.dax
 
 Fonte única dos votos: 'Candidato UF' (2022 e 2026, com o exterior ZZ). Sem filtro, a soma das linhas é o resultado
-nacional oficial do TSE (igual a 'Candidato ano'); com o filtro de UF da casca, é o resultado da UF.
+nacional oficial do TSE (igual a 'Candidato ano'); com o filtro de estado da casca (árvore Região › Estado, 24/10/2026),
+é a soma das UFs escolhidas: um estado, uma região inteira ou vários estados. O nome do recorte vem das medidas comuns
+Recorte · … (pbi/scripts/desenho_recorte.py).
 Oráculo: mockup/data/eleicoes.json › paginas[1].
 """
 from __future__ import annotations
@@ -43,10 +45,10 @@ def literal(texto: str) -> str:
 # ---------------------------------------------------------------------------------------------------- contas
 def contas():
     c = G.conta
-    c("T01 · com UF", "1 quando o filtro de UF da casca está ativo (a tela mostra a UF), 0 no Brasil.",
-      "INT ( ISCROSSFILTERED ( 'UF' ) )", "0")
-    c("T01 · recorte", "Nome do recorte: Brasil ou o nome da UF escolhida no filtro.",
-      'IF ( [T01 · com UF] = 1, SELECTEDVALUE ( \'UF\'[Nome], "as UFs escolhidas" ), "Brasil" )', "texto")
+    c("T01 · com UF", "1 com estado ou região escolhido no filtro de estado da casca (a tela mostra a soma das UFs "
+      "escolhidas), 0 no Brasil: a medida comum [Recorte · com escolha].", "[Recorte · com escolha]", "0")
+    c("T01 · recorte", "Nome do recorte, da medida comum [Recorte · nome]: 'Brasil', o estado ('Bahia'), a região "
+      "inteira ('Nordeste') ou vários estados ('MG e SP', '3 estados').", "[Recorte · nome]", "texto")
     c("T01 · válidos", "Votos válidos do 1º turno de 2026 no recorte (com o exterior no Brasil).",
       f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026 )", "#,0", "paginas[1].validos = 119.300.788")
     for nome, num, orac in (("Flávio", 22, "56.104.503"), ("Lula", 13, "53.879.538")):
@@ -319,7 +321,7 @@ def desenho_barra():
         """))
     G.desenho("T01 · Barra · ALT", "Texto para leitor de tela da barra dos válidos.", dax("""
         LEFT (
-            "Barra dos votos válidos de " & [T01 · recorte]
+            "Barra dos votos válidos " & [Recorte · de]
                 & ", um segmento por candidato, do mais ao menos votado. Passe o mouse num segmento para ver onde cada "
                 & "um foi mais forte.",
             250
@@ -444,7 +446,7 @@ def desenho_virada():
         """))
     G.desenho("T01 · Virada · ALT", "Texto para leitor de tela do bloco de 2022 para 2026.", dax("""
         -- 1 · Leituras
-        VAR _rec = [T01 · recorte]
+        VAR _rec = [Recorte · em]
         VAR _pt22 = [T01 · PT 2022 votos]
         VAR _pt26 = [T01 · Lula votos]
         VAR _pl22 = [T01 · PL 2022 votos]
@@ -452,7 +454,7 @@ def desenho_virada():
         -- 2 · Textos
         RETURN
             LEFT (
-                "De 2022 para 2026, em " & _rec & ": Lula foi de " & @MI(_pt22)@ & " para " & @MI(_pt26)@
+                "De 2022 para 2026, " & _rec & ": Lula foi de " & @MI(_pt22)@ & " para " & @MI(_pt26)@
                     & " votos; o PL foi de " & @MI(_pl22)@ & " para " & @MI(_pl26)@ & ".",
                 250
             )
@@ -473,52 +475,71 @@ def tooltip_candidato():
             )
         )
         """), "0.0%")
-    ufs = """VAR _ufs =
-            ADDCOLUMNS (
-                CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
-                "@p", [T01 · % do candidato na UF]
-            )"""
+    c("T01 · dossiê no recorte", "1 quando o recorte tem mais de uma UF (uma região inteira ou vários estados): o "
+      "dossiê do candidato compara as UFs de dentro dele; 0 no Brasil e com um estado só (aí o dossiê compara as 27).",
+      "IF ( [Recorte · com escolha] = 1 && [Recorte · UFs] > 1, 1, 0 )", "0")
+    c("T01 · UFs do dossiê", "Quantas UFs o dossiê do candidato compara: as do recorte (região ou vários estados) ou as "
+      "27.", "IF ( [T01 · dossiê no recorte] = 1, [Recorte · UFs], 27 )", "0")
+    ufs = """VAR _noRecorte = [T01 · dossiê no recorte]
+            VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+            VAR _todas =
+                CALCULATETABLE (
+                    ADDCOLUMNS ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ), "@p", [T01 · % do candidato na UF] ),
+                    REMOVEFILTERS ( 'UF' ),
+                    'UF'[Tipo] = "UF"
+                )
+            VAR _ufs = FILTER ( _todas, _noRecorte = 0 || 'UF'[UF] IN _sel )"""
     for qual, ordem, orac in (("mais forte", "DESC", "Flávio: Roraima 71,1%"), ("mais fraca", "ASC", "Flávio: Piauí 24,1%")):
-        c(f"T01 · UF {qual} do candidato", f"UF (no Brasil todo, sem o filtro) onde o candidato do item teve a "
-          f"{'maior' if ordem == 'DESC' else 'menor'} parcela dos válidos.", dax(f"""
+        c(f"T01 · UF {qual} do candidato", f"UF onde o candidato do item teve a "
+          f"{'maior' if ordem == 'DESC' else 'menor'} parcela dos válidos: entre as 27 (sem escolha ou com um estado só) "
+          "ou entre as UFs do recorte (região ou vários estados).", dax(f"""
             {ufs}
             RETURN
                 MAXX ( TOPN ( 1, _ufs, [@p], {ordem}, 'UF'[Nome], ASC ), 'UF'[Nome] )
             """), "texto", orac)
-        c(f"T01 · % na UF {qual} do candidato", f"Parcela dos válidos do candidato do item na UF {qual} (0–1).",
+        c(f"T01 · % na UF {qual} do candidato", f"Parcela dos válidos do candidato do item na UF {qual} (0–1), "
+          "entre as UFs do dossiê.",
           dax(f"""
             {ufs}
             RETURN
                 {'MAXX' if ordem == 'DESC' else 'MINX'} ( _ufs, [@p] )
             """), "0.0%")
-    c("T01 · UFs em 1º do candidato", "Em quantas das 27 UFs o candidato do item foi o mais votado (no Brasil todo, sem "
-      "o filtro).", dax(f"""
+    c("T01 · UFs em 1º do candidato", "Em quantas UFs do dossiê o candidato do item foi o mais votado: das 27 (sem "
+      "escolha ou com um estado só) ou das UFs do recorte (região ou vários estados).", dax(f"""
         VAR _cand = SELECTEDVALUE ( {CU}[Candidato] )
-        VAR _ufs =
-            CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" )
+        VAR _noRecorte = [T01 · dossiê no recorte]
+        VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
         VAR _lider =
-            ADDCOLUMNS (
-                _ufs,
-                "@lider",
-                    CALCULATE (
-                        MAXX (
-                            TOPN (
-                                1,
-                                ADDCOLUMNS (
-                                    CALCULATETABLE ( VALUES ( {CU}[Candidato] ), REMOVEFILTERS ( {CU}[Candidato] ) ),
-                                    "@v", [T01 · votos do candidato]
+            CALCULATETABLE (
+                ADDCOLUMNS (
+                    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ),
+                    "@lider",
+                        CALCULATE (
+                            MAXX (
+                                TOPN (
+                                    1,
+                                    ADDCOLUMNS (
+                                        CALCULATETABLE ( VALUES ( {CU}[Candidato] ), REMOVEFILTERS ( {CU}[Candidato] ) ),
+                                        "@v", [T01 · votos do candidato]
+                                    ),
+                                    [@v], DESC
                                 ),
-                                [@v], DESC
-                            ),
-                            {CU}[Candidato]
+                                {CU}[Candidato]
+                            )
                         )
-                    )
+                ),
+                REMOVEFILTERS ( 'UF' ),
+                'UF'[Tipo] = "UF"
             )
         RETURN
-            IF ( NOT ISBLANK ( _cand ), COUNTROWS ( FILTER ( _lider, [@lider] = _cand ) ) + 0 )
+            IF (
+                NOT ISBLANK ( _cand ),
+                COUNTROWS ( FILTER ( _lider, [@lider] = _cand && ( _noRecorte = 0 || 'UF'[UF] IN _sel ) ) ) + 0
+            )
         """), "0", "Flávio 18 · Lula 9 (soma 27)")
     G.desenho("T01 · Tooltip candidato · HTML", "Dossiê do candidato da barra (ficha com clipe): onde foi mais forte e "
-              "mais fraco no Brasil e em quantas UFs ficou em 1º. Só lê contas 'T01 · …'.", dax(f"""
+              "mais fraco e em quantas UFs ficou em 1º, no Brasil (sem escolha ou com um estado só) ou entre as UFs "
+              "do recorte (região ou vários estados). Só lê contas.", dax(f"""
         -- 1 · Leituras
         VAR _nome = SELECTEDVALUE ( {CU}[Candidato] )
         VAR _num = [T01 · número do candidato]
@@ -529,7 +550,9 @@ def tooltip_candidato():
         VAR _ufR = [T01 · UF mais fraca do candidato]
         VAR _pR = [T01 · % na UF mais fraca do candidato]
         VAR _n1 = [T01 · UFs em 1º do candidato]
-        VAR _comUF = [T01 · com UF]
+        VAR _noRecorte = [T01 · dossiê no recorte]
+        VAR _nUFs = [T01 · UFs do dossiê]
+        VAR _em = [Recorte · em]
         -- 2 · Textos
         VAR _cor = SWITCH ( _num, 22, "flavio", 13, "lula", "neutro" )
         VAR _ic = SWITCH ( _num, 22, "urna-azul", 13, "urna-vermelho", "urna-tinta" )
@@ -537,13 +560,15 @@ def tooltip_candidato():
         VAR _txtPar = @ESC(_par)@ & " · " & _num
         VAR _txtPF = @PCT(_pF)@
         VAR _txtPR = @PCT(_pR)@
-        VAR _onde = IF ( _comUF = 1, _pos & "º lugar nesta UF", _pos & "º lugar no Brasil" )
+        VAR _onde = _pos & "º lugar " & _em
         VAR _nota =
-            IF (
-                _n1 > 0,
-                "1º lugar em " & _n1 & IF ( _n1 = 1, " UF", " UFs" ),
+            SWITCH (
+                TRUE (),
+                _n1 > 0 && _noRecorte = 1, "1º lugar em " & _n1 & " de " & _nUFs & " UFs",
+                _n1 > 0, "1º lugar em " & _n1 & IF ( _n1 = 1, " UF", " UFs" ),
                 _onde
             )
+        VAR _escopo = IF ( _noRecorte = 1, _em, "no Brasil" )
         -- 4 · Marcação
         VAR _css =
             "<style>"
@@ -569,7 +594,7 @@ def tooltip_candidato():
                 & "<img class='clipe' alt='' src='{URL}/arte/dossie/clipe-tinta.png'/>"
                 & "<img class='ic entra' alt='' src='{URL}/arte/icones/" & _ic & ".png'/>"
                 & "<div class='cab sobe'><div class='nm " & _cor & "'>" & _txtNome & "</div>"
-                & "<div class='rot pt'>" & _txtPar & " · no Brasil</div></div>"
+                & "<div class='rot pt'>" & _txtPar & " · " & @ESC(_escopo)@ & "</div></div>"
                 & "<div class='lin l1 sobe d2'><span class='rot'>Mais forte em</span>"
                 & "<span class='v'>" & @ESC(_ufF)@ & "<b class='" & _cor & "'>" & _txtPF & "</b></span></div>"
                 & "<div class='lin l2 sobe d3'><span class='rot'>Mais fraco em</span>"
@@ -649,6 +674,25 @@ def pontos_virada():
       "[T01 · ponto · votos no grupo em 2026] - [T01 · ponto · votos no grupo em 2022]", "#,0")
     c("T01 · ordem do porte", "Ordem do porte da linha (1 = até 10 mil habitantes), para listar do menor ao maior.",
       f"MIN ( {MU}[PorteOrdem] )", "0")
+    c("T01 · ponto · grupo", "Como o dossiê do ponto divide os votos: 'região' no Brasil, 'porte' (tamanho de cidade) "
+      "num estado só, 'estado' num recorte de vários (uma região inteira ou estados soltos).", dax("""
+        SWITCH (
+            TRUE (),
+            [Recorte · com escolha] = 0, "região",
+            [Recorte · UFs] = 1, "porte",
+            "estado"
+        )
+        """), "texto")
+    c("T01 · ponto · parte do estado", "Parcela dos votos do partido do ponto, no ano do ponto, que veio do estado da "
+      "linha, dentro do recorte de vários estados (0–1). Tira só o estado da linha: o recorte (o filtro de estado, em "
+      "'UF'[Caminho]) fica.", dax("""
+        DIVIDE (
+            [T01 · ponto · votos no grupo],
+            CALCULATE ( [T01 · ponto · votos no grupo], REMOVEFILTERS ( 'UF'[UF], 'UF'[Nome] ) )
+        )
+        """), "0%")
+    c("T01 · ponto · estados no recorte", "Quantas UFs o recorte tem, para o dossiê do ponto avisar quando mostra só "
+      "as 5 com mais votos.", "[Recorte · UFs]", "0")
     # ---- os alvos (um por ponto, sobre a bolinha desenhada pela virada)
     G.desenho("T01 · Ponto · HTML", "Alvo do ponto da virada (uma entrada por ano × candidato, só PT e PL): um círculo "
               "transparente sobre a bolinha desenhada, com um anel no hover; abre o dossiê do ponto. A posição usa a "
@@ -688,7 +732,8 @@ def pontos_virada():
         """))
     # ---- o dossiê do ponto
     G.desenho("T01 · Tooltip ponto · HTML", "Dossiê do ponto da virada (ficha com clipe): de onde vieram os votos do "
-              "candidato naquele ano — por região no Brasil, por tamanho de cidade numa UF —, com o % dele em cada "
+              "candidato naquele ano — por região no Brasil, por tamanho de cidade num estado, por estado num recorte "
+              "de vários (os 5 com mais votos) —, com o % dele em cada "
               "grupo em 2022 e em 2026 e a nota à mão com a maior perda ou ganho (2026) ou a base mais forte (2022). Só "
               "lê contas.", dax(f"""
         -- 1 · Leituras
@@ -696,11 +741,12 @@ def pontos_virada():
         VAR _n = [T01 · ponto · número]
         VAR _nome = [T01 · ponto · candidato]
         VAR _par = [T01 · ponto · partido]
-        VAR _comUF = [T01 · com UF]
+        VAR _grupo = [T01 · ponto · grupo]
         VAR _rec = [T01 · recorte]
+        VAR _nEst = [T01 · ponto · estados no recorte]
         VAR _regs =
             TOPN (
-                IF ( _comUF = 0, 10, 0 ),
+                IF ( _grupo = "região", 10, 0 ),
                 ADDCOLUMNS (
                     VALUES ( 'UF'[Região] ),
                     "@v", [T01 · ponto · votos no grupo],
@@ -711,9 +757,22 @@ def pontos_virada():
                 ),
                 [@v], DESC
             )
+        VAR _ests =
+            TOPN (
+                IF ( _grupo = "estado", 5, 0 ),
+                ADDCOLUMNS (
+                    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ),
+                    "@v", [T01 · ponto · votos no grupo],
+                    "@p", [T01 · ponto · parte do estado],
+                    "@p22", [T01 · ponto · % no grupo em 2022],
+                    "@p26", [T01 · ponto · % no grupo em 2026],
+                    "@d", [T01 · ponto · variação no grupo]
+                ),
+                [@v], DESC
+            )
         VAR _portes =
             TOPN (
-                IF ( _comUF = 1, 10, 0 ),
+                IF ( _grupo = "porte", 10, 0 ),
                 ADDCOLUMNS (
                     VALUES ( {MU}[Porte] ),
                     "@v", [T01 · ponto · votos no grupo],
@@ -732,6 +791,10 @@ def pontos_virada():
                     "@g", 'UF'[Região], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", - [@v]
                 ),
                 SELECTCOLUMNS (
+                    FILTER ( _ests, [@v] > 0 ), /* lista */
+                    "@g", 'UF'[Nome], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", - [@v]
+                ),
+                SELECTCOLUMNS (
                     FILTER ( _portes, [@v] > 0 && LEN ( {MU}[Porte] ) > 0 ), /* lista */
                     "@g", {MU}[Porte], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", [@o]
                 )
@@ -746,8 +809,14 @@ def pontos_virada():
         VAR _cls = IF ( _n = 13, "lula", "flavio" )
         VAR _ic = IF ( _n = 13, "barras-vermelho", "barras-azul" )
         VAR _txtNome = @ESC(_nome)@ & " · " & _a
-        VAR _sub = @ESC(_par)@ & " · " & _n & " · " & IF ( _comUF = 1, @ESC(_rec)@, "Brasil, sem o exterior" )
-        VAR _rotG = IF ( _comUF = 1, "cidades de", "região" )
+        VAR _sub = @ESC(_par)@ & " · " & _n & " · " & IF ( _grupo = "região", "Brasil, sem o exterior", @ESC(_rec)@ )
+        VAR _rotG =
+            SWITCH (
+                _grupo,
+                "porte", "cidades de",
+                "estado", IF ( _nEst > 5, "estado · 5 de " & _nEst, "estado" ),
+                "região"
+            )
         VAR _nota =
             IF (
                 _a = 2026,
@@ -787,7 +856,8 @@ def pontos_virada():
     G.desenho("T01 · Tooltip ponto · ALT", "Texto para leitor de tela do dossiê do ponto da virada.", dax("""
         LEFT (
             [T01 · ponto · candidato] & " em " & [T01 · ponto · ano] & ": de onde vieram os votos, por "
-                & IF ( [T01 · com UF] = 1, "tamanho de cidade", "região" ) & ", e o % dele em cada grupo em 2022 e 2026.",
+                & SWITCH ( [T01 · ponto · grupo], "porte", "tamanho de cidade", "estado", "estado", "região" )
+                & ", e o % dele em cada grupo em 2022 e 2026.",
             250
         )
         """))

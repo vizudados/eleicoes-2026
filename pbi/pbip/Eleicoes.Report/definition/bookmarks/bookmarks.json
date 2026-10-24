@@ -94,42 +94,6 @@
         "T23_CHEGADA_01",
         "TIX_CHEGADA_01"
       ]
-    },
-    {
-      "name": "Filtros",
-      "displayName": "Filtros",
-      "children": [
-        "T01_FILTRO_ABRE_01",
-        "T01_FILTRO_FECHA_01",
-        "T03_FILTRO_ABRE_01",
-        "T03_FILTRO_FECHA_01",
-        "T05_FILTRO_ABRE_01",
-        "T05_FILTRO_FECHA_01",
-        "T06_FILTRO_ABRE_01",
-        "T06_FILTRO_FECHA_01",
-        "T25_FILTRO_ABRE_01",
-        "T25_FILTRO_FECHA_01",
-        "T11_FILTRO_ABRE_01",
-        "T11_FILTRO_FECHA_01",
-        "T13_FILTRO_ABRE_01",
-        "T13_FILTRO_FECHA_01",
-        "T14_FILTRO_ABRE_01",
-        "T14_FILTRO_FECHA_01",
-        "T17_FILTRO_ABRE_01",
-        "T17_FILTRO_FECHA_01",
-        "T08_FILTRO_ABRE_01",
-        "T08_FILTRO_FECHA_01",
-        "T09_FILTRO_ABRE_01",
-        "T09_FILTRO_FECHA_01",
-        "T18_FILTRO_ABRE_01",
-        "T18_FILTRO_FECHA_01",
-        "T15_FILTRO_ABRE_01",
-        "T15_FILTRO_FECHA_01",
-        "T19_FILTRO_ABRE_01",
-        "T19_FILTRO_FECHA_01",
-        "T20_FILTRO_ABRE_01",
-        "T20_FILTRO_FECHA_01"
-      ]
     }
   ]
 }

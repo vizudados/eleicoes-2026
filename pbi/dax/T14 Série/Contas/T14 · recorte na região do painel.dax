@@ -1,0 +1,12 @@
+/*
+@pasta: T14 Série\Contas
+@formato: texto
+@descricao: O que da região do painel está no recorte, com 'de' e o artigo (medida comum [Recorte · de] só nessa região): 'da Bahia', 'de BA e SE', 'de 3 estados'; 'do Nordeste' quando a região está inteira; vazio sem estado dela.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _r = [T14 · região do painel]
+RETURN
+    IF (
+        [T14 · UFs do recorte na região do painel] > 0,
+        CALCULATE ( [Recorte · de], KEEPFILTERS ( 'UF'[Região] = _r ) )
+    )

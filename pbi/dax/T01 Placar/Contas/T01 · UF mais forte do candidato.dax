@@ -1,13 +1,17 @@
 /*
 @pasta: T01 Placar\Contas
 @formato: texto
-@descricao: UF (no Brasil todo, sem o filtro) onde o candidato do item teve a maior parcela dos válidos.
+@descricao: UF onde o candidato do item teve a maior parcela dos válidos: entre as 27 (sem escolha ou com um estado só) ou entre as UFs do recorte (região ou vários estados).
 @oraculo: Flávio: Roraima 71,1%
 */
-VAR _ufs =
-ADDCOLUMNS (
-    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
-    "@p", [T01 · % do candidato na UF]
-)
+VAR _noRecorte = [T01 · dossiê no recorte]
+VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+VAR _todas =
+    CALCULATETABLE (
+        ADDCOLUMNS ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ), "@p", [T01 · % do candidato na UF] ),
+        REMOVEFILTERS ( 'UF' ),
+        'UF'[Tipo] = "UF"
+    )
+VAR _ufs = FILTER ( _todas, _noRecorte = 0 || 'UF'[UF] IN _sel )
 RETURN
     MAXX ( TOPN ( 1, _ufs, [@p], DESC, 'UF'[Nome], ASC ), 'UF'[Nome] )

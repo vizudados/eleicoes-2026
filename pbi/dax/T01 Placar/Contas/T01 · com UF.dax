@@ -1,6 +1,6 @@
 /*
 @pasta: T01 Placar\Contas
 @formato: 0
-@descricao: 1 quando o filtro de UF da casca está ativo (a tela mostra a UF), 0 no Brasil.
+@descricao: 1 com estado ou região escolhido no filtro de estado da casca (a tela mostra a soma das UFs escolhidas), 0 no Brasil: a medida comum [Recorte · com escolha].
 */
-INT ( ISCROSSFILTERED ( 'UF' ) )
+[Recorte · com escolha]

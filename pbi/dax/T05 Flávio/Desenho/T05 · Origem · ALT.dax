@@ -9,8 +9,11 @@ LEFT (
         [T05 · com município] = 1,
             [T05 · município] & ": " & FORMAT ( [T05 · parte do município no estado], "0.0%" ) & " dos votos de Flávio em "
                 & [T05 · estado do município] & ".",
+        [T05 · vários estados] = 1,
+            "Os estados que mais deram votos a Flávio " & [Recorte · em] & ", com a parte de cada um nos "
+                & "votos dele.",
         [T05 · com UF] = 1,
-            "As cidades que mais deram votos a Flávio em " & [T05 · recorte] & ".",
+            "As cidades que mais deram votos a Flávio " & [Recorte · em] & ".",
         "De onde vêm os votos de Flávio, por região. Clique numa região para ver só ela no mapa; passe o mouse "
             & "para ver os estados dela."
     ),

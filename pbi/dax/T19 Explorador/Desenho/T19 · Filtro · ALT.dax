@@ -1,7 +1,7 @@
 /*
 @pasta: T19 Explorador\Desenho
 @formato: texto
-@descricao: Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o filtro oferece.
+@descricao: Texto alternativo do filtro do recorte (o VizuFilter em árvore, com o gatilho dele; sem pílula desde 24/10/2026): o recorte em uso e o que o filtro oferece.
 */
 -- 1 · Leituras
 VAR _n = [T19 · filtro · escolhas]

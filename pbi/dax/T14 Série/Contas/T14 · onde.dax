@@ -1,7 +1,7 @@
 /*
 @pasta: T14 Série\Contas
 @formato: texto
-@descricao: O lugar com a preposição, para as frases: 'no Nordeste' (região clicada) ou 'em Minas Gerais' (UF).
+@descricao: O lugar com a preposição e o artigo certo, para as frases: 'no Nordeste' (região clicada ou inteira no filtro), 'na Bahia', 'em Minas Gerais', 'em MG e SP', 'em 3 estados' (medida comum [Recorte · em]); vazio = Brasil.
 @gerado: pbi/scripts/desenho_t14.py
 */
 VAR _reg = [T14 · região clicada]
@@ -9,5 +9,5 @@ RETURN
     IF (
         NOT ISBLANK ( _reg ),
         "no " & _reg,
-        IF ( ISFILTERED ( 'UF'[Nome] ), "em " & SELECTEDVALUE ( 'UF'[Nome] ) )
+        IF ( [Recorte · com escolha] = 1, [Recorte · em] )
     )

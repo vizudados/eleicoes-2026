@@ -5,9 +5,6 @@
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
-      "T05_Casca_Filtro",
-      "T05_Casca_FiltroAbre",
-      "T05_Casca_FiltroFora",
       "T05_Casca_InfoAbre",
       "T05_Casca_InfoFecha",
       "T05_Casca_InfoFora",
@@ -21,23 +18,6 @@
     "sections": {
       "T05": {
         "visualContainers": {
-          "T05_Casca_Filtro": {
-            "singleVisual": {
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "T05_Casca_FiltroAbre": {
-            "singleVisual": {}
-          },
-          "T05_Casca_FiltroFora": {
-            "singleVisual": {
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
           "T05_Casca_InfoAbre": {
             "singleVisual": {}
           },

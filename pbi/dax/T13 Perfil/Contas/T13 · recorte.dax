@@ -1,7 +1,7 @@
 /*
 @pasta: T13 Perfil\Contas
 @formato: texto
-@descricao: Nome da UF escolhida no filtro da tela (vazio = Brasil).
+@descricao: O lugar escolhido no filtro de estado da casca (árvore Região › Estado), pela medida comum [Recorte · nome]: 'Bahia', 'Nordeste', 'MG e SP', '3 estados'; vazio = Brasil. As contas da matriz já valem para qualquer conjunto de UFs (VALUES ( 'UF'[UF] ) traz todas as escolhidas).
 @gerado: pbi/scripts/desenho_t13.py
 */
-IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )
+IF ( [Recorte · com escolha] = 1, [Recorte · nome] )

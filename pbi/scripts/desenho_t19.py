@@ -7,7 +7,7 @@
 
 e expõe para paginas/t19_explorador.py os modelos fixos (bodyTemplate): o cabeçalho da lista, o fundo da dispersão
 (eixos, grade, legendas e dicas em Sora, desenhados em HTML atrás do Deneb, com a MESMA geometria do spec) e o papel do
-dossiê. A pílula do filtro do recorte (T19 · Filtro · pílula · HTML) usa a folha da pílula da casca (CSS_PILULA).
+dossiê. O filtro do recorte é o próprio VizuFilter (gatilho dele, sem pílula: 24/10/2026); aqui só o ALT dele.
 
     python -I -X utf8 pbi/scripts/desenho_t19.py
 """
@@ -76,13 +76,6 @@ VAR _nome2 = SUBSTITUTE ( SUBSTITUTE ( _nome1, "<", "&lt;" ), ">", "&gt;" )
 VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome2, \"\"\"\", "&quot;" ), "'", "&#39;" )"""
 
 
-PILULA_MAX = 40          # caracteres que cabem na pílula (424 px, Sora 16 semibold: ~8 px por letra); acima, "N filtros"
-FUNIL = ("<span class='fu'><svg width='16' height='16' viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' "
-         "fill='none' stroke='currentColor' stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span>")
-SETA = ("<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
-        "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg>")
-
-
 def _quebrado(texto: str, largura: int = 96) -> str:
     """Literal DAX longo em pedaços de até `largura` (cortados num espaço), unidos por & em linhas próprias."""
     pedacos, atual = [], ""
@@ -98,35 +91,8 @@ def _quebrado(texto: str, largura: int = 96) -> str:
 
 def medidas() -> None:
     cor_css = {"lula": "var(--vermelho)", "flavio": "var(--azul)"}
-    # --- pílula do filtro do recorte (o mesmo desenho da pílula de UF da casca: Casca · filtro · pílula · HTML)
-    gravar("T19 · Filtro · pílula · HTML", "O botão fechado do filtro do recorte (a pílula, na caixa do filtro da "
-           "casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 "
-           "mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre a árvore "
-           "(VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não "
-           "mexem nela).", f"""
--- 1 · Leituras
-VAR _n = [T19 · filtro · escolhas]
-VAR _uso = [T19 · filtro em uso]
--- 2 · Textos
-VAR _txt0 =
-    SWITCH (
-        TRUE (),
-        _n = 0, "Todos os municípios",
-        _n > 1 && LEN ( _uso ) > {PILULA_MAX}, FORMAT ( _n, "#,0" ) & " filtros",
-        _uso
-    )
-VAR _txt1 = SUBSTITUTE ( SUBSTITUTE ( _txt0, "&", "&amp;" ), "<", "&lt;" )
-VAR _txt = SUBSTITUTE ( SUBSTITUTE ( _txt1, ">", "&gt;" ), "'", "&#39;" )
--- 4 · Marcação
-RETURN
-    "<div class='tela pl" & IF ( _n > 0, " ativo", "" ) & "'>"
-        & "{_quebrado(FUNIL)}"
-        & "<b>" & _txt & "</b>"
-        & "{_quebrado(SETA)}"
-    & "</div>"
-""")
-    gravar("T19 · Filtro · ALT", "Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o "
-           "filtro oferece.", r"""
+    gravar("T19 · Filtro · ALT", "Texto alternativo do filtro do recorte (o VizuFilter em árvore, com o gatilho dele; "
+           "sem pílula desde 24/10/2026): o recorte em uso e o que o filtro oferece.", r"""
 -- 1 · Leituras
 VAR _n = [T19 · filtro · escolhas]
 VAR _uso = [T19 · filtro em uso]

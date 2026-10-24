@@ -1,6 +1,6 @@
 /*
 @pasta: T05 Flávio\Contas
 @formato: texto
-@descricao: Nome da UF da linha (lista de estados do dossiê da região).
+@descricao: Nome da UF da linha (lista de estados do dossiê da região e da origem com vários estados).
 */
 SELECTEDVALUE ( 'UF'[Nome] )

@@ -18,17 +18,27 @@ UFS = [("AC", "Acre", "Norte"), ("AL", "Alagoas", "Nordeste"), ("AM", "Amazonas"
        ("RR", "Roraima", "Norte"), ("RS", "Rio Grande do Sul", "Sul"), ("SC", "Santa Catarina", "Sul"),
        ("SE", "Sergipe", "Nordeste"), ("SP", "São Paulo", "Sudeste"), ("TO", "Tocantins", "Norte")]
 REGIOES = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul", "Exterior"]
+# O filtro de estado das telas (24/10/2026, regra L134 do dono: "se resolve a questão da hierarquia jogando o filtro no
+# último na hierarquia"): Região › Estado num caminho só, o campo do VizuFilter em modo caminho; marcar a região marca os
+# estados dela. O mesmo separador de general.pathSeparator em paginas/casca.py.
+SEPARADOR_CAMINHO = " › "
+# Artigo de cada UF para as frases do recorte ("na Bahia", "no Pará", "em Minas Gerais"; "da Bahia", "de Goiás"): "a",
+# "o" ou "" (sem artigo). As regiões (e o exterior) levam "o": "no Nordeste", "no exterior".
+ARTIGO = {"AC": "o", "AL": "", "AM": "o", "AP": "o", "BA": "a", "CE": "o", "DF": "o", "ES": "o", "GO": "", "MA": "o",
+          "MG": "", "MS": "", "MT": "", "PA": "o", "PB": "a", "PE": "", "PI": "o", "PR": "o", "RJ": "o", "RN": "o",
+          "RO": "", "RR": "", "RS": "o", "SC": "", "SE": "", "SP": "", "TO": "o", "ZZ": "o"}
 
 
 def m_uf():
     linhas = sorted(UFS, key=lambda u: (REGIOES.index(u[2]), u[1])) + [("ZZ", "Exterior", "Exterior")]
     corpo = ",\n        ".join(
         f'{{"{s}", "{n}", "{r}", {REGIOES.index(r) + 1}, {i + 1}, "{"Exterior" if s == "ZZ" else "UF"}", '
-        f'{GRADE[s][0]}, {GRADE[s][1]}}}' for i, (s, n, r) in enumerate(linhas))
+        f'{GRADE[s][0]}, {GRADE[s][1]}, "{r if s == "ZZ" else r + SEPARADOR_CAMINHO + n}", "{ARTIGO[s]}"}}'
+        for i, (s, n, r) in enumerate(linhas))
     return f"""let
     UFs = #table(
         type table [UF = text, Nome = text, Regiao = text, RegiaoOrdem = Int64.Type, Ordem = Int64.Type, Tipo = text,
-                    GradeColuna = Int64.Type, GradeLinha = Int64.Type],
+                    GradeColuna = Int64.Type, GradeLinha = Int64.Type, Caminho = text, Artigo = text],
         {{
         {corpo}
         }}
@@ -70,7 +80,12 @@ TABELAS = [
             col("GradeColuna", tipo="int", descricao="Coluna no mapa de quadrados (0 = Acre).", oculta=True,
                 formato="0"),
             col("GradeLinha", tipo="int", descricao="Linha no mapa de quadrados (0 = Roraima, Amapá e exterior).",
-                oculta=True, formato="0")],
+                oculta=True, formato="0"),
+            col("Caminho", descricao="Região › Estado ('Nordeste › Bahia'): o campo do filtro de estado das telas "
+                "(VizuFilter em árvore, modo caminho). O filtro cai no estado; marcar a região marca os estados dela. "
+                "O exterior fica fora do filtro.", ordenar_por="Ordem"),
+            col("Artigo", descricao="Artigo da UF nas frases do recorte: 'a' (na Bahia), 'o' (no Pará) ou vazio (em "
+                "Minas Gerais). Lido pelas medidas Recorte · em e Recorte · de.", oculta=True)],
            m_uf()),
     tabela("Ano", "As seis eleições presidenciais de 2006 a 2026 (1º turno), com o candidato do PT e o principal "
                   "adversário (o mais votado fora do PT) de cada uma.",

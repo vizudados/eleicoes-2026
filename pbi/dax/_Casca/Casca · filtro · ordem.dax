@@ -1,6 +1,6 @@
 /*
 @pasta: _Casca
 @formato: 0
-@descricao: Ordem da UF na lista do filtro (região, depois o nome; papel itemSort).
+@descricao: Ordem do estado na árvore do filtro de estado (papel itemSort): a região do Norte ao Sul, depois o nome ('UF'[Ordem]). A árvore Região › Estado é montada nessa ordem.
 */
 MIN ( 'UF'[Ordem] )

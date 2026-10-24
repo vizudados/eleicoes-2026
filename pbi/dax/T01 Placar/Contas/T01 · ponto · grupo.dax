@@ -1,0 +1,11 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: texto
+@descricao: Como o dossiê do ponto divide os votos: 'região' no Brasil, 'porte' (tamanho de cidade) num estado só, 'estado' num recorte de vários (uma região inteira ou estados soltos).
+*/
+SWITCH (
+    TRUE (),
+    [Recorte · com escolha] = 0, "região",
+    [Recorte · UFs] = 1, "porte",
+    "estado"
+)

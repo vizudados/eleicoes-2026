@@ -8,9 +8,11 @@
   T<nn>_Casca_Anterior/Proxima   botões transparentes sobre as setas (realce redondo no hover)
   T<nn>_Casca_Inicio       botão sobre a urna: abre o sumário (paginas/tix_sumario.py)
   T<nn>_Casca_InfoAbre/Fecha     o "i" abre o cartão de leitura da tela (T<nn>_Leitura, oculto), o × fecha
-  T<nn>_Casca_Filtro       VizuFilter de UF (sincronizado entre as telas que o têm), de período (Buscas, Redes e 2º
-                           turno, sincronizado entre as três; tabela 'Período', 23/10/2026) ou de município, só onde a
-                           tela tem filtro (roteiro.Tela.filtro)
+  T<nn>_Casca_Filtro       o filtro da tela, só onde ela tem filtro (roteiro.Tela.filtro): VizuFilter visível com o
+                           gatilho dele (abre e fecha a lista sozinho; sem pílula, botão, véu nem marcador, 24/10/2026),
+                           ATRÁS do conteúdo (z 20, lib.CAMADAS["filtro"]): de estado, em árvore Região › Estado sobre
+                           'UF'[Caminho] (sincronizado entre as telas que o têm), ou de período (Buscas, Redes e 2º
+                           turno, sincronizado entre as três; tabela 'Período', 23/10/2026)
   T<nn>_CHEGADA_01         marcador de chegada (L095): toda navegação passa por ele e a tela abre com a leitura fechada
   T<nn>_LEITURA_ABRE_01 / _FECHA_01   marcadores só de exibição da leitura
 
@@ -19,7 +21,6 @@ O texto da leitura de cada tela vem de leituras.py (Como ler · De onde vêm os 
 from __future__ import annotations
 
 import html
-import importlib
 import math
 
 import estilo
@@ -30,19 +31,20 @@ from pbip_lib import Bookmark, Pagina, Visual
 
 CSS = "Estilo · CSS"
 VAZIO = "Casca · vazio"
-# O VizuFilter é um visual próprio: a lista abre dentro da caixa dele, então a caixa vai até onde a lista desce
-# (altura que o Alisson deixou na 01 · Placar em 23/10/2026). Uma caixa alta pega o mouse da área inteira, mesmo
-# fechada (medido no Desktop: os quadrados do mapa da apuração ficavam mortos), então a tela mostra só a pílula
-# (FILTRO_PILULA, HTML com o estado em uso) e o VizuFilter alto aparece por cima quando ela é clicada, já aberto; o
-# véu em volta (FILTRO_FORA) fecha ao clicar fora.
-FILTRO = (1282, 60, 424, 626)
-FILTRO_PILULA = (1282, 60, 424, 48)
+# O VizuFilter é um visual próprio: a lista abre dentro da caixa dele, então a caixa vai até onde a lista desce. Ele
+# é o próprio filtro, com o gatilho dele (24/10/2026, pedido do dono: "eu pedi que o filtro não fosse um botão que ativa
+# ao clicar"; a pílula HTML, o botão, o véu e os marcadores de abrir e fechar saíram): fica ATRÁS do conteúdo
+# (lib.CAMADAS["filtro"], acima só do fundo da casca), e os gráficos por cima da caixa seguem com o mouse ("a solução
+# devia ser colocar ele pra trás na hierarquia de elementos"). O gatilho (1282–1706, 60–108) fica numa faixa sem visual
+# por cima; o clique traz o filtro para a frente e a lista abre por cima de tudo.
+# Estado: árvore Região › Estado (24/10/2026, regra L134: "se resolve a questão da hierarquia jogando o filtro no último
+# na hierarquia"), 'UF'[Caminho]. Aberta: a busca, o Limpar, as 5 regiões e os 9 estados do Nordeste sem rolar.
+FILTRO = (1282, 60, 424, 720)
+FILTRO_GATILHO = 48
 # o de período tem 5 itens (o 2º turno inteiro e os quatro períodos): a caixa desce só até onde a lista vai
 FILTRO_PERIODO = (1282, 60, 424, 270)
-FILTRO_FORA = (0, 0, 1920, 1080)
-# telas com filtro próprio no mesmo padrão (pílula + VizuFilter alto + véu); cada módulo expõe NOMES_FILTRO
-# (T19: o filtro do recorte em acordeão, 23/10/2026)
-FILTROS_PROPRIOS = {"T15": "t15_minha_cidade", "T19": "t19_explorador", "T20": "t20_escola"}
+# as telas com filtro próprio (T15 município, T19 recorte, T20 local) seguem o mesmo padrão: VizuFilter visível, atrás
+# do conteúdo (lib.CAMADAS["filtro"]), nesta mesma caixa, com o gatilho dele
 INFO = (1724, 62, 44, 44)
 SETA_ESQ = (36, 500, 80, 80)
 SETA_DIR = (1804, 500, 80, 80)
@@ -53,8 +55,7 @@ FECHAR = (1724, 124 + TOPO_CARTAO + 14, 40, 40)   # o × desenhado no canto do c
 FORA = (0, 0, 1920, 1080)            # véu da leitura aberta: clicar fora do cartão também fecha
 GRUPO_UF = "Eleicoes_UF"
 GRUPO_PERIODO = "Eleicoes_Periodo"
-Z = {"fundo": 10, "leitura": lib.CAMADAS["leitura"], "filtro": lib.CAMADAS["drawer"],
-     "nav": lib.CAMADAS["navegacao"]}
+Z = {"fundo": 10, "filtro": lib.CAMADAS["filtro"], "leitura": lib.CAMADAS["leitura"], "nav": lib.CAMADAS["navegacao"]}
 
 
 def _tom(t: roteiro.Tela) -> dict:
@@ -161,19 +162,10 @@ def _pagina(t: roteiro.Tela) -> dict:
                         "outspace": [{"properties": {"color": lib.cor(cor), "transparency": lib.lit(0)}}]}}
 
 
-CSS_PILULA = (
-    f".pl{{display:flex;align-items:center;gap:12px;padding:0 14px 0 14px;background:{estilo.COR['creme']};"
-    f"border:1px solid {estilo.COR['areia']};border-radius:6px;color:{estilo.COR['tinta']};font-size:16px;"
-    "box-shadow:0 1px 2px rgba(28,25,21,.06)}"
-    f".pl .fu{{position:relative;display:inline-flex;color:{estilo.COR['grafite']}}}"
-    f".pl .fu i{{display:none;position:absolute;right:-3px;top:-2px;width:7px;height:7px;border-radius:4px;"
-    f"background:{estilo.COR['vermelho']}}}.pl.ativo .fu i{{display:block}}"
-    ".pl b{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
-    f".pl .sv{{color:{estilo.COR['grafite']}}}"
-)
-
-
 def _estilo_filtro(t: roteiro.Tela) -> dict:
+    """Tokens do VizuFilter da casa. O gatilho é o funil que ganha o ponto vermelho quando há escolha (24/10/2026, o
+    dono: "pode manter isso como recurso do vizu filter"): triggerIcon funnel, triggerIconActive filledDot, ponto no
+    vermelho da casa e funil em grafite, em TODOS os filtros (estado, período, município da T15, local da T20 e T19)."""
     c = estilo.COR
     comum = {"fontSize": 16, "optionFontSize": 16, "fontFamily": "Sora Vizu, Segoe UI",
              "enableHoverAnimations": False, "showShadow": True, "counterBadgeRadius": 0, "triggerIcon": "funnel",
@@ -187,74 +179,64 @@ def _estilo_filtro(t: roteiro.Tela) -> dict:
             "triggerIconColor": c["grafite"]}
 
 
+def layout_filtro(caixa: tuple, **extra) -> dict:
+    """layout do VizuFilter na caixa: o gatilho com a altura de sempre (48 px) e a lista com o resto da caixa (L028: a
+    altura da caixa nunca vai para controlHeight)."""
+    _x, _y, w, h = caixa
+    base = {"controlWidth": w, "controlHeight": FILTRO_GATILHO, "dropdownWidth": w,
+            "dropdownHeight": h - FILTRO_GATILHO - 6, "gap": 6, "optionHeight": 40, "searchHeight": 44,
+            "triggerIconGap": 12, "borderRadius": 6, "checkboxSize": 14, "checkboxRadius": 2, "scrollbarWidth": 4,
+            "wrapOptionLabels": False}
+    base.update(extra)
+    return base
+
+
 def _filtro(t: roteiro.Tela) -> list:
-    x, y, w, h = FILTRO_PERIODO if t.filtro == "Período" else FILTRO
-    hp = FILTRO_PILULA[3]
-    layout = {"controlWidth": w, "controlHeight": hp, "dropdownWidth": w, "dropdownHeight": h - hp - 6, "gap": 6,
-              "optionHeight": 40, "searchHeight": 44, "triggerIconGap": 12, "borderRadius": 6, "checkboxSize": 14,
-              "checkboxRadius": 2, "scrollbarWidth": 4, "wrapOptionLabels": False}
+    """O filtro da tela: o próprio VizuFilter, visível, atrás do conteúdo, que abre e fecha a lista sozinho (sem
+    pílula, botão, véu nem marcador). Recolhido ao chegar (alwaysOpen e startOpen desligados)."""
+    p = t.codigo
     if t.filtro == "Período":
         # um filtro só para as três telas (sincronia entre páginas); sem escolha = o 2º turno inteiro, a tela de sempre
+        caixa = FILTRO_PERIODO
         geral = {"mode": "dropdown", "singleSelect": True, "singleSelectAllowAll": True, "sortAscending": True,
-                 "startOpen": True, "alwaysOpen": True, "showSearch": False, "showSelectAll": False,
+                 "startOpen": False, "alwaysOpen": False, "showSearch": False, "showSelectAll": False,
                  "showReset": False, "showSelectedCount": False, "showSelectedValue": True,
                  "selectedValueOnly": True, "syncSelectionWithHost": True, "triggerMode": "value",
                  "triggerLabel": "Período", "placeholderText": "2º turno inteiro", "allOptionText": "2º turno inteiro",
                  "searchPlaceholder": "Buscar período", "searchScope": "list", "pathMode": False}
-        return _pecas_filtro(t, (x, y, w, h), geral, layout, categoria=("Período", "Período", "Período"),
-                             pilula="Casca · período · pílula · HTML", alt="Casca · período · ALT",
-                             dica="Escolher um período", grupo=GRUPO_PERIODO, recorte=None,
-                             medidas={"itemSort": "Casca · período · ordem"}, extras={"sortDirection": "asc"})
+        doc = lib.visual_vizufilter(
+            f"{p}_Casca_Filtro", *caixa, categoria=("Período", "Período", "Período"), geral=geral,
+            layout=layout_filtro(caixa), estilo=_estilo_filtro(t), alt=lib.medida("Casca · período · ALT"),
+            z=Z["filtro"], tab=4, sincronia=lib.grupo_sincronia(GRUPO_PERIODO),
+            medidas={"itemSort": "Casca · período · ordem"}, extras={"sortDirection": "asc"})
+        return [Visual(p, doc)]
     if t.filtro == "UF":
-        geral = {"mode": "dropdown", "singleSelect": True, "singleSelectAllowAll": True, "sortAscending": True,
-                 "startOpen": True, "alwaysOpen": True, "showSearch": True, "showSelectAll": False,
-                 "showReset": False, "showSelectedCount": False, "showSelectedValue": True,
-                 "selectedValueOnly": True, "syncSelectionWithHost": True, "triggerMode": "value",
-                 "triggerLabel": "UF", "placeholderText": "Todo o Brasil", "allOptionText": "Todo o Brasil",
-                 "searchPlaceholder": "Buscar estado", "searchScope": "list", "pathMode": False}
-        extras = {"groupHeaders": True, "groupHeaderFontSize": 13, "groupHeaderHeight": 30, "groupHeaderBold": True,
-                  "groupHeaderUppercase": True, "groupHeaderColor": estilo.COR["cinza"], "sortDirection": "asc"}
+        # árvore Região › Estado ('UF'[Caminho]): marcar a região marca os estados dela; um estado, uma região
+        # inteira ou vários estados soltos, de uma ou mais regiões (o texto do recorte lê a escolha de cima para
+        # baixo: medidas Recorte · …, pbi/scripts/desenho_recorte.py). As regiões são linhas da árvore, com caixa de
+        # marcar e seta própria (abrem e fecham cada uma por si, sem acordeão); a busca única fica no topo. O gatilho
+        # resume a escolha do mesmo jeito (VizuFilter 2.14, triggerPathSummary): "Nordeste", "Bahia", "Minas Gerais
+        # e São Paulo", "5 estados". Ordem da árvore: Norte → Sul e o nome (itemSort = 'UF'[Ordem]).
+        caixa = FILTRO
+        geral = {"mode": "dropdown", "pathMode": True, "pathSeparator": " › ", "listLayout": "standard",
+                 "treeCategoryHeader": False, "singleSelect": False, "sortAscending": False, "startOpen": False,
+                 "alwaysOpen": False, "showSearch": True, "searchScope": "list",
+                 "searchPlaceholder": "Buscar região ou estado", "showSelectAll": False, "showReset": True,
+                 "showSelectedCount": False, "showSelectedValue": True, "selectedValueOnly": True,
+                 "syncSelectionWithHost": True, "triggerMode": "value", "triggerLabel": "Estado",
+                 "placeholderText": "Todo o Brasil", "triggerPathSummary": True, "triggerPathSummaryMax": 2,
+                 "triggerPathSummaryNoun": "estado|estados"}
         recorte = lib.filtro_visual_categorico("ufSemExterior", "UF", "Tipo", ["UF"])
         for f in recorte["filters"]:
             f["isHiddenInViewMode"] = True
             f["isLockedInViewMode"] = True
-        return _pecas_filtro(t, (x, y, w, h), geral, layout, categoria=("UF", "Nome", "Estado"),
-                             pilula="Casca · filtro · pílula · HTML", alt="Casca · filtro · ALT",
-                             dica="Escolher um estado", grupo=GRUPO_UF, recorte=recorte,
-                             medidas={"itemGroup": "Casca · filtro · região", "itemSort": "Casca · filtro · ordem"},
-                             extras=extras)
-    return []                     # município (T15) e local (T20) são declarados pelas próprias telas
-
-
-def _pecas_filtro(t: roteiro.Tela, caixa: tuple, geral: dict, layout: dict, *, categoria: tuple, pilula: str, alt: str,
-                  dica: str, grupo: str, recorte, medidas: dict, extras: dict) -> list:
-    """Pílula (HTML com o recorte em uso) + botão que abre + véu que fecha + VizuFilter alto oculto + marcadores de
-    abrir e fechar: o mesmo desenho e o mesmo comportamento no filtro de UF e no de período."""
-    x, y, w, h = caixa
-    p = t.codigo
-    return [
-            Visual(p, lib.visual_html(f"{p}_Casca_FiltroPilula", *FILTRO_PILULA, pilula,
-                                      folha_de_estilo=CSS, modelo_corpo=f"<style>{CSS_PILULA}</style>{{{{content}}}}",
-                                      alt=lib.medida(alt), z=Z["filtro"] - 20, tab=4,
-                                      movimento=False)),
-            _botao(t, "FiltroAbre", FILTRO_PILULA, lib.acao_bookmark(f"{p}_FILTRO_ABRE_01"),
-                   dica, 5, raio=6),
-            _botao(t, "FiltroFora", FILTRO_FORA, lib.acao_bookmark(f"{p}_FILTRO_FECHA_01"), "Fechar o filtro", 7,
-                   oculto=True, raio=0, z=Z["filtro"] - 10, realce=None, fundo=(estilo.COR["tinta"], 90)),
-            Visual(p, lib.visual_vizufilter(
-                f"{p}_Casca_Filtro", x, y, w, h, categoria=categoria, geral=geral, layout=layout,
-                estilo=_estilo_filtro(t), alt=lib.medida(alt), z=Z["filtro"], tab=6, oculto=True,
-                sincronia=lib.grupo_sincronia(grupo), filtros=recorte,
-                medidas=medidas, extras=extras)),
-            Bookmark(lib.bookmark_exibicao(f"{p}_FILTRO_ABRE_01", p, {f"{p}_Casca_Filtro": True,
-                                                                    f"{p}_Casca_FiltroFora": True,
-                                                                    f"{p}_Casca_FiltroAbre": False},
-                                           titulo=f"{p} · filtro aberto"), grupo=("Filtros", "Filtros")),
-            Bookmark(lib.bookmark_exibicao(f"{p}_FILTRO_FECHA_01", p, {f"{p}_Casca_Filtro": False,
-                                                                     f"{p}_Casca_FiltroFora": False,
-                                                                     f"{p}_Casca_FiltroAbre": True},
-                                           titulo=f"{p} · filtro fechado"), grupo=("Filtros", "Filtros")),
-        ]
+        doc = lib.visual_vizufilter(
+            f"{p}_Casca_Filtro", *caixa, categoria=("UF", "Caminho", "Estado"), geral=geral,
+            layout=layout_filtro(caixa), estilo=_estilo_filtro(t), alt=lib.medida("Casca · filtro · ALT"),
+            z=Z["filtro"], tab=4, sincronia=lib.grupo_sincronia(GRUPO_UF), filtros=recorte,
+            medidas={"itemSort": "Casca · filtro · ordem"}, extras={"sortDirection": "asc"})
+        return [Visual(p, doc)]
+    return []                     # município (T15), recorte (T19) e local (T20) são declarados pelas próprias telas
 
 
 def _botao(t: roteiro.Tela, nome: str, caixa: tuple, acao: tuple, dica: str, tab: int, **extra) -> Visual:
@@ -302,13 +284,6 @@ def declarar(ctx):
                               grupo=("Leituras", "Leituras")))
         itens.append(Bookmark(lib.bookmark_exibicao(f"{p}_LEITURA_FECHA_01", p, fechada,
                                                     titulo=f"{p} · leitura fechada"), grupo=("Leituras", "Leituras")))
-        if t.filtro in ("UF", "Período"):
-            fechada = {**fechada, f"{p}_Casca_Filtro": False, f"{p}_Casca_FiltroFora": False,
-                       f"{p}_Casca_FiltroAbre": True}
-        elif p in FILTROS_PROPRIOS:
-            # telas com VizuFilter próprio (pílula + painel declarados por elas): a chegada deixa o painel fechado
-            nomes = importlib.import_module(f"paginas.{FILTROS_PROPRIOS[p]}").NOMES_FILTRO
-            fechada = {**fechada, nomes["lista"]: False, nomes["fora"]: False, nomes["abre"]: True}
         itens.append(Bookmark(lib.bookmark_chegada(f"{p}_CHEGADA_01", p, fechada, titulo=f"Chegada · {t.titulo_pagina}"),
                               grupo=("Chegadas", "Chegadas")))
         itens += _filtro(t)

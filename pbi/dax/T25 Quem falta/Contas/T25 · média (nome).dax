@@ -1,0 +1,11 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: Nome da média de referência (a do recorte, sem o município marcado): 'média nacional' no Brasil, 'média estadual' num estado, 'média do Nordeste' numa região inteira, 'média de MG e SP' em vários estados.
+*/
+SWITCH (
+    [Recorte · tipo],
+    "Brasil", "média nacional",
+    "UF", "média estadual",
+    "média " & [Recorte · de]
+)

@@ -58,11 +58,6 @@
   "visualInteractions": [
     {
       "source": "T19_Dispersao_Pontos",
-      "target": "T19_Filtro_Pilula",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T19_Dispersao_Pontos",
       "target": "T19_Filtro_Recorte",
       "type": "NoFilter"
     },
@@ -75,11 +70,6 @@
       "source": "T19_Lista_Html",
       "target": "T19_Dispersao_Pontos",
       "type": "HighlightFilter"
-    },
-    {
-      "source": "T19_Lista_Html",
-      "target": "T19_Filtro_Pilula",
-      "type": "NoFilter"
     },
     {
       "source": "T19_Lista_Html",

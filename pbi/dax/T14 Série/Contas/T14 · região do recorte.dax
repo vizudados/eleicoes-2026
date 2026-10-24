@@ -1,7 +1,13 @@
 /*
 @pasta: T14 Série\Contas
 @formato: texto
-@descricao: Região da UF escolhida no filtro (vazio = Brasil).
+@descricao: As regiões que têm estados no recorte do filtro de estado, do Norte ao Sul ('Nordeste', 'Nordeste e Sudeste', 'Norte, Nordeste e Sul'); vazio = Brasil. Os painéis dessas regiões ficam em destaque.
 @gerado: pbi/scripts/desenho_t14.py
 */
-IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Região] ) )
+VAR _r =
+    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[Região], 'UF'[RegiaoOrdem] ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+VAR _n = COUNTROWS ( _r )
+VAR _ult = MAXX ( TOPN ( 1, _r, 'UF'[RegiaoOrdem], DESC ), 'UF'[Região] )
+VAR _resto = CONCATENATEX ( FILTER ( _r, 'UF'[Região] <> _ult ), 'UF'[Região], ", ", 'UF'[RegiaoOrdem], ASC )
+RETURN
+    IF ( [Recorte · com escolha] = 1 && _n > 0, IF ( _n = 1, _ult, _resto & " e " & _ult ) )

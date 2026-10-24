@@ -98,6 +98,11 @@
     },
     {
       "source": "T18_Mapa_Html",
+      "target": "T18_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T18_Mapa_Html",
       "target": "T18_Mapa_Exterior",
       "type": "NoFilter"
     }

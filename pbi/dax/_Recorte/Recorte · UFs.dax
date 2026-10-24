@@ -1,0 +1,6 @@
+/*
+@pasta: _Recorte
+@formato: 0
+@descricao: Quantas UFs estão no recorte (27 sem escolha; o exterior não conta): a base das contagens 'N de M estados'.
+*/
+CALCULATE ( COUNTROWS ( 'UF' ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) ) + 0

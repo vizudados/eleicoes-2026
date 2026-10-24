@@ -113,8 +113,11 @@ conta("T13 · renda máxima", "#,0", "Maior renda per capita do quinto do contex
     MAX ( 'Município'[Renda per capita] ),
     ALLEXCEPT ( 'Município', 'Município'[QuintoOrdem], 'Município'[Quinto de renda] )
 )""", ORACULO + " › colunas › renda_txt")
-conta("T13 · recorte", "texto", "Nome da UF escolhida no filtro da tela (vazio = Brasil).",
-      "IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )")
+conta("T13 · recorte", "texto",
+      "O lugar escolhido no filtro de estado da casca (árvore Região › Estado), pela medida comum [Recorte · nome]: "
+      "'Bahia', 'Nordeste', 'MG e SP', '3 estados'; vazio = Brasil. As contas da matriz já valem para qualquer conjunto "
+      "de UFs (VALUES ( 'UF'[UF] ) traz todas as escolhidas).",
+      "IF ( [Recorte · com escolha] = 1, [Recorte · nome] )")
 
 _SEM_CELULA = "REMOVEFILTERS ( 'Município' ),\n        VALUES ( 'UF'[UF] )"
 _CELULAS = """VAR _c =

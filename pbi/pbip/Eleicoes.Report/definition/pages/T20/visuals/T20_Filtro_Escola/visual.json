@@ -4,10 +4,10 @@
   "position": {
     "x": 1282,
     "y": 60,
-    "z": 5000,
+    "z": 20,
     "height": 780,
     "width": 424,
-    "tabOrder": 6
+    "tabOrder": 4
   },
   "visual": {
     "visualType": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
@@ -116,14 +116,14 @@
             "startOpen": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
             "alwaysOpen": {
               "expr": {
                 "Literal": {
-                  "Value": "true"
+                  "Value": "false"
                 }
               }
             },
@@ -179,35 +179,56 @@
             "showSelectedValue": {
               "expr": {
                 "Literal": {
-                  "Value": "false"
+                  "Value": "true"
+                }
+              }
+            },
+            "selectedValueOnly": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
                 }
               }
             },
             "triggerMode": {
               "expr": {
                 "Literal": {
-                  "Value": "'count'"
-                }
-              }
-            },
-            "triggerCountStyle": {
-              "expr": {
-                "Literal": {
-                  "Value": "'text'"
+                  "Value": "'value'"
                 }
               }
             },
             "triggerLabel": {
               "expr": {
                 "Literal": {
+                  "Value": "'Cidade e escola'"
+                }
+              }
+            },
+            "placeholderText": {
+              "expr": {
+                "Literal": {
                   "Value": "'Rio de Janeiro (RJ)'"
                 }
               }
             },
-            "triggerCountFormat": {
+            "triggerPathSummary": {
               "expr": {
                 "Literal": {
-                  "Value": "'Cidade e escola em uso'"
+                  "Value": "true"
+                }
+              }
+            },
+            "triggerPathSummaryMax": {
+              "expr": {
+                "Literal": {
+                  "Value": "2D"
+                }
+              }
+            },
+            "triggerPathSummaryNoun": {
+              "expr": {
+                "Literal": {
+                  "Value": "'escola|escolas'"
                 }
               }
             },
@@ -751,8 +772,13 @@
           "properties": {
             "altText": {
               "expr": {
-                "Literal": {
-                  "Value": "'Filtro em árvore: a cidade (as 27 capitais, as 6 maiores que viraram e Contagem) e, dentro dela, as escolas, com busca pelo nome; marcar a cidade leva a tela a ela, marcar uma escola a leva à ficha'"
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T20 · Filtro · ALT"
                 }
               }
             }
@@ -761,6 +787,5 @@
       ]
     },
     "drillFilterOtherVisuals": true
-  },
-  "isHidden": true
+  }
 }

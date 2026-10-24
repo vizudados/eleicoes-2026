@@ -1,0 +1,6 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0
+@descricao: 1 quando o contexto não tem nenhuma UF: o clique num quadrado do mapa (que mostra sempre o Brasil inteiro) caiu fora do filtro de estado (ex.: Nordeste no filtro e SP no mapa). O placar avisa em vez de mostrar zeros; 0 nos outros casos.
+*/
+IF ( ISFILTERED ( 'UF' ) && COUNTROWS ( VALUES ( 'UF'[UF] ) ) = 0, 1, 0 )

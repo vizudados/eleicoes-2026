@@ -4,7 +4,7 @@
 @descricao: Texto para leitor de tela da barra dos válidos.
 */
 LEFT (
-    "Barra dos votos válidos de " & [T01 · recorte]
+    "Barra dos votos válidos " & [Recorte · de]
         & ", um segmento por candidato, do mais ao menos votado. Passe o mouse num segmento para ver onde cada "
         & "um foi mais forte.",
     250

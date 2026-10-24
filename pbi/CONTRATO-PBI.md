@@ -38,10 +38,16 @@ Firefly ou gerador pago na nuvem: proibido.
 - 1920 × 1080, fundo papel `#F1EBDF` (capa e encerramento: tinta `#1C1915`).
 - A casca (`paginas/casca.py`) já desenha: urna em traço (40–132, 40–132), "NN · NOME" e a pergunta (x 150, y 46–115,
   até x 1260), o "i" (1724–1768, 62–106), as setas (36–116 e 1804–1884, y 500–580), o lockup Vizu e a linha de fonte no
-  rodapé (y 1014–1042) e, nas telas com filtro de UF, o VizuFilter (1282–1706, 60–108). A fonte do rodapé vem de
-  `roteiro.py` (peça à main para mudar).
+  rodapé (y 1014–1042) e, nas telas com filtro, o VizuFilter: o gatilho em 1282–1706, 60–108, e a caixa da lista
+  aberta até y 780 (estado) ou 330 (período). A fonte do rodapé vem de `roteiro.py` (peça à main para mudar).
+- **Filtro (24/10/2026, pedidos do dono):** o próprio VizuFilter, visível, com o gatilho dele (o funil que ganha o
+  ponto vermelho quando há escolha), que abre e fecha a lista sozinho. Sem pílula HTML, botão, véu nem marcador de
+  abrir e fechar ("eu pedi que o filtro não fosse um botão que ativa ao clicar"). Ele fica ATRÁS do conteúdo
+  (`lib.CAMADAS["filtro"]`, z 20, acima só do fundo da casca): os gráficos por cima da caixa seguem com o mouse ("a
+  solução devia ser colocar ele pra trás na hierarquia de elementos"). Não ponha visual na faixa do gatilho.
 - **Área de conteúdo: x 150–1770, y 140–1000.** Margem é respiro, não faixa vazia: use a área inteira.
-- Camadas z: conteúdo 300+ (lib.CAMADAS["conteudo"]), ações 1020, leitura 4000, filtro 5000, navegação 5500.
+- Camadas z: fundo da casca 10, filtro 20 (lib.CAMADAS["filtro"]), conteúdo 300+ (lib.CAMADAS["conteudo"]),
+  ações 1020, leitura 4000, navegação 5500.
 - Nomes de visual: `TNN_<Bloco>_<Papel>` (regex em pbip_lib.RE_NOME_VISUAL), ex. `T03_Mapa_Pontos`.
 
 ## 4. Como declarar (pbi/scripts/paginas/tNN_nome.py)
@@ -127,7 +133,14 @@ def declarar(ctx):
   `Debate` · `Trends tempo` · `Trends UF` · `Seguidores` · `Monitoramento` · `Anúncios` · `Trajetória` · `Transferência`
   · `Rejeição` · `Apoio` · `Local Contagem` · `Apuração …`.
 - Relações: Município→UF; Município ano→Município e →Ano; Candidato ano→Ano; Candidato UF→UF e →Ano; Trends UF→UF;
-  Apuração UF→UF. O filtro de UF da casca filtra `UF[Nome]` (com Tipo = UF).
+  Apuração UF→UF. O filtro de estado da casca é uma árvore Região › Estado sobre `UF[Caminho]` (sem o exterior):
+  marcar a região marca os estados dela; dá para escolher um estado, uma região inteira ou vários estados soltos.
+  **O nome do recorte vem das medidas comuns `Recorte · …`** (pbi/dax/_Recorte, gerador
+  `pbi/scripts/desenho_recorte.py`): `[Recorte · nome]` ("Brasil", "Nordeste", "Bahia", "MG e SP", "3 estados"),
+  `[Recorte · em]` ("no Nordeste", "na Bahia", "em Minas Gerais"), `[Recorte · de]`, `[Recorte · com artigo]`,
+  `[Recorte · tipo]` (Brasil · UF · Região · Vários), `[Recorte · partes]`, `[Recorte · UFs]`,
+  `[Recorte · com escolha]` e `[Recorte · plural]`. Nunca `SELECTEDVALUE ( 'UF'[Nome] )` nem
+  `ISFILTERED ( 'UF'[Nome] )` para o recorte: o filtro cai em `UF[Caminho]`.
 - Em 2026, "adversário" = Flávio Bolsonaro; em 2022 = Jair Bolsonaro (PL). Margem do PT = (VotosPT − VotosAdversario)
   ÷ Validos.
 - **Oráculo**: `mockup/data/eleicoes.json` (números da tela no mockup, calculados pelo pipeline em Python). As contas

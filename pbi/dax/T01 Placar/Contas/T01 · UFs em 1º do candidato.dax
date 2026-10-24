@@ -1,29 +1,36 @@
 /*
 @pasta: T01 Placar\Contas
 @formato: 0
-@descricao: Em quantas das 27 UFs o candidato do item foi o mais votado (no Brasil todo, sem o filtro).
+@descricao: Em quantas UFs do dossiê o candidato do item foi o mais votado: das 27 (sem escolha ou com um estado só) ou das UFs do recorte (região ou vários estados).
 @oraculo: Flávio 18 · Lula 9 (soma 27)
 */
 VAR _cand = SELECTEDVALUE ( 'Candidato UF'[Candidato] )
-VAR _ufs =
-    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" )
+VAR _noRecorte = [T01 · dossiê no recorte]
+VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
 VAR _lider =
-    ADDCOLUMNS (
-        _ufs,
-        "@lider",
-            CALCULATE (
-                MAXX (
-                    TOPN (
-                        1,
-                        ADDCOLUMNS (
-                            CALCULATETABLE ( VALUES ( 'Candidato UF'[Candidato] ), REMOVEFILTERS ( 'Candidato UF'[Candidato] ) ),
-                            "@v", [T01 · votos do candidato]
+    CALCULATETABLE (
+        ADDCOLUMNS (
+            SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ),
+            "@lider",
+                CALCULATE (
+                    MAXX (
+                        TOPN (
+                            1,
+                            ADDCOLUMNS (
+                                CALCULATETABLE ( VALUES ( 'Candidato UF'[Candidato] ), REMOVEFILTERS ( 'Candidato UF'[Candidato] ) ),
+                                "@v", [T01 · votos do candidato]
+                            ),
+                            [@v], DESC
                         ),
-                        [@v], DESC
-                    ),
-                    'Candidato UF'[Candidato]
+                        'Candidato UF'[Candidato]
+                    )
                 )
-            )
+        ),
+        REMOVEFILTERS ( 'UF' ),
+        'UF'[Tipo] = "UF"
     )
 RETURN
-    IF ( NOT ISBLANK ( _cand ), COUNTROWS ( FILTER ( _lider, [@lider] = _cand ) ) + 0 )
+    IF (
+        NOT ISBLANK ( _cand ),
+        COUNTROWS ( FILTER ( _lider, [@lider] = _cand && ( _noRecorte = 0 || 'UF'[UF] IN _sel ) ) ) + 0
+    )

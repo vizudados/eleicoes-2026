@@ -174,35 +174,45 @@ conta("T14 · adversário", "texto", "Adversário principal no ano do contexto."
 conta("T14 · partido do adversário", "texto", "Partido do adversário principal no ano do contexto.",
       "SELECTEDVALUE ( 'Ano'[Partido do adversário] )")
 conta("T14 · ano", "0", "Ano do contexto (a eleição).", "SELECTEDVALUE ( 'Ano'[Ano] )")
-conta("T14 · recorte", "texto", "O lugar que a tela conta: a região clicada nos painéis ou a UF do filtro (vazio = Brasil).",
+conta("T14 · recorte", "texto",
+      "O lugar que a tela conta: a região clicada nos painéis ou o recorte do filtro de estado (árvore Região › Estado), "
+      "pela medida comum [Recorte · nome]: 'Bahia', 'Nordeste', 'MG e SP', '3 estados'; vazio = Brasil.",
       """VAR _reg = [T14 · região clicada]
 RETURN
-    IF ( NOT ISBLANK ( _reg ), _reg, IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) ) )""")
-conta("T14 · onde", "texto", "O lugar com a preposição, para as frases: 'no Nordeste' (região clicada) ou 'em Minas Gerais' (UF).",
+    IF ( NOT ISBLANK ( _reg ), _reg, IF ( [Recorte · com escolha] = 1, [Recorte · nome] ) )""")
+conta("T14 · onde", "texto",
+      "O lugar com a preposição e o artigo certo, para as frases: 'no Nordeste' (região clicada ou inteira no filtro), "
+      "'na Bahia', 'em Minas Gerais', 'em MG e SP', 'em 3 estados' (medida comum [Recorte · em]); vazio = Brasil.",
       """VAR _reg = [T14 · região clicada]
 RETURN
     IF (
         NOT ISBLANK ( _reg ),
         "no " & _reg,
-        IF ( ISFILTERED ( 'UF'[Nome] ), "em " & SELECTEDVALUE ( 'UF'[Nome] ) )
+        IF ( [Recorte · com escolha] = 1, [Recorte · em] )
     )""")
 conta("T14 · região do painel", "texto",
       "A região do painel (grão dos painéis das regiões e do dossiê da região), mesmo com uma UF de outra região no filtro.",
       "CALCULATE ( SELECTEDVALUE ( 'Município'[Região] ), REMOVEFILTERS ( 'UF' ) )")
 for _q, _med in (("PT %", "T14 · PT %"), ("adversário %", "T14 · adversário %")):
     conta(f"T14 · {_q} da UF na eleição dos painéis", "0.0%",
-          f"{_q} na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel.",
+          f"{_q} na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel e sem o "
+          "recorte do filtro de estado (só a UF do contexto fica: o dossiê da região mostra todos os estados dela, como "
+          "os painéis ignoram o filtro).",
           f"""VAR _a = [T14 · ano dos painéis]
 RETURN
-    CALCULATE ( [{_med}], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )""")
-conta("T14 · UF do filtro", "texto", "Nome da UF escolhida no filtro de UF da tela (vazio = Brasil), sem a região clicada.",
-      "IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )")
+    CALCULATE (
+        [{_med}],
+        REMOVEFILTERS ( 'Município'[Região] ),
+        ALLEXCEPT ( 'UF', 'UF'[UF] ),
+        'Ano'[Ano] = _a
+    )""")
 conta("T14 · UFs da região", "0", "Quantas UFs tem a região do painel.",
       """VAR _r = [T14 · região do painel]
 RETURN
     COUNTROWS ( FILTER ( ALL ( 'UF'[UF], 'UF'[Região] ), 'UF'[Região] = _r ) ) + 0""", "Nordeste 9, Sul 3")
 conta("T14 · UFs da região com o PT à frente", "0",
-      "Quantas UFs da região do painel tiveram o PT à frente do adversário na eleição em destaque (a clicada ou 2026).",
+      "Quantas UFs da região do painel tiveram o PT à frente do adversário na eleição em destaque (a clicada ou 2026); "
+      "ignora o recorte do filtro de estado, como os painéis.",
       """VAR _r = [T14 · região do painel]
 VAR _a = [T14 · ano dos painéis]
 RETURN
@@ -210,13 +220,53 @@ RETURN
         FILTER (
             ADDCOLUMNS (
                 FILTER ( ALL ( 'UF'[UF], 'UF'[Região] ), 'UF'[Região] = _r ),
-                "@m", CALCULATE ( [T14 · margem do PT], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )
+                "@m",
+                    CALCULATE (
+                        [T14 · margem do PT],
+                        REMOVEFILTERS ( 'Município'[Região] ),
+                        ALLEXCEPT ( 'UF', 'UF'[UF] ),
+                        'Ano'[Ano] = _a
+                    )
             ),
             [@m] > 0
         )
     ) + 0""", "Nordeste 2026: 9 de 9 (motor)")
-conta("T14 · região do recorte", "texto", "Região da UF escolhida no filtro (vazio = Brasil).",
-      "IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Região] ) )")
+conta("T14 · região do recorte", "texto",
+      "As regiões que têm estados no recorte do filtro de estado, do Norte ao Sul ('Nordeste', 'Nordeste e Sudeste', "
+      "'Norte, Nordeste e Sul'); vazio = Brasil. Os painéis dessas regiões ficam em destaque.",
+      """VAR _r =
+    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[Região], 'UF'[RegiaoOrdem] ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+VAR _n = COUNTROWS ( _r )
+VAR _ult = MAXX ( TOPN ( 1, _r, 'UF'[RegiaoOrdem], DESC ), 'UF'[Região] )
+VAR _resto = CONCATENATEX ( FILTER ( _r, 'UF'[Região] <> _ult ), 'UF'[Região], ", ", 'UF'[RegiaoOrdem], ASC )
+RETURN
+    IF ( [Recorte · com escolha] = 1 && _n > 0, IF ( _n = 1, _ult, _resto & " e " & _ult ) )""")
+conta("T14 · UFs do recorte na região do painel", "0",
+      "Quantos estados da região do painel estão no recorte do filtro de estado (0 sem escolha ou sem estado dela).",
+      """VAR _r = [T14 · região do painel]
+RETURN
+    IF (
+        [Recorte · com escolha] = 1,
+        CALCULATE ( COUNTROWS ( 'UF' ), KEEPFILTERS ( 'UF'[Região] = _r ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+    ) + 0""")
+conta("T14 · recorte na região do painel", "texto",
+      "O que da região do painel está no recorte, com 'de' e o artigo (medida comum [Recorte · de] só nessa região): "
+      "'da Bahia', 'de BA e SE', 'de 3 estados'; 'do Nordeste' quando a região está inteira; vazio sem estado dela.",
+      """VAR _r = [T14 · região do painel]
+RETURN
+    IF (
+        [T14 · UFs do recorte na região do painel] > 0,
+        CALCULATE ( [Recorte · de], KEEPFILTERS ( 'UF'[Região] = _r ) )
+    )""")
+conta("T14 · sigla do recorte na região do painel", "texto",
+      "A sigla do estado escolhido na região do painel, quando é um só ('MS'); vazio nos outros casos. A nota do painel "
+      "usa a sigla quando o nome não cabe ao lado do nome da região.",
+      """VAR _r = [T14 · região do painel]
+RETURN
+    IF (
+        [T14 · UFs do recorte na região do painel] = 1,
+        CALCULATE ( SELECTEDVALUE ( 'UF'[UF] ), KEEPFILTERS ( 'UF'[Região] = _r ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+    )""")
 conta("T14 · PT % na região", "0.0%", "PT % somando os municípios da região do contexto (ignora o filtro de UF).",
       "CALCULATE ( [T14 · PT %], REMOVEFILTERS ( 'UF' ) )", ORACULO + " › regioes › pt_pct (Nordeste 2026 63,8%)")
 conta("T14 · adversário % na região", "0.0%", "Adversário % somando os municípios da região do contexto (ignora a UF).",
@@ -500,12 +550,15 @@ _ORDEM_REG = ", ".join(f'"{r}", {i + 1}' for i, r in enumerate(REGIOES))
 desenho("T14 · Regiões · HTML",
         "Uma entrada por região (granularidade Município[Região]), todas na mesma escala (10% a 70%): as linhas do PT e "
         "do adversário de 2006 a 2026 e os valores da eleição em destaque (a clicada na série ou 2026). Ignoram o filtro "
-        "de UF; com uma UF escolhida, a região dela fica em destaque. O clique numa região leva a série e a resposta "
+        "de estado; cada região com estado escolhido fica em destaque, com o que dela está no filtro ('região "
+        "escolhida', 'região da Bahia', 'região de BA e SE'). O clique numa região leva a série e a resposta "
         "àquela região; o mouse abre o dossiê dela (ttT14Regiao).",
         f"""-- 1 · Leituras
 VAR _r = [T14 · região do painel]
-VAR _sel = [T14 · região do recorte]
-VAR _ufNome = [T14 · UF do filtro]
+VAR _nRec = [T14 · UFs do recorte na região do painel]
+VAR _nUf = [T14 · UFs da região]
+VAR _deRec = [T14 · recorte na região do painel]
+VAR _siglaRec = [T14 · sigla do recorte na região do painel]
 VAR _ano = [T14 · ano dos painéis]
 VAR _clique = NOT ISBLANK ( [T14 · ano escolhido] )
 VAR _anos = DATATABLE ( "a", INTEGER, {{ {_TAB_ANOS} }} )
@@ -535,7 +588,18 @@ VAR _yApt = MAXX ( FILTER ( _xy, [a] = _ano ), [@yPt] ) /* lista */
 VAR _yAadv = MAXX ( FILTER ( _xy, [a] = _ano ), [@yAdv] ) /* lista */
 VAR _xA = 8 + ( _ano - 2006 ) / 4 * 42
 VAR _sep = IF ( ABS ( _yApt - _yAadv ) < 16, 8 - ABS ( _yApt - _yAadv ) / 2, 0 )
-VAR _cls = IF ( _sel = _r, "pn sel", "pn" )
+VAR _cls = IF ( _nRec > 0, "pn sel", "pn" )
+-- a nota à mão cabe ao lado do nome no painel de 300 px (nome ~9,6 px por letra, Caveat ~8): "região da Bahia"; com
+-- o nome comprido, a sigla ("região de MS" no Centro-Oeste, "região de RN" no Nordeste)
+VAR _cabe = INT ( ( 292 - 9.6 * LEN ( _r ) ) / 8 ) -- geometria
+VAR _nota1 = "região " & _deRec
+VAR _nota =
+    SWITCH (
+        TRUE (),
+        _nRec = _nUf, "região escolhida",
+        LEN ( _nota1 ) <= _cabe || ISBLANK ( _siglaRec ), _nota1,
+        "região de " & _siglaRec
+    )
 VAR _marca =
     IF (
         _clique,
@@ -553,7 +617,7 @@ RETURN
     IF (
         _o > 0,
         "<div class='tela t14g'><div class='" & _cls & " sobe d" & ( 2 + _o ) & "' style='left:" & _px & "px'>"
-            & "<div class='nm'>" & _r & IF ( _sel = _r, " <span class='mao'>região de " & _ufNome & "</span>", "" )
+            & "<div class='nm'>" & _r & IF ( _nRec > 0, " <span class='mao'>" & _nota & "</span>", "" )
             & "</div>"
             & "<svg width='300' height='132' viewBox='0 0 300 132'>"
                 & "<line class='b' x1='0' x2='226' y1='116' y2='116'/>"

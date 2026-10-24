@@ -1,13 +1,13 @@
 /*
 @pasta: T18 Apuração\Contas
 @formato: texto
-@descricao: O que as contas mostram: Brasil, o nome da UF ou N UFs (filtro com várias).
+@descricao: O que as contas mostram: 'Brasil' sem estado no contexto; com estado (o filtro de estado em árvore, Região › Estado, ou o clique num quadrado do mapa), o nome comum do recorte [Recorte · nome] ('Bahia', 'Nordeste', 'MG e SP', '3 estados', 'Exterior'). Vazio quando o clique no mapa cai fora do filtro de estado (nenhuma UF no contexto; ver T18 · recorte vazio).
 */
 VAR _ufs = COUNTROWS ( VALUES ( 'UF'[UF] ) )
 RETURN
     SWITCH (
         TRUE (),
         NOT ISFILTERED ( 'UF' ), "Brasil",
-        _ufs = 1, SELECTEDVALUE ( 'UF'[Nome] ),
-        FORMAT ( _ufs, "0" ) & " UFs"
+        _ufs = 0, BLANK (),
+        [Recorte · nome]
     )

@@ -1,7 +1,7 @@
 /*
 @pasta: T25 Quem falta\Contas
 @formato: 0.0%
-@descricao: A mesma abstenção sem o município marcado ou da linha: a média da UF do filtro (ou do Brasil, com o exterior) no ano e na faixa do contexto (0–1). Referência da cor do mapa e das comparações.
+@descricao: A mesma abstenção sem o município marcado ou da linha: a média do recorte de estado (as UFs escolhidas; ou o Brasil, com o exterior) no ano e na faixa do contexto (0–1). Referência da cor do mapa e das comparações.
 */
 CALCULATE (
     [T25 · abstenção %],

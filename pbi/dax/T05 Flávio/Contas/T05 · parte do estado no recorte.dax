@@ -1,0 +1,9 @@
+/*
+@pasta: T05 Flávio\Contas
+@formato: 0%
+@descricao: Parcela dos votos de Flávio no recorte (soma dos municípios) que veio da UF da linha (0–1): a lista de estados da origem quando o filtro escolheu vários. Tira só as colunas da UF da linha; o recorte do filtro ('UF'[Caminho]) fica.
+*/
+DIVIDE (
+    [T05 · votos (municípios)],
+    CALCULATE ( [T05 · votos (municípios)], REMOVEFILTERS ( 'UF'[UF], 'UF'[Nome], 'UF'[Ordem] ) )
+)

@@ -11,7 +11,14 @@ VAR _anos =
     ADDCOLUMNS ( VALUES ( 'Ano'[Ano] ), "@p", [T06 · abstenção % (ano)], "@n", [T06 · abstenções (ano)] )
 -- 2 · Textos
 VAR _verbo = IF ( _dpp >= 0, "subiu", "caiu" )
-VAR _manchete = "Em 20 anos, a abstenção " & _verbo & " de " & FORMAT ( _p06, "0.0%" ) & " para " & FORMAT ( _p26, "0.0%" )
+VAR _txt06 = FORMAT ( _p06, "0.0%" )
+VAR _txt26 = FORMAT ( _p26, "0.0%" )
+VAR _manchete =
+    IF (
+        _txt06 = _txt26,
+        "Em 20 anos, a abstenção ficou em " & _txt26,
+        "Em 20 anos, a abstenção " & _verbo & " de " & _txt06 & " para " & _txt26
+    )
 -- 3 · Geometria (anos em x 60–700; % de cima para baixo em y 30–220, de 10% a 26% — ou o que couber)
 VAR _min = MIN ( 0.10, MINX ( _anos, [@p] ) - 0.01 ) -- geometria
 VAR _max = MAX ( 0.26, MAXX ( _anos, [@p] ) + 0.01 ) -- geometria

@@ -1,0 +1,12 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0
+@descricao: Quantos estados da região do painel estão no recorte do filtro de estado (0 sem escolha ou sem estado dela).
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _r = [T14 · região do painel]
+RETURN
+    IF (
+        [Recorte · com escolha] = 1,
+        CALCULATE ( COUNTROWS ( 'UF' ), KEEPFILTERS ( 'UF'[Região] = _r ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+    ) + 0

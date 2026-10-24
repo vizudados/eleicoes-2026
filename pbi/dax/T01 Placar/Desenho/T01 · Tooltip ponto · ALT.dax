@@ -5,6 +5,7 @@
 */
 LEFT (
     [T01 · ponto · candidato] & " em " & [T01 · ponto · ano] & ": de onde vieram os votos, por "
-        & IF ( [T01 · com UF] = 1, "tamanho de cidade", "região" ) & ", e o % dele em cada grupo em 2022 e 2026.",
+        & SWITCH ( [T01 · ponto · grupo], "porte", "tamanho de cidade", "estado", "estado", "região" )
+        & ", e o % dele em cada grupo em 2022 e 2026.",
     250
 )

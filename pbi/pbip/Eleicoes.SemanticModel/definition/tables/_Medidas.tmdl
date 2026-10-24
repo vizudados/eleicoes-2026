@@ -2,40 +2,22 @@
 table _Medidas
 	lineageTag: a6088f3f-0f2d-54d6-94ab-8b4718ad59d0
 
-	/// Texto alternativo do filtro de UF: o recorte em uso.
+	/// Texto alternativo do filtro de estado (árvore Região › Estado): o recorte em uso, lido de cima para baixo pela medida comum [Recorte · nome] ('Filtro de estado: Nordeste', 'Filtro de estado: MG e SP'); sem escolha, todo o Brasil.
 	measure 'Casca · filtro · ALT' =
-			VAR _uf = SELECTEDVALUE ( 'UF'[Nome] )
-			RETURN
-			    IF ( ISBLANK ( _uf ), "Filtro de estado: todo o Brasil", "Filtro de estado: " & _uf )
+			IF (
+			    [Recorte · com escolha] = 1,
+			    "Filtro de estado: " & [Recorte · nome],
+			    "Filtro de estado: todo o Brasil"
+			)
 		displayFolder: _Casca
 		lineageTag: 0bc48597-3d09-5b03-ba8b-ce9a0a502288
 
-	/// Ordem da UF na lista do filtro (região, depois o nome; papel itemSort).
+	/// Ordem do estado na árvore do filtro de estado (papel itemSort): a região do Norte ao Sul, depois o nome ('UF'[Ordem]). A árvore Região › Estado é montada nessa ordem.
 	measure 'Casca · filtro · ordem' =
 			MIN ( 'UF'[Ordem] )
 		formatString: 0
 		displayFolder: _Casca
 		lineageTag: 2bc9315f-abc1-537f-9135-52d3909a6d02
-
-	/// O botão fechado do filtro de UF (a pílula): o estado em uso ou "Todo o Brasil", com o funil (ponto vermelho quando há estado) e a seta. O clique abre o VizuFilter alto por cima (marcador FILTRO_ABRE); fechado, só a pílula ocupa a tela e o mapa embaixo segue pegando o mouse.
-	measure 'Casca · filtro · pílula · HTML' =
-			VAR _uf = SELECTEDVALUE ( 'UF'[Nome] )
-			VAR _txt = IF ( ISBLANK ( _uf ), "Todo o Brasil", _uf )
-			VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
-			RETURN
-			    "<div class='tela pl" & IF ( ISBLANK ( _uf ), "", " ativo" ) & "'><span class='fu'><svg width='16' height='16' "
-			        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
-			        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><b>" & _esc & "</b>"
-			        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
-			        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>"
-		displayFolder: _Casca
-		lineageTag: 4f7ab942-e690-5c7e-939c-f00550e93dd5
-
-	/// Região da UF na lista do filtro (subtítulo de grupo do VizuFilter, papel itemGroup).
-	measure 'Casca · filtro · região' =
-			SELECTEDVALUE ( 'UF'[Região] )
-		displayFolder: _Casca
-		lineageTag: 26381721-9e09-5dd0-9da5-fe7b15707c40
 
 	/// Texto alternativo do filtro de período: o recorte em uso.
 	measure 'Casca · período · ALT' =
@@ -51,20 +33,6 @@ table _Medidas
 		formatString: 0
 		displayFolder: _Casca
 		lineageTag: 971ecba8-31de-5ae2-b373-a34dd5bea359
-
-	/// O botão fechado do filtro de período (a pílula), no padrão da pílula de UF: o período em uso ou '2º turno inteiro', com o funil (ponto vermelho quando há período) e a seta. O clique abre o VizuFilter por cima (marcador FILTRO_ABRE).
-	measure 'Casca · período · pílula · HTML' =
-			VAR _p = [Período · rótulo]
-			VAR _txt = IF ( ISBLANK ( _p ), "2º turno inteiro", _p )
-			VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
-			RETURN
-			    "<div class='tela pl" & IF ( ISBLANK ( _p ), "", " ativo" ) & "'><span class='fu'><svg width='16' height='16' "
-			        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
-			        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><b>" & _esc & "</b>"
-			        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
-			        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>"
-		displayFolder: _Casca
-		lineageTag: 2e90e347-2e99-5c82-bb72-bf0a678596c8
 
 	/// Conteúdo vazio para os HTML Content cujo desenho é todo fixo (o bodyTemplate traz a casca da página).
 	measure 'Casca · vazio' =
@@ -502,6 +470,477 @@ table _Medidas
 		displayFolder: _Período
 		lineageTag: 23a0588e-47a3-5d2c-a18d-de5e55622f8a
 
+	/// O recorte como sujeito da frase, com o artigo: 'o Brasil', 'o Nordeste', 'a Bahia', 'o Pará', 'Minas Gerais', 'MG e SP', 'o Nordeste e MG', 'o Norte e o Nordeste', 'os 3 estados'.
+	measure 'Recorte · com artigo' =
+			-- 1 · A escolha: o filtro de estado (UF[Caminho]) ou um clique que filtra a UF (o mapa da apuração, a região da
+			--     origem dos votos). O recorte visual do exterior (UF[Tipo]) não conta como escolha
+			VAR _com =
+			    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+			        || ISFILTERED ( 'UF'[Região] )
+			VAR _sel =
+			    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome], 'UF'[Região], 'UF'[RegiaoOrdem], 'UF'[Ordem], 'UF'[Artigo] )
+			VAR _tot =
+			    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Região] ), REMOVEFILTERS ( 'UF' ) )
+			-- 2 · Regiões inteiras (todos os estados marcados) e estados soltos
+			VAR _regioes =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'UF'[Região], "@o", 'UF'[RegiaoOrdem] ) ),
+			        "@s", COUNTROWS ( FILTER ( _sel, 'UF'[Região] = [@r] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'UF'[Região] = [@r] ) )
+			    )
+			VAR _cheias = FILTER ( _regioes, [@s] = [@t] && [@r] <> "Exterior" )
+			VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+			VAR _soltas = FILTER ( _sel, NOT ( 'UF'[Região] IN _nomesCheias ) )
+			VAR _nR = COUNTROWS ( _cheias ) + 0
+			VAR _nU = COUNTROWS ( _soltas ) + 0
+			VAR _nPartes = IF ( _com, _nR + _nU, 0 )
+			VAR _vazio = _com && _nR + _nU = 0
+			VAR _nUFs = COUNTROWS ( FILTER ( _sel, 'UF'[UF] <> "ZZ" ) ) + 0
+			-- 3 · As partes em ordem (regiões do Norte ao Sul, depois os estados na ordem do filtro); só valem até duas. O
+			--     exterior (só pelo clique no mapa da apuração) é um lugar solto, em minúscula no meio da frase
+			VAR _primeiraUF = MINX ( _soltas, 'UF'[Ordem] )
+			VAR _partes =
+			    UNION (
+			        SELECTCOLUMNS (
+			            _cheias,
+			            "@ordem", [@o],
+			            "@nome", [@r],
+			            "@em", "no " & [@r],
+			            "@de", "do " & [@r],
+			            "@art", "o " & [@r]
+			        ),
+			        SELECTCOLUMNS (
+			            _soltas,
+			            "@ordem", 100 + 'UF'[Ordem],
+			            "@nome", IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@em", IF ( 'UF'[Ordem] = _primeiraUF, "em ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@de", IF ( 'UF'[Ordem] = _primeiraUF, "de ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@art", IF ( 'UF'[UF] = "ZZ", "o exterior", 'UF'[UF] )
+			        )
+			    )
+			-- 4 · A parte única: o estado pelo nome, com o artigo dele ("na Bahia", "em Minas Gerais"); a região com "o"; o
+			--     exterior com "o" e em minúscula ("no exterior")
+			VAR _ufNome = MAXX ( _soltas, 'UF'[Nome] )
+			VAR _ufMin = IF ( MAXX ( _soltas, 'UF'[UF] ) = "ZZ", "exterior", _ufNome )
+			VAR _ufArtigo = MAXX ( _soltas, 'UF'[Artigo] )
+			VAR _regNome = MAXX ( _cheias, [@r] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        _vazio, "nenhum estado",
+			        _nPartes = 0, "o Brasil",
+			        _nPartes = 1 && _nR = 1, "o " & _regNome,
+			        _nPartes = 1, IF ( _ufArtigo = "", "", _ufArtigo & " " ) & _ufMin,
+			        _nPartes = 2, CONCATENATEX ( _partes, [@art], " e ", [@ordem], ASC ),
+			        IF ( _nUFs = 1, "o estado", "os " & FORMAT ( _nUFs, "0" ) & " estados" )
+			    )
+		displayFolder: _Recorte
+		lineageTag: 4afc8f80-4cd0-5252-a3dc-067e1fc6489e
+
+	/// 1 quando há estado ou região escolhido (o filtro de estado da casca, em árvore Região › Estado, ou um clique que filtra a UF, como o mapa da apuração); 0 no Brasil. O recorte visual do exterior não conta.
+	measure 'Recorte · com escolha' =
+			INT (
+			    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+			        || ISFILTERED ( 'UF'[Região] )
+			)
+		formatString: 0
+		displayFolder: _Recorte
+		lineageTag: bf741542-09f9-5603-85c2-8743d9b77239
+
+	/// O recorte com a preposição 'de' e o artigo certo, para as frases: 'do Brasil', 'do Nordeste', 'da Bahia', 'do Pará', 'de Minas Gerais', 'de MG e SP', 'do Nordeste e de MG', 'do Norte e do Nordeste', 'de 3 estados'.
+	measure 'Recorte · de' =
+			-- 1 · A escolha: o filtro de estado (UF[Caminho]) ou um clique que filtra a UF (o mapa da apuração, a região da
+			--     origem dos votos). O recorte visual do exterior (UF[Tipo]) não conta como escolha
+			VAR _com =
+			    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+			        || ISFILTERED ( 'UF'[Região] )
+			VAR _sel =
+			    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome], 'UF'[Região], 'UF'[RegiaoOrdem], 'UF'[Ordem], 'UF'[Artigo] )
+			VAR _tot =
+			    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Região] ), REMOVEFILTERS ( 'UF' ) )
+			-- 2 · Regiões inteiras (todos os estados marcados) e estados soltos
+			VAR _regioes =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'UF'[Região], "@o", 'UF'[RegiaoOrdem] ) ),
+			        "@s", COUNTROWS ( FILTER ( _sel, 'UF'[Região] = [@r] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'UF'[Região] = [@r] ) )
+			    )
+			VAR _cheias = FILTER ( _regioes, [@s] = [@t] && [@r] <> "Exterior" )
+			VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+			VAR _soltas = FILTER ( _sel, NOT ( 'UF'[Região] IN _nomesCheias ) )
+			VAR _nR = COUNTROWS ( _cheias ) + 0
+			VAR _nU = COUNTROWS ( _soltas ) + 0
+			VAR _nPartes = IF ( _com, _nR + _nU, 0 )
+			VAR _vazio = _com && _nR + _nU = 0
+			VAR _nUFs = COUNTROWS ( FILTER ( _sel, 'UF'[UF] <> "ZZ" ) ) + 0
+			-- 3 · As partes em ordem (regiões do Norte ao Sul, depois os estados na ordem do filtro); só valem até duas. O
+			--     exterior (só pelo clique no mapa da apuração) é um lugar solto, em minúscula no meio da frase
+			VAR _primeiraUF = MINX ( _soltas, 'UF'[Ordem] )
+			VAR _partes =
+			    UNION (
+			        SELECTCOLUMNS (
+			            _cheias,
+			            "@ordem", [@o],
+			            "@nome", [@r],
+			            "@em", "no " & [@r],
+			            "@de", "do " & [@r],
+			            "@art", "o " & [@r]
+			        ),
+			        SELECTCOLUMNS (
+			            _soltas,
+			            "@ordem", 100 + 'UF'[Ordem],
+			            "@nome", IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@em", IF ( 'UF'[Ordem] = _primeiraUF, "em ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@de", IF ( 'UF'[Ordem] = _primeiraUF, "de ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@art", IF ( 'UF'[UF] = "ZZ", "o exterior", 'UF'[UF] )
+			        )
+			    )
+			-- 4 · A parte única: o estado pelo nome, com o artigo dele ("na Bahia", "em Minas Gerais"); a região com "o"; o
+			--     exterior com "o" e em minúscula ("no exterior")
+			VAR _ufNome = MAXX ( _soltas, 'UF'[Nome] )
+			VAR _ufMin = IF ( MAXX ( _soltas, 'UF'[UF] ) = "ZZ", "exterior", _ufNome )
+			VAR _ufArtigo = MAXX ( _soltas, 'UF'[Artigo] )
+			VAR _regNome = MAXX ( _cheias, [@r] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        _vazio, "de nenhum estado",
+			        _nPartes = 0, "do Brasil",
+			        _nPartes = 1 && _nR = 1, "do " & _regNome,
+			        _nPartes = 1, SWITCH ( _ufArtigo, "a", "da ", "o", "do ", "de " ) & _ufMin,
+			        _nPartes = 2, CONCATENATEX ( _partes, [@de], " e ", [@ordem], ASC ),
+			        "de " & FORMAT ( _nUFs, "0" ) & IF ( _nUFs = 1, " estado", " estados" )
+			    )
+		displayFolder: _Recorte
+		lineageTag: 3161dc95-082c-56f9-8cca-3640ae353ce0
+
+	/// O recorte com a preposição 'em' e o artigo certo, para as frases: 'no Brasil', 'no Nordeste', 'na Bahia', 'no Pará', 'em Minas Gerais', 'em MG e SP', 'no Nordeste e em MG', 'no Norte e no Nordeste', 'em 3 estados'.
+	measure 'Recorte · em' =
+			-- 1 · A escolha: o filtro de estado (UF[Caminho]) ou um clique que filtra a UF (o mapa da apuração, a região da
+			--     origem dos votos). O recorte visual do exterior (UF[Tipo]) não conta como escolha
+			VAR _com =
+			    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+			        || ISFILTERED ( 'UF'[Região] )
+			VAR _sel =
+			    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome], 'UF'[Região], 'UF'[RegiaoOrdem], 'UF'[Ordem], 'UF'[Artigo] )
+			VAR _tot =
+			    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Região] ), REMOVEFILTERS ( 'UF' ) )
+			-- 2 · Regiões inteiras (todos os estados marcados) e estados soltos
+			VAR _regioes =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'UF'[Região], "@o", 'UF'[RegiaoOrdem] ) ),
+			        "@s", COUNTROWS ( FILTER ( _sel, 'UF'[Região] = [@r] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'UF'[Região] = [@r] ) )
+			    )
+			VAR _cheias = FILTER ( _regioes, [@s] = [@t] && [@r] <> "Exterior" )
+			VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+			VAR _soltas = FILTER ( _sel, NOT ( 'UF'[Região] IN _nomesCheias ) )
+			VAR _nR = COUNTROWS ( _cheias ) + 0
+			VAR _nU = COUNTROWS ( _soltas ) + 0
+			VAR _nPartes = IF ( _com, _nR + _nU, 0 )
+			VAR _vazio = _com && _nR + _nU = 0
+			VAR _nUFs = COUNTROWS ( FILTER ( _sel, 'UF'[UF] <> "ZZ" ) ) + 0
+			-- 3 · As partes em ordem (regiões do Norte ao Sul, depois os estados na ordem do filtro); só valem até duas. O
+			--     exterior (só pelo clique no mapa da apuração) é um lugar solto, em minúscula no meio da frase
+			VAR _primeiraUF = MINX ( _soltas, 'UF'[Ordem] )
+			VAR _partes =
+			    UNION (
+			        SELECTCOLUMNS (
+			            _cheias,
+			            "@ordem", [@o],
+			            "@nome", [@r],
+			            "@em", "no " & [@r],
+			            "@de", "do " & [@r],
+			            "@art", "o " & [@r]
+			        ),
+			        SELECTCOLUMNS (
+			            _soltas,
+			            "@ordem", 100 + 'UF'[Ordem],
+			            "@nome", IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@em", IF ( 'UF'[Ordem] = _primeiraUF, "em ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@de", IF ( 'UF'[Ordem] = _primeiraUF, "de ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@art", IF ( 'UF'[UF] = "ZZ", "o exterior", 'UF'[UF] )
+			        )
+			    )
+			-- 4 · A parte única: o estado pelo nome, com o artigo dele ("na Bahia", "em Minas Gerais"); a região com "o"; o
+			--     exterior com "o" e em minúscula ("no exterior")
+			VAR _ufNome = MAXX ( _soltas, 'UF'[Nome] )
+			VAR _ufMin = IF ( MAXX ( _soltas, 'UF'[UF] ) = "ZZ", "exterior", _ufNome )
+			VAR _ufArtigo = MAXX ( _soltas, 'UF'[Artigo] )
+			VAR _regNome = MAXX ( _cheias, [@r] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        _vazio, "em nenhum estado",
+			        _nPartes = 0, "no Brasil",
+			        _nPartes = 1 && _nR = 1, "no " & _regNome,
+			        _nPartes = 1, SWITCH ( _ufArtigo, "a", "na ", "o", "no ", "em " ) & _ufMin,
+			        _nPartes = 2, CONCATENATEX ( _partes, [@em], " e ", [@ordem], ASC ),
+			        "em " & FORMAT ( _nUFs, "0" ) & IF ( _nUFs = 1, " estado", " estados" )
+			    )
+		displayFolder: _Recorte
+		lineageTag: 4d67a35c-c396-575b-b2bd-a308892cf6ec
+
+	/// O nome do recorte, a medida comum das telas com filtro de estado (pílula, títulos '… · BAHIA', ALTs, manchetes): 'Brasil' sem escolha; a região pelo nome quando está inteira ('Nordeste'); o estado pelo nome quando é um só ('Bahia'); duas partes juntas, com os estados soltos pela sigla ('Nordeste e MG', 'MG e SP', 'Norte e Nordeste'); com mais de duas, a contagem de estados ('3 estados').
+	measure 'Recorte · nome' =
+			-- 1 · A escolha: o filtro de estado (UF[Caminho]) ou um clique que filtra a UF (o mapa da apuração, a região da
+			--     origem dos votos). O recorte visual do exterior (UF[Tipo]) não conta como escolha
+			VAR _com =
+			    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+			        || ISFILTERED ( 'UF'[Região] )
+			VAR _sel =
+			    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome], 'UF'[Região], 'UF'[RegiaoOrdem], 'UF'[Ordem], 'UF'[Artigo] )
+			VAR _tot =
+			    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Região] ), REMOVEFILTERS ( 'UF' ) )
+			-- 2 · Regiões inteiras (todos os estados marcados) e estados soltos
+			VAR _regioes =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'UF'[Região], "@o", 'UF'[RegiaoOrdem] ) ),
+			        "@s", COUNTROWS ( FILTER ( _sel, 'UF'[Região] = [@r] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'UF'[Região] = [@r] ) )
+			    )
+			VAR _cheias = FILTER ( _regioes, [@s] = [@t] && [@r] <> "Exterior" )
+			VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+			VAR _soltas = FILTER ( _sel, NOT ( 'UF'[Região] IN _nomesCheias ) )
+			VAR _nR = COUNTROWS ( _cheias ) + 0
+			VAR _nU = COUNTROWS ( _soltas ) + 0
+			VAR _nPartes = IF ( _com, _nR + _nU, 0 )
+			VAR _vazio = _com && _nR + _nU = 0
+			VAR _nUFs = COUNTROWS ( FILTER ( _sel, 'UF'[UF] <> "ZZ" ) ) + 0
+			-- 3 · As partes em ordem (regiões do Norte ao Sul, depois os estados na ordem do filtro); só valem até duas. O
+			--     exterior (só pelo clique no mapa da apuração) é um lugar solto, em minúscula no meio da frase
+			VAR _primeiraUF = MINX ( _soltas, 'UF'[Ordem] )
+			VAR _partes =
+			    UNION (
+			        SELECTCOLUMNS (
+			            _cheias,
+			            "@ordem", [@o],
+			            "@nome", [@r],
+			            "@em", "no " & [@r],
+			            "@de", "do " & [@r],
+			            "@art", "o " & [@r]
+			        ),
+			        SELECTCOLUMNS (
+			            _soltas,
+			            "@ordem", 100 + 'UF'[Ordem],
+			            "@nome", IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@em", IF ( 'UF'[Ordem] = _primeiraUF, "em ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@de", IF ( 'UF'[Ordem] = _primeiraUF, "de ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@art", IF ( 'UF'[UF] = "ZZ", "o exterior", 'UF'[UF] )
+			        )
+			    )
+			-- 4 · A parte única: o estado pelo nome, com o artigo dele ("na Bahia", "em Minas Gerais"); a região com "o"; o
+			--     exterior com "o" e em minúscula ("no exterior")
+			VAR _ufNome = MAXX ( _soltas, 'UF'[Nome] )
+			VAR _ufMin = IF ( MAXX ( _soltas, 'UF'[UF] ) = "ZZ", "exterior", _ufNome )
+			VAR _ufArtigo = MAXX ( _soltas, 'UF'[Artigo] )
+			VAR _regNome = MAXX ( _cheias, [@r] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        _vazio, "nenhum estado",
+			        _nPartes = 0, "Brasil",
+			        _nPartes = 1 && _nR = 1, _regNome,
+			        _nPartes = 1, _ufNome,
+			        _nPartes = 2, CONCATENATEX ( _partes, [@nome], " e ", [@ordem], ASC ),
+			        FORMAT ( _nUFs, "0" ) & IF ( _nUFs = 1, " estado", " estados" )
+			    )
+		displayFolder: _Recorte
+		lineageTag: 19af9de2-2921-5c33-ac8b-5249fcbb47fe
+
+	/// Quantas partes a leitura do recorte tem, de cima para baixo: 0 no Brasil; 1 num estado ou numa região inteira; 2 em duas partes ('Nordeste e MG', 'MG e SP'); 3 ou mais, quando o texto vira a contagem ('5 estados').
+	measure 'Recorte · partes' =
+			-- 1 · A escolha: o filtro de estado (UF[Caminho]) ou um clique que filtra a UF (o mapa da apuração, a região da
+			--     origem dos votos). O recorte visual do exterior (UF[Tipo]) não conta como escolha
+			VAR _com =
+			    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+			        || ISFILTERED ( 'UF'[Região] )
+			VAR _sel =
+			    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome], 'UF'[Região], 'UF'[RegiaoOrdem], 'UF'[Ordem], 'UF'[Artigo] )
+			VAR _tot =
+			    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Região] ), REMOVEFILTERS ( 'UF' ) )
+			-- 2 · Regiões inteiras (todos os estados marcados) e estados soltos
+			VAR _regioes =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'UF'[Região], "@o", 'UF'[RegiaoOrdem] ) ),
+			        "@s", COUNTROWS ( FILTER ( _sel, 'UF'[Região] = [@r] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'UF'[Região] = [@r] ) )
+			    )
+			VAR _cheias = FILTER ( _regioes, [@s] = [@t] && [@r] <> "Exterior" )
+			VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+			VAR _soltas = FILTER ( _sel, NOT ( 'UF'[Região] IN _nomesCheias ) )
+			VAR _nR = COUNTROWS ( _cheias ) + 0
+			VAR _nU = COUNTROWS ( _soltas ) + 0
+			VAR _nPartes = IF ( _com, _nR + _nU, 0 )
+			VAR _vazio = _com && _nR + _nU = 0
+			VAR _nUFs = COUNTROWS ( FILTER ( _sel, 'UF'[UF] <> "ZZ" ) ) + 0
+			-- 3 · As partes em ordem (regiões do Norte ao Sul, depois os estados na ordem do filtro); só valem até duas. O
+			--     exterior (só pelo clique no mapa da apuração) é um lugar solto, em minúscula no meio da frase
+			VAR _primeiraUF = MINX ( _soltas, 'UF'[Ordem] )
+			VAR _partes =
+			    UNION (
+			        SELECTCOLUMNS (
+			            _cheias,
+			            "@ordem", [@o],
+			            "@nome", [@r],
+			            "@em", "no " & [@r],
+			            "@de", "do " & [@r],
+			            "@art", "o " & [@r]
+			        ),
+			        SELECTCOLUMNS (
+			            _soltas,
+			            "@ordem", 100 + 'UF'[Ordem],
+			            "@nome", IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@em", IF ( 'UF'[Ordem] = _primeiraUF, "em ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@de", IF ( 'UF'[Ordem] = _primeiraUF, "de ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@art", IF ( 'UF'[UF] = "ZZ", "o exterior", 'UF'[UF] )
+			        )
+			    )
+			-- 4 · A parte única: o estado pelo nome, com o artigo dele ("na Bahia", "em Minas Gerais"); a região com "o"; o
+			--     exterior com "o" e em minúscula ("no exterior")
+			VAR _ufNome = MAXX ( _soltas, 'UF'[Nome] )
+			VAR _ufMin = IF ( MAXX ( _soltas, 'UF'[UF] ) = "ZZ", "exterior", _ufNome )
+			VAR _ufArtigo = MAXX ( _soltas, 'UF'[Artigo] )
+			VAR _regNome = MAXX ( _cheias, [@r] )
+			RETURN
+			    _nPartes
+		formatString: 0
+		displayFolder: _Recorte
+		lineageTag: ad8f0df0-2ec8-5cb0-a54f-ed91aebf4f7c
+
+	/// 1 quando o recorte nomeia mais de um lugar ('MG e SP', 'Norte e Nordeste', '3 estados': o verbo vai ao plural); 0 no Brasil, num estado ou numa região inteira.
+	measure 'Recorte · plural' =
+			-- 1 · A escolha: o filtro de estado (UF[Caminho]) ou um clique que filtra a UF (o mapa da apuração, a região da
+			--     origem dos votos). O recorte visual do exterior (UF[Tipo]) não conta como escolha
+			VAR _com =
+			    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+			        || ISFILTERED ( 'UF'[Região] )
+			VAR _sel =
+			    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome], 'UF'[Região], 'UF'[RegiaoOrdem], 'UF'[Ordem], 'UF'[Artigo] )
+			VAR _tot =
+			    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Região] ), REMOVEFILTERS ( 'UF' ) )
+			-- 2 · Regiões inteiras (todos os estados marcados) e estados soltos
+			VAR _regioes =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'UF'[Região], "@o", 'UF'[RegiaoOrdem] ) ),
+			        "@s", COUNTROWS ( FILTER ( _sel, 'UF'[Região] = [@r] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'UF'[Região] = [@r] ) )
+			    )
+			VAR _cheias = FILTER ( _regioes, [@s] = [@t] && [@r] <> "Exterior" )
+			VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+			VAR _soltas = FILTER ( _sel, NOT ( 'UF'[Região] IN _nomesCheias ) )
+			VAR _nR = COUNTROWS ( _cheias ) + 0
+			VAR _nU = COUNTROWS ( _soltas ) + 0
+			VAR _nPartes = IF ( _com, _nR + _nU, 0 )
+			VAR _vazio = _com && _nR + _nU = 0
+			VAR _nUFs = COUNTROWS ( FILTER ( _sel, 'UF'[UF] <> "ZZ" ) ) + 0
+			-- 3 · As partes em ordem (regiões do Norte ao Sul, depois os estados na ordem do filtro); só valem até duas. O
+			--     exterior (só pelo clique no mapa da apuração) é um lugar solto, em minúscula no meio da frase
+			VAR _primeiraUF = MINX ( _soltas, 'UF'[Ordem] )
+			VAR _partes =
+			    UNION (
+			        SELECTCOLUMNS (
+			            _cheias,
+			            "@ordem", [@o],
+			            "@nome", [@r],
+			            "@em", "no " & [@r],
+			            "@de", "do " & [@r],
+			            "@art", "o " & [@r]
+			        ),
+			        SELECTCOLUMNS (
+			            _soltas,
+			            "@ordem", 100 + 'UF'[Ordem],
+			            "@nome", IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@em", IF ( 'UF'[Ordem] = _primeiraUF, "em ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@de", IF ( 'UF'[Ordem] = _primeiraUF, "de ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@art", IF ( 'UF'[UF] = "ZZ", "o exterior", 'UF'[UF] )
+			        )
+			    )
+			-- 4 · A parte única: o estado pelo nome, com o artigo dele ("na Bahia", "em Minas Gerais"); a região com "o"; o
+			--     exterior com "o" e em minúscula ("no exterior")
+			VAR _ufNome = MAXX ( _soltas, 'UF'[Nome] )
+			VAR _ufMin = IF ( MAXX ( _soltas, 'UF'[UF] ) = "ZZ", "exterior", _ufNome )
+			VAR _ufArtigo = MAXX ( _soltas, 'UF'[Artigo] )
+			VAR _regNome = MAXX ( _cheias, [@r] )
+			RETURN
+			    IF ( _nPartes >= 2, 1, 0 )
+		formatString: 0
+		displayFolder: _Recorte
+		lineageTag: 626a8027-800b-56de-a7bf-5cde63a6145b
+
+	/// O tipo do recorte, para as telas escolherem as palavras: 'Brasil' (sem escolha), 'UF' (um estado; 'o estado'), 'Região' (uma região inteira; 'a região') ou 'Vários' (duas ou mais regiões, região e estados, estados soltos; 'os estados escolhidos'). 'Vazio' quando um clique cai fora do filtro e o contexto fica sem UF.
+	measure 'Recorte · tipo' =
+			-- 1 · A escolha: o filtro de estado (UF[Caminho]) ou um clique que filtra a UF (o mapa da apuração, a região da
+			--     origem dos votos). O recorte visual do exterior (UF[Tipo]) não conta como escolha
+			VAR _com =
+			    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+			        || ISFILTERED ( 'UF'[Região] )
+			VAR _sel =
+			    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome], 'UF'[Região], 'UF'[RegiaoOrdem], 'UF'[Ordem], 'UF'[Artigo] )
+			VAR _tot =
+			    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Região] ), REMOVEFILTERS ( 'UF' ) )
+			-- 2 · Regiões inteiras (todos os estados marcados) e estados soltos
+			VAR _regioes =
+			    ADDCOLUMNS (
+			        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'UF'[Região], "@o", 'UF'[RegiaoOrdem] ) ),
+			        "@s", COUNTROWS ( FILTER ( _sel, 'UF'[Região] = [@r] ) ),
+			        "@t", COUNTROWS ( FILTER ( _tot, 'UF'[Região] = [@r] ) )
+			    )
+			VAR _cheias = FILTER ( _regioes, [@s] = [@t] && [@r] <> "Exterior" )
+			VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+			VAR _soltas = FILTER ( _sel, NOT ( 'UF'[Região] IN _nomesCheias ) )
+			VAR _nR = COUNTROWS ( _cheias ) + 0
+			VAR _nU = COUNTROWS ( _soltas ) + 0
+			VAR _nPartes = IF ( _com, _nR + _nU, 0 )
+			VAR _vazio = _com && _nR + _nU = 0
+			VAR _nUFs = COUNTROWS ( FILTER ( _sel, 'UF'[UF] <> "ZZ" ) ) + 0
+			-- 3 · As partes em ordem (regiões do Norte ao Sul, depois os estados na ordem do filtro); só valem até duas. O
+			--     exterior (só pelo clique no mapa da apuração) é um lugar solto, em minúscula no meio da frase
+			VAR _primeiraUF = MINX ( _soltas, 'UF'[Ordem] )
+			VAR _partes =
+			    UNION (
+			        SELECTCOLUMNS (
+			            _cheias,
+			            "@ordem", [@o],
+			            "@nome", [@r],
+			            "@em", "no " & [@r],
+			            "@de", "do " & [@r],
+			            "@art", "o " & [@r]
+			        ),
+			        SELECTCOLUMNS (
+			            _soltas,
+			            "@ordem", 100 + 'UF'[Ordem],
+			            "@nome", IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@em", IF ( 'UF'[Ordem] = _primeiraUF, "em ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@de", IF ( 'UF'[Ordem] = _primeiraUF, "de ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+			            "@art", IF ( 'UF'[UF] = "ZZ", "o exterior", 'UF'[UF] )
+			        )
+			    )
+			-- 4 · A parte única: o estado pelo nome, com o artigo dele ("na Bahia", "em Minas Gerais"); a região com "o"; o
+			--     exterior com "o" e em minúscula ("no exterior")
+			VAR _ufNome = MAXX ( _soltas, 'UF'[Nome] )
+			VAR _ufMin = IF ( MAXX ( _soltas, 'UF'[UF] ) = "ZZ", "exterior", _ufNome )
+			VAR _ufArtigo = MAXX ( _soltas, 'UF'[Artigo] )
+			VAR _regNome = MAXX ( _cheias, [@r] )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        _vazio, "Vazio",
+			        _nPartes = 0, "Brasil",
+			        _nPartes = 1 && _nR = 1, "Região",
+			        _nPartes = 1, "UF",
+			        "Vários"
+			    )
+		displayFolder: _Recorte
+		lineageTag: 7cafede5-e332-5f39-a355-afc955092be6
+
+	/// Quantas UFs estão no recorte (27 sem escolha; o exterior não conta): a base das contagens 'N de M estados'.
+	measure 'Recorte · UFs' =
+			CALCULATE ( COUNTROWS ( 'UF' ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) ) + 0
+		formatString: 0
+		displayFolder: _Recorte
+		lineageTag: 55856724-1ddd-5cb9-a41a-c282e05ed71f
+
 	/// Flávio sobre os válidos de 2026.
 	measure 'T00 · Flávio %' =
 			DIVIDE ( [T00 · Flávio votos], [T00 · válidos] )
@@ -612,35 +1051,43 @@ table _Medidas
 		displayFolder: T01 Placar\Contas
 		lineageTag: 54c8f4b8-6c15-5cbc-94cb-283ac32c9ea3
 
-	/// Parcela dos válidos do candidato do item na UF mais forte (0–1).
+	/// Parcela dos válidos do candidato do item na UF mais forte (0–1), entre as UFs do dossiê.
 	measure 'T01 · % na UF mais forte do candidato' =
-			VAR _ufs =
-			ADDCOLUMNS (
-			    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
-			    "@p", [T01 · % do candidato na UF]
-			)
+			VAR _noRecorte = [T01 · dossiê no recorte]
+			VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+			VAR _todas =
+			    CALCULATETABLE (
+			        ADDCOLUMNS ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ), "@p", [T01 · % do candidato na UF] ),
+			        REMOVEFILTERS ( 'UF' ),
+			        'UF'[Tipo] = "UF"
+			    )
+			VAR _ufs = FILTER ( _todas, _noRecorte = 0 || 'UF'[UF] IN _sel )
 			RETURN
 			    MAXX ( _ufs, [@p] )
 		formatString: 0.0%
 		displayFolder: T01 Placar\Contas
 		lineageTag: 9c6d5c8b-36c0-5565-b04d-467fe271748f
 
-	/// Parcela dos válidos do candidato do item na UF mais fraca (0–1).
+	/// Parcela dos válidos do candidato do item na UF mais fraca (0–1), entre as UFs do dossiê.
 	measure 'T01 · % na UF mais fraca do candidato' =
-			VAR _ufs =
-			ADDCOLUMNS (
-			    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
-			    "@p", [T01 · % do candidato na UF]
-			)
+			VAR _noRecorte = [T01 · dossiê no recorte]
+			VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+			VAR _todas =
+			    CALCULATETABLE (
+			        ADDCOLUMNS ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ), "@p", [T01 · % do candidato na UF] ),
+			        REMOVEFILTERS ( 'UF' ),
+			        'UF'[Tipo] = "UF"
+			    )
+			VAR _ufs = FILTER ( _todas, _noRecorte = 0 || 'UF'[UF] IN _sel )
 			RETURN
 			    MINX ( _ufs, [@p] )
 		formatString: 0.0%
 		displayFolder: T01 Placar\Contas
 		lineageTag: d0088da1-84bd-53d6-b70d-b16ef1b86dcb
 
-	/// 1 quando o filtro de UF da casca está ativo (a tela mostra a UF), 0 no Brasil.
+	/// 1 com estado ou região escolhido no filtro de estado da casca (a tela mostra a soma das UFs escolhidas), 0 no Brasil: a medida comum [Recorte · com escolha].
 	measure 'T01 · com UF' =
-			INT ( ISCROSSFILTERED ( 'UF' ) )
+			[Recorte · com escolha]
 		formatString: 0
 		displayFolder: T01 Placar\Contas
 		lineageTag: 142e9a51-44b5-5c55-9ae9-b30980ff5d1f
@@ -732,6 +1179,13 @@ table _Medidas
 		formatString: 0
 		displayFolder: T01 Placar\Contas
 		lineageTag: 3bc1e5ca-c0f7-5ec7-9f3b-8d4018b18d12
+
+	/// 1 quando o recorte tem mais de uma UF (uma região inteira ou vários estados): o dossiê do candidato compara as UFs de dentro dele; 0 no Brasil e com um estado só (aí o dossiê compara as 27).
+	measure 'T01 · dossiê no recorte' =
+			IF ( [Recorte · com escolha] = 1 && [Recorte · UFs] > 1, 1, 0 )
+		formatString: 0
+		displayFolder: T01 Placar\Contas
+		lineageTag: fe7f6313-6d6d-521d-8c57-adfced61bf65
 
 	/// Parcela de Flávio nos votos válidos de 2026 (0–1).
 	measure 'T01 · Flávio %' =
@@ -861,12 +1315,40 @@ table _Medidas
 		displayFolder: T01 Placar\Contas
 		lineageTag: a6fbba95-41aa-5957-81f1-2113ec06645d
 
+	/// Quantas UFs o recorte tem, para o dossiê do ponto avisar quando mostra só as 5 com mais votos.
+	measure 'T01 · ponto · estados no recorte' =
+			[Recorte · UFs]
+		formatString: 0
+		displayFolder: T01 Placar\Contas
+		lineageTag: b2f5397c-1cb4-5973-83d9-85be7c9a2128
+
+	/// Como o dossiê do ponto divide os votos: 'região' no Brasil, 'porte' (tamanho de cidade) num estado só, 'estado' num recorte de vários (uma região inteira ou estados soltos).
+	measure 'T01 · ponto · grupo' =
+			SWITCH (
+			    TRUE (),
+			    [Recorte · com escolha] = 0, "região",
+			    [Recorte · UFs] = 1, "porte",
+			    "estado"
+			)
+		displayFolder: T01 Placar\Contas
+		lineageTag: 0d766971-5cab-575d-a44e-63e15607a523
+
 	/// Número do candidato do ponto da virada (13 = PT, 22 = PL).
 	measure 'T01 · ponto · número' =
 			SELECTEDVALUE ( 'Candidato UF'[Número] )
 		formatString: 0
 		displayFolder: T01 Placar\Contas
 		lineageTag: f4518bba-38f9-5b6a-97b3-b4dbbb93a384
+
+	/// Parcela dos votos do partido do ponto, no ano do ponto, que veio do estado da linha, dentro do recorte de vários estados (0–1). Tira só o estado da linha: o recorte (o filtro de estado, em 'UF'[Caminho]) fica.
+	measure 'T01 · ponto · parte do estado' =
+			DIVIDE (
+			    [T01 · ponto · votos no grupo],
+			    CALCULATE ( [T01 · ponto · votos no grupo], REMOVEFILTERS ( 'UF'[UF], 'UF'[Nome] ) )
+			)
+		formatString: 0%
+		displayFolder: T01 Placar\Contas
+		lineageTag: bf4fcadd-f929-5686-856d-28e4f725b665
 
 	/// Parcela dos votos do partido do ponto, no ano do ponto, que veio da região ou do porte da linha (0–1). Tira só as colunas do grupo.
 	measure 'T01 · ponto · parte do grupo' =
@@ -972,61 +1454,83 @@ table _Medidas
 		displayFolder: T01 Placar\Contas
 		lineageTag: 27511fe3-8eb2-5128-98e0-1c581c3e4f52
 
-	/// Nome do recorte: Brasil ou o nome da UF escolhida no filtro.
+	/// Nome do recorte, da medida comum [Recorte · nome]: 'Brasil', o estado ('Bahia'), a região inteira ('Nordeste') ou vários estados ('MG e SP', '3 estados').
 	measure 'T01 · recorte' =
-			IF ( [T01 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome], "as UFs escolhidas" ), "Brasil" )
+			[Recorte · nome]
 		displayFolder: T01 Placar\Contas
 		lineageTag: 50647a02-f28c-586b-b523-5dc05cb37876
 
-	/// UF (no Brasil todo, sem o filtro) onde o candidato do item teve a maior parcela dos válidos.
+	/// UF onde o candidato do item teve a maior parcela dos válidos: entre as 27 (sem escolha ou com um estado só) ou entre as UFs do recorte (região ou vários estados).
 	measure 'T01 · UF mais forte do candidato' =
-			VAR _ufs =
-			ADDCOLUMNS (
-			    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
-			    "@p", [T01 · % do candidato na UF]
-			)
+			VAR _noRecorte = [T01 · dossiê no recorte]
+			VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+			VAR _todas =
+			    CALCULATETABLE (
+			        ADDCOLUMNS ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ), "@p", [T01 · % do candidato na UF] ),
+			        REMOVEFILTERS ( 'UF' ),
+			        'UF'[Tipo] = "UF"
+			    )
+			VAR _ufs = FILTER ( _todas, _noRecorte = 0 || 'UF'[UF] IN _sel )
 			RETURN
 			    MAXX ( TOPN ( 1, _ufs, [@p], DESC, 'UF'[Nome], ASC ), 'UF'[Nome] )
 		displayFolder: T01 Placar\Contas
 		lineageTag: 0de3c591-9394-5c9e-a756-2dd32f8b13ce
 
-	/// UF (no Brasil todo, sem o filtro) onde o candidato do item teve a menor parcela dos válidos.
+	/// UF onde o candidato do item teve a menor parcela dos válidos: entre as 27 (sem escolha ou com um estado só) ou entre as UFs do recorte (região ou vários estados).
 	measure 'T01 · UF mais fraca do candidato' =
-			VAR _ufs =
-			ADDCOLUMNS (
-			    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
-			    "@p", [T01 · % do candidato na UF]
-			)
+			VAR _noRecorte = [T01 · dossiê no recorte]
+			VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+			VAR _todas =
+			    CALCULATETABLE (
+			        ADDCOLUMNS ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ), "@p", [T01 · % do candidato na UF] ),
+			        REMOVEFILTERS ( 'UF' ),
+			        'UF'[Tipo] = "UF"
+			    )
+			VAR _ufs = FILTER ( _todas, _noRecorte = 0 || 'UF'[UF] IN _sel )
 			RETURN
 			    MAXX ( TOPN ( 1, _ufs, [@p], ASC, 'UF'[Nome], ASC ), 'UF'[Nome] )
 		displayFolder: T01 Placar\Contas
 		lineageTag: 03a7a712-46ba-5870-bca2-533279f36e15
 
-	/// Em quantas das 27 UFs o candidato do item foi o mais votado (no Brasil todo, sem o filtro).
+	/// Quantas UFs o dossiê do candidato compara: as do recorte (região ou vários estados) ou as 27.
+	measure 'T01 · UFs do dossiê' =
+			IF ( [T01 · dossiê no recorte] = 1, [Recorte · UFs], 27 )
+		formatString: 0
+		displayFolder: T01 Placar\Contas
+		lineageTag: f9c60b4e-8168-5e5c-8349-337cc8425b08
+
+	/// Em quantas UFs do dossiê o candidato do item foi o mais votado: das 27 (sem escolha ou com um estado só) ou das UFs do recorte (região ou vários estados).
 	measure 'T01 · UFs em 1º do candidato' =
 			VAR _cand = SELECTEDVALUE ( 'Candidato UF'[Candidato] )
-			VAR _ufs =
-			    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" )
+			VAR _noRecorte = [T01 · dossiê no recorte]
+			VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
 			VAR _lider =
-			    ADDCOLUMNS (
-			        _ufs,
-			        "@lider",
-			            CALCULATE (
-			                MAXX (
-			                    TOPN (
-			                        1,
-			                        ADDCOLUMNS (
-			                            CALCULATETABLE ( VALUES ( 'Candidato UF'[Candidato] ), REMOVEFILTERS ( 'Candidato UF'[Candidato] ) ),
-			                            "@v", [T01 · votos do candidato]
+			    CALCULATETABLE (
+			        ADDCOLUMNS (
+			            SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ),
+			            "@lider",
+			                CALCULATE (
+			                    MAXX (
+			                        TOPN (
+			                            1,
+			                            ADDCOLUMNS (
+			                                CALCULATETABLE ( VALUES ( 'Candidato UF'[Candidato] ), REMOVEFILTERS ( 'Candidato UF'[Candidato] ) ),
+			                                "@v", [T01 · votos do candidato]
+			                            ),
+			                            [@v], DESC
 			                        ),
-			                        [@v], DESC
-			                    ),
-			                    'Candidato UF'[Candidato]
+			                        'Candidato UF'[Candidato]
+			                    )
 			                )
-			            )
+			        ),
+			        REMOVEFILTERS ( 'UF' ),
+			        'UF'[Tipo] = "UF"
 			    )
 			RETURN
-			    IF ( NOT ISBLANK ( _cand ), COUNTROWS ( FILTER ( _lider, [@lider] = _cand ) ) + 0 )
+			    IF (
+			        NOT ISBLANK ( _cand ),
+			        COUNTROWS ( FILTER ( _lider, [@lider] = _cand && ( _noRecorte = 0 || 'UF'[UF] IN _sel ) ) ) + 0
+			    )
 		formatString: 0
 		displayFolder: T01 Placar\Contas
 		lineageTag: d75e261f-a194-51f5-a6b9-ad3d9b4f667c
@@ -1074,7 +1578,7 @@ table _Medidas
 	/// Texto para leitor de tela da barra dos válidos.
 	measure 'T01 · Barra · ALT' =
 			LEFT (
-			    "Barra dos votos válidos de " & [T01 · recorte]
+			    "Barra dos votos válidos " & [Recorte · de]
 			        & ", um segmento por candidato, do mais ao menos votado. Passe o mouse num segmento para ver onde cada "
 			        & "um foi mais forte.",
 			    250
@@ -1310,7 +1814,7 @@ table _Medidas
 		displayFolder: T01 Placar\Desenho
 		lineageTag: 65404a0b-f95b-5228-8fe6-ddcf903c86be
 
-	/// Dossiê do candidato da barra (ficha com clipe): onde foi mais forte e mais fraco no Brasil e em quantas UFs ficou em 1º. Só lê contas 'T01 · …'.
+	/// Dossiê do candidato da barra (ficha com clipe): onde foi mais forte e mais fraco e em quantas UFs ficou em 1º, no Brasil (sem escolha ou com um estado só) ou entre as UFs do recorte (região ou vários estados). Só lê contas.
 	measure 'T01 · Tooltip candidato · HTML' =
 			-- 1 · Leituras
 			VAR _nome = SELECTEDVALUE ( 'Candidato UF'[Candidato] )
@@ -1322,7 +1826,9 @@ table _Medidas
 			VAR _ufR = [T01 · UF mais fraca do candidato]
 			VAR _pR = [T01 · % na UF mais fraca do candidato]
 			VAR _n1 = [T01 · UFs em 1º do candidato]
-			VAR _comUF = [T01 · com UF]
+			VAR _noRecorte = [T01 · dossiê no recorte]
+			VAR _nUFs = [T01 · UFs do dossiê]
+			VAR _em = [Recorte · em]
 			-- 2 · Textos
 			VAR _cor = SWITCH ( _num, 22, "flavio", 13, "lula", "neutro" )
 			VAR _ic = SWITCH ( _num, 22, "urna-azul", 13, "urna-vermelho", "urna-tinta" )
@@ -1330,13 +1836,15 @@ table _Medidas
 			VAR _txtPar = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _par, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _num
 			VAR _txtPF = FORMAT ( _pF, "0.0%" )
 			VAR _txtPR = FORMAT ( _pR, "0.0%" )
-			VAR _onde = IF ( _comUF = 1, _pos & "º lugar nesta UF", _pos & "º lugar no Brasil" )
+			VAR _onde = _pos & "º lugar " & _em
 			VAR _nota =
-			    IF (
-			        _n1 > 0,
-			        "1º lugar em " & _n1 & IF ( _n1 = 1, " UF", " UFs" ),
+			    SWITCH (
+			        TRUE (),
+			        _n1 > 0 && _noRecorte = 1, "1º lugar em " & _n1 & " de " & _nUFs & " UFs",
+			        _n1 > 0, "1º lugar em " & _n1 & IF ( _n1 = 1, " UF", " UFs" ),
 			        _onde
 			    )
+			VAR _escopo = IF ( _noRecorte = 1, _em, "no Brasil" )
 			-- 4 · Marcação
 			VAR _css =
 			    "<style>"
@@ -1362,7 +1870,7 @@ table _Medidas
 			        & "<img class='clipe' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/clipe-tinta.png'/>"
 			        & "<img class='ic entra' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/" & _ic & ".png'/>"
 			        & "<div class='cab sobe'><div class='nm " & _cor & "'>" & _txtNome & "</div>"
-			        & "<div class='rot pt'>" & _txtPar & " · no Brasil</div></div>"
+			        & "<div class='rot pt'>" & _txtPar & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _escopo, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
 			        & "<div class='lin l1 sobe d2'><span class='rot'>Mais forte em</span>"
 			        & "<span class='v'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _ufF, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "<b class='" & _cor & "'>" & _txtPF & "</b></span></div>"
 			        & "<div class='lin l2 sobe d3'><span class='rot'>Mais fraco em</span>"
@@ -1378,24 +1886,26 @@ table _Medidas
 	measure 'T01 · Tooltip ponto · ALT' =
 			LEFT (
 			    [T01 · ponto · candidato] & " em " & [T01 · ponto · ano] & ": de onde vieram os votos, por "
-			        & IF ( [T01 · com UF] = 1, "tamanho de cidade", "região" ) & ", e o % dele em cada grupo em 2022 e 2026.",
+			        & SWITCH ( [T01 · ponto · grupo], "porte", "tamanho de cidade", "estado", "estado", "região" )
+			        & ", e o % dele em cada grupo em 2022 e 2026.",
 			    250
 			)
 		displayFolder: T01 Placar\Desenho
 		lineageTag: d28518dd-ec3d-5ddc-aaa9-7a1bedfeefec
 
-	/// Dossiê do ponto da virada (ficha com clipe): de onde vieram os votos do candidato naquele ano — por região no Brasil, por tamanho de cidade numa UF —, com o % dele em cada grupo em 2022 e em 2026 e a nota à mão com a maior perda ou ganho (2026) ou a base mais forte (2022). Só lê contas.
+	/// Dossiê do ponto da virada (ficha com clipe): de onde vieram os votos do candidato naquele ano — por região no Brasil, por tamanho de cidade num estado, por estado num recorte de vários (os 5 com mais votos) —, com o % dele em cada grupo em 2022 e em 2026 e a nota à mão com a maior perda ou ganho (2026) ou a base mais forte (2022). Só lê contas.
 	measure 'T01 · Tooltip ponto · HTML' =
 			-- 1 · Leituras
 			VAR _a = [T01 · ponto · ano]
 			VAR _n = [T01 · ponto · número]
 			VAR _nome = [T01 · ponto · candidato]
 			VAR _par = [T01 · ponto · partido]
-			VAR _comUF = [T01 · com UF]
+			VAR _grupo = [T01 · ponto · grupo]
 			VAR _rec = [T01 · recorte]
+			VAR _nEst = [T01 · ponto · estados no recorte]
 			VAR _regs =
 			    TOPN (
-			        IF ( _comUF = 0, 10, 0 ),
+			        IF ( _grupo = "região", 10, 0 ),
 			        ADDCOLUMNS (
 			            VALUES ( 'UF'[Região] ),
 			            "@v", [T01 · ponto · votos no grupo],
@@ -1406,9 +1916,22 @@ table _Medidas
 			        ),
 			        [@v], DESC
 			    )
+			VAR _ests =
+			    TOPN (
+			        IF ( _grupo = "estado", 5, 0 ),
+			        ADDCOLUMNS (
+			            SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ),
+			            "@v", [T01 · ponto · votos no grupo],
+			            "@p", [T01 · ponto · parte do estado],
+			            "@p22", [T01 · ponto · % no grupo em 2022],
+			            "@p26", [T01 · ponto · % no grupo em 2026],
+			            "@d", [T01 · ponto · variação no grupo]
+			        ),
+			        [@v], DESC
+			    )
 			VAR _portes =
 			    TOPN (
-			        IF ( _comUF = 1, 10, 0 ),
+			        IF ( _grupo = "porte", 10, 0 ),
 			        ADDCOLUMNS (
 			            VALUES ( 'Município'[Porte] ),
 			            "@v", [T01 · ponto · votos no grupo],
@@ -1427,6 +1950,10 @@ table _Medidas
 			            "@g", 'UF'[Região], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", - [@v]
 			        ),
 			        SELECTCOLUMNS (
+			            FILTER ( _ests, [@v] > 0 ), /* lista */
+			            "@g", 'UF'[Nome], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", - [@v]
+			        ),
+			        SELECTCOLUMNS (
 			            FILTER ( _portes, [@v] > 0 && LEN ( 'Município'[Porte] ) > 0 ), /* lista */
 			            "@g", 'Município'[Porte], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", [@o]
 			        )
@@ -1441,8 +1968,14 @@ table _Medidas
 			VAR _cls = IF ( _n = 13, "lula", "flavio" )
 			VAR _ic = IF ( _n = 13, "barras-vermelho", "barras-azul" )
 			VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _a
-			VAR _sub = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _par, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _n & " · " & IF ( _comUF = 1, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rec, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ), "Brasil, sem o exterior" )
-			VAR _rotG = IF ( _comUF = 1, "cidades de", "região" )
+			VAR _sub = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _par, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _n & " · " & IF ( _grupo = "região", "Brasil, sem o exterior", SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rec, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) )
+			VAR _rotG =
+			    SWITCH (
+			        _grupo,
+			        "porte", "cidades de",
+			        "estado", IF ( _nEst > 5, "estado · 5 de " & _nEst, "estado" ),
+			        "região"
+			    )
 			VAR _nota =
 			    IF (
 			        _a = 2026,
@@ -1484,7 +2017,7 @@ table _Medidas
 	/// Texto para leitor de tela do bloco de 2022 para 2026.
 	measure 'T01 · Virada · ALT' =
 			-- 1 · Leituras
-			VAR _rec = [T01 · recorte]
+			VAR _rec = [Recorte · em]
 			VAR _pt22 = [T01 · PT 2022 votos]
 			VAR _pt26 = [T01 · Lula votos]
 			VAR _pl22 = [T01 · PL 2022 votos]
@@ -1492,7 +2025,7 @@ table _Medidas
 			-- 2 · Textos
 			RETURN
 			    LEFT (
-			        "De 2022 para 2026, em " & _rec & ": Lula foi de " & SWITCH ( TRUE (), ABS ( _pt22 ) >= 1000000, FORMAT ( _pt22 / 1000000, "0.00" ) & " mi", ABS ( _pt22 ) >= 1000, FORMAT ( _pt22 / 1000, "0.0" ) & " mil", FORMAT ( _pt22, "#,0" ) ) & " para " & SWITCH ( TRUE (), ABS ( _pt26 ) >= 1000000, FORMAT ( _pt26 / 1000000, "0.00" ) & " mi", ABS ( _pt26 ) >= 1000, FORMAT ( _pt26 / 1000, "0.0" ) & " mil", FORMAT ( _pt26, "#,0" ) )
+			        "De 2022 para 2026, " & _rec & ": Lula foi de " & SWITCH ( TRUE (), ABS ( _pt22 ) >= 1000000, FORMAT ( _pt22 / 1000000, "0.00" ) & " mi", ABS ( _pt22 ) >= 1000, FORMAT ( _pt22 / 1000, "0.0" ) & " mil", FORMAT ( _pt22, "#,0" ) ) & " para " & SWITCH ( TRUE (), ABS ( _pt26 ) >= 1000000, FORMAT ( _pt26 / 1000000, "0.00" ) & " mi", ABS ( _pt26 ) >= 1000, FORMAT ( _pt26 / 1000, "0.0" ) & " mil", FORMAT ( _pt26, "#,0" ) )
 			            & " votos; o PL foi de " & SWITCH ( TRUE (), ABS ( _pl22 ) >= 1000000, FORMAT ( _pl22 / 1000000, "0.00" ) & " mi", ABS ( _pl22 ) >= 1000, FORMAT ( _pl22 / 1000, "0.0" ) & " mil", FORMAT ( _pl22, "#,0" ) ) & " para " & SWITCH ( TRUE (), ABS ( _pl26 ) >= 1000000, FORMAT ( _pl26 / 1000000, "0.00" ) & " mi", ABS ( _pl26 ) >= 1000, FORMAT ( _pl26 / 1000, "0.0" ) & " mil", FORMAT ( _pl26, "#,0" ) ) & ".",
 			        250
 			    )
@@ -2183,16 +2716,14 @@ table _Medidas
 		displayFolder: T03 Lula\Contas
 		lineageTag: fe5e6892-4159-5524-b973-67385e672e88
 
-	/// 1 quando o recorte é um grupo de UFs (a região clicada na origem), 0 nos outros casos.
+	/// 1 quando a região foi CLICADA na origem dos votos (filtro cruzado em 'UF'[Região]); 0 nos outros casos. O filtro de estado da casca, em árvore, filtra 'UF'[Caminho] e não conta aqui (uma região escolhida nele é um recorte de vários estados: [T03 · vários estados]).
 	measure 'T03 · com região' =
-			VAR _ufs = CALCULATE ( DISTINCTCOUNT ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
-			RETURN
-			    IF ( ISCROSSFILTERED ( 'UF' ) && _ufs > 1, 1, 0 )
+			INT ( ISFILTERED ( 'UF'[Região] ) || ISFILTERED ( 'UF'[RegiaoOrdem] ) )
 		formatString: 0
 		displayFolder: T03 Lula\Contas
 		lineageTag: b4c22a05-8bf5-57f0-8b03-f6c1eb99f0d9
 
-	/// 1 quando o recorte é UMA UF (filtro da casca), 0 no Brasil, numa região ou sem UF.
+	/// 1 quando o recorte é UMA UF (filtro de estado da casca), 0 no Brasil, numa região ou com vários estados.
 	measure 'T03 · com UF' =
 			VAR _ufs = CALCULATE ( DISTINCTCOUNT ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
 			RETURN
@@ -2231,6 +2762,16 @@ table _Medidas
 		formatString: 0.0%
 		displayFolder: T03 Lula\Contas
 		lineageTag: a4cd5b0d-0a37-5ae7-aa58-b2df10c61a34
+
+	/// 1 na entrada da origem (grão 'UF'[Região]) da primeira região do recorte, do Norte ao Sul: com vários estados no filtro, só ela desenha a lista de estados (as outras entradas ficam vazias).
+	measure 'T03 · linha da primeira região' =
+			VAR _primeira =
+			    CALCULATE ( MIN ( 'UF'[RegiaoOrdem] ), REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ), 'UF'[Tipo] = "UF" )
+			RETURN
+			    INT ( SELECTEDVALUE ( 'UF'[RegiaoOrdem] ) = _primeira )
+		formatString: 0
+		displayFolder: T03 Lula\Contas
+		lineageTag: 2faf947a-59c3-5f72-b90c-6fa0d2fe564c
 
 	/// UF (no Brasil ou na região) ou município (numa UF) onde o candidato teve o forte % dos válidos.
 	measure 'T03 · lugar mais forte' =
@@ -2376,6 +2917,16 @@ table _Medidas
 		displayFolder: T03 Lula\Contas
 		lineageTag: b789c217-5ad5-568d-bff6-600fdf9b68e8
 
+	/// Parcela dos votos de Lula no recorte (soma dos municípios) que veio da UF da linha (0–1): a lista de estados da origem quando o filtro escolheu vários. Tira só as colunas da UF da linha; o recorte do filtro ('UF'[Caminho]) fica.
+	measure 'T03 · parte do estado no recorte' =
+			DIVIDE (
+			    [T03 · votos (municípios)],
+			    CALCULATE ( [T03 · votos (municípios)], REMOVEFILTERS ( 'UF'[UF], 'UF'[Nome], 'UF'[Ordem] ) )
+			)
+		formatString: 0%
+		displayFolder: T03 Lula\Contas
+		lineageTag: 663681b8-bd4d-53a9-8c8d-0e3680366a7b
+
 	/// Parcela dos votos de Lula na UF (soma dos municípios) que saiu do município marcado (0–1).
 	measure 'T03 · parte do município no estado' =
 			VAR _s = [T03 · UF do município]
@@ -2455,14 +3006,12 @@ table _Medidas
 		displayFolder: T03 Lula\Contas
 		lineageTag: 98b5b142-3ca4-5d12-b0bc-ace51d285e28
 
-	/// Nome do recorte: o município marcado, a UF do filtro, a região clicada ou Brasil.
+	/// Nome do recorte: o município marcado ou o recorte de estado, lido da medida comum [Recorte · nome] (Brasil; a UF; a região, escolhida no filtro ou clicada na origem; 'MG e SP'; '3 estados').
 	measure 'T03 · recorte' =
-			SWITCH (
-			    TRUE (),
-			    [T03 · com município] = 1, SELECTEDVALUE ( 'Município'[Rótulo], "municípios marcados" ),
-			    [T03 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome] ),
-			    [T03 · com região] = 1, SELECTEDVALUE ( 'UF'[Região], "UFs escolhidas" ),
-			    "Brasil"
+			IF (
+			    [T03 · com município] = 1,
+			    SELECTEDVALUE ( 'Município'[Rótulo], "municípios marcados" ),
+			    [Recorte · nome]
 			)
 		displayFolder: T03 Lula\Contas
 		lineageTag: 97cf38f2-0ab9-56bb-9835-67289bd4d596
@@ -2489,7 +3038,7 @@ table _Medidas
 		displayFolder: T03 Lula\Contas
 		lineageTag: 288a3a42-900d-5029-8eb2-f80316a748d6
 
-	/// Nome da UF da linha (lista de estados do dossiê da região).
+	/// Nome da UF da linha (lista de estados do dossiê da região e da origem com vários estados).
 	measure 'T03 · UF da linha' =
 			SELECTEDVALUE ( 'UF'[Nome] )
 		displayFolder: T03 Lula\Contas
@@ -2599,6 +3148,16 @@ table _Medidas
 		displayFolder: T03 Lula\Contas
 		lineageTag: 03889dde-92b6-508f-94b5-13bbc29353e4
 
+	/// 1 quando o filtro de estado escolheu mais de uma UF (uma região inteira, estados soltos ou regiões misturadas): a origem mostra os estados do recorte. Ignora a região da linha da origem (o grão) e a região clicada; 0 no Brasil e numa UF.
+	measure 'T03 · vários estados' =
+			VAR _com = CALCULATE ( [Recorte · com escolha], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+			VAR _n = CALCULATE ( [Recorte · UFs], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+			RETURN
+			    IF ( _com = 1 && _n > 1, 1, 0 )
+		formatString: 0
+		displayFolder: T03 Lula\Contas
+		lineageTag: 07866482-b6bd-5776-9615-a580da7fa6d1
+
 	/// Centro do município no quadro 1000 × 1000 dos mapas (x), para o ponto do mapa.
 	measure 'T03 · x do município' =
 			SELECTEDVALUE ( 'Município'[X] )
@@ -2666,8 +3225,11 @@ table _Medidas
 			        [T03 · com município] = 1,
 			            [T03 · município] & ": " & FORMAT ( [T03 · parte do município no estado], "0.0%" ) & " dos votos de Lula em "
 			                & [T03 · estado do município] & ".",
+			        [T03 · vários estados] = 1,
+			            "Os estados que mais deram votos a Lula " & [Recorte · em] & ", com a parte de cada um nos "
+			                & "votos dele.",
 			        [T03 · com UF] = 1,
-			            "As cidades que mais deram votos a Lula em " & [T03 · recorte] & ".",
+			            "As cidades que mais deram votos a Lula " & [Recorte · em] & ".",
 			        "De onde vêm os votos de Lula, por região. Clique numa região para ver só ela no mapa; passe o mouse "
 			            & "para ver os estados dela."
 			    ),
@@ -2675,6 +3237,74 @@ table _Medidas
 			)
 		displayFolder: T03 Lula\Desenho
 		lineageTag: e257d182-5bb8-5aa8-b5cb-b07d7777e486
+
+	/// Com vários estados no filtro de estado (uma região inteira, estados soltos ou regiões misturadas): os estados que mais deram votos a Lula na barra (os 5 maiores e os demais estados) e na lista — a parte de cada um nos votos dele no recorte, os votos e o % dos válidos. Só a entrada da primeira região do recorte desenha (as outras ficam vazias). Sem clique (o clique numa cidade é no mapa).
+	measure 'T03 · Origem · bloco estados' =
+			-- 1 · Leituras
+			VAR _primeira = [T03 · linha da primeira região]
+			VAR _n = CALCULATE ( [Recorte · UFs], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+			VAR _ufsBase =
+			    CALCULATETABLE (
+			        TOPN (
+			            5,
+			            ADDCOLUMNS (
+			                VALUES ( 'UF'[UF] ),
+			                "@nome", [T03 · UF da linha],
+			                "@v", [T03 · votos (municípios)],
+			                "@p", [T03 · parte do estado no recorte],
+			                "@pv", [T03 · % (municípios)]
+			            ),
+			            [@v], DESC
+			        ),
+			        REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ),
+			        'UF'[Tipo] = "UF"
+			    )
+			VAR _lista =
+			    SELECTCOLUMNS ( FILTER ( _ufsBase, [@v] > 0 ), "@nome", [@nome], "@v", [@v], "@p", [@p], "@pv", [@pv] ) /* lista */
+			-- 3 · Geometria (barra de 620 px; as fatias seguem a ordem dos votos; linhas de 30 px a partir de y 92)
+			VAR _comIni =
+			    ADDCOLUMNS (
+			        _lista,
+			        "@ini", VAR _vv = [@v] RETURN SUMX ( FILTER ( _lista, [@v] > _vv ), [@p] ) + 0, /* lista */
+			        "@ord", VAR _vv = [@v] RETURN 1 + COUNTROWS ( FILTER ( _lista, [@v] > _vv ) ) /* lista */
+			    )
+			VAR _sobra = ( 1 - SUMX ( _lista, [@p] ) ) * 620 -- geometria (o trilho dos demais estados)
+			VAR _fatias =
+			    CONCATENATEX (
+			        _comIni,
+			        VAR _w = [@p] * 620 -- geometria
+			        VAR _cabe = ( LEN ( [@nome] ) + 4 ) * 9.4 + 16 -- geometria (nome e % em Sora 15 semibold)
+			        VAR _rot = IF ( _w >= _cabe, [@nome] & " " & FORMAT ( [@p], "0%" ), IF ( _w >= 44, FORMAT ( [@p], "0%" ), "" ) )
+			        RETURN
+			            "<div class='fa o" & MIN ( [@ord], 5 ) & " barra-x d" & ( [@ord] + 4 ) & "' style='left:"
+			                & FORMAT ( [@ini] * 620, "0.0##", "en-US" ) & "px;width:" & FORMAT ( _w, "0.0##", "en-US" ) & "px'><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rot, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span></div>",
+			        "",
+			        [@v], DESC
+			    )
+			VAR _linhas =
+			    CONCATENATEX (
+			        _comIni,
+			        "<div class='li sobe d" & ( [@ord] + 6 ) & "' style='top:" & ( 92 + ( [@ord] - 1 ) * 30 ) & "px'>"
+			            & "<i class='sw o" & MIN ( [@ord], 5 ) & "'></i><span class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span>"
+			            & "<span class='a'>" & FORMAT ( [@p], "0%" ) & " dos votos dele · " & SWITCH ( TRUE (), ABS ( [@v] ) >= 1000000, FORMAT ( [@v] / 1000000, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( [@v] / 1000, "0.0" ) & " mil", FORMAT ( [@v], "#,0" ) ) & "</span>"
+			            & "<span class='b'>" & FORMAT ( [@pv], "0.0%" ) & " dos válidos</span></div>",
+			        "",
+			        [@v], DESC
+			    )
+			-- 4 · Marcação
+			RETURN
+			    IF (
+			        _primeira = 1,
+			        "<div class='tela og'><div class='oc'>"
+			            & "<div class='rot ro sobe'>De onde vêm os votos · os estados que mais deram votos</div>"
+			            & "<div class='trilho entra d3'></div>"
+			            & IF ( _n > 5 && _sobra >= 136, "<span class='resto entra d9'>demais estados</span>" )
+			            & _fatias & _linhas
+			            & "<div class='dica entra d14'>clique num ponto do mapa para ver uma cidade</div>"
+			        & "</div></div>"
+			    )
+		displayFolder: T03 Lula\Desenho
+		lineageTag: edba55c8-df45-5c3e-bd4e-7f99ddcb84e8
 
 	/// Com um município marcado (uma entrada só): o lugar dele entre as cidades da UF — a fatia dos votos de Lula no estado que saiu dele e as posições em votos e em % dos válidos. Sem clique.
 	measure 'T03 · Origem · bloco município' =
@@ -2828,7 +3458,7 @@ table _Medidas
 		displayFolder: T03 Lula\Desenho
 		lineageTag: fa0e8e8e-005e-5886-a046-e98d0a8d142e
 
-	/// De onde vêm os votos de Lula, uma entrada por região: no Brasil, a fatia e a linha da região (clicáveis); numa UF, as cidades que mais deram votos; com um município marcado, o lugar dele entre as cidades do estado. Só escolhe o bloco.
+	/// De onde vêm os votos de Lula, uma entrada por região: no Brasil, a fatia e a linha da região (clicáveis); com vários estados no filtro (uma região inteira ou estados soltos), os estados que mais deram votos; numa UF, as cidades que mais deram votos; com um município marcado, o lugar dele entre as cidades do estado. Só escolhe o bloco.
 	measure 'T03 · Origem · HTML' =
 			VAR _v = [T03 · votos (municípios)]
 			RETURN
@@ -2836,6 +3466,7 @@ table _Medidas
 			        TRUE (),
 			        NOT ( _v > 0 ), BLANK (),
 			        [T03 · com município] = 1, [T03 · Origem · bloco município],
+			        [T03 · vários estados] = 1, [T03 · Origem · bloco estados],
 			        [T03 · com UF] = 1, [T03 · Origem · bloco UF],
 			        [T03 · Origem · bloco região]
 			    )
@@ -3736,16 +4367,14 @@ table _Medidas
 		displayFolder: T05 Flávio\Contas
 		lineageTag: fab9d5da-2d64-52b1-9a03-e6d229eff6ce
 
-	/// 1 quando o recorte é um grupo de UFs (a região clicada na origem), 0 nos outros casos.
+	/// 1 quando a região foi CLICADA na origem dos votos (filtro cruzado em 'UF'[Região]); 0 nos outros casos. O filtro de estado da casca, em árvore, filtra 'UF'[Caminho] e não conta aqui (uma região escolhida nele é um recorte de vários estados: [T05 · vários estados]).
 	measure 'T05 · com região' =
-			VAR _ufs = CALCULATE ( DISTINCTCOUNT ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
-			RETURN
-			    IF ( ISCROSSFILTERED ( 'UF' ) && _ufs > 1, 1, 0 )
+			INT ( ISFILTERED ( 'UF'[Região] ) || ISFILTERED ( 'UF'[RegiaoOrdem] ) )
 		formatString: 0
 		displayFolder: T05 Flávio\Contas
 		lineageTag: d794688b-85b0-534a-aebb-5eb52d0c5aa8
 
-	/// 1 quando o recorte é UMA UF (filtro da casca), 0 no Brasil, numa região ou sem UF.
+	/// 1 quando o recorte é UMA UF (filtro de estado da casca), 0 no Brasil, numa região ou com vários estados.
 	measure 'T05 · com UF' =
 			VAR _ufs = CALCULATE ( DISTINCTCOUNT ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
 			RETURN
@@ -3784,6 +4413,16 @@ table _Medidas
 		formatString: 0.0%
 		displayFolder: T05 Flávio\Contas
 		lineageTag: eb8a44e9-38d6-535b-ad3b-77078d7b9915
+
+	/// 1 na entrada da origem (grão 'UF'[Região]) da primeira região do recorte, do Norte ao Sul: com vários estados no filtro, só ela desenha a lista de estados (as outras entradas ficam vazias).
+	measure 'T05 · linha da primeira região' =
+			VAR _primeira =
+			    CALCULATE ( MIN ( 'UF'[RegiaoOrdem] ), REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ), 'UF'[Tipo] = "UF" )
+			RETURN
+			    INT ( SELECTEDVALUE ( 'UF'[RegiaoOrdem] ) = _primeira )
+		formatString: 0
+		displayFolder: T05 Flávio\Contas
+		lineageTag: e0cfd506-637a-5183-a17e-5bec993a8995
 
 	/// UF (no Brasil ou na região) ou município (numa UF) onde o candidato teve o forte % dos válidos.
 	measure 'T05 · lugar mais forte' =
@@ -3929,6 +4568,16 @@ table _Medidas
 		displayFolder: T05 Flávio\Contas
 		lineageTag: 119e4ff8-8a69-5c63-80eb-917c5c2c28cf
 
+	/// Parcela dos votos de Flávio no recorte (soma dos municípios) que veio da UF da linha (0–1): a lista de estados da origem quando o filtro escolheu vários. Tira só as colunas da UF da linha; o recorte do filtro ('UF'[Caminho]) fica.
+	measure 'T05 · parte do estado no recorte' =
+			DIVIDE (
+			    [T05 · votos (municípios)],
+			    CALCULATE ( [T05 · votos (municípios)], REMOVEFILTERS ( 'UF'[UF], 'UF'[Nome], 'UF'[Ordem] ) )
+			)
+		formatString: 0%
+		displayFolder: T05 Flávio\Contas
+		lineageTag: 3e20ba14-c4e6-5b35-9bd6-bdd710720af7
+
 	/// Parcela dos votos de Flávio na UF (soma dos municípios) que saiu do município marcado (0–1).
 	measure 'T05 · parte do município no estado' =
 			VAR _s = [T05 · UF do município]
@@ -4008,14 +4657,12 @@ table _Medidas
 		displayFolder: T05 Flávio\Contas
 		lineageTag: 88e25884-7c9a-516a-8ad0-9b52f4419ead
 
-	/// Nome do recorte: o município marcado, a UF do filtro, a região clicada ou Brasil.
+	/// Nome do recorte: o município marcado ou o recorte de estado, lido da medida comum [Recorte · nome] (Brasil; a UF; a região, escolhida no filtro ou clicada na origem; 'MG e SP'; '3 estados').
 	measure 'T05 · recorte' =
-			SWITCH (
-			    TRUE (),
-			    [T05 · com município] = 1, SELECTEDVALUE ( 'Município'[Rótulo], "municípios marcados" ),
-			    [T05 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome] ),
-			    [T05 · com região] = 1, SELECTEDVALUE ( 'UF'[Região], "UFs escolhidas" ),
-			    "Brasil"
+			IF (
+			    [T05 · com município] = 1,
+			    SELECTEDVALUE ( 'Município'[Rótulo], "municípios marcados" ),
+			    [Recorte · nome]
 			)
 		displayFolder: T05 Flávio\Contas
 		lineageTag: ca58133b-1220-5641-833d-a6130abbe6d2
@@ -4042,7 +4689,7 @@ table _Medidas
 		displayFolder: T05 Flávio\Contas
 		lineageTag: 72823186-2c54-5cd5-a112-b65e56eda9e6
 
-	/// Nome da UF da linha (lista de estados do dossiê da região).
+	/// Nome da UF da linha (lista de estados do dossiê da região e da origem com vários estados).
 	measure 'T05 · UF da linha' =
 			SELECTEDVALUE ( 'UF'[Nome] )
 		displayFolder: T05 Flávio\Contas
@@ -4152,6 +4799,16 @@ table _Medidas
 		displayFolder: T05 Flávio\Contas
 		lineageTag: 20a711f7-0343-5c89-9bfd-d703fb2dad08
 
+	/// 1 quando o filtro de estado escolheu mais de uma UF (uma região inteira, estados soltos ou regiões misturadas): a origem mostra os estados do recorte. Ignora a região da linha da origem (o grão) e a região clicada; 0 no Brasil e numa UF.
+	measure 'T05 · vários estados' =
+			VAR _com = CALCULATE ( [Recorte · com escolha], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+			VAR _n = CALCULATE ( [Recorte · UFs], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+			RETURN
+			    IF ( _com = 1 && _n > 1, 1, 0 )
+		formatString: 0
+		displayFolder: T05 Flávio\Contas
+		lineageTag: 864c2af0-efd8-5385-bc30-153bf96b126e
+
 	/// Centro do município no quadro 1000 × 1000 dos mapas (x), para o ponto do mapa.
 	measure 'T05 · x do município' =
 			SELECTEDVALUE ( 'Município'[X] )
@@ -4219,8 +4876,11 @@ table _Medidas
 			        [T05 · com município] = 1,
 			            [T05 · município] & ": " & FORMAT ( [T05 · parte do município no estado], "0.0%" ) & " dos votos de Flávio em "
 			                & [T05 · estado do município] & ".",
+			        [T05 · vários estados] = 1,
+			            "Os estados que mais deram votos a Flávio " & [Recorte · em] & ", com a parte de cada um nos "
+			                & "votos dele.",
 			        [T05 · com UF] = 1,
-			            "As cidades que mais deram votos a Flávio em " & [T05 · recorte] & ".",
+			            "As cidades que mais deram votos a Flávio " & [Recorte · em] & ".",
 			        "De onde vêm os votos de Flávio, por região. Clique numa região para ver só ela no mapa; passe o mouse "
 			            & "para ver os estados dela."
 			    ),
@@ -4228,6 +4888,74 @@ table _Medidas
 			)
 		displayFolder: T05 Flávio\Desenho
 		lineageTag: 27343143-d8da-5ae4-90bc-9e1d64b671ac
+
+	/// Com vários estados no filtro de estado (uma região inteira, estados soltos ou regiões misturadas): os estados que mais deram votos a Flávio na barra (os 5 maiores e os demais estados) e na lista — a parte de cada um nos votos dele no recorte, os votos e o % dos válidos. Só a entrada da primeira região do recorte desenha (as outras ficam vazias). Sem clique (o clique numa cidade é no mapa).
+	measure 'T05 · Origem · bloco estados' =
+			-- 1 · Leituras
+			VAR _primeira = [T05 · linha da primeira região]
+			VAR _n = CALCULATE ( [Recorte · UFs], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+			VAR _ufsBase =
+			    CALCULATETABLE (
+			        TOPN (
+			            5,
+			            ADDCOLUMNS (
+			                VALUES ( 'UF'[UF] ),
+			                "@nome", [T05 · UF da linha],
+			                "@v", [T05 · votos (municípios)],
+			                "@p", [T05 · parte do estado no recorte],
+			                "@pv", [T05 · % (municípios)]
+			            ),
+			            [@v], DESC
+			        ),
+			        REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ),
+			        'UF'[Tipo] = "UF"
+			    )
+			VAR _lista =
+			    SELECTCOLUMNS ( FILTER ( _ufsBase, [@v] > 0 ), "@nome", [@nome], "@v", [@v], "@p", [@p], "@pv", [@pv] ) /* lista */
+			-- 3 · Geometria (barra de 620 px; as fatias seguem a ordem dos votos; linhas de 30 px a partir de y 92)
+			VAR _comIni =
+			    ADDCOLUMNS (
+			        _lista,
+			        "@ini", VAR _vv = [@v] RETURN SUMX ( FILTER ( _lista, [@v] > _vv ), [@p] ) + 0, /* lista */
+			        "@ord", VAR _vv = [@v] RETURN 1 + COUNTROWS ( FILTER ( _lista, [@v] > _vv ) ) /* lista */
+			    )
+			VAR _sobra = ( 1 - SUMX ( _lista, [@p] ) ) * 620 -- geometria (o trilho dos demais estados)
+			VAR _fatias =
+			    CONCATENATEX (
+			        _comIni,
+			        VAR _w = [@p] * 620 -- geometria
+			        VAR _cabe = ( LEN ( [@nome] ) + 4 ) * 9.4 + 16 -- geometria (nome e % em Sora 15 semibold)
+			        VAR _rot = IF ( _w >= _cabe, [@nome] & " " & FORMAT ( [@p], "0%" ), IF ( _w >= 44, FORMAT ( [@p], "0%" ), "" ) )
+			        RETURN
+			            "<div class='fa o" & MIN ( [@ord], 5 ) & " barra-x d" & ( [@ord] + 4 ) & "' style='left:"
+			                & FORMAT ( [@ini] * 620, "0.0##", "en-US" ) & "px;width:" & FORMAT ( _w, "0.0##", "en-US" ) & "px'><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rot, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span></div>",
+			        "",
+			        [@v], DESC
+			    )
+			VAR _linhas =
+			    CONCATENATEX (
+			        _comIni,
+			        "<div class='li sobe d" & ( [@ord] + 6 ) & "' style='top:" & ( 92 + ( [@ord] - 1 ) * 30 ) & "px'>"
+			            & "<i class='sw o" & MIN ( [@ord], 5 ) & "'></i><span class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span>"
+			            & "<span class='a'>" & FORMAT ( [@p], "0%" ) & " dos votos dele · " & SWITCH ( TRUE (), ABS ( [@v] ) >= 1000000, FORMAT ( [@v] / 1000000, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( [@v] / 1000, "0.0" ) & " mil", FORMAT ( [@v], "#,0" ) ) & "</span>"
+			            & "<span class='b'>" & FORMAT ( [@pv], "0.0%" ) & " dos válidos</span></div>",
+			        "",
+			        [@v], DESC
+			    )
+			-- 4 · Marcação
+			RETURN
+			    IF (
+			        _primeira = 1,
+			        "<div class='tela og'><div class='oc'>"
+			            & "<div class='rot ro sobe'>De onde vêm os votos · os estados que mais deram votos</div>"
+			            & "<div class='trilho entra d3'></div>"
+			            & IF ( _n > 5 && _sobra >= 136, "<span class='resto entra d9'>demais estados</span>" )
+			            & _fatias & _linhas
+			            & "<div class='dica entra d14'>clique num ponto do mapa para ver uma cidade</div>"
+			        & "</div></div>"
+			    )
+		displayFolder: T05 Flávio\Desenho
+		lineageTag: 0d3a2a34-9296-5be8-a022-d65253244017
 
 	/// Com um município marcado (uma entrada só): o lugar dele entre as cidades da UF — a fatia dos votos de Flávio no estado que saiu dele e as posições em votos e em % dos válidos. Sem clique.
 	measure 'T05 · Origem · bloco município' =
@@ -4381,7 +5109,7 @@ table _Medidas
 		displayFolder: T05 Flávio\Desenho
 		lineageTag: 21d0f58f-d007-589f-97a9-cd6c99427363
 
-	/// De onde vêm os votos de Flávio, uma entrada por região: no Brasil, a fatia e a linha da região (clicáveis); numa UF, as cidades que mais deram votos; com um município marcado, o lugar dele entre as cidades do estado. Só escolhe o bloco.
+	/// De onde vêm os votos de Flávio, uma entrada por região: no Brasil, a fatia e a linha da região (clicáveis); com vários estados no filtro (uma região inteira ou estados soltos), os estados que mais deram votos; numa UF, as cidades que mais deram votos; com um município marcado, o lugar dele entre as cidades do estado. Só escolhe o bloco.
 	measure 'T05 · Origem · HTML' =
 			VAR _v = [T05 · votos (municípios)]
 			RETURN
@@ -4389,6 +5117,7 @@ table _Medidas
 			        TRUE (),
 			        NOT ( _v > 0 ), BLANK (),
 			        [T05 · com município] = 1, [T05 · Origem · bloco município],
+			        [T05 · vários estados] = 1, [T05 · Origem · bloco estados],
 			        [T05 · com UF] = 1, [T05 · Origem · bloco UF],
 			        [T05 · Origem · bloco região]
 			    )
@@ -4802,7 +5531,7 @@ table _Medidas
 		displayFolder: T06 Ausência\Contas
 		lineageTag: 967305f6-2f30-58c5-bcf2-5685c357f985
 
-	/// 1 quando o filtro de UF da casca está ativo (a tela mostra a UF), 0 no Brasil.
+	/// 1 com estado ou região escolhido no filtro de estado da casca (as contas somam os municípios das UFs escolhidas), 0 no Brasil (o total oficial, com o exterior).
 	measure 'T06 · com UF' =
 			INT ( ISCROSSFILTERED ( 'UF' ) )
 		formatString: 0
@@ -4914,9 +5643,9 @@ table _Medidas
 		displayFolder: T06 Ausência\Contas
 		lineageTag: d4a8e639-4015-5098-8984-27b52d9e8923
 
-	/// Nome do recorte: Brasil ou o nome da UF escolhida no filtro.
+	/// Nome do recorte, da medida comum [Recorte · nome]: 'Brasil', o estado ('Bahia'), a região inteira ('Nordeste') ou vários estados ('MG e SP', '3 estados').
 	measure 'T06 · recorte' =
-			IF ( [T06 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome], "UFs escolhidas" ), "Brasil" )
+			[Recorte · nome]
 		displayFolder: T06 Ausência\Contas
 		lineageTag: 498eceff-2ea9-55c3-9e44-b29cb78d93d8
 
@@ -5016,7 +5745,7 @@ table _Medidas
 	/// Texto para leitor de tela das colunas da composição.
 	measure 'T06 · Composição · ALT' =
 			LEFT (
-			    "Colunas de 2006 a 2026 com quem não escolheu ninguém em " & [T06 · recorte]
+			    "Colunas de 2006 a 2026 com quem não escolheu ninguém " & [Recorte · em]
 			        & ": quem faltou, quem anulou e quem votou em branco. Passe o mouse num ano para ver a disputa e quantas "
 			        & "vezes a diferença entre os dois primeiros cabia em quem faltou.",
 			    250
@@ -5189,7 +5918,14 @@ table _Medidas
 			    ADDCOLUMNS ( VALUES ( 'Ano'[Ano] ), "@p", [T06 · abstenção % (ano)], "@n", [T06 · abstenções (ano)] )
 			-- 2 · Textos
 			VAR _verbo = IF ( _dpp >= 0, "subiu", "caiu" )
-			VAR _manchete = "Em 20 anos, a abstenção " & _verbo & " de " & FORMAT ( _p06, "0.0%" ) & " para " & FORMAT ( _p26, "0.0%" )
+			VAR _txt06 = FORMAT ( _p06, "0.0%" )
+			VAR _txt26 = FORMAT ( _p26, "0.0%" )
+			VAR _manchete =
+			    IF (
+			        _txt06 = _txt26,
+			        "Em 20 anos, a abstenção ficou em " & _txt26,
+			        "Em 20 anos, a abstenção " & _verbo & " de " & _txt06 & " para " & _txt26
+			    )
 			-- 3 · Geometria (anos em x 60–700; % de cima para baixo em y 30–220, de 10% a 26% — ou o que couber)
 			VAR _min = MIN ( 0.10, MINX ( _anos, [@p] ) - 0.01 ) -- geometria
 			VAR _max = MAX ( 0.26, MAXX ( _anos, [@p] ) + 0.01 ) -- geometria
@@ -13104,9 +13840,9 @@ table _Medidas
 		displayFolder: T11 Virada\Contas
 		lineageTag: e5c3a605-0827-51e5-9560-1ce0d2b9d968
 
-	/// Nome da UF escolhida no filtro da tela (vazio = Brasil).
+	/// O lugar escolhido no filtro de estado da casca (árvore Região › Estado), pela medida comum [Recorte · nome]: 'Bahia', 'Nordeste', 'MG e SP', '3 estados'; vazio = Brasil. O filtro cai em 'UF'[Caminho] (24/10/2026), então ISFILTERED ( 'UF'[Nome] ) não serve mais.
 	measure 'T11 · recorte' =
-			IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )
+			IF ( [Recorte · com escolha] = 1, [Recorte · nome] )
 		displayFolder: T11 Virada\Contas
 		lineageTag: e97a5ef8-e7cb-5c0b-ab20-32adbc058454
 
@@ -15346,9 +16082,9 @@ table _Medidas
 		displayFolder: T13 Perfil\Contas
 		lineageTag: 64732ce9-1f61-50b5-8ea0-d1d74e2ba6be
 
-	/// Nome da UF escolhida no filtro da tela (vazio = Brasil).
+	/// O lugar escolhido no filtro de estado da casca (árvore Região › Estado), pela medida comum [Recorte · nome]: 'Bahia', 'Nordeste', 'MG e SP', '3 estados'; vazio = Brasil. As contas da matriz já valem para qualquer conjunto de UFs (VALUES ( 'UF'[UF] ) traz todas as escolhidas).
 	measure 'T13 · recorte' =
-			IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )
+			IF ( [Recorte · com escolha] = 1, [Recorte · nome] )
 		displayFolder: T13 Perfil\Contas
 		lineageTag: 1f507368-6b54-5141-bd25-11eaa7bc6601
 
@@ -15914,11 +16650,16 @@ table _Medidas
 		displayFolder: T14 Série\Contas
 		lineageTag: ba591267-49cf-5c25-9bce-97cfd4a52dc1
 
-	/// adversário % na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel.
+	/// adversário % na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel e sem o recorte do filtro de estado (só a UF do contexto fica: o dossiê da região mostra todos os estados dela, como os painéis ignoram o filtro).
 	measure 'T14 · adversário % da UF na eleição dos painéis' =
 			VAR _a = [T14 · ano dos painéis]
 			RETURN
-			    CALCULATE ( [T14 · adversário %], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )
+			    CALCULATE (
+			        [T14 · adversário %],
+			        REMOVEFILTERS ( 'Município'[Região] ),
+			        ALLEXCEPT ( 'UF', 'UF'[UF] ),
+			        'Ano'[Ano] = _a
+			    )
 		formatString: 0.0%
 		displayFolder: T14 Série\Contas
 		lineageTag: ad1c9bc4-5a15-5ab4-8bf4-c765a86d7652
@@ -16021,14 +16762,14 @@ table _Medidas
 		displayFolder: T14 Série\Contas
 		lineageTag: 77d2e3e6-dacc-5b5e-b8e9-8ea49817dbab
 
-	/// O lugar com a preposição, para as frases: 'no Nordeste' (região clicada) ou 'em Minas Gerais' (UF).
+	/// O lugar com a preposição e o artigo certo, para as frases: 'no Nordeste' (região clicada ou inteira no filtro), 'na Bahia', 'em Minas Gerais', 'em MG e SP', 'em 3 estados' (medida comum [Recorte · em]); vazio = Brasil.
 	measure 'T14 · onde' =
 			VAR _reg = [T14 · região clicada]
 			RETURN
 			    IF (
 			        NOT ISBLANK ( _reg ),
 			        "no " & _reg,
-			        IF ( ISFILTERED ( 'UF'[Nome] ), "em " & SELECTEDVALUE ( 'UF'[Nome] ) )
+			        IF ( [Recorte · com escolha] = 1, [Recorte · em] )
 			    )
 		displayFolder: T14 Série\Contas
 		lineageTag: 1134d30f-621a-5dd4-b859-4a89859b6e4e
@@ -16084,11 +16825,16 @@ table _Medidas
 		displayFolder: T14 Série\Contas
 		lineageTag: 9af3f27d-3598-5fcd-bd8e-9f49efe7213c
 
-	/// PT % na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel.
+	/// PT % na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel e sem o recorte do filtro de estado (só a UF do contexto fica: o dossiê da região mostra todos os estados dela, como os painéis ignoram o filtro).
 	measure 'T14 · PT % da UF na eleição dos painéis' =
 			VAR _a = [T14 · ano dos painéis]
 			RETURN
-			    CALCULATE ( [T14 · PT %], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )
+			    CALCULATE (
+			        [T14 · PT %],
+			        REMOVEFILTERS ( 'Município'[Região] ),
+			        ALLEXCEPT ( 'UF', 'UF'[UF] ),
+			        'Ano'[Ano] = _a
+			    )
 		formatString: 0.0%
 		displayFolder: T14 Série\Contas
 		lineageTag: b0b7115a-befe-58f1-936a-35a6b91746a9
@@ -16121,13 +16867,24 @@ table _Medidas
 		displayFolder: T14 Série\Contas
 		lineageTag: 495050d4-1ae5-57c7-b14a-b541c10a92af
 
-	/// O lugar que a tela conta: a região clicada nos painéis ou a UF do filtro (vazio = Brasil).
+	/// O lugar que a tela conta: a região clicada nos painéis ou o recorte do filtro de estado (árvore Região › Estado), pela medida comum [Recorte · nome]: 'Bahia', 'Nordeste', 'MG e SP', '3 estados'; vazio = Brasil.
 	measure 'T14 · recorte' =
 			VAR _reg = [T14 · região clicada]
 			RETURN
-			    IF ( NOT ISBLANK ( _reg ), _reg, IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) ) )
+			    IF ( NOT ISBLANK ( _reg ), _reg, IF ( [Recorte · com escolha] = 1, [Recorte · nome] ) )
 		displayFolder: T14 Série\Contas
 		lineageTag: 0fdb3041-ad5d-5be2-8470-9eafa365fd39
+
+	/// O que da região do painel está no recorte, com 'de' e o artigo (medida comum [Recorte · de] só nessa região): 'da Bahia', 'de BA e SE', 'de 3 estados'; 'do Nordeste' quando a região está inteira; vazio sem estado dela.
+	measure 'T14 · recorte na região do painel' =
+			VAR _r = [T14 · região do painel]
+			RETURN
+			    IF (
+			        [T14 · UFs do recorte na região do painel] > 0,
+			        CALCULATE ( [Recorte · de], KEEPFILTERS ( 'UF'[Região] = _r ) )
+			    )
+		displayFolder: T14 Série\Contas
+		lineageTag: bb6d217a-6ffc-59eb-b2cf-9ec177b80a6c
 
 	/// A região clicada nos painéis (filtro cruzado em Município[Região]); vazio sem clique.
 	measure 'T14 · região clicada' =
@@ -16144,17 +16901,28 @@ table _Medidas
 		displayFolder: T14 Série\Contas
 		lineageTag: 1ec56d0a-52c4-56ec-b400-0fbc6d4800b6
 
-	/// Região da UF escolhida no filtro (vazio = Brasil).
+	/// As regiões que têm estados no recorte do filtro de estado, do Norte ao Sul ('Nordeste', 'Nordeste e Sudeste', 'Norte, Nordeste e Sul'); vazio = Brasil. Os painéis dessas regiões ficam em destaque.
 	measure 'T14 · região do recorte' =
-			IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Região] ) )
+			VAR _r =
+			    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[Região], 'UF'[RegiaoOrdem] ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+			VAR _n = COUNTROWS ( _r )
+			VAR _ult = MAXX ( TOPN ( 1, _r, 'UF'[RegiaoOrdem], DESC ), 'UF'[Região] )
+			VAR _resto = CONCATENATEX ( FILTER ( _r, 'UF'[Região] <> _ult ), 'UF'[Região], ", ", 'UF'[RegiaoOrdem], ASC )
+			RETURN
+			    IF ( [Recorte · com escolha] = 1 && _n > 0, IF ( _n = 1, _ult, _resto & " e " & _ult ) )
 		displayFolder: T14 Série\Contas
 		lineageTag: 69fc8dbc-3417-5c37-8142-9925ea4a0b64
 
-	/// Nome da UF escolhida no filtro de UF da tela (vazio = Brasil), sem a região clicada.
-	measure 'T14 · UF do filtro' =
-			IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )
+	/// A sigla do estado escolhido na região do painel, quando é um só ('MS'); vazio nos outros casos. A nota do painel usa a sigla quando o nome não cabe ao lado do nome da região.
+	measure 'T14 · sigla do recorte na região do painel' =
+			VAR _r = [T14 · região do painel]
+			RETURN
+			    IF (
+			        [T14 · UFs do recorte na região do painel] = 1,
+			        CALCULATE ( SELECTEDVALUE ( 'UF'[UF] ), KEEPFILTERS ( 'UF'[Região] = _r ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+			    )
 		displayFolder: T14 Série\Contas
-		lineageTag: c0fb795f-7428-5bb6-a59f-54eab3cd688e
+		lineageTag: 62d7d43f-a858-53a6-a656-15cb47c5b9a1
 
 	/// Quantas UFs tem a região do painel.
 	measure 'T14 · UFs da região' =
@@ -16165,7 +16933,7 @@ table _Medidas
 		displayFolder: T14 Série\Contas
 		lineageTag: 60f9ac26-7806-5487-b869-c07972218b5c
 
-	/// Quantas UFs da região do painel tiveram o PT à frente do adversário na eleição em destaque (a clicada ou 2026).
+	/// Quantas UFs da região do painel tiveram o PT à frente do adversário na eleição em destaque (a clicada ou 2026); ignora o recorte do filtro de estado, como os painéis.
 	measure 'T14 · UFs da região com o PT à frente' =
 			VAR _r = [T14 · região do painel]
 			VAR _a = [T14 · ano dos painéis]
@@ -16174,7 +16942,13 @@ table _Medidas
 			        FILTER (
 			            ADDCOLUMNS (
 			                FILTER ( ALL ( 'UF'[UF], 'UF'[Região] ), 'UF'[Região] = _r ),
-			                "@m", CALCULATE ( [T14 · margem do PT], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )
+			                "@m",
+			                    CALCULATE (
+			                        [T14 · margem do PT],
+			                        REMOVEFILTERS ( 'Município'[Região] ),
+			                        ALLEXCEPT ( 'UF', 'UF'[UF] ),
+			                        'Ano'[Ano] = _a
+			                    )
 			            ),
 			            [@m] > 0
 			        )
@@ -16182,6 +16956,18 @@ table _Medidas
 		formatString: 0
 		displayFolder: T14 Série\Contas
 		lineageTag: 139faea1-7078-5308-9552-812a260786cf
+
+	/// Quantos estados da região do painel estão no recorte do filtro de estado (0 sem escolha ou sem estado dela).
+	measure 'T14 · UFs do recorte na região do painel' =
+			VAR _r = [T14 · região do painel]
+			RETURN
+			    IF (
+			        [Recorte · com escolha] = 1,
+			        CALCULATE ( COUNTROWS ( 'UF' ), KEEPFILTERS ( 'UF'[Região] = _r ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+			    ) + 0
+		formatString: 0
+		displayFolder: T14 Série\Contas
+		lineageTag: 7997e90f-41dd-5f51-bc77-e43a0b5c826b
 
 	/// No ano do contexto, se o PT ficou atrás: quantas vezes isso já tinha acontecido até ali, contando este ano (1ª, 2ª…). Vazio se o PT ficou à frente.
 	measure 'T14 · vez em que o PT ficou atrás' =
@@ -16352,12 +17138,14 @@ table _Medidas
 		displayFolder: T14 Série\Desenho
 		lineageTag: 4500ad33-dfa6-59ae-84b0-44d8d34fc685
 
-	/// Uma entrada por região (granularidade Município[Região]), todas na mesma escala (10% a 70%): as linhas do PT e do adversário de 2006 a 2026 e os valores da eleição em destaque (a clicada na série ou 2026). Ignoram o filtro de UF; com uma UF escolhida, a região dela fica em destaque. O clique numa região leva a série e a resposta àquela região; o mouse abre o dossiê dela (ttT14Regiao).
+	/// Uma entrada por região (granularidade Município[Região]), todas na mesma escala (10% a 70%): as linhas do PT e do adversário de 2006 a 2026 e os valores da eleição em destaque (a clicada na série ou 2026). Ignoram o filtro de estado; cada região com estado escolhido fica em destaque, com o que dela está no filtro ('região escolhida', 'região da Bahia', 'região de BA e SE'). O clique numa região leva a série e a resposta àquela região; o mouse abre o dossiê dela (ttT14Regiao).
 	measure 'T14 · Regiões · HTML' =
 			-- 1 · Leituras
 			VAR _r = [T14 · região do painel]
-			VAR _sel = [T14 · região do recorte]
-			VAR _ufNome = [T14 · UF do filtro]
+			VAR _nRec = [T14 · UFs do recorte na região do painel]
+			VAR _nUf = [T14 · UFs da região]
+			VAR _deRec = [T14 · recorte na região do painel]
+			VAR _siglaRec = [T14 · sigla do recorte na região do painel]
 			VAR _ano = [T14 · ano dos painéis]
 			VAR _clique = NOT ISBLANK ( [T14 · ano escolhido] )
 			VAR _anos = DATATABLE ( "a", INTEGER, { { 2006 }, { 2010 }, { 2014 }, { 2018 }, { 2022 }, { 2026 } } )
@@ -16387,7 +17175,18 @@ table _Medidas
 			VAR _yAadv = MAXX ( FILTER ( _xy, [a] = _ano ), [@yAdv] ) /* lista */
 			VAR _xA = 8 + ( _ano - 2006 ) / 4 * 42
 			VAR _sep = IF ( ABS ( _yApt - _yAadv ) < 16, 8 - ABS ( _yApt - _yAadv ) / 2, 0 )
-			VAR _cls = IF ( _sel = _r, "pn sel", "pn" )
+			VAR _cls = IF ( _nRec > 0, "pn sel", "pn" )
+			-- a nota à mão cabe ao lado do nome no painel de 300 px (nome ~9,6 px por letra, Caveat ~8): "região da Bahia"; com
+			-- o nome comprido, a sigla ("região de MS" no Centro-Oeste, "região de RN" no Nordeste)
+			VAR _cabe = INT ( ( 292 - 9.6 * LEN ( _r ) ) / 8 ) -- geometria
+			VAR _nota1 = "região " & _deRec
+			VAR _nota =
+			    SWITCH (
+			        TRUE (),
+			        _nRec = _nUf, "região escolhida",
+			        LEN ( _nota1 ) <= _cabe || ISBLANK ( _siglaRec ), _nota1,
+			        "região de " & _siglaRec
+			    )
 			VAR _marca =
 			    IF (
 			        _clique,
@@ -16405,7 +17204,7 @@ table _Medidas
 			    IF (
 			        _o > 0,
 			        "<div class='tela t14g'><div class='" & _cls & " sobe d" & ( 2 + _o ) & "' style='left:" & _px & "px'>"
-			            & "<div class='nm'>" & _r & IF ( _sel = _r, " <span class='mao'>região de " & _ufNome & "</span>", "" )
+			            & "<div class='nm'>" & _r & IF ( _nRec > 0, " <span class='mao'>" & _nota & "</span>", "" )
 			            & "</div>"
 			            & "<svg width='300' height='132' viewBox='0 0 300 132'>"
 			                & "<line class='b' x1='0' x2='226' y1='116' y2='116'/>"
@@ -17431,32 +18230,15 @@ table _Medidas
 		displayFolder: T15 Minha cidade\Desenho
 		lineageTag: abecd74a-4188-58bc-9a82-2d921e837ad7
 
-	/// Texto alternativo do filtro de município (pílula e lista).
-	measure 'T15 · Filtro · pílula · ALT' =
+	/// Texto alternativo do filtro de município (o VizuFilter, com o gatilho dele; sem pílula desde 24/10/2026).
+	measure 'T15 · Filtro · ALT' =
 			-- 1 · Leituras
 			VAR _cid = [T15 · nome e UF da cidade]
 			-- 2 · Textos
 			RETURN
 			    IF ( ISBLANK ( _cid ), "Filtro de município: nenhuma cidade escolhida", "Filtro de município: " & _cid )
 		displayFolder: T15 Minha cidade\Desenho
-		lineageTag: cdc4dcbd-b241-5315-ad4d-82e2deb106e6
-
-	/// O botão fechado do filtro de município (a pílula, no lugar do filtro da casca): a cidade em uso ou o convite, com o funil e a seta. O clique abre o VizuFilter alto por cima (marcador T15_FILTRO_ABRE_01).
-	measure 'T15 · Filtro · pílula · HTML' =
-			-- 1 · Leituras
-			VAR _cid = [T15 · nome e UF da cidade]
-			-- 2 · Textos
-			VAR _txt = IF ( ISBLANK ( _cid ), "Escolha uma cidade", _cid )
-			VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _txt, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
-			-- 4 · Marcação
-			RETURN
-			    "<div class='tela pl" & IF ( ISBLANK ( _cid ), "", " ativo" ) & "'><span class='fu'><svg width='16' height='16' "
-			        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
-			        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><span class='rt'>Município</span><b>" & _esc
-			        & "</b><svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
-			        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>"
-		displayFolder: T15 Minha cidade\Desenho
-		lineageTag: 197dfb7c-55f5-5e19-9e53-2fb77e9bccec
+		lineageTag: 31c2d426-ec9e-59bf-9202-fa90648393c0
 
 	/// Texto alternativo das cidades parecidas.
 	measure 'T15 · Parecidas · ALT' =
@@ -21406,15 +22188,15 @@ table _Medidas
 		displayFolder: T18 Apuração\Contas
 		lineageTag: 881232c9-9843-54f1-8c68-23d4a0a38530
 
-	/// O que as contas mostram: Brasil, o nome da UF ou N UFs (filtro com várias).
+	/// O que as contas mostram: 'Brasil' sem estado no contexto; com estado (o filtro de estado em árvore, Região › Estado, ou o clique num quadrado do mapa), o nome comum do recorte [Recorte · nome] ('Bahia', 'Nordeste', 'MG e SP', '3 estados', 'Exterior'). Vazio quando o clique no mapa cai fora do filtro de estado (nenhuma UF no contexto; ver T18 · recorte vazio).
 	measure 'Apuração · escopo' =
 			VAR _ufs = COUNTROWS ( VALUES ( 'UF'[UF] ) )
 			RETURN
 			    SWITCH (
 			        TRUE (),
 			        NOT ISFILTERED ( 'UF' ), "Brasil",
-			        _ufs = 1, SELECTEDVALUE ( 'UF'[Nome] ),
-			        FORMAT ( _ufs, "0" ) & " UFs"
+			        _ufs = 0, BLANK (),
+			        [Recorte · nome]
 			    )
 		displayFolder: T18 Apuração\Contas
 		lineageTag: ffe3f546-3263-5577-b165-bc42d9e2c4fd
@@ -21469,6 +22251,12 @@ table _Medidas
 			    SWITCH ( TRUE (), _lula > _flavio, "Lula", _flavio > _lula, "Flávio", "—" )
 		displayFolder: T18 Apuração\Contas
 		lineageTag: da969171-45cf-5ba2-bf46-8ecd4394ad41
+
+	/// Quem está à frente no Brasil (a linha BR do TSE), qualquer que seja o recorte: o eleito quando a fase é 'definido'. Com um estado, uma região ou vários estados no filtro, a frase do placar separa o eleito no Brasil de quem lidera no recorte.
+	measure 'Apuração · líder no Brasil' =
+			CALCULATE ( [Apuração · líder], REMOVEFILTERS ( 'UF' ) )
+		displayFolder: T18 Apuração\Contas
+		lineageTag: 5f807958-61ff-56c7-a7ed-d8b9a71bcd65
 
 	/// Votos nulos no escopo.
 	measure 'Apuração · nulos' =
@@ -21773,6 +22561,13 @@ table _Medidas
 		displayFolder: T18 Apuração\Contas
 		lineageTag: 4bb115e2-9214-5f31-8a81-98efdc3fb0d5
 
+	/// 1 quando o contexto não tem nenhuma UF: o clique num quadrado do mapa (que mostra sempre o Brasil inteiro) caiu fora do filtro de estado (ex.: Nordeste no filtro e SP no mapa). O placar avisa em vez de mostrar zeros; 0 nos outros casos.
+	measure 'T18 · recorte vazio' =
+			IF ( ISFILTERED ( 'UF' ) && COUNTROWS ( VALUES ( 'UF'[UF] ) ) = 0, 1, 0 )
+		formatString: 0
+		displayFolder: T18 Apuração\Contas
+		lineageTag: 9639d216-6f2c-57cb-9bce-abbc42873559
+
 	/// Texto para leitor de tela dos pontos da curva da noite.
 	measure 'T18 · Curva pontos · ALT' =
 			VAR _n = [T18 · momento · atualizações da noite]
@@ -21999,26 +22794,34 @@ table _Medidas
 		displayFolder: T18 Apuração\Desenho
 		lineageTag: ec648c88-fced-52d1-a727-5a2ce8b78b40
 
-	/// Texto alternativo do placar da apuração (com uma atualização clicada na curva, o momento escolhido).
+	/// Texto alternativo do placar da apuração: o recorte ([Apuração · escopo]: Brasil, o estado, a região, os estados somados) e os números; com a eleição definida e um recorte, o eleito no Brasil; o aviso do clique no mapa fora do filtro; com uma atualização clicada na curva, o momento escolhido.
 	measure 'T18 · Placar · ALT' =
 			VAR _fase = [Apuração · fase]
 			VAR _momento = [T18 · momento escolhido]
-			RETURN
+			VAR _escopo = [Apuração · escopo]
+			VAR _eleito =
 			    IF (
-			        NOT ISBLANK ( _momento ),
-			        [T18 · Placar momento · ALT],
-			        "Apuração (" & [Apuração · escopo] & "): "
+			        _escopo <> "Brasil" && _fase = "definido",
+			        " " & [Apuração · líder no Brasil] & " está eleito no Brasil."
+			    )
+			RETURN
+			    SWITCH (
+			        TRUE (),
+			        NOT ISBLANK ( _momento ), [T18 · Placar momento · ALT],
+			        [T18 · recorte vazio] = 1, "Apuração: o estado clicado no mapa fica fora do filtro de estado.",
+			        "Apuração (" & _escopo & "): "
 			            & IF (
 			                _fase = "aguardando",
 			                "aguardando o fechamento das urnas às 17h de 25/10.",
 			                "Lula " & FORMAT ( [Apuração · Lula %], "0.00%" ) & ", Flávio Bolsonaro " & FORMAT ( [Apuração · Flávio %], "0.00%" )
 			                    & ", " & FORMAT ( [Apuração · seções %], "0.00%" ) & " das seções apuradas; " & [Apuração · líder] & " à frente."
+			                    & _eleito
 			            )
 			    )
 		displayFolder: T18 Apuração\Desenho
 		lineageTag: 0ee11881-d25b-54b3-8a2a-d0f98ce1ec39
 
-	/// Placar da apuração: horas do TSE e da coleta, os dois candidatos (o líder à esquerda; zerados, a ordem da urna), o selo do estado, a frase do momento, o relógio até as 17h (aguardando, contado no navegador) e a barra de seções. Com uma atualização clicada na curva da noite, o placar daquele momento (T18 · Placar momento · HTML).
+	/// Placar da apuração: horas do TSE e da coleta, os dois candidatos (o líder à esquerda; zerados, a ordem da urna), o selo do estado, a frase do momento, o relógio até as 17h (aguardando, contado no navegador) e a barra de seções. No recorte (filtro de estado em árvore ou clique no mapa: um estado, uma região, vários estados somados) as contas somam as UFs escolhidas e o texto diz onde ('na Bahia', 'no Nordeste', 'em MG e SP (somados)'); com a eleição definida, a frase separa o eleito no Brasil de quem lidera no recorte. Clique no mapa fora do filtro: o aviso. Com uma atualização clicada na curva da noite, o placar daquele momento (T18 · Placar momento · HTML).
 	measure 'T18 · Placar · HTML' =
 			-- 1 · Leituras (contas de T18 Apuração\Contas)
 			VAR _fase = [Apuração · fase]
@@ -22038,7 +22841,14 @@ table _Medidas
 			VAR _tse = [Apuração · atualizado no TSE]
 			VAR _coleta = [Apuração · coletado em]
 			VAR _momento = [T18 · momento escolhido]
+			VAR _vazio = [T18 · recorte vazio]
+			VAR _em = [Recorte · em]
+			VAR _tipo = [Recorte · tipo]
+			VAR _liderBR = [Apuração · líder no Brasil]
 			-- 2 · Textos
+			-- onde: vazio no Brasil (a frase de sempre); 'na Bahia', 'no Nordeste', 'em MG e SP (somados)' no recorte
+			VAR _ondeTxt = _em & IF ( _tipo = "Vários", " (somados)", "" )
+			VAR _onde = IF ( _escopo = "Brasil", "", " " & _ondeTxt )
 			VAR _aguarda = _fase = "aguardando"
 			VAR _lulaTxt = IF ( _aguarda, "—", FORMAT ( _lulaP * 100, "0.00" ) & "%" )
 			VAR _flavioTxt = IF ( _aguarda, "—", FORMAT ( _flavioP * 100, "0.00" ) & "%" )
@@ -22068,18 +22878,23 @@ table _Medidas
 			    SWITCH (
 			        TRUE (),
 			        _aguarda, "As urnas fecham às 17h de domingo, 25/10.",
-			        _lider = "—", "Empate exato com " & _secoesTxt & " das seções apuradas.",
-			        _fase = "apurando", _lider & " está à frente por " & _difTxt & " votos, com " & _secoesTxt & " das seções apuradas.",
+			        -- no recorte, o eleito é o do Brasil (a fase é nacional) e o recorte diz só quem lidera nele
+			        _escopo <> "Brasil" && _fase = "definido",
+			            _liderBR & " está matematicamente eleito no Brasil; " & _ondeTxt & ", "
+			                & IF ( _lider = "—", "empate exato", _lider & " está à frente por " & _difTxt & " votos" ) & ".",
+			        _lider = "—", "Empate exato" & _onde & " com " & _secoesTxt & " das seções apuradas.",
+			        _fase = "apurando", _lider & " está à frente" & _onde & " por " & _difTxt & " votos, com " & _secoesTxt
+			            & " das seções apuradas.",
 			        _fase = "definido", _lider & " está matematicamente eleito: a diferença de " & _difTxt
 			            & " votos já não pode ser revertida.",
-			        _lider & " lidera · apuração encerrada · diferença de " & _difTxt & " votos"
+			        _lider & " lidera" & _onde & " · apuração encerrada · diferença de " & _difTxt & " votos"
 			    )
 			VAR _relogio =
 			    IF (
 			        _aguarda,
 			        "<div class='relogio sobe d4'><span class='rot'>FALTAM</span><span class='num' id='t18rel'>—</span></div>"
 			            & "<div class='txt sobe d5'>" & FORMAT ( _eleitorado, "#,0" ) & " eleitores podem votar"
-			            & IF ( _escopo = "Brasil", "", " em " & _escopo ) & ".</div>"
+			            & IF ( _escopo = "Brasil", "", " " & _em ) & ".</div>"
 			    )
 			VAR _barra =
 			    "<div class='secoes sobe d5'><div class='rot'>SEÇÕES APURADAS" & IF ( _escopo = "Brasil", "", " · " & UPPER ( _escopo ) )
@@ -22087,15 +22902,25 @@ table _Medidas
 			        & FORMAT ( _secoes * 100, "0.0##", "en-US" ) & "%'></div><span class='num'>" & _secoesTxt
 			        & "</span></div><div class='nota'>Abstenção " & FORMAT ( _abst * 100, "0.00" ) & "% · brancos "
 			        & FORMAT ( _brancos, "#,0" ) & " · nulos " & FORMAT ( _nulos, "#,0" ) & "</div></div>"
+			-- o recorte no fim da linha do topo; com o selo (ensaio, definido, encerrada) ele ficaria embaixo do carimbo, e a frase e
+			-- a barra já dizem onde
 			VAR _topo =
 			    "<div class='rot topo entra'>"
 			        & IF ( ISBLANK ( _tse ), "AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE", "ATUALIZADO PELO TSE · " & _tseTxt )
-			        & " · COLETADO EM " & _coletaTxt & IF ( _escopo = "Brasil", "", " · " & UPPER ( _escopo ) ) & "</div>"
+			        & " · COLETADO EM " & _coletaTxt & IF ( _escopo = "Brasil" || _selo <> "", "", " · " & UPPER ( _escopo ) )
+			        & "</div>"
 			VAR _marca = IF ( _aguarda || _lider = "—", "", "<span class='visto'>✓</span>" )
+			-- clique no mapa fora do filtro de estado: nenhuma UF nas contas; o placar avisa em vez de mostrar zeros
+			VAR _aviso =
+			    "<div class='tela t18p'><div class='rot topo entra'>"
+			        & IF ( ISBLANK ( _tse ), "AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE", "ATUALIZADO PELO TSE · " & _tseTxt )
+			        & " · COLETADO EM " & _coletaTxt & "</div><div class='man frase sobe d4'>O estado clicado no mapa fica fora "
+			        & "do filtro de estado do alto. Clique nele de novo para voltar ao recorte do filtro.</div></div>"
 			RETURN
-			    IF (
-			        NOT ISBLANK ( _momento ),
-			        [T18 · Placar momento · HTML],
+			    SWITCH (
+			        TRUE (),
+			        NOT ISBLANK ( _momento ), [T18 · Placar momento · HTML],
+			        _vazio = 1, _aviso,
 			        "<div class='tela t18p'>" & _topo & "<div class='par'>" & _par & _selo & "</div>"
 			            & "<div class='man frase sobe d4'>" & _marca & _frase & "</div>" & _relogio
 			            & IF ( _aguarda, "", _barra ) & "</div>"
@@ -22969,7 +23794,7 @@ table _Medidas
 		displayFolder: T19 Explorador\Desenho
 		lineageTag: 288bf525-b442-511b-9590-827b4de48f3a
 
-	/// Texto alternativo da pílula do filtro do recorte: o recorte em uso e o que o filtro oferece.
+	/// Texto alternativo do filtro do recorte (o VizuFilter em árvore, com o gatilho dele; sem pílula desde 24/10/2026): o recorte em uso e o que o filtro oferece.
 	measure 'T19 · Filtro · ALT' =
 			-- 1 · Leituras
 			VAR _n = [T19 · filtro · escolhas]
@@ -22980,34 +23805,6 @@ table _Medidas
 			        & ". Abre a árvore de região, estado e cidade, tamanho, renda e virada."
 		displayFolder: T19 Explorador\Desenho
 		lineageTag: ecad9809-72a1-5da2-a558-ed54ed0283ab
-
-	/// O botão fechado do filtro do recorte (a pílula, na caixa do filtro da casca): 'Todos os municípios' sem escolha; com escolha, o recorte em poucas palavras ('Nordeste · até 10 mil hab.') ou, quando não cabe, 'N filtros'; o funil ganha o ponto vermelho. O clique abre a árvore (VizuFilter alto, marcador T19_FILTRO_ABRE_01). Recebe só o próprio filtro (a lista e a dispersão não mexem nela).
-	measure 'T19 · Filtro · pílula · HTML' =
-			-- 1 · Leituras
-			VAR _n = [T19 · filtro · escolhas]
-			VAR _uso = [T19 · filtro em uso]
-			-- 2 · Textos
-			VAR _txt0 =
-			    SWITCH (
-			        TRUE (),
-			        _n = 0, "Todos os municípios",
-			        _n > 1 && LEN ( _uso ) > 40, FORMAT ( _n, "#,0" ) & " filtros",
-			        _uso
-			    )
-			VAR _txt1 = SUBSTITUTE ( SUBSTITUTE ( _txt0, "&", "&amp;" ), "<", "&lt;" )
-			VAR _txt = SUBSTITUTE ( SUBSTITUTE ( _txt1, ">", "&gt;" ), "'", "&#39;" )
-			-- 4 · Marcação
-			RETURN
-			    "<div class='tela pl" & IF ( _n > 0, " ativo", "" ) & "'>"
-			        & "<span class='fu'><svg width='16' height='16' viewBox='0 0 16 16'><path d='M2 3h12l-4.6 "
-			        & "5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' stroke-width='1.4' "
-			        & "stroke-linejoin='round'/></svg><i></i></span>"
-			        & "<b>" & _txt & "</b>"
-			        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
-			        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg>"
-			    & "</div>"
-		displayFolder: T19 Explorador\Desenho
-		lineageTag: 6cb1d13d-5be9-5423-a7a3-d28e3c11d88b
 
 	/// Texto alternativo da lista do Explorador.
 	measure 'T19 · Lista · ALT' =
@@ -23847,7 +24644,7 @@ table _Medidas
 		displayFolder: T20 Escola\Desenho
 		lineageTag: a5c52298-5a39-543d-86ba-3a3d554519d6
 
-	/// Texto alternativo do filtro da tela: a cidade e a escola em uso.
+	/// Texto alternativo do filtro da tela (o VizuFilter em árvore, com o gatilho dele; sem pílula desde 24/10/2026): a cidade e a escola em uso.
 	measure 'T20 · Filtro · ALT' =
 			-- 1 · Leituras
 			VAR _escola = [T20 · escola do filtro]
@@ -23864,40 +24661,6 @@ table _Medidas
 			        )
 		displayFolder: T20 Escola\Desenho
 		lineageTag: a4a2825d-700a-526f-a110-2f7eaa2152a9
-
-	/// O botão fechado do filtro da tela (a pílula, na caixa do filtro da casca): a cidade em uso ('Rio de Janeiro (RJ)' sem escolha); com uma escola marcada, ' · escola'; com várias da mesma cidade (não todas), ' · N escolas'; com o funil (ponto vermelho quando o filtro está em uso) e a seta. O clique abre o VizuFilter alto por cima (marcador T20_FILTRO_ABRE_01). Recebe só o filtro (o clique no mapa e na lista não mexe nela).
-	measure 'T20 · Filtro · pílula · HTML' =
-			-- 1 · Leituras
-			VAR _uso = [T20 · filtro em uso]
-			VAR _escola = [T20 · escola do filtro]
-			VAR _marcadas = [T20 · escolas no filtro]
-			VAR _locais = [T20 · locais]
-			VAR _id = _escola
-			VAR _nomeEscolaL = IF ( NOT ISBLANK ( _escola ), CALCULATE ( [T20 · nome do local], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id ) )
-			-- 2 · Textos
-			VAR _cidade0 = [T20 · cidade]
-			VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
-			VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
-			VAR _nomeEscola0 = _nomeEscolaL
-			VAR _nomeEscola1 = SUBSTITUTE ( SUBSTITUTE ( _nomeEscola0, "&", "&amp;" ), "<", "&lt;" )
-			VAR _nomeEscola = SUBSTITUTE ( SUBSTITUTE ( _nomeEscola1, ">", "&gt;" ), "'", "&#39;" )
-			VAR _txt =
-			    _cidade
-			        & SWITCH (
-			            TRUE (),
-			            NOT ISBLANK ( _escola ), " · " & _nomeEscola,
-			            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, "#,0" ) & " escolas",
-			            ""
-			        )
-			-- 4 · Marcação
-			RETURN
-			    "<div class='tela pl" & IF ( _uso = 1, " ativo", "" ) & "'><span class='fu'><svg width='16' height='16' "
-			        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
-			        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><b>" & _txt & "</b>"
-			        & "<svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
-			        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>"
-		displayFolder: T20 Escola\Desenho
-		lineageTag: 8f955d79-4495-59b2-9fe5-83345669b747
 
 	/// Texto alternativo do mapa das escolas.
 	measure 'T20 · Mapa · ALT' =
@@ -26130,7 +26893,7 @@ table _Medidas
 		displayFolder: T25 Quem falta\Contas
 		lineageTag: 1d396e29-bde6-5635-a6b4-10712e1f9c4e
 
-	/// A mesma abstenção sem o município marcado ou da linha: a média da UF do filtro (ou do Brasil, com o exterior) no ano e na faixa do contexto (0–1). Referência da cor do mapa e das comparações.
+	/// A mesma abstenção sem o município marcado ou da linha: a média do recorte de estado (as UFs escolhidas; ou o Brasil, com o exterior) no ano e na faixa do contexto (0–1). Referência da cor do mapa e das comparações.
 	measure 'T25 · abstenção % do recorte' =
 			CALCULATE (
 			    [T25 · abstenção %],
@@ -26286,13 +27049,6 @@ table _Medidas
 		formatString: 0
 		displayFolder: T25 Quem falta\Contas
 		lineageTag: 7196db9b-eb04-5037-a93a-be512b2555d2
-
-	/// 1 com o filtro de UF da casca ativo.
-	measure 'T25 · com UF' =
-			INT ( ISCROSSFILTERED ( 'UF' ) )
-		formatString: 0
-		displayFolder: T25 Quem falta\Contas
-		lineageTag: 42c63888-209b-55cd-b6d4-d2d3cb7090fb
 
 	/// Abstenção do lugar menos a média do recorte, em pontos percentuais.
 	measure 'T25 · diferença para o recorte' =
@@ -26453,7 +27209,7 @@ table _Medidas
 		displayFolder: T25 Quem falta\Contas
 		lineageTag: edb1ac2d-27d0-5c07-8211-a7b9badcd70b
 
-	/// O lugar que a tela mostra: o município marcado, N municípios marcados, a UF do filtro ou o Brasil.
+	/// O lugar que a tela mostra: o município marcado, N municípios marcados ou o recorte de estado (Brasil, o estado, a região, os estados).
 	measure 'T25 · lugar' =
 			SWITCH (
 			    TRUE (),
@@ -26476,6 +27232,17 @@ table _Medidas
 		formatString: 0
 		displayFolder: T25 Quem falta\Contas
 		lineageTag: e6c3a82f-c66d-54d8-8ee0-a93ba4171497
+
+	/// Nome da média de referência (a do recorte, sem o município marcado): 'média nacional' no Brasil, 'média estadual' num estado, 'média do Nordeste' numa região inteira, 'média de MG e SP' em vários estados.
+	measure 'T25 · média (nome)' =
+			SWITCH (
+			    [Recorte · tipo],
+			    "Brasil", "média nacional",
+			    "UF", "média estadual",
+			    "média " & [Recorte · de]
+			)
+		displayFolder: T25 Quem falta\Contas
+		lineageTag: cb337d0f-8429-5daa-97c0-5ca1c09c206b
 
 	/// Ordem da faixa da linha (1 = 16 e 17 anos … 7 = 70 ou mais).
 	measure 'T25 · ordem da faixa' =
@@ -26663,13 +27430,13 @@ table _Medidas
 		displayFolder: T25 Quem falta\Contas
 		lineageTag: 4b6d8dec-26cd-5775-ad39-c76e6259c855
 
-	/// Brasil ou a UF do filtro da casca: a área das médias (ignora o município marcado).
+	/// A área das médias (ignora o município marcado), da medida comum [Recorte · nome]: 'Brasil', o estado ('Bahia'), a região inteira ('Nordeste') ou vários estados ('MG e SP', '3 estados').
 	measure 'T25 · recorte' =
-			IF ( [T25 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome], "UFs escolhidas" ), "Brasil" )
+			[Recorte · nome]
 		displayFolder: T25 Quem falta\Contas
 		lineageTag: 1611d20a-228e-5822-a8dc-003b6819d934
 
-	/// Linha tracejada do bloco de anos (0–1): com município marcado, a média do recorte (UF ou Brasil) no mesmo ano e faixa; só com faixa marcada, todas as idades do lugar; sem marca, vazio.
+	/// Linha tracejada do bloco de anos (0–1): com município marcado, a média do recorte (as UFs escolhidas ou o Brasil) no mesmo ano e faixa; só com faixa marcada, todas as idades do lugar; sem marca, vazio.
 	measure 'T25 · referência da série' =
 			SWITCH (
 			    TRUE (),
@@ -26685,7 +27452,7 @@ table _Medidas
 	measure 'T25 · referência da série (nome)' =
 			SWITCH (
 			    TRUE (),
-			    [T25 · com município] = 1, IF ( [T25 · com UF] = 1, "média estadual", "média nacional" ),
+			    [T25 · com município] = 1, [T25 · média (nome)],
 			    [T25 · com faixa] = 1, "todas as idades",
 			    ""
 			)
@@ -26961,9 +27728,8 @@ table _Medidas
 	measure 'T25 · Legenda · HTML' =
 			-- 1 · Leituras
 			VAR _ref = [T25 · abstenção % do recorte]
-			VAR _comUF = [T25 · com UF]
 			-- 2 · Textos
-			VAR _media = IF ( _comUF = 1, "média estadual", "média nacional" )
+			VAR _media = [T25 · média (nome)]
 			-- 4 · Marcação
 			RETURN
 			    "<div class='tela lgm entra d6'>"
@@ -26998,7 +27764,6 @@ table _Medidas
 			VAR _faixa = [T25 · faixa]
 			VAR _nMun = [T25 · municípios marcados]
 			VAR _lugar = [T25 · lugar]
-			VAR _comUF = [T25 · com UF]
 			VAR _temIdade = [T25 · tem idade no ano]
 			VAR _um = [T25 · um em cada]
 			VAR _dez = [T25 · em cada 10]
@@ -27009,7 +27774,7 @@ table _Medidas
 			VAR _semDado = ISBLANK ( _pct )
 			VAR _semIdade = _comFaixa = 1 && _temIdade = 0
 			VAR _txtPct = IF ( _semDado, "<span class='vz'>sem dado</span>", FORMAT ( _pct, "0.0%" ) )
-			VAR _media = IF ( _comUF = 1, "média estadual", "média nacional" )
+			VAR _media = [T25 · média (nome)]
 			VAR _quantos =
 			    IF ( _pct >= 0.35, FORMAT ( _dez, "0" ) & " em cada 10", "1 em cada " & FORMAT ( _um, "0" ) )
 			VAR _verbo = IF ( _pct >= 0.35, "faltaram", "faltou" )
@@ -27069,15 +27834,13 @@ table _Medidas
 
 	/// Texto para leitor de tela do mapa.
 	measure 'T25 · Mapa · ALT' =
-			VAR _comUF = [T25 · com UF]
-			RETURN
-			    LEFT (
-			        "Mapa de " & [T25 · recorte] & ", " & [T25 · ano]
-			            & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] )
-			            & ": um ponto por município, mais escuro onde se faltou mais que a " & IF ( _comUF = 1, "média estadual", "média nacional" ) & " ("
-			            & FORMAT ( [T25 · abstenção % do recorte], "0.0%" ) & "). Clique num ponto para ver o município nas outras peças.",
-			        250
-			    )
+			LEFT (
+			    "Mapa " & [Recorte · de] & ", " & [T25 · ano]
+			        & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] )
+			        & ": um ponto por município, mais escuro onde se faltou mais que a " & [T25 · média (nome)] & " ("
+			        & FORMAT ( [T25 · abstenção % do recorte], "0.0%" ) & "). Clique num ponto para ver o município nas outras peças.",
+			    250
+			)
 		displayFolder: T25 Quem falta\Desenho
 		lineageTag: 0ba0a1f3-718f-5c39-8aa1-fe607dc54723
 
@@ -27325,7 +28088,6 @@ table _Medidas
 			VAR _ano = [T25 · ano]
 			VAR _comFaixa = [T25 · com faixa]
 			VAR _faixa = [T25 · faixa]
-			VAR _comUF = [T25 · com UF]
 			VAR _pct = [T25 · abstenção %]
 			VAR _n = [T25 · abstenções]
 			VAR _aptos = [T25 · aptos]
@@ -27343,7 +28105,7 @@ table _Medidas
 			VAR _p22 = [T25 · abstenção % em 2022]
 			VAR _p26 = [T25 · abstenção % em 2026]
 			-- 2 · Textos
-			VAR _media = IF ( _comUF = 1, "média estadual", "média nacional" )
+			VAR _media = [T25 · média (nome)]
 			VAR _quem = IF ( _comFaixa = 1, " de " & _faixa, "" )
 			VAR _compara =
 			    IF (

@@ -52,12 +52,14 @@ PACOTES = {
     "deneb": {"guid": "STANDALONEdeneb7E15AEF80B9E4D4F8E12924291ECE89A", "versao": "2.0.0.20260908#0dfe02de",
               "arquivo": "visuais/deneb.standalone.2.0.0.0.pbiviz",
               "sha256": "5d4c0ef87b2c29f6888b21423da5547e8b2552bec4778d45a7309e70783ccc5d", "tamanho": 1955983},
-    # VizuFilter 2.13.0.0 (23/10/2026): a 2.12.1.0 da casa + o modo régua (cartão "regua": botão arrastável sobre uma
-    # coluna numérica, tela 24 · Simulador) + a Sora do painel embutida (família "Sora Vizu", como na 2.12.2.0). Com
-    # regua.ativo desligado desenha e grava o mesmo que a 2.12. Fonte fora do repositório (pbi/visuais_src/, ignorado).
-    "vizufilter": {"guid": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A", "versao": "2.13.0.0",
-                   "arquivo": "visuais/vizufilter/smartFilterFixed9B35E14F08BD474496777B2253A30D3A.2.13.0.0.pbiviz",
-                   "sha256": "bde3a8800b76b57474ee732a61a128cfb5db1c8c504db30ff1c8a8323949d9eb", "tamanho": 1094613},
+    # VizuFilter 2.14.0.0 (24/10/2026): a 2.13.0.0 (modo régua da tela 24 · Simulador, a Sora do painel embutida como
+    # "Sora Vizu") + o resumo do caminho no gatilho (general.triggerPathSummary, triggerPathSummaryMax,
+    # triggerPathSummaryNoun; opt-in): no modo caminho o gatilho lê a seleção de cima para baixo ("Nordeste", "Minas
+    # Gerais e São Paulo", "5 estados"), pedido do dono para o filtro sem pílula. Desligado, desenha e grava o mesmo que
+    # a 2.13. Fonte fora do repositório (pbi/visuais_src/, ignorado); a 2.13.0.0 fica ao lado em visuais/vizufilter/.
+    "vizufilter": {"guid": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A", "versao": "2.14.0.0",
+                   "arquivo": "visuais/vizufilter/smartFilterFixed9B35E14F08BD474496777B2253A30D3A.2.14.0.0.pbiviz",
+                   "sha256": "5bbfc7d951189828f3741a592d94a02048e3c214e1081f2e9edc928d9d5d4600", "tamanho": 1096240},
 }
 GUID_HTML = PACOTES["html"]["guid"]
 GUID_DENEB = PACOTES["deneb"]["guid"]
@@ -68,7 +70,13 @@ TABELA_MEDIDAS = "_Medidas"
 # camadas z (tabOrder segue a leitura: trilho, cabeçalho, conteúdo). O "?" e a leitura ficam abaixo do drawer; o drawer
 # em 5000+; a navegação acima do drawer (o trilho segue clicável com o painel aberto), como no kit da casa. O tour guiado
 # (véu + card + controles) fica por cima de tudo: 7000 (HTML) e os botões dele logo acima.
-CAMADAS = {"conteudo": 300, "acao": 1020, "leitura": 4000, "drawer": 5000, "navegacao": 5500, "tour": 7000}
+# "filtro" (24/10/2026, pedido do dono: "a solução devia ser colocar ele pra trás na hierarquia de elementos"): o
+# VizuFilter tem a caixa da lista aberta (visual personalizado não desenha fora da própria caixa) e fica ATRÁS do
+# conteúdo, acima só do fundo da casca (z 10). Os gráficos por cima seguem com o mouse; o gatilho fica numa faixa sem
+# visual por cima; o clique traz o filtro para a frente (o Desktop faz isso com o visual clicado, "manter a ordem das
+# camadas" desligado) e a lista abre por cima de tudo.
+CAMADAS = {"filtro": 20, "conteudo": 300, "acao": 1020, "leitura": 4000, "drawer": 5000, "navegacao": 5500,
+           "tour": 7000}
 TOOLTIP_LARGURA_MINIMA = 400
 
 RE_NOME = re.compile(r"^[A-Za-z0-9_-]+$")

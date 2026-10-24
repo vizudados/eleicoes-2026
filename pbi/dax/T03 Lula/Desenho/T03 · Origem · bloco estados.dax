@@ -1,0 +1,68 @@
+/*
+@pasta: T03 Lula\Desenho
+@formato: texto
+@descricao: Com vários estados no filtro de estado (uma região inteira, estados soltos ou regiões misturadas): os estados que mais deram votos a Lula na barra (os 5 maiores e os demais estados) e na lista — a parte de cada um nos votos dele no recorte, os votos e o % dos válidos. Só a entrada da primeira região do recorte desenha (as outras ficam vazias). Sem clique (o clique numa cidade é no mapa).
+*/
+-- 1 · Leituras
+VAR _primeira = [T03 · linha da primeira região]
+VAR _n = CALCULATE ( [Recorte · UFs], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+VAR _ufsBase =
+    CALCULATETABLE (
+        TOPN (
+            5,
+            ADDCOLUMNS (
+                VALUES ( 'UF'[UF] ),
+                "@nome", [T03 · UF da linha],
+                "@v", [T03 · votos (municípios)],
+                "@p", [T03 · parte do estado no recorte],
+                "@pv", [T03 · % (municípios)]
+            ),
+            [@v], DESC
+        ),
+        REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ),
+        'UF'[Tipo] = "UF"
+    )
+VAR _lista =
+    SELECTCOLUMNS ( FILTER ( _ufsBase, [@v] > 0 ), "@nome", [@nome], "@v", [@v], "@p", [@p], "@pv", [@pv] ) /* lista */
+-- 3 · Geometria (barra de 620 px; as fatias seguem a ordem dos votos; linhas de 30 px a partir de y 92)
+VAR _comIni =
+    ADDCOLUMNS (
+        _lista,
+        "@ini", VAR _vv = [@v] RETURN SUMX ( FILTER ( _lista, [@v] > _vv ), [@p] ) + 0, /* lista */
+        "@ord", VAR _vv = [@v] RETURN 1 + COUNTROWS ( FILTER ( _lista, [@v] > _vv ) ) /* lista */
+    )
+VAR _sobra = ( 1 - SUMX ( _lista, [@p] ) ) * 620 -- geometria (o trilho dos demais estados)
+VAR _fatias =
+    CONCATENATEX (
+        _comIni,
+        VAR _w = [@p] * 620 -- geometria
+        VAR _cabe = ( LEN ( [@nome] ) + 4 ) * 9.4 + 16 -- geometria (nome e % em Sora 15 semibold)
+        VAR _rot = IF ( _w >= _cabe, [@nome] & " " & FORMAT ( [@p], "0%" ), IF ( _w >= 44, FORMAT ( [@p], "0%" ), "" ) )
+        RETURN
+            "<div class='fa o" & MIN ( [@ord], 5 ) & " barra-x d" & ( [@ord] + 4 ) & "' style='left:"
+                & FORMAT ( [@ini] * 620, "0.0##", "en-US" ) & "px;width:" & FORMAT ( _w, "0.0##", "en-US" ) & "px'><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rot, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span></div>",
+        "",
+        [@v], DESC
+    )
+VAR _linhas =
+    CONCATENATEX (
+        _comIni,
+        "<div class='li sobe d" & ( [@ord] + 6 ) & "' style='top:" & ( 92 + ( [@ord] - 1 ) * 30 ) & "px'>"
+            & "<i class='sw o" & MIN ( [@ord], 5 ) & "'></i><span class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span>"
+            & "<span class='a'>" & FORMAT ( [@p], "0%" ) & " dos votos dele · " & SWITCH ( TRUE (), ABS ( [@v] ) >= 1000000, FORMAT ( [@v] / 1000000, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( [@v] / 1000, "0.0" ) & " mil", FORMAT ( [@v], "#,0" ) ) & "</span>"
+            & "<span class='b'>" & FORMAT ( [@pv], "0.0%" ) & " dos válidos</span></div>",
+        "",
+        [@v], DESC
+    )
+-- 4 · Marcação
+RETURN
+    IF (
+        _primeira = 1,
+        "<div class='tela og'><div class='oc'>"
+            & "<div class='rot ro sobe'>De onde vêm os votos · os estados que mais deram votos</div>"
+            & "<div class='trilho entra d3'></div>"
+            & IF ( _n > 5 && _sobra >= 136, "<span class='resto entra d9'>demais estados</span>" )
+            & _fatias & _linhas
+            & "<div class='dica entra d14'>clique num ponto do mapa para ver uma cidade</div>"
+        & "</div></div>"
+    )

@@ -3,14 +3,19 @@
 (apuracao/coletar.py) grava a API do TSE no GitHub a cada minuto e o Power BI lê os arquivos (pbi/modelo/apuracao.py).
 
   T18_Placar_Html   placar: horas do TSE e da coleta, os dois candidatos (contador), selo do estado, frase do momento,
-                    relógio até as 17h de 25/10 (aguardando; conta no navegador) e a barra de seções
+                    relógio até as 17h de 25/10 (aguardando; conta no navegador) e a barra de seções. Recebe o filtro
+                    de estado da casca (árvore Região › Estado, 24/10/2026) e o clique no mapa: as contas somam as UFs
+                    do recorte (um estado, uma região, vários estados) e o texto lê o nome comum do recorte (Recorte ·
+                    nome/em); com a eleição definida, a frase separa o eleito no Brasil de quem lidera no recorte; o
+                    clique no mapa fora do filtro dá um aviso (T18 · recorte vazio)
   T18_Curva_Html    a curva da noite (Brasil): as linhas se desenham a cada hora nova do TSE
   T18_Curva_Pontos  por cima da curva, uma faixa de clique por atualização do TSE (granularidade 'Apuração
                     histórico'[AtualizadoTSE]): no mouse, a linha da hora e os dois pontos; dossiê ttT18Momento (o que
                     entrou desde a anterior e como a diferença se moveu); clique: o placar mostra o retrato daquele
                     momento (T18 · Placar momento · HTML) e a hora fica marcada; clique de novo volta ao agora
   T18_Mapa_Html     mapa de quadrados (granularidade UF): cor de quem lidera; clique filtra o placar; dossiê da UF no
-                    tooltip ttT18Uf. Não recebe o filtro de UF da casca (mostra sempre as 27 + exterior)
+                    tooltip ttT18Uf. Não recebe o filtro de estado da casca (mostra sempre as 27 + exterior) e não
+                    filtra a lista dele (o clique num quadrado não encolhe a árvore Região › Estado)
   T18_Mapa_Exterior alvo transparente sobre o EX do mapa: abre o tooltip do exterior país a país (ttT18Exterior) e,
                     no clique, filtra o placar pelo exterior como o quadrado de baixo
 """
@@ -177,8 +182,10 @@ def declarar(ctx):
                                   alt=lib.medida("T18 · Mapa · ALT"), z=lib.CAMADAS["conteudo"] + 2, tab=120)),
         *pagina_lib.tooltip("ttT18Uf", "Apuração · UF", 440, 280, "T18 · Tooltip UF · HTML", ordem=180,
                             folha_de_estilo=CSS, modelo_corpo=f"<style>{CSS_TT}</style>{{{{content}}}}"),
-        # o mapa mostra sempre todas as unidades: o filtro de UF da casca não chega nele
+        # o mapa mostra sempre todas as unidades: o filtro de estado da casca não chega nele; e o clique num quadrado não
+        # encolhe a árvore do filtro (24/10/2026: com a árvore Região › Estado, a lista ficaria só com a UF clicada)
         Interacao(P, "T18_Casca_Filtro", "T18_Mapa_Html", "NoFilter"),
+        Interacao(P, "T18_Mapa_Html", "T18_Casca_Filtro", "NoFilter"),
         # o exterior país a país (pedido do Alisson, 23/10/2026): o alvo fica sobre o EX e não recebe filtro do mapa
         # nem da casca (some se recebesse); o mapa também não recebe o clique do alvo
         *exterior.declarar(P, "T18_Mapa_Exterior", EX_ALVO, "Exterior · ao vivo · HTML", ordem=181, cruzar=True,

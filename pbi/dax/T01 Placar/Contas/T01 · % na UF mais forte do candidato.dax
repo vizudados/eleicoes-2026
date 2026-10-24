@@ -1,12 +1,16 @@
 /*
 @pasta: T01 Placar\Contas
 @formato: 0.0%
-@descricao: Parcela dos válidos do candidato do item na UF mais forte (0–1).
+@descricao: Parcela dos válidos do candidato do item na UF mais forte (0–1), entre as UFs do dossiê.
 */
-VAR _ufs =
-ADDCOLUMNS (
-    CALCULATETABLE ( VALUES ( 'UF'[Nome] ), REMOVEFILTERS ( 'UF' ), 'UF'[Tipo] = "UF" ),
-    "@p", [T01 · % do candidato na UF]
-)
+VAR _noRecorte = [T01 · dossiê no recorte]
+VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
+VAR _todas =
+    CALCULATETABLE (
+        ADDCOLUMNS ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ), "@p", [T01 · % do candidato na UF] ),
+        REMOVEFILTERS ( 'UF' ),
+        'UF'[Tipo] = "UF"
+    )
+VAR _ufs = FILTER ( _todas, _noRecorte = 0 || 'UF'[UF] IN _sel )
 RETURN
     MAXX ( _ufs, [@p] )

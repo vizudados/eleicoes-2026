@@ -1,0 +1,12 @@
+/*
+@pasta: T14 Série\Contas
+@formato: texto
+@descricao: A sigla do estado escolhido na região do painel, quando é um só ('MS'); vazio nos outros casos. A nota do painel usa a sigla quando o nome não cabe ao lado do nome da região.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+VAR _r = [T14 · região do painel]
+RETURN
+    IF (
+        [T14 · UFs do recorte na região do painel] = 1,
+        CALCULATE ( SELECTEDVALUE ( 'UF'[UF] ), KEEPFILTERS ( 'UF'[Região] = _r ), KEEPFILTERS ( 'UF'[Tipo] = "UF" ) )
+    )

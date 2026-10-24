@@ -8,10 +8,7 @@
       "T20_Casca_InfoAbre",
       "T20_Casca_InfoFecha",
       "T20_Casca_InfoFora",
-      "T20_Casca_Leitura",
-      "T20_Filtro_Abre",
-      "T20_Filtro_Escola",
-      "T20_Filtro_Fora"
+      "T20_Casca_Leitura"
     ],
     "suppressData": true
   },
@@ -39,23 +36,6 @@
             }
           },
           "T20_Casca_Leitura": {
-            "singleVisual": {
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "T20_Filtro_Abre": {
-            "singleVisual": {}
-          },
-          "T20_Filtro_Escola": {
-            "singleVisual": {
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "T20_Filtro_Fora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

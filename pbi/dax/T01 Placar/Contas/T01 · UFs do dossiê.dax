@@ -1,0 +1,6 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0
+@descricao: Quantas UFs o dossiê do candidato compara: as do recorte (região ou vários estados) ou as 27.
+*/
+IF ( [T01 · dossiê no recorte] = 1, [Recorte · UFs], 27 )

@@ -8,10 +8,7 @@
       "T15_Casca_InfoAbre",
       "T15_Casca_InfoFecha",
       "T15_Casca_InfoFora",
-      "T15_Casca_Leitura",
-      "T15_Filtro_Abre",
-      "T15_Filtro_Fora",
-      "T15_Filtro_Municipio"
+      "T15_Casca_Leitura"
     ],
     "suppressData": true
   },
@@ -39,23 +36,6 @@
             }
           },
           "T15_Casca_Leitura": {
-            "singleVisual": {
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "T15_Filtro_Abre": {
-            "singleVisual": {}
-          },
-          "T15_Filtro_Fora": {
-            "singleVisual": {
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "T15_Filtro_Municipio": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

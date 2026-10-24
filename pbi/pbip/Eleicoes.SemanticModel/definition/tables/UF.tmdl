@@ -86,42 +86,62 @@ table UF
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Região › Estado ('Nordeste › Bahia'): o campo do filtro de estado das telas (VizuFilter em árvore, modo caminho). O filtro cai no estado; marcar a região marca os estados dela. O exterior fica fora do filtro.
+	column Caminho
+		dataType: string
+		lineageTag: 29815b03-1dc7-5823-9e5d-02a787ef200c
+		summarizeBy: none
+		sourceColumn: Caminho
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Artigo da UF nas frases do recorte: 'a' (na Bahia), 'o' (no Pará) ou vazio (em Minas Gerais). Lido pelas medidas Recorte · em e Recorte · de.
+	column Artigo
+		dataType: string
+		isHidden
+		lineageTag: 1fdd963e-92a1-521c-a630-14995742ef8f
+		summarizeBy: none
+		sourceColumn: Artigo
+
+		annotation SummarizationSetBy = Automatic
+
 	partition UF = m
 		mode: import
 		source =
 				let
 				    UFs = #table(
 				        type table [UF = text, Nome = text, Regiao = text, RegiaoOrdem = Int64.Type, Ordem = Int64.Type, Tipo = text,
-				                    GradeColuna = Int64.Type, GradeLinha = Int64.Type],
+				                    GradeColuna = Int64.Type, GradeLinha = Int64.Type, Caminho = text, Artigo = text],
 				        {
-				        {"AC", "Acre", "Norte", 1, 1, "UF", 0, 2},
-				        {"AP", "Amapá", "Norte", 1, 2, "UF", 3, 0},
-				        {"AM", "Amazonas", "Norte", 1, 3, "UF", 1, 1},
-				        {"PA", "Pará", "Norte", 1, 4, "UF", 2, 1},
-				        {"RO", "Rondônia", "Norte", 1, 5, "UF", 1, 2},
-				        {"RR", "Roraima", "Norte", 1, 6, "UF", 1, 0},
-				        {"TO", "Tocantins", "Norte", 1, 7, "UF", 2, 2},
-				        {"AL", "Alagoas", "Nordeste", 2, 8, "UF", 5, 3},
-				        {"BA", "Bahia", "Nordeste", 2, 9, "UF", 3, 3},
-				        {"CE", "Ceará", "Nordeste", 2, 10, "UF", 4, 1},
-				        {"MA", "Maranhão", "Nordeste", 2, 11, "UF", 3, 1},
-				        {"PB", "Paraíba", "Nordeste", 2, 12, "UF", 5, 2},
-				        {"PE", "Pernambuco", "Nordeste", 2, 13, "UF", 4, 2},
-				        {"PI", "Piauí", "Nordeste", 2, 14, "UF", 3, 2},
-				        {"RN", "Rio Grande do Norte", "Nordeste", 2, 15, "UF", 5, 1},
-				        {"SE", "Sergipe", "Nordeste", 2, 16, "UF", 4, 3},
-				        {"DF", "Distrito Federal", "Centro-Oeste", 3, 17, "UF", 2, 4},
-				        {"GO", "Goiás", "Centro-Oeste", 3, 18, "UF", 2, 3},
-				        {"MT", "Mato Grosso", "Centro-Oeste", 3, 19, "UF", 1, 3},
-				        {"MS", "Mato Grosso do Sul", "Centro-Oeste", 3, 20, "UF", 1, 4},
-				        {"ES", "Espírito Santo", "Sudeste", 4, 21, "UF", 4, 4},
-				        {"MG", "Minas Gerais", "Sudeste", 4, 22, "UF", 3, 4},
-				        {"RJ", "Rio de Janeiro", "Sudeste", 4, 23, "UF", 3, 5},
-				        {"SP", "São Paulo", "Sudeste", 4, 24, "UF", 2, 5},
-				        {"PR", "Paraná", "Sul", 5, 25, "UF", 1, 5},
-				        {"RS", "Rio Grande do Sul", "Sul", 5, 26, "UF", 1, 7},
-				        {"SC", "Santa Catarina", "Sul", 5, 27, "UF", 1, 6},
-				        {"ZZ", "Exterior", "Exterior", 6, 28, "Exterior", 5, 0}
+				        {"AC", "Acre", "Norte", 1, 1, "UF", 0, 2, "Norte › Acre", "o"},
+				        {"AP", "Amapá", "Norte", 1, 2, "UF", 3, 0, "Norte › Amapá", "o"},
+				        {"AM", "Amazonas", "Norte", 1, 3, "UF", 1, 1, "Norte › Amazonas", "o"},
+				        {"PA", "Pará", "Norte", 1, 4, "UF", 2, 1, "Norte › Pará", "o"},
+				        {"RO", "Rondônia", "Norte", 1, 5, "UF", 1, 2, "Norte › Rondônia", ""},
+				        {"RR", "Roraima", "Norte", 1, 6, "UF", 1, 0, "Norte › Roraima", ""},
+				        {"TO", "Tocantins", "Norte", 1, 7, "UF", 2, 2, "Norte › Tocantins", "o"},
+				        {"AL", "Alagoas", "Nordeste", 2, 8, "UF", 5, 3, "Nordeste › Alagoas", ""},
+				        {"BA", "Bahia", "Nordeste", 2, 9, "UF", 3, 3, "Nordeste › Bahia", "a"},
+				        {"CE", "Ceará", "Nordeste", 2, 10, "UF", 4, 1, "Nordeste › Ceará", "o"},
+				        {"MA", "Maranhão", "Nordeste", 2, 11, "UF", 3, 1, "Nordeste › Maranhão", "o"},
+				        {"PB", "Paraíba", "Nordeste", 2, 12, "UF", 5, 2, "Nordeste › Paraíba", "a"},
+				        {"PE", "Pernambuco", "Nordeste", 2, 13, "UF", 4, 2, "Nordeste › Pernambuco", ""},
+				        {"PI", "Piauí", "Nordeste", 2, 14, "UF", 3, 2, "Nordeste › Piauí", "o"},
+				        {"RN", "Rio Grande do Norte", "Nordeste", 2, 15, "UF", 5, 1, "Nordeste › Rio Grande do Norte", "o"},
+				        {"SE", "Sergipe", "Nordeste", 2, 16, "UF", 4, 3, "Nordeste › Sergipe", ""},
+				        {"DF", "Distrito Federal", "Centro-Oeste", 3, 17, "UF", 2, 4, "Centro-Oeste › Distrito Federal", "o"},
+				        {"GO", "Goiás", "Centro-Oeste", 3, 18, "UF", 2, 3, "Centro-Oeste › Goiás", ""},
+				        {"MT", "Mato Grosso", "Centro-Oeste", 3, 19, "UF", 1, 3, "Centro-Oeste › Mato Grosso", ""},
+				        {"MS", "Mato Grosso do Sul", "Centro-Oeste", 3, 20, "UF", 1, 4, "Centro-Oeste › Mato Grosso do Sul", ""},
+				        {"ES", "Espírito Santo", "Sudeste", 4, 21, "UF", 4, 4, "Sudeste › Espírito Santo", "o"},
+				        {"MG", "Minas Gerais", "Sudeste", 4, 22, "UF", 3, 4, "Sudeste › Minas Gerais", ""},
+				        {"RJ", "Rio de Janeiro", "Sudeste", 4, 23, "UF", 3, 5, "Sudeste › Rio de Janeiro", "o"},
+				        {"SP", "São Paulo", "Sudeste", 4, 24, "UF", 2, 5, "Sudeste › São Paulo", ""},
+				        {"PR", "Paraná", "Sul", 5, 25, "UF", 1, 5, "Sul › Paraná", "o"},
+				        {"RS", "Rio Grande do Sul", "Sul", 5, 26, "UF", 1, 7, "Sul › Rio Grande do Sul", "o"},
+				        {"SC", "Santa Catarina", "Sul", 5, 27, "UF", 1, 6, "Sul › Santa Catarina", ""},
+				        {"ZZ", "Exterior", "Exterior", 6, 28, "Exterior", 5, 0, "Exterior", "o"}
 				        }
 				    )
 				in

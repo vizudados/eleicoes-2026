@@ -1,0 +1,9 @@
+/*
+@pasta: _Recorte
+@formato: 0
+@descricao: 1 quando há estado ou região escolhido (o filtro de estado da casca, em árvore Região › Estado, ou um clique que filtra a UF, como o mapa da apuração); 0 no Brasil. O recorte visual do exterior não conta.
+*/
+INT (
+    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+        || ISFILTERED ( 'UF'[Região] )
+)

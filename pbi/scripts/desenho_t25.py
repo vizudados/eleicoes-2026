@@ -23,7 +23,9 @@ Pedido do Alisson (23/10/2026): a ausência ganha um segundo painel, com filtro 
 
 Filtro cruzado (relações em pbi/modelo/t25_ausencia.py): ano → mapa, idade, manchete; faixa → mapa, anos, manchete;
 município → anos, idade, manchete. A seleção de um visual não volta para ele mesmo; cada topo ignora o clique da própria
-peça (Interacao NoFilter) para o título não ficar preso a um ano ou faixa. Ninguém filtra o VizuFilter de UF da casca.
+peça (Interacao NoFilter) para o título não ficar preso a um ano ou faixa. Ninguém filtra o VizuFilter de estado da
+casca (árvore Região › Estado: um estado, uma região inteira ou vários estados; o nome do recorte vem das medidas comuns
+Recorte · …, desenho_recorte.py).
 
 Contas (pasta T25 Quem falta\\Contas): o ano do recorte é o marcado (o mais recente, se forem vários) ou 2026; sem faixa,
 'Município ano' nos recortes de municípios e 'Comparecimento ano' (o total oficial, com o exterior) no Brasil — os mesmos
@@ -74,8 +76,8 @@ TT_ANO = ("ttT25Ano", 460, 440)
 TT_IDADE = ("ttT25Idade", 440, 320)
 
 
-def _media(com_uf: str = "_comUF") -> str:
-    return f'IF ( {com_uf} = 1, "média estadual", "média nacional" )'
+def _media() -> str:
+    return "[T25 · média (nome)]"
 
 
 # ---------------------------------------------------------------------------------------------------- contas
@@ -88,7 +90,6 @@ def contas() -> None:
       f"INT ( ISFILTERED ( {MU} ) )", "0")
     c("T25 · com ano", "1 quando há ano marcado no bloco de anos (ou na linha/dica de um ano).",
       "INT ( ISFILTERED ( 'Ano' ) )", "0")
-    c("T25 · com UF", "1 com o filtro de UF da casca ativo.", "INT ( ISCROSSFILTERED ( 'UF' ) )", "0")
     c("T25 · sem exterior", "1 quando o recorte é de municípios (filtro de UF ou município marcado): as contas somam os "
       "municípios; 0 no Brasil inteiro, que usa o total oficial, com o exterior (como a tela 06).",
       f"INT ( ISCROSSFILTERED ( {MU} ) )", "0")
@@ -110,9 +111,21 @@ def contas() -> None:
     c("T25 · município", "Nome (UF) do município marcado ou da linha; vazio se não for um só.",
       f"IF ( [T25 · municípios marcados] = 1, SELECTEDVALUE ( {MU}[Rótulo] ) )", "texto")
     c("T25 · região do município", "Região do município da linha.", f"SELECTEDVALUE ( {MU}[Região] )", "texto")
-    c("T25 · recorte", "Brasil ou a UF do filtro da casca: a área das médias (ignora o município marcado).",
-      'IF ( [T25 · com UF] = 1, SELECTEDVALUE ( \'UF\'[Nome], "UFs escolhidas" ), "Brasil" )', "texto")
-    c("T25 · lugar", "O lugar que a tela mostra: o município marcado, N municípios marcados, a UF do filtro ou o Brasil.",
+    c("T25 · recorte", "A área das médias (ignora o município marcado), da medida comum [Recorte · nome]: 'Brasil', o "
+      "estado ('Bahia'), a região inteira ('Nordeste') ou vários estados ('MG e SP', '3 estados').", "[Recorte · nome]",
+      "texto")
+    c("T25 · média (nome)", "Nome da média de referência (a do recorte, sem o município marcado): 'média nacional' no "
+      "Brasil, 'média estadual' num estado, 'média do Nordeste' numa região inteira, 'média de MG e SP' em vários "
+      "estados.", dax("""
+        SWITCH (
+            [Recorte · tipo],
+            "Brasil", "média nacional",
+            "UF", "média estadual",
+            "média " & [Recorte · de]
+        )
+        """), "texto")
+    c("T25 · lugar", "O lugar que a tela mostra: o município marcado, N municípios marcados ou o recorte de estado "
+      "(Brasil, o estado, a região, os estados).",
       dax("""
         SWITCH (
             TRUE (),
@@ -151,8 +164,8 @@ def contas() -> None:
       "IF ( [T25 · abstenção %] > 0, ROUND ( DIVIDE ( 1, [T25 · abstenção %] ), 0 ) )", "0", "Brasil 2026 = 5")
     c("T25 · em cada 10", "Quantos em cada 10 eleitores do recorte faltaram, arredondado (para a frase quando é 35% ou "
       "mais).", "IF ( [T25 · abstenção %] > 0, ROUND ( [T25 · abstenção %] * 10, 0 ) )", "0")
-    c("T25 · abstenção % do recorte", "A mesma abstenção sem o município marcado ou da linha: a média da UF do filtro "
-      "(ou do Brasil, com o exterior) no ano e na faixa do contexto (0–1). Referência da cor do mapa e das comparações.",
+    c("T25 · abstenção % do recorte", "A mesma abstenção sem o município marcado ou da linha: a média do recorte de "
+      "estado (as UFs escolhidas; ou o Brasil, com o exterior) no ano e na faixa do contexto (0–1). Referência da cor do mapa e das comparações.",
       dax(f"""
         CALCULATE (
             [T25 · abstenção %],
@@ -172,7 +185,7 @@ def contas() -> None:
           f"CALCULATE ( DIVIDE ( [T25 · abstenções (cru)], [T25 · aptos (cru)] ), 'Ano'[Ano] = {ano} )", "0.0%",
           {2006: "Brasil = 16,8% (paginas[6].abstencao_2006_txt)", 2026: "Brasil = 21,1%"}.get(ano))
     c("T25 · referência da série", "Linha tracejada do bloco de anos (0–1): com município marcado, a média do recorte "
-      "(UF ou Brasil) no mesmo ano e faixa; só com faixa marcada, todas as idades do lugar; sem marca, vazio.",
+      "(as UFs escolhidas ou o Brasil) no mesmo ano e faixa; só com faixa marcada, todas as idades do lugar; sem marca, vazio.",
       dax(f"""
         SWITCH (
             TRUE (),
@@ -184,7 +197,7 @@ def contas() -> None:
     c("T25 · referência da série (nome)", "Nome da linha de referência do bloco de anos.", dax("""
         SWITCH (
             TRUE (),
-            [T25 · com município] = 1, IF ( [T25 · com UF] = 1, "média estadual", "média nacional" ),
+            [T25 · com município] = 1, [T25 · média (nome)],
             [T25 · com faixa] = 1, "todas as idades",
             ""
         )
@@ -361,7 +374,6 @@ def desenho() -> None:
         VAR _faixa = [T25 · faixa]
         VAR _nMun = [T25 · municípios marcados]
         VAR _lugar = [T25 · lugar]
-        VAR _comUF = [T25 · com UF]
         VAR _temIdade = [T25 · tem idade no ano]
         VAR _um = [T25 · um em cada]
         VAR _dez = [T25 · em cada 10]
@@ -605,20 +617,17 @@ def desenho() -> None:
         """))
     # ------------------------------------------------------------------ mapa
     d("T25 · Mapa · ALT", "Texto para leitor de tela do mapa.", dax(f"""
-        VAR _comUF = [T25 · com UF]
-        RETURN
-            LEFT (
-                "Mapa de " & [T25 · recorte] & ", " & [T25 · ano]
-                    & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] )
-                    & ": um ponto por município, mais escuro onde se faltou mais que a " & {_media()} & " ("
-                    & @PCT([T25 · abstenção % do recorte])@ & "). Clique num ponto para ver o município nas outras peças.",
-                250
-            )
+        LEFT (
+            "Mapa " & [Recorte · de] & ", " & [T25 · ano]
+                & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] )
+                & ": um ponto por município, mais escuro onde se faltou mais que a " & {_media()} & " ("
+                & @PCT([T25 · abstenção % do recorte])@ & "). Clique num ponto para ver o município nas outras peças.",
+            250
+        )
         """))
     d("T25 · Legenda · HTML", "Legenda do mapa: o ponto e a cor (abaixo e acima da média do recorte).", dax(f"""
         -- 1 · Leituras
         VAR _ref = [T25 · abstenção % do recorte]
-        VAR _comUF = [T25 · com UF]
         -- 2 · Textos
         VAR _media = {_media()}
         -- 4 · Marcação
@@ -718,7 +727,6 @@ def _dossie_municipio() -> None:
         VAR _ano = [T25 · ano]
         VAR _comFaixa = [T25 · com faixa]
         VAR _faixa = [T25 · faixa]
-        VAR _comUF = [T25 · com UF]
         VAR _pct = [T25 · abstenção %]
         VAR _n = [T25 · abstenções]
         VAR _aptos = [T25 · aptos]
@@ -1269,7 +1277,7 @@ def declarar_quem_falta() -> list:
                             ordem=352, folha_de_estilo=css),
     ]
     # filtro cruzado: as três peças se filtram (DataFilter explícito: o Deneb aceitaria realce, que deixaria o mapa com
-    # as contas sem o ano/faixa); cada topo ignora a própria peça; ninguém filtra o filtro de UF da casca (a pílula e o
+    # as contas sem o ano/faixa); cada topo ignora a própria peça; ninguém filtra o filtro de estado da casca (o
     # VizuFilter)
     pecas = ["T25_Anos_Html", "T25_Idade_Html", "T25_Mapa_Pontos"]
     leitores = ["T25_Manchete_Html", "T25_Anos_Topo", "T25_Idade_Topo", "T25_Mapa_Legenda"]
@@ -1280,8 +1288,7 @@ def declarar_quem_falta() -> list:
             tipo = "NoFilter" if (origem, alvo) in (("T25_Anos_Html", "T25_Anos_Topo"),
                                                     ("T25_Idade_Html", "T25_Idade_Topo")) else "DataFilter"
             itens.append(Interacao(P, origem, alvo, tipo))
-        for casca in ("Filtro", "FiltroPilula"):
-            itens.append(Interacao(P, origem, f"{P}_Casca_{casca}", "NoFilter"))
+        itens.append(Interacao(P, origem, f"{P}_Casca_Filtro", "NoFilter"))
     return itens
 
 

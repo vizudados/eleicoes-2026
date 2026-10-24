@@ -8,10 +8,7 @@
       "T19_Casca_InfoAbre",
       "T19_Casca_InfoFecha",
       "T19_Casca_InfoFora",
-      "T19_Casca_Leitura",
-      "T19_Filtro_Abre",
-      "T19_Filtro_Fora",
-      "T19_Filtro_Recorte"
+      "T19_Casca_Leitura"
     ],
     "suppressData": true
   },
@@ -39,23 +36,6 @@
             }
           },
           "T19_Casca_Leitura": {
-            "singleVisual": {
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "T19_Filtro_Abre": {
-            "singleVisual": {}
-          },
-          "T19_Filtro_Fora": {
-            "singleVisual": {
-              "display": {
-                "mode": "hidden"
-              }
-            }
-          },
-          "T19_Filtro_Recorte": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

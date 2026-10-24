@@ -1,6 +1,6 @@
 /*
 @pasta: T06 Ausência\Contas
 @formato: 0
-@descricao: 1 quando o filtro de UF da casca está ativo (a tela mostra a UF), 0 no Brasil.
+@descricao: 1 com estado ou região escolhido no filtro de estado da casca (as contas somam os municípios das UFs escolhidas), 0 no Brasil (o total oficial, com o exterior).
 */
 INT ( ISCROSSFILTERED ( 'UF' ) )

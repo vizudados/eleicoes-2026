@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 """19 · Explorador — onde está a minha pergunta? Explore os 5.571 municípios (dono: tela 19)
 
-  T19_Filtro_Pilula     a pílula do filtro do recorte (HTML, na caixa do filtro da casca, 1282, 60, 424 × 48): "Todos
-                        os municípios" sem escolha; com escolha, o recorte em poucas palavras ("Nordeste · até 10 mil
-                        hab.") ou "N filtros", com o funil e o ponto vermelho
-  T19_Filtro_Abre/Fora  botão sobre a pílula (abre o filtro, T19_FILTRO_ABRE_01) e o véu da tela inteira que fecha
-                        (T19_FILTRO_FECHA_01)
-  T19_Filtro_Recorte    VizuFilter alto e oculto, já aberto (alwaysOpen), em árvore (modo caminho sobre T19
+  T19_Filtro_Recorte    o filtro do recorte: o próprio VizuFilter, visível, na caixa do filtro da casca (1282, 60, 424 ×
+                        780: a lista abre dentro dela), ATRÁS do conteúdo (z 20, lib.CAMADAS["filtro"]; a dispersão por
+                        cima segue com o mouse), com o gatilho dele: "Todos os municípios" sem escolha; com escolha, o
+                        resumo de cima para baixo por grupo ("Nordeste · até 10 mil", "3 cidades"; VizuFilter 2.14,
+                        triggerPathSummary) e o funil com o ponto vermelho. Árvore (modo caminho sobre T19
                         Filtro[Caminho]): o lugar numa hierarquia só — Região › Estado › Cidade, o filtro cai na
                         cidade — e os grupos Tamanho da cidade, Renda (quinto) e Virou?; busca no topo, seleção
                         múltipla e "Limpar"
@@ -24,16 +23,16 @@
 O filtro do recorte (23/10/2026, pedido do dono: "no mesmo local que os filtros sempre ficam; daí dá pra aumentar a
 altura dos gráficos"; o acordeão, com região, estado e cidade em grupos separados, foi reprovado: "se resolve a questão
 da hierarquia jogando o filtro no último na hierarquia"): no lugar da faixa de seis segmentações nativas, um filtro só, no
-padrão da casca (paginas/casca.py › _filtro; o mesmo da T20): fechado, a tela mostra só a pílula e o botão sobre ela; o
-clique mostra o VizuFilter alto por cima e o véu em volta. A T19 Filtro não filtra o Município (relação inativa: um
+padrão da casca (paginas/casca.py › _filtro; o mesmo da T20): o próprio VizuFilter, sem pílula, botão, véu nem
+marcador (24/10/2026: "eu pedi que o filtro não fosse um botão que ativa ao clicar"). A T19 Filtro não filtra o
+Município (relação inativa: um
 filtro numa coluna só daria OU entre os grupos): a lista e a dispersão filtram por [T19 · no recorte] = 1 (E entre os
-grupos, OU dentro do mesmo grupo) e o resumo conta só os municípios no recorte. A pílula mostra "Todos os municípios", o
-recorte em poucas palavras ou "N filtros". A gaveta não apaga itens incompatíveis com as outras escolhas (papel
-"Disponibilidade" fora): o VizuFilter não enxerga a própria seleção na consulta dele. A chegada (T19_CHEGADA_01, da
-casca, por FILTROS_PROPRIOS) deixa o filtro fechado.
+grupos, OU dentro do mesmo grupo) e o resumo conta só os municípios no recorte. A gaveta não apaga itens incompatíveis
+com as outras escolhas (papel "Disponibilidade" fora): o VizuFilter não enxerga a própria seleção na consulta dele. O
+filtro nasce recolhido (startOpen e alwaysOpen desligados); a chegada (T19_CHEGADA_01, da casca) não mexe nele.
 
-Interações (só as exceções): a lista e a dispersão não filtram o filtro nem a pílula; a lista destaca (realce) a
-dispersão e não mexe no resumo nem na manchete da dispersão.
+Interações (só as exceções): a lista e a dispersão não filtram o filtro; a lista destaca (realce) a dispersão e não mexe
+no resumo nem na manchete da dispersão.
 
 Medidas em pbi/dax/T19 Explorador (desenho gerado por pbi/scripts/desenho_t19.py); spec em pbi/spec/t19_dispersao.json;
 tabela do filtro em pbi/modelo/t19_filtro.py.
@@ -47,7 +46,7 @@ import estilo
 import pagina_lib
 import pbip_lib as lib
 import roteiro
-from pbip_lib import Bookmark, Interacao, Visual
+from pbip_lib import Interacao, Visual
 
 P = "T19"
 CSS = "Estilo · CSS"
@@ -58,14 +57,11 @@ RESUMO = (150, 140, 700, 104)
 LISTA = (150, 252, 700, D.LISTA_CAB + D.LISTA_LINHAS * D.LISTA_H)          # até y 992
 DISPERSAO = (890, 140, D.DISP_W, D.DISP_H)                                 # até y 1000
 
-# O filtro do recorte no padrão da casca (pílula + VizuFilter alto + véu), na mesma caixa do filtro de UF das outras
-# telas. Aberto, a caixa vai até y 840: seis raízes de 48 px, o "Limpar", a busca e ~9 linhas da raiz aberta.
-FILTRO = (1282, 60, 424, 48)
-FILTRO_ABERTO = (1282, 60, 424, 780)
-FILTRO_FORA = (0, 0, 1920, 1080)
-Z_FILTRO = lib.CAMADAS["drawer"]
-NOMES_FILTRO = {"lista": f"{P}_Filtro_Recorte", "pilula": f"{P}_Filtro_Pilula", "abre": f"{P}_Filtro_Abre",
-                "fora": f"{P}_Filtro_Fora"}
+# O filtro do recorte no padrão da casca (o próprio VizuFilter, atrás do conteúdo, na caixa do filtro de UF das outras
+# telas). Aberto, a caixa vai até y 840: quatro raízes, o "Limpar", a busca e ~13 linhas da raiz aberta.
+FILTRO_CAIXA = (1282, 60, 424, 780)
+Z_FILTRO = lib.CAMADAS["filtro"]
+NOME_FILTRO = f"{P}_Filtro_Recorte"
 NO_RECORTE = "T19 · no recorte"
 
 
@@ -92,44 +88,27 @@ def _estilo_acordeao() -> dict:
 
 def _filtro() -> list:
     from paginas import casca
-    c = estilo.COR
-    x, y, w, h = FILTRO_ABERTO
-    hp = FILTRO[3]
     # árvore (não acordeão, 23/10/2026: no acordeão, abrir um grupo fechava o outro — "não aprovado"): o lugar é
     # uma hierarquia só, Região › Estado › Cidade, e o filtro cai na cidade (marcar uma região ou um estado marca as
-    # cidades de dentro); os grupos abrem e fecham cada um por si; a busca, no topo, procura em todos (5.571 cidades)
+    # cidades de dentro); os grupos abrem e fecham cada um por si; a busca, no topo, procura em todos (5.571 cidades).
+    # O gatilho resume a escolha de cima para baixo em cada grupo (VizuFilter 2.14, triggerPathSummary): "Nordeste",
+    # "Bahia", "3 cidades", "Nordeste · até 10 mil"; sem escolha, "Todos os municípios"
     geral = {"mode": "dropdown", "treeCategoryHeader": True, "listLayout": "standard", "pathMode": True,
-             "pathSeparator": " › ", "singleSelect": False, "sortAscending": False, "startOpen": True,
-             "alwaysOpen": True, "showSearch": True, "searchScope": "list",
+             "pathSeparator": " › ", "singleSelect": False, "sortAscending": False, "startOpen": False,
+             "alwaysOpen": False, "showSearch": True, "searchScope": "list",
              "searchPlaceholder": "Buscar região, estado ou cidade", "categoryHeaderStyle": "natural",
-             "showSelectAll": False, "showReset": True, "showSelectedCount": False, "showSelectedValue": False,
-             "triggerMode": "count", "triggerCountStyle": "text", "triggerLabel": "Todos os municípios",
-             "triggerCountFormat": "Filtros em uso: {n}", "syncSelectionWithHost": True}
-    layout = {"controlWidth": w, "controlHeight": hp, "dropdownWidth": w, "dropdownHeight": h - hp - 6, "gap": 6,
-              "optionHeight": 36, "searchHeight": 40, "triggerIconGap": 12, "borderRadius": 6, "checkboxSize": 16,
-              "checkboxRadius": 3, "scrollbarWidth": 4, "wrapOptionLabels": False}
-    lista, pilula, abre, fora = (NOMES_FILTRO[k] for k in ("lista", "pilula", "abre", "fora"))
+             "showSelectAll": False, "showReset": True, "showSelectedCount": False, "showSelectedValue": True,
+             "selectedValueOnly": True, "triggerMode": "value", "triggerLabel": "Recorte",
+             "placeholderText": "Todos os municípios", "triggerPathSummary": True, "triggerPathSummaryMax": 2,
+             "triggerPathSummaryNoun": "Região, estado e cidade=cidade|cidades; Tamanho da cidade=tamanho|tamanhos; "
+                                       "Renda (quinto)=faixa de renda|faixas de renda; Virou?=situação|situações",
+             "syncSelectionWithHost": True}
+    layout = casca.layout_filtro(FILTRO_CAIXA, optionHeight=36, searchHeight=40, checkboxSize=16, checkboxRadius=3)
     return [
-        Visual(P, lib.visual_html(pilula, *FILTRO, "T19 · Filtro · pílula · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=f"<style>{casca.CSS_PILULA}</style>{{{{content}}}}",
-                                  alt=lib.medida("T19 · Filtro · ALT"), z=Z_FILTRO - 20, tab=4, movimento=False)),
-        Visual(P, lib.visual_botao(abre, *FILTRO, lib.acao_bookmark(f"{P}_FILTRO_ABRE_01"),
-                                   dica="Filtrar os municípios: região, estado e cidade, tamanho, renda ou quem virou",
-                                   z=lib.CAMADAS["navegacao"], tab=5, realce=c["tinta"], raio=6,
-                                   realce_transp=(90, 82))),
-        Visual(P, lib.visual_botao(fora, *FILTRO_FORA, lib.acao_bookmark(f"{P}_FILTRO_FECHA_01"),
-                                   dica="Fechar o filtro", z=Z_FILTRO - 10, tab=7, oculto=True, raio=0,
-                                   fundo=(c["tinta"], 90))),
         Visual(P, lib.visual_vizufilter(
-            lista, x, y, w, h, categoria=("T19 Filtro", "Caminho", "Filtro"), geral=geral, layout=layout,
-            estilo=_estilo_acordeao(), alt="Filtro do recorte em árvore: região, estado e cidade numa hierarquia "
-            "só, tamanho da cidade, renda e quem virou (com busca); vários itens no mesmo grupo somam, grupos "
-            "diferentes se combinam",
-            z=Z_FILTRO, tab=6, oculto=True, medidas={"itemSort": "T19 · filtro · ordem"})),
-        Bookmark(lib.bookmark_exibicao(f"{P}_FILTRO_ABRE_01", P, {lista: True, fora: True, abre: False},
-                                       titulo=f"{P} · filtro aberto"), grupo=("Filtros", "Filtros")),
-        Bookmark(lib.bookmark_exibicao(f"{P}_FILTRO_FECHA_01", P, {lista: False, fora: False, abre: True},
-                                       titulo=f"{P} · filtro fechado"), grupo=("Filtros", "Filtros")),
+            NOME_FILTRO, *FILTRO_CAIXA, categoria=("T19 Filtro", "Caminho", "Filtro"), geral=geral, layout=layout,
+            estilo=_estilo_acordeao(), alt=lib.medida("T19 · Filtro · ALT"), z=Z_FILTRO, tab=4,
+            medidas={"itemSort": "T19 · filtro · ordem"})),
     ]
 
 
@@ -178,10 +157,9 @@ def declarar(ctx):
         *pagina_lib.tooltip(TT, "Município · dossiê", 460, 350, "T19 · Dossiê · HTML", ordem=290,
                             folha_de_estilo=CSS, modelo_corpo=D.corpo_dossie()),
     ]
-    # exceções de interação: a lista e a dispersão não mexem no filtro nem na pílula (a pílula só mostra o filtro)
+    # exceções de interação: a lista e a dispersão não mexem no filtro
     for origem in ("T19_Dispersao_Pontos", "T19_Lista_Html"):
-        for alvo in (NOMES_FILTRO["lista"], NOMES_FILTRO["pilula"]):
-            itens.append(Interacao(P, origem, alvo, "NoFilter"))
+        itens.append(Interacao(P, origem, NOME_FILTRO, "NoFilter"))
     itens.append(Interacao(P, "T19_Lista_Html", "T19_Dispersao_Pontos", "HighlightFilter"))
     itens.append(Interacao(P, "T19_Lista_Html", "T19_Resumo_Html", "NoFilter"))
     itens.append(Interacao(P, "T19_Lista_Html", "T19_Dispersao_Fundo", "NoFilter"))

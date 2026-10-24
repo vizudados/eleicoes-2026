@@ -5,9 +5,8 @@
 */
 -- 1 · Leituras
 VAR _ref = [T25 · abstenção % do recorte]
-VAR _comUF = [T25 · com UF]
 -- 2 · Textos
-VAR _media = IF ( _comUF = 1, "média estadual", "média nacional" )
+VAR _media = [T25 · média (nome)]
 -- 4 · Marcação
 RETURN
     "<div class='tela lgm entra d6'>"

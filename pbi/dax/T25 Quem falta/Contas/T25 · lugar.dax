@@ -1,7 +1,7 @@
 /*
 @pasta: T25 Quem falta\Contas
 @formato: texto
-@descricao: O lugar que a tela mostra: o município marcado, N municípios marcados, a UF do filtro ou o Brasil.
+@descricao: O lugar que a tela mostra: o município marcado, N municípios marcados ou o recorte de estado (Brasil, o estado, a região, os estados).
 */
 SWITCH (
     TRUE (),

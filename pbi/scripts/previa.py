@@ -12,6 +12,7 @@ headless.
     python -X utf8 pbi/scripts/previa.py T02                       # pbi/qa/previa/T02.png (+ .html)
     python -X utf8 pbi/scripts/previa.py T02 --marcador T02_LEITURA_VENDAS_01   # aplica a visibilidade do marcador
     python -X utf8 pbi/scripts/previa.py T02 --filtro "UF[Nome]=Minas Gerais"       # recorte (filtro na consulta)
+    python -X utf8 pbi/scripts/previa.py T02 --filtro "UF[Nome]=Bahia|Sergipe"      # vários valores (separados por |)
     python -X utf8 pbi/scripts/previa.py T02 --animado              # sem congelar as animações (foto em tempo real)
     python -X utf8 pbi/scripts/previa.py T02 --guias                # contorno tracejado dos visuais nativos e caixas
     python -X utf8 pbi/scripts/previa.py ttT02Ano --tooltip "fVenda[Ano]=2025"   # página de tooltip
@@ -110,15 +111,17 @@ def ref_coluna(tab: str, col: str) -> str:
 
 
 def filtro_dax(texto: str | None) -> str:
-    """'UF[Nome]=Minas Gerais' → TREATAS ( { "Minas Gerais" }, 'UF'[Nome] ) (texto) ou número se for número."""
+    """'UF[Nome]=Minas Gerais' → TREATAS ( { "Minas Gerais" }, 'UF'[Nome] ) (texto) ou número se for número. Vários
+    valores separados por '|' (24/10/2026, o filtro de estado em árvore marca vários): 'UF[Nome]=Bahia|Sergipe'."""
     if not texto:
         return ""
     m = re.match(r"^\s*([^\[]+)\[([^\]]+)\]\s*=\s*(.+?)\s*$", texto)
     if not m:
-        raise SystemExit(f"--filtro {texto!r}: use Tabela[Coluna]=valor")
+        raise SystemExit(f"--filtro {texto!r}: use Tabela[Coluna]=valor (ou valor1|valor2)")
     tab, col, val = m.groups()
-    lit_ = val if re.match(r"^-?\d+(\.\d+)?$", val) else '"' + val.replace('"', '""') + '"'
-    return f"TREATAS ( {{ {lit_} }}, {ref_coluna(tab, col)} )"
+    lits = [v if re.match(r"^-?\d+(\.\d+)?$", v) else '"' + v.replace('"', '""') + '"'
+            for v in (x.strip() for x in val.split("|")) if v]
+    return f"TREATAS ( {{ {', '.join(lits)} }}, {ref_coluna(tab, col)} )"
 
 
 def _literal_dax(v: str) -> str:

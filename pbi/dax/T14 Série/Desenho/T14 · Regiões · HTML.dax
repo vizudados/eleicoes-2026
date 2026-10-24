@@ -1,13 +1,15 @@
 /*
 @pasta: T14 Série\Desenho
 @formato: texto
-@descricao: Uma entrada por região (granularidade Município[Região]), todas na mesma escala (10% a 70%): as linhas do PT e do adversário de 2006 a 2026 e os valores da eleição em destaque (a clicada na série ou 2026). Ignoram o filtro de UF; com uma UF escolhida, a região dela fica em destaque. O clique numa região leva a série e a resposta àquela região; o mouse abre o dossiê dela (ttT14Regiao).
+@descricao: Uma entrada por região (granularidade Município[Região]), todas na mesma escala (10% a 70%): as linhas do PT e do adversário de 2006 a 2026 e os valores da eleição em destaque (a clicada na série ou 2026). Ignoram o filtro de estado; cada região com estado escolhido fica em destaque, com o que dela está no filtro ('região escolhida', 'região da Bahia', 'região de BA e SE'). O clique numa região leva a série e a resposta àquela região; o mouse abre o dossiê dela (ttT14Regiao).
 @gerado: pbi/scripts/desenho_t14.py
 */
 -- 1 · Leituras
 VAR _r = [T14 · região do painel]
-VAR _sel = [T14 · região do recorte]
-VAR _ufNome = [T14 · UF do filtro]
+VAR _nRec = [T14 · UFs do recorte na região do painel]
+VAR _nUf = [T14 · UFs da região]
+VAR _deRec = [T14 · recorte na região do painel]
+VAR _siglaRec = [T14 · sigla do recorte na região do painel]
 VAR _ano = [T14 · ano dos painéis]
 VAR _clique = NOT ISBLANK ( [T14 · ano escolhido] )
 VAR _anos = DATATABLE ( "a", INTEGER, { { 2006 }, { 2010 }, { 2014 }, { 2018 }, { 2022 }, { 2026 } } )
@@ -37,7 +39,18 @@ VAR _yApt = MAXX ( FILTER ( _xy, [a] = _ano ), [@yPt] ) /* lista */
 VAR _yAadv = MAXX ( FILTER ( _xy, [a] = _ano ), [@yAdv] ) /* lista */
 VAR _xA = 8 + ( _ano - 2006 ) / 4 * 42
 VAR _sep = IF ( ABS ( _yApt - _yAadv ) < 16, 8 - ABS ( _yApt - _yAadv ) / 2, 0 )
-VAR _cls = IF ( _sel = _r, "pn sel", "pn" )
+VAR _cls = IF ( _nRec > 0, "pn sel", "pn" )
+-- a nota à mão cabe ao lado do nome no painel de 300 px (nome ~9,6 px por letra, Caveat ~8): "região da Bahia"; com
+-- o nome comprido, a sigla ("região de MS" no Centro-Oeste, "região de RN" no Nordeste)
+VAR _cabe = INT ( ( 292 - 9.6 * LEN ( _r ) ) / 8 ) -- geometria
+VAR _nota1 = "região " & _deRec
+VAR _nota =
+    SWITCH (
+        TRUE (),
+        _nRec = _nUf, "região escolhida",
+        LEN ( _nota1 ) <= _cabe || ISBLANK ( _siglaRec ), _nota1,
+        "região de " & _siglaRec
+    )
 VAR _marca =
     IF (
         _clique,
@@ -55,7 +68,7 @@ RETURN
     IF (
         _o > 0,
         "<div class='tela t14g'><div class='" & _cls & " sobe d" & ( 2 + _o ) & "' style='left:" & _px & "px'>"
-            & "<div class='nm'>" & _r & IF ( _sel = _r, " <span class='mao'>região de " & _ufNome & "</span>", "" )
+            & "<div class='nm'>" & _r & IF ( _nRec > 0, " <span class='mao'>" & _nota & "</span>", "" )
             & "</div>"
             & "<svg width='300' height='132' viewBox='0 0 300 132'>"
                 & "<line class='b' x1='0' x2='226' y1='116' y2='116'/>"

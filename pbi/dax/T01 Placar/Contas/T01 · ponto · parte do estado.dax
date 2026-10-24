@@ -1,0 +1,9 @@
+/*
+@pasta: T01 Placar\Contas
+@formato: 0%
+@descricao: Parcela dos votos do partido do ponto, no ano do ponto, que veio do estado da linha, dentro do recorte de vários estados (0–1). Tira só o estado da linha: o recorte (o filtro de estado, em 'UF'[Caminho]) fica.
+*/
+DIVIDE (
+    [T01 · ponto · votos no grupo],
+    CALCULATE ( [T01 · ponto · votos no grupo], REMOVEFILTERS ( 'UF'[UF], 'UF'[Nome] ) )
+)

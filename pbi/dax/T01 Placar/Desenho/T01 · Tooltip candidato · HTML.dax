@@ -1,7 +1,7 @@
 /*
 @pasta: T01 Placar\Desenho
 @formato: texto
-@descricao: Dossiê do candidato da barra (ficha com clipe): onde foi mais forte e mais fraco no Brasil e em quantas UFs ficou em 1º. Só lê contas 'T01 · …'.
+@descricao: Dossiê do candidato da barra (ficha com clipe): onde foi mais forte e mais fraco e em quantas UFs ficou em 1º, no Brasil (sem escolha ou com um estado só) ou entre as UFs do recorte (região ou vários estados). Só lê contas.
 */
 -- 1 · Leituras
 VAR _nome = SELECTEDVALUE ( 'Candidato UF'[Candidato] )
@@ -13,7 +13,9 @@ VAR _pF = [T01 · % na UF mais forte do candidato]
 VAR _ufR = [T01 · UF mais fraca do candidato]
 VAR _pR = [T01 · % na UF mais fraca do candidato]
 VAR _n1 = [T01 · UFs em 1º do candidato]
-VAR _comUF = [T01 · com UF]
+VAR _noRecorte = [T01 · dossiê no recorte]
+VAR _nUFs = [T01 · UFs do dossiê]
+VAR _em = [Recorte · em]
 -- 2 · Textos
 VAR _cor = SWITCH ( _num, 22, "flavio", 13, "lula", "neutro" )
 VAR _ic = SWITCH ( _num, 22, "urna-azul", 13, "urna-vermelho", "urna-tinta" )
@@ -21,13 +23,15 @@ VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( 
 VAR _txtPar = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _par, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _num
 VAR _txtPF = FORMAT ( _pF, "0.0%" )
 VAR _txtPR = FORMAT ( _pR, "0.0%" )
-VAR _onde = IF ( _comUF = 1, _pos & "º lugar nesta UF", _pos & "º lugar no Brasil" )
+VAR _onde = _pos & "º lugar " & _em
 VAR _nota =
-    IF (
-        _n1 > 0,
-        "1º lugar em " & _n1 & IF ( _n1 = 1, " UF", " UFs" ),
+    SWITCH (
+        TRUE (),
+        _n1 > 0 && _noRecorte = 1, "1º lugar em " & _n1 & " de " & _nUFs & " UFs",
+        _n1 > 0, "1º lugar em " & _n1 & IF ( _n1 = 1, " UF", " UFs" ),
         _onde
     )
+VAR _escopo = IF ( _noRecorte = 1, _em, "no Brasil" )
 -- 4 · Marcação
 VAR _css =
     "<style>"
@@ -53,7 +57,7 @@ VAR _html =
         & "<img class='clipe' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/clipe-tinta.png'/>"
         & "<img class='ic entra' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/" & _ic & ".png'/>"
         & "<div class='cab sobe'><div class='nm " & _cor & "'>" & _txtNome & "</div>"
-        & "<div class='rot pt'>" & _txtPar & " · no Brasil</div></div>"
+        & "<div class='rot pt'>" & _txtPar & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _escopo, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
         & "<div class='lin l1 sobe d2'><span class='rot'>Mais forte em</span>"
         & "<span class='v'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _ufF, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "<b class='" & _cor & "'>" & _txtPF & "</b></span></div>"
         & "<div class='lin l2 sobe d3'><span class='rot'>Mais fraco em</span>"

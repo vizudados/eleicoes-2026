@@ -1,7 +1,7 @@
 /*
 @pasta: T05 Flávio\Desenho
 @formato: texto
-@descricao: De onde vêm os votos de Flávio, uma entrada por região: no Brasil, a fatia e a linha da região (clicáveis); numa UF, as cidades que mais deram votos; com um município marcado, o lugar dele entre as cidades do estado. Só escolhe o bloco.
+@descricao: De onde vêm os votos de Flávio, uma entrada por região: no Brasil, a fatia e a linha da região (clicáveis); com vários estados no filtro (uma região inteira ou estados soltos), os estados que mais deram votos; numa UF, as cidades que mais deram votos; com um município marcado, o lugar dele entre as cidades do estado. Só escolhe o bloco.
 */
 VAR _v = [T05 · votos (municípios)]
 RETURN
@@ -9,6 +9,7 @@ RETURN
         TRUE (),
         NOT ( _v > 0 ), BLANK (),
         [T05 · com município] = 1, [T05 · Origem · bloco município],
+        [T05 · vários estados] = 1, [T05 · Origem · bloco estados],
         [T05 · com UF] = 1, [T05 · Origem · bloco UF],
         [T05 · Origem · bloco região]
     )

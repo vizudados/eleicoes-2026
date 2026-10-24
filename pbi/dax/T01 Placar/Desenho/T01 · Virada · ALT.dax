@@ -4,7 +4,7 @@
 @descricao: Texto para leitor de tela do bloco de 2022 para 2026.
 */
 -- 1 · Leituras
-VAR _rec = [T01 · recorte]
+VAR _rec = [Recorte · em]
 VAR _pt22 = [T01 · PT 2022 votos]
 VAR _pt26 = [T01 · Lula votos]
 VAR _pl22 = [T01 · PL 2022 votos]
@@ -12,7 +12,7 @@ VAR _pl26 = [T01 · Flávio votos]
 -- 2 · Textos
 RETURN
     LEFT (
-        "De 2022 para 2026, em " & _rec & ": Lula foi de " & SWITCH ( TRUE (), ABS ( _pt22 ) >= 1000000, FORMAT ( _pt22 / 1000000, "0.00" ) & " mi", ABS ( _pt22 ) >= 1000, FORMAT ( _pt22 / 1000, "0.0" ) & " mil", FORMAT ( _pt22, "#,0" ) ) & " para " & SWITCH ( TRUE (), ABS ( _pt26 ) >= 1000000, FORMAT ( _pt26 / 1000000, "0.00" ) & " mi", ABS ( _pt26 ) >= 1000, FORMAT ( _pt26 / 1000, "0.0" ) & " mil", FORMAT ( _pt26, "#,0" ) )
+        "De 2022 para 2026, " & _rec & ": Lula foi de " & SWITCH ( TRUE (), ABS ( _pt22 ) >= 1000000, FORMAT ( _pt22 / 1000000, "0.00" ) & " mi", ABS ( _pt22 ) >= 1000, FORMAT ( _pt22 / 1000, "0.0" ) & " mil", FORMAT ( _pt22, "#,0" ) ) & " para " & SWITCH ( TRUE (), ABS ( _pt26 ) >= 1000000, FORMAT ( _pt26 / 1000000, "0.00" ) & " mi", ABS ( _pt26 ) >= 1000, FORMAT ( _pt26 / 1000, "0.0" ) & " mil", FORMAT ( _pt26, "#,0" ) )
             & " votos; o PL foi de " & SWITCH ( TRUE (), ABS ( _pl22 ) >= 1000000, FORMAT ( _pl22 / 1000000, "0.00" ) & " mi", ABS ( _pl22 ) >= 1000, FORMAT ( _pl22 / 1000, "0.0" ) & " mil", FORMAT ( _pl22, "#,0" ) ) & " para " & SWITCH ( TRUE (), ABS ( _pl26 ) >= 1000000, FORMAT ( _pl26 / 1000000, "0.00" ) & " mi", ABS ( _pl26 ) >= 1000, FORMAT ( _pl26 / 1000, "0.0" ) & " mil", FORMAT ( _pl26, "#,0" ) ) & ".",
         250
     )

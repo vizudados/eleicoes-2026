@@ -6,15 +6,18 @@ Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo lugar (2018
   T14_Resposta_Html   o "2ª vez" (ou "N de 6" quando o PT ficou à frente em 2026), a manchete e os anos em que o PT
                       ficou atrás, com os candidatos e os percentuais; com um ano clicado, a margem do PT naquela
                       eleição e a urna dela em destaque; com uma região clicada, tudo no lugar dela
-  T14_Linhas_Titulo   sobretítulo (Brasil, a UF ou a região clicada), manchete do melhor e do pior ano do PT e a legenda
+  T14_Linhas_Titulo   sobretítulo (Brasil, o recorte do filtro de estado ou a região clicada), manchete do melhor e
+                      do pior ano do PT e a legenda
   T14_Linhas_Html     a série PT × adversário principal (granularidade Ano): os trechos de linha se desenham em
                       sequência, os pontos brotam e um sublinhado à mão (embaixo do número) marca os anos em que o PT
                       ficou atrás; eixo com os candidatos. Tooltip: dossiê da eleição (ttT14Ano: os mais votados no
                       Brasil, a colocação do PT e a abstenção). Clique num ano: a resposta e os painéis das regiões
                       vão para aquela eleição (os outros anos esmaecem)
   T14_Regioes_Html    as cinco regiões na mesma escala, uma entrada por região (granularidade Município[Região]);
-                      ignoram o filtro de UF e destacam a região da UF escolhida; mostram os valores da eleição em
-                      destaque (a clicada na série ou 2026). Tooltip: os estados da região naquela eleição
+                      ignoram o filtro de estado e destacam cada região com estado escolhido, dizendo o que dela
+                      está no filtro ("região escolhida", "região da Bahia", "região de BA e SE"; 24/10/2026, filtro
+                      em árvore Região › Estado); mostram os valores da eleição em destaque (a clicada na série ou
+                      2026). Tooltip: os estados da região naquela eleição, todos, sem o recorte do filtro
                       (ttT14Regiao). Clique numa região: a série, o título e a resposta passam a contar a região
 
 Medidas em pbi/dax/T14 Série (geradas por pbi/scripts/desenho_t14.py).

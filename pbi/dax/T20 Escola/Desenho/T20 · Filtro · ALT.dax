@@ -1,7 +1,7 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: Texto alternativo do filtro da tela: a cidade e a escola em uso.
+@descricao: Texto alternativo do filtro da tela (o VizuFilter em árvore, com o gatilho dele; sem pílula desde 24/10/2026): a cidade e a escola em uso.
 */
 -- 1 · Leituras
 VAR _escola = [T20 · escola do filtro]

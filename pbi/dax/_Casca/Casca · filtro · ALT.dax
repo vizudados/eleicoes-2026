@@ -1,8 +1,10 @@
 /*
 @pasta: _Casca
 @formato: texto
-@descricao: Texto alternativo do filtro de UF: o recorte em uso.
+@descricao: Texto alternativo do filtro de estado (árvore Região › Estado): o recorte em uso, lido de cima para baixo pela medida comum [Recorte · nome] ('Filtro de estado: Nordeste', 'Filtro de estado: MG e SP'); sem escolha, todo o Brasil.
 */
-VAR _uf = SELECTEDVALUE ( 'UF'[Nome] )
-RETURN
-    IF ( ISBLANK ( _uf ), "Filtro de estado: todo o Brasil", "Filtro de estado: " & _uf )
+IF (
+    [Recorte · com escolha] = 1,
+    "Filtro de estado: " & [Recorte · nome],
+    "Filtro de estado: todo o Brasil"
+)

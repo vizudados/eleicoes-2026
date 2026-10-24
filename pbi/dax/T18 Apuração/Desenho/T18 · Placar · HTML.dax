@@ -1,7 +1,7 @@
 /*
 @pasta: T18 Apuração\Desenho
 @formato: texto
-@descricao: Placar da apuração: horas do TSE e da coleta, os dois candidatos (o líder à esquerda; zerados, a ordem da urna), o selo do estado, a frase do momento, o relógio até as 17h (aguardando, contado no navegador) e a barra de seções. Com uma atualização clicada na curva da noite, o placar daquele momento (T18 · Placar momento · HTML).
+@descricao: Placar da apuração: horas do TSE e da coleta, os dois candidatos (o líder à esquerda; zerados, a ordem da urna), o selo do estado, a frase do momento, o relógio até as 17h (aguardando, contado no navegador) e a barra de seções. No recorte (filtro de estado em árvore ou clique no mapa: um estado, uma região, vários estados somados) as contas somam as UFs escolhidas e o texto diz onde ('na Bahia', 'no Nordeste', 'em MG e SP (somados)'); com a eleição definida, a frase separa o eleito no Brasil de quem lidera no recorte. Clique no mapa fora do filtro: o aviso. Com uma atualização clicada na curva da noite, o placar daquele momento (T18 · Placar momento · HTML).
 */
 -- 1 · Leituras (contas de T18 Apuração\Contas)
 VAR _fase = [Apuração · fase]
@@ -21,7 +21,14 @@ VAR _nulos = [Apuração · nulos]
 VAR _tse = [Apuração · atualizado no TSE]
 VAR _coleta = [Apuração · coletado em]
 VAR _momento = [T18 · momento escolhido]
+VAR _vazio = [T18 · recorte vazio]
+VAR _em = [Recorte · em]
+VAR _tipo = [Recorte · tipo]
+VAR _liderBR = [Apuração · líder no Brasil]
 -- 2 · Textos
+-- onde: vazio no Brasil (a frase de sempre); 'na Bahia', 'no Nordeste', 'em MG e SP (somados)' no recorte
+VAR _ondeTxt = _em & IF ( _tipo = "Vários", " (somados)", "" )
+VAR _onde = IF ( _escopo = "Brasil", "", " " & _ondeTxt )
 VAR _aguarda = _fase = "aguardando"
 VAR _lulaTxt = IF ( _aguarda, "—", FORMAT ( _lulaP * 100, "0.00" ) & "%" )
 VAR _flavioTxt = IF ( _aguarda, "—", FORMAT ( _flavioP * 100, "0.00" ) & "%" )
@@ -51,18 +58,23 @@ VAR _frase =
     SWITCH (
         TRUE (),
         _aguarda, "As urnas fecham às 17h de domingo, 25/10.",
-        _lider = "—", "Empate exato com " & _secoesTxt & " das seções apuradas.",
-        _fase = "apurando", _lider & " está à frente por " & _difTxt & " votos, com " & _secoesTxt & " das seções apuradas.",
+        -- no recorte, o eleito é o do Brasil (a fase é nacional) e o recorte diz só quem lidera nele
+        _escopo <> "Brasil" && _fase = "definido",
+            _liderBR & " está matematicamente eleito no Brasil; " & _ondeTxt & ", "
+                & IF ( _lider = "—", "empate exato", _lider & " está à frente por " & _difTxt & " votos" ) & ".",
+        _lider = "—", "Empate exato" & _onde & " com " & _secoesTxt & " das seções apuradas.",
+        _fase = "apurando", _lider & " está à frente" & _onde & " por " & _difTxt & " votos, com " & _secoesTxt
+            & " das seções apuradas.",
         _fase = "definido", _lider & " está matematicamente eleito: a diferença de " & _difTxt
             & " votos já não pode ser revertida.",
-        _lider & " lidera · apuração encerrada · diferença de " & _difTxt & " votos"
+        _lider & " lidera" & _onde & " · apuração encerrada · diferença de " & _difTxt & " votos"
     )
 VAR _relogio =
     IF (
         _aguarda,
         "<div class='relogio sobe d4'><span class='rot'>FALTAM</span><span class='num' id='t18rel'>—</span></div>"
             & "<div class='txt sobe d5'>" & FORMAT ( _eleitorado, "#,0" ) & " eleitores podem votar"
-            & IF ( _escopo = "Brasil", "", " em " & _escopo ) & ".</div>"
+            & IF ( _escopo = "Brasil", "", " " & _em ) & ".</div>"
     )
 VAR _barra =
     "<div class='secoes sobe d5'><div class='rot'>SEÇÕES APURADAS" & IF ( _escopo = "Brasil", "", " · " & UPPER ( _escopo ) )
@@ -70,15 +82,25 @@ VAR _barra =
         & FORMAT ( _secoes * 100, "0.0##", "en-US" ) & "%'></div><span class='num'>" & _secoesTxt
         & "</span></div><div class='nota'>Abstenção " & FORMAT ( _abst * 100, "0.00" ) & "% · brancos "
         & FORMAT ( _brancos, "#,0" ) & " · nulos " & FORMAT ( _nulos, "#,0" ) & "</div></div>"
+-- o recorte no fim da linha do topo; com o selo (ensaio, definido, encerrada) ele ficaria embaixo do carimbo, e a frase e
+-- a barra já dizem onde
 VAR _topo =
     "<div class='rot topo entra'>"
         & IF ( ISBLANK ( _tse ), "AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE", "ATUALIZADO PELO TSE · " & _tseTxt )
-        & " · COLETADO EM " & _coletaTxt & IF ( _escopo = "Brasil", "", " · " & UPPER ( _escopo ) ) & "</div>"
+        & " · COLETADO EM " & _coletaTxt & IF ( _escopo = "Brasil" || _selo <> "", "", " · " & UPPER ( _escopo ) )
+        & "</div>"
 VAR _marca = IF ( _aguarda || _lider = "—", "", "<span class='visto'>✓</span>" )
+-- clique no mapa fora do filtro de estado: nenhuma UF nas contas; o placar avisa em vez de mostrar zeros
+VAR _aviso =
+    "<div class='tela t18p'><div class='rot topo entra'>"
+        & IF ( ISBLANK ( _tse ), "AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE", "ATUALIZADO PELO TSE · " & _tseTxt )
+        & " · COLETADO EM " & _coletaTxt & "</div><div class='man frase sobe d4'>O estado clicado no mapa fica fora "
+        & "do filtro de estado do alto. Clique nele de novo para voltar ao recorte do filtro.</div></div>"
 RETURN
-    IF (
-        NOT ISBLANK ( _momento ),
-        [T18 · Placar momento · HTML],
+    SWITCH (
+        TRUE (),
+        NOT ISBLANK ( _momento ), [T18 · Placar momento · HTML],
+        _vazio = 1, _aviso,
         "<div class='tela t18p'>" & _topo & "<div class='par'>" & _par & _selo & "</div>"
             & "<div class='man frase sobe d4'>" & _marca & _frase & "</div>" & _relogio
             & IF ( _aguarda, "", _barra ) & "</div>"

@@ -1,7 +1,7 @@
 /*
 @pasta: T03 Lula\Desenho
 @formato: texto
-@descricao: De onde vêm os votos de Lula, uma entrada por região: no Brasil, a fatia e a linha da região (clicáveis); numa UF, as cidades que mais deram votos; com um município marcado, o lugar dele entre as cidades do estado. Só escolhe o bloco.
+@descricao: De onde vêm os votos de Lula, uma entrada por região: no Brasil, a fatia e a linha da região (clicáveis); com vários estados no filtro (uma região inteira ou estados soltos), os estados que mais deram votos; numa UF, as cidades que mais deram votos; com um município marcado, o lugar dele entre as cidades do estado. Só escolhe o bloco.
 */
 VAR _v = [T03 · votos (municípios)]
 RETURN
@@ -9,6 +9,7 @@ RETURN
         TRUE (),
         NOT ( _v > 0 ), BLANK (),
         [T03 · com município] = 1, [T03 · Origem · bloco município],
+        [T03 · vários estados] = 1, [T03 · Origem · bloco estados],
         [T03 · com UF] = 1, [T03 · Origem · bloco UF],
         [T03 · Origem · bloco região]
     )

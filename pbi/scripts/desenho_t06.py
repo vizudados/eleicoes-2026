@@ -11,7 +11,9 @@ dossiê do ano: a disputa, quantas vezes a diferença entre os dois primeiros ca
 Tons neutros: creme → tinta (sem vermelho/azul).
 
 Fontes: sem filtro, o comparecimento oficial do Brasil ('Comparecimento ano', com o exterior: os 158,7 mi aptos do TSE);
-com o filtro de UF, a soma dos municípios da UF ('Município ano'). Oráculo: mockup/data/eleicoes.json › paginas[6].
+com o filtro de estado (árvore Região › Estado: um estado, uma região inteira ou vários estados), a soma dos municípios
+das UFs escolhidas ('Município ano'). O nome do recorte vem das medidas comuns Recorte · … (desenho_recorte.py).
+Oráculo: mockup/data/eleicoes.json › paginas[6].
 """
 from __future__ import annotations
 
@@ -44,10 +46,10 @@ TT_W, TT_H = 440, 320
 
 def contas() -> None:
     c = G.conta
-    c("T06 · com UF", "1 quando o filtro de UF da casca está ativo (a tela mostra a UF), 0 no Brasil.",
-      "INT ( ISCROSSFILTERED ( 'UF' ) )", "0")
-    c("T06 · recorte", "Nome do recorte: Brasil ou o nome da UF escolhida no filtro.",
-      'IF ( [T06 · com UF] = 1, SELECTEDVALUE ( \'UF\'[Nome], "UFs escolhidas" ), "Brasil" )', "texto")
+    c("T06 · com UF", "1 com estado ou região escolhido no filtro de estado da casca (as contas somam os municípios "
+      "das UFs escolhidas), 0 no Brasil (o total oficial, com o exterior).", "INT ( ISCROSSFILTERED ( 'UF' ) )", "0")
+    c("T06 · recorte", "Nome do recorte, da medida comum [Recorte · nome]: 'Brasil', o estado ('Bahia'), a região "
+      "inteira ('Nordeste') ou vários estados ('MG e SP', '3 estados').", "[Recorte · nome]", "texto")
     # no ano do contexto (série) e em 2026
     for nome, col, desc in (("aptos", "Aptos", "Eleitores aptos"), ("abstenções", "Abstencoes", "Eleitores que faltaram"),
                             ("brancos", "Brancos", "Votos em branco"), ("nulos", "Nulos", "Votos nulos")):
@@ -242,7 +244,14 @@ def desenho() -> None:
             ADDCOLUMNS ( VALUES ( 'Ano'[Ano] ), "@p", [T06 · abstenção % (ano)], "@n", [T06 · abstenções (ano)] )
         -- 2 · Textos
         VAR _verbo = IF ( _dpp >= 0, "subiu", "caiu" )
-        VAR _manchete = "Em 20 anos, a abstenção " & _verbo & " de " & @PCT(_p06)@ & " para " & @PCT(_p26)@
+        VAR _txt06 = @PCT(_p06)@
+        VAR _txt26 = @PCT(_p26)@
+        VAR _manchete =
+            IF (
+                _txt06 = _txt26,
+                "Em 20 anos, a abstenção ficou em " & _txt26,
+                "Em 20 anos, a abstenção " & _verbo & " de " & _txt06 & " para " & _txt26
+            )
         -- 3 · Geometria (anos em x 60–700; % de cima para baixo em y 30–220, de 10% a 26% — ou o que couber)
         VAR _min = MIN ( 0.10, MINX ( _anos, [@p] ) - 0.01 ) -- geometria
         VAR _max = MAX ( 0.26, MAXX ( _anos, [@p] ) + 0.01 ) -- geometria
@@ -369,7 +378,7 @@ def desenho() -> None:
         """))
     G.desenho("T06 · Composição · ALT", "Texto para leitor de tela das colunas da composição.", dax("""
         LEFT (
-            "Colunas de 2006 a 2026 com quem não escolheu ninguém em " & [T06 · recorte]
+            "Colunas de 2006 a 2026 com quem não escolheu ninguém " & [Recorte · em]
                 & ": quem faltou, quem anulou e quem votou em branco. Passe o mouse num ano para ver a disputa e quantas "
                 & "vezes a diferença entre os dois primeiros cabia em quem faltou.",
             250

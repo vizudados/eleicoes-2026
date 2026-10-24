@@ -6,7 +6,8 @@ A história é o mapa: 711 municípios trocaram Lula por Flávio de 2022 para 20
   T11_Resposta_Html   coluna da resposta: o 711 (contador), "nenhum fez o caminho inverso" sublinhado à mão, a fila das
                       5.571 cidades 2022 → 2026 (barras e faixas: a faixa azul forte são as que trocaram) e os votos
                       que mudaram de mão
-  T11_Mapa_Titulo     sobretítulo, manchete do mapa (regiões no Brasil; a UF no filtro; a área marcada ou a cidade
+  T11_Mapa_Titulo     sobretítulo, manchete do mapa (regiões no Brasil; o recorte do filtro de estado, que pode ser
+                      um estado, uma região ou vários estados; a área marcada ou a cidade
                       escolhida), a legenda e a dica do gesto
   T11_Mapa_Pontos     Deneb (Vega 6, canvas): um ponto por município no quadro 1000 × 1000; o contorno das UFs se
                       desenha em rabisco, os pontos esmaecem do norte ao sul e os que viraram acendem em ondas a partir

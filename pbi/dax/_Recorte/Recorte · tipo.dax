@@ -1,0 +1,66 @@
+/*
+@pasta: _Recorte
+@formato: texto
+@descricao: O tipo do recorte, para as telas escolherem as palavras: 'Brasil' (sem escolha), 'UF' (um estado; 'o estado'), 'Região' (uma região inteira; 'a região') ou 'Vários' (duas ou mais regiões, região e estados, estados soltos; 'os estados escolhidos'). 'Vazio' quando um clique cai fora do filtro e o contexto fica sem UF.
+*/
+-- 1 · A escolha: o filtro de estado (UF[Caminho]) ou um clique que filtra a UF (o mapa da apuração, a região da
+--     origem dos votos). O recorte visual do exterior (UF[Tipo]) não conta como escolha
+VAR _com =
+    ISFILTERED ( 'UF'[Caminho] ) || ISFILTERED ( 'UF'[Nome] ) || ISFILTERED ( 'UF'[UF] )
+        || ISFILTERED ( 'UF'[Região] )
+VAR _sel =
+    SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome], 'UF'[Região], 'UF'[RegiaoOrdem], 'UF'[Ordem], 'UF'[Artigo] )
+VAR _tot =
+    CALCULATETABLE ( SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Região] ), REMOVEFILTERS ( 'UF' ) )
+-- 2 · Regiões inteiras (todos os estados marcados) e estados soltos
+VAR _regioes =
+    ADDCOLUMNS (
+        DISTINCT ( SELECTCOLUMNS ( _sel, "@r", 'UF'[Região], "@o", 'UF'[RegiaoOrdem] ) ),
+        "@s", COUNTROWS ( FILTER ( _sel, 'UF'[Região] = [@r] ) ),
+        "@t", COUNTROWS ( FILTER ( _tot, 'UF'[Região] = [@r] ) )
+    )
+VAR _cheias = FILTER ( _regioes, [@s] = [@t] && [@r] <> "Exterior" )
+VAR _nomesCheias = SELECTCOLUMNS ( _cheias, "@r", [@r] )
+VAR _soltas = FILTER ( _sel, NOT ( 'UF'[Região] IN _nomesCheias ) )
+VAR _nR = COUNTROWS ( _cheias ) + 0
+VAR _nU = COUNTROWS ( _soltas ) + 0
+VAR _nPartes = IF ( _com, _nR + _nU, 0 )
+VAR _vazio = _com && _nR + _nU = 0
+VAR _nUFs = COUNTROWS ( FILTER ( _sel, 'UF'[UF] <> "ZZ" ) ) + 0
+-- 3 · As partes em ordem (regiões do Norte ao Sul, depois os estados na ordem do filtro); só valem até duas. O
+--     exterior (só pelo clique no mapa da apuração) é um lugar solto, em minúscula no meio da frase
+VAR _primeiraUF = MINX ( _soltas, 'UF'[Ordem] )
+VAR _partes =
+    UNION (
+        SELECTCOLUMNS (
+            _cheias,
+            "@ordem", [@o],
+            "@nome", [@r],
+            "@em", "no " & [@r],
+            "@de", "do " & [@r],
+            "@art", "o " & [@r]
+        ),
+        SELECTCOLUMNS (
+            _soltas,
+            "@ordem", 100 + 'UF'[Ordem],
+            "@nome", IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+            "@em", IF ( 'UF'[Ordem] = _primeiraUF, "em ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+            "@de", IF ( 'UF'[Ordem] = _primeiraUF, "de ", "" ) & IF ( 'UF'[UF] = "ZZ", "exterior", 'UF'[UF] ),
+            "@art", IF ( 'UF'[UF] = "ZZ", "o exterior", 'UF'[UF] )
+        )
+    )
+-- 4 · A parte única: o estado pelo nome, com o artigo dele ("na Bahia", "em Minas Gerais"); a região com "o"; o
+--     exterior com "o" e em minúscula ("no exterior")
+VAR _ufNome = MAXX ( _soltas, 'UF'[Nome] )
+VAR _ufMin = IF ( MAXX ( _soltas, 'UF'[UF] ) = "ZZ", "exterior", _ufNome )
+VAR _ufArtigo = MAXX ( _soltas, 'UF'[Artigo] )
+VAR _regNome = MAXX ( _cheias, [@r] )
+RETURN
+    SWITCH (
+        TRUE (),
+        _vazio, "Vazio",
+        _nPartes = 0, "Brasil",
+        _nPartes = 1 && _nR = 1, "Região",
+        _nPartes = 1, "UF",
+        "Vários"
+    )

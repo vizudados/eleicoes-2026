@@ -1,6 +1,0 @@
-/*
-@pasta: _Casca
-@formato: texto
-@descricao: Região da UF na lista do filtro (subtítulo de grupo do VizuFilter, papel itemGroup).
-*/
-SELECTEDVALUE ( 'UF'[Região] )

@@ -1,9 +1,14 @@
 /*
 @pasta: T14 Série\Contas
 @formato: 0.0%
-@descricao: PT % na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel.
+@descricao: PT % na UF do contexto, na eleição em destaque (a clicada na série ou 2026), sem a região do painel e sem o recorte do filtro de estado (só a UF do contexto fica: o dossiê da região mostra todos os estados dela, como os painéis ignoram o filtro).
 @gerado: pbi/scripts/desenho_t14.py
 */
 VAR _a = [T14 · ano dos painéis]
 RETURN
-    CALCULATE ( [T14 · PT %], REMOVEFILTERS ( 'Município'[Região] ), 'Ano'[Ano] = _a )
+    CALCULATE (
+        [T14 · PT %],
+        REMOVEFILTERS ( 'Município'[Região] ),
+        ALLEXCEPT ( 'UF', 'UF'[UF] ),
+        'Ano'[Ano] = _a
+    )

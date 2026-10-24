@@ -1,12 +1,10 @@
 /*
 @pasta: T05 Flávio\Contas
 @formato: texto
-@descricao: Nome do recorte: o município marcado, a UF do filtro, a região clicada ou Brasil.
+@descricao: Nome do recorte: o município marcado ou o recorte de estado, lido da medida comum [Recorte · nome] (Brasil; a UF; a região, escolhida no filtro ou clicada na origem; 'MG e SP'; '3 estados').
 */
-SWITCH (
-    TRUE (),
-    [T05 · com município] = 1, SELECTEDVALUE ( 'Município'[Rótulo], "municípios marcados" ),
-    [T05 · com UF] = 1, SELECTEDVALUE ( 'UF'[Nome] ),
-    [T05 · com região] = 1, SELECTEDVALUE ( 'UF'[Região], "UFs escolhidas" ),
-    "Brasil"
+IF (
+    [T05 · com município] = 1,
+    SELECTEDVALUE ( 'Município'[Rótulo], "municípios marcados" ),
+    [Recorte · nome]
 )

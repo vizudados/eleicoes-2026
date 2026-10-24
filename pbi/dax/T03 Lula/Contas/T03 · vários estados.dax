@@ -1,0 +1,9 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0
+@descricao: 1 quando o filtro de estado escolheu mais de uma UF (uma região inteira, estados soltos ou regiões misturadas): a origem mostra os estados do recorte. Ignora a região da linha da origem (o grão) e a região clicada; 0 no Brasil e numa UF.
+*/
+VAR _com = CALCULATE ( [Recorte · com escolha], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+VAR _n = CALCULATE ( [Recorte · UFs], REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ) )
+RETURN
+    IF ( _com = 1 && _n > 1, 1, 0 )

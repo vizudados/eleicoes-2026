@@ -510,23 +510,7 @@ RETURN
         "Nenhuma cidade escolhida: use o filtro de município."
     )""")
 
-desenho("T15 · Filtro · pílula · HTML",
-        "O botão fechado do filtro de município (a pílula, no lugar do filtro da casca): a cidade em uso ou o convite, "
-        "com o funil e a seta. O clique abre o VizuFilter alto por cima (marcador T15_FILTRO_ABRE_01).",
-        f"""-- 1 · Leituras
-VAR _cid = [T15 · nome e UF da cidade]
--- 2 · Textos
-VAR _txt = IF ( ISBLANK ( _cid ), "Escolha uma cidade", _cid )
-VAR _esc = {ESC.format(v="_txt")}
--- 4 · Marcação
-RETURN
-    "<div class='tela pl" & IF ( ISBLANK ( _cid ), "", " ativo" ) & "'><span class='fu'><svg width='16' height='16' "
-        & "viewBox='0 0 16 16'><path d='M2 3h12l-4.6 5.4V13l-2.8-1.4V8.4z' fill='none' stroke='currentColor' "
-        & "stroke-width='1.4' stroke-linejoin='round'/></svg><i></i></span><span class='rt'>Município</span><b>" & _esc
-        & "</b><svg class='sv' width='12' height='12' viewBox='0 0 12 12'><path d='M3 4.5l3 3 3-3' fill='none' "
-        & "stroke='currentColor' stroke-width='1.4' stroke-linecap='round'/></svg></div>\"""")
-
-desenho("T15 · Filtro · pílula · ALT", "Texto alternativo do filtro de município (pílula e lista).",
+desenho("T15 · Filtro · ALT", "Texto alternativo do filtro de município (o VizuFilter, com o gatilho dele; sem pílula desde 24/10/2026).",
         """-- 1 · Leituras
 VAR _cid = [T15 · nome e UF da cidade]
 -- 2 · Textos

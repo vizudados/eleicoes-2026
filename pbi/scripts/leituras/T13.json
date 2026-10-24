@@ -2,5 +2,5 @@
  "blocos": [
   ["Como ler", "As linhas separam as cidades pelo tamanho; as colunas, pela renda por pessoa. O número de cada célula diz quanto a margem de Lula caiu de 2022 para 2026 naquele grupo; quanto mais escuro o azul, maior a queda. Passe o mouse numa célula para o dossiê dela e clique para ver a célula na resposta, ao lado."],
   ["De onde vêm os números", "Votos do 1º turno de 2022 e de 2026 por município, do TSE. População e renda domiciliar por pessoa do Censo 2022, do IBGE. Os quintos de renda são nacionais: cada coluna tem 1.114 cidades do Brasil."],
-  ["Para lembrar", "A célula soma os votos de todas as suas cidades: as maiores pesam mais. Com o filtro de estado, a matriz mostra só as cidades dele, e grupos com poucas cidades aparecem esmaecidos."]
+  ["Para lembrar", "A célula soma os votos de todas as suas cidades: as maiores pesam mais. Com o filtro de estado (um estado, uma região ou vários estados), a matriz mostra só as cidades escolhidas, e grupos com poucas cidades aparecem esmaecidos."]
  ]}

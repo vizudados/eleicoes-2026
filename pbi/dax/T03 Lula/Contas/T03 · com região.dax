@@ -1,8 +1,6 @@
 /*
 @pasta: T03 Lula\Contas
 @formato: 0
-@descricao: 1 quando o recorte é um grupo de UFs (a região clicada na origem), 0 nos outros casos.
+@descricao: 1 quando a região foi CLICADA na origem dos votos (filtro cruzado em 'UF'[Região]); 0 nos outros casos. O filtro de estado da casca, em árvore, filtra 'UF'[Caminho] e não conta aqui (uma região escolhida nele é um recorte de vários estados: [T03 · vários estados]).
 */
-VAR _ufs = CALCULATE ( DISTINCTCOUNT ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )
-RETURN
-    IF ( ISCROSSFILTERED ( 'UF' ) && _ufs > 1, 1, 0 )
+INT ( ISFILTERED ( 'UF'[Região] ) || ISFILTERED ( 'UF'[RegiaoOrdem] ) )

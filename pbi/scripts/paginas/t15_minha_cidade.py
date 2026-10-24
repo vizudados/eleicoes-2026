@@ -5,13 +5,13 @@ Padrão: Ananindeua (PA), a cidade grande (mais de 150 mil votos válidos) que v
 (Lula 45,0% × Flávio 46,2%; no país, 45,2% × 47,0%), e que virou de Lula para Flávio. Até 23/10/2026 era Contagem,
 onde o documentário de referência começa: o dono pediu para variar e não copiar.
 
-  T15_Filtro_Pilula     a pílula fechada do filtro (HTML): "MUNICÍPIO · Ananindeua (PA)", com o funil e a seta, no lugar
-                        do filtro de UF das outras telas (1282, 60, 424 × 48)
-  T15_Filtro_Abre       botão nativo sobre a pílula: abre o filtro (marcador T15_FILTRO_ABRE_01)
-  T15_Filtro_Municipio  VizuFilter alto (424 × 626), oculto, já aberto (alwaysOpen): Município[Rótulo] (os 5.571,
-                        "Nome (UF)"), busca, seleção única, sem "todos". Cidade inicial Ananindeua (PA) por dois caminhos:
-                        o filtro gravado no PBIR (general.filter, L109) e a seleção padrão do visual (defaultSelection)
-  T15_Filtro_Fora       véu da tela inteira por baixo do filtro aberto: o clique fora fecha (T15_FILTRO_FECHA_01)
+  T15_Filtro_Municipio  o filtro de município, no lugar do filtro de UF das outras telas: o próprio VizuFilter, visível,
+                        com o gatilho dele ("Município: Ananindeua (PA)", o funil com o ponto vermelho), que abre e
+                        fecha a lista sozinho (sem pílula, botão, véu nem marcador, 24/10/2026). Caixa 424 × 626 (a
+                        lista abre dentro dela), ATRÁS do conteúdo (z 20, lib.CAMADAS["filtro"]): a série e as
+                        parecidas por cima seguem com o mouse. Município[Rótulo] (os 5.571, "Nome (UF)"), busca,
+                        seleção única, sem "todos". Cidade inicial Ananindeua (PA) por dois caminhos: o filtro gravado
+                        no PBIR (general.filter, L109) e a seleção padrão do visual (defaultSelection)
   T15_Ficha_Html        a eleição escolhida na cidade (sem clique, 2026 contra 2022): quem ficou à frente e com quanto
                         (contador), a manchete da mudança desde a eleição anterior, os dados da cidade, os votos do PT
                         e do adversário nas duas eleições e a margem na cidade, no estado e no país
@@ -23,8 +23,8 @@ onde o documentário de referência começa: o dono pediu para variar e não cop
   T15_Parecidas_Html    entre as cidades parecidas (mesmo porte e quinto de renda, no Brasil): a posição na queda da
                         eleição escolhida contra a anterior, o grupo e o histograma com a cidade marcada
 
-Interações (só as exceções): o clique na série não chega ao título dela (que conta a série toda), à pílula nem à lista
-do filtro. A chegada à tela (T15_CHEGADA_01, da casca) precisa fechar o filtro: pedido à main.
+Interações (só as exceções): o clique na série não chega ao título dela (que conta a série toda) nem ao filtro. A
+chegada à tela (T15_CHEGADA_01, da casca) não mexe no filtro (ele não é mais escondido por marcador).
 
 Medidas em pbi/dax/T15 Minha cidade (geradas por pbi/scripts/desenho_t15.py).
 """
@@ -34,14 +34,14 @@ import estilo
 import pagina_lib
 import pbip_lib as lib
 import roteiro
-from pbip_lib import Bookmark, Interacao, Visual
+from pbip_lib import Interacao, Visual
 
 P = "T15"
 CSS = "Estilo · CSS"
 Z = lib.CAMADAS["conteudo"]
 C = estilo.COR
 
-FILTRO = (1282, 60, 424, 48)          # a mesma caixa do filtro da casca nas telas com UF
+
 FICHA = (150, 140, 560, 860)
 SERIE_TITULO = (760, 140, 1010, 96)
 SERIE = (760, 236, 1010, 384)
@@ -51,79 +51,35 @@ CIDADE_INICIAL = "Ananindeua (PA)"
 ORDEM_TT = 100 + int(roteiro.numero(P)) * 10
 
 
-# O filtro de município no padrão da casca (paginas/casca.py › _filtro, 23/10/2026): fechado, a tela mostra só a
-# pílula (HTML com a cidade em uso) e um botão nativo sobre ela; o clique aplica T15_FILTRO_ABRE_01, que mostra o
-# VizuFilter alto já aberto (alwaysOpen) por cima e o véu em volta; o véu fecha (T15_FILTRO_FECHA_01). Fechado, só a
-# pílula pega o mouse (a caixa alta do VizuFilter pegava o mouse da área inteira, mesmo fechado).
-FILTRO_ABERTO = (1282, 60, 424, 626)     # a mesma caixa do filtro de UF da casca, aberto
-FILTRO_FORA = (0, 0, 1920, 1080)
-Z_FILTRO = lib.CAMADAS["drawer"]
-NOMES_FILTRO = {"lista": f"{P}_Filtro_Municipio", "pilula": f"{P}_Filtro_Pilula", "abre": f"{P}_Filtro_Abre",
-                "fora": f"{P}_Filtro_Fora"}
-# o desenho da pílula é o da casca (paginas/casca.py › CSS_PILULA), mais o rótulo "Município" antes do valor
-CSS_PILULA = (
-    f".pl{{display:flex;align-items:center;gap:12px;padding:0 14px 0 14px;background:{C['creme']};"
-    f"border:1px solid {C['areia']};border-radius:6px;color:{C['tinta']};font-size:16px;"
-    "box-shadow:0 1px 2px rgba(28,25,21,.06)}"
-    f".pl .fu{{position:relative;display:inline-flex;color:{C['grafite']}}}"
-    f".pl .fu i{{display:none;position:absolute;right:-3px;top:-2px;width:7px;height:7px;border-radius:4px;"
-    f"background:{C['vermelho']}}}.pl.ativo .fu i{{display:block}}"
-    f".pl .rt{{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:{C['cinza']}}}"
-    ".pl b{flex:1;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
-    f".pl .sv{{color:{C['grafite']}}}"
-)
+# O filtro de município no padrão da casca (paginas/casca.py › _filtro, 24/10/2026): o próprio VizuFilter, visível, com
+# o gatilho dele, atrás do conteúdo (lib.CAMADAS["filtro"]); a caixa vai até onde a lista desce.
+FILTRO_CAIXA = (1282, 60, 424, 626)
+Z_FILTRO = lib.CAMADAS["filtro"]
+NOME_FILTRO = f"{P}_Filtro_Municipio"
 
 
 def _estilo_lista() -> dict:
-    # mesmos tokens do filtro de UF da casca (paginas/casca.py › _estilo_filtro), para os dois parecerem um só
-    return {"fontSize": 16, "optionFontSize": 16, "fontFamily": "Sora Vizu, Segoe UI",
-            "enableHoverAnimations": False, "showShadow": True, "counterBadgeRadius": 0, "triggerIcon": "funnel",
-            "triggerIconSize": 16, "triggerIconActive": "filledDot", "triggerIconDotColor": C["vermelho"],
-            "textColor": C["tinta"], "backgroundColor": C["creme"], "dropdownBackgroundColor": C["branco"],
-            "selectedBackgroundColor": C["creme"], "hoverBackgroundColor": C["papel"], "hoverTextColor": C["tinta"],
-            "borderColor": C["areia"], "activeBorderColor": C["tinta"], "checkboxColor": C["tinta"],
-            "checkboxMarkColor": C["tinta"], "checkboxBorderColor": C["areia"], "counterBackgroundColor": C["tinta"],
-            "counterTextColor": C["papel"], "clearActionColor": C["tinta"], "mutedTextColor": C["cinza"],
-            "dividerColor": C["creme"], "scrollbarThumbColor": C["areia"],
-            "categorySearchBackgroundColor": C["branco"], "triggerIconColor": C["grafite"]}
+    # os tokens do filtro da casca (paginas/casca.py › _estilo_filtro), para todos os filtros parecerem um só: o funil
+    # que ganha o ponto vermelho quando há escolha
+    from paginas import casca
+    return casca._estilo_filtro(roteiro.POR_CODIGO[P])
 
 
 def _filtro_municipio() -> list:
-    x, y, w, h = FILTRO_ABERTO
-    hp = FILTRO[3]
-    layout = {"controlWidth": w, "controlHeight": hp, "dropdownWidth": w, "dropdownHeight": h - hp - 6, "gap": 6,
-              "optionHeight": 40, "searchHeight": 44, "triggerIconGap": 12, "borderRadius": 6, "checkboxSize": 14,
-              "checkboxRadius": 2, "scrollbarWidth": 4, "wrapOptionLabels": False}
+    from paginas import casca      # o layout do VizuFilter da casca (gatilho de 48 px, a lista no resto da caixa)
     geral = {"mode": "dropdown", "singleSelect": True, "singleSelectAllowAll": False, "sortAscending": True,
-             "startOpen": True, "alwaysOpen": True, "showSearch": True, "showSelectAll": False, "showReset": False,
-             "showSelectedCount": False, "showSelectedValue": True, "selectedValueOnly": True,
+             "startOpen": False, "alwaysOpen": False, "showSearch": True, "showSelectAll": False, "showReset": False,
+             "showSelectedCount": False, "showSelectedValue": True, "selectedValueOnly": False,
              "syncSelectionWithHost": True, "triggerMode": "value", "triggerLabel": "Município",
              "placeholderText": "Escolha uma cidade", "searchPlaceholder": "Digite o nome da cidade",
              "searchScope": "list", "pathMode": False, "defaultSelection": "value", "defaultValue": CIDADE_INICIAL}
-    doc = lib.visual_vizufilter(NOMES_FILTRO["lista"], x, y, w, h, categoria=("Município", "Rótulo", "Município"),
-                                geral=geral, layout=layout, estilo=_estilo_lista(),
-                                alt=lib.medida("T15 · Filtro · pílula · ALT"), z=Z_FILTRO, tab=6, oculto=True)
+    doc = lib.visual_vizufilter(NOME_FILTRO, *FILTRO_CAIXA, categoria=("Município", "Rótulo", "Município"),
+                                geral=geral, layout=casca.layout_filtro(FILTRO_CAIXA), estilo=_estilo_lista(),
+                                alt=lib.medida("T15 · Filtro · ALT"), z=Z_FILTRO, tab=4)
     # a cidade inicial já gravada no filtro do visual (só general.filter vale, L109)
     doc["visual"]["objects"]["general"][0]["properties"]["filter"] = {
         "filter": lib.filtro_in("Município", "Rótulo", [CIDADE_INICIAL])}
-    abre, fora, lista, pilula = (NOMES_FILTRO[k] for k in ("abre", "fora", "lista", "pilula"))
-    return [
-        Visual(P, lib.visual_html(pilula, *FILTRO, "T15 · Filtro · pílula · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=f"<style>{CSS_PILULA}</style>{{{{content}}}}",
-                                  alt=lib.medida("T15 · Filtro · pílula · ALT"), z=Z_FILTRO - 20, tab=4,
-                                  movimento=False)),
-        Visual(P, lib.visual_botao(abre, *FILTRO, lib.acao_bookmark(f"{P}_FILTRO_ABRE_01"),
-                                   dica="Escolher outra cidade", z=lib.CAMADAS["navegacao"], tab=5, realce=C["tinta"],
-                                   raio=6, realce_transp=(90, 82))),
-        Visual(P, lib.visual_botao(fora, *FILTRO_FORA, lib.acao_bookmark(f"{P}_FILTRO_FECHA_01"),
-                                   dica="Fechar o filtro", z=Z_FILTRO - 10, tab=7, oculto=True, raio=0,
-                                   fundo=(C["tinta"], 90))),
-        Visual(P, doc),
-        Bookmark(lib.bookmark_exibicao(f"{P}_FILTRO_ABRE_01", P, {lista: True, fora: True, abre: False},
-                                       titulo=f"{P} · filtro aberto"), grupo=("Filtros", "Filtros")),
-        Bookmark(lib.bookmark_exibicao(f"{P}_FILTRO_FECHA_01", P, {lista: False, fora: False, abre: True},
-                                       titulo=f"{P} · filtro fechado"), grupo=("Filtros", "Filtros")),
-    ]
+    return [Visual(P, doc)]
 
 
 CSS_FICHA = (
@@ -260,8 +216,8 @@ def declarar(ctx):
         *pagina_lib.tooltip("ttT15Ano", "Minha cidade · eleição", 440, 280, "T15 · Tooltip ano · HTML", ordem=ORDEM_TT,
                             folha_de_estilo=CSS, modelo_corpo=_corpo_tt(CSS_TOOLTIP)),
     ]
-    # o clique numa eleição leva a ficha e as parecidas àquele ano; o título da série (que conta a série toda), a
-    # pílula e a lista do filtro não mudam com ele
-    for alvo in ("T15_Serie_Titulo", NOMES_FILTRO["pilula"], NOMES_FILTRO["lista"]):
+    # o clique numa eleição leva a ficha e as parecidas àquele ano; o título da série (que conta a série toda) e o
+    # filtro não mudam com ele
+    for alvo in ("T15_Serie_Titulo", NOME_FILTRO):
         itens.append(Interacao(P, "T15_Serie_Html", alvo, "NoFilter"))
     return itens

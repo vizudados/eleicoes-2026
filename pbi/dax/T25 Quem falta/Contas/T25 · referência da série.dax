@@ -1,7 +1,7 @@
 /*
 @pasta: T25 Quem falta\Contas
 @formato: 0.0%
-@descricao: Linha tracejada do bloco de anos (0–1): com município marcado, a média do recorte (UF ou Brasil) no mesmo ano e faixa; só com faixa marcada, todas as idades do lugar; sem marca, vazio.
+@descricao: Linha tracejada do bloco de anos (0–1): com município marcado, a média do recorte (as UFs escolhidas ou o Brasil) no mesmo ano e faixa; só com faixa marcada, todas as idades do lugar; sem marca, vazio.
 */
 SWITCH (
     TRUE (),

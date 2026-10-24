@@ -179,8 +179,11 @@ conta("T11 · regiões com virada", "0", "Quantas regiões têm ao menos um muni
     ADDCOLUMNS ( VALUES ( 'Município'[Região] ), "@n", [T11 · viraram] )
 RETURN
     COUNTROWS ( FILTER ( _r, [@n] > 0 ) ) + 0""")
-conta("T11 · recorte", "texto", "Nome da UF escolhida no filtro da tela (vazio = Brasil).",
-      "IF ( ISFILTERED ( 'UF'[Nome] ), SELECTEDVALUE ( 'UF'[Nome] ) )")
+conta("T11 · recorte", "texto",
+      "O lugar escolhido no filtro de estado da casca (árvore Região › Estado), pela medida comum [Recorte · nome]: "
+      "'Bahia', 'Nordeste', 'MG e SP', '3 estados'; vazio = Brasil. O filtro cai em 'UF'[Caminho] (24/10/2026), então "
+      "ISFILTERED ( 'UF'[Nome] ) não serve mais.",
+      "IF ( [Recorte · com escolha] = 1, [Recorte · nome] )")
 conta("T11 · município · nome", "texto", "Nome do município do contexto (tooltip e lista).",
       "SELECTEDVALUE ( 'Município'[Município] )")
 conta("T11 · município · UF", "texto", "Sigla da UF do município do contexto.", "SELECTEDVALUE ( 'Município'[UF] )")

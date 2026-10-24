@@ -5,7 +5,7 @@
 */
 SWITCH (
     TRUE (),
-    [T25 · com município] = 1, IF ( [T25 · com UF] = 1, "média estadual", "média nacional" ),
+    [T25 · com município] = 1, [T25 · média (nome)],
     [T25 · com faixa] = 1, "todas as idades",
     ""
 )

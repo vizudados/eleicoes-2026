@@ -1,0 +1,9 @@
+/*
+@pasta: T03 Lula\Contas
+@formato: 0
+@descricao: 1 na entrada da origem (grão 'UF'[Região]) da primeira região do recorte, do Norte ao Sul: com vários estados no filtro, só ela desenha a lista de estados (as outras entradas ficam vazias).
+*/
+VAR _primeira =
+    CALCULATE ( MIN ( 'UF'[RegiaoOrdem] ), REMOVEFILTERS ( 'UF'[Região], 'UF'[RegiaoOrdem] ), 'UF'[Tipo] = "UF" )
+RETURN
+    INT ( SELECTEDVALUE ( 'UF'[RegiaoOrdem] ) = _primeira )

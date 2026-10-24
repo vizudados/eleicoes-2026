@@ -1,18 +1,19 @@
 /*
 @pasta: T01 Placar\Desenho
 @formato: texto
-@descricao: Dossiê do ponto da virada (ficha com clipe): de onde vieram os votos do candidato naquele ano — por região no Brasil, por tamanho de cidade numa UF —, com o % dele em cada grupo em 2022 e em 2026 e a nota à mão com a maior perda ou ganho (2026) ou a base mais forte (2022). Só lê contas.
+@descricao: Dossiê do ponto da virada (ficha com clipe): de onde vieram os votos do candidato naquele ano — por região no Brasil, por tamanho de cidade num estado, por estado num recorte de vários (os 5 com mais votos) —, com o % dele em cada grupo em 2022 e em 2026 e a nota à mão com a maior perda ou ganho (2026) ou a base mais forte (2022). Só lê contas.
 */
 -- 1 · Leituras
 VAR _a = [T01 · ponto · ano]
 VAR _n = [T01 · ponto · número]
 VAR _nome = [T01 · ponto · candidato]
 VAR _par = [T01 · ponto · partido]
-VAR _comUF = [T01 · com UF]
+VAR _grupo = [T01 · ponto · grupo]
 VAR _rec = [T01 · recorte]
+VAR _nEst = [T01 · ponto · estados no recorte]
 VAR _regs =
     TOPN (
-        IF ( _comUF = 0, 10, 0 ),
+        IF ( _grupo = "região", 10, 0 ),
         ADDCOLUMNS (
             VALUES ( 'UF'[Região] ),
             "@v", [T01 · ponto · votos no grupo],
@@ -23,9 +24,22 @@ VAR _regs =
         ),
         [@v], DESC
     )
+VAR _ests =
+    TOPN (
+        IF ( _grupo = "estado", 5, 0 ),
+        ADDCOLUMNS (
+            SUMMARIZE ( 'UF', 'UF'[UF], 'UF'[Nome] ),
+            "@v", [T01 · ponto · votos no grupo],
+            "@p", [T01 · ponto · parte do estado],
+            "@p22", [T01 · ponto · % no grupo em 2022],
+            "@p26", [T01 · ponto · % no grupo em 2026],
+            "@d", [T01 · ponto · variação no grupo]
+        ),
+        [@v], DESC
+    )
 VAR _portes =
     TOPN (
-        IF ( _comUF = 1, 10, 0 ),
+        IF ( _grupo = "porte", 10, 0 ),
         ADDCOLUMNS (
             VALUES ( 'Município'[Porte] ),
             "@v", [T01 · ponto · votos no grupo],
@@ -44,6 +58,10 @@ VAR _lista =
             "@g", 'UF'[Região], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", - [@v]
         ),
         SELECTCOLUMNS (
+            FILTER ( _ests, [@v] > 0 ), /* lista */
+            "@g", 'UF'[Nome], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", - [@v]
+        ),
+        SELECTCOLUMNS (
             FILTER ( _portes, [@v] > 0 && LEN ( 'Município'[Porte] ) > 0 ), /* lista */
             "@g", 'Município'[Porte], "@v", [@v], "@p", [@p], "@p22", [@p22], "@p26", [@p26], "@d", [@d], "@o", [@o]
         )
@@ -58,8 +76,14 @@ VAR _gP = MAXX ( _topP, [@g] ) /* lista */
 VAR _cls = IF ( _n = 13, "lula", "flavio" )
 VAR _ic = IF ( _n = 13, "barras-vermelho", "barras-azul" )
 VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _a
-VAR _sub = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _par, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _n & " · " & IF ( _comUF = 1, SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rec, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ), "Brasil, sem o exterior" )
-VAR _rotG = IF ( _comUF = 1, "cidades de", "região" )
+VAR _sub = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _par, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & _n & " · " & IF ( _grupo = "região", "Brasil, sem o exterior", SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _rec, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) )
+VAR _rotG =
+    SWITCH (
+        _grupo,
+        "porte", "cidades de",
+        "estado", IF ( _nEst > 5, "estado · 5 de " & _nEst, "estado" ),
+        "região"
+    )
 VAR _nota =
     IF (
         _a = 2026,

@@ -63,11 +63,6 @@
     },
     {
       "source": "T15_Serie_Html",
-      "target": "T15_Filtro_Pilula",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T15_Serie_Html",
       "target": "T15_Serie_Titulo",
       "type": "NoFilter"
     }
