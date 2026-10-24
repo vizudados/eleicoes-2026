@@ -10,7 +10,9 @@ O título é "Do placar à escola." (o caminho que o painel fez); a capa abre co
   T23_Fecho_IrApur  o convite "domingo, 17h" vai à tela da apuração (T18)
 
 Os achados repetem as manchetes do 1º turno (números finais do TSE de 22/10/2026), escritos aqui como texto da
-apresentação: não mudam com filtro e o movimento conta cada número na entrada.
+apresentação: não mudam com filtro e o movimento conta cada número na entrada. Os do 2º turno seguem as pesquisas
+lançadas até 24/10/2026, 12h30 (T17: 39 de 45, com 5 de Lula e 1 empate); a cada pesquisa nova, conferir contra o
+modelo ([T17 · depois · pesquisas] e [T17 · depois · Flávio à frente]).
 """
 from __future__ import annotations
 
@@ -36,7 +38,7 @@ ACHADOS = [
                       ("T13", "Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno."),
                       ("T24", "Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%."),
                       ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
-    ("V · O 2º TURNO", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno."),
+    ("V · O 2º TURNO", [("T17", "Desde 5 de outubro, Flávio lidera 39 de 45 pesquisas do 2º turno."),
                          ("T07", "O primeiro frente a frente, na Band, não mexeu nas pesquisas."),
                          ("T26", "O último debate, na Globo em 23/10: o que se soube dele, número a número.")]),
 ]
@@ -107,9 +109,8 @@ def corpo() -> str:
         f"<div class='ach'><div class='rot entra d2'>OS ACHADOS, POR ATO · CLIQUE PARA VOLTAR À TELA</div>{''.join(lista)}</div>"
         f"<img class='urna' alt='' src='{urna}'/>"
         "<div class='convite sobe d12'><div class='mao'>domingo, 25/10, 17h</div>"
-        f"<div class='txt'>A apuração do 2º turno passa ao vivo na tela {roteiro.numero('T18')}: o placar se "
-        "atualiza sozinho, a cada "
-        "minuto, direto da API do TSE.</div><div class='ir'>IR PARA A APURAÇÃO →</div></div>"
+        f"<div class='txt'>A apuração do 2º turno entra na tela {roteiro.numero('T18')}, com os números que o TSE "
+        "divulga ao longo da noite.</div><div class='ir'>IR PARA A APURAÇÃO →</div></div>"
         "<div class='fontes entra d14'><b>Fontes</b> · TSE (votação, comparecimento, perfil do eleitor e API de "
         "resultados), IBGE (Censo 2022 e malhas), Portal da Transparência (Bolsa Família), Atlas do Desenvolvimento "
         "Humano (IDHM), pesquisas registradas no TSE, Google Trends, Bites, Quaest, Social "

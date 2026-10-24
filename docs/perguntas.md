@@ -40,7 +40,7 @@ escola.
 | 17 | IV · Explore você mesmo | Como o mapa mudou em 20 anos? (20 anos, T21) | o mapa de 2006 a 2026 | TSE |
 | 18 | IV · Explore você mesmo | E se os eleitores dos outros candidatos escolherem? (Simulador, T22) | e se os eleitores dos outros candidatos escolherem (simulação, não previsão) | TSE |
 | 19 | V · O 2º turno | Para onde vão os votos dos outros candidatos? (Os outros, T16) | para onde vão os votos dos outros candidatos, pelas pesquisas que publicaram o cruzamento | pesquisas, apoios |
-| 20 | V · O 2º turno | E agora, o que as pesquisas dizem do 2º turno? (2º turno, T17) | Desde 05/10, Flávio lidera 34 de 39 pesquisas do 2º turno · filtro de período em volta dos debates | pesquisas |
+| 20 | V · O 2º turno | E agora, o que as pesquisas dizem do 2º turno? (2º turno, T17) | Desde 05/10, Flávio lidera 39 de 45 pesquisas do 2º turno (até 24/10) · filtro de período em volta dos debates | pesquisas |
 | 21 | V · O 2º turno | O que mudou depois do debate na Band? (Debate Band, T07) | O primeiro frente a frente, na Band (18/10), não mexeu nas pesquisas | debate, pesquisas |
 | 22 | V · O 2º turno | O último debate mudou alguma coisa? (Debate Globo, T26) | o debate da Globo (23/10) número a número, em tela pronta antes dos números | debate_globo.csv |
 | 23 | V · O 2º turno | O que o Brasil perguntou ao Google? (Buscas, T08) | Lula com a maior fatia das buscas nos 27 estados · o clique no estado leva a curva para ele · filtro de período em volta dos debates | Google Trends |
