@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 """23 · Encerramento — e o que fica desta eleição? (dono: main). Tela escura, sem filtro.
 
-O título é "Do resultado à zona eleitoral." (o caminho que o painel fez; até 24/10/2026 era "Do placar à escola.", e o
-dono pediu "resultado" no lugar de "placar" e "zona eleitoral", o nome oficial, no lugar de "escola"); a capa abre com
+O título é "Da zona eleitoral ao resultado." (até 24/10/2026 era "Do placar à escola."; o dono pediu "resultado" no
+lugar de "placar", "zona eleitoral", o nome oficial, no lugar de "escola", e a ordem da hierarquia: "o resultado sai
+das zonas eleitorais"); a capa abre com
 "O voto, de perto." Os dois substituem "o que os números dizem", que é o título do documentário de referência (pedido
 do dono, 23/10/2026: nada de cópia).
 
@@ -92,9 +93,9 @@ def corpo() -> str:
         f"color:{C['areia']}}}"
         ".fx .fontes b{color:var(--creme);font-weight:600}"
     )
-    # o sublinhado à mão acompanha "zona eleitoral." (a 2ª linha do título): o mesmo traço, esticado na largura, com
-    # o traço de espessura fixa
-    sublinhado = ("<svg width='640' height='30' viewBox='0 0 300 30' preserveAspectRatio='none'>"
+    # o sublinhado à mão acompanha "resultado." (o fim da 2ª linha do título): o mesmo traço, esticado na largura,
+    # com o traço de espessura fixa
+    sublinhado = ("<svg width='440' height='30' viewBox='0 0 300 30' preserveAspectRatio='none'>"
                   + estilo.defs_rabisco("rbt", 1.4)
                   + "<path d='M6 18 C 70 8, 160 6, 292 14 M30 24 C 110 16, 200 16, 270 21' pathLength='1' "
                   f"class='traco' fill='none' stroke='{C['creme']}' stroke-width='5' stroke-linecap='round' "
@@ -110,7 +111,7 @@ def corpo() -> str:
     urna = estilo.imagem_b64("arte/limpos/urna-creme.png", 940)
     return (
         f"<style>{css}</style><div class='tela fx' style='left:{X0}px;top:150px;right:150px;bottom:80px'>"
-        "<div class='tg sobe'>Do resultado à<br/><span class='sub'>zona eleitoral." + sublinhado + "</span></div>"
+        "<div class='tg sobe'>Da zona eleitoral<br/>ao <span class='sub'>resultado." + sublinhado + "</span></div>"
         f"<div class='ach'><div class='rot entra d2'>OS ACHADOS, POR ATO · CLIQUE PARA VOLTAR À TELA</div>{''.join(lista)}</div>"
         f"<img class='urna' alt='' src='{urna}'/>"
         "<div class='convite sobe d12'><div class='mao'>domingo, 25/10, 17h</div>"
@@ -128,7 +129,7 @@ def corpo() -> str:
 def declarar(ctx):
     itens = [Visual(P, lib.visual_html(
         "T23_Fecho_Html", 0, 0, lib.LARGURA, lib.ALTURA, "Casca · vazio", folha_de_estilo=CSS, modelo_corpo=corpo(),
-        alt="Do resultado à zona eleitoral: os achados de cada ato, as fontes e o convite para a apuração ao vivo.",
+        alt="Da zona eleitoral ao resultado: os achados de cada ato, as fontes e o convite para a apuração ao vivo.",
         z=lib.CAMADAS["conteudo"], tab=100))]
     for cod, texto, y in _linhas():
         itens.append(Visual(P, lib.visual_botao(
