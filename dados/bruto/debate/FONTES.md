@@ -85,6 +85,9 @@ Para Lula × Flávio, o efeito só pode ser medido no debate de 18/10. O de 23/0
   - O índice vai de 0 a 100 e é relativo dentro de cada consulta, então séries de consultas diferentes não se comparam.
   - O Google amostra os dados, e repetir a consulta pode mudar alguns pontos.
   - "Lula" é um termo curto e mais genérico que "Flávio Bolsonaro", o que favorece Lula na comparação.
+  - **Dia do Google (regra verificada em 24/10/2026):** na resolução diária, o "dia" vai das 21h da véspera às 21h do
+    dia, no horário de Brasília, porque o Trends agrega em UTC. A noite do debate da Band cai no "19/10" e a da Globo, no
+    "24/10". As séries por hora não mudam. Ver `../digital/FONTES.md`, "Regra de leitura das séries diárias".
 - **Resultado:**
   - Às 20h de 23/08, Lula teve 100 (entrevista na Record), Cury 50, Renan 37, Caiado 12 e Flávio 12.
   - Cury passou Lula no diário de 26/08 (51 × 38) e 27/08 (81 × 47).
@@ -436,3 +439,24 @@ e não foram usados.
 ## Conteúdo da web com instruções
 
 Nenhuma página consultada nesta revisão trouxe instruções dirigidas ao agente. Os banners de cookies ficaram sem clique.
+
+## Rodada de 24/10/2026, das 18h45 às 19h
+
+- **Pesquisas:** a Datafolha, a Nexus, a Gerp e a Veritá (18 a 22/10) entraram em `../pesquisas/pesquisas_2turno.csv`
+  (ver `../pesquisas/FONTES.md`).
+  - Nenhuma pesquisa da véspera teve o campo inteiro depois do debate, e `pesquisas_depois` passou a `nao_divulgado`, com o
+    motivo na observação: Datafolha 23–24/10, Nexus 23–24/10 (90% no sábado), Gerp 22–24/10 e Quaest 23–24/10.
+- **Bites** ([Poder360, 24/10 14h55](https://www.poder360.com.br/poder-eleicoes-2026/ana-clara-e-erro-de-lula-lideram-mencoes-sonre-debate-diz-bites/)):
+  - 1,5 milhão de citações ao debate até a manhã de sábado, 11% das publicações no Brasil nas 24 horas até as 11h. Depois
+    da Band, foram 1,7 milhão até as 12h do dia seguinte.
+  - Interações nos perfis oficiais de segunda a sábado (19 a 24/10): Lula 92 milhões, Flávio 24,6 milhões.
+  - Publicações que apontam vencedor: Flávio 440 mil, Lula 416 mil, empate 69 mil.
+  - Temas mais citados: Ana Clara (257 mil), a fala de Lula sobre a polícia (194 mil), os "9 dedos" (75 mil), SUS (61 mil)
+    e a pandemia (55 mil).
+  - As interações são de seis dias, pegam os dois debates e não são a medida de 24 horas usada depois da Band. Por isso
+    `redes_lula` e `redes_flavio` continuam `aguardando`, com a explicação, e os números foram para
+    `../digital/monitoramento.csv`.
+- **AP Exata** ([CNN Brasil, 24/10 12h28](https://www.cnnbrasil.com.br/blogs/caio-junqueira/eleicoes/debate-da-ganho-residual-a-lula-nas-redes-sem-mudar-cenario-diz-ap-exata/)):
+  as menções positivas de Lula foram de 42,23% a 42,85% e as de Flávio, de 39,92% a 39,34%. A janela não foi informada.
+  Também em `monitoramento.csv`, com a Palver (X e WhatsApp).
+- **Pico na internet e consolidado da Kantar:** não saíram até 18h55.

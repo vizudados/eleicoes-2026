@@ -612,3 +612,32 @@ nenhuma é "depois da Globo".
 
 A única dúvida é a Datafolha: a CartaCapital (23/10 18h28) diz que as 4.050 entrevistas foram "todas realizadas no
 sábado". Se a ficha técnica confirmar só 24/10, ela é a única pesquisa com o campo inteiro depois da Globo.
+
+## Rodada de 24/10/2026, das 18h45 às 19h: as pesquisas de sábado
+
+Entraram 4 pesquisas nacionais de 2º turno, 8 linhas. Pela regra do painel, "pesquisa depois do debate" é a que tem o
+campo inteiro a partir de 24/10, e a data que vale é a do registro. **Nenhuma das pesquisas de sábado cumpre a regra.**
+Todas começaram o campo em 23/10 ou antes, e por isso atravessam o dia do debate.
+
+| Instituto | Divulgação | Campo (registro) | Registro TSE | Amostra, margem, modo | Totais (Lula × Flávio, BN, NS) | Válidos (Lula × Flávio) | Fonte |
+|---|---|---|---|---|---|---|---|
+| Datafolha (Folha e TV Globo) | 24/10 | 23/10–24/10 | BR-09540/2026 | 4.050, 2, presencial | não confirmados | 49 × 51 | [Poder360, 18h38](https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-51-e-lula-49-dos-votos-validos-diz-datafolha/); [CNN Brasil, 18h32](https://www.cnnbrasil.com.br/eleicoes/datafolha-flavio-tem-51-dos-votos-validos-lula-49/); [Gazeta do Povo, 18h36](https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/datafolha-presidente-outubro-2026-vespera-segundo-turno/) |
+| Nexus (BTG Pactual) | 24/10 | 23/10–24/10 (10% na sexta, 90% no sábado) | BR-08234/2026 | 2.000, 2,2, telefone (CATI) | 46 × 47, 5,2, 1,8 | 49,5 × 50,5 | [relatório](https://static.poder360.com.br/uploads/2026/10/BTG-Nexus-2oturno-24.out_.2026.pdf); [Poder360, 18h32](https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-505-dos-votos-validos-contra-495-de-lula-diz-nexus/) |
+| Gerp (recursos próprios) | 24/10 | 22/10–24/10 | BR-09327/2026 | 2.400, 2, telefone | 46 × 49, 1 (nenhum), 3 | 48 × 52 | [Poder360, 18h00](https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-52-dos-votos-validos-contra-48-de-lula-diz-gerp/); [CNN Brasil, 17h59](https://www.cnnbrasil.com.br/eleicoes/gerp-flavio-tem-52-dos-votos-validos-no-2o-turno-lula-48-2/) |
+| Veritá (recursos próprios) | 23/10 | 18/10–22/10 | BR-06070/2026 | 15.554, 1, telefone | 47,5 × 50,2, não informados | 48,7 × 51,3 | [CNN Brasil, 23/10 19h00](https://www.cnnbrasil.com.br/eleicoes/verita-flavio-tem-513-dos-votos-validos-no-2o-turno-lula-487/) (ficha e válidos); [Exame, 24/10 05h00](https://exame.com/brasil/pesquisas-para-presidente-hoje-2o-turno-veja-os-levantamentos-que-serao-divulgados-neste-sabado/) (totais) |
+
+**Notas:**
+- **Datafolha:** os votos totais só apareceram no Vale 360 News: Flávio 48 × Lula 47, brancos e nulos 3, indecisos 2.
+  Poder360, CNN Brasil, Gazeta do Povo e Jovem Pan publicaram só os válidos, e por isso a linha de totais ficou em branco,
+  como manda a regra da base.
+  - O campo é 23 e 24/10 no registro e em todas as matérias.
+  - A afirmação da CartaCapital (23/10) de que seriam "todas realizadas no sábado" não foi confirmada.
+  - O modo presencial vem do Poder360 e do Vale 360.
+- **Nexus:** o relatório traz também um modelo de eleitor provável (LVM), que exclui os 21% menos prováveis de votar e dá
+  Flávio 52,4 × Lula 47,6 nos válidos. O CSV usa o total da amostra, como nas outras rodadas.
+- **Veritá:** esta é a rodada de 18 a 22/10, que ficou de fora na atualização do meio-dia porque só a Exame a trazia.
+  Agora tem registro, campo e modo pela CNN Brasil. A tabela de registros do Poder360 ainda lista outra Veritá nacional,
+  com campo de 19 a 23/10, que não foi vista.
+- **Quaest (BR-09158/2026, Globo e O Globo, 3.702 entrevistas presenciais em 23 e 24/10):** a divulgação estava marcada
+  para as 19h. Ela também atravessa o dia do debate.
+- **AtlasIntel nacional (BR-06380/2026, 18 a 23/10):** até 19h só saíram as estaduais (DF, AM e outras).
