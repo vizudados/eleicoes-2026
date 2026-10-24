@@ -1,9 +1,11 @@
-"""Exporta os dados da tela Escola (código T20; dono: tela 20) para 34 cidades: as 27 capitais, as 6 maiores que
-trocaram Lula por Flávio de 2022 para 2026 e Contagem (MG) (pedido do dono, 23/10/2026). A tela abre no Rio de
-Janeiro: a margem da cidade quase não mexeu, mas por dentro locais viraram para os dois lados.
+"""Exporta os dados da tela Zona eleitoral (código T20; dono: tela 20) para 34 cidades: as 27 capitais, as 6 maiores
+que trocaram Lula por Flávio de 2022 para 2026 e Contagem (MG) (pedido do dono, 23/10/2026). A tela abre no Rio de
+Janeiro. Desde 24/10/2026 a unidade é a zona eleitoral, o nome oficial da Justiça Eleitoral (antes, o local de
+votação, a "escola"): os locais de cada zona são somados.
 
-- `dados/pbi/t20_locais.csv`: um local de votação do 1º turno de 2026 por linha, com os votos de 2026 e os de 2022 e
-  2018 do mesmo local (soma das seções do mesmo zona + número) e a posição no mapa da própria cidade.
+- `dados/pbi/t20_locais.csv` (o nome ficou, para não mexer no modelo): uma zona eleitoral da cidade por linha, com os
+  votos de 2026, 2022 e 2018 da própria zona em cada ano (soma dos locais), quantos locais e seções ela tem em 2026 e a
+  posição no mapa (o centro dos locais dela, ponderado pelos válidos de 2026).
 - `dados/pbi/t20_cidades.csv`: uma linha por cidade com o que a tela lê por cidade: a contagem dos locais de 2022 (os do
   próprio ano), a escola de exemplo da ficha, o enquadramento do mapa, o contorno simplificado (malha do IBGE) e os
   rótulos de bairro.
@@ -446,6 +448,35 @@ def geometria(cod_ibge, loc, arcos, geo):
     return px, py, fora, reg
 
 
+# ---------------------------------------------------------------------------------------------------- zonas
+def _por_zona(a26, loc_c):
+    """Uma linha por zona eleitoral da cidade (pedido do dono, 24/10/2026: "zona eleitoral é o que o TRE oficialmente
+    chama"). Os votos de cada ano somam os locais da própria zona naquele ano (a zona é a mesma unidade nos três anos;
+    zona que não existia no ano fica vazia). A posição no mapa é o centro dos locais da zona que estão no mapa,
+    ponderado pelos válidos de 2026; o bairro é o do local com mais válidos; a contagem de locais vai em `locais`."""
+    def soma(ano):
+        return loc_c[loc_c.ano == ano].groupby("NR_ZONA")[["pt", "adv", "validos"]].sum()
+    z = soma(2026).add_suffix("_2026")
+    for ano in (2022, 2018):
+        z = z.join(soma(ano).add_suffix(f"_{ano}"), how="left")
+    z["secoes"] = a26.groupby("NR_ZONA").secoes.sum()
+    z["locais"] = a26.groupby("NR_ZONA").size()
+    no_mapa = a26[a26.fora_mapa == ""]
+    peso = no_mapa.validos_2026.clip(lower=1)
+    z["px"] = (no_mapa.px * peso).groupby(no_mapa.NR_ZONA).sum() / peso.groupby(no_mapa.NR_ZONA).sum()
+    z["py"] = (no_mapa.py * peso).groupby(no_mapa.NR_ZONA).sum() / peso.groupby(no_mapa.NR_ZONA).sum()
+    # sem nenhum local no mapa: o motivo do local maior da zona
+    maior = a26.loc[a26.groupby("NR_ZONA").validos_2026.idxmax()].set_index("NR_ZONA")
+    z["fora_mapa"] = np.where(z.px.notna(), "", maior.fora_mapa.reindex(z.index).replace("", "sem endereço"))
+    # a zona cobre vários bairros: a coluna Bairro (o subtítulo da lista, da ficha e do post-it) passa a dizer quantos
+    # locais de votação a zona tem, sem mexer no modelo
+    z["bairro"] = z.locais.map(lambda n: "1 local de votação" if n == 1 else f"{int(n)} locais de votação")
+    z = z.reset_index()
+    z["NR_LOCAL_VOTACAO"] = z.NR_ZONA
+    z["nome"] = z.NR_ZONA.map(lambda n: f"{int(n)}ª Zona Eleitoral")
+    return z
+
+
 # ---------------------------------------------------------------------------------------------------- tabela
 def _cidade(uf, cd_tse, cod_ibge, nome, loc_c, arcos, geo):
     chave = ["NR_ZONA", "NR_LOCAL_VOTACAO"]
@@ -466,18 +497,21 @@ def _cidade(uf, cd_tse, cod_ibge, nome, loc_c, arcos, geo):
     if a26.nome.duplicated().any():
         raise SystemExit(f"{nome}: nome de local repetido na cidade")
     a26["bairro"] = a26.bairro.map(titulo)
+    # a geometria (moldura, contorno, recorte) sai dos locais; o mapa mostra as zonas no centro dos locais delas
     px, py, fora, reg = geometria(cod_ibge, a26, arcos, geo)
     a26["px"], a26["py"], a26["fora_mapa"] = px, py, fora
-    # a lista da tela: da maior queda da margem de Lula à maior alta; os locais novos no fim, por nome
+    a26 = _por_zona(a26, loc_c)
+    px, py = a26.px.values, a26.py.values
+    # a lista da tela: da maior queda da margem de Lula à maior alta; as zonas novas no fim, pelo número
     m22 = (a26.pt_2022 - a26.adv_2022) / a26.validos_2022
     m26 = (a26.pt_2026 - a26.adv_2026) / a26.validos_2026
     a26["_var"] = m26 - m22
-    a26["_nome"] = a26.nome.map(_chave_pt)
+    a26["_nome"] = a26.NR_ZONA
     ordem = a26.sort_values(["_var", "_nome"], na_position="last").index
     a26.loc[ordem, "pos_queda"] = range(1, len(a26) + 1)
     ordem = a26.sort_values("_nome").index
     a26.loc[ordem, "ordem_nome"] = range(1, len(a26) + 1)
-    # exemplo da ficha: em todas as cidades, a escola que virou com mais votos válidos
+    # exemplo da ficha: em todas as cidades, a zona que virou com mais votos válidos
     # ou, se nenhuma virou, a de maior queda — entre as que estão no mapa (o anel aparece), se houver
     virou = (m22 > 0) & (m26 < 0)
     no_mapa = a26.fora_mapa == ""
@@ -485,13 +519,14 @@ def _cidade(uf, cd_tse, cod_ibge, nome, loc_c, arcos, geo):
         i_ex, tipo = a26[virou & no_mapa if (virou & no_mapa).any() else virou].validos_2026.idxmax(), "virou"
     else:
         i_ex, tipo = a26[no_mapa if (no_mapa & a26._var.notna()).any() else a26._var.notna()]._var.idxmin(), "queda"
-    # locais de 2022 como o TSE os listou naquele ano (zona, número, nome e endereço), e em quantos Lula ficou à frente
-    l22 = loc_c[loc_c.ano == 2022]
+    # zonas de 2022 (as do próprio ano), e em quantas Lula ficou à frente
+    l22 = loc_c[loc_c.ano == 2022].groupby("NR_ZONA")[["pt", "adv"]].sum()
     registro = {
         "cod_ibge": cod_ibge, "cod_tse": cd_tse, "uf": uf, "nome": nome, "cidade": f"{nome} ({uf})",
         "grupo": GRUPO_T20[cod_ibge], "locais_2022": len(l22), "lula_2022": int((l22.pt > l22.adv).sum()),
         "_i_exemplo": i_ex, "exemplo": tipo, "espaco": round(_espaco(px[~np.isnan(px)], py[~np.isnan(py)]), 2),
-        "bairros": _bairros(a26, a26.px, a26.py, (a26.px[i_ex], a26.py[i_ex])), **reg}
+        # sem rótulo de bairro no mapa: a zona cobre vários bairros
+        "bairros": "", **reg}
     a26["cod_ibge"], a26["uf"], a26["cidade"] = cod_ibge, uf, f"{nome} ({uf})"
     return a26, registro
 
@@ -543,7 +578,7 @@ def main():
         r["id_exemplo"] = int(loc.id.iloc[base + t.index.get_loc(r.pop("_i_exemplo"))])
         base += len(t)
     saida = loc.rename(columns={"NR_ZONA": "zona", "NR_LOCAL_VOTACAO": "numero"})[
-        ["id", "cod_ibge", "cidade", "uf", "local", "nome", "bairro", "zona", "numero", "secoes", "pt_2026", "adv_2026",
+        ["id", "cod_ibge", "cidade", "uf", "local", "nome", "bairro", "zona", "numero", "secoes", "locais", "pt_2026", "adv_2026",
          "validos_2026", "pt_2022", "adv_2022", "validos_2022", "pt_2018", "adv_2018", "validos_2018", "px", "py",
          "fora_mapa", "pos_queda", "ordem_nome"]]
     for c in ("pt_2022", "adv_2022", "validos_2022", "pt_2018", "adv_2018", "validos_2018", "pos_queda", "ordem_nome"):
