@@ -310,3 +310,129 @@ E as que contavam "os debates do 2º turno antes deste" na tela da Globo (`T26 �
 `T26 · 2º turno · realizados`) passaram a filtrar a data anterior ao dia do debate da Globo. A tela da Band passou a
 contar 2 de 12 debates com os dois, com o eixo até 23/10, e fecha a janela "depois" das pesquisas na véspera do debate
 da Globo (`T07 · debate seguinte · data`).
+
+---
+
+# Revisão dos dois debates do 2º turno (24/10/2026, das 11h50 às 12h20)
+
+Pedido do Alisson: "designa uma sessão para pesquisar novamente sobre os debates". Foram revistos o debate da Band
+(18/10) e o da Globo (23/10). Só entrou fato com fonte, com veículo e hora. Quando duas fontes divergiram, as duas
+ficaram registradas. Os números de outros eventos ficaram de fora: o debate cancelado de 1º/10, as entrevistas no Jornal
+Nacional, o Flow e a "intenção de assistir".
+
+## O que mudou em cada arquivo
+
+| arquivo | mudança |
+|---|---|
+| `dados/pbi/debate_globo.csv` | `buscas_lula` 100 e `buscas_flavio` 45 (`publicado`, consulta H3); `checagem` com a contagem do Fato ou Fake; `debate` com a janela do Ibope; `audiencia_previa` com as praças e a divergência; `streaming_pico` e `pesquisas_depois` com o que se sabe às 12h (seguem `aguardando`); `esperado` e `previsto_para` do consolidado (segunda, 26/10), da Bites (sábado, 18h), das pesquisas (sábado, 18h40) e do pico na internet (sem previsão; marcado para segunda, 26/10) |
+| `debates.csv` e `dados/pbi/debate.csv` | Globo: `audiencia_pontos_gsp` = 25 (prévia), com a fonte, e a `observacao` com a janela, as praças, a divergência e as checagens. Band: a `observacao` ganhou o consolidado com uma casa (14,9 e 23,8%) e o YouTube no encerramento. O `debate.csv` foi regravado como no `pipeline/exportar_pbi.py` (`read_csv` → `to_csv`), e só as duas linhas mudaram |
+| `ao_vivo_globo.csv` | 30 linhas novas: início e fim, prévia por praça e a divergência da Outro Canal, streaming, checagens, as 12 pesquisas de sábado com o campo do registro, a fonte original da Palver e a ausência da Bites. Uma linha antiga (21h50, `streaming`) tinha `;` dentro do texto e foi corrigida, com o mesmo conteúdo |
+| `../digital/trends_tempo.csv` | Consulta H3 refeita: média de 5 coletas, 336 linhas no lugar das 338 da coleta descartada, sem duplicar (método em `../digital/FONTES.md`, seção "Consulta H3") |
+
+**Formato de `ao_vivo_globo.csv`.** Separador `;`, UTF-8 sem BOM, sem aspas, e nenhum campo contém `;`. Colunas:
+`coletado_em` (hora da leitura, horário de Brasília), `tipo`, `valor` (ponto decimal), `unidade`, `texto`, `fonte`,
+`fonte_url` e `publicado_em`. Os tipos são:
+- `situacao`, `audiencia_previa`, `audiencia_pico`, `streaming`, `presenca` e `outro`, da coleta ao vivo;
+- `checagem` e `pesquisa`, desde esta revisão.
+
+## Globo, 23/10: o que foi achado
+
+| fato | número | fonte |
+|---|---|---|
+| Início | marcado para 21h20; o Ibope mediu a partir das 21h39; o ao vivo do Terra postou "Debate começa" às 21h43 | [Poder360, 24/10 01h49](https://www.poder360.com.br/poder-eleicoes-2026/debate-de-lula-e-flavio-na-globo-chega-a-30-pontos-de-audiencia/); [Terra ao vivo](https://www.terra.com.br/ao-vivo/noticias/eleicoes/flavio-bolsonaro-e-lula-se-enfrentam-em-debate-da-globo-acompanhe-ao-vivo,7d83b51290333be5351e46de92306d3c5knbcs8b.html) (hora da postagem, no JSON da página) |
+| Fim | o Ibope mediu até 23h49; o Metrópoles diz que terminou por volta das 23h50; as considerações finais saíram no Terra às 23h53 e 23h57 (horas de postagem) | Poder360; [Metrópoles, 24/10 00h29](https://www.metropoles.com/brasil/debate-globo-lula-flavio-bolsonaro); Terra |
+| Audiência, prévia, Grande SP | 25 de média e 28 de pico (21h39 às 23h49); 1 ponto = 199 mil pessoas | Poder360, 24/10 01h49 (cita "Ibope"); repetido pelo [Brasil 247](https://www.brasil247.com/midia/debate-entre-lula-e-flavio-bolsonaro-na-globo-alcanca-audiencia-comparavel-a-copa-do-mundo/) e pelo [TV Foco](https://tvfoco.uai.com.br/debate-da-globo-entre-lula-e-flavio-explode-na-audiencia/), este dizendo que o número é da Folha |
+| Audiência, prévia, PNT | 28 de média e 30 de pico; 1 ponto = 699 mil pessoas | Poder360 |
+| Audiência, prévia, por praça | Rio 33,39 (51,95% de share), Recife 31,84 (59,26%), DF 31,65 (54,38%), Salvador 29,98 (54,69%), São Paulo 25,07 (43,30%) | [Portal Alta Definição, 24/10 00h39](https://portalaltadefinicao.com/debate-na-globo-tem-ibope-de-copa-do-mundo-e-ultrapassa-33-pontos-confira-a-audiencia-pelo-brasil/) |
+| Audiência, consolidado | não saiu até 12h20 de 24/10 | — |
+| Pico simultâneo na internet | não divulgado até 12h20; o debate não passou no YouTube da Globo | [Exame, 23/10](https://exame.com/brasil/debate-da-globo-entre-lula-e-flavio-bolsonaro-sera-transmitido-no-youtube-veja-onde-assistir/) |
+| Interações (Bites) | não saíram até 12h20; nada da AP Exata nem da Ativaweb sobre este debate | — |
+| Fato ou Fake (g1) | 54 falas checadas. Flávio: 29 (12 fato, 12 não é bem assim, 5 fake). Lula: 25 (15 fato, 7 não é bem assim, 3 fake) | [g1, 23/10 22h15, atualizado 24/10 10h38](https://g1.globo.com/fato-ou-fake/eleicoes/noticia/2026/10/23/veja-o-que-e-fato-ou-fake-nas-falas-de-flavio-bolsonaro-e-lula-no-debate-da-globo-no-2o-turno-das-eleicoes-2026.ghtml) |
+| Buscas no Google | pico na noite: Lula 100 (23h), Flávio 45 (23h); na mesma consulta, a Band teve Lula 57 (21h) e Flávio 51 (22h) | consulta H3, coleta própria (ver `../digital/FONTES.md`) |
+
+**Como a contagem do Fato ou Fake foi feita.** Os selos foram contados na própria página, aberta no navegador às
+12h05. A página separa as checagens em duas seções, "Flávio Bolsonaro (PL)" e "Lula (PT)", e cada checagem termina em
+"Veja por quê" com o selo. Detalhes:
+- um selo grafado `#/FATO`, na seção de Lula, foi contado como FATO;
+- uma fala com duas afirmações e dois selos (há uma assim na seção de Lula, sobre a fome) conta como duas checagens;
+- uma das 5 checagens #FAKE de Flávio é um vídeo publicado no perfil dele no Instagram durante o debate.
+
+A contagem é das falas que a equipe escolheu checar, não de tudo o que cada um disse. Outras agências (Lupa, UOL
+Confere, Estadão Verifica, Aos Fatos) fizeram as próprias seleções. Elas apareceram resumidas no
+[Só Notícia Boa](https://www.sonoticiaboa.com.br/2026/10/24/quem-mentiu-mais-debate-globo-flavio-lula), mas não foram
+abertas na origem e ficaram de fora. A página do g1 foi atualizada às 10h38 de 24/10 e pode ganhar checagens depois da
+contagem.
+
+**Pesquisas com o campo inteiro depois do debate: até 12h20, nenhuma.** O Poder360
+([24/10 06h15](https://www.poder360.com.br/poder-eleicoes-2026/saiba-quais-pesquisas-eleitorais-podem-sair-neste-sabado-24-out/),
+tabela com os registros no TSE) lista 12 pesquisas nacionais de 2º turno para sábado. Pelas datas de campo do registro,
+todas começam antes de 24/10:
+
+| instituto (quem paga) | campo no registro |
+|---|---|
+| 100% Cidades (Futura) | 21 a 24/10 |
+| AtlasIntel | 18 a 23/10 |
+| Colectta (Brazil Economy) | 23/10 |
+| Datafolha (Folha da Manhã) | 23 e 24/10 |
+| Instituto França | 21 a 23/10 |
+| Veritá | 19 a 23/10 |
+| MDA Pesquisa (CNT) | 21 a 23/10 |
+| Nexus (BTG Pactual) | 23 e 24/10 |
+| Palver | 22 a 24/10 |
+| Quaest (Globo) | 23 e 24/10 |
+| Seta Pesquisa | 23 e 24/10 |
+| Simplex | 19 a 23/10 |
+
+A única dúvida é a Datafolha: registro BR-09540/2026, 4.050 entrevistas, divulgação por volta das 18h40.
+- O registro (Poder360) e o [Brasil de Fato](https://www.brasildefato.com.br/2026/10/23/datafolha-atlasintel-quaest-quando-saem-as-ultimas-pesquisas-do-segundo-turno-das-eleicoes/)
+  (23/10 16h42) dão campo "entre sexta e sábado".
+- A [CartaCapital](https://www.cartacapital.com.br/politica/os-detalhes-da-ultima-pesquisa-datafolha-sobre-lula-x-flavio-bolsonaro-no-2o-turno/)
+  (23/10 18h28) diz que as entrevistas foram "todas realizadas no sábado".
+- Vale a ficha técnica divulgada com a pesquisa:
+  - se o campo for só 24/10, ela entra em `pesquisas_2turno.csv` como "depois do debate";
+  - se não, `pesquisas_depois` vira `nao_divulgado` depois das 19h.
+
+As outras entram na base como de costume, com o campo que atravessa o dia do debate.
+
+## Band, 18/10: conferência
+
+Os números registrados continuam certos, e nada foi corrigido. Saiu um detalhe novo, anotado na `observacao`.
+
+| número | situação | fonte |
+|---|---|---|
+| Consolidado: 15 de média, pico de 16,5 e 24% de share (Grande SP, 20h20 às 22h04, 2,7 milhões de pessoas) | confirmado | balanço da Band via [O Universo da TV, 19/10](https://www.ouniversodatv.com/2026/10/lula-e-flavio-bolsonaro-levam-debate-da.html) (fontes: Kantar IBOPE/GSP, YouTube Studio, Emplifi) |
+| Consolidado com uma casa: 14,9 de média e 23,8% de share | novo, é o mesmo consolidado | [Poder360, 24/10 01h49](https://www.poder360.com.br/poder-eleicoes-2026/debate-de-lula-e-flavio-na-globo-chega-a-30-pontos-de-audiencia/) |
+| Prévia: 13 de média e 15 de pico (20h15 às 22h11); no PNT, 13 × 12 do Fantástico | confirmado | coluna F5 da Folha via [A Tarde, 19/10 07h52](https://atarde.com.br/televisao/debate-entre-lula-e-flavio-faz-band-bater-recorde-e-superar-a-globo-1406201); a Band contestou a prévia pela exibição simultânea em várias TVs |
+| YouTube: 5.385.394 aparelhos às 21h30 no @bandjornalismo; 5,13 milhões no encerramento (22h10) | confirmado; o encerramento é novo | [Poder360, 18/10 22h32](https://poder360.com.br/poder-eleicoes-2026/debate-de-lula-e-flavio-na-band-chega-a-539-milhoes-simultaneos) |
+| Bites, 24h: Lula 25,5 mi × Flávio 5,0 mi de interações | confirmado; saiu às 17h45 do dia seguinte | [Poder360, 19/10 17h45](https://www.poder360.com.br/poder-eleicoes-2026/lula-tem-5-vezes-mais-interacoes-nas-redes-que-flavio-apos-debate/) |
+
+Os "14,89 de média e 16,51 de pico" citados em `pbi/tmp/coleta_debate_brief.md` não aparecem em nenhuma fonte encontrada
+e não foram usados.
+
+## Divergências novas
+
+- **Audiência da Globo, prévia:**
+  - o Poder360 (01h49), o Brasil 247 (05h29) e o TV Foco (11h00) dão 25 na Grande SP e 28 no PNT;
+  - a primeira versão da coluna Outro Canal (F5, 24/10 00h00), citada pelo fórum
+    [BCharts](https://bcharts.com.br/t/lula-x-flavio-bolsonaro-na-globo-tem-indices-de-audiencia-semelhantes-a-copa-na-mundo-veja-numeros/105954)
+    às 03h30, deu 27 e 29;
+  - o O Planeta TV (07h24) fala em 8,7% acima dos 23 pontos da novela, o que bate com 25;
+  - o arquivo usa 25 e 28.
+- **Início da Globo:** marcado para 21h20 (CNN Brasil, Exame); o Portal Alta Definição diz que o programa começou às
+  21h30; o Ibope mediu a partir das 21h39.
+- **Duração da Globo:** "quase 2h30" (Metrópoles) contra 2h10 da janela medida pelo Ibope (21h39 às 23h49). O Metrópoles
+  provavelmente conta desde o horário marcado.
+- **Campo da Datafolha de sábado:** 23 e 24/10 (registro, Brasil de Fato) ou só 24/10 (CartaCapital).
+
+## O que ainda falta e quando deve sair
+
+| pendência | quando | de onde |
+|---|---|---|
+| Pesquisas de sábado (Datafolha decide o cartão) | Datafolha por volta das 18h40; AtlasIntel ~18h; Nexus depois das 16h; Quaest à tarde | institutos e imprensa |
+| Interações (Bites) | sábado, no fim da tarde ou à noite (depois da Band, saiu às 17h45 do dia seguinte) | Bites, via Poder360 ou outros veículos |
+| Audiência consolidada da Globo | provavelmente segunda, 26/10 (o da Band saiu na segunda seguinte); antes, só se a Globo divulgar | Kantar IBOPE, via Globo ou imprensa |
+| Pico simultâneo no g1, no Globoplay ou na GloboNews | sem previsão; a Globo pode não divulgar. Se nada sair até segunda, `nao_divulgado` | balanço da Globo |
+
+## Conteúdo da web com instruções
+
+Nenhuma página consultada nesta revisão trouxe instruções dirigidas ao agente. Os banners de cookies ficaram sem clique.

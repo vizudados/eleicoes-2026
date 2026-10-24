@@ -5,7 +5,7 @@ Levantamento feito em 22/10/2026 para o painel "O que as pesquisas diziam antes 
 ## Arquivos
 
 - `pesquisas_1turno.csv`: 80 pesquisas de 1º turno divulgadas de 01/08 a 03/10/2026, 160 linhas (uma de `totais` e uma de `validos` por pesquisa).
-- `pesquisas_2turno.csv`: 120 cenários Lula × Flávio, 240 linhas. São 79 cenários `antes_1turno` (das pesquisas do 1º turno) e 41 pesquisas `apos_1turno` (divulgadas de 05/10 a 22/10/2026).
+- `pesquisas_2turno.csv`: 126 cenários Lula × Flávio, 252 linhas. São 79 cenários `antes_1turno` (das pesquisas do 1º turno) e 47 pesquisas `apos_1turno`, divulgadas de 05/10 a 24/10/2026. As 6 de 23 e 24/10 entraram em 24/10, ao meio-dia (seção "Atualização de 24/10/2026", no fim).
 - Separador `;`, UTF-8 sem BOM, datas AAAA-MM-DD, ponto decimal. Nenhum campo contém `;`. Na `observacao`, as notas são separadas por ` | `.
 
 ## Como foi feito
@@ -548,3 +548,67 @@ Levantamento feito em 23/10/2026 para a tela "quem vota em quem". O arquivo traz
 **Alerta de leitura:** a AtlasIntel mostra Lula à frente entre quem tem ensino superior (57,3 a 29,4) e nas rendas acima de R$5.000 (51,8 a 40,8 e 51,9 a 35,4). O Datafolha mostra o contrário: Flávio à frente no superior e acima de 2 SM. Os números são os publicados pelos dois institutos, conferidos na imagem das páginas. Nos dois relatórios, a média ponderada pelos segmentos reproduz o total. A diferença vem dos institutos (método online da Atlas com faixas em reais × presencial do Datafolha), não de erro de transcrição.
 
 **Como foi lido:** os PDFs foram abertos pela ferramenta de leitura web, que salvou uma cópia local. O texto foi extraído com `pdftotext`, e as páginas das tabelas foram renderizadas em imagem para conferir cada número. Nenhuma página trouxe instruções, e nada foi executado.
+
+---
+
+# Atualização de 24/10/2026 (até 12h30): pesquisas divulgadas em 23 e 24/10
+
+Pedido da sessão principal do painel, dentro da revisão dos debates do 2º turno. A base parava nas divulgações de 22/10.
+Entraram 6 pesquisas nacionais de 2º turno, 12 linhas (`totais` e `validos`), todas com `momento = apos_1turno` e com
+as datas de campo exatas. Isso importa porque a tela aplica a regra "depois da Globo" pela própria conta: só vale campo
+inteiro depois de 23/10, e quem atravessa o dia do debate fica fora. As 6 terminam o campo em 22/10 ou 23/10, então
+nenhuma é "depois da Globo".
+
+| Instituto | Divulgação | Campo | Registro TSE | Amostra, margem, modo | Totais (Lula × Flávio, BN, NS) | Válidos (Lula × Flávio) | Fonte primária | Conferência |
+|---|---|---|---|---|---|---|---|---|
+| Ipespe (Abrapel) | 23/10 | 20/10–22/10 | BR-04350/2026 | 1.500, 2,6, telefone (CATI) | 47 × 48, 3, 2 | 49,5 × 50,5 | [relatório, rodada 03](https://static.poder360.com.br/uploads/2026/10/ipespe-pesquisa2oturno-23out2026.pdf) | [CNN Brasil, 23/10 10h00](https://www.cnnbrasil.com.br/eleicoes/ipespe-abrapel-flavio-tem-505-dos-votos-validos-lula-495/); [Poder360, 23/10 16h29](https://www.poder360.com.br/poder-eleicoes-2026/4-pesquisas-desta-6a-mostram-cenario-indefinido-entre-flavio-e-lula/) |
+| Vox Brasil | 23/10 | 20/10–22/10 | BR-03259/2026 | 2.100, 2,15, presencial domiciliar | 45,4 × 44,3, 6, 4,3 | 50,6 × 49,4 | [relatório](https://static.poder360.com.br/uploads/2026/10/RELATORIO-VOX-BRASIL-NACIONAL-11-2-TURNO-23-10-2026.pdf) | [Poder360, 23/10 0h02](https://www.poder360.com.br/brasil/lula-tem-506-contra-494-de-flavio-em-votos-validos-diz-vox/) |
+| Real Time Big Data | 23/10 | 19/10–22/10 | BR-09670/2026 | 2.000, 2, telefone (entrevistadores) | 45 × 49, 5, 1 | 48 × 52 | [relatório](https://static.poder360.com.br/uploads/2026/10/Pesquisa-presidencial-Real-Time-Big-Data-23out2026.pdf) | Poder360, 23/10 16h29; Exame, 24/10 |
+| Alfa Inteligência | 23/10 | 18/10–22/10 | BR-08496/2026 | 2.700, 1,9, presencial (padrão do instituto) | 46 × 49,9, não informados | 48 × 52 | Poder360, 23/10 16h29 (campo, registro, válidos) | [Exame, 24/10 05h00](https://exame.com/brasil/pesquisas-para-presidente-hoje-2o-turno-veja-os-levantamentos-que-serao-divulgados-neste-sabado/) (totais) |
+| MDA (CNT) | 24/10 | 21/10–23/10 | BR-02136/2026 | 2.032, 2,2, presencial (domicílio e ponto de fluxo) | 45 × 46,3, 5,8, 2,9 | 49,3 × 50,7 | [relatório 173ª rodada](https://static.poder360.com.br/uploads/2026/10/Pesquisa-CNT-MDA-24out2026.pdf) (ficha; números em gráfico) | [O Povo, 24/10 11h11](https://www.opovo.com.br/noticias/politica/eleicoes/2026/10/24/pesquisa-cnt-mda-flavio-507-e-lula-493-de-votos-validos.html); [Gazeta do Povo, 24/10 11h06](https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/cnt-mda-presidente-outubro-2026-vespera-segundo-turno/) |
+| Instituto França (IFP) | 24/10 | 21/10–23/10 | BR-04863/2026 | 1.537, 2,5, modo não informado | 43,1 × 45,6, 7,4, 3,9 | 48,6 × 51,4 | [dossiê para imprensa](https://static.poder360.com.br/uploads/2026/10/Pesquisa-presidencial-Instituto-Franca-24out2026.pdf) (sem datas de campo) | [Poder360, 24/10 06h00](https://www.poder360.com.br/poder-eleicoes-2026/saiba-como-estao-lula-e-flavio-nas-pesquisas-a-1-dia-da-eleicao/) (campo, registro) |
+
+**Notas:**
+- **MDA:** o relatório distribui o campo assim: 4% das entrevistas em 21/10, 52% em 22/10 e 44% em 23/10. São 44%
+  feitas no dia do debate, antes dele, e por isso a pesquisa fica fora do "depois".
+  - Os números de intenção estão em gráfico no PDF e vieram do O Povo e da Gazeta do Povo, que batem entre si nos
+    válidos.
+  - A Gazeta do Povo traz na mesma matéria um cenário espontâneo (Flávio 45,4 × Lula 43,5); o CSV usa o estimulado.
+  - Divergência de amostra: 2.032 (relatório, O Povo, Gazeta do Povo) contra 2.002 (Exame e uma legenda da Gazeta do
+    Povo).
+- **Ipespe:** o relatório dá Flávio 48 × Lula 47 na estimulada, e a Exame repete. Um resumo de busca citou Flávio 49 × Lula 45, mas não foi
+  achado em nenhuma página e não foi usado.
+- **Alfa Inteligência:** o relatório (19 MB) passou do limite da ferramenta de leitura. Os brancos/nulos e os indecisos
+  ficaram em branco, e os totais vêm só da Exame.
+- **Instituto França:** o dossiê de 7 páginas não traz as datas de campo nem o modo; diz só "seleção por cotas". As datas
+  vêm do Poder360. A rodada anterior (16–20/10) era telefônica, mas o modo desta não foi confirmado e ficou em branco.
+- **Como foi lido:** os PDFs foram abertos pela ferramenta de leitura web, que guardou uma cópia local, e o texto foi
+  extraído com `pdftotext`. Nada foi executado. Nenhuma página trouxe instruções dirigidas ao agente.
+
+**Não entrou:**
+- **Veritá (nova rodada, 15.554 entrevistas):** só a Exame (24/10) traz números: válidos Flávio 51,3 × Lula 48,7 e
+  totais 50,2 × 47,5. As datas de campo não batem:
+  - a Exame diz "entre quarta-feira, 18, e domingo, 22", mas 18/10 foi domingo;
+  - a tabela de registros do Poder360 dá 19–23/10;
+  - não há registro no TSE na fonte.
+  Fica de fora até uma segunda fonte ou o relatório.
+- **DataTrends:** estava na agenda do TSE para 23/10 (O Povo), mas o agregador do Poder360 de 24/10 ainda lista só a
+  rodada de 15–17/10, que já está na base.
+
+**Ainda vão sair hoje (24/10):** pela tabela de registros do Poder360 (24/10 06h15), todas começam o campo antes de
+24/10 e ficam fora do "depois da Globo".
+
+| instituto (quem paga) | campo no registro | quando |
+|---|---|---|
+| Datafolha (Folha da Manhã), BR-09540/2026, 4.050 entrevistas | 23 e 24/10 | ~18h40 |
+| Quaest (Globo), BR-09158/2026, 3.702 entrevistas | 23 e 24/10 | à tarde |
+| AtlasIntel, BR-06380/2026, 5.000 entrevistas | 18 a 23/10 | ~18h |
+| Nexus (BTG Pactual), BR-08234/2026, 2.000 entrevistas | 23 e 24/10 | depois das 16h |
+| Palver | 22 a 24/10 | à tarde |
+| 100% Cidades (Futura) | 21 a 24/10 | à tarde |
+| Colectta (Brazil Economy) | 23/10 | — |
+| Seta Pesquisa | 23 e 24/10 | — |
+| Simplex | 19 a 23/10 | — |
+
+A única dúvida é a Datafolha: a CartaCapital (23/10 18h28) diz que as 4.050 entrevistas foram "todas realizadas no
+sábado". Se a ficha técnica confirmar só 24/10, ela é a única pesquisa com o campo inteiro depois da Globo.

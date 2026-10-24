@@ -8,7 +8,7 @@ Número que não foi confirmado ficou **em branco**, com a razão na coluna `obs
 
 | Arquivo | Linhas | O que tem |
 |---|---|---|
-| `trends_tempo.csv` | 3.092 | Séries do Google Trends (diárias e por hora), coletadas direto no Trends e na Central Google Trends Eleições 2026 |
+| `trends_tempo.csv` | 3.428 | Séries do Google Trends (diárias e por hora), coletadas direto no Trends e na Central Google Trends Eleições 2026 |
 | `trends_uf.csv` | 648 | Índice por UF (0-100) e participação % das buscas por UF, 1º e 2º turno |
 | `trends_uf_tempo.csv` | 4.704 | Série diária Lula x Flávio (tópicos) em cada uma das 27 UFs e no Brasil, 01/08 a 23/10 (consulta U2, coletada em 23/10) |
 | `trends_consultas.csv` | 844 | Consultas principais e em ascensão, perguntas mais buscadas divulgadas pelo Google e pela imprensa |
@@ -36,6 +36,7 @@ séries da mesma consulta. Por isso cada série leva o código da consulta no no
 | E1 | eleições 2026, segundo turno, pesquisa eleitoral, fake news, inteligência artificial | 01/08 a 22/10, diária | Os três últimos ficam perto de zero |
 | H1 | Lula x Flávio (tópicos) | 01/10 00h a 08/10 00h, por hora (BRT) | Dia do 1º turno |
 | H2 | Lula x Flávio (tópicos) | 15/10 00h a 22/10 00h, por hora (BRT) | Inclui o debate da Band (18/10) |
+| **H3** | Lula x Flávio (tópicos), 7 dias (`now 7-d`) | 17/10 12h a 24/10 11h, por hora (BRT) | **As duas noites de debate do 2º turno (Band 18/10, Globo 23/10) na mesma consulta.** Média de 5 coletas de 24/10/2026. Ver a seção "Consulta H3" abaixo |
 | G2 | Lula x Flávio (tópicos), mapa por UF | 05/10 a 22/10 | Só em `trends_uf.csv` |
 | U2 | Lula x Flávio (tópicos), uma consulta por UF (geo=BR-UF) e uma nacional | 01/08 a 23/10, diária | Só em `trends_uf_tempo.csv`. Ver a seção "Consulta U2" abaixo |
 | C1 | Central Google Trends Eleições 2026 | 22/09 a 22/10, diária | Página oficial do Google. Resumo da página: **Lula 56% x Flávio 44%** do interesse em 30 dias |
@@ -171,6 +172,75 @@ Nenhuma página consultada nesta coleta trazia instruções dirigidas ao agente.
 - Quaest: Lula com 95% de 6 mi de comentários nos perfis dos dois no dia. Ganho no Instagram no dia: Lula +178 mil, Flávio +149 mil.
 - Datrix: saldo de sentimento em 18/10 de Lula +2,3 e Flávio +2,4.
 - O Poder360 diz que o debate teve o maior interesse no Google "da série histórica desde 2004", sem número. Não foi verificado.
+
+## Consulta H3: as duas noites de debate na mesma consulta (24/10/2026)
+
+**Para que serve.** O índice do Trends só compara dentro da mesma consulta. A H2 (15 a 22/10) tem a noite da Band, mas
+não a da Globo, e a coleta minuto a minuto da noite da Globo (`trends_debate_globo.csv`, janelas de 4 horas) não tem a
+Band. A H3 pega as duas noites numa consulta só: tópicos Lula (`/m/0pc9q`) e Flávio Bolsonaro (`/g/122pdhqd`), Brasil,
+7 dias, hora a hora.
+
+**A coleta de 24/10, por volta das 8h, foi descartada.** Ela tinha 338 linhas, de 17/10 08h a 24/10 08h, e três defeitos:
+- os dois em 0 às 23h de 18/10, no meio da noite da Band;
+- 30 × 16 às 23h de 17/10, sem evento, cercado de 2 × 1;
+- a noite da Band invertida em relação à H2 (Flávio 100 às 22h, Lula 67) e a Globo muito abaixo (Lula 23 às 23h), com o
+  resto da semana em torno de 2.
+
+Nenhuma das cinco coletas novas repetiu esses números, e nenhum deles bate com a H2. A causa não foi identificada
+(provável erro de leitura ou de alinhamento das horas). As linhas foram substituídas, sem duplicar.
+
+**Método.**
+- Mesmo caminho das outras consultas: na página do trends.google.com, no navegador, `/trends/api/explore` (token do
+  widget TIMESERIES) e depois `/trends/api/widgetdata/multiline`, com `hl=pt-BR`, `tz=180` e `geo=BR`. A página mostrava
+  o título "429", mas as chamadas da API responderam normalmente. Não houve CAPTCHA, e nada foi contornado.
+- O campo `time` vem em epoch UTC. O horário de Brasília é UTC−3.
+- Conferência do fuso:
+  - na noite da Band, os picos caem às 21h (Lula) e às 22h (Flávio), as mesmas horas da H2;
+  - na noite da Globo, o pico cai às 22h e às 23h, dentro da medição do Ibope (21h39 às 23h49).
+
+**Coletas.** Foram cinco coletas `now 7-d` em 24/10, às 11h58, 12h00, 12h01, 12h08 e 12h15 (horário de Brasília). Às
+12h08 houve também uma de controle com janela fixa (`2026-10-17T15 2026-10-24T15`, UTC), que deu exatamente o mesmo que a
+`now 7-d` das 12h08 e ficou fora da média.
+
+**Estabilidade.**
+- Nas 168 horas comuns às cinco coletas, 9 horas tiveram alguma diferença entre elas, nunca maior que 1 ponto.
+- Nas duas noites, das 18h às 2h, a única diferença foi a de Flávio à 1h de 24/10 (13 ou 14).
+- **Conclusão: a série é estável o bastante para comparar os picos das duas noites.**
+
+**O que foi gravado.**
+- A média das cinco coletas, arredondada para o inteiro mais próximo (meio para cima), porque o modelo lê o índice como
+  inteiro.
+- 336 linhas, de 17/10 12h a 24/10 11h.
+- 24/10 11h é parcial em 3 das 5 coletas e está marcada. Quando as coletas divergiram, a `observacao` traz a faixa.
+
+| hora (BRT) | Lula | Flávio | | hora (BRT) | Lula | Flávio |
+|---|---|---|---|---|---|---|
+| 18/10 19h | 18 | 13 | | 23/10 20h | 17 | 13 |
+| 18/10 20h | 42 | 24 | | 23/10 21h | 28 | 18 |
+| **18/10 21h** | **57** | 39 | | 23/10 22h | 72 | 26 |
+| **18/10 22h** | 35 | **51** | | **23/10 23h** | **100** | **45** |
+| 18/10 23h | 23 | 25 | | 24/10 00h | 38 | 22 |
+| 19/10 00h | 18 | 21 | | 24/10 01h | 22 | 13 |
+
+Picos, das 20h à meia-noite:
+- **Band, 18/10:** Lula 57 (21h), Flávio 51 (22h).
+- **Globo, 23/10:** Lula 100 (23h), Flávio 45 (23h).
+
+**Conferência com a H2.** Reescalando a noite da Band na H3 para Lula às 21h = 100, as horas das 20h às 23h ficam assim:
+
+| hora | H3 reescalada (Lula · Flávio) | H2 (Lula · Flávio) |
+|---|---|---|
+| 20h | 74 · 42 | 74 · 45 |
+| 21h | 100 · 68 | 100 · 70 |
+| 22h | 61 · 89 | 57 · 91 |
+| 23h | 40 · 44 | 40 · 45 |
+
+As duas consultas contam a mesma noite.
+
+**Para a tela do debate da Globo (T26).**
+- O cartão de buscas usa os picos da Globo na H3 (Lula 100, Flávio 45).
+- A régua da Band, hoje lida na H2 (100 × 91), vem de outra consulta e só serve para comparar a proporção entre os dois.
+  Para comparar o nível das duas noites, a régua precisa ser a noite da Band na H3: Lula 57, Flávio 51.
 
 ## Segurança e acesso
 
