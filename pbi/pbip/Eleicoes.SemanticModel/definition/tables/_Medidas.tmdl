@@ -21784,8 +21784,8 @@ table _Medidas
 			        & IF ( _fD = 1, "dá", "dão" ) & " Flávio à frente de Lula"
 			VAR _txtMedias =
 			    "Média: Flávio " & FORMAT ( _mF, "0.0" ) & "% × Lula " & FORMAT ( _mL, "0.0" ) & "% dos votos totais ("
-			        & FORMAT ( _vF, "0.0" ) & "% × " & FORMAT ( _vL, "0.0" ) & "% dos válidos, em " & _vN
-			        & IF ( _vN = 1, " pesquisa", " pesquisas" ) & ")."
+			        & FORMAT ( _vF, "0.0" ) & "% × " & FORMAT ( _vL, "0.0" ) & "% dos válidos, nas " & _vN
+			        & IF ( _vN = 1, " que divulgou os válidos", " que divulgaram os válidos" ) & ")."
 			VAR _txtCont = "<span><b class='lula-esc'>" & _lA & "</b> Lula</span><span><b>" & _eA & "</b> "
 			    & IF ( _eA = 1, "empate", "empates" ) & "</span><span><b class='flavio-esc'>" & _fA & "</b> Flávio</span>"
 			VAR _txtContD = "<span><b class='lula-esc'>" & _lD & "</b> Lula</span><span><b>" & _eD & "</b> "
@@ -21857,7 +21857,7 @@ table _Medidas
 			                _vNP > 0,
 			                " ("
 			                    & IF ( _mFP > _mLP, FORMAT ( _vFP, "0.0" ) & "% × " & FORMAT ( _vLP, "0.0" ), FORMAT ( _vLP, "0.0" ) & "% × " & FORMAT ( _vFP, "0.0" ) )
-			                    & "% dos válidos, em " & _vNP & IF ( _vNP = 1, " pesquisa)", " pesquisas)" )
+			                    & "% dos válidos, nas " & _vNP & IF ( _vNP = 1, " que divulgou os válidos)", " que divulgaram os válidos)" )
 			            ) & "."
 			    )
 			VAR _pMan =
