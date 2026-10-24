@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir07",
   "position": {
-    "x": 473,
-    "y": 216,
+    "x": 1131,
+    "y": 404,
     "z": 1020,
     "height": 86,
     "width": 316,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'08 · Debate Band: O que mudou depois do debate na Band?'"
+                  "Value": "'17 · Debate Band: O que mudou depois do debate na Band?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'08 · Debate Band: O que mudou depois do debate na Band?'"
+                  "Value": "'17 · Debate Band: O que mudou depois do debate na Band?'"
                 }
               }
             },

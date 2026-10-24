@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 01 Placar — Quem venceu o 1º turno, e por quanto?'"
+                  "Value": "'Próxima: 01 Lula · quem é — Quem é Luiz Inácio Lula da Silva?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 01 Placar — Quem venceu o 1º turno, e por quanto?'"
+                  "Value": "'Próxima: 01 Lula · quem é — Quem é Luiz Inácio Lula da Silva?'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T01_CHEGADA_01'"
+                  "Value": "'T02_CHEGADA_01'"
                 }
               }
             }

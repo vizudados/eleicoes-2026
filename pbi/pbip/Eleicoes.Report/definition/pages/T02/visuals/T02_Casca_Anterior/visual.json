@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 01 Placar'"
+                  "Value": "'Voltar: 00 Capa'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 01 Placar'"
+                  "Value": "'Voltar: 00 Capa'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T01_CHEGADA_01'"
+                  "Value": "'T00_CHEGADA_01'"
                 }
               }
             }

@@ -3,7 +3,7 @@
   "name": "TIX_Sumario_Ir17",
   "position": {
     "x": 1131,
-    "y": 404,
+    "y": 310,
     "z": 1020,
     "height": 86,
     "width": 316,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'20 · 2º turno: E agora, o que as pesquisas dizem do 2º turno?'"
+                  "Value": "'16 · 2º turno: E agora, o que as pesquisas dizem do 2º turno?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'20 · 2º turno: E agora, o que as pesquisas dizem do 2º turno?'"
+                  "Value": "'16 · 2º turno: E agora, o que as pesquisas dizem do 2º turno?'"
                 }
               }
             },

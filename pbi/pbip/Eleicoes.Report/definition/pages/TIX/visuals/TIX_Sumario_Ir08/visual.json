@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir08",
   "position": {
-    "x": 473,
-    "y": 404,
+    "x": 1131,
+    "y": 592,
     "z": 1020,
     "height": 86,
     "width": 316,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'10 · Buscas: O que o Brasil perguntou ao Google?'"
+                  "Value": "'19 · Buscas: O que o Brasil perguntou ao Google?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'10 · Buscas: O que o Brasil perguntou ao Google?'"
+                  "Value": "'19 · Buscas: O que o Brasil perguntou ao Google?'"
                 }
               }
             },

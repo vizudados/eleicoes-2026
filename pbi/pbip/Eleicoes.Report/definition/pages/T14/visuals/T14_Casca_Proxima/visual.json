@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 18 Minha cidade — Como votou a minha cidade?'"
+                  "Value": "'Próxima: 14 Minha cidade — Como votou a minha cidade?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 18 Minha cidade — Como votou a minha cidade?'"
+                  "Value": "'Próxima: 14 Minha cidade — Como votou a minha cidade?'"
                 }
               }
             },

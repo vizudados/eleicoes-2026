@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 02 Lula · quem é'"
+                  "Value": "'Voltar: 04 Placar'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 02 Lula · quem é'"
+                  "Value": "'Voltar: 04 Placar'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T02_CHEGADA_01'"
+                  "Value": "'T01_CHEGADA_01'"
                 }
               }
             }

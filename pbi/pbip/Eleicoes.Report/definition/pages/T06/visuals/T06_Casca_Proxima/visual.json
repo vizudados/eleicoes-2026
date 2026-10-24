@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 07 Quem falta — Quem mais falta às urnas, e onde?'"
+                  "Value": "'Próxima: 08 Quem falta — Quem mais falta às urnas, e onde?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 07 Quem falta — Quem mais falta às urnas, e onde?'"
+                  "Value": "'Próxima: 08 Quem falta — Quem mais falta às urnas, e onde?'"
                 }
               }
             },

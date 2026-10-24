@@ -22,10 +22,10 @@ C = estilo.COR
 
 # colunas do sumário: (rótulo, códigos)
 COLUNAS = [
-    ("ABERTURA · I · O RESULTADO", ["T00", "T01", "T02", "T03", "T04", "T05", "T06", "T25"]),
-    ("II · A CAMPANHA", ["T07", "T26", "T08", "T09", "T10"]),
-    ("III · O MAPA", ["T11", "T12", "T13", "T24", "T14"]),
-    ("IV · E AGORA", ["T15", "T16", "T17", "T18"]),
+    ("ABERTURA · I · ANTES DA URNA", ["T00", "T02", "T04", "T10"]),
+    ("II · O 1º TURNO", ["T01", "T03", "T05", "T06", "T25"]),
+    ("III · O MAPA", ["T11", "T12", "T13", "T24", "T14", "T15"]),
+    ("IV · O 2º TURNO", ["T16", "T17", "T07", "T26", "T08", "T09", "T18"]),
     ("V · EXPLORE VOCÊ MESMO · FIM", ["T19", "T20", "T21", "T22", "T23"]),
 ]
 X0, Y0, LARGURA_COL, VAO, ALTURA_ITEM = 150, 172, 304, 25, 94

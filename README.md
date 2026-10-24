@@ -62,9 +62,11 @@ python -I -X utf8 pipeline/exportar_t20.py
 
 ## O painel no Power BI (`pbi/`)
 
-27 telas a 1920 × 1080 (00 Capa … 26 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos; a
-15 · Quem vota cruza o voto com renda, escolaridade, Bolsa Família e IDH (`pipeline/extrair_social.py`), e a
-20 · Debate na Globo acompanha o último debate do 2º turno pelo arquivo `dados/pbi/debate_globo.csv` (abaixo). Abra
+27 telas a 1920 × 1080 (00 Capa … 26 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos, do antes para o depois:
+I · Antes da urna, II · O 1º turno, III · O mapa, IV · O 2º turno e V · Explore você mesmo. A 12 · Quem vota cruza o
+voto com renda, escolaridade, Bolsa Família e IDH (`pipeline/extrair_social.py`); a 17 · Debate Band e a 18 · Debate
+Globo ficam coladas, e a da Globo acompanha o último debate do 2º turno pelo arquivo `dados/pbi/debate_globo.csv`
+(abaixo). Abra
 `pbi/pbip/Eleicoes.pbip` no Power BI Desktop; o modelo lê os CSV de `dados/pbi` e de `dados/apuracao` pelo endereço raw
 deste repositório (parâmetro `pRepositorioRaw`), então funciona em qualquer máquina e no Service sem gateway.
 
@@ -122,7 +124,7 @@ python -I apuracao/coletar.py --eleicao 6257 --saida dados/apuracao/ensaio-1turn
 
 ## Debate da Globo (2º turno, 23/10/2026)
 
-A tela 20 · Debate na Globo (código T26) ficou pronta antes do debate e se preenche quando
+A tela 18 · Debate Globo (código T26) ficou pronta antes do debate e se preenche quando
 `dados/pbi/debate_globo.csv` muda no repositório: uma linha por fato ou número (situação do debate, presença de cada
 candidato, regras e os cinco números da noite: buscas, audiência, transmissão na internet, redes e pesquisas). Campo
 vazio aparece como "aguardando", com a hora e a fonte esperadas; nada é estimado. O que é cada campo, de onde vem e

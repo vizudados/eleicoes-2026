@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 17 Série — Como o PT chegou até aqui, de 2006 a 2026?'"
+                  "Value": "'Próxima: 13 Série — Como o PT chegou até aqui, de 2006 a 2026?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 17 Série — Como o PT chegou até aqui, de 2006 a 2026?'"
+                  "Value": "'Próxima: 13 Série — Como o PT chegou até aqui, de 2006 a 2026?'"
                 }
               }
             },

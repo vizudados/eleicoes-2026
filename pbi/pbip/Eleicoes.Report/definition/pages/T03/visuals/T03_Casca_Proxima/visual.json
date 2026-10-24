@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 04 Flávio · quem é — Quem é Flávio Bolsonaro?'"
+                  "Value": "'Próxima: 06 Votos de Flávio — Onde estão os votos de Flávio?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 04 Flávio · quem é — Quem é Flávio Bolsonaro?'"
+                  "Value": "'Próxima: 06 Votos de Flávio — Onde estão os votos de Flávio?'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T04_CHEGADA_01'"
+                  "Value": "'T05_CHEGADA_01'"
                 }
               }
             }

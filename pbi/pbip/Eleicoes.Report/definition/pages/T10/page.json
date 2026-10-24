@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T10",
-  "displayName": "12 Pesquisas",
+  "displayName": "03 Pesquisas",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,

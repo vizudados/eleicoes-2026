@@ -3,7 +3,7 @@
   "name": "T23_Fecho_Ir24",
   "position": {
     "x": 140,
-    "y": 754,
+    "y": 684,
     "z": 1020,
     "height": 35,
     "width": 1020,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 16: Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%.'"
+                  "Value": "'Voltar à tela 12: Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 16: Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%.'"
+                  "Value": "'Voltar à tela 12: Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%.'"
                 }
               }
             },

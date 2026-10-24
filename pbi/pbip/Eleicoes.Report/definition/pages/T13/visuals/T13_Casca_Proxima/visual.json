@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 16 Quem vota — Quem vota em Lula e quem vota em Flávio?'"
+                  "Value": "'Próxima: 12 Quem vota — Quem vota em Lula e quem vota em Flávio?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 16 Quem vota — Quem vota em Lula e quem vota em Flávio?'"
+                  "Value": "'Próxima: 12 Quem vota — Quem vota em Lula e quem vota em Flávio?'"
                 }
               }
             },

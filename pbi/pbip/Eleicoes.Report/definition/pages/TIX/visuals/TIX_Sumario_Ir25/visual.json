@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir25",
   "position": {
-    "x": 144,
-    "y": 874,
+    "x": 473,
+    "y": 592,
     "z": 1020,
     "height": 86,
     "width": 316,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'07 · Quem falta: Quem mais falta às urnas, e onde?'"
+                  "Value": "'08 · Quem falta: Quem mais falta às urnas, e onde?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'07 · Quem falta: Quem mais falta às urnas, e onde?'"
+                  "Value": "'08 · Quem falta: Quem mais falta às urnas, e onde?'"
                 }
               }
             },

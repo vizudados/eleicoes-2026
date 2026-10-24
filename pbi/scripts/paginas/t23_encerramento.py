@@ -25,18 +25,19 @@ P = "T23"
 CSS = "Estilo · CSS"
 C = estilo.COR
 
+# os grupos seguem os atos do roteiro (ordem nova de 23/10/2026: antes da urna, 1º turno, mapa, 2º turno)
 ACHADOS = [
-    ("I · O RESULTADO", [("T01", "Flávio terminou 2,22 mi de votos à frente de Lula."),
+    ("I · ANTES DA URNA", [("T10", "Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.")]),
+    ("II · O 1º TURNO", [("T01", "Flávio terminou 2,22 mi de votos à frente de Lula."),
                          ("T06", "33,5 milhões não foram votar: 15 vezes a diferença entre os dois."),
                          ("T25", "Quem tem 70 anos ou mais falta 3,9 vezes mais que quem tem 16 ou 17.")]),
-    ("II · A CAMPANHA", [("T07", "O primeiro frente a frente, na Band, não mexeu nas pesquisas."),
-                         ("T26", "O último debate, na Globo em 23/10: o que se soube dele, número a número."),
-                         ("T10", "Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.")]),
     ("III · O MAPA", [("T11", "711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso."),
                       ("T13", "Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno."),
                       ("T24", "Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%."),
                       ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
-    ("IV · E AGORA", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno.")]),
+    ("IV · O 2º TURNO", [("T17", "Desde 5 de outubro, Flávio lidera 34 de 39 pesquisas do 2º turno."),
+                         ("T07", "O primeiro frente a frente, na Band, não mexeu nas pesquisas."),
+                         ("T26", "O último debate, na Globo em 23/10: o que se soube dele, número a número.")]),
 ]
 # geometria da lista (o botão de cada linha segue a mesma). Com a linha da T26 (23/10/2026), a linha passou de 37 para
 # 35 px e o grupo de 34 para 30: a lista mantém a altura e as fontes não descem para o rodapé.

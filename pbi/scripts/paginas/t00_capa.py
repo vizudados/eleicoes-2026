@@ -97,7 +97,7 @@ def declarar(ctx):
         Visual(P, lib.visual_botao("T00_Capa_Sumario", 136, 44, 180, 52, lib.acao_bookmark("TIX_CHEGADA_01"),
                                    dica="Sumário: todas as telas", z=lib.CAMADAS["acao"], tab=105, realce=C["creme"],
                                    raio=8, realce_transp=(92, 86))),
-        Visual(P, lib.visual_botao("T00_Capa_Comecar", 1680, 560, 120, 70, lib.acao_bookmark("T01_CHEGADA_01"),
+        Visual(P, lib.visual_botao("T00_Capa_Comecar", 1680, 560, 120, 70, lib.acao_bookmark(f"{roteiro.TELAS[1].codigo}_CHEGADA_01"),
                                    dica="Começar: 01 · Placar", z=lib.CAMADAS["acao"], tab=110, realce=C["creme"],
                                    raio=30, realce_transp=(92, 86))),
     ]

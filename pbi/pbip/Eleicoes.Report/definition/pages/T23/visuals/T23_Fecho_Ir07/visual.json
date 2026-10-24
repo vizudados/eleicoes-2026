@@ -3,7 +3,7 @@
   "name": "T23_Fecho_Ir07",
   "position": {
     "x": 140,
-    "y": 549,
+    "y": 819,
     "z": 1020,
     "height": 35,
     "width": 1020,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 08: O primeiro frente a frente, na Band, não mexeu nas pesquisas.'"
+                  "Value": "'Voltar à tela 17: O primeiro frente a frente, na Band, não mexeu nas pesquisas.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 08: O primeiro frente a frente, na Band, não mexeu nas pesquisas.'"
+                  "Value": "'Voltar à tela 17: O primeiro frente a frente, na Band, não mexeu nas pesquisas.'"
                 }
               }
             },

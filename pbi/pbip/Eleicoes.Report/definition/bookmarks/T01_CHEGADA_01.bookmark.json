@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
   "name": "T01_CHEGADA_01",
-  "displayName": "Chegada · 01 Placar",
+  "displayName": "Chegada · 04 Placar",
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [

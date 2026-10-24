@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir01",
   "position": {
-    "x": 144,
-    "y": 310,
+    "x": 473,
+    "y": 216,
     "z": 1020,
     "height": 86,
     "width": 316,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'01 · Placar: Quem venceu o 1º turno, e por quanto?'"
+                  "Value": "'04 · Placar: Quem venceu o 1º turno, e por quanto?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'01 · Placar: Quem venceu o 1º turno, e por quanto?'"
+                  "Value": "'04 · Placar: Quem venceu o 1º turno, e por quanto?'"
                 }
               }
             },

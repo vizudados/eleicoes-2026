@@ -3,7 +3,7 @@
   "name": "T23_Fecho_Ir01",
   "position": {
     "x": 140,
-    "y": 414,
+    "y": 479,
     "z": 1020,
     "height": 35,
     "width": 1020,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 01: Flávio terminou 2,22 mi de votos à frente de Lula.'"
+                  "Value": "'Voltar à tela 04: Flávio terminou 2,22 mi de votos à frente de Lula.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 01: Flávio terminou 2,22 mi de votos à frente de Lula.'"
+                  "Value": "'Voltar à tela 04: Flávio terminou 2,22 mi de votos à frente de Lula.'"
                 }
               }
             },

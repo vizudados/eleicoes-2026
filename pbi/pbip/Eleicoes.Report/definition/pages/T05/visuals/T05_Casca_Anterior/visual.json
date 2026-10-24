@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 04 Flávio · quem é'"
+                  "Value": "'Voltar: 05 Votos de Lula'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 04 Flávio · quem é'"
+                  "Value": "'Voltar: 05 Votos de Lula'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T04_CHEGADA_01'"
+                  "Value": "'T03_CHEGADA_01'"
                 }
               }
             }

@@ -1,7 +1,7 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "T09",
-  "displayName": "11 Redes",
+  "displayName": "20 Redes",
   "displayOption": "FitToPage",
   "width": 1920,
   "height": 1080,

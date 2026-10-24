@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir10",
   "position": {
-    "x": 473,
-    "y": 592,
+    "x": 144,
+    "y": 498,
     "z": 1020,
     "height": 86,
     "width": 316,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'12 · Pesquisas: O que as pesquisas diziam antes da urna?'"
+                  "Value": "'03 · Pesquisas: O que as pesquisas diziam antes da urna?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'12 · Pesquisas: O que as pesquisas diziam antes da urna?'"
+                  "Value": "'03 · Pesquisas: O que as pesquisas diziam antes da urna?'"
                 }
               }
             },

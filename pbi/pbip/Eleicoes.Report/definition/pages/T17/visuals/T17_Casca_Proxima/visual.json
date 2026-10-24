@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 21 Apuração — Quem está na frente na apuração do 2º turno?'"
+                  "Value": "'Próxima: 17 Debate Band — O que mudou depois do debate na Band?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 21 Apuração — Quem está na frente na apuração do 2º turno?'"
+                  "Value": "'Próxima: 17 Debate Band — O que mudou depois do debate na Band?'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T18_CHEGADA_01'"
+                  "Value": "'T07_CHEGADA_01'"
                 }
               }
             }

@@ -3,7 +3,7 @@
   "name": "T23_Fecho_Ir26",
   "position": {
     "x": 140,
-    "y": 584,
+    "y": 854,
     "z": 1020,
     "height": 35,
     "width": 1020,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 09: O último debate, na Globo em 23/10: o que se soube dele, número a número.'"
+                  "Value": "'Voltar à tela 18: O último debate, na Globo em 23/10: o que se soube dele, número a número.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 09: O último debate, na Globo em 23/10: o que se soube dele, número a número.'"
+                  "Value": "'Voltar à tela 18: O último debate, na Globo em 23/10: o que se soube dele, número a número.'"
                 }
               }
             },

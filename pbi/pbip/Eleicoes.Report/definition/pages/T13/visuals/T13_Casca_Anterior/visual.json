@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 14 Estados'"
+                  "Value": "'Voltar: 10 Estados'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 14 Estados'"
+                  "Value": "'Voltar: 10 Estados'"
                 }
               }
             },

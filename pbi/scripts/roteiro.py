@@ -11,6 +11,12 @@ painel da ausência com filtro cruzado, pedido em 23/10/2026) entra logo depois 
 Globo de 23/10, o último do 2º turno, pedido no próprio dia: uma tela que fica pronta antes dos números e se preenche
 pelo arquivo dados/pbi/debate_globo.csv) entra logo depois da T07, o debate da Band: as duas telas de debate ficam
 coladas, com as abas "Debate Band" e "Debate Globo" (pedido do dono, 23/10/2026).
+
+Ordem em cinco atos, do antes para o depois (23/10/2026, aprovada pelo dono: "remanejar a ordem dos painéis, para o
+que foi pré primeiro turno, pós, e então os debates"): I · Antes da urna (quem são os dois e as pesquisas), II · O 1º
+turno (o resultado), III · O mapa, IV · O 2º turno (os votos dos outros, as pesquisas, os dois debates colados, buscas,
+redes e a apuração) e V · Explore você mesmo. Buscas e Redes vêm depois dos debates porque o filtro de período delas
+é contado em volta dos dois.
 """
 
 from dataclasses import dataclass
@@ -38,28 +44,22 @@ class Tela:
 
 TELAS = [
     Tela("T00", "Capa", "Afinal, qual Brasil foi às urnas no 1º turno?", "Abertura", escura=True),
-    Tela("T01", "Placar", "Quem venceu o 1º turno, e por quanto?", "I · O resultado", filtro="UF"),
-    Tela("T02", "Lula · quem é", "Quem é Luiz Inácio Lula da Silva?", "I · O resultado",
+    # I · Antes da urna: quem são os dois e o que as pesquisas diziam
+    Tela("T02", "Lula · quem é", "Quem é Luiz Inácio Lula da Silva?", "I · Antes da urna",
          fonte="Fontes: Presidência da República, Senado, TSE · fotos redesenhadas em traço (créditos no cartão)"),
-    Tela("T03", "Lula", "Onde estão os votos de Lula?", "I · O resultado", filtro="UF"),
-    Tela("T04", "Flávio · quem é", "Quem é Flávio Bolsonaro?", "I · O resultado",
+    Tela("T04", "Flávio · quem é", "Quem é Flávio Bolsonaro?", "I · Antes da urna",
          fonte="Fontes: Senado, Alerj, TSE · fotos redesenhadas em traço (créditos no cartão)"),
-    Tela("T05", "Flávio", "Onde estão os votos de Flávio?", "I · O resultado", filtro="UF"),
-    Tela("T06", "Ausência", "Quantos brasileiros não escolheram ninguém?", "I · O resultado", filtro="UF",
-         fonte="Fonte: TSE · comparecimento, brancos e nulos do 1º turno, 2006 a 2026"),
-    Tela("T25", "Quem falta", "Quem mais falta às urnas, e onde?", "I · O resultado", filtro="UF",
-         fonte="Fonte: TSE · comparecimento por município (2006 a 2026) e perfil do eleitor por idade (2014 a 2026)"),
-    Tela("T07", "Debate Band", "O que mudou depois do debate na Band?", "II · A campanha",
-         fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
-    Tela("T26", "Debate Globo", "O último debate mudou alguma coisa?", "II · A campanha",
-         fonte="Fontes: TV Globo e imprensa (fatos do debate), Kantar IBOPE, Google Trends, Bites e pesquisas registradas "
-               "no TSE · cada número com a hora em que chegou"),
-    Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "II · A campanha",
-         fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22/10/2026"),
-    Tela("T09", "Redes", "Quem dominou as redes?", "II · A campanha",
-         fonte="Fontes: Bites, Quaest, Social Blade, Datrix e Biblioteca de Anúncios da Meta"),
-    Tela("T10", "Pesquisas", "O que as pesquisas diziam antes da urna?", "II · A campanha",
+    Tela("T10", "Pesquisas", "O que as pesquisas diziam antes da urna?", "I · Antes da urna",
          fonte="Fonte: pesquisas registradas no TSE (levantamento de 22/10/2026) e resultado do TSE"),
+    # II · O 1º turno: o resultado
+    Tela("T01", "Placar", "Quem venceu o 1º turno, e por quanto?", "II · O 1º turno", filtro="UF"),
+    Tela("T03", "Votos de Lula", "Onde estão os votos de Lula?", "II · O 1º turno", filtro="UF"),
+    Tela("T05", "Votos de Flávio", "Onde estão os votos de Flávio?", "II · O 1º turno", filtro="UF"),
+    Tela("T06", "Ausência", "Quantos brasileiros não escolheram ninguém?", "II · O 1º turno", filtro="UF",
+         fonte="Fonte: TSE · comparecimento, brancos e nulos do 1º turno, 2006 a 2026"),
+    Tela("T25", "Quem falta", "Quem mais falta às urnas, e onde?", "II · O 1º turno", filtro="UF",
+         fonte="Fonte: TSE · comparecimento por município (2006 a 2026) e perfil do eleitor por idade (2014 a 2026)"),
+    # III · O mapa: onde e em quem o voto mudou
     Tela("T11", "Virada", "Onde os votos mudaram de lado?", "III · O mapa", filtro="UF"),
     Tela("T12", "Estados", "Como cada estado se moveu?", "III · O mapa"),
     Tela("T13", "Perfil", "Em que tipo de cidade Lula perdeu mais?", "III · O mapa", filtro="UF",
@@ -68,13 +68,24 @@ TELAS = [
          fonte="Fontes: TSE (resultado e perfil do eleitorado), IBGE (Censo 2022), Portal da Transparência (Bolsa "
                "Família, ago/2026), Atlas do Desenvolvimento Humano (IDHM 2010) e Datafolha"),
     Tela("T14", "Série", "Como o PT chegou até aqui, de 2006 a 2026?", "III · O mapa", filtro="UF"),
-    Tela("T15", "Minha cidade", "Como votou a minha cidade?", "IV · E agora", filtro="Município"),
-    Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "IV · E agora",
+    Tela("T15", "Minha cidade", "Como votou a minha cidade?", "III · O mapa", filtro="Município"),
+    # IV · O 2º turno: os votos dos outros, as pesquisas, os dois debates colados, buscas e redes, a apuração
+    Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "IV · O 2º turno",
          fonte="Fontes: pesquisas registradas no TSE que publicaram o cruzamento · imprensa (apoios)"),
-    Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "IV · E agora",
+    Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "IV · O 2º turno",
          fonte="Fonte: pesquisas registradas no TSE e relatórios dos institutos (rejeição) · levantamento de 22/10/2026"),
-    Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "IV · E agora", filtro="UF",
+    Tela("T07", "Debate Band", "O que mudou depois do debate na Band?", "IV · O 2º turno",
+         fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
+    Tela("T26", "Debate Globo", "O último debate mudou alguma coisa?", "IV · O 2º turno",
+         fonte="Fontes: TV Globo e imprensa (fatos do debate), Kantar IBOPE, Google Trends, Bites e pesquisas registradas "
+               "no TSE · cada número com a hora em que chegou"),
+    Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "IV · O 2º turno",
+         fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22/10/2026"),
+    Tela("T09", "Redes", "Quem dominou as redes?", "IV · O 2º turno",
+         fonte="Fontes: Bites, Quaest, Social Blade, Datrix e Biblioteca de Anúncios da Meta"),
+    Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "IV · O 2º turno", filtro="UF",
          fonte="Fonte: TSE · API pública de divulgação dos resultados, coletada a cada minuto"),
+    # V · Explore você mesmo
     Tela("T19", "Explorador", "Onde está a minha pergunta? Explore os 5.571 municípios", "V · Explore você mesmo"),
     Tela("T20", "Escola", "Como votou cada escola da cidade?", "V · Explore você mesmo", filtro="Local",
          fonte="Fontes: TSE (votação por seção e cadastro de locais de votação) e IBGE (malha municipal) · "

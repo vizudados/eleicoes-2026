@@ -2,8 +2,8 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "TIX_Sumario_Ir26",
   "position": {
-    "x": 473,
-    "y": 310,
+    "x": 1131,
+    "y": 498,
     "z": 1020,
     "height": 86,
     "width": 316,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'09 · Debate Globo: O último debate mudou alguma coisa?'"
+                  "Value": "'18 · Debate Globo: O último debate mudou alguma coisa?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'09 · Debate Globo: O último debate mudou alguma coisa?'"
+                  "Value": "'18 · Debate Globo: O último debate mudou alguma coisa?'"
                 }
               }
             },

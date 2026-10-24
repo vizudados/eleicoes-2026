@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 05 Flávio — Onde estão os votos de Flávio?'"
+                  "Value": "'Próxima: 03 Pesquisas — O que as pesquisas diziam antes da urna?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 05 Flávio — Onde estão os votos de Flávio?'"
+                  "Value": "'Próxima: 03 Pesquisas — O que as pesquisas diziam antes da urna?'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T05_CHEGADA_01'"
+                  "Value": "'T10_CHEGADA_01'"
                 }
               }
             }

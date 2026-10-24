@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 02 Lula · quem é — Quem é Luiz Inácio Lula da Silva?'"
+                  "Value": "'Próxima: 05 Votos de Lula — Onde estão os votos de Lula?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 02 Lula · quem é — Quem é Luiz Inácio Lula da Silva?'"
+                  "Value": "'Próxima: 05 Votos de Lula — Onde estão os votos de Lula?'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T02_CHEGADA_01'"
+                  "Value": "'T03_CHEGADA_01'"
                 }
               }
             }

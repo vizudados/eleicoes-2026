@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 19 Os outros'"
+                  "Value": "'Voltar: 15 Os outros'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 19 Os outros'"
+                  "Value": "'Voltar: 15 Os outros'"
                 }
               }
             },

@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 12 Pesquisas — O que as pesquisas diziam antes da urna?'"
+                  "Value": "'Próxima: 21 Apuração — Quem está na frente na apuração do 2º turno?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 12 Pesquisas — O que as pesquisas diziam antes da urna?'"
+                  "Value": "'Próxima: 21 Apuração — Quem está na frente na apuração do 2º turno?'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T10_CHEGADA_01'"
+                  "Value": "'T18_CHEGADA_01'"
                 }
               }
             }
