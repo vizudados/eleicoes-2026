@@ -18,7 +18,8 @@ headless.
     python -X utf8 pbi/scripts/previa.py ttT02Ano --tooltip "fVenda[Ano]=2025"   # página de tooltip
 
 Por padrão as animações são congeladas no estado final (animation/transition com duração 0): a foto mostra o que fica
-na tela. Visuais nativos (botão, segmentação, VizuFilter) não são desenhados (use --guias para ver as caixas).
+na tela. Visuais nativos (botão, segmentação) não são desenhados (use --guias para ver as caixas); o VizuFilter de
+lista aparece como o gatilho fechado (faixa de cima, com o valor do --filtro quando ele cai no campo do filtro).
 Códigos de saída: 0 ok · 1 algum visual falhou (o erro vai na foto, em vermelho, e no console) · 2 uso/ambiente.
 """
 from __future__ import annotations
@@ -39,6 +40,7 @@ sys.path.insert(0, str(AQUI))
 import dax  # noqa: E402
 import dax_para_tmdl as dpt  # noqa: E402
 import montar_pbip as mp  # noqa: E402
+import estilo  # noqa: E402
 import pbip_lib as lib  # noqa: E402
 
 PBI = AQUI.parent
@@ -187,6 +189,74 @@ def coluna_de(proj) -> tuple[str, str] | None:
         return c["Expression"]["SourceRef"]["Entity"], c["Property"]
     except (KeyError, TypeError):
         return None
+
+
+FUNIL = ("<svg width='{t}' height='{t}' viewBox='0 0 16 16' fill='none' stroke='{cor}' stroke-width='1.4' "
+         "stroke-linejoin='round'><path d='M2 3h12l-4.6 5.4v4.2l-2.8 1.4V8.4z'/></svg>")
+
+
+def vizufilter_fechado(doc: dict, filtro: str) -> str:
+    """O gatilho fechado do VizuFilter (24/10/2026: a pílula HTML saiu e o filtro passou a ser o próprio VizuFilter; sem
+    isto, a foto da tela, usada também no vídeo da Lia, ficava com um vão no canto do filtro). Desenha só a faixa de
+    cima (layout.controlHeight), com as cores e a fonte do visual; o valor é o do --filtro quando ele cai na tabela do
+    campo do visual (vários valores viram "A e B"; acima de dois, "N itens"), senão o placeholder. O funil ganha o
+    ponto quando há escolha, como no visual."""
+    obj = doc["visual"].get("objects", {})
+
+    def prop(grupo: str, nome: str):
+        try:
+            return obj[grupo][0]["properties"][nome]
+        except (KeyError, IndexError, TypeError):
+            return None
+
+    def cor(nome: str, padrao: str) -> str:
+        p = prop("style", nome)
+        try:
+            return literal(p["solid"]["color"]) or padrao
+        except (KeyError, TypeError):
+            return padrao
+
+    def num(grupo: str, nome: str, padrao: float) -> float:
+        v = literal(prop(grupo, nome))
+        try:
+            return float(str(v).rstrip("D").rstrip("L"))
+        except (TypeError, ValueError):
+            return padrao
+
+    tabela = None                 # a tabela da coluna do filtro (os papéis de medida, como itemSort, não contam)
+    for papel in doc["visual"].get("query", {}).get("queryState", {}).values():
+        for pr in papel.get("projections", []):
+            col = pr.get("field", {}).get("Column")
+            if col and tabela is None:
+                tabela = col.get("Expression", {}).get("SourceRef", {}).get("Entity")
+    valor = None
+    for parte in (x.strip() for x in (filtro or "").split(" , ") if x.strip()):
+        m = re.match(r"^'?([^'\[]+)'?\[[^\]]+\]\s*=\s*(.+)$", parte)
+        if m and tabela and m.group(1).strip() == tabela:
+            vals = [v.strip() for v in m.group(2).split("|") if v.strip()]
+            valor = vals[0] if len(vals) == 1 else (" e ".join(vals) if len(vals) == 2 else f"{len(vals)} itens")
+    modo = literal(prop("general", "triggerMode")) or "value"
+    rotulo = literal(prop("general", "triggerLabel")) or ""
+    vazio = literal(prop("general", "placeholderText")) or literal(prop("general", "defaultValue")) or ""
+    mostra = valor or vazio
+    texto = mostra if modo == "value" else (f"{rotulo}: {mostra}" if mostra else rotulo)
+    altura = num("layout", "controlHeight", 48)
+    raio = num("layout", "borderRadius", 6)
+    fonte = literal(prop("style", "fontFamily")) or "Segoe UI"
+    tam = num("style", "fontSize", 16)
+    icone = FUNIL.format(t=int(num("style", "triggerIconSize", 16)), cor=cor("triggerIconColor", "#5B5348"))
+    ponto = (f"<i style='position:absolute;right:-3px;top:-2px;width:7px;height:7px;border-radius:4px;"
+             f"background:{cor('triggerIconDotColor', '#B8322A')}'></i>") if valor else ""
+    seta = (f"<svg width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='{cor('textColor', '#1C1915')}' "
+            "stroke-width='1.4'><path d='M3 4.5l3 3 3-3'/></svg>")
+    return (f"<div style='position:absolute;left:0;top:0;right:0;height:{altura:.0f}px;box-sizing:border-box;"
+            f"display:flex;align-items:center;gap:{num('layout', 'triggerIconGap', 12):.0f}px;padding:0 14px;"
+            f"background:{cor('backgroundColor', '#E8DFCF')};border:1px solid {cor('borderColor', '#CBBDA2')};"
+            f"border-radius:{raio:.0f}px;color:{cor('textColor', '#1C1915')};font-family:{fonte},sans-serif;"
+            f"font-size:{tam:.0f}px;font-weight:600'>"
+            f"<span style='position:relative;display:inline-flex'>{icone}{ponto}</span>"
+            f"<span style='flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis'>{html.escape(texto)}</span>"
+            f"{seta}</div>")
 
 
 def html_content(doc: dict, define: str, filtro: str) -> str:
@@ -376,6 +446,11 @@ def main(argv=None) -> int:
             elif tipo == lib.GUID_DENEB:
                 svg = deneb_svg(d, define, filtro_v, tmp)
                 camadas.append(f"<div title=\"{d['name']}\" style=\"position:absolute;{caixa}\">{svg}</div>")
+            elif tipo == lib.GUID_VIZUFILTER and "layout" in d["visual"].get("objects", {}) and \
+                    literal((d["visual"]["objects"].get("general") or [{}])[0].get("properties", {}).get("mode")) == "dropdown":
+                # o filtro de lista fechado (a régua da T22 é outro modo e segue sem desenho)
+                camadas.append(f"<div title=\"{d['name']}\" style=\"position:absolute;{caixa}\">"
+                               f"{vizufilter_fechado(d, a.filtro or '')}</div>")
             elif a.guias:
                 camadas.append(f"<div style=\"position:absolute;{caixa};outline:1px dashed #E0115F;"
                                f"font:11px monospace;color:#E0115F\">{d['name']}</div>")
@@ -386,7 +461,10 @@ def main(argv=None) -> int:
             print(f"ERRO  {d['name']}: {e}")
             camadas.append(f"<div style=\"position:absolute;{caixa};outline:2px solid #E0115F;background:#fff0f4;"
                            f"font:12px monospace;color:#B00020;overflow:hidden;padding:4px\">{d['name']}<br>{msg}</div>")
-    pagina_html = (f"<!doctype html><html><head><meta charset=\"utf-8\"><style>html,body{{margin:0;width:{largura}px;"
+    # a fonte do gatilho do VizuFilter (no relatório ela vem do próprio visual; aqui, da mesma Sora recortada)
+    fontes = estilo.font_face("Sora Vizu", "sora-eleicoes", "100 900") if any(
+        d["visual"]["visualType"] == lib.GUID_VIZUFILTER for d in visuais) else ""
+    pagina_html = (f"<!doctype html><html><head><meta charset=\"utf-8\"><style>{fontes}html,body{{margin:0;width:{largura}px;"
                    f"height:{altura}px;overflow:hidden;background:{cor_fundo}}}#fundo{{position:absolute;inset:0}}"
                    f"#fundo svg{{width:{largura}px;height:{altura}px}}</style></head><body>"
                    f"<div id=\"fundo\">{fundo}</div>{''.join(camadas)}</body></html>")
