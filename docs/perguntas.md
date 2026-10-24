@@ -1,8 +1,8 @@
 # Eleições 2026 · o voto de perto — roteiro (uma pergunta por tela)
 
 Painel no estilo apresentação (linguagem visual da casa, versão de 21/10/2026), contando o 1º turno
-presidencial de 2026, inspirado no documentário da Spotniks e com roteiro próprio: do placar ao porquê, do país à
-escola.
+presidencial de 2026, inspirado no documentário da Spotniks e com roteiro próprio: do resultado ao porquê, da zona
+eleitoral ao país.
 
 - **Quem lê e onde:** público geral e clientes da Vizu (vitrine de storytelling em BI); notebook e projetor, de ponta a
   ponta, como apresentação.
@@ -24,7 +24,7 @@ escola.
 | 01 | I · Antes da urna | Quem é Luiz Inácio Lula da Silva? (Lula · quem é, T02) | trajetória em linha do tempo, com fotos históricas redesenhadas em traço | trajetória |
 | 02 | I · Antes da urna | Quem é Flávio Bolsonaro? (Flávio · quem é, T04) | trajetória em linha do tempo, com fotos históricas redesenhadas em traço | trajetória |
 | 03 | I · Antes da urna | O que as pesquisas diziam antes da urna? (Pesquisas, T10) | Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio por 1,9 ponto | pesquisas |
-| 04 | II · O 1º turno | Quem venceu o 1º turno, e por quanto? (Placar, T01) | Flávio terminou 2,22 mi de votos à frente de Lula | TSE |
+| 04 | II · O 1º turno | Quem venceu o 1º turno, e por quanto? (Resultado, T01) | Flávio terminou 2,22 mi de votos à frente de Lula | TSE |
 | 05 | II · O 1º turno | Onde estão os votos de Lula? (Votos de Lula, T03) | Lula teve 45,2% e ficou à frente em 2.663 municípios; o Nordeste deu 40% dos seus votos | TSE |
 | 06 | II · O 1º turno | Onde estão os votos de Flávio? (Votos de Flávio, T05) | Flávio teve 47,0% e venceu em 2.906 municípios; o Sudeste deu 44% dos seus votos | TSE |
 | 07 | II · O 1º turno | Quantos brasileiros não escolheram ninguém? (Ausência, T06) | 33,5 milhões não foram votar: 15 vezes a diferença entre Flávio e Lula | TSE comparecimento e perfil |
@@ -36,7 +36,7 @@ escola.
 | 13 | III · O mapa | Como o PT chegou até aqui, de 2006 a 2026? (Série, T14) | Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo lugar | TSE |
 | 14 | III · O mapa | Como votou a minha cidade? (Minha cidade, T15) | Abre em Ananindeua (PA), a cidade grande que votou mais perto do Brasil: Flávio 46,2%, a margem de Lula caiu 2,9 p.p. desde 2022 | TSE + IBGE |
 | 15 | IV · Explore você mesmo | Onde está a minha pergunta? Explore os 5.571 municípios (Explorador, T19) | os 5.571 municípios em árvore de região, estado e cidade | TSE × IBGE |
-| 16 | IV · Explore você mesmo | Como votou cada escola da cidade? (Escola, T20) | os locais de votação de 34 cidades; abre no Rio de Janeiro | TSE × malha IBGE |
+| 16 | IV · Explore você mesmo | Como votou cada zona eleitoral da cidade? (Zona eleitoral, T20) | as zonas eleitorais de 34 cidades; abre no Rio de Janeiro | TSE × malha IBGE |
 | 17 | IV · Explore você mesmo | Como o mapa mudou em 20 anos? (20 anos, T21) | o mapa de 2006 a 2026 | TSE |
 | 18 | IV · Explore você mesmo | E se os eleitores dos outros candidatos escolherem? (Simulador, T22) | e se os eleitores dos outros candidatos escolherem (simulação, não previsão) | TSE |
 | 19 | V · O 2º turno | Para onde vão os votos dos outros candidatos? (Os outros, T16) | para onde vão os votos dos outros candidatos, pelas pesquisas que publicaram o cruzamento | pesquisas, apoios |
@@ -46,9 +46,9 @@ escola.
 | 23 | V · O 2º turno | O que o Brasil perguntou ao Google? (Buscas, T08) | Lula com a maior fatia das buscas nos 27 estados · o clique no estado leva a curva para ele · filtro de período em volta dos debates | Google Trends |
 | 24 | V · O 2º turno | Quem dominou as redes? (Redes, T09) | seguidores, interações e anúncios dos dois · filtro de período em volta dos debates | digital |
 | 25 | V · O 2º turno | Quem está na frente na apuração do 2º turno? (Apuração, T18) | a apuração do 2º turno ao vivo, no domingo, 25/10, a partir das 17h | API do TSE |
-| 26 | Fim | E o que fica desta eleição? (Encerramento, T23) | Do placar à escola: os achados de cada ato + fontes + créditos das fotos | — |
+| 26 | Fim | E o que fica desta eleição? (Encerramento, T23) | Da zona eleitoral ao resultado: os achados de cada ato + fontes + créditos das fotos | — |
 
-Tela 16 · Escola (código T20, capítulo IV): **Como votou cada escola da cidade?** — os locais de votação de 34 cidades
+Tela 16 · Zona eleitoral (código T20, capítulo IV): **Como votou cada zona eleitoral da cidade?** — as zonas eleitorais de 34 cidades
 (as 27 capitais, as 6 maiores que trocaram Lula por Flávio de 2022 para 2026 e Contagem; a tela abre no Rio de
 Janeiro), escolhidas no filtro do topo. Resposta no Rio: 1.449 locais de votação; 31 viraram de Lula para Flávio
 e 35 de Flávio para Lula, com a margem da cidade quase parada (−3,6 → −4,0 pontos). TSE (seções e cadastro de locais)

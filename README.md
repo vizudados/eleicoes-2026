@@ -1,7 +1,7 @@
 # Eleições 2026 · o voto de perto
 
-Repositório: https://github.com/vizudados/eleicoes-2026 · Painel em Power BI no estilo apresentação (Vizu Dados), que conta o 1º turno presidencial de 2026 do placar ao porquê,
-do país à escola, e acompanha a apuração do 2º turno ao vivo. Inspirado no documentário "Lula vs Flávio: o que os
+Repositório: https://github.com/vizudados/eleicoes-2026 · Painel em Power BI no estilo apresentação (Vizu Dados), que conta o 1º turno presidencial de 2026 do resultado ao porquê,
+da zona eleitoral ao país, e acompanha a apuração do 2º turno ao vivo. Inspirado no documentário "Lula vs Flávio: o que os
 números dizem" (Spotniks). Mockup no Figma: arquivo `f6nFM7Go5USMK1tXc46uxP` ("Eleições 2026 · Mockup").
 
 ## Pastas
@@ -48,7 +48,7 @@ python -I -X utf8 pipeline/mapas.py
 python -I -X utf8 pipeline/montar_dados_mockup.py
 ```
 
-Tela Escola (34 cidades: as 27 capitais, as 6 maiores que viraram e Contagem): votos por seção e cadastro de locais
+Tela Zona eleitoral (34 cidades: as 27 capitais, as 6 maiores que viraram e Contagem): votos por seção e cadastro de locais
 do TSE numa passada por ano (cache em `dados/bruto/tse`), depois `dados/pbi/t20_locais.csv` e `dados/pbi/t20_cidades.csv`
 com a prova dos totais por cidade contra o TSE:
 
