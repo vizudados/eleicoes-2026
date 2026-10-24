@@ -1,0 +1,20 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: Quantos índices da Quaest (Lula e Flávio, cada um conta) caem dentro do período escolhido.
+@oraculo: Antes da Band 6; Depois da Band 2; Antes da Globo 0
+*/
+VAR _ini = [Período · início]
+VAR _fim = [Período · fim]
+RETURN
+    IF (
+        NOT ISBLANK ( _ini ),
+        CALCULATE (
+            COUNTROWS ( Monitoramento ),
+            REMOVEFILTERS ( Monitoramento ),
+            Monitoramento[Métrica] IN { "IPD", "IPD (patamar máximo)" },
+            Monitoramento[Candidato] IN { "Lula", "Flávio Bolsonaro" },
+            Monitoramento[Início] >= _ini,
+            Monitoramento[Início] <= _fim
+        ) + 0
+    )

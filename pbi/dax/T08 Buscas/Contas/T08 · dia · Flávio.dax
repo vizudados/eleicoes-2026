@@ -1,9 +1,27 @@
 /*
 @pasta: T08 Buscas\Contas
 @formato: 0
-@descricao: Índice do Google Trends (0–100, consulta T2: os 5 candidatos como tópico) de Flávio no dia da linha (grão 'Trends tempo'[DataTexto]); vazio nas linhas por hora.
+@descricao: Índice do Google Trends (0–100) de Flávio no dia da linha (grão 'Trends tempo'[DataTexto]), na série que a curva mostra: sem estado clicado, a consulta T2 do Brasil (os 5 candidatos como tópico); com um estado clicado nos cartões (T08 · escolha · UF), a consulta U2 daquele estado ('Trends UF tempo', Lula × Flávio, 100 = o pico dentro do estado), nos mesmos dias da curva (01/08 a 22/10). Vazio nas linhas por hora.
 */
-IF (
-    HASONEVALUE ( 'Trends tempo'[DataTexto] ),
-    CALCULATE ( MAX ( 'Trends tempo'[Índice] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
-)
+VAR _uf = [T08 · escolha · UF]
+RETURN
+    IF (
+        ISBLANK ( _uf ),
+        -- Brasil: consulta T2
+        IF (
+            HASONEVALUE ( 'Trends tempo'[DataTexto] ),
+            CALCULATE ( MAX ( 'Trends tempo'[Índice] ), 'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]" )
+        ),
+        -- estado clicado: consulta U2 do estado, no dia da curva
+        VAR _d = [T08 · dia · data]
+        RETURN
+            IF (
+                NOT ISBLANK ( _d ),
+                CALCULATE (
+                    MAX ( 'Trends UF tempo'[Índice] ),
+                    'Trends UF tempo'[UF] = _uf,
+                    'Trends UF tempo'[Data] = _d,
+                    'Trends UF tempo'[Série] = "Flávio Bolsonaro [tópico | U2]"
+                )
+            )
+    )

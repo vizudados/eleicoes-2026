@@ -1,0 +1,11 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Último dia da curva (o fim da série T2, 22/10): a curva do estado usa os mesmos dias.
+@oraculo: 22/10
+*/
+CALCULATE (
+    MAX ( 'Trends tempo'[Momento] ),
+    REMOVEFILTERS ( 'Trends tempo' ),
+    'Trends tempo'[Série] = "Lula [tópico | T2]"
+)

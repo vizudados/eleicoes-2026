@@ -8,22 +8,27 @@ o Trends dá um índice relativo (0–100 dentro de cada consulta), não o núme
 
   T08_Placar_Html    Central do Google (30 dias) Lula × Flávio, a manchete e o lembrete do índice
   T08_Perguntas_Html a caixa de busca desenhada com as perguntas, na ordem do tempo (antes, no dia, depois)
-  T08_Curva_Html     fundo da curva diária T2 (01/08 a 22/10): grade, datas, as duas linhas que se desenham, o pico do
-                     1º turno e a virada depois do debate
+  T08_Curva_Html     fundo da curva diária (01/08 a 22/10): grade, datas, as duas linhas que se desenham, o pico do
+                     1º turno e a virada depois do debate. Sem estado clicado, a consulta T2 do Brasil; com um estado
+                     clicado nos cartões (23/10/2026, pedido do dono), a consulta U2 daquele estado ('Trends UF tempo'),
+                     com título, manchete, rótulos, nota da virada (só se aconteceu ali), a faixa da lacuna de 19 a
+                     21/09 e o aviso dos zeros
   T08_Curva_Dias     uma faixa por dia (granularidade 'Trends tempo'[DataTexto]) com a marca do dia no mouse; dossiê
                      ttT08Dia (o dia e, de 01 a 07/10 e de 15 a 21/10, a curva hora a hora). Filtro cruzado
                      (23/10/2026): o clique num dia fixa a marca dele e leva o placar de cima para aquele dia (a parte
-                     de cada um na soma dos dois índices, quem foi mais buscado e se foi um dos dias de pico)
+                     de cada um na soma dos dois índices, quem foi mais buscado e se foi um dos dias de pico). Com um
+                     estado clicado, as faixas e o dossiê seguem a curva do estado (a hora a hora é só do Brasil)
   T08_Mapa_Html      cabeçalho do mapa (27 de 27) e a legenda
   T08_Mapa_Ufs       mapa de quadrados (granularidade UF[UF]): a parte de cada um nas buscas do 2º turno, o fundo pelo
                      interesse; dossiê ttT08Uf (interesse no estado e o período todo entre os 5 candidatos). Filtro
-                     cruzado (23/10/2026): o clique num estado leva o placar para ele (a manchete diz o lugar) e os
-                     outros quadrados esmaecem.
+                     cruzado (23/10/2026): o clique num estado leva o placar e a curva para ele (a manchete diz o
+                     lugar) e os outros quadrados esmaecem.
 
-O que não cruza, e por quê: o Google Trends não dá o dia a dia por estado (só o período todo e o 2º turno, em
-dados/pbi/trends_uf.csv), então o dia clicado não muda o mapa e o estado clicado não muda a curva; o placar diz isso
-ao leitor. As perguntas são uma lista curada (sem grão). NoFilter entre a curva, o mapa e as perguntas: nenhum lê o
-filtro do outro, e assim não se redesenham à toa.
+O caminho do estado: o clique filtra UF[UF]; 'T08 · escolha · UF' acha a sigla (filtrada, fora do grão, uma só) e as
+contas da curva ('T08 · dia · Lula/Flávio' e as que dependem delas) leem a série U2 do estado em 'Trends UF tempo'
+(dados/pbi/trends_uf_tempo.csv, relação com UF). O que não cruza, e por quê: o dia clicado não muda o mapa (os
+cartões são o 2º turno inteiro); as perguntas são uma lista curada (sem grão). NoFilter do dia para o mapa, a curva e
+as perguntas, e do estado para as perguntas e o cabeçalho do mapa: nenhum lê o filtro do outro.
 """
 from __future__ import annotations
 
@@ -98,6 +103,13 @@ def corpo_curva() -> str:
         f".t08c .ll{{stroke:{C['vermelho']};stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none}}"
         f".t08c .lf{{stroke:{C['azul']};stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none}}"
         f".t08c .al{{fill:{C['rosa']};opacity:.16}}.t08c .af{{fill:{C['azul_claro']};opacity:.2}}"
+        # lacuna de coleta de 19 a 21/09 no estado clicado: faixa clara atrás das linhas (o dado continua à vista)
+        f".t08c .lac{{fill:{C['areia']};fill-opacity:.45}}"
+        # filtro de período: a faixa do período atrás das linhas; fora dela, as linhas esmaecem (a cópia recortada pela
+        # faixa fica cheia); período sem dado (Depois da Globo): faixa vazia e tracejada
+        f".t08c .per{{fill:{C['areia']};fill-opacity:.38}}"
+        f".t08c .per.esp{{fill-opacity:.1;stroke:{C['grafite']};stroke-width:1.2;stroke-dasharray:4 5}}"
+        ".t08c .fora{opacity:.26}"
         f".t08c .pl{{fill:{C['vermelho']}}}.t08c .pf{{fill:{C['azul']}}}"
         ".t08c .pl,.t08c .pf{stroke:var(--papel);stroke-width:2}"
         ".t08c .rotulo{position:absolute;font-size:20px;font-weight:700;white-space:nowrap}"
@@ -145,6 +157,7 @@ CSS_MAPA = (
     f".t08m .leg .bar .f{{background:{C['azul']};width:43%}}"
     ".t08m .leg .fundo{display:flex;gap:4px;margin:2px 0 4px 0}"
     ".t08m .leg .fundo i{display:block;width:20px;height:12px;border-radius:2px}"
+    ".t08m .linha .mao{font-size:34px;color:var(--grafite)}"
 )
 
 CSS_UFS = (
@@ -157,6 +170,9 @@ CSS_UFS = (
     f".t08u .q .br{{position:absolute;left:7px;right:7px;bottom:4px;height:5px;display:flex;background:{C['papel']}}}"
     f".t08u .q .br .l{{background:{C['vermelho']}}}.t08u .q .br .f{{background:{C['azul']};margin-left:auto}}"
     ".t08u .q:hover{outline:2px solid var(--tinta);outline-offset:2px}"
+    # filtro de período sem dado (Depois da Globo): só a sigla, tracejado
+    f".t08u .q.esp{{background:transparent;border:1.5px dashed {C['areia']}}}"
+    f".t08u .q.esp b{{color:{C['cinza']}}}"
 )
 
 CSS_TT_DIA = (
@@ -197,13 +213,14 @@ def declarar(ctx):
                                   granularidade=("UF", "UF"), filtro_cruzado=True,
                                   transparencia_nao_selecionados=True, tooltip_pagina="ttT08Uf",
                                   alt=lib.medida("T08 · UFs · ALT"), z=Z + 5, tab=150)),
-        # o dia e o estado clicados só mudam o placar (as outras peças não leem o filtro do outro: ver o docstring)
+        # o dia clicado só muda o placar; o estado clicado muda o placar e a curva (fundo e faixas dos dias); as
+        # outras peças não leem o filtro do outro (ver o docstring)
         *[Interacao(P, origem, alvo, "NoFilter")
           for origem, alvos in (("T08_Curva_Dias", ("T08_Perguntas_Html", "T08_Curva_Html", "T08_Mapa_Html",
                                                     "T08_Mapa_Ufs")),
-                                ("T08_Mapa_Ufs", ("T08_Perguntas_Html", "T08_Curva_Html", "T08_Curva_Dias",
-                                                  "T08_Mapa_Html")))
+                                ("T08_Mapa_Ufs", ("T08_Perguntas_Html", "T08_Mapa_Html")))
           for alvo in alvos],
+        *[Interacao(P, "T08_Mapa_Ufs", alvo, "DataFilter") for alvo in ("T08_Curva_Html", "T08_Curva_Dias")],
         *pagina_lib.tooltip("ttT08Dia", "Buscas · dia", 460, 340, "T08 · Tooltip dia · HTML", ordem=190,
                             folha_de_estilo=CSS, modelo_corpo=cp.dossie("lupa", CSS_TT_DIA)),
         *pagina_lib.tooltip("ttT08Uf", "Buscas · UF", 460, 290, "T08 · Tooltip UF · HTML", ordem=191,

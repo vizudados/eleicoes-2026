@@ -1,7 +1,7 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Fundo do protagonista (as interações nas duas janelas da Bites): título, a frase com a média por dia de cada um antes e depois, os nomes das janelas, o chão dos balões, a divisória e as notas à mão. Os balões são outro visual (T09 · Balões · HTML), na mesma caixa.
+@descricao: Fundo do protagonista (as interações nas duas janelas da Bites): título, a frase com a média por dia de cada um antes e depois, os nomes das janelas, o chão dos balões, a divisória e as notas à mão. Os balões são outro visual (T09 · Balões · HTML), na mesma caixa. Com um período escolhido no filtro, a janela da direita passa a ser a da Bites que cabe inteira no período (Antes da Band, 05 a 17/10; Depois da Band, as 24 h depois do debate), com a janela real no título; a nota à mão compara a distância das duas janelas e aponta o balão maior da direita, de quem for; sem janela no período, o lugar dos balões fica tracejado com 'sem dado no período' (Depois da Globo, 'aguardando').
 */
 -- 1 · Leituras
 VAR _ini1 = [T09 · 1º turno · início]
@@ -15,6 +15,18 @@ VAR _l1 = CALCULATE ( [T09 · interações por dia · 1º turno], Monitoramento[
 VAR _f1 = CALCULATE ( [T09 · interações por dia · 1º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" )
 VAR _l2 = CALCULATE ( [T09 · interações por dia · 2º turno], Monitoramento[Candidato] = "Lula" )
 VAR _f2 = CALCULATE ( [T09 · interações por dia · 2º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+-- com período
+VAR _per = [Período · escolhido]
+VAR _pNome = [Período · nome]
+VAR _pIni = [Período · início]
+VAR _pFim = [Período · fim]
+VAR _pI = [T09 · período · interações · início]
+VAR _pIf = [T09 · período · interações · fim]
+VAR _p24 = CONTAINSSTRING ( [T09 · período · interações · métrica], "24h" )
+VAR _pD = [T09 · período · interações · dias]
+VAR _pR = [T09 · período · interações · razão]
+VAR _pl2 = CALCULATE ( [T09 · período · interações por dia], Monitoramento[Candidato] = "Lula" )
+VAR _pf2 = CALCULATE ( [T09 · período · interações por dia], Monitoramento[Candidato] = "Flávio Bolsonaro" )
 -- 2 · Textos
 VAR _txtMan =
     "Interações por dia: Flávio foi de " & FORMAT ( _f1 / 1000000, "0.0" ) & " a " & FORMAT ( _f2 / 1000000, "0.0" )
@@ -24,20 +36,67 @@ VAR _txtJan1 =
 VAR _txtJan2 =
     "2º turno · " & FORMAT ( _ini2, "dd/MM" ) & " a " & FORMAT ( _fim2, "dd/MM" ) & " · " & _d2 & " dias"
 VAR _txtNota1 = IF ( _r1 >= 0.8 && _r1 <= 1.25, "quase empate", "um à frente" )
+-- com período: a janela real ('05 a 17/10', '18 e 19/10') e o nome do período no meio da frase
+VAR _temP = NOT ISBLANK ( _pl2 ) && NOT ISBLANK ( _pf2 )
+VAR _espera = _per = 4 && NOT _temP
+VAR _nomeMin = LOWER ( LEFT ( _pNome, 1 ) ) & MID ( _pNome, 2, 40 )
+VAR _janP =
+    SWITCH (
+        TRUE (),
+        _pI = _pIf, FORMAT ( _pI, "dd/MM" ),
+        IF ( MONTH ( _pI ) = MONTH ( _pIf ), FORMAT ( _pI, "dd" ), FORMAT ( _pI, "dd/MM" ) )
+            & IF ( DATEDIFF ( _pI, _pIf, DAY ) = 1, " e ", " a " ) & FORMAT ( _pIf, "dd/MM" )
+    )
+VAR _janPer =
+    IF ( MONTH ( _pIni ) = MONTH ( _pFim ), FORMAT ( _pIni, "dd" ), FORMAT ( _pIni, "dd/MM" ) )
+        & IF ( DATEDIFF ( _pIni, _pFim, DAY ) = 1, " e ", " a " ) & FORMAT ( _pFim, "dd/MM" )
+VAR _pMan =
+    SWITCH (
+        TRUE (),
+        _espera, "Por dia, " & _nomeMin & ": os números ainda não chegaram",
+        NOT _temP, "Por dia, " & _nomeMin & ": sem dado no período",
+        "Por dia, " & _nomeMin & ": Flávio foi de " & FORMAT ( _f1 / 1000000, "0.0" ) & " a "
+            & FORMAT ( _pf2 / 1000000, "0.0" ) & " mi; Lula, de " & FORMAT ( _l1 / 1000000, "0.0" ) & " a "
+            & FORMAT ( _pl2 / 1000000, "0.0" ) & " mi"
+    )
+VAR _pJan2 =
+    _pNome & " · " & IF ( _temP, IF ( _p24, "24 h após o debate", _janP & " · " & _pD & " dias" ), _janPer )
+-- a distância entre os dois: abriu ou fechou da campanha para o período (a mesma régua para os dois)
+VAR _pNota2 = IF ( ABS ( LN ( _pR ) ) > ABS ( LN ( _r1 ) ), "a distância abriu", "a distância diminuiu" )
+VAR _lulaMaior = _pl2 >= _pf2
 -- 4 · Marcação
+VAR _direita =
+    IF (
+        ISBLANK ( _per ),
+        "<div class='mao entra d16' style='left:812px;top:138px'>a distância abriu</div>"
+            & "<div class='seta entra d16' style='left:748px;top:166px;width:70px'></div>",
+        SWITCH (
+            TRUE (),
+            _espera, "<div class='vazio entra d6'><span class='mao'>aguardando</span><span class='nota'>Os números depois "
+                & "do debate da Globo chegam entre a noite de sexta e o sábado, véspera da eleição.</span></div>",
+            NOT _temP, "<div class='vazio entra d6'><span class='rot'>sem dado no período</span><span class='nota'>"
+                & "Nenhuma medição das interações dos dois cabe inteira em " & _janPer & ".</span></div>",
+            IF (
+                _lulaMaior,
+                "<div class='mao entra d16' style='left:812px;top:138px'>" & _pNota2 & "</div>"
+                    & "<div class='seta entra d16' style='left:748px;top:166px;width:70px'></div>",
+                "<div class='mao entra d16' style='left:566px;top:138px'>" & _pNota2 & "</div>"
+                    & "<div class='seta entra d16' style='left:842px;top:166px;width:70px;transform:scaleX(-1)'></div>"
+            )
+        )
+    )
 RETURN
     "<div class='tela t09c'>"
         & "<div class='sob sobe'>Interações nos perfis oficiais · X, Instagram, Facebook, TikTok e YouTube · Bites</div>"
-        & "<div class='man sobe d2'>" & _txtMan & "</div>"
+        & "<div class='man sobe d2'>" & IF ( ISBLANK ( _per ), _txtMan, _pMan ) & "</div>"
         & "<div class='jan sob sobe d3' style='left:0'>" & _txtJan1 & "</div>"
-        & "<div class='jan sob sobe d4' style='left:560px'>" & _txtJan2 & "</div>"
+        & "<div class='jan sob sobe d4' style='left:560px'>" & IF ( ISBLANK ( _per ), _txtJan2, _pJan2 ) & "</div>"
         & "<svg width='1040' height='530' viewBox='0 0 1040 530'>"
             & "<path d='M10 410 H500' pathLength='1' class='chao traco' filter='url(#rbu)'/>"
             & "<path d='M560 410 H1030' pathLength='1' class='chao traco' filter='url(#rbu)' style='animation-delay:.3s'/>"
             & "<line x1='530' x2='530' y1='104' y2='500' class='div'/>"
         & "</svg>"
         & "<div class='mao entra d14' style='left:168px;top:196px'>" & _txtNota1 & "</div>"
-        & "<div class='mao entra d16' style='left:812px;top:138px'>a distância abriu</div>"
-        & "<div class='seta entra d16' style='left:748px;top:166px;width:70px'></div>"
+        & _direita
         & "<div class='nota entra d12'>Tamanho do balão: a média de interações por dia, para comparar janelas de tamanhos diferentes</div>"
     & "</div>"

@@ -1,0 +1,6 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: O maior ganho de seguidores entre os dois na janela do período: a escala das barras com período.
+*/
+MAX ( [T09 · período · seguidores ganhos · Lula], [T09 · período · seguidores ganhos · Flávio] )

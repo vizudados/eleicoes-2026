@@ -1,12 +1,19 @@
 /*
 @pasta: T08 Buscas\Contas
 @formato: dd/MM
-@descricao: Dia do pico da série T2 (o dia em que Lula chegou a 100, o máximo da consulta).
-@oraculo: FONTES: pico 04/10
+@descricao: Dia do pico da curva: o dia de maior índice (o 100 da consulta), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); o primeiro, se houver mais de um.
+@oraculo: FONTES: pico 04/10 (Brasil e as 27 UFs)
 */
-CALCULATE (
-    MAX ( 'Trends tempo'[Momento] ),
-    REMOVEFILTERS ( 'Trends tempo' ),
-    'Trends tempo'[Série] = "Lula [tópico | T2]",
-    'Trends tempo'[Índice] = 100
-)
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( 'Trends tempo'[DataTexto] ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            'Trends tempo'[Série] = "Lula [tópico | T2]"
+        ),
+        "@d", [T08 · dia · data],
+        "@m", MAX ( [T08 · dia · Lula], [T08 · dia · Flávio] )
+    )
+VAR _max = MAXX ( _dias, [@m] )
+RETURN
+    MINX ( FILTER ( _dias, [@m] = _max ), [@d] )

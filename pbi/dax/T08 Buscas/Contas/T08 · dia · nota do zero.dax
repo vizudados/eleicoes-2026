@@ -1,0 +1,25 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: Por que o índice do dia é 0 no estado clicado (lido da Observação da consulta U2): busca abaixo do mínimo que o Google mede, provável falha de coleta (19 a 21/09) ou as duas coisas sem dar para separar; vazio sem zero e no Brasil.
+*/
+VAR _uf = [T08 · escolha · UF]
+VAR _d = [T08 · dia · data]
+VAR _obs =
+    IF (
+        NOT ISBLANK ( _uf ) && NOT ISBLANK ( _d ),
+        CALCULATE (
+            CONCATENATEX ( 'Trends UF tempo', 'Trends UF tempo'[Observação], " | " ),
+            'Trends UF tempo'[UF] = _uf,
+            'Trends UF tempo'[Data] = _d,
+            'Trends UF tempo'[Índice] = 0
+        )
+    )
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _obs ) || _obs = "", BLANK (),
+        CONTAINSSTRING ( _obs, "não dá para separar" ), "pouca busca no estado ou falha de coleta do Google",
+        CONTAINSSTRING ( _obs, "lacuna" ), "provável falha de coleta do Google",
+        "busca abaixo do mínimo que o Google mede"
+    )

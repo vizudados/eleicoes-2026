@@ -1,0 +1,9 @@
+/*
+@pasta: _Período
+@formato: 0
+@descricao: Dias do período escolhido, de ponta a ponta (13, 3, 2 e 2).
+*/
+IF (
+    ISFILTERED ( 'Período' ) && HASONEVALUE ( 'Período'[Ordem] ),
+    DATEDIFF ( MIN ( 'Período'[Início] ), MAX ( 'Período'[Fim] ), DAY ) + 1
+)

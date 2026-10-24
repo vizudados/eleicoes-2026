@@ -1,0 +1,9 @@
+/*
+@pasta: _Período
+@formato: texto
+@descricao: Nome curto do período escolhido ('Antes da Band'); vazio sem escolha.
+*/
+IF (
+    ISFILTERED ( 'Período' ) && HASONEVALUE ( 'Período'[Ordem] ),
+    SELECTEDVALUE ( 'Período'[Nome] )
+)

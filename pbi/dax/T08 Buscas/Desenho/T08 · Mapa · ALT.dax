@@ -3,5 +3,13 @@
 @formato: texto
 @descricao: Texto para leitor de tela do cabeçalho do mapa das buscas por estado.
 */
-"No 2º turno, Lula teve a maior parte das buscas entre os dois em " & [T08 · UFs com Lula à frente] & " de " & [T08 · UFs]
-    & " estados: de " & [T08 · UF · menor parte · Lula] & "% a " & [T08 · UF · maior parte · Lula] & "%."
+VAR _per = [Período · escolhido]
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT ISBLANK ( _per ) && [T08 · UFs] = 0,
+            "Nos estados, " & [Período · nome] & ": ainda sem dado de buscas.",
+        IF ( ISBLANK ( _per ), "No 2º turno", [Período · nome] ) & ", Lula teve a maior parte das buscas entre os dois em "
+            & [T08 · UFs com Lula à frente] & " de " & [T08 · UFs] & " estados: de " & [T08 · UF · menor parte · Lula]
+            & "% a " & [T08 · UF · maior parte · Lula] & "%."
+    )

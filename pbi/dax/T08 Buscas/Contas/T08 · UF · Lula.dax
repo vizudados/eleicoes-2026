@@ -1,12 +1,24 @@
 /*
 @pasta: T08 Buscas\Contas
 @formato: 0
-@descricao: Parte (%) das buscas de Lula entre os dois na UF da linha, no 2º turno (05 a 22/10, consulta G2, tópicos).
+@descricao: Parte (%) das buscas de Lula entre os dois na UF da linha. Sem período: o 2º turno inteiro (05 a 22/10, consulta G2, tópicos), como sempre. Com um período escolhido: a soma dos índices diários da consulta U2 do estado nos dias do período, em % arredondado (cada um arredonda o seu); vazio no período sem dado (Depois da Globo).
+@oraculo: G2: 54 a 58; Antes da Band (U2): 53 a 59
 */
-IF (
-    HASONEVALUE ( UF[UF] ),
-    CALCULATE (
-        MAX ( 'Trends UF'[Índice] ),
-        'Trends UF'[Série] = "Lula [tópico] % das buscas entre os 2 comparados"
+VAR _per = [Período · escolhido]
+RETURN
+    IF (
+        ISBLANK ( _per ),
+        -- 2º turno inteiro: consulta G2
+        IF (
+            HASONEVALUE ( UF[UF] ),
+            CALCULATE (
+                MAX ( 'Trends UF'[Índice] ),
+                'Trends UF'[Série] = "Lula [tópico] % das buscas entre os 2 comparados"
+            )
+        ),
+        -- período escolhido: consulta U2 do estado, dia a dia
+        VAR _a = [T08 · UF · período · soma Lula]
+        VAR _b = [T08 · UF · período · soma Flávio]
+        RETURN
+            IF ( NOT ISBLANK ( _a ) && _a + _b > 0, ROUND ( 100 * _a / ( _a + _b ), 0 ) )
     )
-)

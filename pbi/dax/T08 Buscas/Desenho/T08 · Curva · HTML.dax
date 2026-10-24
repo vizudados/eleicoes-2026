@@ -1,29 +1,98 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Fundo da curva diária das buscas (consulta T2, os candidatos como tópico, 01/08 a 22/10): título, grade, datas, as duas linhas que se desenham, o pico no dia do 1º turno e o dia em que Flávio passou Lula depois do debate, com notas à mão. As faixas de cada dia (mouse e dossiê) são outro visual (T08 · Dias · HTML), na mesma caixa e escala.
+@descricao: Fundo da curva diária das buscas (01/08 a 22/10): título, grade, datas, as duas linhas que se desenham, o pico e o dia em que quem estava atrás no dia do debate passou o outro, com notas à mão. Sem estado clicado: a consulta T2 do Brasil (os candidatos como tópico). Com um estado clicado nos cartões (filtro cruzado em UF[UF], T08 · escolha · UF): a consulta U2 daquele estado, em que 100 é o pico dentro do próprio estado; título, manchete, rótulos, nota da virada (só se ela aconteceu ali) e legenda seguem o estado, a faixa de 19 a 21/09 marca a lacuna de coleta e a legenda avisa dos zeros (volume abaixo do mínimo do Google). Com um período escolhido no filtro Período: a curva inteira continua, o período fica realçado (faixa e linhas cheias) e o resto esmaece; a manchete e a nota passam a ser do período (a virada, se aconteceu nele, ou o dia de mais buscas); Depois da Globo, a faixa vazia e 'aguardando'. As faixas de cada dia (mouse e dossiê) são outro visual (T08 · Dias · HTML), na mesma caixa e escala. Só lê contas 'T08 · …' e 'Período · …'.
 */
 -- 1 · Leituras
-VAR _todos =
+VAR _uf = [T08 · escolha · UF]
+VAR _dias =
     ADDCOLUMNS (
-        VALUES ( 'Trends tempo'[DataTexto] ),
+        CALCULATETABLE (
+            VALUES ( 'Trends tempo'[DataTexto] ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            'Trends tempo'[Série] = "Lula [tópico | T2]"
+        ),
         "@d", [T08 · dia · data],
         "@l", [T08 · dia · Lula],
         "@f", [T08 · dia · Flávio]
-    )
-VAR _dias = FILTER ( _todos, NOT ISBLANK ( [@l] ) ) /* lista */
+    ) /* lista */
 VAR _pD = [T08 · pico · data]
 VAR _pL = [T08 · pico · Lula]
 VAR _pF = [T08 · pico · Flávio]
+VAR _quem = [T08 · virada · quem passa]
 VAR _vD = [T08 · virada · data]
 VAR _vL = [T08 · virada · Lula]
 VAR _vF = [T08 · virada · Flávio]
+VAR _vDias = [T08 · virada · dias depois do debate]
+VAR _antes = [T08 · virada · último dia à frente antes do debate]
 VAR _deb = [T08 · debate · data]
-VAR _antes = [T08 · Flávio à frente antes do debate · último dia]
+VAR _nDep = [T08 · depois do debate · dias]
+VAR _nLider = [T08 · depois do debate · dias com o líder à frente]
+VAR _maxDep = [T08 · depois do pico · maior índice]
+VAR _zL = [T08 · zeros · Lula]
+VAR _zF = [T08 · zeros · Flávio]
+VAR _lac = [T08 · lacuna · nota]
+VAR _uNome = [T08 · UF · nome]
+VAR _noUf = NOT ISBLANK ( _uf )
+VAR _per = [Período · escolhido]
+VAR _pNome = [Período · nome]
+VAR _pIni = [Período · início]
+VAR _pFim = [Período · fim]
+VAR _mD = [T08 · período · maior · data]
+VAR _mL = [T08 · período · maior · Lula]
+VAR _mF = [T08 · período · maior · Flávio]
+VAR _noPer = NOT ISBLANK ( _per )
+VAR _semDado = _noPer && ISBLANK ( _mD ) -- período sem nenhum dia na curva (Depois da Globo)
+VAR _viradaNoPer = _noPer && NOT ISBLANK ( _vD ) && _vD >= _pIni && _vD <= _pFim
 -- 2 · Textos
+VAR _t1 = DATE ( 2026, 10, 4 ) -- dia do 1º turno (marco do calendário)
+VAR _outro = IF ( _quem = "Flávio", "Lula", "Flávio" )
+VAR _txtPico = IF ( _pD = _t1, "O pico foi no dia do 1º turno", "O pico foi em " & FORMAT ( _pD, "dd/MM" ) )
+VAR _quando =
+    IF ( _vDias = 1, "um dia depois do debate", "em " & FORMAT ( _vD, "dd/MM" ) & ", depois do debate" )
+VAR _desde = IF ( ISBLANK ( _antes ), "na série", "desde " & FORMAT ( _antes, "dd/MM" ) )
+VAR _txtDepois =
+    SWITCH (
+        TRUE (),
+        NOT ISBLANK ( _vD ),
+            "; " & _quando & ", " & _quem & " passou " & _outro & " pela primeira vez " & _desde,
+        ISBLANK ( _quem ), "",
+        _nLider = _nDep, "; depois do debate, " & _outro & " seguiu mais buscado que " & _quem & " em todos os dias",
+        "; depois do debate, " & _quem & " não passou " & _outro & " em nenhum dia"
+    )
+VAR _quandoP = IF ( _vDias = 1, "um dia depois do debate", "em " & FORMAT ( _vD, "dd/MM" ) )
 VAR _txtMan =
-    "O pico foi no dia do 1º turno; " & IF ( DATEDIFF ( _deb, _vD, DAY ) = 1, "um dia depois do debate", "depois do debate" )
-        & ", Flávio passou Lula pela primeira vez desde " & FORMAT ( _antes, "dd/MM" ) & "."
+    SWITCH (
+        TRUE (),
+        NOT _noPer, _txtPico & _txtDepois & ".",
+        _semDado, _pNome & ", ainda não há dado: as consultas ao Google são de antes do debate de 23/10.",
+        _viradaNoPer, _pNome & ": " & _quandoP & ", " & _quem & " passou " & _outro & " pela primeira vez " & _desde & ".",
+        _pNome & ", o dia de mais buscas foi " & FORMAT ( _mD, "dd/MM" ) & ": Lula " & _mL & ", Flávio " & _mF & "."
+    )
+VAR _txtSob =
+    IF (
+        _noUf,
+        "Quanto cada um foi buscado, dia a dia · " & _uNome & ", índice de 0 a 100 no estado",
+        "Quanto cada um foi buscado, dia a dia · índice de 0 a 100, os candidatos como tópico"
+    )
+VAR _txtZeros =
+    IF ( _zL > 0, "Lula em " & _zL & IF ( _zL = 1, " dia", " dias" ) )
+        & IF ( _zL > 0 && _zF > 0, ", " )
+        & IF ( _zF > 0, "Flávio em " & _zF & IF ( _zF = 1, " dia", " dias" ) )
+VAR _txtLeg =
+    IF (
+        _noUf,
+        "100 = o dia de mais buscas no estado, não o número de buscas; o índice não se compara de um estado para outro"
+            & IF ( _zL + _zF > 0, " · 0 = busca abaixo do mínimo que o Google mede (" & _txtZeros & ")" )
+            & " · passe o mouse num dia",
+        "100 = o dia de mais buscas na consulta, não o número de buscas · 22/10 ainda em curso na coleta · passe o mouse num dia"
+    )
+-- a nota do período: a virada, se aconteceu nele; senão, o dia de mais buscas (o maior índice na frente; no empate,
+-- Lula primeiro, na ordem da tela)
+VAR _notaVirada = IF ( _noPer, _viradaNoPer, NOT ISBLANK ( _vD ) )
+VAR _notaMaior = _noPer && NOT _semDado && NOT _viradaNoPer
+VAR _maiorLula = _mL >= _mF
+VAR _txtNota = IF ( _notaVirada, _quem & " passa " & _outro, "o dia de mais buscas" )
 -- 3 · Geometria (x: 01/08 a 22/10 em 40–1090; y: índice 0 a 100 em 345–30; o svg começa em y 80)
 VAR _ini = DATE ( 2026, 8, 1 )
 VAR _f = "0.0"
@@ -37,12 +106,36 @@ VAR _pts =
 VAR _linhaL = "M" & CONCATENATEX ( _pts, FORMAT ( [@x], _f, "en-US" ) & " " & FORMAT ( [@yl], _f, "en-US" ), " L", [@d], ASC )
 VAR _linhaF = "M" & CONCATENATEX ( _pts, FORMAT ( [@x], _f, "en-US" ) & " " & FORMAT ( [@yf], _f, "en-US" ), " L", [@d], ASC )
 VAR _xP = 40 + DATEDIFF ( _ini, _pD, DAY ) / 82 * 1050 -- geometria
+VAR _xT1 = 40 + DATEDIFF ( _ini, _t1, DAY ) / 82 * 1050 -- geometria
 VAR _xV = 40 + DATEDIFF ( _ini, _vD, DAY ) / 82 * 1050 -- geometria
 VAR _xDeb = 40 + DATEDIFF ( _ini, _deb, DAY ) / 82 * 1050 -- geometria
 VAR _yPL = 345 - _pL * 3.15 -- geometria
 VAR _yPF = 345 - _pF * 3.15 -- geometria
 VAR _yVL = 345 - _vL * 3.15 -- geometria
 VAR _yVF = 345 - _vF * 3.15 -- geometria
+VAR _xM = 40 + DATEDIFF ( _ini, _mD, DAY ) / 82 * 1050 -- geometria (dia de mais buscas do período)
+VAR _yML = 345 - _mL * 3.15 -- geometria
+VAR _yMF = 345 - _mF * 3.15 -- geometria
+VAR _xA = 40 + DATEDIFF ( _ini, _pIni, DAY ) / 82 * 1050 - 6.4 -- geometria (faixa do período)
+VAR _xB = 40 + DATEDIFF ( _ini, _pFim, DAY ) / 82 * 1050 + 6.4 -- geometria
+-- rótulos do pico: no lugar de cada ponto; se ficam a menos de 26 px, abrem em volta do meio (o maior em cima; no
+-- empate, Lula em cima, na ordem da tela)
+VAR _abre = ABS ( _yPL - _yPF ) < 26
+VAR _meio = ( _yPL + _yPF ) / 2
+VAR _lulaCima = _pL >= _pF
+VAR _yRL = IF ( _abre, IF ( _lulaCima, _meio - 13, _meio + 13 ), _yPL ) -- geometria
+VAR _yRF = IF ( _abre, IF ( _lulaCima, _meio + 13, _meio - 13 ), _yPF ) -- geometria
+-- nota (virada ou dia de mais buscas): acima das linhas de 06 a 22/10 e acima da seta que aponta o ponto (topo 150,
+-- como no Brasil, ou mais alto quando a linha sobe); nunca colada à manchete (topo mínimo 62); a seta só entra se
+-- couber embaixo dela; ponto à esquerda da nota (dia de mais buscas logo depois do 1º turno): seta para a esquerda
+VAR _xQ = IF ( _notaVirada, _xV, _xM ) -- geometria
+VAR _yQ = IF ( _notaVirada, IF ( _quem = "Lula", _yVL, _yVF ), MIN ( _yML, _yMF ) ) -- geometria
+VAR _yTopo = 345 - _maxDep * 3.15 -- geometria
+VAR _topo = ROUND ( MAX ( 62, MIN ( 150, MIN ( 80 + _yQ - 118, 80 + _yTopo - 70 ) ) ), 0 ) -- geometria (px inteiro)
+VAR _comSeta = 80 + _yQ - 54 >= _topo + 64
+VAR _setaEsq = _xQ < _xP + 40 -- o ponto fica à esquerda do começo da nota
+VAR _xL1 = 40 + DATEDIFF ( _ini, DATE ( 2026, 9, 19 ), DAY ) / 82 * 1050 - 6.4 -- geometria (lacuna 19 a 21/09)
+VAR _xL2 = 40 + DATEDIFF ( _ini, DATE ( 2026, 9, 21 ), DAY ) / 82 * 1050 + 6.4 -- geometria
 VAR _grade =
     CONCATENATEX (
         { 0, 50, 100 },
@@ -60,41 +153,110 @@ VAR _datas =
     )
 VAR _xCamp = 40 + DATEDIFF ( _ini, DATE ( 2026, 8, 16 ), DAY ) / 82 * 1050 -- geometria
 -- 4 · Marcação
+VAR _lacuna =
+    IF (
+        NOT ISBLANK ( _lac ),
+        "<rect x='" & FORMAT ( _xL1, _f, "en-US" ) & "' y='50' width='" & FORMAT ( _xL2 - _xL1, _f, "en-US" )
+            & "' height='295' class='lac esmaece d12'/><text x='" & FORMAT ( _xL1 - 8, _f, "en-US" )
+            & "' y='120' class='ex' text-anchor='end'>19 a 21/09 · " & _lac & "</text>"
+    )
+-- período: a faixa atrás das linhas e o recorte que deixa só o trecho do período com a linha cheia
+VAR _faixa =
+    IF (
+        _noPer,
+        "<defs><clipPath id='t08per'><rect x='" & FORMAT ( _xA, _f, "en-US" ) & "' y='0' width='"
+            & FORMAT ( _xB - _xA, _f, "en-US" ) & "' height='400'/></clipPath></defs>"
+            & "<rect x='" & FORMAT ( _xA, _f, "en-US" ) & "' y='22' width='" & FORMAT ( _xB - _xA, _f, "en-US" )
+            & "' height='323' class='per" & IF ( _semDado, " esp", "" ) & " esmaece d6'/>"
+    )
+VAR _cl = IF ( _noPer, " fora", "" )
+VAR _cheias =
+    IF (
+        _noPer && NOT _semDado,
+        "<path d='" & _linhaF & "' pathLength='1' class='lf traco' clip-path='url(#t08per)' filter='url(#rbu)' style='animation-delay:.4s'/>"
+            & "<path d='" & _linhaL & "' pathLength='1' class='ll traco' clip-path='url(#t08per)' filter='url(#rbu)' style='animation-delay:.6s'/>"
+    )
+VAR _pontosPico =
+    IF (
+        NOT _noPer,
+        "<circle cx='" & FORMAT ( _xP, _f, "en-US" ) & "' cy='" & FORMAT ( _yPL, _f, "en-US" ) & "' r='7' class='pl brota d16'/>"
+            & "<circle cx='" & FORMAT ( _xP, _f, "en-US" ) & "' cy='" & FORMAT ( _yPF, _f, "en-US" ) & "' r='7' class='pf brota d16'/>"
+    )
+VAR _pontosNota =
+    SWITCH (
+        TRUE (),
+        _notaVirada,
+            "<circle cx='" & FORMAT ( _xV, _f, "en-US" ) & "' cy='" & FORMAT ( _yVL, _f, "en-US" ) & "' r='6' class='pl brota d16'/>"
+                & "<circle cx='" & FORMAT ( _xV, _f, "en-US" ) & "' cy='" & FORMAT ( _yVF, _f, "en-US" ) & "' r='6' class='pf brota d16'/>",
+        _notaMaior,
+            "<circle cx='" & FORMAT ( _xM, _f, "en-US" ) & "' cy='" & FORMAT ( _yML, _f, "en-US" ) & "' r='6' class='pl brota d16'/>"
+                & "<circle cx='" & FORMAT ( _xM, _f, "en-US" ) & "' cy='" & FORMAT ( _yMF, _f, "en-US" ) & "' r='6' class='pf brota d16'/>"
+    )
 VAR _svg =
     "<svg width='1130' height='400' viewBox='0 0 1130 400'>"
-        & _grade & _datas
+        & _grade & _datas & _lacuna & _faixa
         & "<text x='" & FORMAT ( _xCamp, _f, "en-US" ) & "' y='372' class='ex' text-anchor='middle'>16/08 · campanha</text>"
-        & "<line x1='" & FORMAT ( _xP, _f, "en-US" ) & "' x2='" & FORMAT ( _xP, _f, "en-US" ) & "' y1='22' y2='350' class='ev'/>"
-        & "<text x='" & FORMAT ( _xP, _f, "en-US" ) & "' y='372' class='ex b' text-anchor='middle'>1º turno · "
-            & FORMAT ( _pD, "dd/MM" ) & "</text>"
+        & "<line x1='" & FORMAT ( _xT1, _f, "en-US" ) & "' x2='" & FORMAT ( _xT1, _f, "en-US" ) & "' y1='22' y2='350' class='ev'/>"
+        & "<text x='" & FORMAT ( _xT1, _f, "en-US" ) & "' y='372' class='ex b' text-anchor='middle'>1º turno · "
+            & FORMAT ( _t1, "dd/MM" ) & "</text>"
         & "<line x1='" & FORMAT ( _xDeb, _f, "en-US" ) & "' x2='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y1='150' y2='350' class='ev'/>"
         & "<text x='" & FORMAT ( _xDeb - 4, _f, "en-US" ) & "' y='388' class='ex b' text-anchor='middle'>debate</text>"
-        & "<path d='" & _linhaF & "' pathLength='1' class='lf traco' filter='url(#rbu)' style='animation-delay:.4s'/>"
-        & "<path d='" & _linhaL & "' pathLength='1' class='ll traco' filter='url(#rbu)' style='animation-delay:.6s'/>"
-        & "<circle cx='" & FORMAT ( _xP, _f, "en-US" ) & "' cy='" & FORMAT ( _yPL, _f, "en-US" ) & "' r='7' class='pl brota d16'/>"
-        & "<circle cx='" & FORMAT ( _xP, _f, "en-US" ) & "' cy='" & FORMAT ( _yPF, _f, "en-US" ) & "' r='7' class='pf brota d16'/>"
-        & "<circle cx='" & FORMAT ( _xV, _f, "en-US" ) & "' cy='" & FORMAT ( _yVL, _f, "en-US" ) & "' r='6' class='pl brota d16'/>"
-        & "<circle cx='" & FORMAT ( _xV, _f, "en-US" ) & "' cy='" & FORMAT ( _yVF, _f, "en-US" ) & "' r='6' class='pf brota d16'/>"
+        & "<path d='" & _linhaF & "' pathLength='1' class='lf traco" & _cl & "' filter='url(#rbu)' style='animation-delay:.4s'/>"
+        & "<path d='" & _linhaL & "' pathLength='1' class='ll traco" & _cl & "' filter='url(#rbu)' style='animation-delay:.6s'/>"
+        & _cheias & _pontosPico & _pontosNota
     & "</svg>"
 VAR _rotulos =
-    "<div class='rotulo e lula-esc entra d16' style='right:" & FORMAT ( 1130 - _xP + 14, _f, "en-US" ) & "px;top:"
-        & FORMAT ( 80 + _yPL - 14, _f, "en-US" ) & "px'>Lula " & _pL & "</div>"
-        & "<div class='rotulo e flavio-esc entra d16' style='right:" & FORMAT ( 1130 - _xP + 14, _f, "en-US" ) & "px;top:"
-        & FORMAT ( 80 + _yPF - 14, _f, "en-US" ) & "px'>Flávio " & _pF & "</div>"
-        & "<div class='mao entra d16' style='left:" & FORMAT ( _xP - 330, _f, "en-US" ) & "px;top:"
-        & FORMAT ( 80 + _yPL - 18, _f, "en-US" ) & "px;transform:rotate(-3deg)'>o dia da eleição</div>"
-VAR _virada =
-    "<div class='mao entra d16' style='left:" & FORMAT ( _xP + 40, _f, "en-US" ) & "px;top:150px;transform:rotate(-2deg)'>Flávio passa Lula</div>"
-        & "<div class='rotulo entra d16' style='left:" & FORMAT ( _xP + 40, _f, "en-US" ) & "px;top:188px'><span class='flavio-esc'>Flávio "
-        & _vF & "</span> <span class='lula-esc'>Lula " & _vL & "</span></div>"
-        & "<div class='seta e entra d16' style='left:" & FORMAT ( _xV - 64, _f, "en-US" ) & "px;top:"
-        & FORMAT ( 80 + _yVF - 54, _f, "en-US" ) & "px;width:56px;height:50px;transform:scaleX(-1)'></div>"
+    IF (
+        NOT _noPer,
+        "<div class='rotulo e lula-esc entra d16' style='right:" & FORMAT ( 1130 - _xP + 14, _f, "en-US" ) & "px;top:"
+            & FORMAT ( 80 + _yRL - 14, _f, "en-US" ) & "px'>Lula " & _pL & "</div>"
+            & "<div class='rotulo e flavio-esc entra d16' style='right:" & FORMAT ( 1130 - _xP + 14, _f, "en-US" ) & "px;top:"
+            & FORMAT ( 80 + _yRF - 14, _f, "en-US" ) & "px'>Flávio " & _pF & "</div>"
+            & IF (
+                _pD = _t1,
+                "<div class='mao entra d16' style='left:" & FORMAT ( _xP - 330, _f, "en-US" ) & "px;top:"
+                    & FORMAT ( 80 + MIN ( _yRL, _yRF ) - 18, _f, "en-US" ) & "px;transform:rotate(-3deg)'>o dia da eleição</div>"
+            )
+    )
+VAR _spanL = "<span class='lula-esc'>Lula " & IF ( _notaVirada, _vL, _mL ) & "</span>"
+VAR _spanF = "<span class='flavio-esc'>Flávio " & IF ( _notaVirada, _vF, _mF ) & "</span>"
+VAR _primeiroLula = IF ( _notaVirada, _quem = "Lula", _maiorLula )
+VAR _nota =
+    IF (
+        _notaVirada || _notaMaior,
+        "<div class='mao entra d16' style='left:" & FORMAT ( _xP + 40, _f, "en-US" ) & "px;top:" & FORMAT ( _topo, "0", "en-US" )
+            & "px;transform:rotate(-2deg)'>" & _txtNota & "</div>"
+            & "<div class='rotulo entra d16' style='left:" & FORMAT ( _xP + 40, _f, "en-US" ) & "px;top:"
+            & FORMAT ( _topo + 38, "0", "en-US" ) & "px'>"
+            & IF ( _primeiroLula, _spanL & " " & _spanF, _spanF & " " & _spanL ) & "</div>"
+            & IF (
+                _comSeta,
+                IF (
+                    _setaEsq,
+                    "<div class='seta e entra d16' style='left:" & FORMAT ( _xQ + 6, _f, "en-US" ) & "px;top:"
+                        & FORMAT ( 80 + _yQ - 54, _f, "en-US" ) & "px;width:56px;height:50px'></div>",
+                    "<div class='seta e entra d16' style='left:" & FORMAT ( _xQ - 64, _f, "en-US" ) & "px;top:"
+                        & FORMAT ( 80 + _yQ - 54, _f, "en-US" ) & "px;width:56px;height:50px;transform:scaleX(-1)'></div>"
+                )
+            )
+    )
+VAR _espera =
+    IF (
+        _semDado,
+        "<div class='mao entra d16' style='right:" & FORMAT ( 1130 - _xA + 10, _f, "en-US" )
+            & "px;top:96px;transform:rotate(-2deg)'>aguardando</div>"
+    )
+VAR _zeroMao =
+    IF (
+        MAX ( _zL, _zF ) >= 20,
+        "<div class='mao entra d16' style='left:70px;top:290px;transform:rotate(-2deg)'>zero = busca abaixo do mínimo</div>"
+    )
 RETURN
     "<div class='tela t08c'>"
-        & "<div class='cab'><div class='sob sobe'>Quanto cada um foi buscado, dia a dia · índice de 0 a 100, os candidatos como tópico</div>"
+        & "<div class='cab'><div class='sob sobe'>" & _txtSob & "</div>"
         & "<div class='man sobe d2'>" & _txtMan & "</div></div>"
-        & _svg & _rotulos & _virada
+        & _svg & _rotulos & _nota & _espera & _zeroMao
         & "<div class='leg entra d12'><b><i style='background:var(--vermelho)'></i>Lula</b>"
         & "<b><i style='background:var(--azul)'></i>Flávio</b>"
-        & "100 = o dia de mais buscas na consulta, não o número de buscas · 22/10 ainda em curso na coleta · passe o mouse num dia</div>"
+        & _txtLeg & "</div>"
     & "</div>"

@@ -1,0 +1,13 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Índice de Lula no dia de mais buscas do período.
+@oraculo: Antes da Band, Brasil (T2): 53
+*/
+VAR _d = [T08 · período · maior · data]
+RETURN
+    CALCULATE (
+        [T08 · dia · Lula],
+        REMOVEFILTERS ( 'Trends tempo' ),
+        'Trends tempo'[DataTexto] = FORMAT ( _d, "yyyy-MM-dd" )
+    )

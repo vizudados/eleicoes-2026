@@ -1,0 +1,19 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Soma dos índices diários de Flávio na consulta U2 da UF da linha (ou da clicada), nos dias do período escolhido que a curva tem (até 22/10: o 23/10 da coleta é parcial e anterior ao debate da Globo); vazio sem período, fora de uma UF ou sem dia no período.
+*/
+VAR _uf = SELECTEDVALUE ( UF[UF] )
+VAR _ini = [Período · início]
+VAR _fim = MIN ( [Período · fim], [T08 · curva · último dia] )
+RETURN
+    IF (
+        HASONEVALUE ( UF[UF] ) && NOT ISBLANK ( _ini ) && _ini <= _fim,
+        CALCULATE (
+            SUM ( 'Trends UF tempo'[Índice] ),
+            'Trends UF tempo'[UF] = _uf,
+            'Trends UF tempo'[Série] = "Flávio Bolsonaro [tópico | U2]",
+            'Trends UF tempo'[Data] >= _ini,
+            'Trends UF tempo'[Data] <= _fim
+        )
+    )

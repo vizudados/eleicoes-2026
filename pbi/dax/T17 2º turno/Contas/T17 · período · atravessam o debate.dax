@@ -1,0 +1,21 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Pesquisas de 2º turno (votos totais) com o campo atravessando o dia do debate de referência do período escolhido (começou nele ou antes e terminou nele ou depois): ficam fora de qualquer período, como na T07. Vazio sem período.
+@oraculo: Band (18/10): 10; Globo (23/10): 0
+*/
+VAR _deb = [Período · debate · data]
+RETURN
+    IF (
+        NOT ISBLANK ( [Período · escolhido] ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo início] <= _deb,
+            Pesquisa[Campo fim] >= _deb
+        ) + 0
+    )

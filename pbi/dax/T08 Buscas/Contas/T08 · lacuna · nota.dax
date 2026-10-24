@@ -1,0 +1,22 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: Nota da lacuna de 19 a 21/09 no estado clicado (zeros marcados na Observação da consulta U2): 'provável falha de coleta do Google' ou, em AC, AP e RR, 'pouca busca ou falha do Google' (não dá para separar); vazio sem lacuna e no Brasil.
+*/
+VAR _uf = [T08 · escolha · UF]
+VAR _obs =
+    IF (
+        NOT ISBLANK ( _uf ),
+        CALCULATE (
+            CONCATENATEX ( VALUES ( 'Trends UF tempo'[Observação] ), 'Trends UF tempo'[Observação], " | " ),
+            'Trends UF tempo'[UF] = _uf,
+            CONTAINSSTRING ( 'Trends UF tempo'[Observação], "19-21/09" )
+        )
+    )
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _obs ) || _obs = "", BLANK (),
+        CONTAINSSTRING ( _obs, "não dá para separar" ), "pouca busca ou falha do Google",
+        "provável falha de coleta do Google"
+    )

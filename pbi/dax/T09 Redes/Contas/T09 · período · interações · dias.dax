@@ -1,0 +1,11 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: Dias da janela de interações do período (a de 24 h depois do debate conta 1 dia, não os dois dias do calendário que ela toca).
+@oraculo: Antes da Band 13; Depois da Band 1
+*/
+VAR _m = [T09 · período · interações · métrica]
+VAR _i = [T09 · período · interações · início]
+VAR _f = [T09 · período · interações · fim]
+RETURN
+    IF ( NOT ISBLANK ( _i ), IF ( CONTAINSSTRING ( _m, "24h" ), 1, DATEDIFF ( _i, _f, DAY ) + 1 ) )

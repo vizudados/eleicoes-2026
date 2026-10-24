@@ -1,14 +1,13 @@
 /*
 @pasta: T08 Buscas\Contas
 @formato: 0
-@descricao: Índice T2 de Flávio no dia em que Flávio passou Lula depois do debate.
-@oraculo: FONTES: 19/10 Flávio 49 × Lula 48 → 49
+@descricao: Índice de Flávio no dia da virada depois do debate (T08 · virada · data), na série que a curva mostra.
+@oraculo: FONTES: 19/10 Flávio 49 × Lula 48 → 49 (Brasil, T2); DF 93; RJ 75
 */
 VAR _d = [T08 · virada · data]
 RETURN
     CALCULATE (
-        MAX ( 'Trends tempo'[Índice] ),
+        [T08 · dia · Flávio],
         REMOVEFILTERS ( 'Trends tempo' ),
-        'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | T2]",
-        'Trends tempo'[Momento] = _d
+        'Trends tempo'[DataTexto] = FORMAT ( _d, "yyyy-MM-dd" )
     )

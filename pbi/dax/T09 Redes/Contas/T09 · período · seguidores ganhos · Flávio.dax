@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Seguidores que Flávio ganhou na janela do período.
+@oraculo: Antes da Band +1,5 mi (Bites); Depois da Band +149 mil (Instagram, 18/10, Quaest)
+*/
+CALCULATE ( [T09 · período · seguidores ganhos], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )

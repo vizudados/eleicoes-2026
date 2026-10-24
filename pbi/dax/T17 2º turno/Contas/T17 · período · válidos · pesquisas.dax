@@ -1,0 +1,21 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Quantas pesquisas do período escolhido (campo inteiro dentro) divulgaram votos válidos.
+*/
+VAR _de = [T17 · período · campo de]
+VAR _ate = [T17 · período · campo até]
+RETURN
+    IF (
+        NOT ISBLANK ( _de ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "validos",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo início] >= _de,
+            Pesquisa[Campo fim] <= _ate
+        ) + 0
+    )

@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: A escala dos balões com período: a maior média por dia entre a de sempre (campanha do 1º turno e 2º turno, T09 · interações por dia · maior) e a da janela do período (Lula e Flávio). Sem janela no período, fica a de sempre e o balão da campanha não muda de tamanho.
+*/
+VAR _sempre = [T09 · interações por dia · maior]
+VAR _l2 = CALCULATE ( [T09 · período · interações por dia], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula" )
+VAR _f2 = CALCULATE ( [T09 · período · interações por dia], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )
+RETURN
+    IF ( NOT ISBLANK ( [Período · escolhido] ), MAX ( _sempre, MAX ( _l2, _f2 ) ) )

@@ -1,0 +1,9 @@
+/*
+@pasta: _Período
+@formato: texto
+@descricao: O debate de referência do período escolhido: Band ou Globo.
+*/
+IF (
+    ISFILTERED ( 'Período' ) && HASONEVALUE ( 'Período'[Ordem] ),
+    SELECTEDVALUE ( 'Período'[Debate] )
+)

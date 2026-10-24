@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Fundo da curva do 2º turno: zonas 'Flávio à frente' (em cima) e 'Lula à frente' (embaixo), grade, datas, o 1º turno, o debate e o 2º turno (urna), a média móvel de 10 dias em dois trechos (antes e depois do 1º turno, traço que se desenha), o valor de hoje (contador) e a nota à mão na virada. Os pontos são outro visual (T17 · Pontos · HTML), na mesma caixa e escala.
+@descricao: Fundo da curva do 2º turno: zonas 'Flávio à frente' (em cima) e 'Lula à frente' (embaixo), grade, datas, o 1º turno, o debate e o 2º turno (urna), a média móvel de 10 dias em dois trechos (antes e depois do 1º turno, traço que se desenha), o valor de hoje (contador) e a nota à mão na virada. Com um período escolhido no filtro Período: a faixa do campo do período, a manchete do período (de quanto a quanto foram as pesquisas com o campo inteiro nele, a única, nenhuma ou a espera depois da Globo), a legenda que explica o destaque, e a nota da virada sai (fica fora de qualquer período). Os pontos são outro visual (T17 · Pontos · HTML), na mesma caixa e escala.
 */
 -- 1 · Leituras
 VAR _n = [T17 · pesquisas]
@@ -13,6 +13,18 @@ VAR _mmFim = [T17 · média móvel · agora]
 VAR _diaFim = [T17 · média móvel · último dia]
 VAR _vir = [T17 · média móvel · virada]
 VAR _mmVir = [T17 · média móvel · na virada]
+VAR _per = [Período · escolhido]
+VAR _pNome = [Período · nome]
+VAR _pDe = [T17 · período · campo de]
+VAR _pAte = [T17 · período · campo até]
+VAR _nP = [T17 · período · pesquisas]
+VAR _pMin = [T17 · período · diferença mínima]
+VAR _pMax = [T17 · período · diferença máxima]
+VAR _pDif = [T17 · período · diferença]
+VAR _parte = [T17 · período · só em parte]
+VAR _espera = [T17 · período · ainda sem dado]
+VAR _unica = [T17 · período · única · instituto]
+VAR _pDebData = [Período · debate · data]
 VAR _dias =
     ADDCOLUMNS (
         VALUES ( Pesquisa[Divulgação] ),
@@ -26,6 +38,26 @@ VAR _txtMan =
     "Em agosto, a média dava " & _quemIni & " " & FORMAT ( ABS ( _mmIni ), "0.0" ) & " pontos à frente; virou em "
         & FORMAT ( _vir, "dd/MM" ) & " e, desde então, " & _quemFim & " segue à frente na média."
 VAR _txtFim = _quemFim & " +" & FORMAT ( ABS ( _mmFim ), "0.0" )
+VAR _pJanela =
+    SWITCH (
+        DATEDIFF ( _pDe, _pAte, DAY ),
+        0, "em " & FORMAT ( _pDe, "dd/MM" ),
+        1, "em " & FORMAT ( _pDe, "dd" ) & " e " & FORMAT ( _pAte, "dd/MM" ),
+        "de " & FORMAT ( _pDe, "dd" ) & " a " & FORMAT ( _pAte, "dd/MM" )
+    )
+VAR _txtManP =
+    SWITCH (
+        TRUE (),
+        _espera = 1, _pNome & ", ainda não dá para dizer: as pesquisas com campo depois do debate de "
+            & FORMAT ( _pDebData, "dd/MM" ) & " ainda não chegaram",
+        _nP = 0, _pNome & ", nenhuma pesquisa teve o campo inteiro " & _pJanela
+            & IF ( _parte > 0, "; " & _parte & IF ( _parte = 1, " pegou", " pegaram" ) & " só parte do período" ),
+        _nP = 1, _pNome & ", só uma pesquisa teve o campo inteiro " & _pJanela & ": " & _unica & ", "
+            & IF ( _pDif > 0, "Flávio +" & FORMAT ( _pDif, "0.0" ), IF ( _pDif < 0, "Lula +" & FORMAT ( -_pDif, "0.0" ), "empate" ) ),
+        _pNome & ", as " & _nP & " pesquisas com o campo inteiro " & _pJanela & " foram de "
+            & IF ( _pMin > 0, "Flávio +" & FORMAT ( _pMin, "0.0" ), IF ( _pMin < 0, "Lula +" & FORMAT ( -_pMin, "0.0" ), "empate" ) ) & " a "
+            & IF ( _pMax > 0, "Flávio +" & FORMAT ( _pMax, "0.0" ), IF ( _pMax < 0, "Lula +" & FORMAT ( -_pMax, "0.0" ), "empate" ) )
+    ) & "."
 -- 3 · Geometria (x: 01/08 a 27/10 em x 70–1440; y: diferença −10 a +10 pontos em y 360–20, empate em 190)
 VAR _ini = DATE ( 2026, 8, 1 )
 VAR _f = "0.0"
@@ -71,11 +103,20 @@ VAR _datas =
             & "' y='384' class='ex' text-anchor='middle'>" & FORMAT ( [Value], "dd/MM" ) & "</text>",
         ""
     )
+VAR _xP1 = 70 + DATEDIFF ( _ini, _pDe, DAY ) / 87 * 1370 -- geometria (faixa do campo do período: do 1º dia ao fim do último)
+VAR _xP2 = 70 + ( DATEDIFF ( _ini, _pAte, DAY ) + 1 ) / 87 * 1370 -- geometria
+VAR _faixa =
+    IF (
+        NOT ISBLANK ( _per ),
+        "<rect x='" & FORMAT ( _xP1, _f, "en-US" ) & "' y='20' width='" & FORMAT ( _xP2 - _xP1, _f, "en-US" )
+            & "' height='340' class='per esmaece d4'/>"
+    )
 -- 4 · Marcação
 VAR _svg =
     "<svg class='pl' width='1620' height='395' viewBox='0 0 1620 395'>"
         & "<rect x='70' y='20' width='1370' height='170' class='zf esmaece'/>"
         & "<rect x='70' y='190' width='1370' height='170' class='zl esmaece'/>"
+        & _faixa
         & _grade
         & "<line x1='70' x2='1440' y1='190' y2='190' class='g0'/>"
         & "<text x='60' y='195' class='ex' text-anchor='end'>0</text>"
@@ -108,10 +149,17 @@ VAR _nota =
 RETURN
     "<div class='tela t17g'>"
         & "<div class='cab'><div class='sob sobe'>Lula × Flávio no 2º turno, pesquisa a pesquisa · " & _n
-        & " pesquisas · votos totais</div><div class='man sobe d2'>" & _txtMan & "</div></div>"
-        & _svg & _urna & _fim & _nota
+        & " pesquisas · votos totais" & IF ( NOT ISBLANK ( _per ), " · em destaque, " & _pNome ) & "</div><div class='man sobe d2'>"
+        & IF ( ISBLANK ( _per ), _txtMan, _txtManP ) & "</div></div>"
+        & _svg & _urna & _fim & IF ( ISBLANK ( _per ), _nota )
         & "<div class='leg entra d12'><b><i style='background:var(--azul)'></i>Flávio à frente</b>"
         & "<b><i style='background:var(--vermelho)'></i>Lula à frente</b>"
-        & "Cada ponto é uma pesquisa; a distância até o empate é a vantagem, em pontos · vazado: simulação antes do 1º turno"
-        & " · traço: média dos 10 dias anteriores, com 3 pesquisas ou mais</div>"
+        & IF (
+            ISBLANK ( _per ),
+            "Cada ponto é uma pesquisa; a distância até o empate é a vantagem, em pontos · vazado: simulação antes do 1º turno"
+                & " · traço: média dos 10 dias anteriores, com 3 pesquisas ou mais",
+            "Em destaque, as pesquisas com o campo inteiro no período (a faixa é o campo; o ponto fica no dia da divulgação)"
+                & " · esmaecidas, as outras · traço: média dos 10 dias"
+        )
+        & "</div>"
     & "</div>"

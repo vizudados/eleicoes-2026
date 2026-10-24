@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: O placar das pesquisas do 2º turno: quantas das feitas depois do 1º turno dão Flávio à frente (contadores), as médias em votos totais e válidos, a manchete e dois quadriculados (um quadradinho por pesquisa na cor de quem liderava): as simulações antes do 1º turno e as pesquisas depois. Com um instituto em destaque (clique num quadrinho da rejeição ou num ponto da curva), os quadradinhos dele ganham contorno, os outros esmaecem e a contagem embaixo passa a ser a dele. Só lê contas 'T17 · …'.
+@descricao: O placar das pesquisas do 2º turno: quantas das feitas depois do 1º turno dão Flávio à frente (contadores), as médias em votos totais e válidos, a manchete e dois quadriculados (um quadradinho por pesquisa na cor de quem liderava): as simulações antes do 1º turno e as pesquisas depois. Com um instituto em destaque (clique num quadrinho da rejeição ou num ponto da curva), os quadradinhos dele ganham contorno, os outros esmaecem e a contagem embaixo passa a ser a dele. Com um período escolhido no filtro Período (23/10/2026), o placar conta só as pesquisas com o campo inteiro dentro do período (a que atravessa o dia do debate fica fora, como na T07): quem liderou, as médias, a manchete do período e, nos quadriculados, as do período em destaque e o resto esmaecido; sem pesquisa, o estado honesto (nenhuma no período, ou ainda não chegaram depois da Globo). Só lê contas 'T17 · …' e 'Período · …'.
 */
 -- 1 · Leituras
 VAR _nD = [T17 · depois · pesquisas]
@@ -24,6 +24,29 @@ VAR _kFA = [T17 · foco · antes · Flávio à frente]
 VAR _kLD = [T17 · foco · depois · Lula à frente]
 VAR _kED = [T17 · foco · depois · empates]
 VAR _kFD = [T17 · foco · depois · Flávio à frente]
+VAR _per = [Período · escolhido]
+VAR _pNome = [Período · nome]
+VAR _pDe = [T17 · período · campo de]
+VAR _pAte = [T17 · período · campo até]
+VAR _nP = [T17 · período · pesquisas]
+VAR _lP = [T17 · período · Lula à frente]
+VAR _eP = [T17 · período · empates]
+VAR _fP = [T17 · período · Flávio à frente]
+VAR _mLP = [T17 · período · Lula]
+VAR _mFP = [T17 · período · Flávio]
+VAR _difP = [T17 · período · diferença]
+VAR _vLP = [T17 · período · válidos · Lula]
+VAR _vFP = [T17 · período · válidos · Flávio]
+VAR _vNP = [T17 · período · válidos · pesquisas]
+VAR _atr = [T17 · período · atravessam o debate]
+VAR _parte = [T17 · período · só em parte]
+VAR _espera = [T17 · período · ainda sem dado]
+VAR _unica = [T17 · período · única · instituto]
+VAR _pDeb = [Período · debate]
+VAR _pDebData = [Período · debate · data]
+VAR _qLP = [T17 · foco · período · Lula à frente]
+VAR _qEP = [T17 · foco · período · empates]
+VAR _qFP = [T17 · foco · período · Flávio à frente]
 -- 2 · Textos
 VAR _txtLado =
     IF ( _nD = 1, "pesquisa feita", "pesquisas feitas" ) & " depois do 1º turno "
@@ -54,6 +77,126 @@ VAR _txtFocoD =
             & "</b> Flávio</span><span class='fo'>" & _esc & "</span>"
     )
 VAR _semFoco = ISBLANK ( _foco )
+-- 2b · Textos do período (só com um período escolhido)
+VAR _pJanela =
+    SWITCH (
+        DATEDIFF ( _pDe, _pAte, DAY ),
+        0, "em " & FORMAT ( _pDe, "dd/MM" ),
+        1, "em " & FORMAT ( _pDe, "dd" ) & " e " & FORMAT ( _pAte, "dd/MM" ),
+        "de " & FORMAT ( _pDe, "dd" ) & " a " & FORMAT ( _pAte, "dd/MM" )
+    )
+VAR _pQuem = SWITCH ( TRUE (), _fP > _lP, "Flávio", _lP > _fP, "Lula", "" )
+VAR _pOutro = IF ( _pQuem = "Flávio", "Lula", "Flávio" )
+VAR _pNum = MAX ( _fP, _lP )
+VAR _pQuemDif = SWITCH ( TRUE (), _difP > 0, "Flávio", _difP < 0, "Lula", "" )
+VAR _pPontos = FORMAT ( ABS ( _difP ), "0.0" ) & IF ( ROUND ( ABS ( _difP ), 1 ) = 1, " ponto", " pontos" )
+VAR _pFora =
+    IF ( _atr > 0, "; " & IF ( _atr = 1, "a que atravessa o debate fica fora", "as " & _atr & " que atravessam o debate ficam fora" ) )
+VAR _pSob =
+    _pNome & " · "
+        & IF ( _espera = 1, "pesquisas com campo depois do debate", "pesquisas com o campo inteiro " & _pJanela )
+VAR _pLado =
+    SWITCH (
+        TRUE (),
+        _espera = 1, "pesquisa com o campo depois do debate da " & _pDeb & " (" & FORMAT ( _pDebData, "dd/MM" ) & ")",
+        _nP = 0, "com o campo inteiro " & _pJanela,
+        _pQuem = "", IF ( _nP = 1, "pesquisa", "pesquisas" ) & " do período: Lula e Flávio na frente no mesmo número",
+        IF ( _nP = 1, "pesquisa com o campo inteiro no período", "pesquisas com o campo inteiro no período" )
+            & IF ( _pNum = 1, " dá ", " dão " ) & _pQuem & " à frente de " & _pOutro
+    )
+VAR _pMedias =
+    SWITCH (
+        TRUE (),
+        _espera = 1, "O levantamento é de 22/10: as pesquisas feitas depois do debate ainda vão ser registradas.",
+        _nP = 0,
+            IF (
+                _parte > 0,
+                _parte & IF ( _parte = 1, " pesquisa pega", " pesquisas pegam" )
+                    & " só parte do período e " & IF ( _parte = 1, "fica", "ficam" ) & " fora: só conta a de campo inteiro.",
+                "Só conta a pesquisa com o campo inteiro dentro do período."
+            ),
+        "Média: "
+            & IF (
+                _mFP > _mLP,
+                "Flávio " & FORMAT ( _mFP, "0.0" ) & "% × Lula " & FORMAT ( _mLP, "0.0" ) & "%",
+                "Lula " & FORMAT ( _mLP, "0.0" ) & "% × Flávio " & FORMAT ( _mFP, "0.0" ) & "%"
+            )
+            & " dos votos totais"
+            & IF (
+                _vNP > 0,
+                " ("
+                    & IF ( _mFP > _mLP, FORMAT ( _vFP, "0.0" ) & "% × " & FORMAT ( _vLP, "0.0" ), FORMAT ( _vLP, "0.0" ) & "% × " & FORMAT ( _vFP, "0.0" ) )
+                    & "% dos válidos, em " & _vNP & IF ( _vNP = 1, " pesquisa)", " pesquisas)" )
+            ) & "."
+    )
+VAR _pMan =
+    SWITCH (
+        TRUE (),
+        _espera = 1, _pNome & ", ainda não dá para dizer: as pesquisas com campo depois do debate de "
+            & FORMAT ( _pDebData, "dd/MM" ) & " ainda não chegaram",
+        _nP = 0, _pNome & ", nenhuma pesquisa teve o campo inteiro no período" & _pFora,
+        _nP = 1, _pNome & ", só uma pesquisa coube no período: " & _unica & ", com "
+            & IF ( _pQuemDif = "", "empate", _pQuemDif & " " & _pPontos & " à frente" ) & _pFora,
+        _pNome & ", a média das " & _nP & " pesquisas dava "
+            & IF ( _pQuemDif = "", "empate", _pQuemDif & " " & _pPontos & " à frente" ) & _pFora
+    ) & "."
+VAR _pEscFoco = IF ( _semFoco, "", _esc )
+VAR _pCont =
+    IF (
+        _semFoco,
+        IF (
+            _nP = 0,
+            "<span class='fo'>" & IF ( _espera = 1, "ainda sem pesquisa no período", "nenhuma no período" ) & "</span>",
+            "<span><b class='lula-esc'>" & _lP & "</b> Lula</span><span><b>" & _eP & "</b> "
+                & IF ( _eP = 1, "empate", "empates" ) & "</span><span><b class='flavio-esc'>" & _fP
+                & "</b> Flávio</span><span class='fo'>no período</span>"
+        ),
+        IF (
+            _qLP + _qEP + _qFP = 0,
+            "<span class='fo'>" & _pEscFoco & ": nenhuma no período</span>",
+            "<span><b class='lula-esc'>" & _qLP & "</b> Lula</span><span><b>" & _qEP & "</b> "
+                & IF ( _qEP = 1, "empate", "empates" ) & "</span><span><b class='flavio-esc'>" & _qFP
+                & "</b> Flávio</span><span class='fo'>" & _pEscFoco & " no período</span>"
+        )
+    )
+-- 3b · Geometria do período: as do período (ou as do instituto em destaque, no período) em destaque nos 39 de
+--   depois; as 79 simulações de antes do 1º turno nunca cabem num período e esmaecem todas
+VAR _hL = IF ( _semFoco, _lP, _qLP )
+VAR _hE = IF ( _semFoco, _eP, _qEP )
+VAR _hF = IF ( _semFoco, _fP, _qFP )
+VAR _gradeAP =
+    CONCATENATEX (
+        GENERATESERIES ( 1, _nA, 1 ),
+        "<i class='" & IF ( [Value] <= _lA, "l", IF ( [Value] <= _lA + _eA, "e", "f" ) ) & " fora' style='animation-delay:"
+            & ( 400 + [Value] * 14 ) & "ms," & ( 400 + [Value] * 14 ) & "ms'></i>",
+        "",
+        [Value], ASC
+    )
+VAR _gradeDP =
+    CONCATENATEX (
+        GENERATESERIES ( 1, _nD, 1 ),
+        "<i class='" & IF ( [Value] <= _lD, "l", IF ( [Value] <= _lD + _eD, "e", "f" ) )
+            & IF (
+                SWITCH (
+                    TRUE (),
+                    [Value] <= _lD, [Value] <= _hL,
+                    [Value] <= _lD + _eD, [Value] - _lD <= _hE,
+                    [Value] - _lD - _eD <= _hF
+                ),
+                IF ( _semFoco, "", " fx" ),
+                " fora"
+            ) & "' style='animation-delay:"
+            & ( 1200 + [Value] * 22 ) & "ms," & ( 1200 + [Value] * 22 ) & "ms'></i>",
+        "",
+        [Value], ASC
+    )
+VAR _pHero =
+    IF (
+        _nP = 0,
+        "<div class='vazio sobe d1'>" & IF ( _espera = 1, "ainda não chegou", "nenhuma pesquisa" ) & "</div>",
+        "<div class='hero sobe d1'><span class='num" & SWITCH ( _pQuem, "Flávio", " flavio", "Lula", " lula", "" ) & "'>"
+            & _pNum & "</span><span class='de'>de</span><span class='num'>" & _nP & "</span></div>"
+    )
 -- 3 · Geometria (um quadradinho por pesquisa: Lula, empates, Flávio; o atraso faz a cor esmaecer em onda)
 VAR _gradeA =
     CONCATENATEX (
@@ -100,7 +243,7 @@ VAR _gradeD =
         [Value], ASC
     )
 -- 4 · Marcação
-RETURN
+VAR _brasil =
     "<div class='tela t17a'>"
         & "<div class='sob sobe'>Depois do 1º turno · pesquisas do 2º turno</div>"
         & "<div class='linha'>"
@@ -115,3 +258,19 @@ RETURN
         & "<div class='waf sobe d8' style='left:400px'><div class='rot'>Depois · " & _nD & " pesquisas</div>"
             & "<div class='grade'>" & _gradeD & "</div><div class='cont'>" & IF ( _semFoco, _txtContD, _txtFocoD ) & "</div></div>"
     & "</div>"
+VAR _periodo =
+    "<div class='tela t17a'>"
+        & "<div class='sob sobe'>" & _pSob & "</div>"
+        & "<div class='linha'>"
+            & _pHero
+            & "<div class='lado sobe d3'><div class='man'>" & _pLado & "</div>"
+                & "<div class='txt'>" & _pMedias & "</div></div>"
+        & "</div>"
+        & "<div class='man manchete sobe d5'>" & _pMan & "</div>"
+        & "<div class='waf sobe d6' style='left:0'><div class='rot'>Antes do 1º turno · " & _nA & " simulações</div>"
+            & "<div class='grade'>" & _gradeAP & "</div><div class='cont'><span class='fo'>fora do período</span></div></div>"
+        & "<div class='waf sobe d8' style='left:400px'><div class='rot'>Depois · " & _nD & " pesquisas</div>"
+            & "<div class='grade'>" & _gradeDP & "</div><div class='cont'>" & _pCont & "</div></div>"
+    & "</div>"
+RETURN
+    IF ( ISBLANK ( _per ), _brasil, _periodo )

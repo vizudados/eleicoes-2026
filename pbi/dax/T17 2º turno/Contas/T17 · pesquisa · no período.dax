@@ -1,0 +1,22 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: Onde a pesquisa da linha (grão Pesquisa[Id]) fica em relação ao período escolhido: dentro (campo inteiro na janela), atravessa (o campo pega o dia do debate de referência), em parte (só parte do campo na janela) ou fora; vazio sem período e fora das pesquisas de 2º turno.
+*/
+VAR _de = [T17 · período · campo de]
+VAR _ate = [T17 · período · campo até]
+VAR _deb = [Período · debate · data]
+VAR _mom = [T17 · pesquisa · momento]
+VAR _ini = SELECTEDVALUE ( Pesquisa[Campo início] )
+VAR _fim = SELECTEDVALUE ( Pesquisa[Campo fim] )
+RETURN
+    IF (
+        NOT ISBLANK ( _de ) && NOT ISBLANK ( _mom ),
+        SWITCH (
+            TRUE (),
+            _ini >= _de && _fim <= _ate, "dentro",
+            _ini <= _deb && _fim >= _deb, "atravessa",
+            _ini <= _ate && _fim >= _de, "em parte",
+            "fora"
+        )
+    )

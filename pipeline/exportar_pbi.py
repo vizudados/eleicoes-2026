@@ -399,6 +399,9 @@ def main():
     gravar(copiar(BRUTO / "debate" / "debates.csv"), "debate")
     gravar(copiar(BRUTO / "digital" / "trends_tempo.csv"), "trends_tempo")
     gravar(copiar(BRUTO / "digital" / "trends_uf.csv"), "trends_uf")
+    # consulta U2 (23/10/2026): Lula × Flávio dia a dia, uma consulta por UF e a nacional (uf = BR); a curva da tela de
+    # buscas segue o estado clicado. O modelo deixa a BR de fora (a curva do Brasil segue a T2 de trends_tempo)
+    gravar(copiar(BRUTO / "digital" / "trends_uf_tempo.csv"), "trends_uf_tempo")
     gravar(copiar(BRUTO / "digital" / "seguidores.csv"), "seguidores")
     gravar(copiar(BRUTO / "digital" / "monitoramento.csv"), "monitoramento")
     gravar(copiar(BRUTO / "digital" / "anuncios.csv"), "anuncios")

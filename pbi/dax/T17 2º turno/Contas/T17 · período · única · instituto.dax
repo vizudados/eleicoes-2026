@@ -1,0 +1,22 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: texto
+@descricao: O instituto da pesquisa do período escolhido quando há uma só (o maior nome, se houver mais de uma).
+@oraculo: Depois da Band: Futura (campo 19 e 20/10)
+*/
+VAR _de = [T17 · período · campo de]
+VAR _ate = [T17 · período · campo até]
+RETURN
+    IF (
+        NOT ISBLANK ( _de ),
+        CALCULATE (
+            MAX ( Pesquisa[Instituto] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo início] >= _de,
+            Pesquisa[Campo fim] <= _ate
+        )
+    )

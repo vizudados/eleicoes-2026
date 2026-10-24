@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Anúncios na Meta da página do candidato da linha (Monitoramento[Candidato]) na janela que cabe no período.
+*/
+SWITCH (
+    SELECTEDVALUE ( Monitoramento[Candidato] ),
+    "Lula", [T09 · período · Meta · Lula],
+    "Flávio Bolsonaro", [T09 · período · Meta · Flávio]
+)

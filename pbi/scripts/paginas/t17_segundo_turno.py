@@ -21,6 +21,13 @@ Filtro cruzado (23/10/2026, pedido do Alisson: "clicar num instituto destaca a s
   clique num ponto      → a série do mesmo instituto se acende (regras :has da folha dos pontos), o quadrinho dele fica em
                           destaque (ou a nota diz que ele não tem quadrinho) e o placar contorna os quadradinhos dele
   nada clicado          → a tela como antes
+
+Filtro de período (23/10/2026, aprovado pelo dono; a pílula e o VizuFilter são da casca, tabela 'Período', o mesmo
+filtro das Buscas e das Redes): o placar conta só as pesquisas com o campo inteiro dentro do período (a que atravessa o
+dia do debate fica fora, a regra da T07; no período "depois", o dia do debate também fica fora da janela do campo),
+com a manchete do período e os quadriculados com as do período em destaque; a curva ganha a faixa do campo do período
+e a manchete dele, e os pontos fora do período esmaecem. Período sem pesquisa: "nenhuma pesquisa"; Depois da Globo: a
+espera honesta (o levantamento é de 22/10). Sem período, a tela é a de sempre, texto por texto.
 """
 from __future__ import annotations
 
@@ -64,6 +71,9 @@ CSS_PLACAR = (
     ".t17a .grade i.fora{opacity:.22}"
     f".t17a .grade i.fx{{box-shadow:0 0 0 1.5px {C['papel']},0 0 0 3px {C['tinta']}}}"
     ".t17a .cont .fo{font-weight:600;color:var(--tinta);white-space:nowrap}"
+    # período sem pesquisa (nenhuma, ou ainda não chegou): o texto no lugar do número grande, nunca um zero
+    ".t17a .vazio{font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1.05;color:var(--grafite);"
+    "padding-top:26px;white-space:nowrap}"
 )
 
 CSS_REJ = (
@@ -116,6 +126,8 @@ def corpo_curva() -> str:
         f".t17g .mk{{stroke:{C['tinta']};stroke-width:1.4;stroke-dasharray:5 6}}"
         f".t17g .mk.s{{stroke:{C['cinza']};stroke-dasharray:2 5}}"
         f".t17g .mm{{stroke:{C['tinta']};stroke-width:3.6;fill:none;stroke-linecap:round;stroke-linejoin:round}}"
+        # a faixa do campo do período escolhido (filtro Período): um véu de tinta leve sobre as duas zonas
+        f".t17g .per{{fill:{C['tinta']};fill-opacity:.08}}"
         ".t17g .fim{position:absolute;white-space:nowrap}"
         ".t17g .fim .rot{font-size:13px}"
         ".t17g .fim .num{font-size:24px;margin-top:2px}"

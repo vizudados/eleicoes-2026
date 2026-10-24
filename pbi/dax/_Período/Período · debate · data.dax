@@ -1,0 +1,9 @@
+/*
+@pasta: _Período
+@formato: dd/MM
+@descricao: Dia do debate de referência do período escolhido (Band 18/10, Globo 23/10).
+*/
+IF (
+    ISFILTERED ( 'Período' ) && HASONEVALUE ( 'Período'[Ordem] ),
+    MAX ( 'Período'[Data do debate] )
+)

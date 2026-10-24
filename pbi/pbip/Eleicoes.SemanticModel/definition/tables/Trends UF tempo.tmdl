@@ -1,0 +1,79 @@
+/// Google Trends por UF, dia a dia (consulta U2, 23/10/2026: Lula × Flávio como tópicos, uma consulta por UF, 01/08 a 23/10, 23/10 parcial). O índice 0–100 é relativo dentro da consulta de cada UF e não se compara entre UFs; 0 é volume abaixo do mínimo do Google (ou a lacuna de 19 a 21/09), com nota em Observação. A consulta nacional (uf = BR) fica fora: a curva do Brasil segue a T2 de 'Trends tempo'.
+table 'Trends UF tempo'
+	isHidden
+	lineageTag: f10c15c3-cdf4-5dfd-9568-ccc5d9c70174
+
+	/// Sigla da UF da consulta.
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: b8f0c003-b303-513b-b007-494d4a3b1dda
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Dia da observação.
+	column Data
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: d0a1f82d-6cca-56d9-9478-752af0b0b105
+		summarizeBy: none
+		sourceColumn: Data
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Termo e consulta: 'Lula [tópico | U2]' ou 'Flávio Bolsonaro [tópico | U2]'.
+	column 'Série'
+		dataType: string
+		lineageTag: f7855467-b2ca-5422-a5b4-6374ec93b96b
+		summarizeBy: none
+		sourceColumn: Série
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Índice relativo 0–100 dentro da consulta da UF.
+	column 'Índice'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a4c85654-1271-5c9d-89ca-f31e3f006054
+		summarizeBy: none
+		sourceColumn: Índice
+
+		annotation SummarizationSetBy = Automatic
+
+	/// URL da fonte da linha.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: c0221fc8-ebe4-5e16-ab81-43e355e6f2f5
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nota do levantamento (método, ressalva).
+	column 'Observação'
+		dataType: string
+		isHidden
+		lineageTag: 61855d8b-7641-5d4a-9e4f-43872675762b
+		summarizeBy: none
+		sourceColumn: Observação
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Trends UF tempo' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/trends_uf_tempo.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"uf", "data", "termo", "indice", "fonte_url", "observacao"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"uf", type text}, {"data", type date}, {"termo", type text}, {"indice", Int64.Type}, {"fonte_url", type text}, {"observacao", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"uf", "UF"}, {"data", "Data"}, {"termo", "Série"}, {"indice", "Índice"}, {"fonte_url", "Fonte"}, {"observacao", "Observação"}}),
+				    Filtro = Table.SelectRows(Nomes, each [UF] <> "BR")
+				in
+				    Filtro
+
+	annotation PBI_ResultType = Table

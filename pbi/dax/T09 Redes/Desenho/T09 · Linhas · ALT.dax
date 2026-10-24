@@ -1,9 +1,25 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela das barras e do ritmo de cada candidato na coluna da direita.
+@descricao: Texto para leitor de tela das barras e do ritmo de cada candidato na coluna da direita (com período, a medição que cabe nele).
 */
-"Seguidores ganhos de 16/08 a 03/10: Lula +" & FORMAT ( [T09 · seguidores ganhos · campanha · Lula] / 1000000, "0.00" )
-    & " mi, Flávio +" & FORMAT ( [T09 · seguidores ganhos · campanha · Flávio] / 1000000, "0.00" )
-    & " mi. Por dia, de 04 a 08/10: Lula " & FORMAT ( CALCULATE ( [T09 · seguidores por dia · após o 1º turno], Monitoramento[Candidato] = "Lula" ) / 1000, "0" )
-    & " mil, Flávio " & FORMAT ( CALCULATE ( [T09 · seguidores por dia · após o 1º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" ) / 1000, "0" ) & " mil."
+VAR _per = [Período · escolhido]
+VAR _psL = [T09 · período · seguidores ganhos · Lula]
+VAR _psF = [T09 · período · seguidores ganhos · Flávio]
+VAR _pD = [T09 · período · seguidores · dias]
+RETURN
+    IF (
+        ISBLANK ( _per ),
+        "Seguidores ganhos de 16/08 a 03/10: Lula +" & FORMAT ( [T09 · seguidores ganhos · campanha · Lula] / 1000000, "0.00" )
+            & " mi, Flávio +" & FORMAT ( [T09 · seguidores ganhos · campanha · Flávio] / 1000000, "0.00" )
+            & " mi. Por dia, de 04 a 08/10: Lula " & FORMAT ( CALCULATE ( [T09 · seguidores por dia · após o 1º turno], Monitoramento[Candidato] = "Lula" ) / 1000, "0" )
+            & " mil, Flávio " & FORMAT ( CALCULATE ( [T09 · seguidores por dia · após o 1º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" ) / 1000, "0" ) & " mil.",
+        IF (
+            ISBLANK ( _psL ) || ISBLANK ( _psF ),
+            [Período · rótulo] & ": sem barras de seguidores ganhos no período.",
+            "Seguidores ganhos, " & [Período · rótulo] & ": Lula +" & FORMAT ( _psL / 1000, "#,0" ) & " mil, Flávio +"
+                & FORMAT ( _psF / 1000, "#,0" ) & " mil"
+                & IF ( _pD > 1, "; por dia, Lula " & FORMAT ( _psL / _pD / 1000, "0" ) & " mil e Flávio "
+                    & FORMAT ( _psF / _pD / 1000, "0" ) & " mil.", "." )
+        )
+    )

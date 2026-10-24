@@ -1,0 +1,18 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações nos perfis oficiais na janela da Bites do período escolhido, no contexto do candidato (Monitoramento[Candidato]); vazio sem período ou sem janela que caiba nele.
+*/
+VAR _m = [T09 · período · interações · métrica]
+VAR _i = [T09 · período · interações · início]
+VAR _f = [T09 · período · interações · fim]
+RETURN
+    IF (
+        NOT ISBLANK ( _i ),
+        CALCULATE (
+            SUM ( Monitoramento[Valor] ),
+            Monitoramento[Métrica] = _m,
+            Monitoramento[Início] = _i,
+            Monitoramento[Fim] = _f
+        )
+    )

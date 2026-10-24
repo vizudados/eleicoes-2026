@@ -1,0 +1,18 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Reais gastos em anúncios pela página de Flávio na Meta (Facebook e Instagram) na janela da Biblioteca de Anúncios que cabe no período; não se soma aos pagamentos declarados ao TSE (outra base).
+@oraculo: Depois da Band: R$ 397 mil (19/10)
+*/
+VAR _j = [T09 · período · Meta · janela]
+RETURN
+    IF (
+        NOT ISBLANK ( _j ),
+        CALCULATE (
+            SUM ( 'Anúncios'[Valor] ),
+            REMOVEFILTERS ( 'Anúncios' ),
+            'Anúncios'[Anunciante] = "Flávio Bolsonaro (página 'Flavio Bolsonaro', rótulo da campanha)",
+            'Anúncios'[Plataforma] = "Meta (Facebook/Instagram)",
+            'Anúncios'[Período] = _j
+        )
+    )

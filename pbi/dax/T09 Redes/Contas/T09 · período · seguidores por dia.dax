@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Ganho médio de seguidores por dia na janela do período (total ÷ dias), no contexto do candidato.
+@oraculo: Antes da Band: Lula 177 mil, Flávio 115 mil por dia
+*/
+DIVIDE ( [T09 · período · seguidores ganhos], [T09 · período · seguidores · dias] )

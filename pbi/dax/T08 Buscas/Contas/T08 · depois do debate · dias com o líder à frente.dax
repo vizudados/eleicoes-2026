@@ -1,0 +1,24 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Dias da curva depois do debate em que quem liderava no dia do debate seguiu na frente, na série que a curva mostra (igual a T08 · depois do debate · dias = ficou na frente em todos).
+@oraculo: AC 4 de 4; AL 3 de 4 (empate em 22/10)
+*/
+VAR _deb = [T08 · debate · data]
+VAR _quem = [T08 · virada · quem passa]
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( 'Trends tempo'[DataTexto] ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            'Trends tempo'[Série] = "Lula [tópico | T2]"
+        ),
+        "@d", [T08 · dia · data],
+        "@l", [T08 · dia · Lula],
+        "@f", [T08 · dia · Flávio]
+    )
+RETURN
+    IF (
+        NOT ISBLANK ( _quem ),
+        COUNTROWS ( FILTER ( _dias, [@d] > _deb && IF ( _quem = "Flávio", [@l] > [@f], [@f] > [@l] ) ) ) + 0
+    )

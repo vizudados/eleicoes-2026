@@ -38,6 +38,10 @@ relationship 9a44cd5c-10f9-5635-8593-a0f9537b4765
 	fromColumn: 'Trends UF'.UF
 	toColumn: UF.UF
 
+relationship 7002e579-d386-5920-b8b1-f307f4ae1dcd
+	fromColumn: 'Trends UF tempo'.UF
+	toColumn: UF.UF
+
 relationship 922afb0a-a8df-5a0f-a70a-9bd35488330f
 	fromColumn: 'Município'.CodIBGE
 	toColumn: 'T13 Célula'.CodIBGE

@@ -1,0 +1,8 @@
+/*
+@pasta: _Casca
+@formato: texto
+@descricao: Texto alternativo do filtro de período: o recorte em uso.
+*/
+VAR _p = [Período · rótulo]
+RETURN
+    IF ( ISBLANK ( _p ), "Filtro de período: o 2º turno inteiro", "Filtro de período: " & _p )

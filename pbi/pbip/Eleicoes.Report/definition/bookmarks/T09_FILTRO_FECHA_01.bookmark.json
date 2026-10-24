@@ -1,0 +1,42 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T09_FILTRO_FECHA_01",
+  "displayName": "T09 · filtro fechado",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T09_Casca_Filtro",
+      "T09_Casca_FiltroAbre",
+      "T09_Casca_FiltroFora"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T09",
+    "sections": {
+      "T09": {
+        "visualContainers": {
+          "T09_Casca_Filtro": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T09_Casca_FiltroAbre": {
+            "singleVisual": {}
+          },
+          "T09_Casca_FiltroFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

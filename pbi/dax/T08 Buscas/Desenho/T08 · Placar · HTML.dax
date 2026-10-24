@@ -1,7 +1,7 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Abertura da tela das buscas. Sem clique: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias em que cada um foi mais buscado (consulta T2) e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Com um dia clicado na curva (filtro cruzado de 'Trends tempo'[DataTexto]): a parte de cada um na soma dos dois índices daquele dia, quem foi mais buscado e se foi um dos dias de mais buscas. Com um estado clicado no mapa (filtro cruzado de UF[UF]): a parte de cada um nas buscas do estado no 2º turno e o aviso de que a curva segue sendo a do Brasil (o Trends não dá o dia a dia por estado). Só lê contas 'T08 · …'.
+@descricao: Abertura da tela das buscas. Sem clique: a parte de cada um no interesse dos últimos 30 dias (resumo da Central Google Trends, contadores), a manchete com os dias em que cada um foi mais buscado (consulta T2) e o lembrete de que o Trends dá um índice relativo, não o número de buscas. Com um dia clicado na curva (filtro cruzado de 'Trends tempo'[DataTexto]): a parte de cada um na soma dos dois índices daquele dia, quem foi mais buscado e se foi um dos dias de mais buscas. Com um estado clicado no mapa (filtro cruzado de UF[UF]): a parte de cada um nas buscas do estado no 2º turno e o aviso de que a curva abaixo passou a ser a do estado (100 = o pico dentro do próprio estado; o índice não se compara entre estados). Com estado e dia (Ctrl+clique), o dia é o do estado. Com um período escolhido no filtro Período (sem dia clicado): no Brasil, a parte de cada um na soma dos índices diários da consulta T2 no período e quantos dias cada um ficou na frente; no estado, a parte de cada um pela consulta U2 do estado no período; Depois da Globo, a espera honesta (os números com traço, nunca zero). Só lê contas 'T08 · …' e 'Período · …'.
 */
 -- 1 · Leituras
 VAR _dia = [T08 · escolha · dia]
@@ -27,6 +27,20 @@ VAR _ufF = [T08 · UF · Flávio]
 VAR _upL = [T08 · UF · parte Lula]
 VAR _upF = [T08 · UF · parte Flávio]
 VAR _nivel = [T08 · UF · nível de interesse]
+VAR _per = [Período · escolhido]
+VAR _pNome = [Período · nome]
+VAR _pRot = [Período · rótulo]
+VAR _pFim = [Período · fim]
+VAR _pDias = [T08 · período · dias]
+VAR _pqL = [T08 · período · dias com Lula à frente]
+VAR _pqF = [T08 · período · dias com Flávio à frente]
+VAR _pqE = [T08 · período · empates]
+VAR _pqLD = [T08 · período · dia com Lula à frente]
+VAR _pqFD = [T08 · período · dia com Flávio à frente]
+VAR _pqED = [T08 · período · dia de empate]
+VAR _ppL = [T08 · período · parte Lula]
+VAR _ppF = [T08 · período · parte Flávio]
+VAR _noPer = NOT ISBLANK ( _per ) && ISBLANK ( _dia ) -- o dia clicado vale mais que o período
 -- 2 · Textos
 VAR _modo = SWITCH ( TRUE (), NOT ISBLANK ( _dia ), "dia", NOT ISBLANK ( _ufEsc ), "uf", "brasil" )
 VAR _txtDep =
@@ -61,7 +75,7 @@ VAR _manUf =
 VAR _sob =
     SWITCH (
         _modo,
-        "dia", FORMAT ( _dia, "dd/MM" ) & " · " & _marco & " · índice do dia",
+        "dia", FORMAT ( _dia, "dd/MM" ) & IF ( NOT ISBLANK ( _ufEsc ), " · " & _uNome ) & " · " & _marco & " · índice do dia",
         "uf", _uNome & " · 2º turno, 05 a 22/10",
         "Quem o Brasil mais buscou · Central Google Trends, últimos 30 dias"
     )
@@ -75,26 +89,95 @@ VAR _lado =
 VAR _txt =
     SWITCH (
         _modo,
-        "dia", "O índice vai de 0 a 100 dentro da consulta: 100 é o dia de mais buscas por Lula, " & FORMAT ( _pico, "dd/MM" )
-            & ". Clique de novo no dia para voltar aos 30 dias.",
-        "uf", "O Google Trends não separa o dia a dia por estado: a curva abaixo segue sendo a do Brasil. Clique de novo "
-            & "no estado para voltar.",
+        "dia",
+            IF (
+                ISBLANK ( _ufEsc ),
+                "O índice vai de 0 a 100 dentro da consulta: 100 é o dia de mais buscas por Lula, " & FORMAT ( _pico, "dd/MM" )
+                    & ". Clique de novo no dia para voltar aos 30 dias.",
+                "O índice vai de 0 a 100 dentro da consulta do estado: 100 é o dia de mais buscas ali, " & FORMAT ( _pico, "dd/MM" )
+                    & ". Clique de novo no dia para voltar ao estado."
+            ),
+        "uf", "A curva abaixo agora é a do estado: 100 é o dia de mais buscas dentro do próprio estado, e o índice não se "
+            & "compara de um estado para outro. Clique de novo no estado para voltar.",
         "O Google não diz quantas buscas houve: o Trends dá um índice de 0 a 100 dentro de cada consulta, em que 100 é o "
             & "momento de mais procura. Só se comparam números da mesma consulta."
     )
 VAR _pL = SWITCH ( _modo, "dia", _pdL, "uf", _upL, _cL )
 VAR _pF = SWITCH ( _modo, "dia", _pdF, "uf", _upF, _cF )
 VAR _man = SWITCH ( _modo, "dia", _manDia, "uf", _manUf, _manBrasil )
+-- período escolhido (sem dia clicado): os ramos 'brasil' e 'uf' passam a ser do período
+VAR _pDatas = MID ( _pRot, SEARCH ( " · ", _pRot, 1, 0 ) + 3, 40 ) -- "05 a 17/10", "21 e 22/10"
+VAR _pDe = IF ( CONTAINSSTRING ( _pDatas, " e " ), "em ", "de " ) & _pDatas
+VAR _pNomeMin = LOWER ( LEFT ( _pNome, 1 ) ) & MID ( _pNome, 2, 40 )
+VAR _semDadoP = _noPer && IF ( _modo = "uf", ISBLANK ( _upL ), ISBLANK ( _ppL ) )
+-- quem ficou na frente em mais dias (a mesma regra para os dois); um dia só vira a data
+VAR _pA = IF ( _pqF > _pqL, "Flávio", "Lula" )
+VAR _pB = IF ( _pA = "Lula", "Flávio", "Lula" )
+VAR _pnA = IF ( _pA = "Lula", _pqL, _pqF )
+VAR _pnB = IF ( _pA = "Lula", _pqF, _pqL )
+VAR _pdB = IF ( _pA = "Lula", _pqFD, _pqLD )
+VAR _manBrasilP =
+    SWITCH (
+        TRUE (),
+        _pnA = 0, _pNome & ", os dois empataram em todos os dias",
+        _pnA = _pnB,
+            _pNome & ", cada um foi mais buscado "
+                & IF (
+                    _pnA = 1,
+                    "num dos " & IF ( _pDias = 2, "dois", FORMAT ( _pDias, "0" ) ) & " dias: Lula em " & FORMAT ( _pqLD, "dd/MM" )
+                        & ", Flávio em " & FORMAT ( _pqFD, "dd/MM" ),
+                    "em " & _pnA & " dos " & _pDias & " dias"
+                ),
+        _pNome & ", " & _pA & " foi mais buscado que " & _pB & " em " & _pnA & " dos " & _pDias & " dias"
+            & IF ( _pnB > 0, "; " & _pB & " ficou na frente " & IF ( _pnB = 1, "em " & FORMAT ( _pdB, "dd/MM" ), "em " & _pnB & " dias" ) )
+            & IF ( _pqE > 0, "; empataram " & IF ( _pqE = 1, "em " & FORMAT ( _pqED, "dd/MM" ), "em " & _pqE & " dias" ) )
+    )
+VAR _manUfP =
+    _uNo & ", "
+        & SWITCH ( TRUE (), _ufL > _ufF, "Lula foi mais buscado ", _ufF > _ufL, "Flávio foi mais buscado ", "os dois empataram nas buscas " )
+        & _pNomeMin
+VAR _sobP =
+    IF ( _modo = "uf", _uNome & " · " & _pRot, "Quem o Brasil mais buscou · " & _pRot )
+VAR _ladoP =
+    SWITCH (
+        TRUE (),
+        _semDadoP, "ainda sem dado: as consultas ao Google são de antes do debate de 23/10",
+        _modo = "uf", "das buscas pelos dois no estado, " & _pDe,
+        "da soma dos índices diários dos dois, " & _pDe
+    )
+VAR _manP =
+    SWITCH (
+        TRUE (),
+        _semDadoP, IF ( _modo = "uf", _uNo & ", ainda não há dado " & _pNomeMin, _pNome & ", ainda não há dado de buscas" ),
+        _modo = "uf", _manUfP,
+        _manBrasilP
+    )
+VAR _txtP =
+    SWITCH (
+        TRUE (),
+        _semDadoP, "Os números depois do debate da Globo chegam numa nova coleta do Google. Escolha outro período no "
+            & "filtro, ou nenhum para voltar ao 2º turno inteiro.",
+        _modo = "uf", _txt,
+        "A parte de cada um soma os índices dos dias do período na mesma consulta (0 a 100, em que 100 é o dia de mais "
+            & "procura), não o número de buscas." & IF ( _pFim >= DATE ( 2026, 10, 22 ), " O 22/10 ainda estava em curso na coleta.", "" )
+    )
+VAR _numL = IF ( _noPer, FORMAT ( IF ( _modo = "uf", _upL, _ppL ), "0%" ), FORMAT ( _pL, "0%" ) )
+VAR _numF = IF ( _noPer, FORMAT ( IF ( _modo = "uf", _upF, _ppF ), "0%" ), FORMAT ( _pF, "0%" ) )
 -- 4 · Marcação
 RETURN
     "<div class='tela t08a'>"
-        & "<div class='sob sobe'>" & _sob & "</div>"
+        & "<div class='sob sobe'>" & IF ( _noPer, _sobP, _sob ) & "</div>"
         & "<div class='par'>"
-            & "<div class='cand l sobe d1'><div class='rot'>Lula</div><div class='num'>" & FORMAT ( _pL, "0%" ) & "</div></div>"
-            & "<div class='x entra d2'>×</div>"
-            & "<div class='cand f sobe d2'><div class='rot'>Flávio</div><div class='num'>" & FORMAT ( _pF, "0%" ) & "</div></div>"
-            & "<div class='lado sobe d3'>" & _lado & "</div>"
+            & IF (
+                _semDadoP,
+                -- período sem dado: a espera no lugar dos números (nunca zero)
+                "<div class='mao sobe d1' style='font-size:64px;color:var(--grafite);padding-bottom:14px'>aguardando</div>",
+                "<div class='cand l sobe d1'><div class='rot'>Lula</div><div class='num'>" & _numL & "</div></div>"
+                    & "<div class='x entra d2'>×</div>"
+                    & "<div class='cand f sobe d2'><div class='rot'>Flávio</div><div class='num'>" & _numF & "</div></div>"
+            )
+            & "<div class='lado sobe d3'>" & IF ( _noPer, _ladoP, _lado ) & "</div>"
         & "</div>"
-        & "<div class='man sobe d4'>" & _man & "</div>"
-        & "<div class='txt sobe d5'>" & _txt & "</div>"
+        & "<div class='man sobe d4'>" & IF ( _noPer, _manP, _man ) & "</div>"
+        & "<div class='txt sobe d5'>" & IF ( _noPer, _txtP, _txt ) & "</div>"
     & "</div>"

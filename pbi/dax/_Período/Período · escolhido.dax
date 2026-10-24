@@ -1,0 +1,9 @@
+/*
+@pasta: _Período
+@formato: 0
+@descricao: Ordem do período escolhido no filtro Período (1 Antes da Band, 2 Depois da Band, 3 Antes da Globo, 4 Depois da Globo); vazio sem escolha (o 2º turno inteiro, a tela como sempre foi).
+*/
+IF (
+    ISFILTERED ( 'Período' ) && HASONEVALUE ( 'Período'[Ordem] ),
+    VALUES ( 'Período'[Ordem] )
+)

@@ -1,0 +1,23 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Das pesquisas do período escolhido (campo inteiro dentro), quantas deram Flávio à frente.
+@oraculo: Antes da Band 18; Depois da Band 1
+*/
+VAR _de = [T17 · período · campo de]
+VAR _ate = [T17 · período · campo até]
+RETURN
+    IF (
+        NOT ISBLANK ( _de ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo início] >= _de,
+            Pesquisa[Campo fim] <= _ate,
+            FILTER ( ALL ( Pesquisa[Lula], Pesquisa[Flavio] ), Pesquisa[Flavio] > Pesquisa[Lula] )
+        ) + 0
+    )

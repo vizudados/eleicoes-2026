@@ -1,0 +1,18 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Dias da curva depois do debate (19 a 22/10).
+@oraculo: 4
+*/
+VAR _deb = [T08 · debate · data]
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( 'Trends tempo'[DataTexto] ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            'Trends tempo'[Série] = "Lula [tópico | T2]"
+        ),
+        "@d", [T08 · dia · data]
+    )
+RETURN
+    COUNTROWS ( FILTER ( _dias, [@d] > _deb ) ) + 0

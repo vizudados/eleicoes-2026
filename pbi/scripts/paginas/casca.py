@@ -8,8 +8,9 @@
   T<nn>_Casca_Anterior/Proxima   botões transparentes sobre as setas (realce redondo no hover)
   T<nn>_Casca_Inicio       botão sobre a urna: abre o sumário (paginas/tix_sumario.py)
   T<nn>_Casca_InfoAbre/Fecha     o "i" abre o cartão de leitura da tela (T<nn>_Leitura, oculto), o × fecha
-  T<nn>_Casca_Filtro       VizuFilter de UF (sincronizado entre as telas que o têm) ou de município, só onde a tela tem
-                           filtro (roteiro.Tela.filtro)
+  T<nn>_Casca_Filtro       VizuFilter de UF (sincronizado entre as telas que o têm), de período (Buscas, Redes e 2º
+                           turno, sincronizado entre as três; tabela 'Período', 23/10/2026) ou de município, só onde a
+                           tela tem filtro (roteiro.Tela.filtro)
   T<nn>_CHEGADA_01         marcador de chegada (L095): toda navegação passa por ele e a tela abre com a leitura fechada
   T<nn>_LEITURA_ABRE_01 / _FECHA_01   marcadores só de exibição da leitura
 
@@ -36,6 +37,8 @@ VAZIO = "Casca · vazio"
 # véu em volta (FILTRO_FORA) fecha ao clicar fora.
 FILTRO = (1282, 60, 424, 626)
 FILTRO_PILULA = (1282, 60, 424, 48)
+# o de período tem 5 itens (o 2º turno inteiro e os quatro períodos): a caixa desce só até onde a lista vai
+FILTRO_PERIODO = (1282, 60, 424, 270)
 FILTRO_FORA = (0, 0, 1920, 1080)
 # telas com filtro próprio no mesmo padrão (pílula + VizuFilter alto + véu); cada módulo expõe NOMES_FILTRO
 # (T19: o filtro do recorte em acordeão, 23/10/2026)
@@ -49,6 +52,7 @@ TOPO_CARTAO = 14                     # o cartão começa 14 px abaixo do topo do
 FECHAR = (1724, 124 + TOPO_CARTAO + 14, 40, 40)   # o × desenhado no canto do cartão: 16 px da direita, 14 do topo
 FORA = (0, 0, 1920, 1080)            # véu da leitura aberta: clicar fora do cartão também fecha
 GRUPO_UF = "Eleicoes_UF"
+GRUPO_PERIODO = "Eleicoes_Periodo"
 Z = {"fundo": 10, "leitura": lib.CAMADAS["leitura"], "filtro": lib.CAMADAS["drawer"],
      "nav": lib.CAMADAS["navegacao"]}
 
@@ -184,11 +188,23 @@ def _estilo_filtro(t: roteiro.Tela) -> dict:
 
 
 def _filtro(t: roteiro.Tela) -> list:
-    x, y, w, h = FILTRO
+    x, y, w, h = FILTRO_PERIODO if t.filtro == "Período" else FILTRO
     hp = FILTRO_PILULA[3]
     layout = {"controlWidth": w, "controlHeight": hp, "dropdownWidth": w, "dropdownHeight": h - hp - 6, "gap": 6,
               "optionHeight": 40, "searchHeight": 44, "triggerIconGap": 12, "borderRadius": 6, "checkboxSize": 14,
               "checkboxRadius": 2, "scrollbarWidth": 4, "wrapOptionLabels": False}
+    if t.filtro == "Período":
+        # um filtro só para as três telas (sincronia entre páginas); sem escolha = o 2º turno inteiro, a tela de sempre
+        geral = {"mode": "dropdown", "singleSelect": True, "singleSelectAllowAll": True, "sortAscending": True,
+                 "startOpen": True, "alwaysOpen": True, "showSearch": False, "showSelectAll": False,
+                 "showReset": False, "showSelectedCount": False, "showSelectedValue": True,
+                 "selectedValueOnly": True, "syncSelectionWithHost": True, "triggerMode": "value",
+                 "triggerLabel": "Período", "placeholderText": "2º turno inteiro", "allOptionText": "2º turno inteiro",
+                 "searchPlaceholder": "Buscar período", "searchScope": "list", "pathMode": False}
+        return _pecas_filtro(t, (x, y, w, h), geral, layout, categoria=("Período", "Período", "Período"),
+                             pilula="Casca · período · pílula · HTML", alt="Casca · período · ALT",
+                             dica="Escolher um período", grupo=GRUPO_PERIODO, recorte=None,
+                             medidas={"itemSort": "Casca · período · ordem"}, extras={"sortDirection": "asc"})
     if t.filtro == "UF":
         geral = {"mode": "dropdown", "singleSelect": True, "singleSelectAllowAll": True, "sortAscending": True,
                  "startOpen": True, "alwaysOpen": True, "showSearch": True, "showSelectAll": False,
@@ -202,21 +218,34 @@ def _filtro(t: roteiro.Tela) -> list:
         for f in recorte["filters"]:
             f["isHiddenInViewMode"] = True
             f["isLockedInViewMode"] = True
-        p = t.codigo
-        return [
-            Visual(p, lib.visual_html(f"{p}_Casca_FiltroPilula", *FILTRO_PILULA, "Casca · filtro · pílula · HTML",
+        return _pecas_filtro(t, (x, y, w, h), geral, layout, categoria=("UF", "Nome", "Estado"),
+                             pilula="Casca · filtro · pílula · HTML", alt="Casca · filtro · ALT",
+                             dica="Escolher um estado", grupo=GRUPO_UF, recorte=recorte,
+                             medidas={"itemGroup": "Casca · filtro · região", "itemSort": "Casca · filtro · ordem"},
+                             extras=extras)
+    return []                     # município (T15) e local (T20) são declarados pelas próprias telas
+
+
+def _pecas_filtro(t: roteiro.Tela, caixa: tuple, geral: dict, layout: dict, *, categoria: tuple, pilula: str, alt: str,
+                  dica: str, grupo: str, recorte, medidas: dict, extras: dict) -> list:
+    """Pílula (HTML com o recorte em uso) + botão que abre + véu que fecha + VizuFilter alto oculto + marcadores de
+    abrir e fechar: o mesmo desenho e o mesmo comportamento no filtro de UF e no de período."""
+    x, y, w, h = caixa
+    p = t.codigo
+    return [
+            Visual(p, lib.visual_html(f"{p}_Casca_FiltroPilula", *FILTRO_PILULA, pilula,
                                       folha_de_estilo=CSS, modelo_corpo=f"<style>{CSS_PILULA}</style>{{{{content}}}}",
-                                      alt=lib.medida("Casca · filtro · ALT"), z=Z["filtro"] - 20, tab=4,
+                                      alt=lib.medida(alt), z=Z["filtro"] - 20, tab=4,
                                       movimento=False)),
             _botao(t, "FiltroAbre", FILTRO_PILULA, lib.acao_bookmark(f"{p}_FILTRO_ABRE_01"),
-                   "Escolher um estado", 5, raio=6),
+                   dica, 5, raio=6),
             _botao(t, "FiltroFora", FILTRO_FORA, lib.acao_bookmark(f"{p}_FILTRO_FECHA_01"), "Fechar o filtro", 7,
                    oculto=True, raio=0, z=Z["filtro"] - 10, realce=None, fundo=(estilo.COR["tinta"], 90)),
             Visual(p, lib.visual_vizufilter(
-                f"{p}_Casca_Filtro", x, y, w, h, categoria=("UF", "Nome", "Estado"), geral=geral, layout=layout,
-                estilo=_estilo_filtro(t), alt=lib.medida("Casca · filtro · ALT"), z=Z["filtro"], tab=6, oculto=True,
-                sincronia=lib.grupo_sincronia(GRUPO_UF), filtros=recorte,
-                medidas={"itemGroup": "Casca · filtro · região", "itemSort": "Casca · filtro · ordem"}, extras=extras)),
+                f"{p}_Casca_Filtro", x, y, w, h, categoria=categoria, geral=geral, layout=layout,
+                estilo=_estilo_filtro(t), alt=lib.medida(alt), z=Z["filtro"], tab=6, oculto=True,
+                sincronia=lib.grupo_sincronia(grupo), filtros=recorte,
+                medidas=medidas, extras=extras)),
             Bookmark(lib.bookmark_exibicao(f"{p}_FILTRO_ABRE_01", p, {f"{p}_Casca_Filtro": True,
                                                                     f"{p}_Casca_FiltroFora": True,
                                                                     f"{p}_Casca_FiltroAbre": False},
@@ -226,7 +255,6 @@ def _filtro(t: roteiro.Tela) -> list:
                                                                      f"{p}_Casca_FiltroAbre": True},
                                            titulo=f"{p} · filtro fechado"), grupo=("Filtros", "Filtros")),
         ]
-    return []                     # município (T15) e local (T20) são declarados pelas próprias telas
 
 
 def _botao(t: roteiro.Tela, nome: str, caixa: tuple, acao: tuple, dica: str, tab: int, **extra) -> Visual:
@@ -274,7 +302,7 @@ def declarar(ctx):
                               grupo=("Leituras", "Leituras")))
         itens.append(Bookmark(lib.bookmark_exibicao(f"{p}_LEITURA_FECHA_01", p, fechada,
                                                     titulo=f"{p} · leitura fechada"), grupo=("Leituras", "Leituras")))
-        if t.filtro == "UF":
+        if t.filtro in ("UF", "Período"):
             fechada = {**fechada, f"{p}_Casca_Filtro": False, f"{p}_Casca_FiltroFora": False,
                        f"{p}_Casca_FiltroAbre": True}
         elif p in FILTROS_PROPRIOS:

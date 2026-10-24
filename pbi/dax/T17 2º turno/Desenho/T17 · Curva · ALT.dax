@@ -1,8 +1,27 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela da curva do 2º turno.
+@descricao: Texto para leitor de tela da curva do 2º turno; com um período escolhido, o que fica em destaque.
 */
-"Diferença entre Flávio e Lula em " & [T17 · pesquisas] & " pesquisas do 2º turno, de agosto a "
-    & FORMAT ( [T17 · média móvel · último dia], "dd/MM" ) & ". A média dos 10 dias virou para Flávio em "
-    & FORMAT ( [T17 · média móvel · virada], "dd/MM" ) & " e hoje está em Flávio +" & FORMAT ( [T17 · média móvel · agora], "0.0" ) & "."
+VAR _per = [Período · escolhido]
+VAR _nP = [T17 · período · pesquisas]
+VAR _min = [T17 · período · diferença mínima]
+VAR _max = [T17 · período · diferença máxima]
+RETURN
+    IF (
+        ISBLANK ( _per ),
+        "Diferença entre Flávio e Lula em " & [T17 · pesquisas] & " pesquisas do 2º turno, de agosto a "
+            & FORMAT ( [T17 · média móvel · último dia], "dd/MM" ) & ". A média dos 10 dias virou para Flávio em "
+            & FORMAT ( [T17 · média móvel · virada], "dd/MM" ) & " e hoje está em Flávio +" & FORMAT ( [T17 · média móvel · agora], "0.0" ) & ".",
+        "Diferença entre Flávio e Lula em " & [T17 · pesquisas] & " pesquisas do 2º turno. Em destaque, " & [Período · nome] & ": "
+            & SWITCH (
+                TRUE (),
+                [T17 · período · ainda sem dado] = 1, "as pesquisas ainda não chegaram.",
+                _nP = 0, "nenhuma pesquisa com o campo inteiro no período.",
+                _nP = 1, "1 pesquisa com o campo inteiro no período (" & [T17 · período · única · instituto] & "), "
+                    & IF ( _min > 0, "Flávio +" & FORMAT ( _min, "0.0" ), IF ( _min < 0, "Lula +" & FORMAT ( -_min, "0.0" ), "empate" ) ) & ".",
+                _nP & IF ( _nP = 1, " pesquisa", " pesquisas" ) & " com o campo inteiro no período, de "
+                    & IF ( _min > 0, "Flávio +" & FORMAT ( _min, "0.0" ), IF ( _min < 0, "Lula +" & FORMAT ( -_min, "0.0" ), "empate" ) ) & " a "
+                    & IF ( _max > 0, "Flávio +" & FORMAT ( _max, "0.0" ), IF ( _max < 0, "Lula +" & FORMAT ( -_max, "0.0" ), "empate" ) ) & "."
+            )
+    )

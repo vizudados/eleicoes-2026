@@ -1,0 +1,26 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0
+@descricao: Dias da curva (até 22/10) em que Lula tem índice 0 no estado clicado porque a busca ficou abaixo do mínimo que o Google mede (nota hasData=false da consulta U2; em AC, AP e RR entram também os zeros de 19 a 21/09, em que não dá para separar volume baixo de lacuna). Os zeros da provável lacuna de coleta de 19 a 21/09 ficam de fora: a curva marca essa faixa à parte. 0 no Brasil (a série T2 não tem zero).
+@oraculo: FONTES (U2, todos os zeros): RR 41 e 47, AC 33 e 52, AP 24 e 48; sem a lacuna provável: RO 2 e 15, DF 0 e 0
+*/
+VAR _uf = [T08 · escolha · UF]
+VAR _fim =
+    CALCULATE (
+        MAX ( 'Trends tempo'[Momento] ),
+        REMOVEFILTERS ( 'Trends tempo' ),
+        'Trends tempo'[Série] = "Lula [tópico | T2]"
+    )
+RETURN
+    IF (
+        ISBLANK ( _uf ),
+        0,
+        CALCULATE (
+            COUNTROWS ( 'Trends UF tempo' ),
+            'Trends UF tempo'[UF] = _uf,
+            'Trends UF tempo'[Série] = "Lula [tópico | U2]",
+            'Trends UF tempo'[Índice] = 0,
+            'Trends UF tempo'[Data] <= _fim,
+            NOT CONTAINSSTRING ( 'Trends UF tempo'[Observação], "provável lacuna" )
+        ) + 0
+    )

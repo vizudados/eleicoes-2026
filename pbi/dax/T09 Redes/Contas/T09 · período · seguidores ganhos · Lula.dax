@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Seguidores que Lula ganhou na janela do período.
+@oraculo: Antes da Band +2,3 mi (Bites); Depois da Band +178 mil (Instagram, 18/10, Quaest)
+*/
+CALCULATE ( [T09 · período · seguidores ganhos], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula" )

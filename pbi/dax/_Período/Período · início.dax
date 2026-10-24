@@ -1,0 +1,9 @@
+/*
+@pasta: _Período
+@formato: dd/MM
+@descricao: Primeiro dia do período escolhido; vazio sem escolha.
+*/
+IF (
+    ISFILTERED ( 'Período' ) && HASONEVALUE ( 'Período'[Ordem] ),
+    MIN ( 'Período'[Início] )
+)

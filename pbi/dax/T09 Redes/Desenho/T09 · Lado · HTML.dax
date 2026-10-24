@@ -1,7 +1,7 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Fundo da coluna da direita, só seguidores (os anúncios na Meta foram para o dossiê ttT09Lado): título, frase e fonte dos seguidores ganhos na campanha do 1º turno; o bloco do ritmo logo depois do 1º turno (mesma fonte e mesmas quatro redes, ganho por dia) e a nota de que depois de 08/10 as fontes divergem. As barras e os números de cada um são outro visual (T09 · Linhas · HTML), na mesma caixa.
+@descricao: Fundo da coluna da direita, só seguidores (os anúncios na Meta foram para o dossiê ttT09Lado): título, frase e fonte dos seguidores ganhos na campanha do 1º turno; o bloco do ritmo logo depois do 1º turno (mesma fonte e mesmas quatro redes, ganho por dia) e a nota de que depois de 08/10 as fontes divergem. As barras e os números de cada um são outro visual (T09 · Linhas · HTML), na mesma caixa. Com um período escolhido no filtro: os seguidores ganhos na janela que cabe inteira no período (Antes da Band, Bites de 05 a 17/10; Depois da Band, Quaest, só Instagram, 18/10), com a janela real e a fonte escritas, e o ritmo por dia na mesma janela (sem ritmo numa janela de um dia); sem janela, o lugar das barras tracejado com 'sem dado no período' (Depois da Globo, 'aguardando').
 */
 -- 1 · Leituras
 VAR _sL = [T09 · seguidores ganhos · campanha · Lula]
@@ -12,23 +12,96 @@ VAR _d1 = [T09 · seguidores · campanha · dias]
 VAR _ini2 = [T09 · seguidores · após o 1º turno · início]
 VAR _fim2 = [T09 · seguidores · após o 1º turno · fim]
 VAR _d2 = [T09 · seguidores · após o 1º turno · dias]
+-- com período
+VAR _per = [Período · escolhido]
+VAR _pNome = [Período · nome]
+VAR _pIni = [Período · início]
+VAR _pFim = [Período · fim]
+VAR _psL = [T09 · período · seguidores ganhos · Lula]
+VAR _psF = [T09 · período · seguidores ganhos · Flávio]
+VAR _psI = [T09 · período · seguidores · início]
+VAR _psIf = [T09 · período · seguidores · fim]
+VAR _psD = [T09 · período · seguidores · dias]
+VAR _psFonte = [T09 · período · seguidores · fonte]
+VAR _psIg = CONTAINSSTRING ( [T09 · período · seguidores · métrica], "Instagram" )
 -- 2 · Textos
 VAR _quemS = IF ( _sF >= _sL, "Flávio", "Lula" )
 VAR _txtJan1 = FORMAT ( _ini1, "dd/MM" ) & " a " & FORMAT ( _fim1, "dd/MM" ) & ", " & _d1 & " dias"
 VAR _txtJan2 = FORMAT ( _ini2, "dd/MM" ) & " a " & FORMAT ( _fim2, "dd/MM" ) & ", " & _d2 & IF ( _d2 = 1, " dia", " dias" )
--- 4 · Marcação
-RETURN
+-- com período: a janela real da medição que cabe nele, a fonte e as redes
+VAR _janS =
+    SWITCH (
+        TRUE (),
+        _psI = _psIf, FORMAT ( _psI, "dd/MM" ),
+        IF ( MONTH ( _psI ) = MONTH ( _psIf ), FORMAT ( _psI, "dd" ), FORMAT ( _psI, "dd/MM" ) )
+            & IF ( DATEDIFF ( _psI, _psIf, DAY ) = 1, " e ", " a " ) & FORMAT ( _psIf, "dd/MM" )
+    )
+VAR _janPer =
+    IF ( MONTH ( _pIni ) = MONTH ( _pFim ), FORMAT ( _pIni, "dd" ), FORMAT ( _pIni, "dd/MM" ) )
+        & IF ( DATEDIFF ( _pIni, _pFim, DAY ) = 1, " e ", " a " ) & FORMAT ( _pFim, "dd/MM" )
+VAR _temP = NOT ISBLANK ( _psL ) && NOT ISBLANK ( _psF )
+VAR _espera = _per = 4 && NOT _temP
+VAR _pQuem = SWITCH ( TRUE (), _psL > _psF, "Lula", _psF > _psL, "Flávio" )
+VAR _pMan =
+    SWITCH (
+        TRUE (),
+        _espera, _pNome & ", os números ainda não chegaram",
+        NOT _temP, _pNome & ": sem dado no período",
+        ISBLANK ( _pQuem ), _pNome & ", os dois ganharam o mesmo número de seguidores",
+        _pNome & ", quem mais ganhou seguidores foi " & _pQuem
+    )
+VAR _pNota =
+    SWITCH (
+        TRUE (),
+        _espera, "Os números depois do debate da Globo chegam entre a noite de sexta e o sábado.",
+        NOT _temP, "Nenhuma medição do ganho dos dois cabe inteira em " & _janPer & ".",
+        _janS & IF ( _psD = 1 && _psI = [Período · debate · data], ", dia do debate", "" ) & " · "
+            & IF ( _psIg, "só Instagram", "a fonte não detalha as redes" ) & " · " & _psFonte
+    )
+VAR _pRitmo =
+    IF (
+        _psD = 1,
+        "A janela é de um dia só: o ganho do dia já é o número de cima.",
+        "Ganho médio por dia na mesma janela de cima, " & _janS & ", " & _psD & " dias."
+    )
+VAR _periodo =
     "<div class='tela t09l'>"
         & "<div class='bloco' style='top:0'>"
-            & "<div class='sob sobe'>Seguidores ganhos em quatro redes</div>"
-            & "<div class='man sobe d2'>Na campanha do 1º turno, quem mais ganhou seguidores foi " & _quemS & "</div>"
-            & "<div class='nota sobe d3'>" & _txtJan1 & " · Instagram, Facebook, TikTok e YouTube · Bites</div>"
+            & "<div class='sob sobe'>Seguidores ganhos · " & _pNome & "</div>"
+            & "<div class='man sobe d2'>" & _pMan & "</div>"
+            & "<div class='nota sobe d3'>" & _pNota & "</div>"
         & "</div>"
-        & "<hr class='entra d8'/>"
-        & "<div class='bloco' style='top:322px'>"
-            & "<div class='sob sobe d8'>O ritmo logo depois do 1º turno</div>"
-            & "<div class='txt sobe d9'>Ganho médio por dia, mesma fonte e mesmas redes: de " & _txtJan1 & ", e de " & _txtJan2 & ".</div>"
-        & "</div>"
-        & "<div class='ress entra d14'>Depois de 08/10, Bites e Datrix contam redes e dias diferentes e não concordam. "
-            & "Passe o mouse num nome: redes uma a uma e anúncios na Meta.</div>"
+        & IF (
+            _temP,
+            "<hr class='entra d8'/>"
+                & "<div class='bloco' style='top:322px'>"
+                    & "<div class='sob sobe d8'>O ritmo no período</div>"
+                    & "<div class='txt sobe d9'>" & _pRitmo & "</div>"
+                & "</div>",
+            "<div class='vazio entra d6'>"
+                & IF ( _espera, "<span class='mao'>aguardando</span>", "<span class='rot'>sem dado no período</span>" )
+            & "</div>"
+        )
+        & "<div class='ress entra d14'>Só entra a medição que cabe inteira no período; as fontes contam redes e dias "
+            & "diferentes. Passe o mouse num nome: redes uma a uma e anúncios na Meta.</div>"
     & "</div>"
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _per ),
+        _periodo,
+        "<div class='tela t09l'>"
+            & "<div class='bloco' style='top:0'>"
+                & "<div class='sob sobe'>Seguidores ganhos em quatro redes</div>"
+                & "<div class='man sobe d2'>Na campanha do 1º turno, quem mais ganhou seguidores foi " & _quemS & "</div>"
+                & "<div class='nota sobe d3'>" & _txtJan1 & " · Instagram, Facebook, TikTok e YouTube · Bites</div>"
+            & "</div>"
+            & "<hr class='entra d8'/>"
+            & "<div class='bloco' style='top:322px'>"
+                & "<div class='sob sobe d8'>O ritmo logo depois do 1º turno</div>"
+                & "<div class='txt sobe d9'>Ganho médio por dia, mesma fonte e mesmas redes: de " & _txtJan1 & ", e de " & _txtJan2 & ".</div>"
+            & "</div>"
+            & "<div class='ress entra d14'>Depois de 08/10, Bites e Datrix contam redes e dias diferentes e não concordam. "
+                & "Passe o mouse num nome: redes uma a uma e anúncios na Meta.</div>"
+        & "</div>"
+    )

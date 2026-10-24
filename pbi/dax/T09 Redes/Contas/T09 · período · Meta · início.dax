@@ -1,0 +1,39 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: Primeiro dia da janela da Biblioteca de Anúncios (Meta) que cabe inteira no período escolhido (as de 90, 30 e 7 dias até 19/10 atravessam os períodos; só o dia 19/10 cabe em Depois da Band). Só entra a janela que cabe inteira dentro do período escolhido (o dia do debate conta como depois); entre as que cabem, a mais longa (no empate, a mais recente). Vazio sem período ou sem janela que caiba.
+@oraculo: Depois da Band 19/10
+*/
+VAR _ini = [Período · início]
+VAR _fim = [Período · fim]
+VAR _jan =
+    FILTER (
+        ADDCOLUMNS (
+            CALCULATETABLE (
+                VALUES ( 'Anúncios'[Período] ),
+                REMOVEFILTERS ( 'Anúncios' ),
+                'Anúncios'[Plataforma] = "Meta (Facebook/Instagram)"
+            ),
+            "@i",
+                VAR _t = 'Anúncios'[Período]
+                RETURN
+                    IF (
+                        MID ( _t, 5, 1 ) = "-" && MID ( _t, 8, 1 ) = "-",
+                        DATE ( VALUE ( LEFT ( _t, 4 ) ), VALUE ( MID ( _t, 6, 2 ) ), VALUE ( MID ( _t, 9, 2 ) ) )
+                    ),
+            "@f",
+                VAR _t = 'Anúncios'[Período]
+                RETURN
+                    SWITCH (
+                        TRUE (),
+                        MID ( _t, 12, 2 ) = "a " && MID ( _t, 18, 1 ) = "-",
+                            DATE ( VALUE ( MID ( _t, 14, 4 ) ), VALUE ( MID ( _t, 19, 2 ) ), VALUE ( MID ( _t, 22, 2 ) ) ),
+                        MID ( _t, 5, 1 ) = "-" && MID ( _t, 8, 1 ) = "-",
+                            DATE ( VALUE ( LEFT ( _t, 4 ) ), VALUE ( MID ( _t, 6, 2 ) ), VALUE ( MID ( _t, 9, 2 ) ) )
+                    )
+        ),
+        NOT ISBLANK ( [@i] ) && [@i] >= _ini && [@f] <= _fim
+    )
+VAR _top = TOPN ( 1, _jan, [@f] - [@i], DESC, [@i], DESC )
+RETURN
+    IF ( NOT ISBLANK ( _ini ), MAXX ( _top, [@i] ) )

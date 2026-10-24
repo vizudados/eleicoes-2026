@@ -1,0 +1,6 @@
+/*
+@pasta: _Casca
+@formato: 0
+@descricao: Ordem do período na lista do filtro Período (papel itemSort).
+*/
+MIN ( 'Período'[Ordem] )

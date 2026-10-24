@@ -1,9 +1,23 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do placar das pesquisas do 2º turno (≤ 250 caracteres).
+@descricao: Texto para leitor de tela do placar das pesquisas do 2º turno (≤ 250 caracteres); com um período escolhido, o placar do período.
 */
-"Depois do 1º turno, Flávio lidera " & [T17 · depois · Flávio à frente] & " de " & [T17 · depois · pesquisas]
-    & " pesquisas do 2º turno; Lula, " & [T17 · depois · Lula à frente] & ". Antes, nas " & [T17 · antes · pesquisas]
-    & " simulações: Lula " & [T17 · antes · Lula à frente] & ", Flávio " & [T17 · antes · Flávio à frente] & ", "
-    & [T17 · antes · empates] & " empates."
+VAR _per = [Período · escolhido]
+VAR _nP = [T17 · período · pesquisas]
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _per ),
+            "Depois do 1º turno, Flávio lidera " & [T17 · depois · Flávio à frente] & " de " & [T17 · depois · pesquisas]
+                & " pesquisas do 2º turno; Lula, " & [T17 · depois · Lula à frente] & ". Antes, nas " & [T17 · antes · pesquisas]
+                & " simulações: Lula " & [T17 · antes · Lula à frente] & ", Flávio " & [T17 · antes · Flávio à frente] & ", "
+                & [T17 · antes · empates] & " empates.",
+        [T17 · período · ainda sem dado] = 1,
+            [Período · nome] & ": as pesquisas com campo depois do debate ainda não chegaram.",
+        _nP = 0, [Período · nome] & ": nenhuma pesquisa com o campo inteiro no período.",
+        [Período · nome] & ": " & _nP & IF ( _nP = 1, " pesquisa", " pesquisas" ) & " com o campo inteiro no período; Flávio à frente em "
+            & [T17 · período · Flávio à frente] & ", Lula em " & [T17 · período · Lula à frente] & ", empate em "
+            & [T17 · período · empates] & ". Média: Flávio " & FORMAT ( [T17 · período · Flávio], "0.0" ) & "% e Lula "
+            & FORMAT ( [T17 · período · Lula], "0.0" ) & "% dos votos totais."
+    )

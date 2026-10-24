@@ -1,0 +1,33 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: texto
+@descricao: A métrica da janela de seguidores ganhos do período (diz se é só o Instagram). Só entra a janela que cabe inteira dentro do período escolhido (o dia do debate conta como depois); entre as que cabem, a mais longa (no empate, a mais recente). Vazio sem período ou sem janela que caiba.
+*/
+VAR _ini = [Período · início]
+VAR _fim = [Período · fim]
+VAR _jan =
+    FILTER (
+        ADDCOLUMNS (
+            CALCULATETABLE (
+                SUMMARIZE ( Monitoramento, Monitoramento[Estudo], Monitoramento[Métrica], Monitoramento[Início], Monitoramento[Fim] ),
+                REMOVEFILTERS ( Monitoramento ),
+                CONTAINSSTRING ( Monitoramento[Métrica], "seguidores ganhos" ),
+                NOT CONTAINSSTRING ( Monitoramento[Métrica], " - " ),
+                Monitoramento[Unidade] = "seguidores",
+                Monitoramento[Início] >= _ini,
+                Monitoramento[Fim] <= _fim
+            ),
+            "@dois",
+                CALCULATE (
+                    DISTINCTCOUNT ( Monitoramento[Candidato] ),
+                    REMOVEFILTERS ( Monitoramento[Candidato] ),
+                    Monitoramento[Candidato] IN { "Lula", "Flávio Bolsonaro" },
+                    NOT ISBLANK ( Monitoramento[Valor] )
+                ),
+            "@dur", DATEDIFF ( Monitoramento[Início], Monitoramento[Fim], DAY )
+        ),
+        [@dois] = 2
+    )
+VAR _top = TOPN ( 1, _jan, [@dur], DESC, Monitoramento[Início], DESC )
+RETURN
+    IF ( NOT ISBLANK ( _ini ), MAXX ( _top, Monitoramento[Métrica] ) )

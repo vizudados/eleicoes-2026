@@ -1,0 +1,21 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0.0
+@descricao: Média simples de Flávio em votos válidos (%) nas pesquisas do período escolhido que divulgaram válidos (campo inteiro dentro).
+*/
+VAR _de = [T17 · período · campo de]
+VAR _ate = [T17 · período · campo até]
+RETURN
+    IF (
+        NOT ISBLANK ( _de ),
+        CALCULATE (
+            AVERAGE ( Pesquisa[Flavio] ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "validos",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo início] >= _de,
+            Pesquisa[Campo fim] <= _ate
+        )
+    )

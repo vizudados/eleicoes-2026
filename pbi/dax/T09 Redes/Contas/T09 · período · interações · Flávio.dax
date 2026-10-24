@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Interações de Flávio na janela da Bites do período escolhido.
+@oraculo: Antes da Band 31,3 mi; Depois da Band 5,0 mi (24 h)
+*/
+CALCULATE ( [T09 · período · interações], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )

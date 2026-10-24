@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Quantas vezes as interações de Lula foram as de Flávio na janela do período.
+@oraculo: Antes da Band 3,5; Depois da Band 5,1
+*/
+DIVIDE ( [T09 · período · interações · Lula], [T09 · período · interações · Flávio] )

@@ -1,0 +1,9 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Índice da Quaest de Lula no último dia do período com os dois (T09 · período · IPD · dia).
+@oraculo: Antes da Band 82,6; Depois da Band 83,3
+*/
+VAR _d = [T09 · período · IPD · dia]
+RETURN
+    IF ( NOT ISBLANK ( _d ), CALCULATE ( [T09 · IPD], REMOVEFILTERS ( Monitoramento ), Monitoramento[Início] = _d, Monitoramento[Candidato] = "Lula" ) )

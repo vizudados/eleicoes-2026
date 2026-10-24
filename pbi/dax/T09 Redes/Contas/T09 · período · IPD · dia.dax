@@ -1,0 +1,22 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: dd/MM
+@descricao: O último dia dentro do período em que a Quaest divulgou o índice dos dois; vazio sem período ou sem dia com os dois.
+@oraculo: Antes da Band 15/10; Depois da Band 19/10
+*/
+VAR _ini = [Período · início]
+VAR _fim = [Período · fim]
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( Monitoramento[Início] ),
+            REMOVEFILTERS ( Monitoramento ),
+            Monitoramento[Métrica] IN { "IPD", "IPD (patamar máximo)" },
+            Monitoramento[Início] >= _ini,
+            Monitoramento[Início] <= _fim
+        ),
+        "@l", CALCULATE ( [T09 · IPD], REMOVEFILTERS ( Monitoramento[Candidato] ), Monitoramento[Candidato] = "Lula" ),
+        "@f", CALCULATE ( [T09 · IPD], REMOVEFILTERS ( Monitoramento[Candidato] ), Monitoramento[Candidato] = "Flávio Bolsonaro" )
+    )
+RETURN
+    IF ( NOT ISBLANK ( _ini ), MAXX ( FILTER ( _dias, NOT ISBLANK ( [@l] ) && NOT ISBLANK ( [@f] ) ), Monitoramento[Início] ) )

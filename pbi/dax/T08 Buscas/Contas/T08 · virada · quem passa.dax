@@ -1,0 +1,16 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: Quem estava atrás nas buscas no dia do debate (o que pode passar o outro depois dele), na série que a curva mostra; vazio se os dois empataram. A mesma regra para os dois candidatos.
+@oraculo: Flávio (Brasil e as 27 UFs: Lula na frente em 18/10)
+*/
+VAR _l = [T08 · debate · Lula]
+VAR _f = [T08 · debate · Flávio]
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _l ) || ISBLANK ( _f ), BLANK (),
+        _l > _f, "Flávio",
+        _f > _l, "Lula",
+        BLANK ()
+    )

@@ -1,7 +1,7 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Dossiê da coluna da direita (ttT09Lado, grão Seguidores[Candidato]; as contas de Monitoramento recebem o candidato da linha), em duas colunas. À esquerda, os seguidores do candidato rede a rede (quanto ganhou na campanha do 1º turno, Bites, e quantos tem hoje, Social Blade e Datrix) e o 2º turno com as duas fontes que divergem. À direita, os anúncios da página na Meta (Biblioteca de Anúncios: 90 dias e última semana) e, à parte e rotulados como outra base, os pagamentos à Meta declarados ao TSE — nunca somados nem comparados com a Biblioteca.
+@descricao: Dossiê da coluna da direita (ttT09Lado, grão Seguidores[Candidato]; as contas de Monitoramento recebem o candidato da linha), em duas colunas. À esquerda, os seguidores do candidato rede a rede (quanto ganhou na campanha do 1º turno, Bites, e quantos tem hoje, Social Blade e Datrix) e o 2º turno com as duas fontes que divergem. À direita, os anúncios da página na Meta (Biblioteca de Anúncios: 90 dias e última semana) e, à parte e rotulados como outra base, os pagamentos à Meta declarados ao TSE — nunca somados nem comparados com a Biblioteca. Com um período escolhido no filtro, a linha da última semana dá lugar à janela da Biblioteca que cabe inteira no período (Depois da Band: 19/10) ou a 'sem dado no período'.
 */
 -- 1 · Leituras
 VAR _c = [T09 · lado · candidato]
@@ -28,6 +28,10 @@ VAR _datrix2 = CALCULATE ( [T09 · seguidores ganhos · 2º turno Datrix], Monit
 VAR _a90 = CALCULATE ( [T09 · Meta · 90 dias], Monitoramento[Candidato] = _cBase )
 VAR _a7 = CALCULATE ( [T09 · Meta · 7 dias], Monitoramento[Candidato] = _cBase )
 VAR _tse = CALCULATE ( [T09 · TSE · pagamentos à Meta], Monitoramento[Candidato] = _cBase )
+VAR _per = [Período · escolhido]
+VAR _aP = CALCULATE ( [T09 · período · Meta], Monitoramento[Candidato] = _cBase )
+VAR _aI = [T09 · período · Meta · início]
+VAR _aF = [T09 · período · Meta · fim]
 -- 2 · Textos
 VAR _clsTxt = IF ( _c = "Lula", "lula-esc", "flavio-esc" )
 VAR _linhas =
@@ -45,6 +49,21 @@ VAR _txt2 =
 VAR _txtA90 = "R$ " & FORMAT ( _a90 / 1000000, "0.00" ) & " mi"
 VAR _txtA7 = "R$ " & FORMAT ( _a7 / 1000000, "0.00" ) & " mi"
 VAR _txtTse = "R$ " & FORMAT ( _tse / 1000000, "0.00" ) & " mi"
+VAR _txtAP = "R$ " & FORMAT ( _aP / 1000000, "0.00" ) & " mi"
+VAR _janA =
+    IF ( _aI = _aF, FORMAT ( _aI, "dd/MM" ), FORMAT ( _aI, "dd" ) & " a " & FORMAT ( _aF, "dd/MM" ) )
+        & ", " & ( DATEDIFF ( _aI, _aF, DAY ) + 1 ) & IF ( _aI = _aF, " dia", " dias" )
+VAR _linhaA2 =
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _per ),
+            "<div class='ad sobe d4'><b class='" & _clsTxt & "'>" & _txtA7 & "</b><span>na última semana (13 a 19/10)</span></div>",
+        NOT ISBLANK ( _aP ),
+            "<div class='ad sobe d4'><b class='" & _clsTxt & "'>" & _txtAP & "</b><span>" & [Período · nome] & " ("
+                & _janA & ")</span></div>",
+        "<div class='ad sobe d4'><b class='vazio'>sem dado no período</b><span>" & [Período · nome]
+            & ": as janelas da Biblioteca (90, 30 e 7 dias até 19/10) não cabem nele</span></div>"
+    )
 -- 4 · Marcação
 RETURN
     IF (
@@ -61,7 +80,7 @@ RETURN
             & "<div class='col'>"
                 & "<div class='sob sobe d2'>Anúncios na Meta</div>"
                 & "<div class='ad sobe d3'><b class='" & _clsTxt & "'>" & _txtA90 & "</b><span>em 90 dias (22/07 a 19/10)</span></div>"
-                & "<div class='ad sobe d4'><b class='" & _clsTxt & "'>" & _txtA7 & "</b><span>na última semana (13 a 19/10)</span></div>"
+                & _linhaA2
                 & "<div class='nota sobe d4'>Página do candidato · Biblioteca de Anúncios</div>"
                 & "<div class='outra sobe d5'><div class='rot'>Outra base · não se soma</div>"
                 & "Pagamentos à Meta declarados ao TSE até cerca de 20/10: <b>" & _txtTse & "</b>. Medem o que a campanha pagou, "

@@ -25,6 +25,14 @@ relação entre si: os balões, Monitoramento[Candidato]; a coluna da direita, S
 seguidores, que é o assunto dela). As contas da coluna recebem o candidato da linha por CALCULATE em
 Monitoramento[Candidato]; 'T09 · foco' lê o clique de qualquer um dos dois (ISINSCOPE separa o grão do clique).
 NoFilter para o herói, os fundos e os alvos do índice (não leem o candidato).
+
+Filtro de período (pílula da casca, tabela 'Período', compartilhado com Buscas e 2º turno; pedido do dono em
+23/10/2026): sem escolha, a tela é a de sempre. Com um período, cada bloco usa só a medição que cabe INTEIRA nele (o
+dia do debate conta como depois; entre as que cabem, a mais longa) e escreve a janela real dela: o herói e os balões,
+as interações da Bites (Antes da Band = 05 a 17/10; Depois da Band = as 24 h depois do debate); a coluna da direita,
+os seguidores ganhos (Bites, 05 a 17/10; Quaest, só Instagram, 18/10); o índice da Quaest, a faixa do período com o
+resto esmaecido; o dossiê do lado, os anúncios da Biblioteca que cabem (19/10). Sem medição que caiba: 'sem dado no
+período', nunca zero; Depois da Globo, 'aguardando' (como na tela da Globo).
 """
 from __future__ import annotations
 
@@ -52,6 +60,10 @@ CSS_HEROI = (
     ".t09a .lado{font-size:22px;font-weight:600;line-height:1.25;padding-bottom:18px;max-width:330px}"
     ".t09a .man{position:absolute;left:0;top:178px;width:820px}"
     ".t09a .txt{position:absolute;left:0;top:246px;width:820px}"
+    # período sem medição que caiba ('sem dado no período') ou à espera ('aguardando'): o lugar do número tracejado
+    f".t09a .vazio{{display:inline-block;border:2px dashed {C['areia']};border-radius:8px;padding:22px 30px;"
+    "font-size:30px;font-weight:600;line-height:1.1;color:var(--cinza);white-space:nowrap}"
+    ".t09a .vazio.mao{font-family:var(--mao);font-size:46px;color:var(--grafite);padding:14px 34px}"
 )
 
 CSS_IPD = (
@@ -68,6 +80,9 @@ CSS_IPD = (
     ".t09i .mao{position:absolute;font-size:30px;transform:rotate(-4deg);white-space:nowrap}"
     ".t09i .nota{position:absolute;left:0;right:0;top:258px}"
     ".t09i .apaga{opacity:.14;transition:opacity .35s}"
+    # período: a faixa dele no eixo, as linhas a meio tom e os pontos e rótulos de fora apagados
+    f".t09i .faixa{{fill:{C['areia']};fill-opacity:.45}}"
+    ".t09i .meio{opacity:.4}.t09i .fora{opacity:.2}"
 )
 
 CSS_IPD_ALVOS = (
@@ -90,6 +105,13 @@ CSS_CONVERSA = (
     ".t09c .mao{position:absolute;font-size:30px;transform:rotate(-4deg);white-space:nowrap}"
     ".t09c .seta{position:absolute;height:56px}"
     ".t09c .nota{position:absolute;left:0;top:508px}"
+    # período sem medição que caiba: o lugar dos balões da direita tracejado
+    f".t09c .vazio{{position:absolute;left:590px;top:190px;width:420px;height:200px;border:2px dashed {C['areia']};"
+    "border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;"
+    "padding:0 30px;text-align:center}"
+    ".t09c .vazio .rot{font-size:20px}"
+    ".t09c .vazio .mao{position:static;font-size:44px;color:var(--grafite);transform:rotate(-3deg)}"
+    ".t09c .vazio .nota{position:static;font-size:15px;color:var(--grafite);line-height:1.4}"
 )
 
 
@@ -121,6 +143,11 @@ CSS_LADO = (
     ".t09l .bloco{position:absolute;left:0;right:0}"
     f".t09l hr{{position:absolute;left:0;right:0;top:306px;border:0;border-top:1px solid {C['areia']};margin:0}}"
     ".t09l .ress{position:absolute;left:0;right:0;top:494px;font-size:13px;line-height:1.4;color:var(--cinza)}"
+    # período sem medição que caiba: o lugar das barras tracejado
+    f".t09l .vazio{{position:absolute;left:0;right:0;top:150px;height:150px;border:2px dashed {C['areia']};"
+    "border-radius:10px;display:flex;align-items:center;justify-content:center}"
+    ".t09l .vazio .rot{font-size:20px}"
+    ".t09l .vazio .mao{font-size:44px;color:var(--grafite);transform:rotate(-3deg)}"
 )
 
 
@@ -185,6 +212,7 @@ CSS_TT_LADO = (
     ".tt9l .txt{margin-top:8px;font-size:15px}"
     ".tt9l .ad{margin-top:10px}.tt9l .ad b{display:block;font-size:26px;font-weight:700;letter-spacing:-.02em}"
     ".tt9l .ad span{display:block;font-size:15px;color:var(--grafite)}"
+    ".tt9l .ad b.vazio{font-size:20px;color:var(--cinza)}"
     f".tt9l .outra{{margin-top:12px;padding:10px 12px;border:1.5px dashed {C['areia']};font-size:15px;line-height:1.38}}"
     ".tt9l .outra .rot{margin-bottom:4px}"
     ".dos .tt9l .mao{position:static;display:block;text-align:right;margin-top:10px}"

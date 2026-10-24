@@ -1,9 +1,13 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Dossiê de um dia da curva das buscas (ttT08Dia, grão 'Trends tempo'[DataTexto]): o índice de cada um no dia, quem foi mais buscado e, nos dias que têm série por hora (01 a 07/10 e 15 a 21/10), a curva hora a hora com a hora do pico de cada um; nota à mão nos dias marcantes. Só lê contas 'T08 · …'; a curva por hora lê 'T08 · hora · …' em cada hora do dia (igualdade na coluna do item).
+@descricao: Dossiê de um dia da curva das buscas (ttT08Dia, grão 'Trends tempo'[DataTexto]): o índice de cada um no dia, quem foi mais buscado e, nos dias que têm série por hora (01 a 07/10 e 15 a 21/10), a curva hora a hora com a hora do pico de cada um; nota à mão nos dias marcantes. Com um estado clicado nos cartões, o dia é o do estado (consulta U2): no lugar da curva por hora, que só existe para o Brasil, o lembrete de que o índice é de dentro do estado e, nos dias com 0, o porquê do zero. Só lê contas 'T08 · …'; a curva por hora lê 'T08 · hora · …' em cada hora do dia (igualdade na coluna do item).
 */
 -- 1 · Leituras
+VAR _uf = [T08 · escolha · UF]
+VAR _uNome = [T08 · UF · nome]
+VAR _pico = [T08 · pico · data]
+VAR _zero = [T08 · dia · nota do zero]
 VAR _d = [T08 · dia · data]
 VAR _l = [T08 · dia · Lula]
 VAR _f = [T08 · dia · Flávio]
@@ -36,6 +40,7 @@ VAR _txtQuem =
         TRUE (),
         _dif > 0, "Lula foi mais buscado no dia.",
         _dif < 0, "Flávio foi mais buscado no dia.",
+        NOT ISBLANK ( _zero ) && _l = 0, "Os dois aparecem com 0 no dia.", -- estado clicado: zero não é empate
         "Os dois empataram no dia."
     )
 VAR _evento =
@@ -45,9 +50,15 @@ VAR _evento =
         DATE ( 2026, 10, 4 ), "o dia da eleição",
         DATE ( 2026, 10, 18 ), "a noite do debate",
         DATE ( 2026, 10, 19 ), "o dia seguinte ao debate",
-        DATE ( 2026, 10, 22 ), "dia em curso na coleta",
+        DATE ( 2026, 10, 22 ), IF ( ISBLANK ( _uf ), "dia em curso na coleta", "" ), -- na U2, 22/10 é dia inteiro
         ""
     )
+VAR _quemZero =
+    SWITCH ( TRUE (), _l = 0 && _f = 0, "dos dois", _l = 0, "de Lula", "de Flávio" )
+VAR _txtEstado =
+    IF ( NOT ISBLANK ( _zero ), "O 0 " & _quemZero & " é " & _zero & ", não falta de busca. " )
+        & "Índice de 0 a 100 dentro do estado: 100 é o dia de mais buscas ali (" & FORMAT ( _pico, "dd/MM" )
+        & "). A curva hora a hora só existe para o Brasil."
 VAR _txtPico =
     "Pico: Lula às " & _hl & "h (" & _pl & "), Flávio às " & _hf & "h (" & _pf & ")"
 -- 3 · Geometria (curva por hora: 400 × 92; índice 0–100)
@@ -70,24 +81,28 @@ VAR _eixo =
     )
 VAR _grafico =
     IF (
-        _h > 0,
-        "<div class='sob sobe d4' style='margin-top:6px'>Hora a hora · 0 a 100 na semana</div>"
-            & "<svg width='420' height='112' viewBox='0 0 420 112'>"
-                & "<line x1='34' x2='414' y1='86' y2='86' class='g'/><line x1='34' x2='414' y1='6' y2='6' class='g'/>"
-                & "<text x='26' y='90' class='ex' text-anchor='end'>0</text><text x='26' y='10' class='ex' text-anchor='end'>100</text>"
-                & _eixo
-                & "<polyline points='" & _linhaF & "' class='hf traco-rapido' pathLength='1'/>"
-                & "<polyline points='" & _linhaL & "' class='hl traco-rapido' pathLength='1'/>"
-            & "</svg>"
-            & "<div class='nota entra d6'>" & _txtPico & "</div>",
-        "<div class='nota sobe d4'>A curva hora a hora só existe de 01 a 07/10 e de 15 a 21/10.</div>"
+        NOT ISBLANK ( _uf ),
+        "<div class='nota sobe d4'>" & _txtEstado & "</div>",
+        IF (
+            _h > 0,
+            "<div class='sob sobe d4' style='margin-top:6px'>Hora a hora · 0 a 100 na semana</div>"
+                & "<svg width='420' height='112' viewBox='0 0 420 112'>"
+                    & "<line x1='34' x2='414' y1='86' y2='86' class='g'/><line x1='34' x2='414' y1='6' y2='6' class='g'/>"
+                    & "<text x='26' y='90' class='ex' text-anchor='end'>0</text><text x='26' y='10' class='ex' text-anchor='end'>100</text>"
+                    & _eixo
+                    & "<polyline points='" & _linhaF & "' class='hf traco-rapido' pathLength='1'/>"
+                    & "<polyline points='" & _linhaL & "' class='hl traco-rapido' pathLength='1'/>"
+                & "</svg>"
+                & "<div class='nota entra d6'>" & _txtPico & "</div>",
+            "<div class='nota sobe d4'>A curva hora a hora só existe de 01 a 07/10 e de 15 a 21/10.</div>"
+        )
     )
 -- 4 · Marcação
 RETURN
     IF (
         NOT ISBLANK ( _l ),
         "<div class='tt8d'>"
-            & "<div class='sob sobe'>" & FORMAT ( _d, "dd/MM" ) & " · Google Trends, tópicos</div>"
+            & "<div class='sob sobe'>" & FORMAT ( _d, "dd/MM" ) & IF ( ISBLANK ( _uf ), " · Google Trends, tópicos", " · " & _uNome ) & "</div>"
             & "<div class='par sobe d2'>"
                 & "<div class='lula'><small>Lula</small><span class='num'>" & _l & "</span></div>"
                 & "<div class='flavio'><small>Flávio</small><span class='num'>" & _f & "</span></div>"

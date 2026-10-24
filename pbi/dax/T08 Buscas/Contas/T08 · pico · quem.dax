@@ -1,0 +1,16 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: texto
+@descricao: De quem é o 100 da curva: Lula, Flávio ou os dois (em RO, Flávio; em RR, os dois; no Brasil e nas outras UFs, Lula).
+@oraculo: Lula (Brasil, T2)
+*/
+VAR _l = [T08 · pico · Lula]
+VAR _f = [T08 · pico · Flávio]
+RETURN
+    SWITCH (
+        TRUE (),
+        ISBLANK ( _l ) || ISBLANK ( _f ), BLANK (),
+        _l > _f, "Lula",
+        _f > _l, "Flávio",
+        "os dois"
+    )

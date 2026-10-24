@@ -1,0 +1,24 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Do instituto em destaque (T17 · foco · instituto), quantas pesquisas do período escolhido (campo inteiro dentro) deram empate; vazio sem destaque ou sem período.
+*/
+VAR _de = [T17 · período · campo de]
+VAR _ate = [T17 · período · campo até]
+VAR _inst = [T17 · foco · instituto]
+RETURN
+    IF (
+        NOT ISBLANK ( _inst ) && NOT ISBLANK ( _de ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo início] >= _de,
+            Pesquisa[Campo fim] <= _ate,
+            Pesquisa[Instituto] = _inst,
+            FILTER ( ALL ( Pesquisa[Lula], Pesquisa[Flavio] ), Pesquisa[Flavio] = Pesquisa[Lula] )
+        ) + 0
+    )

@@ -1,0 +1,105 @@
+/// Os quatro períodos em volta dos debates do 2º turno (Band 18/10, Globo 23/10) para o filtro Período das telas Buscas, Redes e 2º turno. Desconectada: as medidas leem a escolha.
+table 'Período'
+	lineageTag: a2233e99-9616-5b55-90ca-ae7f33c23f4b
+
+	/// Ordem do período (1 a 4).
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 50c9c960-997b-5fc7-9536-bda0070e252e
+		summarizeBy: none
+		sourceColumn: ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Rótulo do filtro: o nome e as datas ('Antes da Band · 05 a 17/10').
+	column 'Período'
+		dataType: string
+		lineageTag: 6700fc40-b001-584c-a4ba-ec08039fb1ff
+		summarizeBy: none
+		sourceColumn: periodo
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome curto ('Antes da Band').
+	column Nome
+		dataType: string
+		isHidden
+		lineageTag: 78f1340d-27ce-5589-8306-d9e877ffb7fd
+		summarizeBy: none
+		sourceColumn: nome
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Primeiro dia do período.
+	column 'Início'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: 9d0978f7-c79d-5a97-b433-2683ab1212a7
+		summarizeBy: none
+		sourceColumn: inicio
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Último dia do período.
+	column Fim
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: 1d06a877-b5ec-5e6d-a242-f54f53544340
+		summarizeBy: none
+		sourceColumn: fim
+
+		annotation SummarizationSetBy = Automatic
+
+	/// O debate de referência: Band ou Globo.
+	column Debate
+		dataType: string
+		isHidden
+		lineageTag: be3fa34d-3edf-576f-8ddd-a1b060b9abda
+		summarizeBy: none
+		sourceColumn: debate
+
+		annotation SummarizationSetBy = Automatic
+
+	/// antes ou depois do debate.
+	column Lado
+		dataType: string
+		isHidden
+		lineageTag: a0c3e5d1-2c5e-57d9-a802-ff391d141a96
+		summarizeBy: none
+		sourceColumn: lado
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Dia do debate de referência.
+	column 'Data do debate'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: 5bf10b2e-3f50-51f5-ae9c-87912ce884ae
+		summarizeBy: none
+		sourceColumn: data_debate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Período' = m
+		mode: import
+		source =
+				let
+				    Fonte = #table(
+				        type table [ordem = Int64.Type, periodo = text, nome = text, inicio = date, fim = date, debate = text,
+				            lado = text, data_debate = date],
+				        {
+				            {1, "Antes da Band · 05 a 17/10", "Antes da Band", #date(2026, 10, 5), #date(2026, 10, 17), "Band", "antes", #date(2026, 10, 18)},
+				            {2, "Depois da Band · 18 a 20/10", "Depois da Band", #date(2026, 10, 18), #date(2026, 10, 20), "Band", "depois", #date(2026, 10, 18)},
+				            {3, "Antes da Globo · 21 e 22/10", "Antes da Globo", #date(2026, 10, 21), #date(2026, 10, 22), "Globo", "antes", #date(2026, 10, 23)},
+				            {4, "Depois da Globo · 23 e 24/10", "Depois da Globo", #date(2026, 10, 23), #date(2026, 10, 24), "Globo", "depois", #date(2026, 10, 23)}
+				        })
+				in
+				    Fonte
+
+	annotation PBI_ResultType = Table

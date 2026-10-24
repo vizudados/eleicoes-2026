@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Um ponto por pesquisa de 2º turno (grão Pesquisa[Id]) na escala do fundo (T17 · Curva · HTML): x no dia de divulgação, y na diferença Flávio − Lula. Azul = Flávio à frente, vermelho = Lula, cinza = empate; vazado = simulação feita antes do 1º turno. Cada ponto leva o traço até a pesquisa anterior do MESMO instituto e, na última dele, o nome: escondidos, aparecem quando a série está em destaque (clique num quadrinho da rejeição = classe fx; clique num ponto = a folha liga os pontos com a mesma classe i<n>); os outros esmaecem. Alvo do dossiê ttT17Pesquisa; vazio fora do conjunto.
+@descricao: Um ponto por pesquisa de 2º turno (grão Pesquisa[Id]) na escala do fundo (T17 · Curva · HTML): x no dia de divulgação, y na diferença Flávio − Lula. Azul = Flávio à frente, vermelho = Lula, cinza = empate; vazado = simulação feita antes do 1º turno. Cada ponto leva o traço até a pesquisa anterior do MESMO instituto e, na última dele, o nome: escondidos, aparecem quando a série está em destaque (clique num quadrinho da rejeição = classe fx; clique num ponto = a folha liga os pontos com a mesma classe i<n>); os outros esmaecem. Com um período escolhido no filtro Período, a pesquisa sem o campo inteiro no período esmaece (classe fora; a do instituto clicado segue a regra do destaque). Alvo do dossiê ttT17Pesquisa; vazio fora do conjunto.
 */
 -- 1 · Leituras
 VAR _mom = [T17 · pesquisa · momento]
@@ -17,10 +17,13 @@ VAR _ordA = [T17 · série · anterior · ordem no dia]
 VAR _nA = [T17 · série · anterior · no mesmo dia]
 VAR _ult = [T17 · série · última do instituto]
 VAR _foco = [T17 · foco · instituto da rejeição]
+VAR _noPer = [T17 · pesquisa · no período]
 -- 2 · Textos
 VAR _cls =
     SWITCH ( TRUE (), _dif > 0, "f", _dif < 0, "l", "e" ) & IF ( _mom = "antes_1turno", " sim", "" )
 VAR _clsFoco = IF ( ISBLANK ( _foco ), "", IF ( _foco = _inst, " fx", " fora" ) )
+VAR _clsPer = IF ( ISBLANK ( _noPer ) || _noPer = "dentro", "", " fora" ) -- período: fora do período esmaece
+VAR _clsTela = IF ( _clsFoco = "", _clsPer, _clsFoco )
 VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 -- 3 · Geometria (x: 01/08 a 27/10 em x 70–1440; y: −10 a +10 em y 360–20; o svg do fundo começa em y 72; ponto de 12 px;
 --   o traço vai do centro da pesquisa anterior do mesmo instituto ao centro desta)
@@ -48,7 +51,7 @@ VAR _nome =
 RETURN
     IF (
         NOT ISBLANK ( _mom ),
-        "<div class='tela t17p i" & _num & _clsFoco & "'>" & _traco & "<i class='pt " & _cls & "' style='left:"
+        "<div class='tela t17p i" & _num & _clsTela & "'>" & _traco & "<i class='pt " & _cls & "' style='left:"
             & FORMAT ( _x, _f, "en-US" ) & "px;top:" & FORMAT ( _y, _f, "en-US" ) & "px;animation-delay:" & _atraso
             & "ms'></i>" & _nome & "</div>"
     )

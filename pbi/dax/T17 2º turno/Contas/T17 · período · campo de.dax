@@ -1,0 +1,13 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: dd/MM
+@descricao: Primeiro dia em que o campo de uma pesquisa pode começar para entrar no período escolhido: o início do período; no período 'depois', o dia seguinte ao debate (a pesquisa com campo no dia do debate atravessa o debate e fica fora, a regra da T07). Vazio sem período.
+@oraculo: Antes da Band 05/10; Depois da Band 19/10; Antes da Globo 21/10; Depois da Globo 24/10
+*/
+VAR _ini = [Período · início]
+VAR _deb = [Período · debate · data]
+RETURN
+    IF (
+        NOT ISBLANK ( [Período · escolhido] ),
+        IF ( [Período · lado] = "depois", MAX ( _ini, _deb + 1 ), _ini )
+    )

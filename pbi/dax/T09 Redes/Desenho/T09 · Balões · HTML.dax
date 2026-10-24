@@ -1,17 +1,19 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Os dois balões de fala de um candidato (grão Monitoramento[Candidato]; vazio para quem não é Lula nem Flávio): área proporcional à média de interações por dia na campanha do 1º turno e no 2º turno, sobre o chão do fundo (y 410). Embaixo, o total da janela (contador) e os dias. Cada balão é alvo do dossiê ttT09Conversa. Com um candidato clicado na coluna da direita ('T09 · foco'), os balões do outro esmaecem (o clique nos próprios balões esmaece pelo visual).
+@descricao: Os dois balões de fala de um candidato (grão Monitoramento[Candidato]; vazio para quem não é Lula nem Flávio): área proporcional à média de interações por dia na campanha do 1º turno e no 2º turno, sobre o chão do fundo (y 410). Embaixo, o total da janela (contador) e os dias. Cada balão é alvo do dossiê ttT09Conversa. Com um candidato clicado na coluna da direita ('T09 · foco'), os balões do outro esmaecem (o clique nos próprios balões esmaece pelo visual). Com um período escolhido no filtro, o balão da direita é o da janela da Bites que cabe inteira no período (média por dia; a janela de 24 h depois do debate conta 1 dia) e a escala passa a ser a maior das quatro médias; sem janela no período, só o balão da campanha.
 */
 -- 1 · Leituras
 VAR _c = [T09 · candidato]
 VAR _i1 = [T09 · interações · 1º turno]
-VAR _i2 = [T09 · interações · 2º turno]
+VAR _per = [Período · escolhido]
+VAR _i2 = IF ( ISBLANK ( _per ), [T09 · interações · 2º turno], [T09 · período · interações] )
 VAR _p1 = [T09 · interações por dia · 1º turno]
-VAR _p2 = [T09 · interações por dia · 2º turno]
-VAR _max = [T09 · interações por dia · maior]
+VAR _p2 = IF ( ISBLANK ( _per ), [T09 · interações por dia · 2º turno], [T09 · período · interações por dia] )
+VAR _max = IF ( ISBLANK ( _per ), [T09 · interações por dia · maior], [T09 · período · interações por dia · maior] )
 VAR _d1 = [T09 · 1º turno · dias]
-VAR _d2 = [T09 · 2º turno · dias]
+VAR _d2 = IF ( ISBLANK ( _per ), [T09 · 2º turno · dias], [T09 · período · interações · dias] )
+VAR _p24 = NOT ISBLANK ( _per ) && CONTAINSSTRING ( [T09 · período · interações · métrica], "24h" )
 VAR _foco = [T09 · foco]
 -- 2 · Textos
 VAR _cls = IF ( _c = "Lula", "l", "f" )
@@ -69,10 +71,14 @@ RETURN
     IF (
         NOT ISBLANK ( _c ) && NOT ISBLANK ( _i1 ),
         "<div class='tela t09b" & _apaga & "'>"
-            & "<svg width='1040' height='530' viewBox='0 0 1040 530'>" & _b1b & _b2 & "</svg>"
+            & "<svg width='1040' height='530' viewBox='0 0 1040 530'>" & _b1b & IF ( NOT ISBLANK ( _i2 ), _b2 ) & "</svg>"
             & "<div class='lab sobe d8' style='left:" & _cx1 & "px;top:420px'><b class='" & _clsTxt & "'>" & _c & "</b>"
                 & "<span class='num " & _clsTxt & "'>" & _txt1 & "</span><span class='sub'>em " & _d1 & " dias</span></div>"
-            & "<div class='lab sobe d12' style='left:" & _cx2 & "px;top:420px'><b class='" & _clsTxt & "'>" & _c & "</b>"
-                & "<span class='num " & _clsTxt & "'>" & _txt2 & "</span><span class='sub'>em " & _d2 & " dias</span></div>"
+            & IF (
+                NOT ISBLANK ( _i2 ),
+                "<div class='lab sobe d12' style='left:" & _cx2 & "px;top:420px'><b class='" & _clsTxt & "'>" & _c & "</b>"
+                    & "<span class='num " & _clsTxt & "'>" & _txt2 & "</span><span class='sub'>"
+                    & IF ( _p24, "em 24 h", "em " & _d2 & " dias" ) & "</span></div>"
+            )
         & "</div>"
     )

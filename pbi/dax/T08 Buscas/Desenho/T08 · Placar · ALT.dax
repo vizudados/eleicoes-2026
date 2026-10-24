@@ -5,12 +5,23 @@
 */
 VAR _dia = [T08 · escolha · dia]
 VAR _uf = [T08 · escolha · UF]
+VAR _per = [Período · escolhido]
 RETURN
     SWITCH (
         TRUE (),
         NOT ISBLANK ( _dia ),
             "Em " & FORMAT ( _dia, "dd/MM" ) & ", índice de buscas: Lula " & [T08 · dia · Lula] & " e Flávio "
                 & [T08 · dia · Flávio] & ", de 0 a 100.",
+        NOT ISBLANK ( _per ) && ISBLANK ( IF ( ISBLANK ( _uf ), [T08 · período · parte Lula], [T08 · UF · parte Lula] ) ),
+            IF ( ISBLANK ( _uf ), "Brasil", [T08 · UF · nome] ) & ", " & [Período · rótulo] & ": ainda sem dado de buscas.",
+        NOT ISBLANK ( _per ) && NOT ISBLANK ( _uf ),
+            [T08 · UF · nome] & ", " & [Período · rótulo] & ": Lula " & FORMAT ( [T08 · UF · parte Lula], "0%" ) & " e Flávio "
+                & FORMAT ( [T08 · UF · parte Flávio], "0%" ) & " das buscas pelos dois.",
+        NOT ISBLANK ( _per ),
+            "Brasil, " & [Período · rótulo] & ": Lula " & FORMAT ( [T08 · período · parte Lula], "0%" ) & " e Flávio "
+                & FORMAT ( [T08 · período · parte Flávio], "0%" ) & " da soma dos índices diários. Lula na frente em "
+                & [T08 · período · dias com Lula à frente] & " de " & [T08 · período · dias] & " dias; Flávio, em "
+                & [T08 · período · dias com Flávio à frente] & ".",
         NOT ISBLANK ( _uf ),
             [T08 · UF · nome] & ", 2º turno: Lula " & FORMAT ( [T08 · UF · parte Lula], "0%" ) & " e Flávio "
                 & FORMAT ( [T08 · UF · parte Flávio], "0%" ) & " das buscas pelos dois.",

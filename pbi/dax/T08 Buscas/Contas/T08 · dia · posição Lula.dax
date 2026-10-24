@@ -1,7 +1,7 @@
 /*
 @pasta: T08 Buscas\Contas
 @formato: 0
-@descricao: Posição do dia entre os dias da campanha pelo índice de Lula (1 = o dia de mais buscas por ele).
+@descricao: Posição do dia entre os dias da curva pelo índice de Lula (1 = o dia de mais buscas por ele), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2).
 */
 VAR _v = [T08 · dia · Lula]
 VAR _dias =
@@ -11,13 +11,7 @@ VAR _dias =
             REMOVEFILTERS ( 'Trends tempo' ),
             'Trends tempo'[Série] = "Lula [tópico | T2]"
         ),
-        "@v",
-            CALCULATE (
-                MAX ( 'Trends tempo'[Índice] ),
-                REMOVEFILTERS ( 'Trends tempo' ),
-                'Trends tempo'[DataTexto] = EARLIER ( 'Trends tempo'[DataTexto] ),
-                'Trends tempo'[Série] = "Lula [tópico | T2]"
-            )
+        "@v", [T08 · dia · Lula]
     )
 RETURN
     IF ( NOT ISBLANK ( _v ), COUNTROWS ( FILTER ( _dias, [@v] > _v ) ) + 1 )

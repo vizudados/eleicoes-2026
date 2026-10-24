@@ -79,12 +79,12 @@
     {
       "source": "T08_Mapa_Ufs",
       "target": "T08_Curva_Dias",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "T08_Mapa_Ufs",
       "target": "T08_Curva_Html",
-      "type": "NoFilter"
+      "type": "DataFilter"
     },
     {
       "source": "T08_Mapa_Ufs",

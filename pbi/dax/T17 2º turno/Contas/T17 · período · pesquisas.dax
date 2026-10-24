@@ -1,0 +1,22 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0
+@descricao: Pesquisas de 2º turno (votos totais, Lula e Flávio publicados) no período escolhido: só a pesquisa com o campo inteiro dentro da janela do período (T17 · período · campo de / até: no período 'depois', o dia do debate fica fora, como na T07, porque a pesquisa que o pega atravessa o debate). Vazio sem período.
+@oraculo: Antes da Band 23; Depois da Band 1; Antes da Globo 0; Depois da Globo 0
+*/
+VAR _de = [T17 · período · campo de]
+VAR _ate = [T17 · período · campo até]
+RETURN
+    IF (
+        NOT ISBLANK ( _de ),
+        CALCULATE (
+            COUNTROWS ( Pesquisa ),
+            REMOVEFILTERS ( Pesquisa ),
+            Pesquisa[Cenário] = "2º turno",
+            Pesquisa[Tipo] = "totais",
+            NOT ISBLANK ( Pesquisa[Lula] ),
+            NOT ISBLANK ( Pesquisa[Flavio] ),
+            Pesquisa[Campo início] >= _de,
+            Pesquisa[Campo fim] <= _ate
+        ) + 0
+    )

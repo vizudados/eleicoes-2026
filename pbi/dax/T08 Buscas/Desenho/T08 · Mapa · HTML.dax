@@ -1,7 +1,7 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Cabeçalho do mapa de quadrados das buscas no 2º turno: 'N de 27' estados com Lula à frente (contadores), a faixa de cada um entre as UFs e a legenda (barra = parte das buscas; fundo = interesse). Os quadrados são outro visual (T08 · UFs · HTML), na mesma caixa.
+@descricao: Cabeçalho do mapa de quadrados das buscas no 2º turno: 'N de 27' estados com Lula à frente (contadores), a faixa de cada um entre as UFs e a legenda (barra = parte das buscas; fundo = interesse). Os quadrados são outro visual (T08 · UFs · HTML), na mesma caixa. Com um período escolhido no filtro Período: as contas passam a ser as do período (a parte de cada um pela consulta U2 de cada estado, dia a dia), o fundo dos quadrados fica igual (o interesse por estado só existe para o 2º turno inteiro) e a legenda fala só da barra; Depois da Globo, 'aguardando'.
 */
 -- 1 · Leituras
 VAR _n = [T08 · UFs com Lula à frente]
@@ -11,20 +11,41 @@ VAR _lMin = [T08 · UF · menor parte · Lula]
 VAR _lMax = [T08 · UF · maior parte · Lula]
 VAR _fMin = [T08 · UF · menor parte · Flávio]
 VAR _fMax = [T08 · UF · maior parte · Flávio]
+VAR _per = [Período · escolhido]
+VAR _pNome = [Período · nome]
+VAR _pRot = [Período · rótulo]
+VAR _noPer = NOT ISBLANK ( _per )
+VAR _semDado = _noPer && _t = 0
 -- 2 · Textos
 VAR _quem = IF ( _n >= _nF, "Lula", "Flávio" )
 VAR _num = MAX ( _n, _nF )
+VAR _pDatas = MID ( _pRot, SEARCH ( " · ", _pRot, 1, 0 ) + 3, 40 ) -- "05 a 17/10", "21 e 22/10"
+VAR _pDe = IF ( CONTAINSSTRING ( _pDatas, " e " ), "Em ", "De " ) & _pDatas
 VAR _txt =
-    "Lula teve de " & _lMin & "% a " & _lMax & "% das buscas entre os dois; Flávio, de " & _fMin & "% a " & _fMax & "%."
--- 4 · Marcação
-RETURN
-    "<div class='tela t08m'>"
-        & "<div class='sob sobe'>Nos estados · 2º turno, 05 a 22/10</div>"
-        & "<div class='linha sobe d2'><span class='num " & IF ( _quem = "Lula", "lula", "flavio" ) & "'>" & _num
-        & "</span><span class='de'>de</span><span class='num'>" & _t & "</span><span class='man'>com " & _quem & " na frente</span></div>"
-        & "<div class='txt sobe d3'>" & _txt & "</div>"
-        & "<div class='leg entra d14'><div class='bar'><i class='l'></i><i class='f'></i></div>"
+    IF ( _noPer, _pDe & ", Lula", "Lula" ) & " teve de " & _lMin & "% a " & _lMax & "% das buscas entre os dois; Flávio, de "
+        & _fMin & "% a " & _fMax & "%."
+VAR _leg =
+    IF (
+        _noPer,
+        "<div class='leg entra d14'><div class='bar'><i class='l'></i><i class='f'></i></div>"
+            & "barra: as buscas entre os dois no período</div>",
+        "<div class='leg entra d14'><div class='bar'><i class='l'></i><i class='f'></i></div>"
             & "barra: as buscas entre os dois"
             & "<div class='fundo'><i style='background:rgba(203,189,162,.18)'></i><i style='background:rgba(203,189,162,.55)'></i>"
             & "<i style='background:rgba(203,189,162,1)'></i></div>fundo escuro: mais interesse</div>"
+    )
+-- 4 · Marcação
+RETURN
+    "<div class='tela t08m'>"
+        & "<div class='sob sobe'>Nos estados · " & IF ( _noPer, _pNome, "2º turno, 05 a 22/10" ) & "</div>"
+        & IF (
+            _semDado,
+            "<div class='linha sobe d2'><span class='mao'>aguardando</span></div>"
+                & "<div class='txt sobe d3'>Ainda não há dado por estado " & LOWER ( LEFT ( _pNome, 1 ) ) & MID ( _pNome, 2, 40 )
+                & ": as consultas ao Google são de antes do debate de 23/10.</div>",
+            "<div class='linha sobe d2'><span class='num " & IF ( _quem = "Lula", "lula", "flavio" ) & "'>" & _num
+                & "</span><span class='de'>de</span><span class='num'>" & _t & "</span><span class='man'>com " & _quem & " na frente</span></div>"
+                & "<div class='txt sobe d3'>" & _txt & "</div>"
+                & _leg
+        )
     & "</div>"

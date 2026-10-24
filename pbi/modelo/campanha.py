@@ -80,6 +80,20 @@ TABELAS = [
          FONTE],
         oculta=True),
     tabela_csv(
+        "Trends UF tempo", "Google Trends por UF, dia a dia (consulta U2, 23/10/2026: Lula × Flávio como tópicos, uma "
+                           "consulta por UF, 01/08 a 23/10, 23/10 parcial). O índice 0–100 é relativo dentro da "
+                           "consulta de cada UF e não se compara entre UFs; 0 é volume abaixo do mínimo do Google (ou a "
+                           "lacuna de 19 a 21/09), com nota em Observação. A consulta nacional (uf = BR) fica fora: a "
+                           "curva do Brasil segue a T2 de 'Trends tempo'.",
+        "dados/pbi/trends_uf_tempo.csv",
+        [col("uf", "UF", descricao="Sigla da UF da consulta.", oculta=True),
+         col("data", "Data", tipo="date", descricao="Dia da observação.", oculta=True),
+         col("termo", "Série", descricao="Termo e consulta: 'Lula [tópico | U2]' ou 'Flávio Bolsonaro [tópico | U2]'."),
+         col("indice", "Índice", tipo="int", descricao="Índice relativo 0–100 dentro da consulta da UF.", oculta=True,
+             formato="0"),
+         FONTE, OBS],
+        oculta=True, filtro='[UF] <> "BR"'),
+    tabela_csv(
         "Seguidores", "Seguidores dos candidatos por rede e data (Social Blade, Datrix); brancos onde não há total "
                       "publicado.",
         "dados/pbi/seguidores.csv",
@@ -198,4 +212,6 @@ TABELAS = [
 
 RELACOES = [
     ("Trends UF", "UF", "UF", "UF"),
+    # o estado clicado nos cartões da T08 (filtro cruzado em UF[UF]) chega à curva diária do estado
+    ("Trends UF tempo", "UF", "UF", "UF"),
 ]

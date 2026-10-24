@@ -1,0 +1,6 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Média de interações por dia na janela do período (total ÷ dias), no contexto do candidato: o tamanho do balão da direita com período.
+*/
+DIVIDE ( [T09 · período · interações], [T09 · período · interações · dias] )

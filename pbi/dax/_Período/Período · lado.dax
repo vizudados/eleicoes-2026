@@ -1,0 +1,9 @@
+/*
+@pasta: _Período
+@formato: texto
+@descricao: antes ou depois do debate de referência, no período escolhido.
+*/
+IF (
+    ISFILTERED ( 'Período' ) && HASONEVALUE ( 'Período'[Ordem] ),
+    SELECTEDVALUE ( 'Período'[Lado] )
+)

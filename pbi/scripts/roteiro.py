@@ -29,7 +29,7 @@ class Tela:
     pergunta: str
     ato: str
     escura: bool = False
-    filtro: str | None = None          # None · "UF" · "Município" · "Local"
+    filtro: str | None = None          # None · "UF" · "Município" · "Local" · "Período" (debates do 2º turno)
     fonte: str = "Fonte: TSE e IBGE · resultado de 22/10/2026"
 
     @property
@@ -72,16 +72,16 @@ TELAS = [
     # IV · O 2º turno: os votos dos outros, as pesquisas, os dois debates colados, buscas e redes, a apuração
     Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "IV · O 2º turno",
          fonte="Fontes: pesquisas registradas no TSE que publicaram o cruzamento · imprensa (apoios)"),
-    Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "IV · O 2º turno",
+    Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "IV · O 2º turno", filtro="Período",
          fonte="Fonte: pesquisas registradas no TSE e relatórios dos institutos (rejeição) · levantamento de 22/10/2026"),
     Tela("T07", "Debate Band", "O que mudou depois do debate na Band?", "IV · O 2º turno",
          fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
     Tela("T26", "Debate Globo", "O último debate mudou alguma coisa?", "IV · O 2º turno",
          fonte="Fontes: TV Globo e imprensa (fatos do debate), Kantar IBOPE, Google Trends, Bites e pesquisas registradas "
                "no TSE · cada número com a hora em que chegou"),
-    Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "IV · O 2º turno",
-         fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22/10/2026"),
-    Tela("T09", "Redes", "Quem dominou as redes?", "IV · O 2º turno",
+    Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "IV · O 2º turno", filtro="Período",
+         fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22 e 23/10/2026"),
+    Tela("T09", "Redes", "Quem dominou as redes?", "IV · O 2º turno", filtro="Período",
          fonte="Fontes: Bites, Quaest, Social Blade, Datrix e Biblioteca de Anúncios da Meta"),
     Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "IV · O 2º turno", filtro="UF",
          fonte="Fonte: TSE · API pública de divulgação dos resultados, coletada a cada minuto"),

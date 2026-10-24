@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0
+@descricao: Dias da janela de seguidores do período (os dois extremos inclusos).
+@oraculo: Antes da Band 13; Depois da Band 1
+*/
+VAR _i = [T09 · período · seguidores · início]
+VAR _f = [T09 · período · seguidores · fim]
+RETURN
+    IF ( NOT ISBLANK ( _i ), DATEDIFF ( _i, _f, DAY ) + 1 )

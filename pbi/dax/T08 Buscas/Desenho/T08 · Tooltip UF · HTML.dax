@@ -1,7 +1,7 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Dossiê de uma UF no mapa das buscas (ttT08Uf, grão UF[UF]): o interesse pelos dois no estado no 2º turno (índice 0–100, 100 = o estado de mais interesse) e, no período todo, a parte de cada um nas buscas entre os 5 candidatos; nota à mão quando o estado está entre os que mais ou menos buscaram. Só lê contas 'T08 · UF · …'.
+@descricao: Dossiê de uma UF no mapa das buscas (ttT08Uf, grão UF[UF]): o interesse pelos dois no estado no 2º turno (índice 0–100, 100 = o estado de mais interesse) e, no período todo, a parte de cada um nas buscas entre os 5 candidatos; nota à mão quando o estado está entre os que mais ou menos buscaram. Com um período escolhido no filtro Período, a linha dos cinco candidatos dá lugar à parte de cada um entre os dois no período (consulta U2 do estado); Depois da Globo, 'ainda sem dado'. Só lê contas 'T08 · UF · …' e 'Período · …'.
 */
 -- 1 · Leituras
 VAR _nome = [T08 · UF · nome]
@@ -13,12 +13,14 @@ VAR _f = [T08 · UF · Flávio]
 VAR _c5L = [T08 · UF · Lula entre os 5]
 VAR _c5F = [T08 · UF · Flávio entre os 5]
 VAR _nivel = [T08 · UF · nível de interesse]
+VAR _per = [Período · escolhido]
+VAR _pRot = [Período · rótulo]
 -- 2 · Textos
 VAR _mao = SWITCH ( _nivel, "alto", "dos que mais buscaram", "baixo", "dos que menos buscaram", "" )
 -- 4 · Marcação
 RETURN
     IF (
-        NOT ISBLANK ( _l ),
+        NOT ISBLANK ( _l ) || ( NOT ISBLANK ( _per ) && NOT ISBLANK ( _iL ) ),
         "<div class='tt8u'>"
             & "<div class='sob sobe'>" & _uf & " · 2º turno, 05 a 22/10</div>"
             & "<div class='tt sobe d2'>" & _nome & "</div>"
@@ -27,8 +29,14 @@ RETURN
                 & "<div class='flavio'><small>Flávio</small><span class='num'>" & _iF & "</span></div>"
             & "</div>"
             & "<div class='txt sobe d4'>Interesse no estado, de 0 a 100: 100 é o estado que mais buscou cada um.</div>"
-            & "<div class='txt sobe d5'>De 01/08 a 22/10, entre os cinco candidatos: Lula " & _c5L
-                & "% e Flávio " & _c5F & "% das buscas.</div>"
+            & IF (
+                ISBLANK ( _per ),
+                "<div class='txt sobe d5'>De 01/08 a 22/10, entre os cinco candidatos: Lula " & _c5L
+                    & "% e Flávio " & _c5F & "% das buscas.</div>",
+                "<div class='txt sobe d5'>" & _pRot & ": "
+                    & IF ( ISBLANK ( _l ), "ainda sem dado de buscas.", "Lula " & _l & "% e Flávio " & _f & "% das buscas entre os dois." )
+                    & "</div>"
+            )
             & IF ( _mao <> "", "<div class='mao entra d7'>" & _mao & "</div>" )
         & "</div>"
     )

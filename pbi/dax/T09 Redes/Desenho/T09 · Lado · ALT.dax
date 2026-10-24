@@ -1,6 +1,21 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela da coluna da direita (seguidores ganhos e o ritmo depois do 1º turno).
+@descricao: Texto para leitor de tela da coluna da direita (seguidores ganhos e o ritmo depois do 1º turno; com período, a medição que cabe nele ou 'sem dado no período').
 */
-"Seguidores ganhos em Instagram, Facebook, TikTok e YouTube na campanha do 1º turno (Bites) e o ganho médio por dia antes e logo depois do 1º turno. Anúncios na Meta: no dossiê de cada nome."
+VAR _per = [Período · escolhido]
+VAR _psL = [T09 · período · seguidores ganhos · Lula]
+VAR _psF = [T09 · período · seguidores ganhos · Flávio]
+RETURN
+    IF (
+        ISBLANK ( _per ),
+        "Seguidores ganhos em Instagram, Facebook, TikTok e YouTube na campanha do 1º turno (Bites) e o ganho médio por dia antes e logo depois do 1º turno. Anúncios na Meta: no dossiê de cada nome.",
+        "Seguidores ganhos, " & [Período · rótulo] & ": "
+            & IF (
+                ISBLANK ( _psL ) || ISBLANK ( _psF ),
+                IF ( _per = 4, "os números ainda não chegaram.", "sem dado no período." ),
+                "Lula +" & FORMAT ( _psL / 1000, "#,0" ) & " mil e Flávio +" & FORMAT ( _psF / 1000, "#,0" )
+                    & " mil (" & [T09 · período · seguidores · fonte]
+                    & IF ( CONTAINSSTRING ( [T09 · período · seguidores · métrica], "Instagram" ), ", só Instagram", "" ) & ")."
+            )
+    )

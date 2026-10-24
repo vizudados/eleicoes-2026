@@ -1,8 +1,42 @@
 /*
 @pasta: T08 Buscas\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela da curva diária das buscas.
+@descricao: Texto para leitor de tela da curva diária das buscas (≤ 250 caracteres): a do Brasil ou, com um estado clicado nos cartões, a do estado; com um período escolhido no filtro, o que está em destaque nele (no lugar do pico, que fica fora dos períodos).
 */
-"Curva diária das buscas, 01/08 a 22/10, índice 0 a 100. Pico em " & FORMAT ( [T08 · pico · data], "dd/MM" ) & ": Lula "
-    & [T08 · pico · Lula] & " e Flávio " & [T08 · pico · Flávio] & ". Em " & FORMAT ( [T08 · virada · data], "dd/MM" )
-    & ", depois do debate, Flávio " & [T08 · virada · Flávio] & " e Lula " & [T08 · virada · Lula] & "."
+VAR _uf = [T08 · escolha · UF]
+VAR _no = [T08 · UF · no estado]
+VAR _quem = [T08 · virada · quem passa]
+VAR _outro = IF ( _quem = "Flávio", "Lula", "Flávio" )
+VAR _vD = [T08 · virada · data]
+VAR _vQ = IF ( _quem = "Lula", [T08 · virada · Lula], [T08 · virada · Flávio] )
+VAR _vO = IF ( _quem = "Lula", [T08 · virada · Flávio], [T08 · virada · Lula] )
+VAR _per = [Período · escolhido]
+VAR _mD = [T08 · período · maior · data]
+VAR _base =
+    "Curva diária das buscas"
+        & IF ( NOT ISBLANK ( _uf ), " " & LOWER ( LEFT ( _no, 1 ) ) & MID ( _no, 2, 60 ) )
+        & ", 01/08 a 22/10, índice 0 a 100" & IF ( NOT ISBLANK ( _uf ), " dentro do estado" ) & "."
+VAR _txtPer =
+    " Em destaque, " & [Período · rótulo]
+        & IF (
+            ISBLANK ( _mD ),
+            ": ainda sem dado.",
+            ": dia de mais buscas " & FORMAT ( _mD, "dd/MM" ) & ", Lula " & [T08 · período · maior · Lula] & " e Flávio "
+                & [T08 · período · maior · Flávio] & "."
+                & IF (
+                    NOT ISBLANK ( _vD ) && _vD >= [Período · início] && _vD <= [Período · fim],
+                    " Em " & FORMAT ( _vD, "dd/MM" ) & ", " & _quem & " passou " & _outro & "."
+                )
+        )
+RETURN
+    IF (
+        ISBLANK ( _per ),
+        _base & " Pico em " & FORMAT ( [T08 · pico · data], "dd/MM" ) & ": Lula " & [T08 · pico · Lula] & " e Flávio "
+            & [T08 · pico · Flávio] & "."
+            & IF (
+                NOT ISBLANK ( _vD ),
+                " Em " & FORMAT ( _vD, "dd/MM" ) & ", depois do debate, " & _quem & " " & _vQ & " e " & _outro & " " & _vO & ".",
+                IF ( NOT ISBLANK ( _quem ), " Depois do debate, " & _quem & " não passou " & _outro & "." )
+            ),
+        _base & _txtPer
+    )

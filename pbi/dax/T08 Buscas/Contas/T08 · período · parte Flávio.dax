@@ -1,0 +1,10 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: 0%
+@descricao: Parte de Flávio na soma dos índices diários dos dois no período (a mesma consulta, então a soma dos índices pesa como a soma das buscas); vazio sem período ou sem dia.
+@oraculo: Antes da Band, Brasil (T2): Lula 56%
+*/
+VAR _a = [T08 · período · soma Flávio]
+VAR _b = [T08 · período · soma Lula]
+RETURN
+    IF ( NOT ISBLANK ( _a ) && _a + _b > 0, DIVIDE ( _a, _a + _b ) )

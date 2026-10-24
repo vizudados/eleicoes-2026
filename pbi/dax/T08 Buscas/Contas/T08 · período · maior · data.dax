@@ -1,0 +1,22 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: O dia de mais buscas do período: o de maior índice entre os dois, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período; o primeiro, se empatar.
+@oraculo: Antes da Band, Brasil (T2): 05/10
+*/
+VAR _ini = [Período · início]
+VAR _fim = [Período · fim]
+VAR _dias =
+    ADDCOLUMNS (
+        CALCULATETABLE (
+            VALUES ( 'Trends tempo'[DataTexto] ),
+            REMOVEFILTERS ( 'Trends tempo' ),
+            'Trends tempo'[Série] = "Lula [tópico | T2]"
+        ),
+        "@d", [T08 · dia · data],
+        "@m", MAX ( [T08 · dia · Lula], [T08 · dia · Flávio] )
+    )
+VAR _no = FILTER ( _dias, [@d] >= _ini && [@d] <= _fim )
+VAR _max = MAXX ( _no, [@m] )
+RETURN
+    IF ( NOT ISBLANK ( _ini ), MINX ( FILTER ( _no, [@m] = _max ), [@d] ) )
