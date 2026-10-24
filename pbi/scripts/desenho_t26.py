@@ -19,11 +19,11 @@ do arquivo: cancelar o debate ou registrar uma ausência não exige mexer no rel
                       ttT26Cartao (o que mede, quando e de onde, a ressalva e a Band em detalhe)
 
 Contas (pasta T26 Debate na Globo\\Contas): a linha pela Chave; a situação efetiva de cada cartão; a régua da Band nas
-tabelas Debate (audiência e YouTube), 'Trends tempo' (pico da noite, consulta H2) e Monitoramento (Bites); as pesquisas
+tabelas Debate (audiência e YouTube), 'Trends tempo' (pico da noite, consulta H3) e Monitoramento (Bites); as pesquisas
 na tabela Pesquisa com a regra da tela 08: antes = campo inteiro entre os dois debates (19 a 22/10), depois = campo que
 começa depois do dia do debate; quem atravessa o dia fica fora das médias.
 Oráculo (pandas sobre dados/pbi, 23/10/2026): antes 5 pesquisas, Lula 45,98 e Flávio 48,02; depois 0; atravessam 0; Band
-15 pontos (consolidado), 5.385.394 aparelhos, buscas 100 × 91, redes 25,5 mi × 5,0 mi.
+15 pontos (consolidado), 5.385.394 aparelhos, buscas 57 × 51 (H3, 24/10), redes 25,5 mi × 5,0 mi.
 """
 from __future__ import annotations
 
@@ -234,11 +234,12 @@ G.conta("T26 · Band · pico streaming",
         "Pico de aparelhos no YouTube da Band durante o debate de 18/10 (21h30, Poder360; tabela Debate).",
         "VAR _d = [T26 · Band · data]\nRETURN\n    CALCULATE ( MAX ( Debate[Pico no streaming] ), REMOVEFILTERS ( Debate ), "
         "Debate[Data] = _d )", "#,0", "5385394")
-for cand, serie, orc in (("Lula", "Lula [tópico | H2]", "100 (21h)"),
-                         ("Flávio", "Flávio Bolsonaro [tópico | H2]", "91 (22h)")):
+for cand, serie, orc in (("Lula", "Lula [tópico | H3]", "57 (21h)"),
+                         ("Flávio", "Flávio Bolsonaro [tópico | H3]", "51 (22h)")):
     G.conta(f"T26 · Band · buscas · {cand}",
-            f"Pico de {cand} na noite do debate da Band (18/10, das 20h à meia-noite) no Google Trends, consulta H2 "
-            "(tópicos, hora a hora, 15 a 22/10).",
+            f"Pico de {cand} na noite do debate da Band (18/10, das 20h à meia-noite) no Google Trends, consulta H3 "
+            "(tópicos, hora a hora, 17 a 24/10): a mesma consulta que dá o pico da noite da Globo, para a régua "
+            "comparar dentro dela.",
             "VAR _d = [T26 · Band · data]\n"
             "RETURN\n"
             f"    CALCULATE (\n        MAX ( {TT}[Índice] ),\n        REMOVEFILTERS ( {TT} ),\n"
@@ -817,7 +818,7 @@ VAR _bandTxt =
     SWITCH (
         _c,
         "buscas", "Na noite de " & FORMAT ( _band, "dd/MM" ) & ", das 20h à meia-noite, o pico foi " & FORMAT ( _bandBL, "0" ) & " para Lula e "
-            & FORMAT ( _bandBF, "0" ) & " para Flávio (Google Trends, tópicos, a consulta hora a hora do levantamento). Só a proporção entre os dois se compara.",
+            & FORMAT ( _bandBF, "0" ) & " para Flávio (Google Trends, tópicos, hora a hora). É a mesma consulta que mede a noite da Globo, então as duas noites se comparam: 100 é a hora mais buscada da semana.",
         "audiencia", "Consolidado: " & #N1(_bandC)# & " pontos; prévia: " & #N1(_bandP)# & ". Fonte: " & _bandFonte & ".",
         "streaming", FORMAT ( _bandS, "#,0" ) & " aparelhos ao mesmo tempo, só no canal da Band no YouTube (Poder360).",
         "redes", "Lula " & FORMAT ( _bandRL, "#,0" ) & " e Flávio " & FORMAT ( _bandRF, "#,0" ) & " interações nas 24 horas depois do debate (Bites, via Poder360).",

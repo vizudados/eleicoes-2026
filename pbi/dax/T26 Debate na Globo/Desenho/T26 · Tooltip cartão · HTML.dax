@@ -59,7 +59,7 @@ VAR _bandTxt =
     SWITCH (
         _c,
         "buscas", "Na noite de " & FORMAT ( _band, "dd/MM" ) & ", das 20h à meia-noite, o pico foi " & FORMAT ( _bandBL, "0" ) & " para Lula e "
-            & FORMAT ( _bandBF, "0" ) & " para Flávio (Google Trends, tópicos, a consulta hora a hora do levantamento). Só a proporção entre os dois se compara.",
+            & FORMAT ( _bandBF, "0" ) & " para Flávio (Google Trends, tópicos, hora a hora). É a mesma consulta que mede a noite da Globo, então as duas noites se comparam: 100 é a hora mais buscada da semana.",
         "audiencia", "Consolidado: " & IF ( _bandC = INT ( _bandC ), FORMAT ( _bandC, "0" ), FORMAT ( _bandC, "0.0" ) ) & " pontos; prévia: " & IF ( _bandP = INT ( _bandP ), FORMAT ( _bandP, "0" ), FORMAT ( _bandP, "0.0" ) ) & ". Fonte: " & _bandFonte & ".",
         "streaming", FORMAT ( _bandS, "#,0" ) & " aparelhos ao mesmo tempo, só no canal da Band no YouTube (Poder360).",
         "redes", "Lula " & FORMAT ( _bandRL, "#,0" ) & " e Flávio " & FORMAT ( _bandRF, "#,0" ) & " interações nas 24 horas depois do debate (Bites, via Poder360).",

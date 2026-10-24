@@ -28495,14 +28495,14 @@ table _Medidas
 		displayFolder: T26 Debate na Globo\Contas
 		lineageTag: 7b88e41a-f1f9-57a2-ab1c-88628226f585
 
-	/// Pico de Flávio na noite do debate da Band (18/10, das 20h à meia-noite) no Google Trends, consulta H2 (tópicos, hora a hora, 15 a 22/10).
+	/// Pico de Flávio na noite do debate da Band (18/10, das 20h à meia-noite) no Google Trends, consulta H3 (tópicos, hora a hora, 17 a 24/10): a mesma consulta que dá o pico da noite da Globo, para a régua comparar dentro dela.
 	measure 'T26 · Band · buscas · Flávio' =
 			VAR _d = [T26 · Band · data]
 			RETURN
 			    CALCULATE (
 			        MAX ( 'Trends tempo'[Índice] ),
 			        REMOVEFILTERS ( 'Trends tempo' ),
-			        'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | H2]",
+			        'Trends tempo'[Série] = "Flávio Bolsonaro [tópico | H3]",
 			        'Trends tempo'[Momento] >= _d + TIME ( 20, 0, 0 ),
 			        'Trends tempo'[Momento] < _d + 1
 			    )
@@ -28510,14 +28510,14 @@ table _Medidas
 		displayFolder: T26 Debate na Globo\Contas
 		lineageTag: 90a48e09-c2cc-5bba-bec8-b2f64f14d021
 
-	/// Pico de Lula na noite do debate da Band (18/10, das 20h à meia-noite) no Google Trends, consulta H2 (tópicos, hora a hora, 15 a 22/10).
+	/// Pico de Lula na noite do debate da Band (18/10, das 20h à meia-noite) no Google Trends, consulta H3 (tópicos, hora a hora, 17 a 24/10): a mesma consulta que dá o pico da noite da Globo, para a régua comparar dentro dela.
 	measure 'T26 · Band · buscas · Lula' =
 			VAR _d = [T26 · Band · data]
 			RETURN
 			    CALCULATE (
 			        MAX ( 'Trends tempo'[Índice] ),
 			        REMOVEFILTERS ( 'Trends tempo' ),
-			        'Trends tempo'[Série] = "Lula [tópico | H2]",
+			        'Trends tempo'[Série] = "Lula [tópico | H3]",
 			        'Trends tempo'[Momento] >= _d + TIME ( 20, 0, 0 ),
 			        'Trends tempo'[Momento] < _d + 1
 			    )
@@ -29694,7 +29694,7 @@ table _Medidas
 			    SWITCH (
 			        _c,
 			        "buscas", "Na noite de " & FORMAT ( _band, "dd/MM" ) & ", das 20h à meia-noite, o pico foi " & FORMAT ( _bandBL, "0" ) & " para Lula e "
-			            & FORMAT ( _bandBF, "0" ) & " para Flávio (Google Trends, tópicos, a consulta hora a hora do levantamento). Só a proporção entre os dois se compara.",
+			            & FORMAT ( _bandBF, "0" ) & " para Flávio (Google Trends, tópicos, hora a hora). É a mesma consulta que mede a noite da Globo, então as duas noites se comparam: 100 é a hora mais buscada da semana.",
 			        "audiencia", "Consolidado: " & IF ( _bandC = INT ( _bandC ), FORMAT ( _bandC, "0" ), FORMAT ( _bandC, "0.0" ) ) & " pontos; prévia: " & IF ( _bandP = INT ( _bandP ), FORMAT ( _bandP, "0" ), FORMAT ( _bandP, "0.0" ) ) & ". Fonte: " & _bandFonte & ".",
 			        "streaming", FORMAT ( _bandS, "#,0" ) & " aparelhos ao mesmo tempo, só no canal da Band no YouTube (Poder360).",
 			        "redes", "Lula " & FORMAT ( _bandRL, "#,0" ) & " e Flávio " & FORMAT ( _bandRF, "#,0" ) & " interações nas 24 horas depois do debate (Bites, via Poder360).",
