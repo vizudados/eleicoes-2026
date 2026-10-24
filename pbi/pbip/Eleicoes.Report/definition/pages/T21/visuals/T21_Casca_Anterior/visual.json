@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 16 Escola'"
+                  "Value": "'Voltar: 16 Zona eleitoral'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 16 Escola'"
+                  "Value": "'Voltar: 16 Zona eleitoral'"
                 }
               }
             },

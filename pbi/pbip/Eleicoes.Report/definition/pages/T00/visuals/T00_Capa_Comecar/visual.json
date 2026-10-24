@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Começar: 01 · Placar'"
+                  "Value": "'Começar: 01 · Lula · quem é'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Começar: 01 · Placar'"
+                  "Value": "'Começar: 01 · Lula · quem é'"
                 }
               }
             },

@@ -1632,7 +1632,7 @@ table _Medidas
 			-- 2 · Textos
 			RETURN
 			    LEFT (
-			        "Placar do 1º turno, " & _rec & ": Flávio Bolsonaro " & SWITCH ( TRUE (), ABS ( _fv ) >= 1000000, FORMAT ( _fv / 1000000, "0.00" ) & " mi", ABS ( _fv ) >= 1000, FORMAT ( _fv / 1000, "0.0" ) & " mil", FORMAT ( _fv, "#,0" ) ) & " (" & FORMAT ( _fp, "0.0%" ) & "), Lula "
+			        "Resultado do 1º turno, " & _rec & ": Flávio Bolsonaro " & SWITCH ( TRUE (), ABS ( _fv ) >= 1000000, FORMAT ( _fv / 1000000, "0.00" ) & " mi", ABS ( _fv ) >= 1000, FORMAT ( _fv / 1000, "0.0" ) & " mil", FORMAT ( _fv, "#,0" ) ) & " (" & FORMAT ( _fp, "0.0%" ) & "), Lula "
 			            & SWITCH ( TRUE (), ABS ( _lv ) >= 1000000, FORMAT ( _lv / 1000000, "0.00" ) & " mi", ABS ( _lv ) >= 1000, FORMAT ( _lv / 1000, "0.0" ) & " mil", FORMAT ( _lv, "#,0" ) ) & " (" & FORMAT ( _lp, "0.0%" ) & "). Diferença de " & FORMAT ( _dif, "#,0" ) & " votos.",
 			        250
 			    )
@@ -22796,7 +22796,7 @@ table _Medidas
 			        _n = 0,
 			        "A curva da noite começa às 17h, com a primeira divulgação do TSE.",
 			        "Uma faixa por atualização do TSE (" & _n & IF ( _n = 1, " atualização", " atualizações" )
-			            & " até agora): passe o mouse para ver o que mudou; clique para ver o placar daquele momento."
+			            & " até agora): passe o mouse para ver o que mudou; clique para ver o resultado parcial daquele momento."
 			    )
 		displayFolder: T18 Apuração\Desenho
 		lineageTag: 152bfb0f-e474-5329-9915-174ee0676db1

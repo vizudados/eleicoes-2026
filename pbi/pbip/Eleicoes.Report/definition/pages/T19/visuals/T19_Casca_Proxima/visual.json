@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 16 Escola — Como votou cada escola da cidade?'"
+                  "Value": "'Próxima: 16 Zona eleitoral — Como votou cada zona eleitoral da cidade?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 16 Escola — Como votou cada escola da cidade?'"
+                  "Value": "'Próxima: 16 Zona eleitoral — Como votou cada zona eleitoral da cidade?'"
                 }
               }
             },

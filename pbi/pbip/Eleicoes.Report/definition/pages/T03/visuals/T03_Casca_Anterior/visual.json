@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 04 Placar'"
+                  "Value": "'Voltar: 04 Resultado'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 04 Placar'"
+                  "Value": "'Voltar: 04 Resultado'"
                 }
               }
             },

@@ -278,7 +278,7 @@ def desenho_placar():
         -- 2 · Textos
         RETURN
             LEFT (
-                "Placar do 1º turno, " & _rec & ": Flávio Bolsonaro " & @MI(_fv)@ & " (" & @PCT(_fp)@ & "), Lula "
+                "Resultado do 1º turno, " & _rec & ": Flávio Bolsonaro " & @MI(_fv)@ & " (" & @PCT(_fp)@ & "), Lula "
                     & @MI(_lv)@ & " (" & @PCT(_lp)@ & "). Diferença de " & @INT(_dif)@ & " votos.",
                 250
             )

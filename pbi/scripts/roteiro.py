@@ -30,7 +30,7 @@ class Tela:
     pergunta: str
     ato: str
     escura: bool = False
-    filtro: str | None = None          # None · "UF" · "Município" · "Local" · "Período" (debates do 2º turno)
+    filtro: str | None = None          # None · "UF" · "Município" · "Zona" · "Período" (debates do 2º turno)
     fonte: str = "Fonte: TSE e IBGE · resultado de 22/10/2026"
 
     @property
@@ -53,7 +53,8 @@ TELAS = [
     Tela("T10", "Pesquisas", "O que as pesquisas diziam antes da urna?", "I · Antes da urna",
          fonte="Fonte: pesquisas registradas no TSE (levantamento de 22/10/2026) e resultado do TSE"),
     # II · O 1º turno: o resultado
-    Tela("T01", "Placar", "Quem venceu o 1º turno, e por quanto?", "II · O 1º turno", filtro="UF"),
+    # "Resultado", não "Placar" (pedido do dono, 24/10/2026: tirar "placar" do painel e dos vídeos)
+    Tela("T01", "Resultado", "Quem venceu o 1º turno, e por quanto?", "II · O 1º turno", filtro="UF"),
     Tela("T03", "Votos de Lula", "Onde estão os votos de Lula?", "II · O 1º turno", filtro="UF"),
     Tela("T05", "Votos de Flávio", "Onde estão os votos de Flávio?", "II · O 1º turno", filtro="UF"),
     Tela("T06", "Ausência", "Quantos brasileiros não escolheram ninguém?", "II · O 1º turno", filtro="UF",
@@ -72,9 +73,11 @@ TELAS = [
     Tela("T15", "Minha cidade", "Como votou a minha cidade?", "III · O mapa", filtro="Município"),
     # IV · Explore você mesmo
     Tela("T19", "Explorador", "Onde está a minha pergunta? Explore os 5.571 municípios", "IV · Explore você mesmo"),
-    Tela("T20", "Escola", "Como votou cada escola da cidade?", "IV · Explore você mesmo", filtro="Local",
-         fonte="Fontes: TSE (votação por seção e cadastro de locais de votação) e IBGE (malha municipal) · "
-               "27 capitais, as 6 maiores que viraram e Contagem (MG)"),
+    # zona eleitoral, o nome oficial da Justiça Eleitoral, no lugar de escola (pedido do dono, 24/10/2026)
+    Tela("T20", "Zona eleitoral", "Como votou cada zona eleitoral da cidade?", "IV · Explore você mesmo",
+         filtro="Zona",
+         fonte="Fontes: TSE (votação por seção, somada por zona eleitoral, e cadastro de locais de votação) e IBGE "
+               "(malha municipal) · 27 capitais, as 6 maiores que viraram e Contagem (MG)"),
     Tela("T21", "20 anos", "Como o mapa mudou em 20 anos?", "IV · Explore você mesmo"),
     Tela("T22", "Simulador", "E se os eleitores dos outros candidatos escolherem?", "IV · Explore você mesmo",
          fonte="Simulação a partir do 1º turno (TSE); não é previsão"),

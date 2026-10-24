@@ -9,5 +9,5 @@ RETURN
         _n = 0,
         "A curva da noite começa às 17h, com a primeira divulgação do TSE.",
         "Uma faixa por atualização do TSE (" & _n & IF ( _n = 1, " atualização", " atualizações" )
-            & " até agora): passe o mouse para ver o que mudou; clique para ver o placar daquele momento."
+            & " até agora): passe o mouse para ver o que mudou; clique para ver o resultado parcial daquele momento."
     )

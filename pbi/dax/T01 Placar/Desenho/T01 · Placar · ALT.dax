@@ -13,7 +13,7 @@ VAR _dif = [T01 · diferença]
 -- 2 · Textos
 RETURN
     LEFT (
-        "Placar do 1º turno, " & _rec & ": Flávio Bolsonaro " & SWITCH ( TRUE (), ABS ( _fv ) >= 1000000, FORMAT ( _fv / 1000000, "0.00" ) & " mi", ABS ( _fv ) >= 1000, FORMAT ( _fv / 1000, "0.0" ) & " mil", FORMAT ( _fv, "#,0" ) ) & " (" & FORMAT ( _fp, "0.0%" ) & "), Lula "
+        "Resultado do 1º turno, " & _rec & ": Flávio Bolsonaro " & SWITCH ( TRUE (), ABS ( _fv ) >= 1000000, FORMAT ( _fv / 1000000, "0.00" ) & " mi", ABS ( _fv ) >= 1000, FORMAT ( _fv / 1000, "0.0" ) & " mil", FORMAT ( _fv, "#,0" ) ) & " (" & FORMAT ( _fp, "0.0%" ) & "), Lula "
             & SWITCH ( TRUE (), ABS ( _lv ) >= 1000000, FORMAT ( _lv / 1000000, "0.00" ) & " mi", ABS ( _lv ) >= 1000, FORMAT ( _lv / 1000, "0.0" ) & " mil", FORMAT ( _lv, "#,0" ) ) & " (" & FORMAT ( _lp, "0.0%" ) & "). Diferença de " & FORMAT ( _dif, "#,0" ) & " votos.",
         250
     )
