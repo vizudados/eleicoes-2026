@@ -76,21 +76,21 @@ VAR _viraram = [T20 · locais que viraram]
 VAR _paraLula = [T20 · locais que viraram para Lula]
 -- 2 · Textos
 {_escapa("_cidade", "[T20 · cidade]")}
-VAR _rotLocal = IF ( _lula = 1, "local de votação com Lula à frente em 2026", "locais de votação com Lula à frente em 2026" )
+VAR _rotLocal = IF ( _lula = 1, "zona eleitoral com Lula à frente em 2026", "zonas eleitorais com Lula à frente em 2026" )
 VAR _antes =
     SWITCH (
         TRUE (),
-        _lula22 = 0 && _lula = 0, "Em 2022, também nenhum",
-        _lula22 = 0, "Em 2022, nenhum",
+        _lula22 = 0 && _lula = 0, "Em 2022, também nenhuma",
+        _lula22 = 0, "Em 2022, nenhuma",
         _lula22 = 1, "Em 2022, <span class='num'>1</span>",
         "Em 2022, eram <span class='num'>" & FORMAT ( _lula22, {N} ) & "</span>"
-    ) & IF ( _n22 = 1, " no único local.", " dos " & FORMAT ( _n22, {N} ) & " locais." )
+    ) & IF ( _n22 = 1, " na única zona.", " das " & FORMAT ( _n22, {N} ) & " zonas." )
 VAR _txtViraram =
     SWITCH (
         TRUE (),
-        _viraram = 0, "Nenhum local virou de Lula para Flávio",
-        _viraram = 1, "1 local virou de Lula para Flávio",
-        FORMAT ( _viraram, {N} ) & " locais viraram de Lula para Flávio"
+        _viraram = 0, "Nenhuma zona virou de Lula para Flávio",
+        _viraram = 1, "1 zona virou de Lula para Flávio",
+        FORMAT ( _viraram, {N} ) & " zonas viraram de Lula para Flávio"
     ) & SWITCH (
         TRUE (),
         _paraLula = 0, ".",
@@ -121,9 +121,9 @@ VAR _n22 = [T20 · locais em 2022]
 VAR _viraram = [T20 · locais que viraram]
 VAR _paraLula = [T20 · locais que viraram para Lula]
 RETURN
-    [T20 · cidade] & ": Lula ficou à frente em " & FORMAT ( _lula, {N} ) & " dos " & FORMAT ( _n, {N} )
-        & " locais de votação em 2026; em 2022, em " & FORMAT ( _lula22, {N} ) & " dos " & FORMAT ( _n22, {N} )
-        & ". " & FORMAT ( _viraram, {N} ) & IF ( _viraram = 1, " local virou", " locais viraram" )
+    [T20 · cidade] & ": Lula ficou à frente em " & FORMAT ( _lula, {N} ) & " das " & FORMAT ( _n, {N} )
+        & " zonas eleitorais em 2026; em 2022, em " & FORMAT ( _lula22, {N} ) & " das " & FORMAT ( _n22, {N} )
+        & ". " & FORMAT ( _viraram, {N} ) & IF ( _viraram = 1, " zona virou", " zonas viraram" )
         & " de Lula para Flávio e " & FORMAT ( _paraLula, {N} ) & " de Flávio para Lula."
 """)
     # --- ponto do mapa (um por local da cidade); o último ponto da cidade leva os rótulos de bairro, por cima de tudo
@@ -195,15 +195,15 @@ RETURN
         & "</div>"
     )
 """)
-    gravar("T20 · Mapa · ALT", "Texto alternativo do mapa das escolas.", rf"""
+    gravar("T20 · Mapa · ALT", "Texto alternativo do mapa das zonas eleitorais.", rf"""
 -- 1 · Leituras
 VAR _n = [T20 · locais]
 VAR _lula = [T20 · locais com Lula à frente]
 VAR _fora = [T20 · locais sem endereço] + [T20 · locais fora do recorte]
 RETURN
-    "Mapa de " & [T20 · cidade] & " com " & FORMAT ( _n - _fora, {N} ) & " dos " & FORMAT ( _n, {N} )
-        & " locais de votação: " & FORMAT ( _lula, {N} ) & " com Lula à frente (vermelho) e os outros com Flávio "
-        & "(azul). Passe o mouse num ponto para ver a escola; clique para pôr na ficha."
+    "Mapa de " & [T20 · cidade] & " com " & FORMAT ( _n - _fora, {N} ) & " das " & FORMAT ( _n, {N} )
+        & " zonas eleitorais: " & FORMAT ( _lula, {N} ) & " com Lula à frente (vermelho) e as outras com Flávio "
+        & "(azul). Passe o mouse num ponto para ver a zona; clique para pôr na ficha."
 """)
     # --- o mapa de fundo: contorno da cidade em rabisco, mapinha do recorte e o anel do local da ficha
     gravar("T20 · Escolhido · HTML", "A camada atrás dos pontos: o contorno da cidade escolhida (rabisco que se desenha, "
@@ -269,7 +269,7 @@ RETURN
     "<div class='tela t20e'>" & _mapa & _mini & _anel & "</div>"
 """)
     gravar("T20 · Escolhido · ALT", "Texto alternativo do anel do local escolhido.", r"""
-"Mapa de " & [T20 · cidade] & "; local em destaque: " & [T20 · local escolhido]
+"Mapa de " & [T20 · cidade] & "; zona em destaque: " & [T20 · local escolhido]
 """)
     # --- ficha (post-it)
     gravar("T20 · Ficha · HTML", "A ficha do local escolhido (post-it com alfinete): bairro, seções e válidos, Lula × "
@@ -326,8 +326,8 @@ RETURN
     )
 """)
     gravar("T20 · Quedas · ALT", "Texto alternativo da lista dos locais pela queda.", rf"""
-"Os " & FORMAT ( [T20 · locais], {N} ) & " locais de votação de " & [T20 · cidade]
-    & ", da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a escola na ficha."
+"Os " & FORMAT ( [T20 · locais], {N} ) & " zonas eleitorais de " & [T20 · cidade]
+    & ", da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a zona na ficha."
 """)
     # --- o aviso honesto do mapa (no cartão "como explorar")
     gravar("T20 · Como · HTML", "O aviso do cartão 'como explorar', por cidade: quantos locais não aparecem no mapa (sem "
@@ -337,8 +337,8 @@ RETURN
 VAR _sem = [T20 · locais sem endereço]
 VAR _fora = [T20 · locais fora do recorte]
 -- 2 · Textos
-VAR _txtSem = FORMAT ( _sem, {N} ) & IF ( _sem = 1, " local sem endereço", " locais sem endereço" )
-VAR _txtFora = FORMAT ( _fora, {N} ) & IF ( _fora = 1, " local fora do recorte", " locais fora do recorte" )
+VAR _txtSem = FORMAT ( _sem, {N} ) & IF ( _sem = 1, " zona sem endereço", " zonas sem endereço" )
+VAR _txtFora = FORMAT ( _fora, {N} ) & IF ( _fora = 1, " zona fora do recorte", " zonas fora do recorte" )
 VAR _quem =
     SWITCH (
         TRUE (),
@@ -350,16 +350,16 @@ VAR _nota =
     IF (
         _sem + _fora > 0,
         _quem & IF ( _sem + _fora = 1, ", mas entra nas contas e na lista.", ", mas entram nas contas e na lista." ),
-        "Todos os locais da cidade estão no mapa."
+        "Todas as zonas da cidade estão no mapa."
     )
 -- 4 · Marcação
 RETURN
     "<div class='tela t20n'><div class='nota entra d6'>" & _nota & "</div></div>"
 """)
     gravar("T20 · Como · ALT", "Texto alternativo do cartão 'como explorar'.", r"""
-"Como explorar: passe o mouse num ponto para ver a escola; clique num ponto ou numa linha para levá-la à ficha; o filtro do topo troca a cidade e procura a escola. "
+"Como explorar: passe o mouse num ponto para ver a zona; clique num ponto ou numa linha para levá-la à ficha; o filtro do topo troca a cidade e procura a zona. "
     & IF ( [T20 · locais sem endereço] + [T20 · locais fora do recorte] > 0,
-        FORMAT ( [T20 · locais sem endereço] + [T20 · locais fora do recorte], "#,0" ) & " locais não aparecem no mapa.", "" )
+        FORMAT ( [T20 · locais sem endereço] + [T20 · locais fora do recorte], "#,0" ) & " zonas não aparecem no mapa.", "" )
 """)
     # --- tooltip (post-it do hover)
     gravar("T20 · Tooltip escola · HTML", "Post-it do local sob o mouse (página de tooltip ttT20Escola): bairro, "
@@ -381,12 +381,12 @@ VAR _marcadas = [T20 · escolas no filtro]
 VAR _locais = [T20 · locais]
 VAR _id = _escola
 RETURN
-    "Filtro de cidade e escola: " & [T20 · cidade]
+    "Filtro de cidade e zona: " & [T20 · cidade]
         & SWITCH (
             TRUE (),
             NOT ISBLANK ( _escola ), " · " & {_no_local("[T20 · nome do local]")},
-            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, {N} ) & " escolas marcadas",
-            " (nenhuma escola escolhida)"
+            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, {N} ) & " zonas marcadas",
+            " (nenhuma zona escolhida)"
         )
 """)
 
@@ -411,10 +411,11 @@ VAR _virouLula = {_no_local("[T20 · virou para Lula]")}
 {_escapa("_nome", "[T20 · local escolhido]")}
 {_escapa("_bairro", "_bairroL")}
 {_escapa("_cidade", "[T20 · cidade (nome)]")}
-VAR _sobre = IF ( _ha = 1, "A escola escolhida", "Um exemplo · " & IF ( _bairro <> "", _bairro, _cidade ) )
+VAR _sobre = IF ( _ha = 1, "A zona escolhida", "Um exemplo · " & _cidade )
+-- a zona: quantos locais de votação (a coluna Bairro), seções e válidos de 2026, numa linha só
 VAR _sub =
-    _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" ) & " votos válidos em 2026"
-        & IF ( _bairro <> "" && _ha = 1, " · " & _bairro, "" )
+    IF ( _bairro <> "", _bairro & " · ", "" ) & _secoes & IF ( _secoes = 1, " seção · ", " seções · " )
+        & FORMAT ( _val, "#,0" ) & " válidos"
 VAR _t18 = IF ( ISBLANK ( _m18 ), "—", FORMAT ( _m18 * 100, {PP} ) )
 VAR _t22 = IF ( ISBLANK ( _m22 ), "—", FORMAT ( _m22 * 100, {PP} ) )
 VAR _t26 = FORMAT ( _m26 * 100, {PP} )
@@ -424,7 +425,7 @@ VAR _c26 = IF ( _m26 > 0, "lula", IF ( _m26 < 0, "flavio", "" ) )
 VAR _nota =
     SWITCH (
         TRUE (),
-        _ha = 0 && _exemplo = "virou", "a maior escola que virou",
+        _ha = 0 && _exemplo = "virou", "a maior zona que virou",
         _ha = 0, "a maior queda da cidade",
         _virou = 1, "virou para Flávio",
         _virouLula = 1, "virou para Lula",
@@ -688,7 +689,7 @@ def corpo_quedas() -> str:
 def corpo_como() -> str:
     """O cartão 'como explorar' e a legenda (fixos) e, no {{content}}, o aviso de quantos locais ficam fora do mapa na
     cidade escolhida (T20 · Como · HTML)."""
-    escola = estilo.imagem_b64("docs/midia/arte/icones/escola-tinta.png", 110)
+    escola = estilo.imagem_b64("docs/midia/arte/icones/urna-tinta.png", 110)
     css = (
         ".t20x img{position:absolute;right:0;top:0;width:72px;opacity:.9}"
         ".t20x .rot{position:absolute;left:0;top:14px}"
@@ -701,12 +702,12 @@ def corpo_como() -> str:
     )
     return (f"<style>{css}</style><div class='tela t20x'><img class='entra' alt='' src='{escola}'/>"
             f"<div class='rot sobe'>Como explorar</div>"
-            f"<div class='txt sobe d2'>Passe o mouse num ponto para ver o post-it da escola; clique num ponto ou numa "
-            f"linha para levá-la à ficha. O filtro do topo troca a cidade e acha a escola pelo nome.</div>"
+            f"<div class='txt sobe d2'>Passe o mouse num ponto para ver o post-it da zona; clique num ponto ou numa "
+            f"linha para levá-la à ficha. O filtro do topo troca a cidade e acha a zona pelo número.</div>"
             f"<div class='leg entra d4'><div><i style='background:{FAIXAS[-2][1]}'></i>Lula à frente&nbsp;&nbsp;&nbsp;"
             f"<i style='background:{FAIXAS[1][1]}'></i>Flávio à frente</div>"
             f"<div class='p'>cor forte = vantagem maior · tamanho = votos</div>"
-            f"<div><i class='a'></i>a escola da ficha</div></div></div>{{{{content}}}}")
+            f"<div><i class='a'></i>a zona da ficha</div></div></div>{{{{content}}}}")
 
 
 CSS_TOOLTIP = (

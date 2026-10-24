@@ -3,5 +3,5 @@
 @formato: texto
 @descricao: Texto alternativo da lista dos locais pela queda.
 */
-"Os " & FORMAT ( [T20 · locais], "#,0" ) & " locais de votação de " & [T20 · cidade]
-    & ", da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a escola na ficha."
+"Os " & FORMAT ( [T20 · locais], "#,0" ) & " zonas eleitorais de " & [T20 · cidade]
+    & ", da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a zona na ficha."

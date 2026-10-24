@@ -24652,9 +24652,9 @@ table _Medidas
 
 	/// Texto alternativo do cartão 'como explorar'.
 	measure 'T20 · Como · ALT' =
-			"Como explorar: passe o mouse num ponto para ver a escola; clique num ponto ou numa linha para levá-la à ficha; o filtro do topo troca a cidade e procura a escola. "
+			"Como explorar: passe o mouse num ponto para ver a zona; clique num ponto ou numa linha para levá-la à ficha; o filtro do topo troca a cidade e procura a zona. "
 			    & IF ( [T20 · locais sem endereço] + [T20 · locais fora do recorte] > 0,
-			        FORMAT ( [T20 · locais sem endereço] + [T20 · locais fora do recorte], "#,0" ) & " locais não aparecem no mapa.", "" )
+			        FORMAT ( [T20 · locais sem endereço] + [T20 · locais fora do recorte], "#,0" ) & " zonas não aparecem no mapa.", "" )
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 509b4caf-a673-5691-8ddc-f68b05320395
 
@@ -24664,8 +24664,8 @@ table _Medidas
 			VAR _sem = [T20 · locais sem endereço]
 			VAR _fora = [T20 · locais fora do recorte]
 			-- 2 · Textos
-			VAR _txtSem = FORMAT ( _sem, "#,0" ) & IF ( _sem = 1, " local sem endereço", " locais sem endereço" )
-			VAR _txtFora = FORMAT ( _fora, "#,0" ) & IF ( _fora = 1, " local fora do recorte", " locais fora do recorte" )
+			VAR _txtSem = FORMAT ( _sem, "#,0" ) & IF ( _sem = 1, " zona sem endereço", " zonas sem endereço" )
+			VAR _txtFora = FORMAT ( _fora, "#,0" ) & IF ( _fora = 1, " zona fora do recorte", " zonas fora do recorte" )
 			VAR _quem =
 			    SWITCH (
 			        TRUE (),
@@ -24677,7 +24677,7 @@ table _Medidas
 			    IF (
 			        _sem + _fora > 0,
 			        _quem & IF ( _sem + _fora = 1, ", mas entra nas contas e na lista.", ", mas entram nas contas e na lista." ),
-			        "Todos os locais da cidade estão no mapa."
+			        "Todas as zonas da cidade estão no mapa."
 			    )
 			-- 4 · Marcação
 			RETURN
@@ -24687,7 +24687,7 @@ table _Medidas
 
 	/// Texto alternativo do anel do local escolhido.
 	measure 'T20 · Escolhido · ALT' =
-			"Mapa de " & [T20 · cidade] & "; local em destaque: " & [T20 · local escolhido]
+			"Mapa de " & [T20 · cidade] & "; zona em destaque: " & [T20 · local escolhido]
 		displayFolder: T20 Escola\Desenho
 		lineageTag: fa071ec2-b80d-586a-9b83-39955d17f13f
 
@@ -24796,10 +24796,11 @@ table _Medidas
 			VAR _cidade0 = [T20 · cidade (nome)]
 			VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
 			VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
-			VAR _sobre = IF ( _ha = 1, "A escola escolhida", "Um exemplo · " & IF ( _bairro <> "", _bairro, _cidade ) )
+			VAR _sobre = IF ( _ha = 1, "A zona escolhida", "Um exemplo · " & _cidade )
+			-- a zona: quantos locais de votação (a coluna Bairro), seções e válidos de 2026, numa linha só
 			VAR _sub =
-			    _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" ) & " votos válidos em 2026"
-			        & IF ( _bairro <> "" && _ha = 1, " · " & _bairro, "" )
+			    IF ( _bairro <> "", _bairro & " · ", "" ) & _secoes & IF ( _secoes = 1, " seção · ", " seções · " )
+			        & FORMAT ( _val, "#,0" ) & " válidos"
 			VAR _t18 = IF ( ISBLANK ( _m18 ), "—", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
 			VAR _t22 = IF ( ISBLANK ( _m22 ), "—", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
 			VAR _t26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
@@ -24809,7 +24810,7 @@ table _Medidas
 			VAR _nota =
 			    SWITCH (
 			        TRUE (),
-			        _ha = 0 && _exemplo = "virou", "a maior escola que virou",
+			        _ha = 0 && _exemplo = "virou", "a maior zona que virou",
 			        _ha = 0, "a maior queda da cidade",
 			        _virou = 1, "virou para Flávio",
 			        _virouLula = 1, "virou para Lula",
@@ -24872,26 +24873,26 @@ table _Medidas
 			VAR _locais = [T20 · locais]
 			VAR _id = _escola
 			RETURN
-			    "Filtro de cidade e escola: " & [T20 · cidade]
+			    "Filtro de cidade e zona: " & [T20 · cidade]
 			        & SWITCH (
 			            TRUE (),
 			            NOT ISBLANK ( _escola ), " · " & CALCULATE ( [T20 · nome do local], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id ),
-			            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, "#,0" ) & " escolas marcadas",
-			            " (nenhuma escola escolhida)"
+			            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, "#,0" ) & " zonas marcadas",
+			            " (nenhuma zona escolhida)"
 			        )
 		displayFolder: T20 Escola\Desenho
 		lineageTag: a4a2825d-700a-526f-a110-2f7eaa2152a9
 
-	/// Texto alternativo do mapa das escolas.
+	/// Texto alternativo do mapa das zonas eleitorais.
 	measure 'T20 · Mapa · ALT' =
 			-- 1 · Leituras
 			VAR _n = [T20 · locais]
 			VAR _lula = [T20 · locais com Lula à frente]
 			VAR _fora = [T20 · locais sem endereço] + [T20 · locais fora do recorte]
 			RETURN
-			    "Mapa de " & [T20 · cidade] & " com " & FORMAT ( _n - _fora, "#,0" ) & " dos " & FORMAT ( _n, "#,0" )
-			        & " locais de votação: " & FORMAT ( _lula, "#,0" ) & " com Lula à frente (vermelho) e os outros com Flávio "
-			        & "(azul). Passe o mouse num ponto para ver a escola; clique para pôr na ficha."
+			    "Mapa de " & [T20 · cidade] & " com " & FORMAT ( _n - _fora, "#,0" ) & " das " & FORMAT ( _n, "#,0" )
+			        & " zonas eleitorais: " & FORMAT ( _lula, "#,0" ) & " com Lula à frente (vermelho) e as outras com Flávio "
+			        & "(azul). Passe o mouse num ponto para ver a zona; clique para pôr na ficha."
 		displayFolder: T20 Escola\Desenho
 		lineageTag: aa1ebfe6-813c-53ff-9078-a8577df80ed2
 
@@ -24975,8 +24976,8 @@ table _Medidas
 
 	/// Texto alternativo da lista dos locais pela queda.
 	measure 'T20 · Quedas · ALT' =
-			"Os " & FORMAT ( [T20 · locais], "#,0" ) & " locais de votação de " & [T20 · cidade]
-			    & ", da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a escola na ficha."
+			"Os " & FORMAT ( [T20 · locais], "#,0" ) & " zonas eleitorais de " & [T20 · cidade]
+			    & ", da maior queda à maior alta da margem de Lula de 2022 para 2026; a lista rola. Clique numa linha para pôr a zona na ficha."
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 8d3a2f9d-5e51-5e84-ab67-c6e5da56f7f8
 
@@ -25028,9 +25029,9 @@ table _Medidas
 			VAR _viraram = [T20 · locais que viraram]
 			VAR _paraLula = [T20 · locais que viraram para Lula]
 			RETURN
-			    [T20 · cidade] & ": Lula ficou à frente em " & FORMAT ( _lula, "#,0" ) & " dos " & FORMAT ( _n, "#,0" )
-			        & " locais de votação em 2026; em 2022, em " & FORMAT ( _lula22, "#,0" ) & " dos " & FORMAT ( _n22, "#,0" )
-			        & ". " & FORMAT ( _viraram, "#,0" ) & IF ( _viraram = 1, " local virou", " locais viraram" )
+			    [T20 · cidade] & ": Lula ficou à frente em " & FORMAT ( _lula, "#,0" ) & " das " & FORMAT ( _n, "#,0" )
+			        & " zonas eleitorais em 2026; em 2022, em " & FORMAT ( _lula22, "#,0" ) & " das " & FORMAT ( _n22, "#,0" )
+			        & ". " & FORMAT ( _viraram, "#,0" ) & IF ( _viraram = 1, " zona virou", " zonas viraram" )
 			        & " de Lula para Flávio e " & FORMAT ( _paraLula, "#,0" ) & " de Flávio para Lula."
 		displayFolder: T20 Escola\Desenho
 		lineageTag: 17adf2d2-f94d-59fd-a6b4-ed407fc2b7c1
@@ -25048,21 +25049,21 @@ table _Medidas
 			VAR _cidade0 = [T20 · cidade]
 			VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
 			VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
-			VAR _rotLocal = IF ( _lula = 1, "local de votação com Lula à frente em 2026", "locais de votação com Lula à frente em 2026" )
+			VAR _rotLocal = IF ( _lula = 1, "zona eleitoral com Lula à frente em 2026", "zonas eleitorais com Lula à frente em 2026" )
 			VAR _antes =
 			    SWITCH (
 			        TRUE (),
-			        _lula22 = 0 && _lula = 0, "Em 2022, também nenhum",
-			        _lula22 = 0, "Em 2022, nenhum",
+			        _lula22 = 0 && _lula = 0, "Em 2022, também nenhuma",
+			        _lula22 = 0, "Em 2022, nenhuma",
 			        _lula22 = 1, "Em 2022, <span class='num'>1</span>",
 			        "Em 2022, eram <span class='num'>" & FORMAT ( _lula22, "#,0" ) & "</span>"
-			    ) & IF ( _n22 = 1, " no único local.", " dos " & FORMAT ( _n22, "#,0" ) & " locais." )
+			    ) & IF ( _n22 = 1, " na única zona.", " das " & FORMAT ( _n22, "#,0" ) & " zonas." )
 			VAR _txtViraram =
 			    SWITCH (
 			        TRUE (),
-			        _viraram = 0, "Nenhum local virou de Lula para Flávio",
-			        _viraram = 1, "1 local virou de Lula para Flávio",
-			        FORMAT ( _viraram, "#,0" ) & " locais viraram de Lula para Flávio"
+			        _viraram = 0, "Nenhuma zona virou de Lula para Flávio",
+			        _viraram = 1, "1 zona virou de Lula para Flávio",
+			        FORMAT ( _viraram, "#,0" ) & " zonas viraram de Lula para Flávio"
 			    ) & SWITCH (
 			        TRUE (),
 			        _paraLula = 0, ".",

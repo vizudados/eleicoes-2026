@@ -102,7 +102,7 @@
             "exclusiveRoots": {
               "expr": {
                 "Literal": {
-                  "Value": "'Cidade e escola'"
+                  "Value": "'Cidade e zona'"
                 }
               }
             },
@@ -144,7 +144,7 @@
             "searchPlaceholder": {
               "expr": {
                 "Literal": {
-                  "Value": "'Buscar cidade ou escola'"
+                  "Value": "'Buscar cidade ou zona'"
                 }
               }
             },
@@ -200,7 +200,7 @@
             "triggerLabel": {
               "expr": {
                 "Literal": {
-                  "Value": "'Cidade e escola'"
+                  "Value": "'Cidade e zona'"
                 }
               }
             },
@@ -228,7 +228,7 @@
             "triggerPathSummaryNoun": {
               "expr": {
                 "Literal": {
-                  "Value": "'escola|escolas'"
+                  "Value": "'zona|zonas'"
                 }
               }
             },

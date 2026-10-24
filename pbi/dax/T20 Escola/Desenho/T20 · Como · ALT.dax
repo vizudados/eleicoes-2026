@@ -3,6 +3,6 @@
 @formato: texto
 @descricao: Texto alternativo do cartão 'como explorar'.
 */
-"Como explorar: passe o mouse num ponto para ver a escola; clique num ponto ou numa linha para levá-la à ficha; o filtro do topo troca a cidade e procura a escola. "
+"Como explorar: passe o mouse num ponto para ver a zona; clique num ponto ou numa linha para levá-la à ficha; o filtro do topo troca a cidade e procura a zona. "
     & IF ( [T20 · locais sem endereço] + [T20 · locais fora do recorte] > 0,
-        FORMAT ( [T20 · locais sem endereço] + [T20 · locais fora do recorte], "#,0" ) & " locais não aparecem no mapa.", "" )
+        FORMAT ( [T20 · locais sem endereço] + [T20 · locais fora do recorte], "#,0" ) & " zonas não aparecem no mapa.", "" )

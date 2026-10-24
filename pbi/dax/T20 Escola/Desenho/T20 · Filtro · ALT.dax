@@ -9,10 +9,10 @@ VAR _marcadas = [T20 · escolas no filtro]
 VAR _locais = [T20 · locais]
 VAR _id = _escola
 RETURN
-    "Filtro de cidade e escola: " & [T20 · cidade]
+    "Filtro de cidade e zona: " & [T20 · cidade]
         & SWITCH (
             TRUE (),
             NOT ISBLANK ( _escola ), " · " & CALCULATE ( [T20 · nome do local], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id ),
-            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, "#,0" ) & " escolas marcadas",
-            " (nenhuma escola escolhida)"
+            _marcadas > 1 && _marcadas < _locais, " · " & FORMAT ( _marcadas, "#,0" ) & " zonas marcadas",
+            " (nenhuma zona escolhida)"
         )

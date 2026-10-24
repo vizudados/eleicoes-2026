@@ -27,10 +27,11 @@ VAR _bairro = SUBSTITUTE ( SUBSTITUTE ( _bairro1, ">", "&gt;" ), "'", "&#39;" )
 VAR _cidade0 = [T20 · cidade (nome)]
 VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
 VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
-VAR _sobre = IF ( _ha = 1, "A escola escolhida", "Um exemplo · " & IF ( _bairro <> "", _bairro, _cidade ) )
+VAR _sobre = IF ( _ha = 1, "A zona escolhida", "Um exemplo · " & _cidade )
+-- a zona: quantos locais de votação (a coluna Bairro), seções e válidos de 2026, numa linha só
 VAR _sub =
-    _secoes & IF ( _secoes = 1, " seção · ", " seções · " ) & FORMAT ( _val, "#,0" ) & " votos válidos em 2026"
-        & IF ( _bairro <> "" && _ha = 1, " · " & _bairro, "" )
+    IF ( _bairro <> "", _bairro & " · ", "" ) & _secoes & IF ( _secoes = 1, " seção · ", " seções · " )
+        & FORMAT ( _val, "#,0" ) & " válidos"
 VAR _t18 = IF ( ISBLANK ( _m18 ), "—", FORMAT ( _m18 * 100, "+0.0;−0.0;0.0" ) )
 VAR _t22 = IF ( ISBLANK ( _m22 ), "—", FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) )
 VAR _t26 = FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" )
@@ -40,7 +41,7 @@ VAR _c26 = IF ( _m26 > 0, "lula", IF ( _m26 < 0, "flavio", "" ) )
 VAR _nota =
     SWITCH (
         TRUE (),
-        _ha = 0 && _exemplo = "virou", "a maior escola que virou",
+        _ha = 0 && _exemplo = "virou", "a maior zona que virou",
         _ha = 0, "a maior queda da cidade",
         _virou = 1, "virou para Flávio",
         _virouLula = 1, "virou para Lula",

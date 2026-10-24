@@ -11,7 +11,7 @@ VAR _n22 = [T20 · locais em 2022]
 VAR _viraram = [T20 · locais que viraram]
 VAR _paraLula = [T20 · locais que viraram para Lula]
 RETURN
-    [T20 · cidade] & ": Lula ficou à frente em " & FORMAT ( _lula, "#,0" ) & " dos " & FORMAT ( _n, "#,0" )
-        & " locais de votação em 2026; em 2022, em " & FORMAT ( _lula22, "#,0" ) & " dos " & FORMAT ( _n22, "#,0" )
-        & ". " & FORMAT ( _viraram, "#,0" ) & IF ( _viraram = 1, " local virou", " locais viraram" )
+    [T20 · cidade] & ": Lula ficou à frente em " & FORMAT ( _lula, "#,0" ) & " das " & FORMAT ( _n, "#,0" )
+        & " zonas eleitorais em 2026; em 2022, em " & FORMAT ( _lula22, "#,0" ) & " das " & FORMAT ( _n22, "#,0" )
+        & ". " & FORMAT ( _viraram, "#,0" ) & IF ( _viraram = 1, " zona virou", " zonas viraram" )
         & " de Lula para Flávio e " & FORMAT ( _paraLula, "#,0" ) & " de Flávio para Lula."

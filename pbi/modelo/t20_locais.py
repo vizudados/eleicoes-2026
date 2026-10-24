@@ -19,7 +19,7 @@ dados/pbi/t20_cidades.csv (pipeline/exportar_t20.py). As três ficam sem relaç�
 from gerar_modelo import col, tabela, tabela_csv
 
 SEPARADOR = " › "        # o mesmo de general.pathSeparator do VizuFilter (paginas/t20_escola.py)
-RAIZ = "Cidade e escola"  # a raiz única da árvore (o mesmo nome vai em general.exclusiveRoots)
+RAIZ = "Cidade e zona"  # a raiz única da árvore (o mesmo nome vai em general.exclusiveRoots)
 
 
 def _votos(sigla, ano, quem):

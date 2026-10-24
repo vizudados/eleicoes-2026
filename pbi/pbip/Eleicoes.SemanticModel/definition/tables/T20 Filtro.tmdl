@@ -61,7 +61,7 @@ table 'T20 Filtro'
 				    ComCidade = Table.Join(Loc, "cod_ibge", Table.RenameColumns(Cid, {{"cod_ibge", "cod_cidade"}}), "cod_cidade",
 				        JoinKind.Inner),
 				    Escolas = Table.FromRecords(List.Transform(Table.ToRecords(ComCidade), each [
-				        Caminho = "Cidade e escola › " & [cidade] & " › " & [nome], CodIBGE = [cod_ibge], IdLocal = [id],
+				        Caminho = "Cidade e zona › " & [cidade] & " › " & [nome], CodIBGE = [cod_ibge], IdLocal = [id],
 				        Ordem = [ordem] * 10000 + [ordem_nome]])),
 				    Final = Table.TransformColumnTypes(Escolas, {{"Caminho", type text}, {"CodIBGE", type text},
 				        {"IdLocal", Int64.Type}, {"Ordem", Int64.Type}})

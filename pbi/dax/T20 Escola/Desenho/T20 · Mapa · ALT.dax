@@ -1,13 +1,13 @@
 /*
 @pasta: T20 Escola\Desenho
 @formato: texto
-@descricao: Texto alternativo do mapa das escolas.
+@descricao: Texto alternativo do mapa das zonas eleitorais.
 */
 -- 1 · Leituras
 VAR _n = [T20 · locais]
 VAR _lula = [T20 · locais com Lula à frente]
 VAR _fora = [T20 · locais sem endereço] + [T20 · locais fora do recorte]
 RETURN
-    "Mapa de " & [T20 · cidade] & " com " & FORMAT ( _n - _fora, "#,0" ) & " dos " & FORMAT ( _n, "#,0" )
-        & " locais de votação: " & FORMAT ( _lula, "#,0" ) & " com Lula à frente (vermelho) e os outros com Flávio "
-        & "(azul). Passe o mouse num ponto para ver a escola; clique para pôr na ficha."
+    "Mapa de " & [T20 · cidade] & " com " & FORMAT ( _n - _fora, "#,0" ) & " das " & FORMAT ( _n, "#,0" )
+        & " zonas eleitorais: " & FORMAT ( _lula, "#,0" ) & " com Lula à frente (vermelho) e as outras com Flávio "
+        & "(azul). Passe o mouse num ponto para ver a zona; clique para pôr na ficha."

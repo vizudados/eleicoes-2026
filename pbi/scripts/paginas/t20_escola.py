@@ -47,7 +47,7 @@ P = "T20"
 CSS = "Estilo · CSS"
 Z = lib.CAMADAS["conteudo"]
 TT = "ttT20Escola"
-RAIZ = "Cidade e escola"   # a raiz única da árvore: a mesma de pbi/modelo/t20_locais.py (RAIZ) e de exclusiveRoots
+RAIZ = "Cidade e zona"   # a raiz única da árvore: a mesma de pbi/modelo/t20_locais.py (RAIZ) e de exclusiveRoots
 
 RESPOSTA = (150, 140, 550, 270)
 FICHA = (150, 430, 550, 570)
@@ -84,11 +84,11 @@ def _filtro() -> list:
     geral = {"mode": "dropdown", "treeCategoryHeader": True, "listLayout": "standard", "pathMode": True,
              "pathSeparator": " › ", "singleSelect": False, "exclusiveRoots": RAIZ, "sortAscending": False,
              "startOpen": False, "alwaysOpen": False, "showSearch": True, "searchScope": "list",
-             "searchPlaceholder": "Buscar cidade ou escola", "categoryHeaderStyle": "natural",
+             "searchPlaceholder": "Buscar cidade ou zona", "categoryHeaderStyle": "natural",
              "showSelectAll": False, "showReset": True, "showSelectedCount": False, "showSelectedValue": True,
-             "selectedValueOnly": True, "triggerMode": "value", "triggerLabel": "Cidade e escola",
+             "selectedValueOnly": True, "triggerMode": "value", "triggerLabel": "Cidade e zona",
              "placeholderText": "Rio de Janeiro (RJ)", "triggerPathSummary": True, "triggerPathSummaryMax": 2,
-             "triggerPathSummaryNoun": "escola|escolas", "syncSelectionWithHost": True}
+             "triggerPathSummaryNoun": "zona|zonas", "syncSelectionWithHost": True}
     layout = casca.layout_filtro(FILTRO_CAIXA, optionHeight=36, searchHeight=40, checkboxSize=16, checkboxRadius=3)
     return [
         Visual(P, lib.visual_vizufilter(
@@ -130,7 +130,7 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T20_Como_Html", *COMO, "T20 · Como · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=D.corpo_como(), alt=lib.medida("T20 · Como · ALT"), z=Z + 21,
                                   tab=140)),
-        *pagina_lib.tooltip(TT, "Escola · post-it", 420, 270, "T20 · Tooltip escola · HTML", ordem=300,
+        *pagina_lib.tooltip(TT, "Zona · post-it", 420, 270, "T20 · Tooltip escola · HTML", ordem=300,
                             folha_de_estilo=CSS, modelo_corpo=D.corpo_tooltip()),
     ]
     # exceções: o filtro (cidade e escola) chega a todos (a cidade filtra tudo pelas medidas; a escola só muda a
