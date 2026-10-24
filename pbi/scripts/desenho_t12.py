@@ -449,10 +449,12 @@ VAR _man =
             _lugar & ": a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" )
                 & IF ( _nUf = 1, " unidade", " unidades" ) & "; na região, de " & {_pp("_m22")} & " para "
                 & {_pp("_m26")} & " pontos",
-        _nSubiu = 0, "Todas andaram para a esquerda, a direção do adversário",
-        _nSubiu = 1, "Quase todas andaram para a esquerda; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
-            & _subiu & " foi na direção de Lula",
-        "A maioria andou para a esquerda; " & FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula"
+        -- "na direção de Flávio", e não "para a esquerda" (24/10/2026): num painel de eleição, "esquerda" se lê como
+        -- lado político, o contrário do dado (a margem andou para o lado de Flávio no eixo do gráfico)
+        _nSubiu = 0, "Todas andaram na direção de Flávio",
+        _nSubiu = 1, "Quase todas andaram na direção de Flávio; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
+            & _subiu & ", na de Lula",
+        "A maioria andou na direção de Flávio; " & FORMAT ( _nSubiu, "0" ) & " unidades, na de Lula"
     )
 -- 4 · Marcação
 RETURN
