@@ -4,16 +4,16 @@ Levantamento feito entre a noite de 22/10/2026 e a madrugada de 23/10/2026 para 
 
 ## Arquivos
 
-- `debates.csv`: 11 linhas, uma por debate presidencial do 1º e do 2º turno marcado até 22/10/2026, inclusive os cancelados. Separador `;`, UTF-8 sem BOM, datas AAAA-MM-DD, ponto decimal. Nenhum campo contém `;`. A `observacao` abre com o status (`REALIZADO`, `CANCELADO`, `NÃO REALIZADO`), e as notas vêm separadas por ` | `. Em `fonte_url`, mais de um link vai separado por ` , `.
+- `debates.csv`: 12 linhas, uma por debate presidencial do 1º e do 2º turno marcado na campanha, inclusive os cancelados: as 11 do levantamento de 22/10/2026 e o debate da Globo de 23/10, que entrou em 24/10/2026 (ver "Debate da Globo, 23/10, em debates.csv", abaixo). Separador `;`, UTF-8 sem BOM, datas AAAA-MM-DD, ponto decimal. Nenhum campo contém `;`. A `observacao` abre com o status (`REALIZADO`, `CANCELADO`, `NÃO REALIZADO`), e as notas vêm separadas por ` | `. Em `fonte_url`, mais de um link vai separado por ` , `.
 - `debate_band.json`: tudo sobre os dois debates da Band: identificação, formato, momentos com trecho curto e fonte, temas, direitos de resposta, audiência, repercussão digital, "quem venceu", pesquisas antes × depois (com as listas usadas) e atribuições. Quando um campo não foi confirmado, ele fica `null` e a razão vai no `*_obs` correspondente.
-- O debate da Globo de 23/10 (2º turno) ainda não tinha acontecido e ficou fora do CSV. Ele aparece em `proximo_debate`, no JSON, e tem arquivo próprio, `dados/pbi/debate_globo.csv` (seção "Debate da Globo, 23/10/2026", no fim deste arquivo).
+- O debate da Globo de 23/10 (2º turno) ainda não tinha acontecido no levantamento de 22/10 e ficou fora do CSV até 24/10/2026, quando entrou como linha de `debates.csv` (realizado, com os dois). O JSON guarda o que se sabia em 22/10 (`proximo_debate`), e os números da noite seguem no arquivo próprio, `dados/pbi/debate_globo.csv` (seção "Debate da Globo, 23/10/2026", no fim deste arquivo).
 
 ## Escolha de foco (ler antes de montar a tela)
 
 A Band fez dois debates presidenciais em 2026, e o JSON cobre os dois.
 
 1. **23/08, 1º turno.** Foi o primeiro debate da campanha, e o pedido o tratava como principal. **Lula, Flávio Bolsonaro e Zema faltaram.** Estiveram Caiado, Renan Santos e Augusto Cury. O debate teve cerca de 2 pontos de audiência. A mudança mensurável depois dele foi a **alta de Augusto Cury**: de 1,8% para 9,05% na média das pesquisas, ou +8,5 p.p. comparando o mesmo instituto. Essa alta se desfez em setembro.
-2. **18/10, 2º turno.** Foi o **único confronto direto entre Lula e Flávio** na campanha. Teve 15 pontos em Grande SP (consolidado divulgado pela Band), a maior audiência de debate em 20 anos segundo a emissora. Nas pesquisas, **nada mudou além da margem de erro**, e a janela "depois" tem só 4 dias e 5 pesquisas.
+2. **18/10, 2º turno.** Foi o **primeiro confronto direto entre Lula e Flávio** na campanha (o segundo e último foi na Globo, em 23/10, fora deste levantamento; ver o fim do arquivo). Teve 15 pontos em Grande SP (consolidado divulgado pela Band), a maior audiência de debate em 20 anos segundo a emissora. Nas pesquisas, **nada mudou além da margem de erro**, e a janela "depois" tem só 4 dias e 5 pesquisas.
 
 Para Lula × Flávio, o efeito só pode ser medido no debate de 18/10. O de 23/08 mostra o efeito sobre o "resto do pelotão".
 
@@ -71,6 +71,7 @@ Para Lula × Flávio, o efeito só pode ser medido no debate de 18/10. O de 23/0
 | 11/10 Record | cancelado | [Jornal Opção](https://www.jornalopcao.com.br/politica/record-cancela-debate-entre-lula-e-flavio-bolsonaro-por-incompatibilidade-de-agendas-877592/) |
 | 15/10 consórcio SBT/CNN | não realizado | Wikipédia diz cancelado; o Correio, citando a Folha, disse em 09/10 que "deve ser cancelado". A Band chamou o 18/10 de primeiro confronto entre os dois. |
 | 18/10 Band | realizado | Band, Congresso em Foco, Poder360, Agência Brasil |
+| 23/10 Globo | realizado (entrou em 24/10/2026) | [Metrópoles, 24/10 00h29](https://www.metropoles.com/brasil/debate-globo-lula-flavio-bolsonaro); regras e mediação: [CNN Brasil, 22/10](https://www.cnnbrasil.com.br/eleicoes/globo-limita-espaco-de-flavio-e-lula-no-estudio-em-ultimo-debate-entenda/), [Exame, 23/10](https://exame.com/brasil/que-horas-termina-o-debate-da-globo-veja-duracao-do-encontro-entre-lula-e-flavio-bolsonaro/) |
 
 ## Google Trends (coleta própria)
 
@@ -178,10 +179,7 @@ arquivo abaixo muda no repositório (o modelo lê o CSV pelo endereço raw do Gi
   entra com fonte publicada.
 - No modelo: tabela `T26 Debate Globo` (`pbi/modelo/t26_debate_globo.py`), sem relação com as outras; as contas leem a
   linha pela `chave` (`pbi/scripts/desenho_t26.py` → `pbi/dax/T26 Debate na Globo`).
-- O debate **não** entra em `debates.csv` / `dados/pbi/debate.csv` por enquanto: as telas 08 (T07) e 19 (T17) acham "o
-  debate em que Lula e Flávio estiveram" pelo `MAX(Data)` das linhas com os dois em `participantes`
-  (`T07 · debate · data`, `T17 · debate · data`). Uma linha da Globo com os dois faria essas telas trocarem a Band pela
-  Globo. Para juntar as duas fontes, primeiro fixe a Band nessas duas contas.
+- Desde 24/10/2026 o debate também é linha de `debates.csv` / `dados/pbi/debate.csv` (seção "Debate da Globo, 23/10, em debates.csv", abaixo). Antes de a linha entrar, toda conta que achava "o debate em que Lula e Flávio estiveram" pelo `MAX(Data)` passou a escolher a Band pela emissora e pelo turno; a lista está naquela seção.
 
 ## Colunas
 
@@ -279,3 +277,36 @@ GitHub guarda cópia por até 5 minutos.
 ## Conteúdo da web com instruções
 
 Nenhuma página consultada para esta seção trouxe instruções dirigidas ao agente.
+
+## Debate da Globo, 23/10, em debates.csv (24/10/2026)
+
+O debate aconteceu e entrou como linha de `debates.csv` (e, pelo `pipeline/exportar_pbi.py`, de `dados/pbi/debate.csv`),
+com os campos que o arquivo já tinha. Nada estimado.
+
+| campo | valor | fonte |
+|---|---|---|
+| `data`, `turno`, `emissora` | 2026-10-23, 2, Globo | CNN Brasil (22/10), Exame (23/10), Metrópoles (24/10) |
+| `pool` | Grupo Globo (TV Globo, GloboNews, g1, Globoplay) | Exame (23/10); NSC Total (23/10) |
+| `participantes` | Lula (PT), Flávio Bolsonaro (PL); `ausentes` vazio | [Metrópoles, 24/10 00h29](https://www.metropoles.com/brasil/debate-globo-lula-flavio-bolsonaro): os dois compareceram e se enfrentaram |
+| `mediacao` | César Tralli | CNN Brasil (22/10); Exame (23/10); Metrópoles (24/10) |
+| `audiencia_pontos_gsp`, `audiencia_fonte`, `pico_streaming` | vazios | ainda não divulgados: entram quando sair o número (a sessão principal preenche), com a fonte |
+| `observacao` | REALIZADO; marcado para as 21h20, durou quase 2h30 e terminou por volta das 23h50 | Metrópoles (24/10 00h29); horário marcado: CNN Brasil e Exame |
+
+Os números da noite (buscas, audiência, streaming, redes, pesquisas) continuam chegando primeiro em
+`dados/pbi/debate_globo.csv`, que a tela do debate da Globo (T26) lê. Quando a audiência e o pico saírem, repita-os
+aqui, na linha de 23/10, com a mesma fonte; a régua da Band na T26 não muda, porque lê a linha da Band.
+
+**As contas que liam a tabela Debate e o que mudou nelas.** Com a Globo na tabela, quem procurava "o debate com os dois"
+pelo `MAX(Data)` passaria a pegar a Globo onde a tela fala da Band. Todas passaram a escolher a Band pela regra
+explícita **Emissora = "Band" e Turno = 2**, a mesma que `T26 · Band · data` já usava:
+
+- `T07 · debate · data` (tela do debate da Band: audiência, YouTube, janelas das pesquisas, palco);
+- `T08 · debate · data` (buscas: a marca do debate e a virada do dia seguinte);
+- `T09 · debate · data` (redes: a marca do debate no índice de popularidade);
+- `T17 · debate · data` (2º turno: a primeira das duas marcas de debate da curva; a da Globo é `T17 · debate da Globo · data`);
+- `T26 · Band · data` (já era explícita; ganhou a descrição da regra).
+
+E as que contavam "os debates do 2º turno antes deste" na tela da Globo (`T26 · 2º turno · debates` e
+`T26 · 2º turno · realizados`) passaram a filtrar a data anterior ao dia do debate da Globo. A tela da Band passou a
+contar 2 de 12 debates com os dois, com o eixo até 23/10, e fecha a janela "depois" das pesquisas na véspera do debate
+da Globo (`T07 · debate seguinte · data`).

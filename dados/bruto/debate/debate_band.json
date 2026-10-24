@@ -2,7 +2,7 @@
   "meta": {
     "gerado_em": "2026-10-22 (coleta concluída na madrugada de 23/10)",
     "pergunta_do_painel": "O que mudou depois do debate na Band?",
-    "escopo": "Os dois debates presidenciais da Band em 2026. O de 23/08 é o principal da campanha do 1º turno (o primeiro da temporada); o de 18/10 é o único em que Lula e Flávio se enfrentaram.",
+    "escopo": "Os dois debates presidenciais da Band em 2026. O de 23/08 é o principal da campanha do 1º turno (o primeiro da temporada); o de 18/10 foi o primeiro em que Lula e Flávio se enfrentaram (o segundo e último foi o da Globo, em 23/10, fora deste arquivo: ver debates.csv, linha incluída em 24/10/2026).",
     "aviso_foco": "No debate de 23/08 Lula e Flávio faltaram; a mudança mensurável depois dele foi a alta de Augusto Cury. O efeito sobre Lula × Flávio só pode ser medido no debate de 18/10, com 4 dias de pesquisas depois.",
     "regras": "Nada estimado. Campo sem fonte fica null com a razão em *_obs. Trechos entre aspas têm até 15 palavras. 'o_numero_mostra' é conta sobre a base local; 'atribuicoes_ao_debate' é o que institutos e imprensa disseram.",
     "arquivos_relacionados": [
@@ -2281,7 +2281,7 @@
   "proximo_debate": {
     "data": "2026-10-23",
     "emissora": "Globo",
-    "status": "agendado (Lula e Flávio convidados); fora do escopo 'até hoje'",
+    "status": "agendado no levantamento de 22/10; realizado em 23/10, com Lula e Flávio (linha de debates.csv desde 24/10/2026); fora do escopo deste arquivo",
     "fonte_url": "https://pt.wikipedia.org/wiki/Elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
   }
 }
