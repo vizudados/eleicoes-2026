@@ -2,11 +2,11 @@
 """17 · 2º turno — e agora, o que as pesquisas dizem do 2º turno? (dono: agente das telas da campanha)
 
 A história: antes do 1º turno, as simulações de 2º turno estavam divididas (79: Lula à frente em 34, Flávio em 36,
-9 empates); depois do 1º turno, Flávio lidera 39 de 45 pesquisas (até 24/10). A média dos 10 dias virou para Flávio em 09/09 e não
+9 empates); depois do 1º turno, Flávio lidera 42 de 48 pesquisas (até 24/10, 18h55). A média dos 10 dias virou para Flávio em 09/09 e não
 voltou mais. A rejeição não forma série entre institutos (cada um pergunta de um jeito): compara-se dentro de cada um.
 
-  T17_Placar_Html       "39 de 45" (contadores), as médias, a manchete e dois quadriculados (antes: 79 simulações;
-                        depois: 45 pesquisas), um quadradinho por pesquisa na cor de quem liderava
+  T17_Placar_Html       "42 de 48" (contadores), as médias, a manchete e dois quadriculados (antes: 79 simulações;
+                        depois: 48 pesquisas), um quadradinho por pesquisa na cor de quem liderava
   T17_Rejeicao_Html     cabeçalho da rejeição: "8 de 10 institutos" e como ler os quadrinhos
   T17_Rejeicao_Paineis  um quadrinho por instituto comparável (granularidade 'Rejeição'[Instituto]): a última medição
                         antes do 1º turno → a última depois, Lula e Flávio; dossiê ttT17Rejeicao (a série do instituto)

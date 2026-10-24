@@ -618,6 +618,9 @@ VAR _quando =
             "<div class='rot'>" & IF ( _pN = 1, "CHEGOU", "CHEGARAM" ) & "</div><div class='qt'>" & FORMAT ( _pN, "0" )
                 & IF ( _pN = 1, " pesquisa, campo até ", " pesquisas, campo até " ) & FORMAT ( _pFim, "dd/MM" ) & "</div>",
         _est = "publicado", "<div class='rot'>CHEGOU</div><div class='qt'>" & #ESC(_atu)# & "</div>",
+        -- pesquisas: saíram, mas nenhuma com o campo inteiro depois do debate (24/10/2026, véspera da eleição)
+        _est = "nao_divulgado" && _c = "pesquisas",
+            "<div class='rot'>NENHUMA DEPOIS</div><div class='qt'>campo no dia do debate</div>",
         _est = "nao_divulgado", "<div class='rot'>NÃO DIVULGADO</div><div class='qt'>esperado: " & #ESC(_esp)# & "</div>",
         "<div class='rot'>" & IF ( _est = "parcial", "FALTA UM DOS DOIS", "ESPERADO" ) & "</div><div class='qt'>" & #ESC(_esp)# & "</div>"
     )
@@ -653,7 +656,7 @@ VAR _vazioMeio =
     SWITCH (
         TRUE (),
         _parado, "#MOLD_MEIO#<div class='mao'>sem número</div>",
-        _est = "nao_divulgado", "<div class='ndt'>não saiu</div>",
+        _est = "nao_divulgado", "<div class='ndt'>" & IF ( _c = "pesquisas", "nenhuma", "não saiu" ) & "</div>",
         "#MOLD_MEIO#<div class='mao'>aguardando</div>"
     )
 VAR _par =
@@ -734,7 +737,13 @@ VAR _ref =
 VAR _notaP =
     IF (
         _c = "pesquisas" && NOT _chegou && NOT _parado,
-        "<div class='np'>Provavelmente só as últimas de sábado, véspera da eleição, e talvez nenhuma."
+        -- com o cartão em "nenhuma" (as de sábado já saíram), a nota diz o fato; antes, o que se esperava
+        "<div class='np'>"
+            & IF (
+                _est = "nao_divulgado",
+                "Nenhuma pesquisa nacional teve o campo inteiro depois do debate.",
+                "Provavelmente só as últimas de sábado, véspera da eleição, e talvez nenhuma."
+            )
             & IF ( _xN > 0, " " & FORMAT ( _xN, "0" ) & IF ( _xN = 1, " atravessa", " atravessam" ) & " o dia do debate e fica" & IF ( _xN = 1, "", "m" ) & " fora.", "" ) & "</div>",
         ""
     )
@@ -832,7 +841,7 @@ VAR _mao =
         "consolidado", "chegou o consolidado",
         "previa", "falta o consolidado",
         "parcial", "falta um dos dois",
-        "nao_divulgado", "não saiu",
+        "nao_divulgado", IF ( _c = "pesquisas", "nenhuma com o campo todo depois", "não saiu" ),
         "cancelado", "sem debate",
         "adiado", "debate adiado",
         "ainda não chegou"
