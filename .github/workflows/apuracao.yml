@@ -20,6 +20,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: apuracao
@@ -28,7 +29,8 @@ concurrency:
 jobs:
   coletar:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    # execução longa (repetir > 50) cobre a noite sem depender do cron, que atrasa em horário de pico
+    timeout-minutes: 360
     # Segredos como variáveis do job: o GitHub não aceita `secrets` direto numa condição `if` de passo.
     env:
       PBI_TENANT_ID: ${{ secrets.PBI_TENANT_ID }}
@@ -47,6 +49,7 @@ jobs:
         env:
           ELEICAO: ${{ github.event.inputs.eleicao || '6258' }}
           REPETIR: ${{ github.event.inputs.repetir || '4' }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "apuracao-bot"
           git config user.email "apuracao-bot@users.noreply.github.com"
@@ -63,6 +66,11 @@ jobs:
             if [ "$(hora_tse)" != "$antes" ]; then echo "ATUALIZOU=1" >> "$GITHUB_ENV"; fi
             if [ "$i" -lt "$REPETIR" ]; then sleep 60; fi
           done
+          # a execução longa passa o bastão a outra antes de acabar, enquanto for noite de apuração (16h às 23h59 de Brasília)
+          hora=$(date -u +%H)
+          if [ "$REPETIR" -gt 50 ] && { [ "$hora" -ge 19 ] || [ "$hora" -lt 3 ]; }; then
+            gh workflow run apuracao.yml -R "$GITHUB_REPOSITORY" -f eleicao="$ELEICAO" -f repetir=200
+          fi
 
       - name: Atualizar o modelo no Power BI
         if: env.ATUALIZOU == '1' && env.PBI_CLIENT_ID != ''

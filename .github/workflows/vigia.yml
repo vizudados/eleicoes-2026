@@ -1,0 +1,84 @@
+# Vigia da apuração: a cada 10 minutos na noite de 25/10, confere se o coletor (workflow `apuracao`) está vivo, sem
+# depender de computador ligado. Coleta parada → dispara o coletor de novo. Falha repetida → chama um agente Claude
+# (Opus) com a chave da API da Vizu para diagnosticar, corrigir o mínimo e abrir uma issue (que chega por e-mail).
+name: vigia
+
+on:
+  schedule:
+    # 25/10/2026, das 16h às 0h50 de Brasília (19h–03h50 UTC). O GitHub usa UTC.
+    - cron: "3,13,23,33,43,53 19-23 25 10 *"
+    - cron: "3,13,23,33,43,53 0-3 26 10 *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+  issues: write
+
+concurrency:
+  group: vigia
+  cancel-in-progress: false
+
+jobs:
+  conferir:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      problema: ${{ steps.vigia.outputs.problema }}
+      resumo: ${{ steps.vigia.outputs.resumo }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - id: vigia
+        name: Conferir coletor, dados e TSE
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python -I apuracao/vigiar.py
+
+  corrigir:
+    needs: conferir
+    if: needs.conferir.outputs.problema == '1'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Já existe aviso aberto na última meia hora?
+        id: aviso
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          n=$(gh issue list -R "$GITHUB_REPOSITORY" --label vigia --state open --json createdAt \
+            --jq "[.[] | select((now - (.createdAt | fromdateiso8601)) < 1800)] | length")
+          echo "recente=$n" >> "$GITHUB_OUTPUT"
+      - uses: anthropics/claude-code-action@v1
+        if: steps.aviso.outputs.recente == '0'
+        with:
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          github_token: ${{ github.token }}
+          claude_args: "--model claude-opus-5-5 --max-turns 40 --allowedTools Bash,Read,Edit,Write,Grep,Glob"
+          prompt: |
+            Você é o vigia da apuração do 2º turno de 2026 (domingo, 25/10) no repositório ${{ github.repository }}.
+            O conferidor automático achou este problema: ${{ needs.conferir.outputs.resumo }}
+
+            Contexto: o workflow `apuracao` (.github/workflows/apuracao.yml) roda apuracao/coletar.py a cada 5 min, lê a API
+            pública do TSE (eleição 6258) e comita dados/apuracao/ (ultimo.json, ufs.csv, historico.csv, exterior.csv). O
+            total do Brasil é a soma das 27 UFs e do exterior. O painel do Power BI e a página ao vivo do site dependem
+            desses arquivos.
+
+            Faça, nesta ordem:
+            1. Diagnostique: `gh run list --workflow apuracao.yml --limit 8` e `gh run view <id> --log-failed` das falhas.
+            2. Se a causa for o código (apuracao/coletar.py ou o workflow), corrija o mínimo necessário. Teste com
+               `python -I apuracao/coletar.py --eleicao 6257 --saida /tmp/t1` (o Brasil tem de dar Flávio 56.104.503 e
+               Lula 53.879.538 votos) e com `--eleicao 6258 --saida /tmp/t2`. Só então comite no main com mensagem em
+               pt-BR (git pull --rebase antes do push; nunca force) e dispare `gh workflow run apuracao.yml -f eleicao=6258 -f repetir=4`.
+            3. Se a causa for externa (TSE fora do ar, GitHub instável), não mexa no código.
+            4. Abra uma issue com o rótulo `vigia` (crie o rótulo se não existir), título curto em pt-BR, dizendo o que
+               aconteceu, a causa e o que você fez. Mensagens curtas, sem opinião política.
+            Regras: não apague dados, não use reset --hard nem push --force, não imprima segredos, não mexa em pbi/.
