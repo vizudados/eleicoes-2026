@@ -102,8 +102,9 @@ def hora_tse(txt):
 
 
 def brasil_somado(ufs, br_tse):
-    """O Brasil como soma das 27 UFs e do exterior (pedido do Alisson, 25/10/2026: o arquivo nacional do TSE chega depois
-    dos estaduais). Os candidatos eleitos e a totalização final continuam vindo do arquivo nacional, quando ele existe."""
+    """O Brasil como soma das 27 UFs e do exterior (pedido do Alisson, 25/10/2026, para não esperar o arquivo nacional;
+    coletar() usa o que estiver mais adiantado, a soma ou o nacional). Os candidatos eleitos e a totalização final
+    continuam vindo do arquivo nacional, quando ele existe."""
     br = {c: sum(u[c] for u in ufs) for c in SOMAVEIS}
     br["uf"] = "BR"
     br["atualizado_tse"] = max((u["atualizado_tse"] for u in ufs), key=hora_tse, default="")
@@ -176,9 +177,12 @@ def coletar(ciclo, eleicao, pasta):
     lidas = [resumo(b, uf) for uf, b in brutos.items() if b]
     br_tse = next((l for l in lidas if l["uf"] == "BR"), None)
     ufs = [l for l in lidas if l["uf"] != "BR"]
-    # com alguma UF fora desta coleta, a soma ficaria curta: vale o arquivo nacional do TSE
-    if len(ufs) == len(UFS) - 1:
-        br = brasil_somado(ufs, br_tse)
+    # vale o mais adiantado, a soma das UFs e do exterior ou o arquivo nacional: o que tiver mais seções totalizadas (na
+    # noite do 2º turno o nacional chegou antes dos estaduais); com alguma UF fora desta coleta, a soma ficaria curta e
+    # vale o nacional
+    soma = brasil_somado(ufs, br_tse) if len(ufs) == len(UFS) - 1 else None
+    if soma and (not br_tse or soma["secoes_totalizadas"] >= br_tse["secoes_totalizadas"]):
+        br = soma
     elif br_tse:
         br = br_tse
     else:

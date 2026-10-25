@@ -99,10 +99,13 @@
     const ufs = {};
     let brTse = null;
     for (const [uf, d] of lidos) if (uf === 'BR') brTse = d; else ufs[uf] = d;
-    // com alguma UF fora desta leitura, a soma ficaria curta: vale o arquivo nacional (a mesma regra do coletor)
+    // vale o mais adiantado, a soma das UFs e do exterior ou o arquivo nacional: o que tiver mais seções totalizadas (na
+    // noite do 2º turno o nacional chegou antes dos estaduais); com alguma UF fora desta leitura, a soma ficaria curta e
+    // vale o nacional (a mesma regra do coletor)
     const completo = SIGLAS.every((uf) => ufs[uf]);
     if (!completo && !brTse) return false;
-    const br = completo ? somar(SIGLAS.map((uf) => ufs[uf])) : brTse;
+    const soma = completo ? somar(SIGLAS.map((uf) => ufs[uf])) : null;
+    const br = soma && (!brTse || soma.totalizadas >= brTse.totalizadas) ? soma : brTse;
     br.eleito = brTse ? brTse.eleito : '';
     br.turno = brTse ? brTse.turno : estado.turno;
     estado.ufs = Object.assign(estado.ufs, ufs);

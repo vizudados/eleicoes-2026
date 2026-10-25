@@ -63,7 +63,7 @@ pecas = {}
 casca = corpo("T18_Casca_Fundo")
 casca = casca.replace("Fonte: TSE · API pública de divulgação dos resultados, coletada a cada minuto",
                       "Fonte: TSE · API pública de divulgação dos resultados, consultada a cada minuto · "
-                      "Brasil = soma das UFs e do exterior")
+                      "Brasil = o mais adiantado entre o total do TSE e a soma das UFs")
 pecas["casca"] = casca.replace("</style>", ".cs .seta,.cs .info{display:none}</style>", 1)
 for chave, nome in [("placar", "T18_Placar_Html"), ("curva", "T18_Curva_Html"), ("mapa", "T18_Mapa_Html")]:
     pecas[chave + "_css"] = primeiro_estilo(corpo(nome))
