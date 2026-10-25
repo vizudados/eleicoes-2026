@@ -4,7 +4,7 @@
 @descricao: Dias da curva depois do debate em que quem liderava no dia do debate seguiu na frente, na série que a curva mostra (igual a T08 · depois do debate · dias = ficou na frente em todos).
 @oraculo: AC 4 de 4; AL 3 de 4 (empate em 22/10)
 */
-VAR _deb = [T08 · debate · data]
+VAR _deb = [T08 · debate · dia no Google]
 VAR _quem = [T08 · virada · quem passa]
 VAR _dias =
     ADDCOLUMNS (

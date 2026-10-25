@@ -8,7 +8,7 @@ VAR _d = [T08 · dia · data]
 VAR _l = [T08 · dia · Lula]
 VAR _fl = [T08 · dia · Flávio]
 -- 3 · Geometria (x: 01/08 a 22/10 em 40–1090; y: índice em 345–30 no svg que começa em y 80; a faixa começa em y 100)
-VAR _x = 40 + DATEDIFF ( DATE ( 2026, 8, 1 ), _d, DAY ) / 82 * 1050 - 6.5 -- geometria
+VAR _x = 40 + DATEDIFF ( DATE ( 2026, 8, 1 ), _d, DAY ) / 84 * 1050 - 6.5 -- geometria
 VAR _yl = 80 + 345 - _l * 3.15 - 100 - 5.5 -- geometria
 VAR _yf = 80 + 345 - _fl * 3.15 - 100 - 5.5 -- geometria
 -- 4 · Marcação

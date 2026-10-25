@@ -15,7 +15,8 @@ VAR _mD = [T08 · período · maior · data]
 VAR _base =
     "Curva diária das buscas"
         & IF ( NOT ISBLANK ( _uf ), " " & LOWER ( LEFT ( _no, 1 ) ) & MID ( _no, 2, 60 ) )
-        & ", 01/08 a 22/10, índice 0 a 100" & IF ( NOT ISBLANK ( _uf ), " dentro do estado" ) & "."
+        & ", 01/08 a 24/10, índice 0 a 100" & IF ( NOT ISBLANK ( _uf ), " dentro do estado" )
+        & "; o dia do Google vai das 21h às 21h de Brasília, e a noite de cada debate cai no dia seguinte."
 VAR _txtPer =
     " Em destaque, " & [Período · rótulo]
         & IF (
@@ -24,7 +25,7 @@ VAR _txtPer =
             ": dia de mais buscas " & FORMAT ( _mD, "dd/MM" ) & ", Lula " & [T08 · período · maior · Lula] & " e Flávio "
                 & [T08 · período · maior · Flávio] & "."
                 & IF (
-                    NOT ISBLANK ( _vD ) && _vD >= [Período · início] && _vD <= [Período · fim],
+                    NOT ISBLANK ( _vD ) && _vD >= [T08 · período · início no Google] && _vD <= [T08 · período · fim no Google],
                     " Em " & FORMAT ( _vD, "dd/MM" ) & ", " & _quem & " passou " & _outro & "."
                 )
         )

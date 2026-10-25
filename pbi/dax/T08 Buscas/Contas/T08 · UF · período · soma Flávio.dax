@@ -4,8 +4,8 @@
 @descricao: Soma dos índices diários de Flávio na consulta U2 da UF da linha (ou da clicada), nos dias do período escolhido que a curva tem (até 22/10: o 23/10 da coleta é parcial e anterior ao debate da Globo); vazio sem período, fora de uma UF ou sem dia no período.
 */
 VAR _uf = SELECTEDVALUE ( UF[UF] )
-VAR _ini = [Período · início]
-VAR _fim = MIN ( [Período · fim], [T08 · curva · último dia] )
+VAR _ini = [T08 · período · início no Google]
+VAR _fim = MIN ( [T08 · período · fim no Google], [T08 · curva · último dia] )
 RETURN
     IF (
         HASONEVALUE ( UF[UF] ) && NOT ISBLANK ( _ini ) && _ini <= _fim,

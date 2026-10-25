@@ -49,9 +49,10 @@ VAR _evento =
         _d,
         _camp, "começa a campanha",
         DATE ( 2026, 10, 4 ), "o dia da eleição",
-        DATE ( 2026, 10, 18 ), "a noite do debate",
-        DATE ( 2026, 10, 19 ), "o dia seguinte ao debate",
-        DATE ( 2026, 10, 22 ), IF ( ISBLANK ( _uf ), "dia em curso na coleta", "" ), -- na U2, 22/10 é dia inteiro
+        -- o dia do Google vai das 21h da véspera às 21h (Brasília): a noite de cada debate cai no ponto seguinte
+        DATE ( 2026, 10, 18 ), "até as 21h do debate da Band",
+        DATE ( 2026, 10, 19 ), "a noite do debate da Band (o dia do Google começa às 21h)",
+        DATE ( 2026, 10, 24 ), "a noite do debate da Globo (o dia do Google começa às 21h)",
         ""
     )
 VAR _quemZero =

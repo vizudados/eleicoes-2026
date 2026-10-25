@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Último ponto da série diária do Google no período escolhido: o fim do período mais um dia (mesma regra do início); vazio sem período.
+@oraculo: Antes da Band 18/10; Antes da Globo 23/10
+*/
+VAR _f = [Período · fim]
+RETURN
+    IF ( NOT ISBLANK ( _f ), _f + 1 )

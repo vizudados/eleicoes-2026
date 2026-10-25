@@ -3,8 +3,8 @@
 @formato: dd/MM
 @descricao: Último dia em que Lula teve índice maior que Flávio, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período (o texto usa quando é um dia só).
 */
-VAR _ini = [Período · início]
-VAR _fim = [Período · fim]
+VAR _ini = [T08 · período · início no Google]
+VAR _fim = [T08 · período · fim no Google]
 VAR _dias =
     ADDCOLUMNS (
         CALCULATETABLE (

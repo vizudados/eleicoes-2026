@@ -4,7 +4,7 @@
 @descricao: Primeiro dia depois do debate em que quem estava atrás no dia do debate (T08 · virada · quem passa) teve índice maior que o outro, na série que a curva mostra; vazio se não passou.
 @oraculo: FONTES: 19/10 (Brasil, T2); DF e RJ 19/10; MG 22/10; RO nenhum
 */
-VAR _deb = [T08 · debate · data]
+VAR _deb = [T08 · debate · dia no Google]
 VAR _quem = [T08 · virada · quem passa]
 VAR _dias =
     ADDCOLUMNS (

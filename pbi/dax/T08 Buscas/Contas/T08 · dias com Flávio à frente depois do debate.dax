@@ -4,7 +4,7 @@
 @descricao: Dias da curva depois do debate da Band (18/10) em que Flávio teve índice maior que Lula, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias). A mesma conta para os dois: a manchete usa a de quem ficou na frente em menos dias da campanha.
 @oraculo: Brasil 2 (19/10 e 22/10; 22/10 é dia parcial na coleta); Distrito Federal 3
 */
-VAR _deb = [T08 · debate · data]
+VAR _deb = [T08 · debate · dia no Google]
 VAR _dias =
     ADDCOLUMNS (
         CALCULATETABLE (

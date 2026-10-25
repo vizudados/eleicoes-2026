@@ -1,0 +1,7 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Ponto da série diária do Google Trends que tem a noite do debate da Band: o dia seguinte (o Google fecha o dia às 21h de Brasília, em UTC; o debate foi das 20h20 às 22h04 de 18/10). As contas da curva comparam com ele.
+@oraculo: 19/10
+*/
+[T08 · debate · data] + 1

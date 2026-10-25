@@ -7658,6 +7658,18 @@ table _Medidas
 		displayFolder: T08 Buscas\Contas
 		lineageTag: ecce4fc8-1dd3-582b-8735-99d5eb359cc9
 
+	/// Ponto da série diária do Google Trends que tem a noite do debate da Globo: o dia seguinte (o Google fecha o dia às 21h de Brasília; o debate foi das 21h20 às 23h50 de 23/10). Regra explícita: Debate com Emissora = Globo e Turno = 2.
+	measure 'T08 · debate Globo · dia no Google' =
+			CALCULATE (
+			    MAX ( Debate[Data] ),
+			    REMOVEFILTERS ( Debate ),
+			    Debate[Emissora] = "Globo",
+			    Debate[Turno] = 2
+			) + 1
+		formatString: dd/MM
+		displayFolder: T08 Buscas\Contas
+		lineageTag: 9e6e45d6-3e43-5f81-9374-d507c1e477d9
+
 	/// Data do debate da Band no 2º turno, o primeiro frente a frente de Lula e Flávio (a marca 'debate' da curva das buscas, que vai até 22/10). Regra explícita e neutra (24/10/2026): a linha da tabela Debate com Emissora = "Band" e Turno = 2. Não usa o MAX(Data) das linhas com os dois nos participantes: com o debate da Globo (23/10) na tabela, esse máximo passaria a ser a Globo.
 	measure 'T08 · debate · data' =
 			CALCULATE (
@@ -7670,9 +7682,16 @@ table _Medidas
 		displayFolder: T08 Buscas\Contas
 		lineageTag: fd962ad8-46ea-5866-8ebf-f8ef55e8f37f
 
+	/// Ponto da série diária do Google Trends que tem a noite do debate da Band: o dia seguinte (o Google fecha o dia às 21h de Brasília, em UTC; o debate foi das 20h20 às 22h04 de 18/10). As contas da curva comparam com ele.
+	measure 'T08 · debate · dia no Google' =
+			[T08 · debate · data] + 1
+		formatString: dd/MM
+		displayFolder: T08 Buscas\Contas
+		lineageTag: d6f20086-8cf9-5aa0-ada5-634a016d786a
+
 	/// Índice de Flávio no dia do debate da Band, na série que a curva mostra (Brasil, T2, ou o estado clicado, U2).
 	measure 'T08 · debate · Flávio' =
-			VAR _d = [T08 · debate · data]
+			VAR _d = [T08 · debate · dia no Google]
 			RETURN
 			    CALCULATE (
 			        [T08 · dia · Flávio],
@@ -7685,7 +7704,7 @@ table _Medidas
 
 	/// Índice de Lula no dia do debate da Band, na série que a curva mostra (Brasil, T2, ou o estado clicado, U2).
 	measure 'T08 · debate · Lula' =
-			VAR _d = [T08 · debate · data]
+			VAR _d = [T08 · debate · dia no Google]
 			RETURN
 			    CALCULATE (
 			        [T08 · dia · Lula],
@@ -7698,7 +7717,7 @@ table _Medidas
 
 	/// Dias da curva depois do debate (19 a 22/10).
 	measure 'T08 · depois do debate · dias' =
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -7716,7 +7735,7 @@ table _Medidas
 
 	/// Dias da curva depois do debate em que quem liderava no dia do debate seguiu na frente, na série que a curva mostra (igual a T08 · depois do debate · dias = ficou na frente em todos).
 	measure 'T08 · depois do debate · dias com o líder à frente' =
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
 			VAR _quem = [T08 · virada · quem passa]
 			VAR _dias =
 			    ADDCOLUMNS (
@@ -7886,10 +7905,11 @@ table _Medidas
 		displayFolder: T08 Buscas\Contas
 		lineageTag: 79a19ed7-ddd2-5345-85d6-be69b3c77941
 
-	/// O que foi o dia, para o leitor: dia do 1º turno, véspera, dia do debate, um dia depois do debate ou o dia da semana.
+	/// O que foi o dia, para o leitor: dia do 1º turno, véspera, noite do debate da Band ou da Globo (o dia do Google), um dia depois do debate ou o dia da semana.
 	measure 'T08 · dia · marco' =
 			VAR _d = [T08 · dia · data]
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
+			VAR _glo = [T08 · debate Globo · dia no Google]
 			VAR _t1 = DATE ( 2026, 10, 4 )
 			RETURN
 			    IF (
@@ -7898,8 +7918,9 @@ table _Medidas
 			            TRUE (),
 			            _d = _t1, "dia do 1º turno",
 			            _d = _t1 - 1, "véspera do 1º turno",
-			            _d = _deb, "dia do debate",
-			            _d = _deb + 1, "um dia depois do debate",
+			            _d = _deb, "noite do debate da Band",
+			            _d = _deb + 1, "um dia depois do debate da Band",
+			            _d = _glo, "noite do debate da Globo",
 			            FORMAT ( _d, "dddd" )
 			        )
 			    )
@@ -8063,7 +8084,7 @@ table _Medidas
 
 	/// Dias da curva depois do debate da Band (18/10) em que Flávio teve índice maior que Lula, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias). A mesma conta para os dois: a manchete usa a de quem ficou na frente em menos dias da campanha.
 	measure 'T08 · dias com Flávio à frente depois do debate' =
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8103,7 +8124,7 @@ table _Medidas
 
 	/// Dias da curva depois do debate da Band (18/10) em que Lula teve índice maior que Flávio, na série que a curva mostra (Brasil, consulta T2; com um estado clicado, a consulta U2 dele, nos mesmos dias). A mesma conta para os dois: a manchete usa a de quem ficou na frente em menos dias da campanha.
 	measure 'T08 · dias com Lula à frente depois do debate' =
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8227,8 +8248,8 @@ table _Medidas
 
 	/// Último dia em que Flávio teve índice maior que Lula, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período (o texto usa quando é um dia só).
 	measure 'T08 · período · dia com Flávio à frente' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8248,8 +8269,8 @@ table _Medidas
 
 	/// Último dia em que Lula teve índice maior que Flávio, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período (o texto usa quando é um dia só).
 	measure 'T08 · período · dia com Lula à frente' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8269,8 +8290,8 @@ table _Medidas
 
 	/// Último dia de empate entre os dois, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período (o texto usa quando é um dia só).
 	measure 'T08 · período · dia de empate' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8290,8 +8311,8 @@ table _Medidas
 
 	/// Dias da curva no período escolhido (nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período).
 	measure 'T08 · período · dias' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8311,8 +8332,8 @@ table _Medidas
 
 	/// Dias em que Flávio teve índice maior que Lula, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período.
 	measure 'T08 · período · dias com Flávio à frente' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8332,8 +8353,8 @@ table _Medidas
 
 	/// Dias em que Lula teve índice maior que Flávio, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período.
 	measure 'T08 · período · dias com Lula à frente' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8353,8 +8374,8 @@ table _Medidas
 
 	/// Dias em que os dois tiveram o mesmo índice, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período.
 	measure 'T08 · período · empates' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8372,10 +8393,28 @@ table _Medidas
 		displayFolder: T08 Buscas\Contas
 		lineageTag: 9063b2cf-5f1d-520c-ad85-c407595fd675
 
+	/// Último ponto da série diária do Google no período escolhido: o fim do período mais um dia (mesma regra do início); vazio sem período.
+	measure 'T08 · período · fim no Google' =
+			VAR _f = [Período · fim]
+			RETURN
+			    IF ( NOT ISBLANK ( _f ), _f + 1 )
+		formatString: dd/MM
+		displayFolder: T08 Buscas\Contas
+		lineageTag: a1a1c7f8-baf9-5b05-a07b-99851f0d9fd7
+
+	/// Primeiro ponto da série diária do Google no período escolhido: o início do período mais um dia (o dia do Google fecha às 21h de Brasília, e a noite que abre o período, a do debate, cai no ponto seguinte); vazio sem período.
+	measure 'T08 · período · início no Google' =
+			VAR _i = [Período · início]
+			RETURN
+			    IF ( NOT ISBLANK ( _i ), _i + 1 )
+		formatString: dd/MM
+		displayFolder: T08 Buscas\Contas
+		lineageTag: 0bb1f86b-de97-5939-9484-17d1d06ea5c8
+
 	/// O dia de mais buscas do período: o de maior índice entre os dois, nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período; o primeiro, se empatar.
 	measure 'T08 · período · maior · data' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8442,8 +8481,8 @@ table _Medidas
 
 	/// Soma dos índices diários de Flávio nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período (base da parte de cada um no período).
 	measure 'T08 · período · soma Flávio' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8463,8 +8502,8 @@ table _Medidas
 
 	/// Soma dos índices diários de Lula nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período (base da parte de cada um no período).
 	measure 'T08 · período · soma Lula' =
-			VAR _ini = [Período · início]
-			VAR _fim = [Período · fim]
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = [T08 · período · fim no Google]
 			VAR _dias =
 			    ADDCOLUMNS (
 			        CALCULATETABLE (
@@ -8902,8 +8941,8 @@ table _Medidas
 	/// Soma dos índices diários de Flávio na consulta U2 da UF da linha (ou da clicada), nos dias do período escolhido que a curva tem (até 22/10: o 23/10 da coleta é parcial e anterior ao debate da Globo); vazio sem período, fora de uma UF ou sem dia no período.
 	measure 'T08 · UF · período · soma Flávio' =
 			VAR _uf = SELECTEDVALUE ( UF[UF] )
-			VAR _ini = [Período · início]
-			VAR _fim = MIN ( [Período · fim], [T08 · curva · último dia] )
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = MIN ( [T08 · período · fim no Google], [T08 · curva · último dia] )
 			RETURN
 			    IF (
 			        HASONEVALUE ( UF[UF] ) && NOT ISBLANK ( _ini ) && _ini <= _fim,
@@ -8922,8 +8961,8 @@ table _Medidas
 	/// Soma dos índices diários de Lula na consulta U2 da UF da linha (ou da clicada), nos dias do período escolhido que a curva tem (até 22/10: o 23/10 da coleta é parcial e anterior ao debate da Globo); vazio sem período, fora de uma UF ou sem dia no período.
 	measure 'T08 · UF · período · soma Lula' =
 			VAR _uf = SELECTEDVALUE ( UF[UF] )
-			VAR _ini = [Período · início]
-			VAR _fim = MIN ( [Período · fim], [T08 · curva · último dia] )
+			VAR _ini = [T08 · período · início no Google]
+			VAR _fim = MIN ( [T08 · período · fim no Google], [T08 · curva · último dia] )
 			RETURN
 			    IF (
 			        HASONEVALUE ( UF[UF] ) && NOT ISBLANK ( _ini ) && _ini <= _fim,
@@ -8980,7 +9019,7 @@ table _Medidas
 
 	/// Primeiro dia depois do debate em que quem estava atrás no dia do debate (T08 · virada · quem passa) teve índice maior que o outro, na série que a curva mostra; vazio se não passou.
 	measure 'T08 · virada · data' =
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
 			VAR _quem = [T08 · virada · quem passa]
 			VAR _dias =
 			    ADDCOLUMNS (
@@ -9004,7 +9043,7 @@ table _Medidas
 
 	/// Quantos dias depois do debate veio a virada (1 = no dia seguinte); vazio sem virada.
 	measure 'T08 · virada · dias depois do debate' =
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
 			VAR _v = [T08 · virada · data]
 			RETURN
 			    IF ( NOT ISBLANK ( _v ), DATEDIFF ( _deb, _v, DAY ) )
@@ -9055,7 +9094,7 @@ table _Medidas
 
 	/// Último dia antes do debate em que quem passou o outro depois dele (T08 · virada · quem passa) já tinha estado na frente, na série que a curva mostra (o 'desde' da manchete).
 	measure 'T08 · virada · último dia à frente antes do debate' =
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
 			VAR _quem = [T08 · virada · quem passa]
 			VAR _dias =
 			    ADDCOLUMNS (
@@ -9143,7 +9182,8 @@ table _Medidas
 			VAR _base =
 			    "Curva diária das buscas"
 			        & IF ( NOT ISBLANK ( _uf ), " " & LOWER ( LEFT ( _no, 1 ) ) & MID ( _no, 2, 60 ) )
-			        & ", 01/08 a 22/10, índice 0 a 100" & IF ( NOT ISBLANK ( _uf ), " dentro do estado" ) & "."
+			        & ", 01/08 a 24/10, índice 0 a 100" & IF ( NOT ISBLANK ( _uf ), " dentro do estado" )
+			        & "; o dia do Google vai das 21h às 21h de Brasília, e a noite de cada debate cai no dia seguinte."
 			VAR _txtPer =
 			    " Em destaque, " & [Período · rótulo]
 			        & IF (
@@ -9152,7 +9192,7 @@ table _Medidas
 			            ": dia de mais buscas " & FORMAT ( _mD, "dd/MM" ) & ", Lula " & [T08 · período · maior · Lula] & " e Flávio "
 			                & [T08 · período · maior · Flávio] & "."
 			                & IF (
-			                    NOT ISBLANK ( _vD ) && _vD >= [Período · início] && _vD <= [Período · fim],
+			                    NOT ISBLANK ( _vD ) && _vD >= [T08 · período · início no Google] && _vD <= [T08 · período · fim no Google],
 			                    " Em " & FORMAT ( _vD, "dd/MM" ) & ", " & _quem & " passou " & _outro & "."
 			                )
 			        )
@@ -9171,7 +9211,7 @@ table _Medidas
 		displayFolder: T08 Buscas\Desenho
 		lineageTag: 96fc1791-6cd6-50c0-91f9-c152d685be95
 
-	/// Fundo da curva diária das buscas (01/08 a 22/10): título, grade, datas, as duas linhas que se desenham, o pico e o dia em que quem estava atrás no dia do debate passou o outro, com notas à mão. Sem estado clicado: a consulta T2 do Brasil (os candidatos como tópico). Com um estado clicado nos cartões (filtro cruzado em UF[UF], T08 · escolha · UF): a consulta U2 daquele estado, em que 100 é o pico dentro do próprio estado; título, manchete, rótulos, nota da virada (só se ela aconteceu ali) e legenda seguem o estado, a faixa de 19 a 21/09 marca a lacuna de coleta e a legenda avisa dos zeros (volume abaixo do mínimo do Google). Com um período escolhido no filtro Período: a curva inteira continua, o período fica realçado (faixa e linhas cheias) e o resto esmaece; a manchete e a nota passam a ser do período (a virada, se aconteceu nele, ou o dia de mais buscas); Depois da Globo, a faixa vazia e 'aguardando'. As faixas de cada dia (mouse e dossiê) são outro visual (T08 · Dias · HTML), na mesma caixa e escala. Só lê contas 'T08 · …' e 'Período · …'.
+	/// Fundo da curva diária das buscas (01/08 a 24/10, no dia do Google: das 21h às 21h de Brasília): título, grade, datas, as duas linhas que se desenham, o pico e o dia em que quem estava atrás no dia do debate passou o outro, com notas à mão. Sem estado clicado: a consulta T2 do Brasil (os candidatos como tópico). Com um estado clicado nos cartões (filtro cruzado em UF[UF], T08 · escolha · UF): a consulta U2 daquele estado, em que 100 é o pico dentro do próprio estado; título, manchete, rótulos, nota da virada (só se ela aconteceu ali) e legenda seguem o estado, a faixa de 19 a 21/09 marca a lacuna de coleta e a legenda avisa dos zeros (volume abaixo do mínimo do Google). Com um período escolhido no filtro Período: a curva inteira continua, o período fica realçado (faixa e linhas cheias) e o resto esmaece; a manchete e a nota passam a ser do período (a virada, se aconteceu nele, ou o dia de mais buscas); Depois da Globo, a faixa vazia e 'aguardando'. As faixas de cada dia (mouse e dossiê) são outro visual (T08 · Dias · HTML), na mesma caixa e escala. Só lê contas 'T08 · …' e 'Período · …'.
 	measure 'T08 · Curva · HTML' =
 			-- 1 · Leituras
 			VAR _uf = [T08 · escolha · UF]
@@ -9195,7 +9235,8 @@ table _Medidas
 			VAR _vF = [T08 · virada · Flávio]
 			VAR _vDias = [T08 · virada · dias depois do debate]
 			VAR _antes = [T08 · virada · último dia à frente antes do debate]
-			VAR _deb = [T08 · debate · data]
+			VAR _deb = [T08 · debate · dia no Google]
+			VAR _glo = [T08 · debate Globo · dia no Google]
 			VAR _nDep = [T08 · depois do debate · dias]
 			VAR _nLider = [T08 · depois do debate · dias com o líder à frente]
 			VAR _maxDep = [T08 · depois do pico · maior índice]
@@ -9207,8 +9248,8 @@ table _Medidas
 			VAR _noUf = NOT ISBLANK ( _uf )
 			VAR _per = [Período · escolhido]
 			VAR _pNome = [Período · nome]
-			VAR _pIni = [Período · início]
-			VAR _pFim = [Período · fim]
+			VAR _pIni = [T08 · período · início no Google]
+			VAR _pFim = [T08 · período · fim no Google]
 			VAR _mD = [T08 · período · maior · data]
 			VAR _mL = [T08 · período · maior · Lula]
 			VAR _mF = [T08 · período · maior · Flávio]
@@ -9222,11 +9263,15 @@ table _Medidas
 			VAR _quando =
 			    IF ( _vDias = 1, "um dia depois do debate", "em " & FORMAT ( _vD, "dd/MM" ) & ", depois do debate" )
 			VAR _desde = IF ( ISBLANK ( _antes ), "na série", "desde " & FORMAT ( _antes, "dd/MM" ) )
+			-- quem passou já estava na frente na véspera do ponto do debate: não é "pela primeira vez", é "voltou à frente"
+			VAR _volta = NOT ISBLANK ( _antes ) && _antes = _deb - 1
+			VAR _txtPassa =
+			    IF ( _volta, _quem & " voltou à frente de " & _outro, _quem & " passou " & _outro & " pela primeira vez " & _desde )
 			VAR _txtDepois =
 			    SWITCH (
 			        TRUE (),
 			        NOT ISBLANK ( _vD ),
-			            "; " & _quando & ", " & _quem & " passou " & _outro & " pela primeira vez " & _desde,
+			            "; " & _quando & ", " & _txtPassa,
 			        ISBLANK ( _quem ), "",
 			        _nLider = _nDep, "; depois do debate, " & _outro & " seguiu mais buscado que " & _quem & " em todos os dias",
 			        "; depois do debate, " & _quem & " não passou " & _outro & " em nenhum dia"
@@ -9237,7 +9282,7 @@ table _Medidas
 			        TRUE (),
 			        NOT _noPer, _txtPico & _txtDepois & ".",
 			        _semDado, _pNome & ", ainda não há dado: as consultas ao Google são de antes do debate de 23/10.",
-			        _viradaNoPer, _pNome & ": " & _quandoP & ", " & _quem & " passou " & _outro & " pela primeira vez " & _desde & ".",
+			        _viradaNoPer, _pNome & ": " & _quandoP & ", " & _txtPassa & ".",
 			        _pNome & ", o dia de mais buscas foi " & FORMAT ( _mD, "dd/MM" ) & ": Lula " & _mL & ", Flávio " & _mF & "."
 			    )
 			VAR _txtSob =
@@ -9256,39 +9301,40 @@ table _Medidas
 			        "100 = o dia de mais buscas no estado, não o número de buscas; o índice não se compara de um estado para outro"
 			            & IF ( _zL + _zF > 0, " · 0 = busca abaixo do mínimo que o Google mede (" & _txtZeros & ")" )
 			            & " · passe o mouse num dia",
-			        "100 = o dia de mais buscas na consulta, não o número de buscas · 22/10 ainda em curso na coleta · passe o mouse num dia"
+			        "100 = o dia de mais buscas na consulta, não o número de buscas · o dia do Google vai das 21h às 21h (Brasília): a noite de cada debate cai no dia seguinte · passe o mouse num dia"
 			    )
 			-- a nota do período: a virada, se aconteceu nele; senão, o dia de mais buscas (o maior índice na frente; no empate,
 			-- Lula primeiro, na ordem da tela)
 			VAR _notaVirada = IF ( _noPer, _viradaNoPer, NOT ISBLANK ( _vD ) )
 			VAR _notaMaior = _noPer && NOT _semDado && NOT _viradaNoPer
 			VAR _maiorLula = _mL >= _mF
-			VAR _txtNota = IF ( _notaVirada, _quem & " passa " & _outro, "o dia de mais buscas" )
-			-- 3 · Geometria (x: 01/08 a 22/10 em 40–1090; y: índice 0 a 100 em 345–30; o svg começa em y 80)
+			VAR _txtNota = IF ( _notaVirada, IF ( _volta, _quem & " volta à frente", _quem & " passa " & _outro ), "o dia de mais buscas" )
+			-- 3 · Geometria (x: 01/08 a 24/10 em 40–1090; y: índice 0 a 100 em 345–30; o svg começa em y 80)
 			VAR _ini = DATE ( 2026, 8, 1 )
 			VAR _f = "0.0"
 			VAR _pts =
 			    ADDCOLUMNS (
 			        _dias,
-			        "@x", 40 + DATEDIFF ( _ini, [@d], DAY ) / 82 * 1050, -- geometria
+			        "@x", 40 + DATEDIFF ( _ini, [@d], DAY ) / 84 * 1050, -- geometria
 			        "@yl", 345 - [@l] * 3.15, -- geometria
 			        "@yf", 345 - [@f] * 3.15 -- geometria
 			    )
 			VAR _linhaL = "M" & CONCATENATEX ( _pts, FORMAT ( [@x], _f, "en-US" ) & " " & FORMAT ( [@yl], _f, "en-US" ), " L", [@d], ASC )
 			VAR _linhaF = "M" & CONCATENATEX ( _pts, FORMAT ( [@x], _f, "en-US" ) & " " & FORMAT ( [@yf], _f, "en-US" ), " L", [@d], ASC )
-			VAR _xP = 40 + DATEDIFF ( _ini, _pD, DAY ) / 82 * 1050 -- geometria
-			VAR _xT1 = 40 + DATEDIFF ( _ini, _t1, DAY ) / 82 * 1050 -- geometria
-			VAR _xV = 40 + DATEDIFF ( _ini, _vD, DAY ) / 82 * 1050 -- geometria
-			VAR _xDeb = 40 + DATEDIFF ( _ini, _deb, DAY ) / 82 * 1050 -- geometria
+			VAR _xP = 40 + DATEDIFF ( _ini, _pD, DAY ) / 84 * 1050 -- geometria
+			VAR _xT1 = 40 + DATEDIFF ( _ini, _t1, DAY ) / 84 * 1050 -- geometria
+			VAR _xV = 40 + DATEDIFF ( _ini, _vD, DAY ) / 84 * 1050 -- geometria
+			VAR _xDeb = 40 + DATEDIFF ( _ini, _deb, DAY ) / 84 * 1050 -- geometria
+			VAR _xGlo = 40 + DATEDIFF ( _ini, _glo, DAY ) / 84 * 1050 -- geometria
 			VAR _yPL = 345 - _pL * 3.15 -- geometria
 			VAR _yPF = 345 - _pF * 3.15 -- geometria
 			VAR _yVL = 345 - _vL * 3.15 -- geometria
 			VAR _yVF = 345 - _vF * 3.15 -- geometria
-			VAR _xM = 40 + DATEDIFF ( _ini, _mD, DAY ) / 82 * 1050 -- geometria (dia de mais buscas do período)
+			VAR _xM = 40 + DATEDIFF ( _ini, _mD, DAY ) / 84 * 1050 -- geometria (dia de mais buscas do período)
 			VAR _yML = 345 - _mL * 3.15 -- geometria
 			VAR _yMF = 345 - _mF * 3.15 -- geometria
-			VAR _xA = 40 + DATEDIFF ( _ini, _pIni, DAY ) / 82 * 1050 - 6.4 -- geometria (faixa do período)
-			VAR _xB = 40 + DATEDIFF ( _ini, _pFim, DAY ) / 82 * 1050 + 6.4 -- geometria
+			VAR _xA = 40 + DATEDIFF ( _ini, _pIni, DAY ) / 84 * 1050 - 6.4 -- geometria (faixa do período)
+			VAR _xB = 40 + DATEDIFF ( _ini, _pFim, DAY ) / 84 * 1050 + 6.4 -- geometria
 			-- rótulos do pico: no lugar de cada ponto; se ficam a menos de 26 px, abrem em volta do meio (o maior em cima; no
 			-- empate, Lula em cima, na ordem da tela)
 			VAR _abre = ABS ( _yPL - _yPF ) < 26
@@ -9305,8 +9351,8 @@ table _Medidas
 			VAR _topo = ROUND ( MAX ( 62, MIN ( 150, MIN ( 80 + _yQ - 118, 80 + _yTopo - 70 ) ) ), 0 ) -- geometria (px inteiro)
 			VAR _comSeta = 80 + _yQ - 54 >= _topo + 64
 			VAR _setaEsq = _xQ < _xP + 40 -- o ponto fica à esquerda do começo da nota
-			VAR _xL1 = 40 + DATEDIFF ( _ini, DATE ( 2026, 9, 19 ), DAY ) / 82 * 1050 - 6.4 -- geometria (lacuna 19 a 21/09)
-			VAR _xL2 = 40 + DATEDIFF ( _ini, DATE ( 2026, 9, 21 ), DAY ) / 82 * 1050 + 6.4 -- geometria
+			VAR _xL1 = 40 + DATEDIFF ( _ini, DATE ( 2026, 9, 19 ), DAY ) / 84 * 1050 - 6.4 -- geometria (lacuna 19 a 21/09)
+			VAR _xL2 = 40 + DATEDIFF ( _ini, DATE ( 2026, 9, 21 ), DAY ) / 84 * 1050 + 6.4 -- geometria
 			VAR _grade =
 			    CONCATENATEX (
 			        { 0, 50, 100 },
@@ -9317,12 +9363,12 @@ table _Medidas
 			    )
 			VAR _datas =
 			    CONCATENATEX (
-			        { DATE ( 2026, 8, 1 ), DATE ( 2026, 9, 1 ), DATE ( 2026, 9, 15 ), DATE ( 2026, 10, 22 ) },
-			        "<text x='" & FORMAT ( 40 + DATEDIFF ( _ini, [Value], DAY ) / 82 * 1050, _f, "en-US" )
+			        { DATE ( 2026, 8, 1 ), DATE ( 2026, 9, 1 ), DATE ( 2026, 9, 15 ) },
+			        "<text x='" & FORMAT ( 40 + DATEDIFF ( _ini, [Value], DAY ) / 84 * 1050, _f, "en-US" )
 			            & "' y='372' class='ex' text-anchor='middle'>" & FORMAT ( [Value], "dd/MM" ) & "</text>",
 			        ""
 			    )
-			VAR _xCamp = 40 + DATEDIFF ( _ini, _camp, DAY ) / 82 * 1050 -- geometria
+			VAR _xCamp = 40 + DATEDIFF ( _ini, _camp, DAY ) / 84 * 1050 -- geometria
 			-- 4 · Marcação
 			VAR _lacuna =
 			    IF (
@@ -9371,7 +9417,10 @@ table _Medidas
 			        & "<text x='" & FORMAT ( _xT1, _f, "en-US" ) & "' y='372' class='ex b' text-anchor='middle'>1º turno · "
 			            & FORMAT ( _t1, "dd/MM" ) & "</text>"
 			        & "<line x1='" & FORMAT ( _xDeb, _f, "en-US" ) & "' x2='" & FORMAT ( _xDeb, _f, "en-US" ) & "' y1='150' y2='350' class='ev'/>"
-			        & "<text x='" & FORMAT ( _xDeb - 4, _f, "en-US" ) & "' y='388' class='ex b' text-anchor='middle'>debate</text>"
+			        & "<text x='" & FORMAT ( _xDeb - 4, _f, "en-US" ) & "' y='388' class='ex b' text-anchor='middle'>Band</text>"
+			        & IF ( NOT ISBLANK ( _glo ), "<line x1='" & FORMAT ( _xGlo, _f, "en-US" ) & "' x2='" & FORMAT ( _xGlo, _f, "en-US" )
+			            & "' y1='150' y2='350' class='ev'/><text x='" & FORMAT ( _xGlo, _f, "en-US" )
+			            & "' y='388' class='ex b' text-anchor='middle'>Globo</text>" )
 			        & "<path d='" & _linhaF & "' pathLength='1' class='lf traco" & _cl & "' filter='url(#rbu)' style='animation-delay:.4s'/>"
 			        & "<path d='" & _linhaL & "' pathLength='1' class='ll traco" & _cl & "' filter='url(#rbu)' style='animation-delay:.6s'/>"
 			        & _cheias & _pontosPico & _pontosNota
@@ -9451,7 +9500,7 @@ table _Medidas
 			VAR _l = [T08 · dia · Lula]
 			VAR _fl = [T08 · dia · Flávio]
 			-- 3 · Geometria (x: 01/08 a 22/10 em 40–1090; y: índice em 345–30 no svg que começa em y 80; a faixa começa em y 100)
-			VAR _x = 40 + DATEDIFF ( DATE ( 2026, 8, 1 ), _d, DAY ) / 82 * 1050 - 6.5 -- geometria
+			VAR _x = 40 + DATEDIFF ( DATE ( 2026, 8, 1 ), _d, DAY ) / 84 * 1050 - 6.5 -- geometria
 			VAR _yl = 80 + 345 - _l * 3.15 - 100 - 5.5 -- geometria
 			VAR _yf = 80 + 345 - _fl * 3.15 - 100 - 5.5 -- geometria
 			-- 4 · Marcação
@@ -9570,7 +9619,7 @@ table _Medidas
 			                & "<span class='v'><span class='ord'>" & _p2 & "ª</span><small>mais buscada</small></span></div>"
 			        & "</div>"
 			        & "<div class='nota entra d9'>Fontes: Google ao UOL (alta contra a semana anterior); Google Trends, termos de serviço "
-			            & "(0 a 100, 01/08 a 22/10); lista do Google obtida pelo Estadão</div>"
+			            & "(0 a 100, 01/08 a 24/10); lista do Google obtida pelo Estadão</div>"
 			    & "</div>"
 		displayFolder: T08 Buscas\Desenho
 		lineageTag: dbe60636-9a59-5f5c-9e85-0dd8097abd22
@@ -9636,7 +9685,7 @@ table _Medidas
 			VAR _per = [Período · escolhido]
 			VAR _pNome = [Período · nome]
 			VAR _pRot = [Período · rótulo]
-			VAR _pFim = [Período · fim]
+			VAR _pFim = [T08 · período · fim no Google]
 			VAR _pDias = [T08 · período · dias]
 			VAR _pqL = [T08 · período · dias com Lula à frente]
 			VAR _pqF = [T08 · período · dias com Flávio à frente]
@@ -9657,9 +9706,20 @@ table _Medidas
 			VAR _nA = IF ( _cA = "Lula", _dL, _dF )
 			VAR _nB = IF ( _cA = "Lula", _dF, _dL )
 			VAR _kB = IF ( _cA = "Lula", _dFdep, _dLdep )
+			-- o ponto do Google com a noite do debate da Band (19/10: o dia do Google fecha às 21h de Brasília) não é "depois"
+			-- do debate; se quem ficou atrás na campanha liderou nele, a frase diz isso
+			VAR _noite =
+			    IF (
+			        _cB = "Flávio",
+			        [T08 · debate · Flávio] > [T08 · debate · Lula],
+			        [T08 · debate · Lula] > [T08 · debate · Flávio]
+			    )
 			VAR _txtDep =
 			    SWITCH (
 			        TRUE (),
+			        _noite && _nB = 1, ", na noite do debate da Band",
+			        _noite && _nB = 2 && _kB = 1, ", um na noite do debate da Band e outro depois",
+			        _noite && _kB = _nB - 1, ", um na noite do debate da Band e " & _kB & " depois",
 			        _kB = 0, "",
 			        _kB = _nB, SWITCH ( _nB, 1, ", depois do debate da Band", 2, ", ambos depois do debate da Band", ", todos depois do debate da Band" ),
 			        _kB = 1, ", um deles depois do debate da Band",
@@ -9671,7 +9731,14 @@ table _Medidas
 			        _nA = _nB,
 			        "Lula e Flávio foram mais buscados no mesmo número de dias da campanha: " & _nA & " cada um, dos " & _dias,
 			        _cA & " foi mais buscado que " & _cB & " em " & _nA & " dos " & _dias & " dias da campanha; "
-			            & IF ( _nB = 0, _cB & " não ficou na frente em nenhum", _cB & " ficou na frente em " & _nB & IF ( _nB = 1, " dia", " dias" ) & _txtDep )
+			            & SWITCH (
+			                TRUE (),
+			                _nB = 0, _cB & " não ficou na frente em nenhum",
+			                -- liderou no ponto da noite do debate: a frase curta cabe em duas linhas
+			                _noite && _nB = 1, _cB & " liderou só na noite do debate da Band",
+			                _noite, _cB & " liderou na noite do debate da Band e em mais " & _nB - 1 & IF ( _nB = 2, " dia", " dias" ),
+			                _cB & " ficou na frente em " & _nB & IF ( _nB = 1, " dia", " dias" ) & _txtDep
+			            )
 			    )
 			-- no dia: quem foi mais buscado e, se for o caso, a posição do dia para quem liderou
 			VAR _lider = SWITCH ( TRUE (), _iL > _iF, "Lula", _iF > _iL, "Flávio", "" )
@@ -9785,7 +9852,7 @@ table _Medidas
 			            & "filtro, ou nenhum para voltar ao 2º turno inteiro.",
 			        _modo = "uf", _txt,
 			        "A parte de cada um soma os índices dos dias do período na mesma consulta (0 a 100, em que 100 é o dia de mais "
-			            & "procura), não o número de buscas." & IF ( _pFim >= DATE ( 2026, 10, 22 ), " O 22/10 ainda estava em curso na coleta.", "" )
+			            & "procura), não o número de buscas." & " O dia do Google vai das 21h da véspera às 21h, no horário de Brasília."
 			    )
 			VAR _numL = IF ( _noPer, FORMAT ( IF ( _modo = "uf", _upL, _ppL ), "0%" ), FORMAT ( _pL, "0%" ) )
 			VAR _numF = IF ( _noPer, FORMAT ( IF ( _modo = "uf", _upF, _ppF ), "0%" ), FORMAT ( _pF, "0%" ) )
@@ -9870,9 +9937,10 @@ table _Medidas
 			        _d,
 			        _camp, "começa a campanha",
 			        DATE ( 2026, 10, 4 ), "o dia da eleição",
-			        DATE ( 2026, 10, 18 ), "a noite do debate",
-			        DATE ( 2026, 10, 19 ), "o dia seguinte ao debate",
-			        DATE ( 2026, 10, 22 ), IF ( ISBLANK ( _uf ), "dia em curso na coleta", "" ), -- na U2, 22/10 é dia inteiro
+			        -- o dia do Google vai das 21h da véspera às 21h (Brasília): a noite de cada debate cai no ponto seguinte
+			        DATE ( 2026, 10, 18 ), "até as 21h do debate da Band",
+			        DATE ( 2026, 10, 19 ), "a noite do debate da Band (o dia do Google começa às 21h)",
+			        DATE ( 2026, 10, 24 ), "a noite do debate da Globo (o dia do Google começa às 21h)",
 			        ""
 			    )
 			VAR _quemZero =

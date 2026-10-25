@@ -30,7 +30,7 @@ VAR _upF = [T08 · UF · parte Flávio]
 VAR _per = [Período · escolhido]
 VAR _pNome = [Período · nome]
 VAR _pRot = [Período · rótulo]
-VAR _pFim = [Período · fim]
+VAR _pFim = [T08 · período · fim no Google]
 VAR _pDias = [T08 · período · dias]
 VAR _pqL = [T08 · período · dias com Lula à frente]
 VAR _pqF = [T08 · período · dias com Flávio à frente]
@@ -51,9 +51,20 @@ VAR _cB = IF ( _cA = "Lula", "Flávio", "Lula" )
 VAR _nA = IF ( _cA = "Lula", _dL, _dF )
 VAR _nB = IF ( _cA = "Lula", _dF, _dL )
 VAR _kB = IF ( _cA = "Lula", _dFdep, _dLdep )
+-- o ponto do Google com a noite do debate da Band (19/10: o dia do Google fecha às 21h de Brasília) não é "depois"
+-- do debate; se quem ficou atrás na campanha liderou nele, a frase diz isso
+VAR _noite =
+    IF (
+        _cB = "Flávio",
+        [T08 · debate · Flávio] > [T08 · debate · Lula],
+        [T08 · debate · Lula] > [T08 · debate · Flávio]
+    )
 VAR _txtDep =
     SWITCH (
         TRUE (),
+        _noite && _nB = 1, ", na noite do debate da Band",
+        _noite && _nB = 2 && _kB = 1, ", um na noite do debate da Band e outro depois",
+        _noite && _kB = _nB - 1, ", um na noite do debate da Band e " & _kB & " depois",
         _kB = 0, "",
         _kB = _nB, SWITCH ( _nB, 1, ", depois do debate da Band", 2, ", ambos depois do debate da Band", ", todos depois do debate da Band" ),
         _kB = 1, ", um deles depois do debate da Band",
@@ -65,7 +76,14 @@ VAR _manBrasil =
         _nA = _nB,
         "Lula e Flávio foram mais buscados no mesmo número de dias da campanha: " & _nA & " cada um, dos " & _dias,
         _cA & " foi mais buscado que " & _cB & " em " & _nA & " dos " & _dias & " dias da campanha; "
-            & IF ( _nB = 0, _cB & " não ficou na frente em nenhum", _cB & " ficou na frente em " & _nB & IF ( _nB = 1, " dia", " dias" ) & _txtDep )
+            & SWITCH (
+                TRUE (),
+                _nB = 0, _cB & " não ficou na frente em nenhum",
+                -- liderou no ponto da noite do debate: a frase curta cabe em duas linhas
+                _noite && _nB = 1, _cB & " liderou só na noite do debate da Band",
+                _noite, _cB & " liderou na noite do debate da Band e em mais " & _nB - 1 & IF ( _nB = 2, " dia", " dias" ),
+                _cB & " ficou na frente em " & _nB & IF ( _nB = 1, " dia", " dias" ) & _txtDep
+            )
     )
 -- no dia: quem foi mais buscado e, se for o caso, a posição do dia para quem liderou
 VAR _lider = SWITCH ( TRUE (), _iL > _iF, "Lula", _iF > _iL, "Flávio", "" )
@@ -179,7 +197,7 @@ VAR _txtP =
             & "filtro, ou nenhum para voltar ao 2º turno inteiro.",
         _modo = "uf", _txt,
         "A parte de cada um soma os índices dos dias do período na mesma consulta (0 a 100, em que 100 é o dia de mais "
-            & "procura), não o número de buscas." & IF ( _pFim >= DATE ( 2026, 10, 22 ), " O 22/10 ainda estava em curso na coleta.", "" )
+            & "procura), não o número de buscas." & " O dia do Google vai das 21h da véspera às 21h, no horário de Brasília."
     )
 VAR _numL = IF ( _noPer, FORMAT ( IF ( _modo = "uf", _upL, _ppL ), "0%" ), FORMAT ( _pL, "0%" ) )
 VAR _numF = IF ( _noPer, FORMAT ( IF ( _modo = "uf", _upF, _ppF ), "0%" ), FORMAT ( _pF, "0%" ) )

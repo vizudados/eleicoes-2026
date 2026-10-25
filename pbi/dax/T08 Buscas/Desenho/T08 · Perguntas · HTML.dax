@@ -33,5 +33,5 @@ RETURN
                 & "<span class='v'><span class='ord'>" & _p2 & "ª</span><small>mais buscada</small></span></div>"
         & "</div>"
         & "<div class='nota entra d9'>Fontes: Google ao UOL (alta contra a semana anterior); Google Trends, termos de serviço "
-            & "(0 a 100, 01/08 a 22/10); lista do Google obtida pelo Estadão</div>"
+            & "(0 a 100, 01/08 a 24/10); lista do Google obtida pelo Estadão</div>"
     & "</div>"

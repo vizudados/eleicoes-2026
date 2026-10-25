@@ -92,7 +92,7 @@ TELAS = [
          fonte="Fontes: TV Globo e imprensa (fatos do debate), Kantar IBOPE, Google Trends, Bites e pesquisas registradas "
                "no TSE · cada número com a hora em que chegou"),
     Tela("T08", "Buscas", "O que o Brasil perguntou ao Google?", "V · O 2º turno", filtro="Período",
-         fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22 e 23/10/2026"),
+         fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22 a 24/10/2026"),
     Tela("T09", "Redes", "Quem dominou as redes?", "V · O 2º turno", filtro="Período",
          fonte="Fontes: Bites, Quaest, Social Blade, Datrix e Biblioteca de Anúncios da Meta"),
     Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "V · O 2º turno", filtro="UF",

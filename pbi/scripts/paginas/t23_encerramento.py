@@ -14,7 +14,7 @@ do dono, 23/10/2026: nada de cópia).
 
 Os achados repetem as manchetes do 1º turno (números finais do TSE de 22/10/2026), escritos aqui como texto da
 apresentação: não mudam com filtro e o movimento conta cada número na entrada. Os do 2º turno seguem as pesquisas
-lançadas até 24/10/2026, 18h55 (T17: 42 de 48, com 5 de Lula e 1 empate); a cada pesquisa nova, conferir contra o
+lançadas até 24/10/2026, 21h20 (T17: 43 de 49, com 5 de Lula e 1 empate; a última foi a Futura); a cada pesquisa nova, conferir contra o
 modelo ([T17 · depois · pesquisas] e [T17 · depois · Flávio à frente]).
 """
 from __future__ import annotations
@@ -41,7 +41,7 @@ ACHADOS = [
                       ("T13", "Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno."),
                       ("T24", "Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%."),
                       ("T14", "Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.")]),
-    ("V · O 2º TURNO", [("T17", "Desde 5 de outubro, Flávio lidera 42 de 48 pesquisas do 2º turno."),
+    ("V · O 2º TURNO", [("T17", "Desde 5 de outubro, Flávio lidera 43 de 49 pesquisas do 2º turno."),
                          ("T07", "O primeiro frente a frente, na Band, não mexeu nas pesquisas."),
                          ("T26", "O último debate, na Globo em 23/10: o que se soube dele, número a número.")]),
 ]

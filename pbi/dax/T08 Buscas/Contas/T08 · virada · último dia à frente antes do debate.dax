@@ -4,7 +4,7 @@
 @descricao: Último dia antes do debate em que quem passou o outro depois dele (T08 · virada · quem passa) já tinha estado na frente, na série que a curva mostra (o 'desde' da manchete).
 @oraculo: 13/08 (Brasil, T2)
 */
-VAR _deb = [T08 · debate · data]
+VAR _deb = [T08 · debate · dia no Google]
 VAR _quem = [T08 · virada · quem passa]
 VAR _dias =
     ADDCOLUMNS (

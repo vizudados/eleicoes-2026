@@ -4,7 +4,7 @@
 @descricao: Quantos dias depois do debate veio a virada (1 = no dia seguinte); vazio sem virada.
 @oraculo: 1 (Brasil, T2); MG 4
 */
-VAR _deb = [T08 · debate · data]
+VAR _deb = [T08 · debate · dia no Google]
 VAR _v = [T08 · virada · data]
 RETURN
     IF ( NOT ISBLANK ( _v ), DATEDIFF ( _deb, _v, DAY ) )

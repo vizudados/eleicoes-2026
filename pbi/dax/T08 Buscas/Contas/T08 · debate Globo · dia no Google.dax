@@ -1,0 +1,12 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Ponto da série diária do Google Trends que tem a noite do debate da Globo: o dia seguinte (o Google fecha o dia às 21h de Brasília; o debate foi das 21h20 às 23h50 de 23/10). Regra explícita: Debate com Emissora = Globo e Turno = 2.
+@oraculo: 24/10
+*/
+CALCULATE (
+    MAX ( Debate[Data] ),
+    REMOVEFILTERS ( Debate ),
+    Debate[Emissora] = "Globo",
+    Debate[Turno] = 2
+) + 1

@@ -1,0 +1,9 @@
+/*
+@pasta: T08 Buscas\Contas
+@formato: dd/MM
+@descricao: Primeiro ponto da série diária do Google no período escolhido: o início do período mais um dia (o dia do Google fecha às 21h de Brasília, e a noite que abre o período, a do debate, cai no ponto seguinte); vazio sem período.
+@oraculo: Depois da Band 19/10; Depois da Globo 24/10
+*/
+VAR _i = [Período · início]
+RETURN
+    IF ( NOT ISBLANK ( _i ), _i + 1 )

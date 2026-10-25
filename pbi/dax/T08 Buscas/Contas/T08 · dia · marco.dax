@@ -1,10 +1,11 @@
 /*
 @pasta: T08 Buscas\Contas
 @formato: texto
-@descricao: O que foi o dia, para o leitor: dia do 1º turno, véspera, dia do debate, um dia depois do debate ou o dia da semana.
+@descricao: O que foi o dia, para o leitor: dia do 1º turno, véspera, noite do debate da Band ou da Globo (o dia do Google), um dia depois do debate ou o dia da semana.
 */
 VAR _d = [T08 · dia · data]
-VAR _deb = [T08 · debate · data]
+VAR _deb = [T08 · debate · dia no Google]
+VAR _glo = [T08 · debate Globo · dia no Google]
 VAR _t1 = DATE ( 2026, 10, 4 )
 RETURN
     IF (
@@ -13,8 +14,9 @@ RETURN
             TRUE (),
             _d = _t1, "dia do 1º turno",
             _d = _t1 - 1, "véspera do 1º turno",
-            _d = _deb, "dia do debate",
-            _d = _deb + 1, "um dia depois do debate",
+            _d = _deb, "noite do debate da Band",
+            _d = _deb + 1, "um dia depois do debate da Band",
+            _d = _glo, "noite do debate da Globo",
             FORMAT ( _d, "dddd" )
         )
     )

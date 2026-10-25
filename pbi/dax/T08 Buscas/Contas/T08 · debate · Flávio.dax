@@ -4,7 +4,7 @@
 @descricao: Índice de Flávio no dia do debate da Band, na série que a curva mostra (Brasil, T2, ou o estado clicado, U2).
 @oraculo: 32 (Brasil, T2)
 */
-VAR _d = [T08 · debate · data]
+VAR _d = [T08 · debate · dia no Google]
 RETURN
     CALCULATE (
         [T08 · dia · Flávio],

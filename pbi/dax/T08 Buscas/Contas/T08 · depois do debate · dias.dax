@@ -4,7 +4,7 @@
 @descricao: Dias da curva depois do debate (19 a 22/10).
 @oraculo: 4
 */
-VAR _deb = [T08 · debate · data]
+VAR _deb = [T08 · debate · dia no Google]
 VAR _dias =
     ADDCOLUMNS (
         CALCULATETABLE (

@@ -4,8 +4,8 @@
 @descricao: Dias da curva no período escolhido (nos dias da curva dentro do período escolhido no filtro Período (o dia do debate conta como depois), na série que a curva mostra (Brasil, T2, ou o estado clicado, U2); vazio sem período).
 @oraculo: Antes da Band 13; Depois da Band 3; Antes da Globo 2; Depois da Globo 0
 */
-VAR _ini = [Período · início]
-VAR _fim = [Período · fim]
+VAR _ini = [T08 · período · início no Google]
+VAR _fim = [T08 · período · fim no Google]
 VAR _dias =
     ADDCOLUMNS (
         CALCULATETABLE (
