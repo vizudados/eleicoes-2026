@@ -125,27 +125,29 @@ PARAMETROS = [
 
 FUNCOES = [
     ("fxCsv",
-     "Lê um CSV do repositório (caminho relativo a pRepositorioRaw) e promove o cabeçalho. A apuração passa um "
+     "Lê um CSV do repositório (caminho relativo ao raw do GitHub, branch main; endereço-base literal, para o Service atualizar) e promove o cabeçalho. A apuração passa um "
      "carimbo na consulta para furar o cache de 5 minutos do raw do GitHub; os demais arquivos mudam pouco.",
      """
 (caminho as text, optional separador as nullable text) as table =>
     let
         Ao_vivo = Text.StartsWith(caminho, "dados/apuracao"),
-        Opcoes = if Ao_vivo
-            then [RelativePath = caminho,
-                  Query = [t = DateTimeZone.ToText(DateTimeZone.UtcNow(), [Format = "yyyyMMddHHmmss", Culture = "en-US"])]]
-            else [RelativePath = caminho],
-        Bruto = Csv.Document(Web.Contents(pRepositorioRaw, Opcoes),
+        // endereço-base literal: o Power BI Service só atualiza fontes Web cujo endereço ele lê sem rodar a consulta
+        // (um parâmetro aqui vira "fonte de dados dinâmica" e o modelo não atualiza); o caminho vai no RelativePath
+        Bruto = Csv.Document(Web.Contents("https://raw.githubusercontent.com",
+                [RelativePath = "vizudados/eleicoes-2026/main/" & caminho,
+                 Query = if Ao_vivo
+                     then [t = DateTimeZone.ToText(DateTimeZone.UtcNow(), [Format = "yyyyMMddHHmmss", Culture = "en-US"])]
+                     else []]),
             [Delimiter = if separador = null then "," else separador, Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
         Cabecalho = Table.PromoteHeaders(Bruto, [PromoteAllScalars = true])
     in
         Cabecalho
 """),
     ("fxJson",
-     "Lê um JSON do repositório (caminho relativo a pRepositorioRaw), com carimbo para furar o cache do raw.",
+     "Lê um JSON do repositório (caminho relativo ao raw do GitHub, branch main), com carimbo para furar o cache do raw.",
      """
 (caminho as text) as any =>
-    Json.Document(Web.Contents(pRepositorioRaw, [RelativePath = caminho,
+    Json.Document(Web.Contents("https://raw.githubusercontent.com", [RelativePath = "vizudados/eleicoes-2026/main/" & caminho,
         Query = [t = DateTimeZone.ToText(DateTimeZone.UtcNow(), [Format = "yyyyMMddHHmmss", Culture = "en-US"])]]))
 """),
     ("fxHora",
