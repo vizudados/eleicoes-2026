@@ -17,6 +17,9 @@ on:
       voltas:
         description: "Quantas conferências, uma a cada 10 min (1 = uma só; 30 ≈ 5 h, depois passa o bastão)"
         default: "1"
+      testar_agente:
+        description: "sim = chama o agente mesmo sem problema, para conferir a chave e o modelo (abre uma issue de teste)"
+        default: "nao"
 
 permissions:
   contents: write
@@ -58,7 +61,7 @@ jobs:
 
   corrigir:
     needs: conferir
-    if: needs.conferir.outputs.problema == '1'
+    if: needs.conferir.outputs.problema == '1' || github.event.inputs.testar_agente == 'sim'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -85,6 +88,7 @@ jobs:
           prompt: |
             Você é o vigia da apuração do 2º turno de 2026 (domingo, 25/10) no repositório ${{ github.repository }}.
             O conferidor automático achou este problema: ${{ needs.conferir.outputs.resumo }}
+            ${{ github.event.inputs.testar_agente == 'sim' && 'ESTE É UM TESTE pedido pela equipe: não há problema real. Não mexa em código nem dispare workflows; só confira o estado (passo 1) e abra a issue com o título "Teste do vigia: agente ok" resumindo o que viu.' || '' }}
 
             Contexto: o workflow `apuracao` (.github/workflows/apuracao.yml) roda apuracao/coletar.py uma vez por minuto
             em execuções longas encadeadas (repetir=200, cada uma dispara a seguinte), lê a API pública do TSE (eleição
