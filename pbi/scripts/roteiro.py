@@ -85,7 +85,7 @@ TELAS = [
     Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "V · O 2º turno",
          fonte="Fontes: pesquisas registradas no TSE que publicaram o cruzamento · imprensa (apoios)"),
     Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "V · O 2º turno", filtro="Período",
-         fonte="Fonte: pesquisas registradas no TSE e relatórios dos institutos (rejeição) · levantamento de 22/10/2026"),
+         fonte="Fonte: pesquisas registradas no TSE e relatórios dos institutos (rejeição) · levantamento até 24/10/2026"),
     Tela("T07", "Debate Band", "O que mudou depois do debate na Band?", "V · O 2º turno",
          fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
     Tela("T26", "Debate Globo", "O último debate mudou alguma coisa?", "V · O 2º turno",
