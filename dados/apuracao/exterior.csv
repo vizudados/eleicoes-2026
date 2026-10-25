@@ -23,7 +23,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 38881,Belmopan,Belize,América Central e Caribe,25/10/2026 16:02:54,100.0,1,1,0,0,0
 38920,Cotonou,Benin,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 99210,Cobija,Bolívia,América do Sul,25/10/2026 18:02:54,100.0,1,1,0,0,0
-29572,Cochabamba,Bolívia,América do Sul,,0.0,1,0,0,0,0
+29572,Cochabamba,Bolívia,América do Sul,25/10/2026 19:27:03,100.0,1,1,186,62,124
 29904,La Paz,Bolívia,América do Sul,,0.0,1,0,0,0,0
 99236,Puerto Quijarro,Bolívia,América do Sul,25/10/2026 18:02:54,100.0,1,1,0,0,0
 30473,Santa Cruz De La Sierra,Bolívia,América do Sul,,0.0,5,0,0,0,0
@@ -143,7 +143,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 99503,Edimburgo,Reino Unido,Europa,25/10/2026 21:05:26,100.0,6,6,834,658,176
 29971,Londres,Reino Unido,Europa,25/10/2026 21:05:27,100.0,48,48,16483,10310,6173
 29874,Kinshasa,República Democrática do Congo,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
-30490,São Domingos,República Dominicana,América Central e Caribe,,0.0,1,0,0,0,0
+30490,São Domingos,República Dominicana,América Central e Caribe,25/10/2026 19:27:08,100.0,1,1,208,90,118
 39187,Brazzaville,República do Congo,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 29440,Bucareste,Romênia,Europa,25/10/2026 23:05:25,100.0,1,1,65,40,25
 30163,Moscou,Rússia,Europa,26/10/2026 02:21:22,100.0,1,1,93,60,33
