@@ -36,7 +36,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 29815,Iaundê,Camarões,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 30155,Montreal,Canadá,América do Norte,25/10/2026 19:52:18,13.33,15,2,1015,719,296
 30252,Ottawa,Canadá,América do Norte,,0.0,4,0,0,0,0
-30635,Toronto,Canadá,América do Norte,,0.0,28,0,0,0,0
+30635,Toronto,Canadá,América do Norte,25/10/2026 19:53:02,92.86,28,26,9430,5687,3743
 39063,Vancouver,Canadá,América do Norte,,0.0,16,0,0,0,0
 29653,Doha,Catar,Ásia,25/10/2026 23:05:25,100.0,1,1,354,159,195
 39241,Astana,Cazaquistão,Ásia,26/10/2026 03:02:54,100.0,1,1,0,0,0
@@ -65,7 +65,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 39080,Atlanta,Estados Unidos,América do Norte,25/10/2026 19:46:46,18.18,22,4,778,221,557
 29416,Boston,Estados Unidos,América do Norte,,0.0,69,0,0,0,0
 29513,Chicago,Estados Unidos,América do Norte,,0.0,18,0,0,0,0
-30902,Hartford,Estados Unidos,América do Norte,25/10/2026 19:52:40,50.0,12,6,1411,455,956
+30902,Hartford,Estados Unidos,América do Norte,25/10/2026 19:54:53,83.33,12,10,2016,703,1313
 29807,Houston,Estados Unidos,América do Norte,,0.0,23,0,0,0,0
 29980,Los Angeles,Estados Unidos,América do Norte,,0.0,25,0,0,0,0
 30112,Miami,Estados Unidos,América do Norte,,0.0,51,0,0,0,0
