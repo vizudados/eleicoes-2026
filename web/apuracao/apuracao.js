@@ -195,9 +195,27 @@
     const topo = "<div class='rot topo entra'>" + (tse ? 'ATUALIZADO PELO TSE · ' + tse : 'AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE') +
       ' · COLETADO EM ' + (estado.coleta || '—') + (noBrasil || selo ? '' : ' · ' + nome.toUpperCase()) + '</div>';
     const marca = aguarda || r.lider === '—' ? '' : "<span class='visto'>✓</span>";
+    // no celular, as mesmas peças em coluna (t18m), na largura da tela e sem escala
+    if (MODO_CEL) {
+      return "<div class='t18m'>" + topo + selo + "<div class='par'>" + par + '</div>' +
+        "<div class='man frase sobe d4'>" + marca + frase + '</div>' + relogio + (aguarda ? '' : barra) + '</div>';
+    }
     return "<div class='tela t18p'>" + topo + "<div class='par'>" + par + selo + '</div>' +
       "<div class='man frase sobe d4'>" + marca + frase + '</div>' + relogio + (aguarda ? '' : barra) + '</div>';
   }
+
+  const CSS_CELULAR = '<style>.t18m{padding:2px 0 14px 0}.t18m .topo{line-height:1.6;margin-bottom:14px}' +
+    '.t18m .par{display:flex;flex-direction:column;gap:16px}.t18m .cand .pct{font-size:60px;margin:6px 0 6px 0}' +
+    '.t18m .cand .votos{font-size:16px;color:var(--grafite)}' +
+    '.t18m .selo{display:inline-block;transform:rotate(-3deg);border:2.5px solid #1C1915;outline:1.2px solid #1C1915;' +
+    'outline-offset:3px;padding:7px 12px;font-weight:700;font-size:12px;letter-spacing:.14em;margin:4px 0 18px 4px}' +
+    '.t18m .frase{display:flex;align-items:center;gap:10px;margin:20px 0 12px 0;font-size:20px}' +
+    '.t18m .visto{font-family:var(--mao);font-size:36px;line-height:1;margin-top:-6px}' +
+    '.t18m .relogio{display:flex;align-items:baseline;gap:12px;margin:8px 0 6px 0}.t18m .relogio .num{font-size:40px}' +
+    '.t18m .secoes{margin-top:8px}.t18m .trilho{position:relative;height:28px;background:#E5DBC8;margin:8px 0 10px 0;overflow:hidden}' +
+    '.t18m .enche{height:100%;background:#1C1915}' +
+    '.t18m .trilho .num{position:absolute;left:10px;top:5px;font-size:17px;color:#F1EBDF;mix-blend-mode:difference}' +
+    '.t18m .secoes .nota{font-size:14px;color:var(--grafite)}</style>';
 
   function contagem() {
     const d = FECHAMENTO - Date.now();
@@ -333,15 +351,19 @@
   let PECAS = null;
   const quadros = {};
 
-  function quadro(id, x, y, w, h, css, z) {
+  // cada visual num iframe; no celular, o resultado, o mapa e a curva vão para as vagas da coluna (o iframe não muda de
+  // lugar depois de criado: movido, ele recarregaria vazio)
+  const VAGA = { placar: 'v-placar', mapa: 'v-mapa', curva: 'v-curva' };
+  function quadro(id, css) {
     const f = document.createElement('iframe');
     f.title = id;
     f.setAttribute('scrolling', 'no');
-    f.style.cssText = 'position:absolute;border:0;left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px;z-index:' + z + ';background:transparent';
     f.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><base href="' + document.baseURI + '"><link rel="stylesheet" href="base.css">' +
       css + '<style id="congela"></style></head><body><div id="c"></div></body></html>';
-    document.getElementById('palco').appendChild(f);
-    return new Promise((ok) => f.addEventListener('load', () => { quadros[id] = f; ok(f); }, { once: true }));
+    (MODO_CEL && VAGA[id] ? document.getElementById(VAGA[id]) : document.getElementById('palco')).appendChild(f);
+    quadros[id] = f;
+    estilizar(id);
+    return new Promise((ok) => f.addEventListener('load', () => ok(f), { once: true }));
   }
 
   function pintar(id, html) {
@@ -359,7 +381,48 @@
     pintar('mapa', PECAS.mapa_fixo + (estado.modo === 'mapa' ? htmlMapa() : htmlQuadrados()));
     ligarMapa();
     rotuloFiltro();
+    if (MODO_CEL) alturaPlacar();
     estado.primeira = false;
+  }
+
+  // ---------- celular: os blocos em coluna (resultado, mapa, curva), cada um na largura da tela ----------
+  const GEO = { casca: [0, 0, 1920, 1080, 10], placar: [150, 140, 900, 470, 300], curva: [150, 640, 900, 340, 301],
+    mapa: [1110, 140, 660, 860, 302], tooltip: [650, 300, 440, 320, 400] };
+  const celular = () => document.getElementById('quadro').clientWidth < 1000;
+  const MODO_CEL = celular();
+
+  function alturaPlacar() {
+    const f = quadros.placar;
+    const c = f.contentDocument && f.contentDocument.getElementById('c');
+    if (c) f.style.height = Math.ceil(c.scrollHeight + 8) + 'px';
+  }
+
+  function estilizar(id) {
+    const f = quadros[id];
+    const [x, y, w, h, z] = GEO[id];
+    if (!MODO_CEL || !VAGA[id]) {
+      f.style.cssText = 'position:absolute;border:0;left:' + x + 'px;top:' + y + 'px;width:' + w + 'px;height:' + h + 'px;z-index:' + z +
+        ';background:transparent' + (id === 'tooltip' || (MODO_CEL && id === 'casca') ? ';display:none;pointer-events:none' : '');
+      return;
+    }
+    // no celular: o resultado na largura da tela, sem escala; o mapa e a curva escalados para caber nela
+    const vaga = document.getElementById(VAGA[id]);
+    const W = vaga.clientWidth;
+    if (id === 'placar') {
+      f.style.cssText = 'position:static;display:block;border:0;background:transparent;width:' + W + 'px;height:' + (f.style.height || '420px');
+      return;
+    }
+    const s = W / w;
+    f.style.cssText = 'position:absolute;left:0;top:0;border:0;background:transparent;transform-origin:0 0;width:' + w + 'px;height:' + h +
+      'px;transform:scale(' + s + ')';
+    vaga.style.height = h * s + 'px';
+  }
+
+  function arrumar() {
+    if (!MODO_CEL) { ajustar(); return; }
+    document.getElementById('v-modo').appendChild(document.getElementById('modo'));
+    for (const id of Object.keys(VAGA)) estilizar(id);
+    alturaPlacar();
   }
 
   // ---------- interação: clique no estado filtra o resultado; dossiê no mouse ----------
@@ -375,6 +438,7 @@
 
   function mostrarTooltip(uf, el) {
     const tt = quadros.tooltip;
+    if (MODO_CEL) return;
     const html = htmlTooltip(uf);
     if (!tt || !html) return;
     pintar('tooltip', html);
@@ -389,12 +453,13 @@
   function escolher(uf) {
     estado.escopo = uf;
     document.getElementById('filtro-sel').value = uf;
+    document.getElementById('filtro-cel').value = uf;
     desenhar();
   }
 
   function rotuloFiltro() {
-    const el = document.querySelector('#filtro .rotulo');
-    if (el) el.textContent = estado.escopo === 'BR' ? 'Todo o Brasil' : UF[estado.escopo][0];
+    const nome = estado.escopo === 'BR' ? 'Todo o Brasil' : UF[estado.escopo][0];
+    for (const el of document.querySelectorAll('#filtro .rotulo, #cel .rotulo-cel')) el.textContent = nome;
   }
 
   // ---------- montagem ----------
@@ -440,34 +505,40 @@
     fetch('uf_caminhos.json').then((r) => r.json()).then(centros).then((c) => { estado.caminhos = c; });
     const palco = document.getElementById('palco');
     // a casca (cabeçalho, urna, rodapé) e o filtro do alto, como no painel
+    document.body.classList.toggle('celular', MODO_CEL);
     await Promise.all([
       // a casca é fixa: sem a animação de entrada, que num quadro escondido ficaria parada no começo
-      quadro('casca', 0, 0, 1920, 1080, '<style>*{animation:none!important}</style>', 10)
+      quadro('casca', '<style>*{animation:none!important}</style>')
         .then((f) => { f.contentDocument.getElementById('c').innerHTML = PECAS.casca; }),
-      quadro('placar', 150, 140, 900, 470, PECAS.placar_css, 300),
-      quadro('curva', 150, 640, 900, 340, PECAS.curva_css, 301),
-      quadro('mapa', 1110, 140, 660, 860, PECAS.mapa_css, 302),
-      quadro('tooltip', 650, 300, 440, 320, "<style>" + TT_CSS + "</style>", 400)
+      quadro('placar', PECAS.placar_css + CSS_CELULAR),
+      // no celular, curva e mapa saem escalados: os textos pequenos crescem para continuar legíveis
+      quadro('curva', PECAS.curva_css + (MODO_CEL ? '<style>.t18c .rot{font-size:18px;letter-spacing:.06em}.t18c .ex{font-size:26px}' +
+        '.t18c .rl,.t18c .rf{font-size:34px}</style>' : '')),
+      quadro('mapa', PECAS.mapa_css + (MODO_CEL ? '<style>.mapa-fixo .rot{font-size:15px;letter-spacing:.08em}' +
+        '.mapa-fixo .leg{font-size:19px;gap:16px}.mapa-fixo .leg i{width:18px;height:18px}.mapa-fixo .dica{font-size:26px}</style>' : '')),
+      quadro('tooltip', '<style>' + TT_CSS + '</style>')
     ]);
-    quadros.tooltip.style.display = 'none';
-    quadros.tooltip.style.pointerEvents = 'none';
     const filtro = document.getElementById('filtro');
     filtro.insertAdjacentHTML('afterbegin', PECAS.filtro.replace('>Todo o Brasil<', " class='rotulo'>Todo o Brasil<"));
-    const sel = document.getElementById('filtro-sel');
-    sel.innerHTML = "<option value='BR'>Todo o Brasil</option>" +
+    const opcoes = "<option value='BR'>Todo o Brasil</option>" +
       SIGLAS.filter((u) => u !== 'ZZ').sort((a, b) => UF[a][0].localeCompare(UF[b][0], 'pt-BR'))
         .map((u) => "<option value='" + u + "'>" + UF[u][0] + '</option>').join('') + "<option value='ZZ'>Exterior</option>";
-    sel.addEventListener('change', () => escolher(sel.value));
+    for (const id of ['filtro-sel', 'filtro-cel']) {
+      const sel = document.getElementById(id);
+      sel.innerHTML = opcoes;
+      sel.addEventListener('change', () => escolher(sel.value));
+    }
     document.querySelectorAll('#modo button').forEach((b) => b.addEventListener('click', () => {
       estado.modo = b.dataset.modo;
       document.querySelectorAll('#modo button').forEach((x) => x.classList.toggle('on', x === b));
       desenhar();
     }));
-    ajustar();
-    addEventListener('resize', ajustar);
     await lerHistorico();
     await atualizar();
+    arrumar();
     desenhar();
+    // de computador para celular (ou o contrário) a página se monta de novo; no mesmo modo, só reescala
+    addEventListener('resize', () => { if (celular() !== MODO_CEL) location.reload(); else arrumar(); });
     setInterval(async () => { if (await atualizar()) desenhar(); }, INTERVALO);
     setInterval(lerHistorico, 5 * INTERVALO);
     setInterval(() => {
