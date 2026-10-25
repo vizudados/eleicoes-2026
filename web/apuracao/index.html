@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Apuração ao vivo · Eleições 2026 · Vizu Dados</title>
+<link rel="preload" href="fontes/sora-eleicoes.woff2" as="font" type="font/woff2" crossorigin>
 <meta name="description" content="A apuração do 2º turno de 2026, atualizada a cada minuto pela API pública do TSE.">
 <style>
-  @font-face{font-family:'Sora Vizu';font-style:normal;font-weight:100 900;font-display:block;src:url(fontes/sora-vizu.woff2) format('woff2')}
-  @font-face{font-family:'Sora Eleicoes';font-style:normal;font-weight:300 800;font-display:block;src:url(fontes/sora-eleicoes.woff2) format('woff2')}
+  @font-face{font-family:'Sora Vizu';font-style:normal;font-weight:100 900;font-display:swap;src:url(fontes/sora-eleicoes.woff2) format('woff2')}
+  @font-face{font-family:'Sora Eleicoes';font-style:normal;font-weight:300 800;font-display:swap;src:url(fontes/sora-eleicoes.woff2) format('woff2')}
   html,body{margin:0;padding:0;background:#F1EBDF}
   body:not(.celular){overflow:hidden}
   #quadro{position:relative;width:100%;overflow:hidden;background:#F1EBDF}
@@ -60,6 +61,6 @@
     </div>
   </div>
 </div>
-<script src="apuracao.js?v=20261025-1720"></script>
+<script src="apuracao.js?v=20261025-1730"></script>
 </body>
 </html>

@@ -205,24 +205,27 @@
     // no celular, as mesmas peças em coluna (t18m), na largura da tela e sem escala
     if (MODO_CEL) {
       return "<div class='t18m'>" + topo + selo + "<div class='par'>" + par + '</div>' +
-        "<div class='man frase sobe d4'>" + marca + frase + '</div>' + relogio + (aguarda ? '' : barra) + '</div>';
+        "<div class='man frase sobe d4'>" + marca + '<span>' + frase + '</span></div>' + relogio + (aguarda ? '' : barra) + '</div>';
     }
     return "<div class='tela t18p'>" + topo + "<div class='par'>" + par + selo + '</div>' +
-      "<div class='man frase sobe d4'>" + marca + frase + '</div>' + relogio + (aguarda ? '' : barra) + '</div>';
+      "<div class='man frase sobe d4'>" + marca + '<span>' + frase + '</span></div>' + relogio + (aguarda ? '' : barra) + '</div>';
   }
 
-  const CSS_CELULAR = '<style>.t18m{padding:2px 0 14px 0}.t18m .topo{line-height:1.6;margin-bottom:14px}' +
-    '.t18m .par{display:flex;flex-direction:column;gap:16px}.t18m .cand .pct{font-size:60px;margin:6px 0 6px 0}' +
-    '.t18m .cand .votos{font-size:16px;color:var(--grafite)}' +
-    '.t18m .selo{display:inline-block;transform:rotate(-3deg);border:2.5px solid #1C1915;outline:1.2px solid #1C1915;' +
-    'outline-offset:3px;padding:7px 12px;font-weight:700;font-size:12px;letter-spacing:.14em;margin:4px 0 18px 4px}' +
-    '.t18m .frase{display:flex;align-items:center;gap:10px;margin:20px 0 12px 0;font-size:20px}' +
-    '.t18m .visto{font-family:var(--mao);font-size:36px;line-height:1;margin-top:-6px}' +
-    '.t18m .relogio{display:flex;align-items:baseline;gap:12px;margin:8px 0 6px 0}.t18m .relogio .num{font-size:40px}' +
-    '.t18m .secoes{margin-top:8px}.t18m .trilho{position:relative;height:28px;background:#E5DBC8;margin:8px 0 10px 0;overflow:hidden}' +
+  const CSS_CELULAR = '<style>.t18m{padding:2px 0 10px 0}.t18m .topo{font-size:10.5px;line-height:1.6;letter-spacing:.1em;margin-bottom:12px}' +
+    '.t18m .par{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}' +
+    '.t18m .cand .rot{font-size:10.5px;letter-spacing:.08em;line-height:1.35}' +
+    '.t18m .cand .pct{font-size:36px;margin:6px 0 4px 0}.t18m .cand .votos{font-size:13px;color:var(--grafite)}' +
+    '.t18m .selo{display:inline-block;transform:rotate(-3deg);border:2px solid #1C1915;outline:1px solid #1C1915;' +
+    'outline-offset:3px;padding:5px 9px;font-weight:700;font-size:10.5px;letter-spacing:.12em;margin:2px 0 14px 4px}' +
+    '.t18m .frase{display:flex;align-items:flex-start;gap:8px;margin:16px 0 10px 0;font-size:16px;line-height:1.35}' +
+    '.t18m .visto{font-family:var(--mao);font-size:26px;line-height:1;margin-top:-4px}' +
+    '.t18m .relogio{display:flex;align-items:baseline;gap:10px;margin:6px 0 4px 0}.t18m .relogio .num{font-size:28px}' +
+    '.t18m .relogio + .txt{font-size:14px}' +
+    '.t18m .secoes{margin-top:6px}.t18m .secoes .rot{font-size:10.5px}' +
+    '.t18m .trilho{position:relative;height:24px;background:#E5DBC8;margin:6px 0 8px 0;overflow:hidden}' +
     '.t18m .enche{height:100%;background:#1C1915}' +
-    '.t18m .trilho .num{position:absolute;left:10px;top:5px;font-size:17px;color:#F1EBDF;mix-blend-mode:difference}' +
-    '.t18m .secoes .nota{font-size:14px;color:var(--grafite)}</style>';
+    '.t18m .trilho .num{position:absolute;left:8px;top:4px;font-size:14px;color:#F1EBDF;mix-blend-mode:difference}' +
+    '.t18m .secoes .nota{font-size:12.5px;color:var(--grafite)}</style>';
 
   function contagem() {
     const d = FECHAMENTO - Date.now();
@@ -384,7 +387,7 @@
     const f = document.createElement('iframe');
     f.title = id;
     f.setAttribute('scrolling', 'no');
-    f.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><base href="' + document.baseURI + '"><link rel="stylesheet" href="base.css">' +
+    f.srcdoc = '<!doctype html><html><head><meta charset="utf-8"><base href="' + document.baseURI + '"><link rel="stylesheet" href="base.css?v=20261025-1730">' +
       css + '<style id="congela"></style></head><body><div id="c"></div></body></html>';
     (MODO_CEL && VAGA[id] ? document.getElementById(VAGA[id]) : document.getElementById('palco')).appendChild(f);
     quadros[id] = f;
@@ -578,13 +581,12 @@
     MODO_CEL = celular();
     PECAS = await (await fetch('pecas.json')).json();
     estado.t1 = await (await fetch('primeiro_turno.json')).json();
-    fetch('uf_caminhos.json').then((r) => r.json()).then(centros).then((c) => { estado.caminhos = c; });
     const palco = document.getElementById('palco');
     // a casca (cabeçalho, urna, rodapé) e o filtro do alto, como no painel
     document.body.classList.toggle('celular', MODO_CEL);
     await Promise.all([
       // a casca é fixa: sem a animação de entrada, que num quadro escondido ficaria parada no começo
-      quadro('casca', '<style>*{animation:none!important}</style>')
+      MODO_CEL ? null : quadro('casca', '<style>*{animation:none!important}</style>')
         .then((f) => { f.contentDocument.getElementById('c').innerHTML = PECAS.casca; }),
       quadro('placar', PECAS.placar_css + CSS_CELULAR),
       // no celular, curva e mapa saem escalados: os textos pequenos crescem para continuar legíveis
@@ -592,7 +594,7 @@
         '.t18c .rl,.t18c .rf{font-size:34px}</style>' : '')),
       quadro('mapa', PECAS.mapa_css + (MODO_CEL ? '<style>.mapa-fixo .rot{font-size:15px;letter-spacing:.08em}' +
         '.mapa-fixo .leg{font-size:19px;gap:16px}.mapa-fixo .leg i{width:18px;height:18px}.mapa-fixo .dica{font-size:26px}</style>' : '')),
-      quadro('tooltip', '<style>' + TT_CSS + '</style>')
+      MODO_CEL ? null : quadro('tooltip', '<style>' + TT_CSS + '</style>')
     ]);
     const filtro = document.getElementById('filtro');
     filtro.insertAdjacentHTML('afterbegin', PECAS.filtro.replace('>Todo o Brasil<', " class='rotulo'>Todo o Brasil<"));
@@ -604,7 +606,11 @@
       sel.innerHTML = opcoes;
       sel.addEventListener('change', () => escolher(sel.value));
     }
-    document.querySelectorAll('#modo button').forEach((b) => b.addEventListener('click', () => {
+    document.querySelectorAll('#modo button').forEach((b) => b.addEventListener('click', async () => {
+      // o desenho do Brasil (28 kB) só vem na primeira vez que alguém pede o mapa
+      if (b.dataset.modo === 'mapa' && !estado.caminhos) {
+        estado.caminhos = await centros(await (await fetch('uf_caminhos.json')).json());
+      }
       estado.modo = b.dataset.modo;
       document.querySelectorAll('#modo button').forEach((x) => x.classList.toggle('on', x === b));
       desenhar();
