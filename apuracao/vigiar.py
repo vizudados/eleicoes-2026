@@ -53,8 +53,9 @@ def main():
     except Exception as e:  # noqa: BLE001 — o vigia relata qualquer falha de rede
         notas.append(f"TSE sem resposta: {e}")
     if idade > LIMITE and not rodando:
-        gh("workflow", "run", "apuracao.yml", "-R", REPO, "-f", "eleicao=6258", "-f", "repetir=4")
-        notas.append("coleta parada: disparei o apuracao de novo")
+        # uma execução longa (a corrente da noite: ela mesma passa o bastão à seguinte até a meia-noite)
+        gh("workflow", "run", "apuracao.yml", "-R", REPO, "-f", "eleicao=6258", "-f", "repetir=200")
+        notas.append("coleta parada: lancei uma execução longa do apuracao")
     if len(falhas) >= 2:
         problemas.append(f"{len(falhas)} execuções do coletor falharam nos últimos 40 min (ids "
                          + ", ".join(str(r["databaseId"]) for r in falhas) + ")")
