@@ -55,12 +55,18 @@ jobs:
           git config user.email "apuracao-bot@users.noreply.github.com"
           hora_tse() { python -I -c "import json;print(json.load(open('dados/apuracao/ultimo.json',encoding='utf-8')).get('atualizado_tse',''))" 2>/dev/null; }
           for i in $(seq 1 "$REPETIR"); do
+            # parte sempre do main mais recente: a execução começa no commit do disparo, que pode estar atrás de outra
+            # coleta (o conflito em ultimo.json que derrubou a execução longa de 25/10, 16h10)
+            git pull --rebase --quiet || { git rebase --abort 2>/dev/null || true; git fetch --quiet origin main; git reset --quiet --hard origin/main; }
             antes="$(hora_tse)"
-            python -I apuracao/coletar.py --eleicao "$ELEICAO"
+            python -I apuracao/coletar.py --eleicao "$ELEICAO" || echo "coleta falhou nesta volta; tenta de novo no próximo minuto"
             git add dados/apuracao
             if ! git diff --cached --quiet; then
               git commit -m "apuração: $(date -u +%H:%M) UTC" --quiet
-              git pull --rebase --quiet && git push --quiet
+              # se o push não passar, esta volta se perde (só no clone do runner) e o próximo minuto coleta de novo
+              if ! { git pull --rebase --quiet -X theirs && git push --quiet; }; then
+                git rebase --abort 2>/dev/null || true; git fetch --quiet origin main; git reset --quiet --hard origin/main
+              fi
             fi
             # o Power BI só é atualizado quando o TSE divulga números novos (a hora de totalização muda)
             if [ "$(hora_tse)" != "$antes" ]; then echo "ATUALIZOU=1" >> "$GITHUB_ENV"; fi
