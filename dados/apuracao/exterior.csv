@@ -6,8 +6,8 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 29998,Luanda,Angola,África,25/10/2026 21:05:24,100.0,1,1,285,167,118
 99147,Saint Johns,Antígua e Barbuda,América Central e Caribe,25/10/2026 18:02:54,100.0,1,1,0,0,0
 29467,Buenos Aires,Argentina,América do Sul,,0.0,15,0,0,0,0
-29602,Córdoba,Argentina,América do Sul,,0.0,2,0,0,0,0
-39004,Mendoza,Argentina,América do Sul,,0.0,1,0,0,0,0
+29602,Córdoba,Argentina,América do Sul,25/10/2026 19:33:29,50.0,2,1,172,89,83
+39004,Mendoza,Argentina,América do Sul,25/10/2026 19:32:34,100.0,1,1,120,62,58
 30295,Paso Los Libres,Argentina,América do Sul,,0.0,1,0,0,0,0
 99155,Puerto Iguazú,Argentina,América do Sul,,0.0,1,0,0,0,0
 29300,Argel,Argélia,África,,0.0,1,0,0,0,0
@@ -126,7 +126,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30414,Ramallah,Palestina,Ásia,25/10/2026 22:05:26,100.0,3,3,1046,1000,46
 30260,Panama,Panamá,América Central e Caribe,,0.0,2,0,0,0,0
 29831,Islamabade,Paquistão,Ásia,26/10/2026 03:02:54,100.0,1,1,0,0,0
-29327,Assunção,Paraguai,América do Sul,,0.0,4,0,0,0,0
+29327,Assunção,Paraguai,América do Sul,25/10/2026 19:32:34,100.0,4,4,1187,325,862
 29556,Ciudad Del Este,Paraguai,América do Sul,,0.0,7,0,0,0,0
 29580,Concepción,Paraguai,América do Sul,,0.0,1,0,0,0,0
 29670,Encarnación,Paraguai,América do Sul,25/10/2026 19:29:15,100.0,1,1,140,19,121
