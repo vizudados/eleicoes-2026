@@ -1,45 +1,45 @@
 cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totalizadas,validos,lula_votos,flavio_votos
-99139,Tirana,Albânia,Europa,,0.0,1,0,0,0,0
+99139,Tirana,Albânia,Europa,25/10/2026 23:02:54,100.0,1,1,0,0,0
 29386,Berlim,Alemanha,Europa,25/10/2026 22:05:24,100.0,20,20,8577,7452,1125
 29696,Frankfurt,Alemanha,Europa,25/10/2026 22:05:24,100.0,21,21,6165,4572,1593
 30180,Munique,Alemanha,Europa,25/10/2026 22:05:27,100.0,21,21,6181,4525,1656
 29998,Luanda,Angola,África,25/10/2026 21:05:24,100.0,1,1,285,167,118
-99147,Saint Johns,Antígua e Barbuda,América Central e Caribe,,0.0,1,0,0,0,0
+99147,Saint Johns,Antígua e Barbuda,América Central e Caribe,25/10/2026 18:02:54,100.0,1,1,0,0,0
 29467,Buenos Aires,Argentina,América do Sul,,0.0,15,0,0,0,0
 29602,Córdoba,Argentina,América do Sul,,0.0,2,0,0,0,0
 39004,Mendoza,Argentina,América do Sul,,0.0,1,0,0,0,0
 30295,Paso Los Libres,Argentina,América do Sul,,0.0,1,0,0,0,0
 99155,Puerto Iguazú,Argentina,América do Sul,,0.0,1,0,0,0,0
 29300,Argel,Argélia,África,,0.0,1,0,0,0,0
-38989,Ierevan,Armênia,Ásia,,0.0,1,0,0,0,0
+38989,Ierevan,Armênia,Ásia,26/10/2026 02:02:54,100.0,1,1,0,0,0
 30422,Riade,Arábia Saudita,Ásia,25/10/2026 23:05:25,100.0,1,1,80,49,31
 29491,Camberra,Austrália,Oceania,26/10/2026 07:05:22,100.0,10,10,2853,1856,997
 30562,Sydney,Austrália,Oceania,26/10/2026 07:05:22,100.0,19,19,6629,4161,2468
-39128,Baku,Azerbaijão,Ásia,,0.0,1,0,0,0,0
+39128,Baku,Azerbaijão,Ásia,26/10/2026 02:02:54,100.0,1,1,0,0,0
 99180,Nassau,Bahamas,América Central e Caribe,,0.0,1,0,0,0,0
 99473,Barein,Bahrein,Ásia,,0.0,1,0,0,0,0
-29629,Dacca,Bangladesh,Ásia,,0.0,1,0,0,0,0
-29424,Bridgetown,Barbados,América Central e Caribe,,0.0,1,0,0,0,0
-38881,Belmopan,Belize,América Central e Caribe,,0.0,1,0,0,0,0
-38920,Cotonou,Benin,África,,0.0,1,0,0,0,0
-99210,Cobija,Bolívia,América do Sul,,0.0,1,0,0,0,0
+29629,Dacca,Bangladesh,Ásia,26/10/2026 04:02:54,100.0,1,1,0,0,0
+29424,Bridgetown,Barbados,América Central e Caribe,25/10/2026 18:02:54,100.0,1,1,0,0,0
+38881,Belmopan,Belize,América Central e Caribe,25/10/2026 16:02:54,100.0,1,1,0,0,0
+38920,Cotonou,Benin,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
+99210,Cobija,Bolívia,América do Sul,25/10/2026 18:02:54,100.0,1,1,0,0,0
 29572,Cochabamba,Bolívia,América do Sul,,0.0,1,0,0,0,0
 29904,La Paz,Bolívia,América do Sul,,0.0,1,0,0,0,0
-99236,Puerto Quijarro,Bolívia,América do Sul,,0.0,1,0,0,0,0
+99236,Puerto Quijarro,Bolívia,América do Sul,25/10/2026 18:02:54,100.0,1,1,0,0,0
 30473,Santa Cruz De La Sierra,Bolívia,América do Sul,,0.0,5,0,0,0,0
-30669,Gaborone,Botsuana,África,,0.0,1,0,0,0,0
+30669,Gaborone,Botsuana,África,26/10/2026 00:02:54,100.0,1,1,0,0,0
 30546,Sófia,Bulgária,Europa,,0.0,1,0,0,0,0
-39284,Uagadugu,Burkina Faso,África,,0.0,1,0,0,0,0
+39284,Uagadugu,Burkina Faso,África,25/10/2026 22:02:54,100.0,1,1,0,0,0
 29432,Bruxelas,Bélgica,Europa,25/10/2026 22:05:25,100.0,14,14,5218,3064,2154
-30988,Sarajevo,Bósnia e Herzegovina,Europa,,0.0,2,0,0,0,0
+30988,Sarajevo,Bósnia e Herzegovina,Europa,25/10/2026 23:02:54,100.0,2,2,0,0,0
 30368,Praia,Cabo Verde,África,25/10/2026 19:05:27,100.0,1,1,77,48,29
-29815,Iaundê,Camarões,África,,0.0,1,0,0,0,0
+29815,Iaundê,Camarões,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 30155,Montreal,Canadá,América do Norte,,0.0,15,0,0,0,0
 30252,Ottawa,Canadá,América do Norte,,0.0,4,0,0,0,0
 30635,Toronto,Canadá,América do Norte,,0.0,28,0,0,0,0
 39063,Vancouver,Canadá,América do Norte,,0.0,16,0,0,0,0
 29653,Doha,Catar,Ásia,25/10/2026 23:05:25,100.0,1,1,354,159,195
-39241,Astana,Cazaquistão,Ásia,,0.0,1,0,0,0,0
+39241,Astana,Cazaquistão,Ásia,26/10/2026 03:02:54,100.0,1,1,0,0,0
 30481,Santiago,Chile,América do Sul,,0.0,5,0,0,0,0
 30651,Cantão,China,Ásia,26/10/2026 04:05:21,100.0,1,1,113,67,46
 29793,Hong Kong,China,Ásia,26/10/2026 04:05:24,100.0,1,1,260,127,133
@@ -47,7 +47,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30848,Xangai,China,Ásia,26/10/2026 04:05:25,100.0,1,1,248,182,66
 39322,Nicosia,Chipre,Europa,25/10/2026 23:05:25,100.0,1,1,54,29,25
 29408,Bogotá,Colômbia,América do Sul,,0.0,2,0,0,0,0
-99295,Pyongyang,Coreia do Norte,Ásia,,0.0,1,0,0,0,0
+99295,Pyongyang,Coreia do Norte,Ásia,26/10/2026 07:02:54,100.0,1,1,0,0,0
 30538,Seul,Coreia do Sul,Ásia,26/10/2026 05:05:21,100.0,1,1,230,148,82
 30511,São José,Costa Rica,América Central e Caribe,,0.0,1,0,0,0,0
 29254,Abidjã,Costa do Marfim,África,,0.0,1,0,0,0,0
@@ -79,22 +79,22 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 29785,Helsinque,Finlândia,Europa,25/10/2026 23:05:25,100.0,2,2,735,550,185
 99511,Marselha,França,Europa,25/10/2026 22:05:24,100.0,4,4,1041,929,112
 30287,Paris,França,Europa,25/10/2026 22:05:25,100.0,34,34,11674,9747,1927
-29939,Libreville,Gabão,África,,0.0,1,0,0,0,0
+29939,Libreville,Gabão,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 29270,Accra,Gana,África,,0.0,1,0,0,0,0
-99104,Tbilisi,Geórgia,Ásia,,0.0,1,0,0,0,0
+99104,Tbilisi,Geórgia,Ásia,26/10/2026 02:02:54,100.0,1,1,0,0,0
 29335,Atenas,Grécia,Europa,25/10/2026 23:05:24,100.0,2,2,566,255,311
 98000,Guatemala,Guatemala,América Central e Caribe,,0.0,1,0,0,0,0
 29718,Georgetown,Guiana,América do Sul,,0.0,1,0,0,0,0
 29475,Caiena,Guiana Francesa,América do Sul,,0.0,5,0,0,0,0
-99333,St Georges De Loyapock,Guiana Francesa,América do Sul,,0.0,1,0,0,0,0
-38903,Conacri,Guiné,África,,0.0,1,0,0,0,0
-39263,Malabo,Guiné Equatorial,África,,0.0,1,0,0,0,0
+99333,St Georges De Loyapock,Guiana Francesa,América do Sul,25/10/2026 19:02:54,100.0,1,1,0,0,0
+38903,Conacri,Guiné,África,25/10/2026 22:02:54,100.0,1,1,0,0,0
+39263,Malabo,Guiné Equatorial,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 29394,Bissau,Guiné-Bissau,África,,0.0,1,0,0,0,0
 30333,Porto Príncipe,Haiti,América Central e Caribe,,0.0,1,0,0,0,0
 30600,Tegucigalpa,Honduras,América Central e Caribe,,0.0,1,0,0,0,0
 29459,Budapeste,Hungria,Europa,25/10/2026 22:05:26,100.0,2,2,472,355,117
 29840,Jacarta,Indonésia,Ásia,26/10/2026 03:05:25,100.0,1,1,38,15,23
-99171,Bagdá,Iraque,Ásia,,0.0,1,0,0,0,0
+99171,Bagdá,Iraque,Ásia,26/10/2026 01:02:54,100.0,1,1,0,0,0
 29661,Dublin,Irlanda,Europa,25/10/2026 21:05:26,100.0,28,28,8970,7194,1776
 30597,Teerã,Irã,Ásia,,0.0,1,0,0,0,0
 30619,Tel Aviv,Israel,Ásia,25/10/2026 23:05:25,100.0,5,5,865,166,699
@@ -109,10 +109,10 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 29360,Beirute,Líbano,Ásia,25/10/2026 23:05:25,100.0,13,13,4012,2736,1276
 30686,Trípoli,Líbia,África,,0.0,1,0,0,0,0
 99341,Lilongue,Malaui,África,,0.0,1,0,0,0,0
-99350,Bamako,Mali,África,,0.0,1,0,0,0,0
+99350,Bamako,Mali,África,25/10/2026 22:02:54,100.0,1,1,0,0,0
 29890,Kuala Lumpur,Malásia,Ásia,26/10/2026 04:05:24,100.0,1,1,85,41,44
 30406,Rabat,Marrocos,África,25/10/2026 20:05:26,100.0,1,1,37,31,6
-99376,Yangon,Mianmar,Ásia,,0.0,1,0,0,0,0
+99376,Yangon,Mianmar,Ásia,26/10/2026 04:32:54,100.0,1,1,0,0,0
 30090,Maputo,Moçambique,África,25/10/2026 22:05:25,100.0,1,1,225,108,117
 30104,Mexico,México,América do Norte,,0.0,6,0,0,0,0
 30821,Windhoek,Namíbia,África,,0.0,1,0,0,0,0
@@ -125,7 +125,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 39102,Mascate,Omã,Ásia,,0.0,1,0,0,0,0
 30414,Ramallah,Palestina,Ásia,25/10/2026 22:05:26,100.0,3,3,1046,1000,46
 30260,Panama,Panamá,América Central e Caribe,,0.0,2,0,0,0,0
-29831,Islamabade,Paquistão,Ásia,,0.0,1,0,0,0,0
+29831,Islamabade,Paquistão,Ásia,26/10/2026 03:02:54,100.0,1,1,0,0,0
 29327,Assunção,Paraguai,América do Sul,,0.0,4,0,0,0,0
 29556,Ciudad Del Este,Paraguai,América do Sul,,0.0,7,0,0,0,0
 29580,Concepción,Paraguai,América do Sul,,0.0,1,0,0,0,0
@@ -133,7 +133,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30309,Pedro Juan Caballero,Paraguai,América do Sul,,0.0,1,0,0,0,0
 30465,Salto Del Guairá,Paraguai,América do Sul,,0.0,2,0,0,0,0
 30457,Amsterdã,Países Baixos,Europa,25/10/2026 22:05:26,100.0,17,17,6961,5578,1383
-29823,Iquitos,Peru,América do Sul,,0.0,1,0,0,0,0
+29823,Iquitos,Peru,América do Sul,25/10/2026 17:02:54,100.0,1,1,0,0,0
 29947,Lima,Peru,América do Sul,,0.0,3,0,0,0,0
 30740,Varsóvia,Polônia,Europa,25/10/2026 22:05:25,100.0,1,1,357,268,89
 30961,Faro,Portugal,Europa,25/10/2026 21:05:27,100.0,11,11,3093,1464,1629
@@ -142,20 +142,20 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30201,Nairóbi,Quênia,África,25/10/2026 23:05:25,100.0,1,1,45,29,16
 99503,Edimburgo,Reino Unido,Europa,25/10/2026 21:05:26,100.0,6,6,834,658,176
 29971,Londres,Reino Unido,Europa,25/10/2026 21:05:27,100.0,48,48,16483,10310,6173
-29874,Kinshasa,República Democrática do Congo,África,,0.0,1,0,0,0,0
+29874,Kinshasa,República Democrática do Congo,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 30490,São Domingos,República Dominicana,América Central e Caribe,,0.0,1,0,0,0,0
-39187,Brazzaville,República do Congo,África,,0.0,1,0,0,0,0
+39187,Brazzaville,República do Congo,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 29440,Bucareste,Romênia,Europa,25/10/2026 23:05:25,100.0,1,1,65,40,25
 30163,Moscou,Rússia,Europa,,0.0,1,0,0,0,0
-99384,Castries,Santa Lúcia,América Central e Caribe,,0.0,1,0,0,0,0
+99384,Castries,Santa Lúcia,América Central e Caribe,25/10/2026 18:02:54,100.0,1,1,0,0,0
 29610,Dacar,Senegal,África,25/10/2026 20:05:26,100.0,1,1,81,59,22
 29548,Singapura,Singapura,Ásia,26/10/2026 04:05:24,100.0,2,2,334,213,121
-30929,Colombo,Sri Lanka,Ásia,,0.0,1,0,0,0,0
+30929,Colombo,Sri Lanka,Ásia,26/10/2026 03:32:54,100.0,1,1,0,0,0
 30279,Paramaribo,Suriname,América do Sul,,0.0,3,0,0,0,0
 29688,Estocolmo,Suécia,Europa,25/10/2026 22:05:25,100.0,7,7,2718,2127,591
 29700,Genebra,Suíça,Europa,25/10/2026 22:05:25,100.0,15,15,5625,3041,2584
 30864,Zurique,Suíça,Europa,25/10/2026 22:05:25,100.0,19,19,6883,4048,2835
-39225,São Tomé,São Tomé e Príncipe,África,,0.0,1,0,0,0,0
+39225,São Tomé,São Tomé e Príncipe,África,25/10/2026 22:02:54,100.0,1,1,0,0,0
 29378,Belgrado,Sérvia,Europa,25/10/2026 22:05:25,100.0,1,1,48,35,13
 29637,Damasco,Síria,Ásia,25/10/2026 23:05:25,100.0,1,1,117,106,11
 29343,Bangkok,Tailândia,Ásia,26/10/2026 03:05:25,100.0,1,1,116,56,60
@@ -163,23 +163,23 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 38962,Dar Es Salaam,Tanzânia,África,,0.0,1,0,0,0,0
 30350,Praga,Tchéquia,Europa,25/10/2026 22:05:25,100.0,1,1,390,304,86
 29645,Díli,Timor-Leste,Ásia,,0.0,1,0,0,0,0
-29963,Lomé,Togo,África,,0.0,1,0,0,0,0
+29963,Lomé,Togo,África,25/10/2026 22:02:54,100.0,1,1,0,0,0
 30325,Port Of Spain,Trinidad e Tobago,América Central e Caribe,,0.0,1,0,0,0,0
 30708,Tunis,Tunísia,África,,0.0,1,0,0,0,0
 29297,Ancara,Turquia,Ásia,,0.0,1,0,0,0,0
 39306,Istambul,Turquia,Ásia,25/10/2026 23:05:25,100.0,1,1,127,98,29
 29858,Kiev,Ucrânia,Europa,,0.0,1,0,0,0,0
 29319,Artigas,Uruguai,América do Sul,,0.0,1,0,0,0,0
-29521,Chuy,Uruguai,América do Sul,,0.0,1,0,0,0,0
+29521,Chuy,Uruguai,América do Sul,25/10/2026 19:02:54,100.0,1,1,0,0,0
 30147,Montevidéu,Uruguai,América do Sul,,0.0,4,0,0,0,0
 30430,Rio Branco,Uruguai,América do Sul,,0.0,1,0,0,0,0
-99244,Rivera,Uruguai,América do Sul,,0.0,1,0,0,0,0
+99244,Rivera,Uruguai,América do Sul,25/10/2026 19:02:54,100.0,1,1,0,0,0
 29505,Caracas,Venezuela,América do Sul,,0.0,3,0,0,0,0
 29564,Ciudad Guayana,Venezuela,América do Sul,,0.0,1,0,0,0,0
-99279,Santa Elena De Uairén,Venezuela,América do Sul,,0.0,1,0,0,0,0
+99279,Santa Elena De Uairén,Venezuela,América do Sul,25/10/2026 18:02:54,100.0,1,1,0,0,0
 29750,Hanói,Vietnã,Ásia,,0.0,1,0,0,0,0
-29769,Harare,Zimbábue,África,,0.0,1,0,0,0,0
-99287,Lusaca,Zâmbia,África,,0.0,1,0,0,0,0
+29769,Harare,Zimbábue,África,26/10/2026 00:02:54,100.0,1,1,0,0,0
+99287,Lusaca,Zâmbia,África,26/10/2026 00:02:54,100.0,1,1,0,0,0
 29530,Cidade Do Cabo,África do Sul,África,25/10/2026 22:05:25,100.0,1,1,168,107,61
 30376,Pretória,África do Sul,África,25/10/2026 22:05:25,100.0,1,1,274,79,195
 30767,Viena,Áustria,Europa,25/10/2026 22:05:25,100.0,5,5,1571,1178,393
