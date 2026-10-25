@@ -38,11 +38,11 @@ vêm no horário de Brasília. A regra vale para T1, T2, S1, S2, E1 e U2, e foi 
 
 | Código | Consulta | Período e resolução | Observação |
 |---|---|---|---|
-| T1 | 5 candidatos como **termos** de pesquisa | 01/08 a 24/10, diária (refeita em 24/10) | "Lula" também é o molusco e o apelido; "Flávio Bolsonaro" não pega quem busca só "flavio". Subestima Flávio |
+| T1 | 5 candidatos como **termos** de pesquisa | 01/08 a 24/10, diária (refeita em 25/10, com o dia 24/10 completo) | "Lula" também é o molusco e o apelido; "Flávio Bolsonaro" não pega quem busca só "flavio". Subestima Flávio |
 | **T2** | 5 candidatos como **tópicos** (entidades Google) | 01/08 a 24/10, diária (refeita em 24/10, das 21h05 às 21h46, com o dia 24/10 completo; ver "Refação de 24/10, 21h") | **Use esta para comparar candidatos.** Tópicos: Lula /m/0pc9q, Flávio /g/122pdhqd, Cury /m/07s813b, Renan /g/11gh2ptx5_ (tópico "Renan Santos, Assunto": presumido do candidato), Caiado /m/04fw8x8 |
-| S1 | título de eleitor, local de votação, justificar ausência, e-título, onde voto | 01/08 a 24/10, diária (refeita em 24/10) | 100 = "local de votação" em 04/10 |
-| S2 | local de votação, justificar voto, justificativa eleitoral, como votar, apuração | 01/08 a 24/10, diária (refeita em 24/10) | "apuração" é 100 em 04/10 e comprime os demais |
-| E1 | eleições 2026, segundo turno, pesquisa eleitoral, fake news, inteligência artificial | 01/08 a 24/10, diária (refeita em 24/10) | Os três últimos ficam perto de zero |
+| S1 | título de eleitor, local de votação, justificar ausência, e-título, onde voto | 01/08 a 24/10, diária (refeita em 25/10, com o dia 24/10 completo) | 100 = "local de votação" em 04/10 |
+| S2 | local de votação, justificar voto, justificativa eleitoral, como votar, apuração | 01/08 a 24/10, diária (refeita em 25/10, com o dia 24/10 completo) | "apuração" é 100 em 04/10 e comprime os demais |
+| E1 | eleições 2026, segundo turno, pesquisa eleitoral, fake news, inteligência artificial | 01/08 a 24/10, diária (refeita em 25/10, com o dia 24/10 completo) | Os três últimos ficam perto de zero |
 | H1 | Lula x Flávio (tópicos) | 01/10 00h a 08/10 00h, por hora (BRT) | Dia do 1º turno |
 | H2 | Lula x Flávio (tópicos) | 15/10 00h a 22/10 00h, por hora (BRT) | Inclui o debate da Band (18/10) |
 | **H3** | Lula x Flávio (tópicos), 7 dias (`now 7-d`) | 17/10 12h a 24/10 11h, por hora (BRT) | **As duas noites de debate do 2º turno (Band 18/10, Globo 23/10) na mesma consulta.** Média de 5 coletas de 24/10/2026. Ver a seção "Consulta H3" abaixo |
@@ -363,8 +363,35 @@ buscas pelos dois em todas as UFs, e 65,9% no Brasil. Nas outras janelas:
 
 Como sempre, isso mede interesse de busca, não voto.
 
-**Ficou para depois:** T1, S1, S2 e E1. Continuam como na refação das 16h, com o 24/10 parcial e marcado. Houve só a
-coleta 1 depois das 21h, e as coletas 2 e 3 ficaram para amanhã, por decisão da sessão principal.
+**T1, S1, S2 e E1** foram refeitas na manhã de 25/10, também com o 24/10 completo (seção seguinte).
+
+## Refação de 25/10/2026, 8h: T1, S1, S2 e E1 com o dia 24/10 completo
+
+As quatro séries foram refeitas de 01/08 a 24/10 com o dia "24/10" já fechado. Foram 3 coletas de cada, entre 8h24 e 8h31
+de Brasília, com 40 segundos entre consultas, sem 429 nem CAPTCHA. Método e notas iguais aos de antes. Cada série foi
+trocada inteira, com 425 linhas, e a marca de "dia em curso" do 24/10 saiu.
+
+**Os picos não mudaram:** Lula em 04/10 na T1, "local de votação" na S1, "apuração" na S2 e "eleições 2026" na E1. As três
+coletas só divergiram em 2 pontos da T1, de 1 ponto cada.
+
+**O dia "24/10" completo** vai das 21h de 23/10 às 21h de 24/10 e pega o debate da Globo e o sábado.
+- T1: Lula 87, Flávio 14.
+- S1: "local de votação" 41, "onde voto" 6, "e-título" 5, "título de eleitor" 7.
+- S2: tudo perto de zero, porque "apuração" de 04/10 comprime a escala.
+- E1: "segundo turno" 8.
+
+**Conferência.**
+
+| série | × refação das 16h (até 23/10) | × série de 22/10 (até 21/10) |
+|---|---|---|
+| T1 | 389 de 420 iguais, máx. 3 | 367 de 410 iguais, máx. 3 |
+| S1 | 380 de 420, máx. 7 | 365 de 410, máx. 5 ("onde voto" em 04/10) |
+| S2 | 418 de 420, máx. 1 | 407 de 410, máx. 1 |
+| E1 | 414 de 420, máx. 2 | 404 de 410, máx. 1 |
+
+As maiores diferenças ficam nos dias de pico (04/10) e na noite da Band (19/10 na T1, 48 → 51), onde o Google amostra
+mais. Agora todas as séries diárias do arquivo (T1, T2, S1, S2, E1 e U2) vão até 24/10 completo. Só a C1 (Central)
+continua até 22/10.
 
 ## Segurança e acesso
 

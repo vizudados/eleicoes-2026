@@ -460,3 +460,17 @@ Nenhuma página consultada nesta revisão trouxe instruções dirigidas ao agent
   as menções positivas de Lula foram de 42,23% a 42,85% e as de Flávio, de 39,92% a 39,34%. A janela não foi informada.
   Também em `monitoramento.csv`, com a Palver (X e WhatsApp).
 - **Pico na internet e consolidado da Kantar:** não saíram até 18h55.
+
+## Manhã de 25/10/2026 (até 8h30): o que saiu sobre o debate da Globo desde as 22h de 24/10
+
+- **Consolidado da Kantar:** não saiu. O da Band saiu na segunda seguinte, e por isso a previsão continua sendo a segunda,
+  26/10.
+- **Pico na internet (g1, Globoplay, GloboNews):** não saiu.
+- **Bites nas 24 horas, na medida da Band:** não saiu. O único número novo de interações é de outra ferramenta, o Radar
+  Evag, citado pelo [Metrópoles (coluna de Thiago Herdy, 24/10 16h41)](https://www.metropoles.com/colunas/thiago-herdy/a-um-dia-da-eleicao-lula-influencia-debate-no-instagram-e-flavio-no-x).
+  - Interações no Instagram "nas horas seguintes ao debate": Lula 16,7 milhões, Flávio 9,3 milhões.
+  - No X: 21,4 mil curtidas por publicação de Flávio, contra 14,3 mil de Lula.
+  - A janela não foi informada, e a medida não é a da Bites. Foi para `../digital/monitoramento.csv` e
+    `ao_vivo_globo.csv`, e não entra no cartão de redes.
+- **"19,5 milhões de pessoas" (Canal do Vannucci, 24/10 21h50):** é a conta da prévia do PNT (28 pontos × 699 mil por
+  ponto), não um número novo, e foi anotada como tal em `ao_vivo_globo.csv`.
