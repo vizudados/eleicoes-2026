@@ -81,7 +81,7 @@ VAR _pMan =
 VAR _pTxt =
     SWITCH (
         TRUE (),
-        _espera, "Os números da noite do debate chegam entre a noite de sexta e o sábado, véspera da eleição. "
+        _espera, "Até a manhã de domingo, 25/10, a Bites não tinha publicado as interações dos dois depois do debate. "
             & "Interação é toda reação a uma publicação: curtida, comentário, compartilhamento.",
         NOT _temI, "As medições publicadas terminam antes ou atravessam o período, e aqui só entra a que cabe "
             & "inteira nele. Interação é toda reação a uma publicação.",

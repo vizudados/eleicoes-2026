@@ -72,8 +72,8 @@ VAR _direita =
             & "<div class='seta entra d16' style='left:748px;top:166px;width:70px'></div>",
         SWITCH (
             TRUE (),
-            _espera, "<div class='vazio entra d6'><span class='mao'>aguardando</span><span class='nota'>Os números depois "
-                & "do debate da Globo chegam entre a noite de sexta e o sábado, véspera da eleição.</span></div>",
+            _espera, "<div class='vazio entra d6'><span class='mao'>aguardando</span><span class='nota'>Até a manhã de domingo, 25/10, "
+                & "a Bites não tinha publicado as interações por dia depois do debate da Globo.</span></div>",
             NOT _temP, "<div class='vazio entra d6'><span class='rot'>sem dado no período</span><span class='nota'>"
                 & "Nenhuma medição das interações dos dois cabe inteira em " & _janPer & ".</span></div>",
             IF (

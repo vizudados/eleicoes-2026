@@ -53,7 +53,7 @@ VAR _pMan =
 VAR _pNota =
     SWITCH (
         TRUE (),
-        _espera, "Os números depois do debate da Globo chegam entre a noite de sexta e o sábado.",
+        _espera, "Até a manhã de domingo, 25/10, nenhuma medição do ganho dos dois cabia inteira em " & _janPer & ".",
         NOT _temP, "Nenhuma medição do ganho dos dois cabe inteira em " & _janPer & ".",
         _janS & IF ( _psD = 1 && _psI = [Período · debate · data], ", dia do debate", "" ) & " · "
             & IF ( _psIg, "só Instagram", "a fonte não detalha as redes" ) & " · " & _psFonte
