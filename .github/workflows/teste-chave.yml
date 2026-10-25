@@ -19,8 +19,11 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           if [ -z "$ANTHROPIC_API_KEY" ]; then echo "::error::o segredo ANTHROPIC_API_KEY está vazio"; exit 1; fi
+          # o formato, sem mostrar a chave: tamanho, prefixo esperado e espaço ou quebra de linha colados por engano
+          limpa=$(printf %s "$ANTHROPIC_API_KEY" | tr -d '[:space:]')
+          echo "tamanho ${#ANTHROPIC_API_KEY} (sem espaços: ${#limpa}) · começa com sk-ant-: $([[ $limpa == sk-ant-* ]] && echo sim || echo não)"
           codigo=$(curl -s -o resposta.json -w "%{http_code}" https://api.anthropic.com/v1/models \
-            -H "x-api-key: $ANTHROPIC_API_KEY" -H "anthropic-version: 2023-06-01")
+            -H "x-api-key: $limpa" -H "anthropic-version: 2023-06-01")
           echo "HTTP $codigo"
           if [ "$codigo" != "200" ]; then
             python3 -c "import json;print('erro:', json.load(open('resposta.json')).get('error',{}).get('type','?'))"
