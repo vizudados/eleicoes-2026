@@ -90,6 +90,36 @@ def resumo(bruto, uf):
     }
 
 
+SOMAVEIS = ["eleitorado", "comparecimento", "abstencao", "brancos", "nulos", "validos", "lula_votos", "flavio_votos",
+            "secoes_total", "secoes_totalizadas", "eleitorado_apurado"]
+
+
+def hora_tse(txt):
+    try:
+        return datetime.strptime(txt, "%d/%m/%Y %H:%M:%S")
+    except (TypeError, ValueError):
+        return datetime.min
+
+
+def brasil_somado(ufs, br_tse):
+    """O Brasil como soma das 27 UFs e do exterior (pedido do Alisson, 25/10/2026: o arquivo nacional do TSE chega depois
+    dos estaduais). Os candidatos eleitos e a totalização final continuam vindo do arquivo nacional, quando ele existe."""
+    br = {c: sum(u[c] for u in ufs) for c in SOMAVEIS}
+    br["uf"] = "BR"
+    br["atualizado_tse"] = max((u["atualizado_tse"] for u in ufs), key=hora_tse, default="")
+    br["secoes_pct"] = round(100 * br["secoes_totalizadas"] / br["secoes_total"], 2) if br["secoes_total"] else 0.0
+    votantes = br["comparecimento"] + br["abstencao"]
+    br["abstencao_pct"] = round(100 * br["abstencao"] / votantes, 2) if votantes else 0.0
+    br["lula_pct"] = round(100 * br["lula_votos"] / br["validos"], 2) if br["validos"] else 0.0
+    br["flavio_pct"] = round(100 * br["flavio_votos"] / br["validos"], 2) if br["validos"] else 0.0
+    br["lider"] = ("Lula" if br["lula_votos"] > br["flavio_votos"] else
+                   "Flávio" if br["flavio_votos"] > br["lula_votos"] else "—")
+    br["diferenca_votos"] = abs(br["lula_votos"] - br["flavio_votos"])
+    br["candidatos"] = br_tse["candidatos"] if br_tse else []
+    br["totalizacao_final"] = bool(br_tse and br_tse["totalizacao_final"])
+    return br
+
+
 def status(br):
     if br["secoes_pct"] == 0:
         return "aguardando"
@@ -143,13 +173,21 @@ def coletar(ciclo, eleicao, pasta):
     urls = {uf: BASE.format(ciclo=ciclo, eleicao=eleicao, uf=uf) for uf in UFS}
     with ThreadPoolExecutor(8) as ex:
         brutos = dict(zip(urls, ex.map(baixar, urls.values())))
-    if not brutos.get("br"):
-        print("falha ao baixar o arquivo do Brasil; nada gravado", file=sys.stderr)
+    lidas = [resumo(b, uf) for uf, b in brutos.items() if b]
+    br_tse = next((l for l in lidas if l["uf"] == "BR"), None)
+    ufs = [l for l in lidas if l["uf"] != "BR"]
+    # com alguma UF fora desta coleta, a soma ficaria curta: vale o arquivo nacional do TSE
+    if len(ufs) == len(UFS) - 1:
+        br = brasil_somado(ufs, br_tse)
+    elif br_tse:
+        br = br_tse
+    else:
+        print("faltaram UFs e o arquivo do Brasil; nada gravado", file=sys.stderr)
         return False
-    linhas = [resumo(b, uf) for uf, b in brutos.items() if b]
-    br = next(l for l in linhas if l["uf"] == "BR")
+    linhas = [br] + ufs
+    turno = int((brutos.get("br") or next(b for b in brutos.values() if b))["t"])
     agora = datetime.now(BRASILIA).strftime("%d/%m/%Y %H:%M:%S")
-    retrato = {"eleicao": eleicao, "turno": int(brutos["br"]["t"]), "coletado_em": agora,
+    retrato = {"eleicao": eleicao, "turno": turno, "coletado_em": agora,
                "atualizado_tse": br["atualizado_tse"], "status": status(br), "brasil": br,
                "ufs": [l for l in linhas if l["uf"] != "BR"],
                "fonte": "TSE · resultados.tse.jus.br (API pública de divulgação)",
