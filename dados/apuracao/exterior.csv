@@ -34,7 +34,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30988,Sarajevo,Bósnia e Herzegovina,Europa,25/10/2026 23:02:54,100.0,2,2,0,0,0
 30368,Praia,Cabo Verde,África,25/10/2026 19:05:27,100.0,1,1,77,48,29
 29815,Iaundê,Camarões,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
-30155,Montreal,Canadá,América do Norte,25/10/2026 19:52:18,13.33,15,2,1015,719,296
+30155,Montreal,Canadá,América do Norte,25/10/2026 19:56:46,100.0,15,15,6604,4747,1857
 30252,Ottawa,Canadá,América do Norte,,0.0,4,0,0,0,0
 30635,Toronto,Canadá,América do Norte,25/10/2026 19:53:02,92.86,28,26,9430,5687,3743
 39063,Vancouver,Canadá,América do Norte,,0.0,16,0,0,0,0
@@ -124,7 +124,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30805,Wellington,Nova Zelândia,Oceania,26/10/2026 09:05:23,100.0,5,5,519,418,101
 39102,Mascate,Omã,Ásia,26/10/2026 03:22:50,100.0,1,1,32,10,22
 30414,Ramallah,Palestina,Ásia,25/10/2026 22:05:26,100.0,3,3,1046,1000,46
-30260,Panama,Panamá,América Central e Caribe,,0.0,2,0,0,0,0
+30260,Panama,Panamá,América Central e Caribe,25/10/2026 18:58:06,100.0,2,2,696,267,429
 29831,Islamabade,Paquistão,Ásia,26/10/2026 03:02:54,100.0,1,1,0,0,0
 29327,Assunção,Paraguai,América do Sul,25/10/2026 19:32:34,100.0,4,4,1187,325,862
 29556,Ciudad Del Este,Paraguai,América do Sul,25/10/2026 19:45:51,100.0,7,7,2960,251,2709
