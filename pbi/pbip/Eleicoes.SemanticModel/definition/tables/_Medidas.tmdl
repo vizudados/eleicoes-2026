@@ -21517,7 +21517,7 @@ table _Medidas
 			        ISBLANK ( _per ),
 			        "Diferença entre Flávio e Lula em " & [T17 · pesquisas] & " pesquisas do 2º turno, de agosto a "
 			            & FORMAT ( [T17 · média móvel · último dia], "dd/MM" ) & ". A média dos 10 dias virou para Flávio em "
-			            & FORMAT ( [T17 · média móvel · virada], "dd/MM" ) & " e hoje está em Flávio +" & FORMAT ( [T17 · média móvel · agora], "0.0" ) & ".",
+			            & FORMAT ( [T17 · média móvel · virada], "dd/MM" ) & " e, até " & FORMAT ( [T17 · média móvel · último dia], "dd/MM" ) & ", estava em Flávio +" & FORMAT ( [T17 · média móvel · agora], "0.0" ) & ".",
 			        "Diferença entre Flávio e Lula em " & [T17 · pesquisas] & " pesquisas do 2º turno. Em destaque, " & [Período · nome] & ": "
 			            & SWITCH (
 			                TRUE (),
@@ -21680,7 +21680,7 @@ table _Medidas
 			        & "px'></div>"
 			VAR _fim =
 			    "<div class='fim entra d16' style='left:1452px;top:" & FORMAT ( 72 + _yFim - 26, _f, "en-US" ) & "px'>"
-			        & "<div class='rot'>média hoje</div><div class='num " & IF ( _quemFim = "Lula", "lula", "flavio" ) & "'>" & _txtFim
+			        & "<div class='rot'>média até " & FORMAT ( _diaFim, "dd/MM" ) & "</div><div class='num " & IF ( _quemFim = "Lula", "lula", "flavio" ) & "'>" & _txtFim
 			        & "</div></div>"
 			VAR _nota =
 			    "<div class='seta entra d14' style='left:" & FORMAT ( _xVir + 2, _f, "en-US" ) & "px;top:" & FORMAT ( 72 + _yVir + 6, _f, "en-US" )

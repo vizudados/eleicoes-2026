@@ -148,7 +148,7 @@ VAR _urna =
         & "px'></div>"
 VAR _fim =
     "<div class='fim entra d16' style='left:1452px;top:" & FORMAT ( 72 + _yFim - 26, _f, "en-US" ) & "px'>"
-        & "<div class='rot'>média hoje</div><div class='num " & IF ( _quemFim = "Lula", "lula", "flavio" ) & "'>" & _txtFim
+        & "<div class='rot'>média até " & FORMAT ( _diaFim, "dd/MM" ) & "</div><div class='num " & IF ( _quemFim = "Lula", "lula", "flavio" ) & "'>" & _txtFim
         & "</div></div>"
 VAR _nota =
     "<div class='seta entra d14' style='left:" & FORMAT ( _xVir + 2, _f, "en-US" ) & "px;top:" & FORMAT ( 72 + _yVir + 6, _f, "en-US" )
