@@ -10,7 +10,7 @@ Número que não foi confirmado ficou **em branco**, com a razão na coluna `obs
 |---|---|---|
 | `trends_tempo.csv` | 3.478 | Séries do Google Trends (diárias e por hora), coletadas direto no Trends e na Central Google Trends Eleições 2026 |
 | `trends_uf.csv` | 648 | Índice por UF (0-100) e participação % das buscas por UF, 1º e 2º turno |
-| `trends_uf_tempo.csv` | 4.760 | Série diária Lula x Flávio (tópicos) em cada uma das 27 UFs e no Brasil, 01/08 a 24/10 (consulta U2, refeita em 24/10, 16h13 a 16h44) |
+| `trends_uf_tempo.csv` | 4.760 | Série diária Lula x Flávio (tópicos) em cada uma das 27 UFs e no Brasil, 01/08 a 24/10 (consulta U2, refeita em 24/10, das 21h06 às 22h06, com o dia 24/10 completo) |
 | `trends_consultas.csv` | 844 | Consultas principais e em ascensão, perguntas mais buscadas divulgadas pelo Google e pela imprensa |
 | `seguidores.csv` | 118 | Seguidores por candidato e rede: base de junho, Social Blade (22/09 a 23/10), imprensa (19 a 22/10), canais de WhatsApp |
 | `monitoramento.csv` | 115 | Quaest IPD, Bites, DSC Lab, Datrix, FGV/EAESP, Palver, VigIA (deepfakes), processos e denúncias no TSE |
@@ -39,7 +39,7 @@ vêm no horário de Brasília. A regra vale para T1, T2, S1, S2, E1 e U2, e foi 
 | Código | Consulta | Período e resolução | Observação |
 |---|---|---|---|
 | T1 | 5 candidatos como **termos** de pesquisa | 01/08 a 24/10, diária (refeita em 24/10) | "Lula" também é o molusco e o apelido; "Flávio Bolsonaro" não pega quem busca só "flavio". Subestima Flávio |
-| **T2** | 5 candidatos como **tópicos** (entidades Google) | 01/08 a 24/10, diária (refeita em 24/10; ver "Atualização de 24/10") | **Use esta para comparar candidatos.** Tópicos: Lula /m/0pc9q, Flávio /g/122pdhqd, Cury /m/07s813b, Renan /g/11gh2ptx5_ (tópico "Renan Santos, Assunto": presumido do candidato), Caiado /m/04fw8x8 |
+| **T2** | 5 candidatos como **tópicos** (entidades Google) | 01/08 a 24/10, diária (refeita em 24/10, das 21h05 às 21h46, com o dia 24/10 completo; ver "Refação de 24/10, 21h") | **Use esta para comparar candidatos.** Tópicos: Lula /m/0pc9q, Flávio /g/122pdhqd, Cury /m/07s813b, Renan /g/11gh2ptx5_ (tópico "Renan Santos, Assunto": presumido do candidato), Caiado /m/04fw8x8 |
 | S1 | título de eleitor, local de votação, justificar ausência, e-título, onde voto | 01/08 a 24/10, diária (refeita em 24/10) | 100 = "local de votação" em 04/10 |
 | S2 | local de votação, justificar voto, justificativa eleitoral, como votar, apuração | 01/08 a 24/10, diária (refeita em 24/10) | "apuração" é 100 em 04/10 e comprime os demais |
 | E1 | eleições 2026, segundo turno, pesquisa eleitoral, fake news, inteligência artificial | 01/08 a 24/10, diária (refeita em 24/10) | Os três últimos ficam perto de zero |
@@ -323,6 +323,48 @@ Nas quatro, o pico continua em 04/10. No "24/10" parcial, a T1 já chega a 96 co
 **A refazer depois das 21h de 24/10.** Às 21h o dia "24/10" fecha em UTC. Uma coleta depois disso tira a escala do dia
 parcial e põe o sábado inteiro na série. Depois, o dia "25/10" (das 21h de 24/10 às 21h do domingo) vai ser o dia da
 eleição.
+
+## Refação de 24/10/2026, 21h: T2 e U2 com o dia 24/10 completo
+
+O dia "24/10" do Google fechou às 21h de Brasília, que é 00h UTC. A T2 e a U2 foram refeitas depois disso, para tirar da
+série a escala do dia parcial (ver a seção das 16h). A sessão principal decidiu fechar a fila às 22h06.
+
+**Consulta.** Mesmos termos, geos e método. As consultas vão de 01/08 a 24/10. Uma consulta até 25/10 traria o dia
+"25/10" com só alguns minutos de dados (Lula 60 × Flávio 31 às 21h05, na escala de 20 a 25/10), sem valor para a série,
+e ficou de fora. O 24/10 veio sem a marca de parcial.
+
+**Coletas.**
+- **T2:** 3 coletas, às 21h05, 21h20 e 21h46.
+- **U2:**
+  - rodada 1, das 21h06 às 21h18;
+  - rodada 2, das 21h21 às 21h24, até um 429 em GO; esperei 9 minutos e retomei às 21h33, com 40 segundos entre
+    consultas;
+  - rodada 3, das 21h47 às 22h05.
+  - A fila foi parada às 22h06, como decidido. A rodada 3 não chegou a Tocantins, que ficou com a média de 2 coletas (a
+    observação de cada linha de TO diz "média de 2 coletas"). As outras 27 consultas têm 3.
+  - Não houve CAPTCHA, e o 429 não foi contornado.
+
+**Resultado.**
+- **T2:** o pico continua sendo Lula em 04/10 (100). No dia "24/10" completo, Lula tem 82 e Flávio 43. As três coletas
+  divergiram em 11 pontos, nunca mais de 2 (24/10 de Lula: 81 a 83).
+- **U2:** o 100 de Lula fica no 24/10 no DF, no RJ, no RS e em SC. Nas outras 23 UFs e no Brasil, continua no 04/10 (em
+  RO, é Flávio em 04/10).
+
+**Conferência.**
+- **T2 nova × T2 das 16h, até 23/10:** 400 de 420 pontos iguais, diferença máxima de 2.
+- **T2 nova × T2 original de 22/10, até 21/10:** 379 de 410 iguais, diferença máxima de 2.
+- **U2:** a fatia Lula/(Lula+Flávio) de 05 a 22/10 ficou a no máximo 0,5 ponto percentual da U2 original de 23/10 em
+  todas as UFs (Brasil: 55,7% antes e 55,3% agora).
+
+**O que a série diz sobre o debate da Globo (dia "24/10", agora completo).** Lula fica com 64,1% (DF) a 68,9% (AM) das
+buscas pelos dois em todas as UFs, e 65,9% no Brasil. Nas outras janelas:
+- no "23/10", que termina às 21h, antes do debate: 53,3% a 59,1%;
+- de 05 a 22/10: 53,2% (DF) a 57,6% (AL).
+
+Como sempre, isso mede interesse de busca, não voto.
+
+**Ficou para depois:** T1, S1, S2 e E1. Continuam como na refação das 16h, com o 24/10 parcial e marcado. Houve só a
+coleta 1 depois das 21h, e as coletas 2 e 3 ficaram para amanhã, por decisão da sessão principal.
 
 ## Segurança e acesso
 

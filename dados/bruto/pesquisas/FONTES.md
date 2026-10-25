@@ -615,7 +615,7 @@ sábado". Se a ficha técnica confirmar só 24/10, ela é a única pesquisa com 
 
 ## Rodada de 24/10/2026, das 18h45 às 19h: as pesquisas de sábado
 
-Entraram 4 pesquisas nacionais de 2º turno, 8 linhas. Pela regra do painel, "pesquisa depois do debate" é a que tem o
+Entraram 5 pesquisas nacionais de 2º turno, 10 linhas (a Quaest às 19h15). Pela regra do painel, "pesquisa depois do debate" é a que tem o
 campo inteiro a partir de 24/10, e a data que vale é a do registro. **Nenhuma das pesquisas de sábado cumpre a regra.**
 Todas começaram o campo em 23/10 ou antes, e por isso atravessam o dia do debate.
 
@@ -638,6 +638,29 @@ Todas começaram o campo em 23/10 ou antes, e por isso atravessam o dia do debat
 - **Veritá:** esta é a rodada de 18 a 22/10, que ficou de fora na atualização do meio-dia porque só a Exame a trazia.
   Agora tem registro, campo e modo pela CNN Brasil. A tabela de registros do Poder360 ainda lista outra Veritá nacional,
   com campo de 19 a 23/10, que não foi vista.
-- **Quaest (BR-09158/2026, Globo e O Globo, 3.702 entrevistas presenciais em 23 e 24/10):** a divulgação estava marcada
-  para as 19h. Ela também atravessa o dia do debate.
+- **Quaest (entrou às 19h15):** contratada pela Editora Globo e pela Globo Comunicação e Participações, registro
+  BR-09158/2026, campo de 23 a 24/10, 3.702 entrevistas presenciais, margem de 2.
+  - Totais: Lula 45 × Flávio 46, com 8 de "brancos, nulos e nenhum" e 1 de não sabe.
+  - Válidos: 49 × 51.
+  - Fontes: [Poder360, 19h11](https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-51-dos-votos-validos-contra-49-de-lula-diz-quaest/)
+    e [CNN Brasil, 19h03](https://www.cnnbrasil.com.br/eleicoes/quaest-flavio-tem-51-dos-votos-validos-lula-49/).
+  - Diferente da rodada de 21/10, os válidos saíram publicados.
+  - O campo também atravessa o dia do debate.
 - **AtlasIntel nacional (BR-06380/2026, 18 a 23/10):** até 19h só saíram as estaduais (DF, AM e outras).
+
+**Entraram depois, às 21h20:**
+- **AtlasIntel nacional:** registro BR-06380/2026, campo de 18 a 23/10, 4.990 entrevistas por recrutamento digital
+  (`online`), margem de 1 ponto.
+  - Pago com recursos próprios, segundo o Poder360 e a CNN; a divulgação é AtlasIntel/Bloomberg.
+  - Totais: Lula 48,4 × Flávio 49,9, com 1,7 de branco, nulo e não sabe (categoria única, em `brancos_nulos`).
+  - Válidos: 49,2 × 50,8.
+  - Fontes: [Poder360, 19h30](https://www.poder360.com.br/poder-eleicoes-2026/flavio-tem-508-dos-votos-validos-e-lula-492-diz-atlasintel/)
+    e [CNN Brasil, 19h30](https://www.cnnbrasil.com.br/eleicoes/atlasintel-flavio-tem-508-dos-votos-validos-no-2o-turno-lula-492/).
+  - O campo termina no dia do debate.
+- **Futura/100% Cidades:** registro BR-09726/2026, 2.000 entrevistas, margem de 2,2.
+  - Válidos: Lula 49,9 × Flávio 50,1 ([CNN Brasil, 20h32](https://www.cnnbrasil.com.br/eleicoes/futura-flavio-tem-501-dos-votos-validos-no-2o-turno-lula-499/)).
+    Os totais não saíram nas fontes encontradas.
+  - Divergência de campo: a CNN diz 23 e 24/10, e a tabela de registros no TSE do Poder360 diz 21 a 24/10. O CSV usa o
+    registro, como pedido. Nas duas versões, o campo atravessa o dia do debate.
+  - O modo não foi citado, e o CSV usa o padrão do instituto (telefone), com aviso.
+- **Até 21h20 não foram achadas:** Paraná Pesquisas, Real Time Big Data de sábado, Palver, Colectta, Seta e Simplex.
