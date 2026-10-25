@@ -40,7 +40,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 39063,Vancouver,Canadá,América do Norte,,0.0,16,0,0,0,0
 29653,Doha,Catar,Ásia,25/10/2026 23:05:25,100.0,1,1,354,159,195
 39241,Astana,Cazaquistão,Ásia,26/10/2026 03:02:54,100.0,1,1,0,0,0
-30481,Santiago,Chile,América do Sul,,0.0,5,0,0,0,0
+30481,Santiago,Chile,América do Sul,25/10/2026 19:42:30,20.0,5,1,447,250,197
 30651,Cantão,China,Ásia,26/10/2026 04:05:21,100.0,1,1,113,67,46
 29793,Hong Kong,China,Ásia,26/10/2026 04:05:24,100.0,1,1,260,127,133
 30317,Pequim,China,Ásia,26/10/2026 04:05:22,100.0,1,1,148,126,22
@@ -131,7 +131,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 29580,Concepción,Paraguai,América do Sul,,0.0,1,0,0,0,0
 29670,Encarnación,Paraguai,América do Sul,25/10/2026 19:29:15,100.0,1,1,140,19,121
 30309,Pedro Juan Caballero,Paraguai,América do Sul,,0.0,1,0,0,0,0
-30465,Salto Del Guairá,Paraguai,América do Sul,,0.0,2,0,0,0,0
+30465,Salto Del Guairá,Paraguai,América do Sul,25/10/2026 19:42:32,50.0,2,1,224,11,213
 30457,Amsterdã,Países Baixos,Europa,25/10/2026 22:05:26,100.0,17,17,6961,5578,1383
 29823,Iquitos,Peru,América do Sul,25/10/2026 17:02:54,100.0,1,1,0,0,0
 29947,Lima,Peru,América do Sul,,0.0,3,0,0,0,0
