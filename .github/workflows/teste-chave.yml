@@ -1,0 +1,29 @@
+# Teste da chave da API da Anthropic que o `vigia` usa (segredo ANTHROPIC_API_KEY): pede a lista de modelos, que não
+# gasta tokens, e mostra só o código HTTP e se o Opus 5.5 está liberado; a chave nunca é impressa. Rode à mão:
+#   gh workflow run teste-chave.yml -R vizudados/eleicoes-2026
+name: teste-chave
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  testar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Chamar a API com a chave
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -z "$ANTHROPIC_API_KEY" ]; then echo "::error::o segredo ANTHROPIC_API_KEY está vazio"; exit 1; fi
+          codigo=$(curl -s -o resposta.json -w "%{http_code}" https://api.anthropic.com/v1/models \
+            -H "x-api-key: $ANTHROPIC_API_KEY" -H "anthropic-version: 2023-06-01")
+          echo "HTTP $codigo"
+          if [ "$codigo" != "200" ]; then
+            python3 -c "import json;print('erro:', json.load(open('resposta.json')).get('error',{}).get('type','?'))"
+            exit 1
+          fi
+          python3 -c "import json;d=json.load(open('resposta.json'))['data'];print('modelos liberados:', len(d), '· Opus 5.5:', any('opus-5-5' in m['id'] for m in d))"
