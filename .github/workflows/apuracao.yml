@@ -70,10 +70,22 @@ jobs:
             if [ "$(hora_tse)" != "$antes" ]; then echo "ATUALIZOU=1" >> "$GITHUB_ENV"; fi
             if [ "$i" -lt "$REPETIR" ]; then sleep 60; fi
           done
-          # a execução longa passa o bastão a outra antes de acabar, enquanto for noite de apuração (16h às 23h59 de Brasília)
+
+      # a execução longa passa o bastão a outra antes de acabar, enquanto for noite de apuração (16h às 23h59 de Brasília),
+      # mesmo que a coleta tenha falhado (always); e religa a corrente do vigia se ela não estiver rodando
+      - name: Passar o bastão
+        if: always()
+        env:
+          ELEICAO: ${{ github.event.inputs.eleicao || '6258' }}
+          REPETIR: ${{ github.event.inputs.repetir || '4' }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
           hora=$(date -u +%H)
           if [ "$REPETIR" -gt 50 ] && { [ "$hora" -ge 19 ] || [ "$hora" -lt 3 ]; }; then
             gh workflow run apuracao.yml -R "$GITHUB_REPOSITORY" -f eleicao="$ELEICAO" -f repetir=200
+            vivos=$(gh run list -R "$GITHUB_REPOSITORY" --workflow vigia.yml --limit 5 --json status \
+              --jq '[.[] | select(.status == "in_progress" or .status == "queued")] | length')
+            if [ "$vivos" = "0" ]; then gh workflow run vigia.yml -R "$GITHUB_REPOSITORY" -f voltas=30; fi
           fi
 
       - name: Atualizar o modelo no Power BI
