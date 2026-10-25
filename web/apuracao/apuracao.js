@@ -388,8 +388,9 @@
   // ---------- celular: os blocos em coluna (resultado, mapa, curva), cada um na largura da tela ----------
   const GEO = { casca: [0, 0, 1920, 1080, 10], placar: [150, 140, 900, 470, 300], curva: [150, 640, 900, 340, 301],
     mapa: [1110, 140, 660, 860, 302], tooltip: [650, 300, 440, 320, 400] };
-  const celular = () => document.getElementById('quadro').clientWidth < 1000;
-  const MODO_CEL = celular();
+  const largura = () => document.documentElement.clientWidth || window.innerWidth || 0;
+  const celular = () => largura() < 1000;
+  let MODO_CEL = false; // decidido em iniciar(), quando a janela (ou o iframe do site) já tem largura
 
   function alturaPlacar() {
     const f = quadros.placar;
@@ -463,14 +464,12 @@
   }
 
   // ---------- montagem ----------
-  function palcoEscala() {
-    const caixa = document.getElementById('quadro');
-    return caixa.clientWidth / 1920;
-  }
+  // a tela cabe inteira na janela (largura e altura), centrada: no quadro 16:9 do site enche tudo, sem barra de rolagem
   function ajustar() {
-    const s = palcoEscala();
-    document.getElementById('palco').style.transform = 'scale(' + s + ')';
-    document.getElementById('quadro').style.height = (1080 * s) + 'px';
+    const W = document.documentElement.clientWidth, H = window.innerHeight;
+    const s = Math.min(W / 1920, H / 1080);
+    document.getElementById('palco').style.transform = 'translate(' + Math.max(0, (W - 1920 * s) / 2) + 'px,0) scale(' + s + ')';
+    document.getElementById('quadro').style.height = Math.floor(1080 * s) + 'px';
   }
 
   async function centros(cam) {
@@ -500,6 +499,9 @@
   }
 
   async function iniciar() {
+    // num iframe que ainda está sendo montado, a largura pode vir zerada: espera ela existir
+    for (let i = 0; i < 120 && largura() === 0; i++) await new Promise((ok) => requestAnimationFrame(ok));
+    MODO_CEL = celular();
     PECAS = await (await fetch('pecas.json')).json();
     estado.t1 = await (await fetch('primeiro_turno.json')).json();
     fetch('uf_caminhos.json').then((r) => r.json()).then(centros).then((c) => { estado.caminhos = c; });
