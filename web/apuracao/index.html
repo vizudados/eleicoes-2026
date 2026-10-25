@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apuração ao vivo · Eleições 2026 · Vizu Dados</title>
+<meta name="description" content="A apuração do 2º turno de 2026, atualizada a cada minuto pela API pública do TSE.">
+<style>
+  @font-face{font-family:'Sora Vizu';font-style:normal;font-weight:100 900;font-display:block;src:url(fontes/sora-vizu.woff2) format('woff2')}
+  @font-face{font-family:'Sora Eleicoes';font-style:normal;font-weight:300 800;font-display:block;src:url(fontes/sora-eleicoes.woff2) format('woff2')}
+  html,body{margin:0;padding:0;background:#F1EBDF}
+  #quadro{position:relative;width:100%;overflow:hidden;background:#F1EBDF}
+  #palco{position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;visibility:hidden}
+  #palco.pronto{visibility:visible}
+  #filtro{position:absolute;left:1282px;top:60px;width:424px;height:48px;z-index:20}
+  #filtro-sel{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;font-size:16px}
+  #filtro:focus-within > div{outline:2px solid #1C1915;outline-offset:2px}
+  /* quadrados ou mapa: no canto vazio do mapa, embaixo à direita */
+  #modo{position:absolute;left:1548px;top:852px;z-index:350;display:flex;border:1.5px solid #1C1915;border-radius:4px;overflow:hidden}
+  #modo button{appearance:none;border:0;margin:0;padding:9px 14px;background:#F1EBDF;color:#48423A;cursor:pointer;
+    font:600 13px/1 'Sora Eleicoes','Segoe UI',sans-serif;letter-spacing:.14em;text-transform:uppercase}
+  #modo button + button{border-left:1.5px solid #1C1915}
+  #modo button.on{background:#1C1915;color:#F1EBDF}
+  #modo button:focus-visible{outline:2px solid #2B5797;outline-offset:-4px}
+</style>
+</head>
+<body>
+<div id="quadro">
+  <div id="palco">
+    <div id="filtro"><select id="filtro-sel" aria-label="Recorte da apuração"></select></div>
+    <div id="modo" role="group" aria-label="Como ver o mapa">
+      <button type="button" data-modo="quadrados" class="on">Quadrados</button><button type="button" data-modo="mapa">Mapa</button>
+    </div>
+  </div>
+</div>
+<script src="apuracao.js"></script>
+</body>
+</html>
