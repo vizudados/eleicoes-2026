@@ -39,6 +39,10 @@
   const dec = (x, c) => x.toLocaleString('pt-BR', { minimumFractionDigits: c, maximumFractionDigits: c });
   const en = (x, c) => x.toFixed(c);
   const esc = (s) => String(s).replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+  // número que conta até o valor novo a cada atualização (k = chave para lembrar o valor anterior)
+  const an = (k, v, d, s) => "<span data-k='" + k + "' data-n='" + v + "' data-d='" + d + "' data-s='" + (s || '') + "'>" +
+    (d ? dec(v, d) : inteiro(v)) + (s || '') + '</span>';
+  const anAttr = (k, v, d, s) => " data-k='" + k + "' data-n='" + v + "' data-d='" + d + "' data-s='" + (s || '') + "'";
   const num = (t) => (t === undefined || t === null || t === '' ? 0 : Number(String(t).replace(',', '.')));
   const quando = (dt, ht) => (dt && ht ? dt + ' ' + ht.slice(0, 5) : '');
   const paraData = (txt) => { // 'dd/mm/aaaa hh:mm[:ss]' → Date (Brasília)
@@ -85,7 +89,7 @@
   }
 
   const estado = { ufs: {}, br: null, turno: ELEICAO === 6257 ? 1 : 2, coleta: '', historico: new Map(), escopo: 'BR',
-    modo: 'quadrados', primeira: true, t1: {}, caminhos: null };
+    modo: 'quadrados', primeira: true, t1: {}, caminhos: null, vistos: {}, marcas: {}, nCurva: 0 };
 
   async function atualizar() {
     const pedidos = SIGLAS.map((uf) => baixar(uf).then((d) => [uf, d]).catch(() => null));
@@ -160,15 +164,15 @@
     const nome = noBrasil ? 'Brasil' : UF[estado.escopo][0];
     const em = noBrasil ? '' : UF[estado.escopo][1];
     const onde = noBrasil ? '' : ' ' + em;
-    const lulaTxt = aguarda ? '—' : dec(r.lulaP * 100, 2) + '%';
-    const flavioTxt = aguarda ? '—' : dec(r.flavioP * 100, 2) + '%';
-    const votos = (n) => (aguarda ? 'aguardando a 1ª parcial' : inteiro(n) + (n === 1 ? ' voto' : ' votos'));
-    const secoesTxt = dec(r.secoesP * 100, 2) + '%';
-    const difTxt = inteiro(r.dif);
+    const lulaTxt = aguarda ? '—' : an('lp', r.lulaP * 100, 2, '%');
+    const flavioTxt = aguarda ? '—' : an('fp', r.flavioP * 100, 2, '%');
+    const votos = (k, n) => (aguarda ? 'aguardando a 1ª parcial' : an(k, n, 0, n === 1 ? ' voto' : ' votos'));
+    const secoesTxt = an('sf', r.secoesP * 100, 2, '%');
+    const difTxt = an('dif', r.dif, 0, '');
     const blocoLula = "<div class='cand sobe d2'><div class='rot lula-esc'>LULA · PT · 13</div><div class='num pct lula'>" + lulaTxt +
-      "</div><div class='txt votos'>" + votos(r.lula) + '</div></div>';
+      "</div><div class='txt votos'>" + votos('lv', r.lula) + '</div></div>';
     const blocoFlavio = "<div class='cand sobe d3'><div class='rot flavio-esc'>FLÁVIO BOLSONARO · PL · 22</div><div class='num pct flavio'>" +
-      flavioTxt + "</div><div class='txt votos'>" + votos(r.flavio) + '</div></div>';
+      flavioTxt + "</div><div class='txt votos'>" + votos('fv', r.flavio) + '</div></div>';
     const par = r.lider === 'Flávio' ? blocoFlavio + blocoLula : blocoLula + blocoFlavio;
     const selo = estado.turno === 1 ? "<div class='selo entra d6'>ENSAIO · 1º TURNO</div>"
       : f === 'definido' ? "<div class='selo entra d6'>MATEMATICAMENTE DEFINIDO</div>"
@@ -188,8 +192,8 @@
         "<div class='txt sobe d5'>" + inteiro(r.eleitorado) + ' eleitores podem votar' + (noBrasil ? '' : ' ' + em) + '.</div>'
       : '';
     const barra = "<div class='secoes sobe d5'><div class='rot'>SEÇÕES APURADAS" + (noBrasil ? '' : ' · ' + nome.toUpperCase()) +
-      "</div><div class='trilho'><div class='enche barra-x' style='width:" + en(r.secoesP * 100, 3) + "%'></div><span class='num'>" +
-      secoesTxt + "</span></div><div class='nota'>Abstenção " + dec(r.abstP * 100, 2) + '% · brancos ' + inteiro(r.brancos) +
+      "</div><div class='trilho'><div class='enche barra-x' data-w='" + en(r.secoesP * 100, 3) + "' data-wk='sw' style='width:" +
+      en(r.secoesP * 100, 3) + "%'></div><span class='num'>" + an('sb', r.secoesP * 100, 2, '%') + "</span></div><div class='nota'>Abstenção " + dec(r.abstP * 100, 2) + '% · brancos ' + inteiro(r.brancos) +
       ' · nulos ' + inteiro(r.nulos) + '</div></div>';
     const tse = r.tse;
     const topo = "<div class='rot topo entra'>" + (tse ? 'ATUALIZADO PELO TSE · ' + tse : 'AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE') +
@@ -248,19 +252,25 @@
     let horas = '';
     for (let h = 17; h <= 24; h++) horas += "<text x='" + en(70 + (h - 17) / 7 * 770, 1) + "' y='282' class='ex' text-anchor='middle'>" + (h === 24 ? '0h' : h + 'h') + '</text>';
     let series = '', rotulos = '', vazio = '';
+    const novo = !estado.primeira && n > estado.nCurva;
+    estado.nCurva = n;
     if (n >= 2) {
       const linha = (k) => xs.map((p) => en(p.x, 1) + ',' + en(p[k], 1)).join(' ');
-      series = "<polyline points='" + linha('yf') + "' class='lf traco' pathLength='1' fill='none'/>" +
-        "<polyline points='" + linha('yl') + "' class='ll traco' pathLength='1' fill='none'/>";
+      const re = novo ? ' redesenha' : '';
+      series = "<polyline points='" + linha('yf') + "' class='lf traco" + re + "' pathLength='1' fill='none'/>" +
+        "<polyline points='" + linha('yl') + "' class='ll traco" + re + "' pathLength='1' fill='none'/>";
     }
     if (n >= 1) {
       const u = xs[n - 1];
       const esq = u.x < 455;
       const xt = en(esq ? u.x + 14 : u.x - 14, 1), anc = esq ? 'start' : 'end';
-      rotulos = "<circle cx='" + en(u.x, 1) + "' cy='" + en(u.yf, 1) + "' r='6' class='pf brota d8'/>" +
-        "<circle cx='" + en(u.x, 1) + "' cy='" + en(u.yl, 1) + "' r='6' class='pl brota d8'/>" +
-        "<text x='" + xt + "' y='" + en(u.yf + (u.f >= u.l ? -14 : 26), 1) + "' text-anchor='" + anc + "' class='rf entra d9'>Flávio " + dec(u.f * 100, 2) + '%</text>' +
-        "<text x='" + xt + "' y='" + en(u.yl + (u.l > u.f ? -14 : 26), 1) + "' text-anchor='" + anc + "' class='rl entra d9'>Lula " + dec(u.l * 100, 2) + '%</text>';
+      const bc = novo ? ' brota-novo' : '';
+      rotulos = "<circle cx='" + en(u.x, 1) + "' cy='" + en(u.yf, 1) + "' r='6' class='pf brota d8" + bc + "'/>" +
+        "<circle cx='" + en(u.x, 1) + "' cy='" + en(u.yl, 1) + "' r='6' class='pl brota d8" + bc + "'/>" +
+        "<text x='" + xt + "' y='" + en(u.yf + (u.f >= u.l ? -14 : 26), 1) + "' text-anchor='" + anc + "' class='rf entra d9'>Flávio <tspan" +
+        anAttr('cf', u.f * 100, 2, '%') + '>' + dec(u.f * 100, 2) + '%</tspan></text>' +
+        "<text x='" + xt + "' y='" + en(u.yl + (u.l > u.f ? -14 : 26), 1) + "' text-anchor='" + anc + "' class='rl entra d9'>Lula <tspan" +
+        anAttr('cl', u.l * 100, 2, '%') + '>' + dec(u.l * 100, 2) + '%</tspan></text>';
     } else vazio = "<text x='455' y='96' text-anchor='middle' class='vz'>a curva começa às 17h</text>";
     return "<div class='tela t18c'><div class='rot entra'>A CURVA DA NOITE · % DOS VÁLIDOS A CADA ATUALIZAÇÃO DO TSE · BRASIL</div>" +
       "<svg viewBox='0 0 900 290' width='900' height='290'>" + grade + horas + series + rotulos + vazio + '</svg></div>';
@@ -275,6 +285,14 @@
     return { classe: l === 'Lula' ? 'ql' : l === 'Flávio' ? 'qf' : 'qz', pct, secoes: d.secoes ? d.totalizadas / d.secoes : 0 };
   }
 
+  // o quadrado (ou o estado no mapa) pulsa quando o líder ou a porcentagem muda numa atualização
+  function mudou(uf, q) {
+    const marca = q.classe + (q.pct === null ? '' : q.pct.toFixed(4));
+    const antes = estado.marcas[uf];
+    estado.marcas[uf] = marca;
+    return !estado.primeira && antes !== undefined && antes !== marca;
+  }
+
   function htmlQuadrados() {
     let h = '';
     for (const uf of SIGLAS) {
@@ -282,9 +300,10 @@
       const q = liderUF(uf);
       const sel = estado.escopo === uf ? ';outline:3px solid var(--tinta);outline-offset:3px' : '';
       h += "<div class='tela mq'><div data-uf='" + uf + "' class='q " + q.classe + (uf === 'ZZ' ? ' ex' : '') + ' brota d' + (lin + 1) +
-        "' style='left:" + (22 + col * 104) + 'px;top:' + (52 + lin * 92) + 'px' + sel + "'>" +
-        '<b>' + (uf === 'ZZ' ? 'EX' : uf) + '</b><i>' + Math.round(q.secoes * 100) + '%</i><span>' +
-        (q.pct === null ? '—' : dec(q.pct * 100, 1) + '%') + '</span></div></div>';
+        (mudou(uf, q) ? ' pulsa' : '') + "' style='left:" + (22 + col * 104) + 'px;top:' + (52 + lin * 92) + 'px' + sel + "'>" +
+        '<b>' + (uf === 'ZZ' ? 'EX' : uf) + '</b><i' + anAttr('qs' + uf, q.secoes * 100, 0, '%') + '>' + Math.round(q.secoes * 100) + '%</i>' +
+        (q.pct === null ? '<span>—</span>' : '<span' + anAttr('qp' + uf, q.pct * 100, 1, '%') + '>' + dec(q.pct * 100, 1) + '%</span>') +
+        '</div></div>';
     }
     return h;
   }
@@ -301,16 +320,18 @@
       const q = liderUF(uf);
       const sel = estado.escopo === uf;
       paths += "<path data-uf='" + uf + "' d='" + cam.caminhos[uf] + "' fill='" + COR[q.classe] + "' stroke='" + (sel ? '#1C1915' : '#F1EBDF') +
-        "' stroke-width='" + (sel ? 4 : 1.6) + "' class='uf'/>";
+        "' stroke-width='" + (sel ? 4 : 1.6) + "' class='uf" + (mudou(uf, q) ? ' pulsa' : '') + "'/>";
       const c = cam.centros[uf];
       if (c) {
         const pequeno = ['DF', 'SE', 'AL', 'PB', 'RN', 'ES', 'RJ'].includes(uf);
         rot += "<text x='" + en(c[0], 1) + "' y='" + en(c[1], 1) + "' text-anchor='middle' class='mr" + (pequeno ? ' p' : '') + "'>" + uf +
-          (pequeno ? '' : "<tspan x='" + en(c[0], 1) + "' dy='22' fill='" + TINTA[q.classe] + "' class='mp'>" +
+          (pequeno ? '' : "<tspan x='" + en(c[0], 1) + "' dy='22' fill='" + TINTA[q.classe] + "' class='mp'" +
+            (q.pct === null ? '' : anAttr('gp' + uf, q.pct * 100, 1, '%')) + '>' +
             (q.pct === null ? '—' : dec(q.pct * 100, 1) + '%') + '</tspan>') + '</text>';
       }
     }
     const ex = liderUF('ZZ');
+    mudou('ZZ', ex);
     const sel = estado.escopo === 'ZZ' ? " style='left:542px;top:52px;outline:3px solid var(--tinta);outline-offset:3px'" : " style='left:542px;top:52px'";
     return "<style>.geo .uf{cursor:pointer;transition:opacity .18s}.geo:has(.uf:hover) .uf:not(:hover){opacity:.55}" +
       ".geo .mr{font-family:var(--fonte);font-size:21px;font-weight:700;fill:#1C1915;pointer-events:none}.geo .mr.p{font-size:15px}" +
@@ -329,8 +350,8 @@
     if (!(d.validos > 0)) {
       const t1 = estado.t1[uf];
       return "<div class='tela tt18'><div class='fita'></div><div class='rot'>" + nome + '</div>' +
-        "<div class='linha'><span class='num'>" + inteiro(d.eleitorado) + "</span><span class='rot'>ELEITORES</span></div>" +
-        "<div class='txt'>A apuração começa às 17h de domingo, 25/10: " + inteiro(d.secoes) + ' seções a contar.</div>' +
+        "<div class='linha'><span class='num'>" + an('tte', d.eleitorado, 0, '') + "</span><span class='rot'>ELEITORES</span></div>" +
+        "<div class='txt'>A apuração começa às 17h de domingo, 25/10: " + an('tts', d.secoes, 0, '') + ' seções a contar.</div>' +
         (t1 ? "<div class='nota'>No 1º turno: Lula " + dec(t1.lula * 100, 1) + '% × Flávio ' + dec(t1.flavio * 100, 1) + '% dos válidos.</div>' : '') +
         "<div class='mao'>ainda sem votos</div></div>";
     }
@@ -338,10 +359,12 @@
     const lider = d.lula > d.flavio ? 'Lula' : d.flavio > d.lula ? 'Flávio' : '—';
     const abst = d.comparecimento + d.abstencao ? d.abstencao / (d.comparecimento + d.abstencao) : 0;
     return "<div class='tela tt18'><div class='fita'></div><div class='rot'>" + nome + '</div>' +
-      "<div class='linha'><span class='lula num'>" + dec(l * 100, 2) + "%</span><span class='rot'>LULA</span></div>" +
-      "<div class='barra'><i class='bl' style='width:" + en(l * 100, 3) + "%'></i><i class='bf' style='width:" + en(f * 100, 3) + "%'></i></div>" +
-      "<div class='linha'><span class='flavio num'>" + dec(f * 100, 2) + "%</span><span class='rot'>FLÁVIO</span></div>" +
-      "<div class='txt'>" + inteiro(d.lula) + ' × ' + inteiro(d.flavio) + ' votos · diferença de ' + inteiro(Math.abs(d.lula - d.flavio)) + '</div>' +
+      "<div class='linha'><span class='lula num'>" + an('ttl', l * 100, 2, '%') + "</span><span class='rot'>LULA</span></div>" +
+      "<div class='barra'><i class='bl barra-x' style='width:" + en(l * 100, 3) + "%'></i><i class='bf barra-x-dir' style='width:" + en(f * 100, 3) +
+      "%'></i></div>" +
+      "<div class='linha'><span class='flavio num'>" + an('ttf', f * 100, 2, '%') + "</span><span class='rot'>FLÁVIO</span></div>" +
+      "<div class='txt'>" + an('ttlv', d.lula, 0, '') + ' × ' + an('ttfv', d.flavio, 0, '') + ' votos · diferença de ' +
+      an('ttd', Math.abs(d.lula - d.flavio), 0, '') + '</div>' +
       "<div class='nota'>" + dec((d.secoes ? d.totalizadas / d.secoes : 0) * 100, 2) + '% das seções · abstenção ' + dec(abst * 100, 2) + '%' +
       (d.tse ? ' · atualizado às ' + d.tse.slice(11, 16) : '') + '</div>' +
       (lider !== '—' ? "<div class='mao " + (lider === 'Lula' ? 'lula-esc' : 'flavio-esc') + "'>" + lider + ' na frente</div>' : '') + '</div>';
@@ -371,8 +394,56 @@
     if (!f) return;
     const doc = f.contentDocument;
     // depois da primeira pintura, as entradas animadas não se repetem a cada minuto
-    if (!estado.primeira) doc.getElementById('congela').textContent = '*,*::before,*::after{animation:none!important}';
+    if (!estado.primeira && id !== 'tooltip') doc.getElementById('congela').textContent = CONGELA;
     doc.getElementById('c').innerHTML = html;
+    animar(doc, id === 'tooltip');
+  }
+
+  // depois da primeira pintura, as entradas não se repetem a cada minuto; ficam as animações de atualização
+  const CONGELA = '.sobe,.entra,.brota,.barra-x,.barra-x-dir,.traco,.traco-rapido,.cor,.esmaece,.mq .q{animation:none!important}' +
+    '.redesenha{animation:eTraco 1.1s cubic-bezier(.45,.05,.3,1) both!important}' +
+    '.brota-novo{animation:eEscala .6s cubic-bezier(.2,.9,.3,1.3) both!important}' +
+    '.mq .q.pulsa{animation:qPulsa 1.4s ease-out both!important}.geo .uf.pulsa{animation:gPulsa 1.4s ease-out both!important}' +
+    '@keyframes qPulsa{0%{box-shadow:0 0 0 0 rgba(28,25,21,.55);transform:scale(1.06)}100%{box-shadow:0 0 0 16px rgba(28,25,21,0);transform:scale(1)}}' +
+    '@keyframes gPulsa{0%{opacity:.35}100%{opacity:1}}';
+
+  // os números contam do valor anterior até o novo (do zero na primeira vez e no dossiê); as barras crescem do antigo
+  function animar(doc, doZero) {
+    const vistos = estado.vistos;
+    const dur = 950, t0 = performance.now();
+    const itens = [];
+    doc.querySelectorAll('[data-k]').forEach((el) => {
+      const k = el.getAttribute('data-k'), para = +el.getAttribute('data-n');
+      const de = doZero || vistos[k] === undefined ? 0 : vistos[k];
+      if (!doZero) vistos[k] = para;
+      if (de !== para) itens.push([el, de, para, +el.getAttribute('data-d'), el.getAttribute('data-s') || '']);
+    });
+    doc.querySelectorAll('[data-w]').forEach((el) => {
+      const k = el.getAttribute('data-wk'), para = +el.getAttribute('data-w');
+      const de = vistos[k] === undefined ? para : vistos[k];
+      vistos[k] = para;
+      if (de === para) return;
+      el.style.transition = 'none';
+      el.style.width = de + '%';
+      void el.offsetWidth;
+      el.style.transition = 'width .95s cubic-bezier(.2,.7,.2,1)';
+      el.style.width = para + '%';
+    });
+    if (!itens.length) return;
+    const passo = (agora) => {
+      // o carimbo do quadro pode vir antes de t0: sem o piso, a conta começaria negativa
+      const x = Math.max(0, Math.min(1, (agora - t0) / dur)), e = 1 - Math.pow(1 - x, 3);
+      for (const [el, de, para, d, s] of itens) {
+        const v = de + (para - de) * e;
+        el.textContent = (d ? dec(v, d) : inteiro(v)) + s;
+      }
+      if (x < 1) requestAnimationFrame(passo);
+    };
+    requestAnimationFrame(passo);
+    // garantia: sem quadros de animação (aba em segundo plano, economia de energia), o número final aparece do mesmo jeito
+    setTimeout(() => {
+      for (const [el, , para, d, s] of itens) el.textContent = (d ? dec(para, d) : inteiro(para)) + s;
+    }, dur + 200);
   }
 
   function desenhar() {
@@ -387,7 +458,7 @@
 
   // ---------- celular: os blocos em coluna (resultado, mapa, curva), cada um na largura da tela ----------
   const GEO = { casca: [0, 0, 1920, 1080, 10], placar: [150, 140, 900, 470, 300], curva: [150, 640, 900, 340, 301],
-    mapa: [1110, 140, 660, 860, 302], tooltip: [650, 300, 440, 320, 400] };
+    mapa: [1110, 140, 660, 860, 302], tooltip: [520, 300, 580, 460, 400] };
   const largura = () => document.documentElement.clientWidth || window.innerWidth || 0;
   const celular = () => largura() < 1000;
   let MODO_CEL = false; // decidido em iniciar(), quando a janela (ou o iframe do site) já tem largura
@@ -445,8 +516,8 @@
     pintar('tooltip', html);
     // o dossiê abre à esquerda do mapa, na altura do estado (coordenadas do palco de 1920 × 1080)
     const r = el.getBoundingClientRect();
-    tt.style.left = (1110 - 460) + 'px';
-    tt.style.top = Math.min(Math.max(140 + r.top - 40, 120), 1080 - 330) + 'px';
+    tt.style.left = (1110 - 590) + 'px';
+    tt.style.top = Math.min(Math.max(140 + r.top - 60, 110), 1080 - 470) + 'px';
     tt.style.display = 'block';
   }
   function esconderTooltip() { if (quadros.tooltip) quadros.tooltip.style.display = 'none'; }
@@ -539,6 +610,12 @@
     await atualizar();
     arrumar();
     desenhar();
+    // ?dossie=BA abre o dossiê de um estado ao carregar (para conferir o desenho sem passar o mouse)
+    const dossie = PARAMS.get('dossie');
+    if (dossie && UF[dossie]) {
+      const el = quadros.mapa.contentDocument.querySelector("[data-uf='" + dossie + "']");
+      if (el) setTimeout(() => mostrarTooltip(dossie, el), 1500);
+    }
     // de computador para celular (ou o contrário) a página se monta de novo; no mesmo modo, só reescala
     addEventListener('resize', () => { if (celular() !== MODO_CEL) location.reload(); else arrumar(); });
     setInterval(async () => { if (await atualizar()) desenhar(); }, INTERVALO);
@@ -550,13 +627,16 @@
     palco.classList.add('pronto');
   }
 
-  const TT_CSS = ".tt18{background:#FBF8F2;border:1.5px solid #CBBDA2;padding:26px 26px 18px 26px;box-shadow:0 10px 24px rgba(28,25,21,.16)}" +
-    ".tt18 .fita{position:absolute;left:150px;top:-10px;width:120px;height:26px;background:#CBBDA2;opacity:.7;transform:rotate(-3deg)}" +
-    ".tt18 .rot{margin-bottom:12px}.tt18 .linha{display:flex;align-items:baseline;gap:12px}.tt18 .linha .num{font-size:34px}" +
-    ".tt18 .barra{display:flex;height:12px;margin:8px 0 10px 0;background:#E5DBC8}.tt18 .barra .bl{background:#B8322A}" +
-    ".tt18 .barra .bf{background:#2B5797;margin-left:auto}.tt18 .txt{font-size:15px;margin-top:12px;color:var(--tinta)}" +
-    ".tt18 .nota{margin-top:6px}.tt18 .mao{position:absolute;right:22px;top:20px;transform:rotate(-4deg)}" +
-    ".tela.tt18{inset:14px}";
+  const TT_CSS = ".tt18{background:#FBF8F2;border:1.5px solid #CBBDA2;padding:34px 34px 26px 34px;box-shadow:0 14px 34px rgba(28,25,21,.2)}" +
+    ".tt18 .fita{position:absolute;left:200px;top:-12px;width:150px;height:30px;background:#CBBDA2;opacity:.7;transform:rotate(-3deg)}" +
+    ".tt18 .rot{margin-bottom:14px;font-size:16px}.tt18 .linha{display:flex;align-items:baseline;gap:14px}.tt18 .linha .num{font-size:48px}" +
+    ".tt18 .linha .rot{font-size:15px}.tt18 .barra{display:flex;height:16px;margin:10px 0 14px 0;background:#E5DBC8}" +
+    ".tt18 .barra .bl{background:#B8322A}.tt18 .barra .bf{background:#2B5797;margin-left:auto}" +
+    ".tt18 .txt{font-size:19px;margin-top:16px;color:var(--tinta)}.tt18 .nota{margin-top:8px;font-size:15px}" +
+    ".tt18 .mao{position:absolute;right:28px;top:24px;transform:rotate(-4deg);font-size:32px}" +
+    ".tela.tt18{inset:auto;left:14px;right:14px;top:14px;animation:ttEntra .38s cubic-bezier(.2,.8,.2,1) both}" +
+    "@keyframes ttEntra{from{opacity:0;transform:translateY(12px) scale(.96)}}" +
+    ".tt18 .barra .bl,.tt18 .barra .bf{animation-delay:.12s!important}";
 
   iniciar();
 })();
