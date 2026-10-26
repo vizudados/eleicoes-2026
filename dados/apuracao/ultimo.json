@@ -1,7 +1,7 @@
 {
  "eleicao": 6258,
  "turno": 2,
- "coletado_em": "25/10/2026 22:03:27",
+ "coletado_em": "25/10/2026 22:04:32",
  "atualizado_tse": "25/10/2026 22:02:36",
  "status": "apurando",
  "brasil": {
@@ -29,7 +29,7 @@
     "numero": 13,
     "nome": "Lula",
     "partido": "PT",
-    "votos": 64240799,
+    "votos": 64241049,
     "pct": 51.78,
     "eleito": false,
     "situacao": ""
@@ -38,7 +38,7 @@
     "numero": 22,
     "nome": "Flavio Bolsonaro",
     "partido": "PL",
-    "votos": 59818591,
+    "votos": 59818719,
     "pct": 48.22,
     "eleito": false,
     "situacao": ""
