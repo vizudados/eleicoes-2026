@@ -1,6 +1,17 @@
-{"titulo": "Como acompanhar a apuração",
- "blocos": [
-  ["Como ler", "O número grande é a porcentagem dos votos válidos de cada um. Quem está na frente fica à esquerda. A barra mostra quanto das seções já foi contado: até ela encher, a ordem ainda pode mudar."],
-  ["De onde vêm os números", "Da API pública de resultados do TSE. Um robô no GitHub copia os números a cada minuto e o painel lê essa cópia. A hora do TSE, no alto, é a hora em que o próprio TSE fechou aquela conta."],
-  ["Para lembrar", "Clique num estado para ver só ele, ou numa hora da curva para ver o resultado parcial daquele momento. O filtro do alto escolhe um estado, uma região inteira ou vários estados, e o resultado soma os escolhidos; o mapa e a curva da noite mostram sempre o Brasil. Antes das 17h de domingo, a tela mostra o relógio e os zeros."]
- ]}
+{
+  "titulo": "Como foi a noite da apuração",
+  "blocos": [
+    [
+      "Como ler",
+      "O resultado é o final do 2º turno. Flávio passou à frente às 19h45, com 13,98% apurado; Lula já aparecia à frente às 20h24min14s, com 47,24%, e permaneceu até o fim. A parcial de 20h25min24s, com 48,42%, confirmou a liderança."
+    ],
+    [
+      "De onde vêm os números",
+      "API pública do TSE, totalização final de 25/10/2026, 23h26. A divulgação foi suspensa até as 19h; o trecho reto liga as parciais disponíveis antes e depois da suspensão, conforme TSE e Agência Senado. O coletor foi desligado em 26/10/2026."
+    ],
+    [
+      "Para lembrar",
+      "Clique num estado para consultar seu resultado, ou numa hora da curva para consultar uma parcial histórica. Clique de novo na hora para retornar ao final; a curva e o mapa permanecem nacionais."
+    ]
+  ]
+}

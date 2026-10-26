@@ -1,0 +1,11 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: UFs inteiras com virada estrita. Reaplica a UF após limpar Município, cuja tabela expandida também contém UF.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+SUMX (
+    FILTER ( VALUES ( 'UF'[UF] ), 'UF'[UF] <> "ZZ" ),
+    VAR _uf = 'UF'[UF]
+    RETURN CALCULATE ( [T28 · virou para Flávio], REMOVEFILTERS ( 'Município' ), 'UF'[UF] = _uf ) )

@@ -79,7 +79,7 @@ VAR _vazioUm =
         TRUE (),
         _parado, "<div class='vz pa'><svg class='mold' width='268' height='100' viewBox='0 0 268 100'><path d='M4 5 C 80 2, 188 4, 264 5 C 266 40, 263 70, 264 96 C 174 99, 80 97, 5 95 C 3 60, 6 30, 4 5 Z' filter='url(#rbu)'/></svg><div class='mao'>sem número</div></div>",
         _est = "nao_divulgado", "<div class='vz nd'><div class='ndt'>não divulgado</div></div>",
-        "<div class='vz ag'><svg class='mold' width='268' height='100' viewBox='0 0 268 100'><path d='M4 5 C 80 2, 188 4, 264 5 C 266 40, 263 70, 264 96 C 174 99, 80 97, 5 95 C 3 60, 6 30, 4 5 Z' filter='url(#rbu)'/></svg><div class='mao'>aguardando</div></div>"
+        "<div class='vz ag'><svg class='mold' width='268' height='100' viewBox='0 0 268 100'><path d='M4 5 C 80 2, 188 4, 264 5 C 266 40, 263 70, 264 96 C 174 99, 80 97, 5 95 C 3 60, 6 30, 4 5 Z' filter='url(#rbu)'/></svg><div class='mao'>não divulgado</div></div>"
     )
 -- o par (Lula e Flávio, o mesmo tratamento): o número de cada um, ou o lugar dele tracejado
 VAR _parLula =
@@ -104,7 +104,7 @@ VAR _vazioMeio =
         TRUE (),
         _parado, "<svg class='mold' width='128' height='100' viewBox='0 0 128 100'><path d='M4 5 C 38 2, 90 4, 124 5 C 126 40, 123 70, 124 96 C 83 99, 38 97, 5 95 C 3 60, 6 30, 4 5 Z' filter='url(#rbu)'/></svg><div class='mao'>sem número</div>",
         _est = "nao_divulgado", "<div class='ndt'>" & IF ( _c = "pesquisas", "nenhuma", "não saiu" ) & "</div>",
-        "<svg class='mold' width='128' height='100' viewBox='0 0 128 100'><path d='M4 5 C 38 2, 90 4, 124 5 C 126 40, 123 70, 124 96 C 83 99, 38 97, 5 95 C 3 60, 6 30, 4 5 Z' filter='url(#rbu)'/></svg><div class='mao'>aguardando</div>"
+        "<svg class='mold' width='128' height='100' viewBox='0 0 128 100'><path d='M4 5 C 38 2, 90 4, 124 5 C 126 40, 123 70, 124 96 C 83 99, 38 97, 5 95 C 3 60, 6 30, 4 5 Z' filter='url(#rbu)'/></svg><div class='mao'>não divulgado</div>"
     )
 VAR _par =
     "<div class='vz par'>"

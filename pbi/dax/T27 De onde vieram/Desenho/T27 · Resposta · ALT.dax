@@ -1,0 +1,13 @@
+/*
+@pasta: T27 De onde vieram\Desenho
+@formato: texto
+@descricao: Resposta acessível do recorte; valores em milhões.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( NOT ISBLANK ( [T27 · Lula em cada dez ganhos] ),
+    "De cada 10 votos que a dupla ganhou, " & FORMAT ( [T27 · Lula em cada dez ganhos], "0.0" ) & " foram para Lula",
+    "Lula " & IF ( [T27 · ganho Lula] >= 0, "ganhou ", "perdeu " ) & ((SWITCH ( TRUE (), ABS ( [T27 · ganho Lula] ) >= 1e6, FORMAT ( ABS ( [T27 · ganho Lula] ) / 1e6, "0.00" ) & " mi", ABS ( [T27 · ganho Lula] ) >= 1000, FORMAT ( ABS ( [T27 · ganho Lula] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T27 · ganho Lula] ), "#,0" ) )) & IF ( ABS ( [T27 · ganho Lula] ) >= 1e6, " de votos", IF ( ABS ( [T27 · ganho Lula] ) = 1, " voto", " votos" ) )) & " entre os turnos" ) & ". " & IF ( NOT ISBLANK ( [T27 · parcela Lula nos ganhos] ),
+    "Lula ficou com " & FORMAT ( [T27 · parcela Lula nos ganhos], "0.00%" ) & " do aumento; Flávio, "
+        & FORMAT ( [T27 · parcela Flávio nos ganhos], "0.00%" ) & ". A conta dos volumes observados fecha abaixo.",
+    "Flávio " & IF ( [T27 · ganho Flávio] >= 0, "ganhou ", "perdeu " ) & ((SWITCH ( TRUE (), ABS ( [T27 · ganho Flávio] ) >= 1e6, FORMAT ( ABS ( [T27 · ganho Flávio] ) / 1e6, "0.00" ) & " mi", ABS ( [T27 · ganho Flávio] ) >= 1000, FORMAT ( ABS ( [T27 · ganho Flávio] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T27 · ganho Flávio] ), "#,0" ) )) & IF ( ABS ( [T27 · ganho Flávio] ) >= 1e6, " de votos", IF ( ABS ( [T27 · ganho Flávio] ) = 1, " voto", " votos" ) )) & ". A conta abaixo mostra o saldo conjunto dos dois." )

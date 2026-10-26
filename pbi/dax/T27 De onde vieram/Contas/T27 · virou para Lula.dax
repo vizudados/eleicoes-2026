@@ -1,0 +1,8 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Indicador de virada estrita; empate não conta como vitória.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( [T27 · Flávio 1º] > [T27 · Lula 1º] && [T27 · Lula 2º] > [T27 · Flávio 2º], 1, 0 )

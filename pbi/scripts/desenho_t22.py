@@ -181,7 +181,7 @@ VAR _txt =
 -- 3 · Marcação (trilho, botão e os rótulos 0% e 50% são do VizuFilter no modo régua, por cima)
 RETURN
     "<div class='tela t22c'>"
-        & "<div class='pergunta sobe'>Quantos deles não vão escolher ninguém?</div>"
+        & "<div class='pergunta sobe'>Quantos deles teriam deixado de escolher alguém?</div>"
         & "<div class='valor sobe d1'>" & _txt & "</div>"
     & "</div>"
 """)
@@ -435,7 +435,7 @@ VAR _media = [T22 · pesquisa · demais pela média]
 VAR _inst = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst0, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
 VAR _txtSoma =
     "No total, Lula ganha <b class='lula'>" & {mi("_ganhaL")} & "</b> e Flávio, <b class='flavio'>" & {mi("_ganhaF")}
-        & "</b>; " & {mi("_ninguem")} & " não vão para nenhum dos dois."
+        & "</b>; " & {mi("_ninguem")} & " não iriam para nenhum dos dois."
 VAR _nota =
     SWITCH (
         TRUE (),
@@ -475,7 +475,7 @@ RETURN
         NOT ISBLANK ( _data ),
         "<div class='tela tt22p'>"
             & "<div class='nm sobe'>" & _inst & " · " & FORMAT ( _data, "dd/MM" ) & "</div>"
-            & "<div class='rot sobe d1'>Para onde vão os " & {mi("_outros")} & " de votos dos outros</div>"
+            & "<div class='rot sobe d1'>Pesquisas · " & {mi("_outros")} & " de votos dos outros</div>"
             & "<div class='leg sobe d2'><i class='l'></i>Lula <i class='f'></i>Flávio <i class='n'></i>nenhum dos dois</div>"
             & _gCu & _gRe & _gCa & _gde
             & "<div class='pe sobe d8'>" & _txtSoma & "</div>"
@@ -570,7 +570,7 @@ def corpo_pesquisas() -> str:
         ".t22p .pa{left:466px;font-weight:700;color:var(--vermelho)}"
         ".t22p .r{left:560px}"
     )
-    cab = ("<div class='cab'><span style='left:6px'>Instituto</span><span style='left:190px'>Para onde vão os "
+    cab = ("<div class='cab'><span style='left:6px'>Instituto</span><span style='left:190px'>Para onde as pesquisas indicavam os "
            "9,3 mi</span><span style='left:466px'>Lula leva</span>"
            "<span style='left:560px'>2º turno daria</span></div>")
     return (f"<style>{css}</style><div class='tela t22t'><div class='rot sobe'>E se os outros votarem como diz cada "

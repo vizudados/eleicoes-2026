@@ -1,0 +1,14 @@
+{
+  "votacao_recorde": 64256232,
+  "candidato_recorde": "Lula",
+  "ano": 2026,
+  "turno": 2,
+  "recorde_anterior": 60345999,
+  "ano_anterior": 2022,
+  "candidato_anterior": "LUIZ INÁCIO LULA DA SILVA",
+  "supera_em_votos": 3910233,
+  "candidaturas_turnos_comparadas_desde_1989": 127,
+  "eleicoes_anteriores_com_limite_superior_oficial": 15,
+  "maior_votacao_antes_1989": 5636623,
+  "limite_do_metodo": "Compara todas as candidaturas/turnos desde 1989; antes disso usa o mais votado de cada eleição direta como limite superior de todos os concorrentes, sem afirmar ter transcrito todos os derrotados"
+}

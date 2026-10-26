@@ -1,0 +1,137 @@
+/// Segundo turno por UF, 2022 e 2026, com exterior ZZ. Os totais nacionais incluem o exterior; as análises municipais das telas T27 e T28 não incluem.
+table 'UF segundo turno'
+	isHidden
+	lineageTag: 303b5611-6b47-51c3-92dc-23fbbd9d60e8
+
+	/// Sigla da UF ou ZZ, exterior.
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 34562a06-808d-570f-a724-2bbfe8c6728d
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ano, somente segundo turno.
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0f7a53b1-bbb1-5237-8198-b706f387e139
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Lula.
+	column VotosPT
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 19037527-976a-595d-bf55-b4f6c6d0400c
+		summarizeBy: none
+		sourceColumn: VotosPT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Flávio em 2026 e Jair Bolsonaro em 2022.
+	column VotosAdversario
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: e9a4d71c-6c86-58e6-8f1f-05db0e48d5a0
+		summarizeBy: none
+		sourceColumn: VotosAdversario
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Demais candidatos; zero no segundo turno.
+	column VotosDemais
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 39af0fe3-fcf0-5068-a563-2dc76c31e6c6
+		summarizeBy: none
+		sourceColumn: VotosDemais
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos.
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 111927be-cf43-55b9-980a-a8c9274487bb
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores aptos.
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 44323a78-6fb4-5f2c-b70d-66d3b2ef4481
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Comparecimento registrado pelo TSE.
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: ab80c53f-614c-58d1-94cc-4d31f8a1bf11
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Abstenções registradas pelo TSE.
+	column Abstencoes
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 3e7a5462-3077-57ad-acb6-161af6e2226e
+		summarizeBy: none
+		sourceColumn: Abstencoes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos brancos.
+	column Brancos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: f6b3a03a-f7aa-55c3-9e6d-00d77fb097d5
+		summarizeBy: none
+		sourceColumn: Brancos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos nulos.
+	column Nulos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4ed051ff-ee50-5616-9e70-907906dd7da0
+		summarizeBy: none
+		sourceColumn: Nulos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'UF segundo turno' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/uf_2turno.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"uf", "ano", "pt", "adv", "demais", "validos", "aptos", "comparecimento", "abstencoes", "brancos", "nulos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"uf", type text}, {"ano", Int64.Type}, {"pt", Int64.Type}, {"adv", Int64.Type}, {"demais", Int64.Type}, {"validos", Int64.Type}, {"aptos", Int64.Type}, {"comparecimento", Int64.Type}, {"abstencoes", Int64.Type}, {"brancos", Int64.Type}, {"nulos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"uf", "UF"}, {"ano", "Ano"}, {"pt", "VotosPT"}, {"adv", "VotosAdversario"}, {"demais", "VotosDemais"}, {"validos", "Validos"}, {"aptos", "Aptos"}, {"comparecimento", "Comparecimento"}, {"abstencoes", "Abstencoes"}, {"brancos", "Brancos"}, {"nulos", "Nulos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

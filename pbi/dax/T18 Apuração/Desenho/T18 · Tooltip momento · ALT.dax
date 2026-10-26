@@ -7,7 +7,7 @@ VAR _m = [T18 · momento escolhido]
 RETURN
     IF (
         NOT ISBLANK ( _m ),
-        "Às " & FORMAT ( _m, "HH:mm" ) & ", com " & FORMAT ( [T18 · momento · seções %] * 100, "0.00" )
+        "Às " & SUBSTITUTE ( FORMAT ( _m, "HH:mm" ), ":", "h" ) & ", com " & FORMAT ( [T18 · momento · seções %] * 100, "0.00" )
             & "% das seções: Lula " & FORMAT ( [T18 · momento · Lula %] * 100, "0.00" ) & "%, Flávio "
             & FORMAT ( [T18 · momento · Flávio %] * 100, "0.00" ) & "%."
     )

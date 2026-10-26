@@ -1,0 +1,6 @@
+/*
+@pasta: T23 Encerramento\Desenho
+@formato: texto
+@descricao: Achados finais do encerramento, sem filtro.
+*/
+"Achados dos dois turnos. Lula foi eleito com " & FORMAT ( [Apuração · Lula votos], "#,0" ) & " votos. Atalhos às pesquisas, à apuração, às origens do crescimento e aos lugares em que Flávio perdeu vantagem."

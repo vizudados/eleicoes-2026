@@ -1,7 +1,7 @@
 /*
 @pasta: T22 Simulador\Desenho
 @formato: texto
-@descricao: Uma linha da lista das pesquisas (granularidade Transferência[Instituto]): para onde vão os votos dos outros segundo a última pesquisa do instituto depois do 1º turno, e o 2º turno que isso daria. Clicar leva o cenário da pesquisa ao resultado e ao mapa.
+@descricao: Uma linha da lista das pesquisas (granularidade Transferência[Instituto]): para onde as pesquisas indicavam os votos dos outros segundo a última pesquisa do instituto depois do 1º turno, e o 2º turno que isso daria. Clicar leva o cenário da pesquisa ao resultado e ao mapa.
 */
 -- 1 · Leituras
 VAR _data = [T22 · pesquisa · data]

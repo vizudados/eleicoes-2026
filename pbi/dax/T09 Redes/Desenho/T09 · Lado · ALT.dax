@@ -13,7 +13,7 @@ RETURN
         "Seguidores ganhos, " & [Período · rótulo] & ": "
             & IF (
                 ISBLANK ( _psL ) || ISBLANK ( _psF ),
-                IF ( _per = 4, "os números ainda não chegaram.", "sem dado no período." ),
+                IF ( _per = 4, "os números não constam do levantamento.", "sem dado no período." ),
                 "Lula +" & FORMAT ( _psL / 1000, "#,0" ) & " mil e Flávio +" & FORMAT ( _psF / 1000, "#,0" )
                     & " mil (" & [T09 · período · seguidores · fonte]
                     & IF ( CONTAINSSTRING ( [T09 · período · seguidores · métrica], "Instagram" ), ", só Instagram", "" ) & ")."

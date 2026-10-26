@@ -1,0 +1,11 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: dd/MM/yyyy HH:mm
+@descricao: Primeiro registro com Lula à frente depois da liderança de Flávio.
+*/
+VAR _f = [T18 · noite · Flávio passou à frente]
+RETURN CALCULATE (
+    MIN ( 'Apuração histórico'[AtualizadoTSE] ), REMOVEFILTERS ( 'Apuração histórico' ),
+    'Apuração histórico'[AtualizadoTSE] > _f,
+    'Apuração histórico'[LulaVotos] > 'Apuração histórico'[FlavioVotos]
+)

@@ -1,0 +1,11 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: 0.00%
+@descricao: Parcela do aumento conjunto; só é interpretada como distribuição de ganhos quando ambos não perdem votos.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+VAR _l = [T27 · ganho Lula]
+VAR _f = [T27 · ganho Flávio]
+VAR _total = [T27 · ganhos da dupla]
+RETURN IF ( _l >= 0 && _f >= 0 && _total > 0, DIVIDE ( [T27 · ganho Flávio], _total ) )

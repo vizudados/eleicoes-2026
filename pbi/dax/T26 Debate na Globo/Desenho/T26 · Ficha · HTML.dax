@@ -28,7 +28,7 @@ VAR _aN = [T26 · pesquisas · antes · n]
 -- 2 · Textos
 VAR _sitEf = IF ( _sit IN { "marcado", "no_ar" } && _n > 0, "realizado", _sit )
 VAR _selo =
-    SWITCH ( _sit, "no_ar", "NO AR", "realizado", "REALIZADO", "adiado", "ADIADO", "cancelado", "CANCELADO", "MARCADO" )
+    SWITCH ( _sit, "no_ar", "REGISTRO PARCIAL", "realizado", "REALIZADO", "adiado", "ADIADO", "cancelado", "CANCELADO", "REGISTRO" )
 VAR _hora = IF ( ISBLANK ( _ini ), "—", FORMAT ( _ini, "HH" ) & "h" & FORMAT ( _ini, "nn" ) )
 VAR _dia = IF ( ISBLANK ( _ini ), "", UPPER ( FORMAT ( _ini, "dddd" ) ) & ", " & FORMAT ( _ini, "dd/MM" ) & " · " )
 VAR _aud = IF ( NOT ISBLANK ( _audC ), _audC, _audP )
@@ -38,8 +38,8 @@ VAR _frAus =
     SWITCH (
         TRUE (),
         _aus = "", "",
-        _aus = "Lula e Flávio", IF ( _sitEf = "realizado", "Nem Lula nem Flávio foram ao debate. ", "Nem Lula nem Flávio vão ao debate. " ),
-        _aus & IF ( _sitEf = "realizado", " não foi ao debate. ", " não vai ao debate. " )
+        _aus = "Lula e Flávio", IF ( _sitEf = "realizado", "Nem Lula nem Flávio foram ao debate. ", "Nem Lula nem Flávio foram ao debate. " ),
+        _aus & IF ( _sitEf = "realizado", " não foi ao debate. ", " não foi ao debate. " )
     )
 VAR _man =
     SWITCH (
@@ -50,10 +50,10 @@ VAR _man =
         _sitEf = "marcado",
             IF (
                 _aus = "",
-                "Ainda não dá para dizer. Os números chegam entre a noite de sexta e o sábado, véspera da eleição.",
-                _frAus & "Os números da noite chegam entre sexta e sábado, véspera da eleição."
+                "O levantamento não registrou números suficientes para responder.",
+                _frAus & "Os números da noite não constam do levantamento."
             ),
-        _sitEf = "no_ar", _frAus & "O debate está no ar; os primeiros números chegam quando ele acabar.",
+        _sitEf = "no_ar", _frAus & "O registro disponível é parcial; os números finais não constam do levantamento.",
         _pN > 0,
             _frAus & "Nas " & IF ( _pN = 1, "pesquisa feita inteira", FORMAT ( _pN, "0" ) & " pesquisas feitas inteiras" )
                 & " depois do debate, Lula tem " & FORMAT ( _pL, "0.0" ) & "% e Flávio, " & FORMAT ( _pF, "0.0" ) & "%"
@@ -62,7 +62,7 @@ VAR _man =
             _frAus & "Na Grande SP, a Globo marcou " & FORMAT ( _aud, "0.0" ) & " pontos"
                 & IF ( ISBLANK ( _audC ), " na prévia", "" ) & ", " & _cmp & " os " & IF ( _ref = INT ( _ref ), FORMAT ( _ref, "0" ), FORMAT ( _ref, "0.0" ) )
                 & IF ( ISBLANK ( _audC ), " da prévia da Band.", " da Band." ),
-        _frAus & "O debate acabou, e os números ainda não chegaram."
+        _frAus & "O debate acabou, e os números não constam do levantamento."
     )
 VAR _sub =
     IF (
@@ -79,8 +79,8 @@ RETURN
         [T26 · arquivo · linhas] = 0,
         "<div class='tela t26f'><div class='selo entra'><span>SEM DADOS</span></div>"
             & "<div class='dia rot entra d1'>O ÚLTIMO DEBATE ANTES DO 2º TURNO</div>"
-            & "<div class='man sobe d2' style='top:72px'>O arquivo do debate ainda não chegou ao painel. A ficha, os púlpitos "
-            & "e os números da noite aparecem quando ele for lido.</div></div>",
+            & "<div class='man sobe d2' style='top:72px'>O arquivo do debate não consta do levantamento ao painel. A ficha, os púlpitos "
+            & "e os números da noite não constam do levantamento.</div></div>",
     "<div class='tela t26f s-" & _sit & "'>"
         & "<div class='selo entra'><span>" & _selo & "</span></div>"
         & "<div class='dia rot entra d1'>" & _dia & "O ÚLTIMO DEBATE ANTES DO 2º TURNO</div>"

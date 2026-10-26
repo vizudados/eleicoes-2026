@@ -3,7 +3,7 @@
 @formato: texto
 @descricao: Texto para leitor de tela do diagrama de fluxo (≤ 250 caracteres).
 */
-VAR _t = "Para onde vão, no 2º turno: eleitor de Cury, Lula " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Cury" ), "0" )
+VAR _t = "Pelas pesquisas do 2º turno: eleitor de Cury, Lula " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Cury" ), "0" )
     & "% e Flávio " & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "Cury" ), "0" )
     & "%; de Renan, " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Renan" ), "0" ) & "% e "
     & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "Renan" ), "0" )

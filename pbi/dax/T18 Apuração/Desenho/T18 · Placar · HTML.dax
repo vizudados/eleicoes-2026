@@ -1,107 +1,43 @@
 /*
 @pasta: T18 Apuração\Desenho
 @formato: texto
-@descricao: Placar da apuração: horas do TSE e da coleta, os dois candidatos (o líder à esquerda; zerados, a ordem da urna), o selo do estado, a frase do momento, o relógio até as 17h (aguardando, contado no navegador) e a barra de seções. No recorte (filtro de estado em árvore ou clique no mapa: um estado, uma região, vários estados somados) as contas somam as UFs escolhidas e o texto diz onde ('na Bahia', 'no Nordeste', 'em MG e SP (somados)'); com a eleição definida, a frase separa o eleito no Brasil de quem lidera no recorte. Clique no mapa fora do filtro: o aviso. Com uma atualização clicada na curva da noite, o placar daquele momento (T18 · Placar momento · HTML).
+@descricao: Resultado final e manchete da noite; o clique na curva consulta uma parcial histórica.
 */
--- 1 · Leituras (contas de T18 Apuração\Contas)
-VAR _fase = [Apuração · fase]
-VAR _turno = [Apuração · turno]
+-- 1 · Leituras
 VAR _escopo = [Apuração · escopo]
-VAR _lula = [Apuração · Lula votos]
-VAR _flavio = [Apuração · Flávio votos]
-VAR _lulaP = [Apuração · Lula %]
-VAR _flavioP = [Apuração · Flávio %]
-VAR _secoes = [Apuração · seções %]
+VAR _l = [Apuração · Lula votos]
+VAR _f = [Apuração · Flávio votos]
+VAR _lp = [Apuração · Lula %]
+VAR _fp = [Apuração · Flávio %]
 VAR _dif = [Apuração · diferença]
 VAR _lider = [Apuração · líder]
-VAR _eleitorado = [Apuração · eleitorado]
-VAR _abst = [Apuração · abstenção %]
-VAR _brancos = [Apuração · brancos]
-VAR _nulos = [Apuração · nulos]
-VAR _tse = [Apuração · atualizado no TSE]
-VAR _coleta = [Apuração · coletado em]
-VAR _momento = [T18 · momento escolhido]
-VAR _vazio = [T18 · recorte vazio]
+VAR _m = [T18 · momento escolhido]
+VAR _fora = [T18 · recorte vazio]
 VAR _em = [Recorte · em]
-VAR _tipo = [Recorte · tipo]
-VAR _liderBR = [Apuração · líder no Brasil]
+VAR _tse = [Apuração · atualizado no TSE]
+VAR _a = [T18 · noite · Flávio passou à frente]
+VAR _b = [T18 · noite · Lula retomou a frente]
 -- 2 · Textos
--- onde: vazio no Brasil (a frase de sempre); 'na Bahia', 'no Nordeste', 'em MG e SP (somados)' no recorte
-VAR _ondeTxt = _em & IF ( _tipo = "Vários", " (somados)", "" )
-VAR _onde = IF ( _escopo = "Brasil", "", " " & _ondeTxt )
-VAR _aguarda = _fase = "aguardando"
-VAR _lulaTxt = IF ( _aguarda, "—", FORMAT ( _lulaP * 100, "0.00" ) & "%" )
-VAR _flavioTxt = IF ( _aguarda, "—", FORMAT ( _flavioP * 100, "0.00" ) & "%" )
--- antes da 1ª parcial, "0,00% · 0 votos" parecia resultado: o placar mostra o traço e diz que espera
-VAR _votosLula = IF ( _aguarda, "aguardando a 1ª parcial", FORMAT ( _lula, "#,0" ) & IF ( _lula = 1, " voto", " votos" ) )
-VAR _votosFlavio = IF ( _aguarda, "aguardando a 1ª parcial", FORMAT ( _flavio, "#,0" ) & IF ( _flavio = 1, " voto", " votos" ) )
-VAR _secoesTxt = FORMAT ( _secoes * 100, "0.00" ) & "%"
-VAR _difTxt = FORMAT ( _dif, "#,0" )
-VAR _tseTxt = IF ( ISBLANK ( _tse ), "—", FORMAT ( _tse, "dd/MM/yyyy HH:mm" ) )
-VAR _coletaTxt = IF ( ISBLANK ( _coleta ), "—", FORMAT ( _coleta, "dd/MM/yyyy HH:mm" ) )
-VAR _blocoLula =
-    "<div class='cand sobe d2'><div class='rot lula-esc'>LULA · PT · 13</div><div class='num pct lula'>" & _lulaTxt
-        & "</div><div class='txt votos'>" & _votosLula & "</div></div>"
-VAR _blocoFlavio =
-    "<div class='cand sobe d3'><div class='rot flavio-esc'>FLÁVIO BOLSONARO · PL · 22</div><div class='num pct flavio'>"
-        & _flavioTxt & "</div><div class='txt votos'>" & _votosFlavio & "</div></div>"
-VAR _par = IF ( _lider = "Flávio", _blocoFlavio & _blocoLula, _blocoLula & _blocoFlavio )
-VAR _selo =
-    SWITCH (
-        TRUE (),
-        _turno = 1, "<div class='selo entra d6'>ENSAIO · 1º TURNO</div>",
-        _fase = "definido", "<div class='selo entra d6'>MATEMATICAMENTE DEFINIDO</div>",
-        _fase = "encerrada", "<div class='selo entra d6'>APURAÇÃO ENCERRADA</div>",
-        ""
-    )
-VAR _frase =
-    SWITCH (
-        TRUE (),
-        _aguarda, "As urnas fecham às 17h de domingo, 25/10.",
-        -- no recorte, o eleito é o do Brasil (a fase é nacional) e o recorte diz só quem lidera nele
-        _escopo <> "Brasil" && _fase = "definido",
-            _liderBR & " está matematicamente eleito no Brasil; " & _ondeTxt & ", "
-                & IF ( _lider = "—", "empate exato", _lider & " está à frente por " & _difTxt & " votos" ) & ".",
-        _lider = "—", "Empate exato" & _onde & " com " & _secoesTxt & " das seções apuradas.",
-        _fase = "apurando", _lider & " está à frente" & _onde & " por " & _difTxt & " votos, com " & _secoesTxt
-            & " das seções apuradas.",
-        _fase = "definido", _lider & " está matematicamente eleito: a diferença de " & _difTxt
-            & " votos já não pode ser revertida.",
-        _lider & " lidera" & _onde & " · apuração encerrada · diferença de " & _difTxt & " votos"
-    )
-VAR _relogio =
-    IF (
-        _aguarda,
-        "<div class='relogio sobe d4'><span class='rot'>FALTAM</span><span class='num' id='t18rel'>—</span></div>"
-            & "<div class='txt sobe d5'>" & FORMAT ( _eleitorado, "#,0" ) & " eleitores podem votar"
-            & IF ( _escopo = "Brasil", "", " " & _em ) & ".</div>"
-    )
-VAR _barra =
-    "<div class='secoes sobe d5'><div class='rot'>SEÇÕES APURADAS" & IF ( _escopo = "Brasil", "", " · " & UPPER ( _escopo ) )
-        & "</div><div class='trilho'><div class='enche barra-x' style='width:"
-        & FORMAT ( _secoes * 100, "0.0##", "en-US" ) & "%'></div><span class='num'>" & _secoesTxt
-        & "</span></div><div class='nota'>Abstenção " & FORMAT ( _abst * 100, "0.00" ) & "% · brancos "
-        & FORMAT ( _brancos, "#,0" ) & " · nulos " & FORMAT ( _nulos, "#,0" ) & "</div></div>"
--- o recorte no fim da linha do topo; com o selo (ensaio, definido, encerrada) ele ficaria embaixo do carimbo, e a frase e
--- a barra já dizem onde
-VAR _topo =
-    "<div class='rot topo entra'>"
-        & IF ( ISBLANK ( _tse ), "AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE", "ATUALIZADO PELO TSE · " & _tseTxt )
-        & " · COLETADO EM " & _coletaTxt & IF ( _escopo = "Brasil" || _selo <> "", "", " · " & UPPER ( _escopo ) )
-        & "</div>"
-VAR _marca = IF ( _aguarda || _lider = "—", "", "<span class='visto'>✓</span>" )
--- clique no mapa fora do filtro de estado: nenhuma UF nas contas; o placar avisa em vez de mostrar zeros
-VAR _aviso =
-    "<div class='tela t18p'><div class='rot topo entra'>"
-        & IF ( ISBLANK ( _tse ), "AGUARDANDO A PRIMEIRA DIVULGAÇÃO DO TSE", "ATUALIZADO PELO TSE · " & _tseTxt )
-        & " · COLETADO EM " & _coletaTxt & "</div><div class='man frase sobe d4'>O estado clicado no mapa fica fora "
-        & "do filtro de estado do alto. Clique nele de novo para voltar ao recorte do filtro.</div></div>"
-RETURN
-    SWITCH (
-        TRUE (),
-        NOT ISBLANK ( _momento ), [T18 · Placar momento · HTML],
-        _vazio = 1, _aviso,
-        "<div class='tela t18p'>" & _topo & "<div class='par'>" & _par & _selo & "</div>"
-            & "<div class='man frase sobe d4'>" & _marca & _frase & "</div>" & _relogio
-            & IF ( _aguarda, "", _barra ) & "</div>"
-    )
+VAR _frase = IF ( _escopo = "Brasil",
+    "Lula foi eleito por " & FORMAT ( _dif, "#,0" ) & " votos. Flávio liderou das "
+        & SUBSTITUTE ( FORMAT ( _a, "HH:mm" ), ":", "h" ) & " às " & SUBSTITUTE ( FORMAT ( _b, "HH:mm" ), ":", "h" ) & ".",
+    "Lula foi eleito no Brasil; " & _em & ", " & _lider & " terminou à frente por "
+        & FORMAT ( _dif, "#,0" ) & IF ( _dif = 1, " voto.", " votos." ) )
+VAR _bl = "<div class='cand sobe d2'><div class='rot lula-esc'>LULA · PT · 13</div>"
+    & "<div class='num pct lula'>" & FORMAT ( _lp, "0.00%" ) & "</div><div class='txt votos'>"
+    & FORMAT ( _l, "#,0" ) & " votos</div></div>"
+VAR _bf = "<div class='cand sobe d3'><div class='rot flavio-esc'>FLÁVIO BOLSONARO · PL · 22</div>"
+    & "<div class='num pct flavio'>" & FORMAT ( _fp, "0.00%" ) & "</div><div class='txt votos'>"
+    & FORMAT ( _f, "#,0" ) & " votos</div></div>"
+VAR _html = "<div class='tela t18p'><div class='rot topo entra'>RESULTADO FINAL · 2º TURNO · "
+    & UPPER ( _escopo ) & "</div><div class='par'>" & _bl & _bf
+    & "<div class='selo entra d6'>LULA ELEITO</div></div><div class='man frase sobe d4'>" & _frase
+    & "</div><div class='secoes sobe d5'><div class='rot'>SEÇÕES TOTALIZADAS</div><div class='trilho'>"
+    & "<div class='enche barra-x' style='width:100%'></div><span class='num'>"
+    & FORMAT ( [Apuração · seções %], "0%" ) & "</span></div><div class='nota'>Abstenção "
+    & FORMAT ( [Apuração · abstenção %], "0.00%" ) & " · brancos " & FORMAT ( [Apuração · brancos], "#,0" )
+    & " · nulos " & FORMAT ( [Apuração · nulos], "#,0" ) & "</div></div></div>"
+-- 4 · Marcação
+RETURN SWITCH ( TRUE (), NOT ISBLANK ( _m ), [T18 · Placar momento · HTML],
+    _fora = 1, "<div class='tela t18p'><div class='man frase'>O estado clicado fica fora do filtro do alto. Clique nele de novo para voltar.</div></div>",
+    _html )

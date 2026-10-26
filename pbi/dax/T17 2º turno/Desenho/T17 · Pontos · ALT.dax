@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela dos pontos das pesquisas do 2º turno; com um período escolhido, quantas estão em destaque (ou que nenhuma, ou que ainda não chegaram).
+@descricao: Texto para leitor de tela dos pontos das pesquisas do 2º turno; com um período escolhido, quantas estão em destaque (ou que nenhuma, ou que não constam do levantamento).
 */
 VAR _nP = [T17 · período · pesquisas]
 RETURN
@@ -12,7 +12,7 @@ RETURN
         "Um ponto por pesquisa do 2º turno (" & [T17 · pesquisas] & "). " & [Período · nome] & ": "
             & SWITCH (
                 TRUE (),
-                [T17 · período · ainda sem dado] = 1, "as pesquisas ainda não chegaram",
+                [T17 · período · ainda sem dado] = 1, "não há pesquisas registradas neste recorte",
                 _nP = 0, "nenhuma com o campo inteiro no período",
                 _nP & " em destaque, com o campo inteiro no período; as outras esmaecem"
             )

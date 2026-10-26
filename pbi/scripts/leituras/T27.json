@@ -1,0 +1,8 @@
+{
+  "titulo": "De onde veio o crescimento de Lula",
+  "blocos": [
+    ["Como ler", "Os traços ligam os votos de cada candidato entre os turnos. A conta abaixo fecha com o que a dupla ganhou: votos dos demais no 1º turno, variação do comparecimento e redução de brancos e nulos. Mapa e lista se filtram pelo clique; o filtro do alto escolhe estados e regiões."],
+    ["De onde vêm os números", "São volumes observados do TSE por município, sem exterior, e recortes de região e porte do IBGE. A parcela de Lula divide seu ganho pela soma dos ganhos dos dois candidatos; a frase de cada dez só aparece quando ambos têm saldo não negativo. Nenhuma parcela da conta é atribuída individualmente a Lula ou a Flávio."],
+    ["Para lembrar", "A variação de comparecimento é um saldo: pode haver quem voltou e quem deixou de votar ao mesmo tempo. Valores negativos subtraem da soma; se alguém perdeu votos, a manchete mostra esse saldo em lugar da distribuição de ganhos."]
+  ]
+}

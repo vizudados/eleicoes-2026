@@ -50,7 +50,7 @@ VAR _txtPer =
                 & IF ( _pL = _pF, "os dois empatavam", IF ( _pL > _pF, "Lula", "Flávio" ) & " tinha "
                 & FORMAT ( ABS ( _pL - _pF ), "0.0" ) & " pontos a mais" ),
         _pN > 0, _pNome & ", a Quaest divulgou o índice de um só dos dois",
-        _per = 4, _pNome & ": o índice ainda não chegou",
+        _per = 4, _pNome & ": o índice não consta do levantamento",
         _pNome & ": sem dado no período (o índice vai até " & FORMAT ( _fim, "dd/MM" ) & ")"
     )
 VAR _txtMan = IF ( NOT ISBLANK ( _per ), _txtPer, IF ( ISBLANK ( _foco ), _txtTodos, _txtFoco ) )

@@ -4,7 +4,7 @@
 Pedido do Alisson em 23/10/2026, dia do debate: uma página por debate do 2º turno, pronta antes dos números. A da Band
 (18/10) é a 08 · Debate (T07); esta é a da Globo (23/10, 21h20). Desenho próprio, sem repetir o formato da T07 nem o do
 documentário: em vez de "o número da noite + o palco + o gráfico", uma ficha da noite, o palco com os dois púlpitos e
-uma fita do tempo com os cinco números que vão chegar, cada um com o seu lugar marcado até chegar.
+uma fita do tempo com os cinco números registrados, com ausência identificada quando não divulgados.
 
   T26_Ficha_Html     a ficha: o selo da situação (marcado, no ar, realizado, adiado, cancelado), a hora, onde passa,
                      mediação e local e a manchete (o que já dá para dizer). As regras em blocos e a checagem
@@ -12,10 +12,10 @@ uma fita do tempo com os cinco números que vão chegar, cada um com o seu lugar
   T26_Palco_Html     os dois púlpitos em traço (grão 'T26 Debate Globo'[Chave], só as linhas de presença): nome, púlpito
                      na cor do candidato (tracejado e vazio se ele faltar ou se o debate cair) e a situação; o palco, a
                      mesa da mediação e as luzes ficam no bodyTemplate. Dossiê ttT26Presenca (histórico e fonte)
-  T26_Noite_Html     o fundo da faixa de baixo: o título e a fita do tempo, do início do debate à eleição de domingo
+  T26_Noite_Html     o fundo da faixa de baixo: o título e a fita do tempo, do início do debate à eleição de 25/10
   T26_Noite_Cartoes  os cinco cartões (grão 'T26 Debate Globo'[Cartão]): buscas, audiência, transmissão na internet,
                      redes e pesquisas, pendurados na fita na ordem em que chegam; o número (contador) ou o lugar dele
-                     tracejado com "aguardando", a fonte e a régua da Band (18/10) na mesma medida. Dossiê ttT26Cartao
+                     tracejado com "não divulgado", a fonte e a régua da Band (18/10) na mesma medida. Dossiê ttT26Cartao
 
 Sem filtro cruzado: nada na tela muda com clique. O realce no hover é o da casa (CSS_REALCE: o púlpito ou o cartão sob
 o mouse fica, os outros apagam). Contas e desenho: pbi/scripts/desenho_t26.py.

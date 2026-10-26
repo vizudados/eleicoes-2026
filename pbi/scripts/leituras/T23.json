@@ -1,17 +1,17 @@
 {
- "titulo": "E o que fica desta eleição?",
- "blocos": [
-  [
-   "Como ler",
-   "Cada linha é um achado de uma tela; clique nela para voltar à tela de onde ele veio. O quadro da direita leva à apuração do 2º turno, que passa ao vivo no domingo, 25/10, a partir das 17h."
-  ],
-  [
-   "De onde vêm os números",
-   "Os mesmos das telas: TSE, IBGE, Portal da Transparência, Atlas do Desenvolvimento Humano, pesquisas registradas no TSE e as fontes digitais citadas em cada uma."
-  ],
-  [
-   "Para lembrar",
-   "Os dados e o código do painel estão abertos em github.com/vizudados/eleicoes-2026."
+  "titulo": "O que ficou da eleição",
+  "blocos": [
+    [
+      "Como ler",
+      "Cada achado leva à tela de onde veio. À direita estão as pesquisas diante da urna, o resultado final, os ganhos entre turnos e as viradas de municípios e estados."
+    ],
+    [
+      "De onde vêm os números",
+      "As mesmas fontes das telas: TSE, IBGE, pesquisas registradas e fontes digitais identificadas em cada página. Os resultados finais são de 25/10/2026."
+    ],
+    [
+      "Para lembrar",
+      "Dados e código do painel estão abertos em github.com/vizudados/eleicoes-2026."
+    ]
   ]
- ]
 }

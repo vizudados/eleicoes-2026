@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""16 · Os outros — para onde vão os votos dos outros candidatos? (dono: agente das telas da campanha)
+"""16 · Os outros — em quem os eleitores dos outros candidatos diziam votar? (dono: agente das telas da campanha)
 
 A história: depois do 1º turno, as pesquisas perguntaram aos eleitores de Cury, Renan e Caiado (e a quem não votou) em
 quem votam no 2º turno. O eleitor de Caiado e o de Renan pendem para Flávio (o de Renan com muito branco e nulo), o de

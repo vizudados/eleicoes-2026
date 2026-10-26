@@ -3,6 +3,6 @@
 @formato: texto
 @descricao: Texto puro da fita da noite.
 */
-"Fita do tempo da noite do debate até a eleição, domingo, 25/10: " & FORMAT ( [T26 · cartões · total], "0" )
+"Fita do tempo da noite do debate até a eleição de 25/10: " & FORMAT ( [T26 · cartões · total], "0" )
     & " números esperados; " & FORMAT ( [T26 · cartões · chegaram], "0" )
     & IF ( [T26 · cartões · chegaram] = 1, " já chegou.", " já chegaram." )

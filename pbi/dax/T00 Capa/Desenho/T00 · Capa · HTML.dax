@@ -1,19 +1,27 @@
 /*
 @pasta: T00 Capa\Desenho
 @formato: texto
-@descricao: Os números da capa (o vídeo, o título e a composição fixa estão no bodyTemplate do visual): os dois candidatos em blocos simétricos, os municípios que mudaram de lado e os do mapa. Os números contam na entrada.
+@descricao: Capa com segundo turno em destaque, primeiro turno menor e viradas estritas entre turnos; mesmos blocos para os dois.
+@oraculo: TSE nacional com exterior; UF segundo turno 2026; viradas municipais sem exterior
+@gerado: pbi/scripts/desenho_t00.py
 */
-VAR _f = [T00 · Flávio votos]
-VAR _l = [T00 · Lula votos]
-VAR _fp = [T00 · Flávio %]
-VAR _lp = [T00 · Lula %]
-VAR _vir = [T00 · municípios que viraram]
+VAR _paraLula = [T00 · entre turnos · Flávio para Lula]
+VAR _paraFlavio = [T00 · entre turnos · Lula para Flávio]
 VAR _n = [T00 · municípios no mapa]
-RETURN
-    "<div class='bl esq sobe d6'><div class='rot'>FLÁVIO BOLSONARO · PL</div><div class='num v flavio-c'>"
-        & FORMAT ( _f / 1e6, "0.00" ) & " mi</div><div class='p'>" & FORMAT ( _fp * 100, "0.0" ) & "% dos válidos</div></div>"
-        & "<div class='bl dir sobe d7'><div class='rot'>LULA · PT</div><div class='num v lula-c'>"
-        & FORMAT ( _l / 1e6, "0.00" ) & " mi</div><div class='p'>" & FORMAT ( _lp * 100, "0.0" ) & "% dos válidos</div></div>"
-        & "<div class='pe-esq sobe d10'><span class='vir'><span class='num'>" & FORMAT ( _vir, "#,0" ) & "</span>"
-        & "<span class='risco'></span></span> municípios mudaram de lado</div>"
-        & "<div class='pe-dir sobe d11'><span class='num'>" & FORMAT ( _n, "#,0" ) & "</span> municípios, um ponto cada</div>"
+VAR _html = "<div class='bl esq sobe d6'><div class='rot'>FLÁVIO BOLSONARO · PL</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
+    & "<div class='num v flavio-c'>" & FORMAT ( [T00 · 2º turno · Flávio votos] / 1e6, "0.00" )
+    & " mi</div><div class='p'>" & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" ) & " dos válidos</div>"
+    & "<div class='primeiro'>1º turno · <span class='num'>" & FORMAT ( [T00 · Flávio votos] / 1e6, "0.00" )
+    & " mi</span> · " & FORMAT ( [T00 · Flávio %], "0.00%" ) & "</div></div>"
+    & "<div class='bl dir sobe d6'><div class='rot'>LULA · PT</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
+    & "<div class='num v lula-c'>" & FORMAT ( [T00 · 2º turno · Lula votos] / 1e6, "0.00" )
+    & " mi</div><div class='p'>" & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & " dos válidos</div>"
+    & "<div class='primeiro'>1º turno · <span class='num'>" & FORMAT ( [T00 · Lula votos] / 1e6, "0.00" )
+    & " mi</span> · " & FORMAT ( [T00 · Lula %], "0.00%" ) & "</div><span class='selo-eleito' aria-label='Lula eleito'>eleito</span></div>"
+    & "<div class='pe-esq sobe d10'><span class='vir'><span class='num'>" & FORMAT ( _paraLula, "#,0" )
+    & "</span><span class='risco'></span></span> " & IF ( _paraLula = 1, "município trocou", "municípios trocaram" )
+    & " Flávio por Lula<br/>entre os turnos · <span class='num'>" & FORMAT ( _paraFlavio, "#,0" )
+    & "</span> " & IF ( _paraFlavio = 1, "fez", "fizeram" ) & " o caminho contrário</div>"
+    & "<div class='pe-dir sobe d11'><span class='num'>" & FORMAT ( _n, "#,0" )
+    & "</span> municípios, um ponto cada</div>"
+RETURN _html

@@ -1,0 +1,8 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: 0.00%
+@descricao: Fração de seções no registro da mudança de liderança.
+*/
+VAR _d = [T18 · noite · Flávio passou à frente]
+RETURN CALCULATE ( MAX ( 'Apuração histórico'[SecoesPct] ) / 100,
+    REMOVEFILTERS ( 'Apuração histórico' ), 'Apuração histórico'[AtualizadoTSE] = _d )

@@ -1,0 +1,7 @@
+/*
+@pasta: T17 2º turno\Contas
+@formato: 0.00
+@descricao: Percentual final nacional de votos válidos no TSE, de 0 a 100.
+*/
+CALCULATE ( DIVIDE ( SUM ( 'Apuração Brasil'[LulaVotos] ), SUM ( 'Apuração Brasil'[Validos] ) ) * 100,
+    REMOVEFILTERS ( 'UF' ), REMOVEFILTERS ( 'Apuração Brasil' ) )

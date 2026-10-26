@@ -22,8 +22,8 @@ VAR _status =
         TRUE (),
         _sit = "cancelado", "debate cancelado",
         _sit = "adiado", "debate adiado",
-        _pres = "ausente", IF ( _sit = "realizado", "não foi ao debate", "não vai ao debate" ),
-        _pres = "a_confirmar", "presença a confirmar",
+        _pres = "ausente", IF ( _sit = "realizado", "não foi ao debate", "não foi ao debate" ),
+        _pres = "a_confirmar", "presença não registrada",
         _sit = "realizado", "esteve no debate",
         "presença confirmada"
     )

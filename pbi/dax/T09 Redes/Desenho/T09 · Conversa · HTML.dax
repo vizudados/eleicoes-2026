@@ -1,7 +1,7 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Fundo do protagonista (as interações nas duas janelas da Bites): título, a frase com a média por dia de cada um antes e depois, os nomes das janelas, o chão dos balões, a divisória e as notas à mão. Os balões são outro visual (T09 · Balões · HTML), na mesma caixa. Com um período escolhido no filtro, a janela da direita passa a ser a da Bites que cabe inteira no período (Antes da Band, 05 a 17/10; Depois da Band, as 24 h depois do debate), com a janela real no título; a nota à mão compara a distância das duas janelas e aponta o balão maior da direita, de quem for; sem janela no período, o lugar dos balões fica tracejado com 'sem dado no período' (Depois da Globo, 'aguardando').
+@descricao: Fundo do protagonista (as interações nas duas janelas da Bites): título, a frase com a média por dia de cada um antes e depois, os nomes das janelas, o chão dos balões, a divisória e as notas à mão. Os balões são outro visual (T09 · Balões · HTML), na mesma caixa. Com um período escolhido no filtro, a janela da direita passa a ser a da Bites que cabe inteira no período (Antes da Band, 05 a 17/10; Depois da Band, as 24 h depois do debate), com a janela real no título; a nota à mão compara a distância das duas janelas e aponta o balão maior da direita, de quem for; sem janela no período, o lugar dos balões fica tracejado com 'sem dado no período' (Depois da Globo, 'não divulgado').
 */
 -- 1 · Leituras
 VAR _ini1 = [T09 · 1º turno · início]
@@ -53,7 +53,7 @@ VAR _janPer =
 VAR _pMan =
     SWITCH (
         TRUE (),
-        _espera, "Por dia, " & _nomeMin & ": os números ainda não chegaram",
+        _espera, "Por dia, " & _nomeMin & ": os números não constam do levantamento",
         NOT _temP, "Por dia, " & _nomeMin & ": sem dado no período",
         "Por dia, " & _nomeMin & ": Flávio foi de " & FORMAT ( _f1 / 1000000, "0.0" ) & " a "
             & FORMAT ( _pf2 / 1000000, "0.0" ) & " mi; Lula, de " & FORMAT ( _l1 / 1000000, "0.0" ) & " a "
@@ -72,7 +72,7 @@ VAR _direita =
             & "<div class='seta entra d16' style='left:748px;top:166px;width:70px'></div>",
         SWITCH (
             TRUE (),
-            _espera, "<div class='vazio entra d6'><span class='mao'>aguardando</span><span class='nota'>Até a manhã de domingo, 25/10, "
+            _espera, "<div class='vazio entra d6'><span class='mao'>não divulgado</span><span class='nota'>No levantamento encerrado em 25/10, "
                 & "a Bites não tinha publicado as interações por dia depois do debate da Globo.</span></div>",
             NOT _temP, "<div class='vazio entra d6'><span class='rot'>sem dado no período</span><span class='nota'>"
                 & "Nenhuma medição das interações dos dois cabe inteira em " & _janPer & ".</span></div>",

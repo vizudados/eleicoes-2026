@@ -1,0 +1,9 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Leitura acessível dos dois fluxos.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+"Votos entre turnos: Lula " & FORMAT ( [T28 · Lula 1º], "#,0" ) & " para " & FORMAT ( [T28 · Lula 2º], "#,0" )
+    & "; Flávio " & FORMAT ( [T28 · Flávio 1º], "#,0" ) & " para " & FORMAT ( [T28 · Flávio 2º], "#,0" ) & ". Sem exterior; origens individuais não observadas."

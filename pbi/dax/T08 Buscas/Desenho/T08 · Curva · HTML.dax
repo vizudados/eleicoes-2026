@@ -71,7 +71,7 @@ VAR _txtMan =
     SWITCH (
         TRUE (),
         NOT _noPer, _txtPico & _txtDepois & ".",
-        _semDado, _pNome & ", ainda não há dado: as consultas ao Google são de antes do debate de 23/10.",
+        _semDado, _pNome & ", não há dado no levantamento: as consultas ao Google são de antes do debate de 23/10.",
         _viradaNoPer, _pNome & ": " & _quandoP & ", " & _txtPassa & ".",
         _pNome & ", o dia de mais buscas foi " & FORMAT ( _mD, "dd/MM" ) & ": Lula " & _mL & ", Flávio " & _mF & "."
     )
@@ -254,7 +254,7 @@ VAR _espera =
     IF (
         _semDado,
         "<div class='mao entra d16' style='right:" & FORMAT ( 1130 - _xA + 10, _f, "en-US" )
-            & "px;top:96px;transform:rotate(-2deg)'>aguardando</div>"
+            & "px;top:96px;transform:rotate(-2deg)'>não divulgado</div>"
     )
 VAR _zeroMao =
     IF (

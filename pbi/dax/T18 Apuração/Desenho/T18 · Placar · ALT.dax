@@ -1,27 +1,9 @@
 /*
 @pasta: T18 Apuração\Desenho
 @formato: texto
-@descricao: Texto alternativo do placar da apuração: o recorte ([Apuração · escopo]: Brasil, o estado, a região, os estados somados) e os números; com a eleição definida e um recorte, o eleito no Brasil; o aviso do clique no mapa fora do filtro; com uma atualização clicada na curva, o momento escolhido.
+@descricao: Alternativa acessível do resultado final.
 */
-VAR _fase = [Apuração · fase]
-VAR _momento = [T18 · momento escolhido]
-VAR _escopo = [Apuração · escopo]
-VAR _eleito =
-    IF (
-        _escopo <> "Brasil" && _fase = "definido",
-        " " & [Apuração · líder no Brasil] & " está eleito no Brasil."
-    )
-RETURN
-    SWITCH (
-        TRUE (),
-        NOT ISBLANK ( _momento ), [T18 · Placar momento · ALT],
-        [T18 · recorte vazio] = 1, "Apuração: o estado clicado no mapa fica fora do filtro de estado.",
-        "Apuração (" & _escopo & "): "
-            & IF (
-                _fase = "aguardando",
-                "aguardando o fechamento das urnas às 17h de 25/10.",
-                "Lula " & FORMAT ( [Apuração · Lula %], "0.00%" ) & ", Flávio Bolsonaro " & FORMAT ( [Apuração · Flávio %], "0.00%" )
-                    & ", " & FORMAT ( [Apuração · seções %], "0.00%" ) & " das seções apuradas; " & [Apuração · líder] & " à frente."
-                    & _eleito
-            )
-    )
+IF ( NOT ISBLANK ( [T18 · momento escolhido] ), [T18 · Placar momento · ALT],
+    "Resultado final, " & [Apuração · escopo] & ": Lula " & FORMAT ( [Apuração · Lula %], "0.00%" )
+    & "; Flávio " & FORMAT ( [Apuração · Flávio %], "0.00%" ) & ". Lula eleito no Brasil. Abstenção "
+    & FORMAT ( [Apuração · abstenção %], "0.00%" ) & "." )

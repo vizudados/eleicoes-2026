@@ -20,7 +20,7 @@ VAR _ganhouF = [T18 · momento · Flávio ganhou]
 VAR _dif = [T18 · momento · diferença]
 VAR _difAnt = [T18 · momento · diferença na anterior]
 -- 2 · Textos
-VAR _hora = FORMAT ( _m, "HH:mm" )
+VAR _hora = SUBSTITUTE ( FORMAT ( _m, "HH:mm" ), ":", "h" )
 VAR _txtVarL = IF ( ISBLANK ( _varL ), "", "<span class='vr'>" & FORMAT ( _varL * 100, "+0.00;−0.00;0.00" ) & "</span>" )
 VAR _txtVarF = IF ( ISBLANK ( _varF ), "", "<span class='vr'>" & FORMAT ( _varF * 100, "+0.00;−0.00;0.00" ) & "</span>" )
 VAR _txtDif = SWITCH ( TRUE (), _dif > 0, "Lula +", _dif < 0, "Flávio +", "empate" ) & IF ( _dif = 0, "", FORMAT ( ABS ( _dif ), "#,0" ) )
@@ -30,7 +30,7 @@ VAR _txtEntrou =
     IF (
         ISBLANK ( _ant ),
         "A primeira parcial da noite: " & FORMAT ( _validos, "#,0" ) & " votos válidos contados.",
-        "Desde a anterior (" & FORMAT ( _ant, "HH:mm" ) & "), entraram " & FORMAT ( _entrou, "#,0" ) & " votos válidos: "
+        "Desde a anterior (" & SUBSTITUTE ( FORMAT ( _ant, "HH:mm" ), ":", "h" ) & "), entraram " & FORMAT ( _entrou, "#,0" ) & " votos válidos: "
             & "<b class='lula'>" & FORMAT ( _ganhouL, "#,0" ) & "</b> para Lula e <b class='flavio'>" & FORMAT ( _ganhouF, "#,0" )
             & "</b> para Flávio. A diferença foi de " & _txtDifAnt & " para " & _txtDif & "."
     )

@@ -1,4 +1,4 @@
-"""roteiro — as 27 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
+"""roteiro — as 29 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
 
 Cada tela: código (nome da página no PBIR e prefixo de visuais e medidas), nome curto, pergunta (o título da tela, na
 voz de quem assiste), ato, se é escura (capa e encerramento), o filtro que a tela tem (só onde muda a leitura, pedido
@@ -44,7 +44,8 @@ class Tela:
 
 
 TELAS = [
-    Tela("T00", "Capa", "Afinal, qual Brasil foi às urnas no 1º turno?", "Abertura", escura=True),
+    Tela("T00", "Capa", "Afinal, qual Brasil foi às urnas nesta eleição?", "Abertura", escura=True,
+         fonte="Fonte: TSE e IBGE · 1º turno (04/10) e 2º turno (25/10/2026)"),
     # I · Antes da urna: quem são os dois e o que as pesquisas diziam
     Tela("T02", "Lula · quem é", "Quem é Luiz Inácio Lula da Silva?", "I · Antes da urna",
          fonte="Fontes: Presidência da República, Senado, TSE · fotos redesenhadas em traço (créditos no cartão)"),
@@ -79,13 +80,13 @@ TELAS = [
          fonte="Fontes: TSE (votação por seção, somada por zona eleitoral, e cadastro de locais de votação) e IBGE "
                "(malha municipal) · 27 capitais, as 6 maiores que viraram e Contagem (MG)"),
     Tela("T21", "20 anos", "Como o mapa mudou em 20 anos?", "IV · Explore você mesmo"),
-    Tela("T22", "Simulador", "E se os eleitores dos outros candidatos escolherem?", "IV · Explore você mesmo",
+    Tela("T22", "Simulador", "E se os eleitores dos outros candidatos tivessem escolhido diferente?", "IV · Explore você mesmo",
          fonte="Simulação a partir do 1º turno (TSE); não é previsão"),
     # V · O 2º turno: os votos dos outros, as pesquisas, os dois debates colados, buscas e redes, a apuração
-    Tela("T16", "Os outros", "Para onde vão os votos dos outros candidatos?", "V · O 2º turno",
+    Tela("T16", "Os outros", "Em quem os eleitores dos outros candidatos diziam votar?", "V · O 2º turno",
          fonte="Fontes: pesquisas registradas no TSE que publicaram o cruzamento · imprensa (apoios)"),
-    Tela("T17", "2º turno", "E agora, o que as pesquisas dizem do 2º turno?", "V · O 2º turno", filtro="Período",
-         fonte="Fonte: pesquisas registradas no TSE e relatórios dos institutos (rejeição) · levantamento até 24/10/2026"),
+    Tela("T17", "2º turno", "O que as pesquisas diziam, e o que a urna mostrou?", "V · O 2º turno", filtro="Período",
+         fonte="Fontes: pesquisas registradas no TSE e relatórios dos institutos · TSE, resultado final de 25/10/2026"),
     Tela("T07", "Debate Band", "O que mudou depois do debate na Band?", "V · O 2º turno",
          fonte="Fontes: emissoras, Kantar Ibope (via imprensa) e pesquisas registradas no TSE"),
     Tela("T26", "Debate Globo", "O último debate mudou alguma coisa?", "V · O 2º turno",
@@ -95,8 +96,12 @@ TELAS = [
          fonte="Fonte: Google Trends (índice relativo 0–100) · consultas de 22 a 24/10/2026"),
     Tela("T09", "Redes", "Quem dominou as redes?", "V · O 2º turno", filtro="Período",
          fonte="Fontes: Bites, Quaest, Social Blade, Datrix e Biblioteca de Anúncios da Meta"),
-    Tela("T18", "Apuração", "Quem está na frente na apuração do 2º turno?", "V · O 2º turno", filtro="UF",
-         fonte="Fonte: TSE · API pública de divulgação dos resultados, coletada a cada minuto"),
+    Tela("T18", "Apuração", "Como foi a apuração do 2º turno?", "V · O 2º turno", filtro="UF",
+         fonte="Fonte: TSE · API pública de divulgação dos resultados · totalização final de 25/10/2026, 23h26"),
+    Tela("T27", "De onde vieram", "De onde vieram os votos que elegeram Lula?", "V · O 2º turno", filtro="UF",
+         fonte="Fontes: TSE · 1º e 2º turnos de 2026, sem exterior · IBGE, Censo 2022"),
+    Tela("T28", "Onde Flávio perdeu", "Onde Flávio perdeu a eleição?", "V · O 2º turno", filtro="UF",
+         fonte="Fontes: TSE · 1º e 2º turnos de 2026 e 2º turno de 2022, sem exterior · IBGE, Censo 2022"),
     Tela("T23", "Encerramento", "E o que fica desta eleição?", "Fim", escura=True,
          fonte="Vizu Dados · vizudados.com.br · dados e código em github.com/vizudados/eleicoes-2026"),
 ]

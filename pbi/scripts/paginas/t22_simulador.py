@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""22 · Simulador — e se os eleitores dos outros candidatos escolherem? (dono: tela 22)
+"""22 · Simulador — e se os eleitores dos outros candidatos tivessem escolhido diferente? (dono: tela 22)
 
 Para empatar, Lula precisaria de 62% dos 9,32 mi de votos dos outros candidatos. Simulação, não previsão.
 
@@ -12,7 +12,7 @@ Para empatar, Lula precisaria de 62% dos 9,32 mi de votos dos outros candidatos.
                                subtítulo; o VizuFilter, trilho, trecho, botão e os rótulos 0% e 50%
   T22_ReguaComp_Html/_Regua    mudança no comparecimento (T22 Comparecimento, −5 a +5; metade para cada um): idem, com o
                                trecho a partir do zero, a marca do zero e os rótulos −5 e +5
-  T22_Pesquisas_Html      as 8 pesquisas (granularidade Transferência[Instituto]): para onde vão os votos dos outros e o
+  T22_Pesquisas_Html      as 8 pesquisas (granularidade Transferência[Instituto]): para onde as pesquisas indicavam os votos dos outros e o
                           2º turno que isso daria; clique leva o cenário da pesquisa ao resultado e ao mapa; dossiê
                           ttT22Pesquisa (cada grupo: Cury, Renan, Caiado e os demais, e quanto cada um ganha)
   T22_Resultado_Html      o 2º turno simulado (Brasil com o exterior): Lula × Flávio, UFs à frente, diferença
@@ -111,7 +111,7 @@ def declarar(ctx):
         *pagina_lib.tooltip(TT, "UF · cenário", 420, 250, "T22 · Tooltip UF · HTML", ordem=320,
                             folha_de_estilo=CSS, modelo_corpo=D.corpo_tooltip()),
         # a lista das pesquisas ganha o dossiê (23/10/2026): para onde vai cada grupo de eleitores dos outros
-        *pagina_lib.tooltip("ttT22Pesquisa", "Pesquisa · para onde vão", 500, 360, "T22 · Tooltip pesquisa · HTML",
+        *pagina_lib.tooltip("ttT22Pesquisa", "Pesquisa · intenção declarada", 500, 360, "T22 · Tooltip pesquisa · HTML",
                             ordem=322, folha_de_estilo=CSS, modelo_corpo=D.corpo_tooltip_pesquisa()),
         # o EX da grade (coluna 5, linha 0) abre o tooltip do exterior país a país, com o cenário no topo
         *exterior.declarar(P, "T22_Exterior_Alvo", (D.GRADE[0] + 5 * D.PASSO, D.GRADE[1], D.LADO, D.LADO),

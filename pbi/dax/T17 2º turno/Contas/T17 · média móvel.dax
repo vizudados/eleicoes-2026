@@ -1,8 +1,8 @@
 /*
 @pasta: T17 2º turno\Contas
 @formato: +0.0;-0.0;0.0
-@descricao: Média de Flávio − Lula (pontos, votos totais) nas pesquisas de 2º turno divulgadas nos 10 dias até o dia do contexto (d−10, d], só do mesmo momento (não atravessa o 1º turno) e só com 3 pesquisas ou mais na janela.
-@oraculo: media_movel (dias com pesquisa); 22/10 = +1,89
+@descricao: Média de Flávio − Lula (pontos entre os dois candidatos, normalizados para 100) nas pesquisas de 2º turno divulgadas nos 10 dias até o dia do contexto (d−10, d], só do mesmo momento (não atravessa o 1º turno) e só com 3 pesquisas ou mais na janela.
+@oraculo: dados/pbi/pesquisa.csv; Momento declarado ou fim do campo quando ausente (26/10/2026)
 */
 VAR _d = MAX ( Pesquisa[Divulgação] )
 VAR _m = [T17 · dia · momento]
@@ -14,9 +14,13 @@ VAR _t =
         Pesquisa[Tipo] = "totais",
         NOT ISBLANK ( Pesquisa[Lula] ),
         NOT ISBLANK ( Pesquisa[Flavio] ),
-        Pesquisa[Momento] = _m,
+        IF (
+            Pesquisa[Momento] IN { "antes_1turno", "apos_1turno" }, Pesquisa[Momento],
+            IF ( NOT ISBLANK ( Pesquisa[Campo fim] ),
+                IF ( Pesquisa[Campo fim] >= DATE ( 2026, 10, 4 ), "apos_1turno", "antes_1turno" ) )
+        ) = _m,
         Pesquisa[Divulgação] > _d - 10,
         Pesquisa[Divulgação] <= _d
     )
 RETURN
-    IF ( NOT ISBLANK ( _m ) && COUNTROWS ( _t ) >= 3, AVERAGEX ( _t, Pesquisa[Flavio] - Pesquisa[Lula] ) )
+    IF ( NOT ISBLANK ( _m ) && COUNTROWS ( _t ) >= 3, AVERAGEX ( _t, DIVIDE ( Pesquisa[Flavio] - Pesquisa[Lula], Pesquisa[Flavio] + Pesquisa[Lula] ) * 100 ) )

@@ -1,0 +1,8 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Redução da vantagem de Flávio: ganho de Lula menos ganho de Flávio, em votos; sinal negativo favorece Flávio.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+[T28 · ganho Lula] - [T28 · ganho Flávio]

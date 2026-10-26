@@ -1,0 +1,8 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Demais no primeiro turno + variação de comparecimento + queda de inválidos; identidade de saldos.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+[T27 · demais no 1º turno] + [T27 · saldo comparecimento] + [T27 · queda de brancos e nulos]

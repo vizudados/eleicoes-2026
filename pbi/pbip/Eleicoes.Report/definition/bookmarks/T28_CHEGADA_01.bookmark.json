@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T28_CHEGADA_01",
+  "displayName": "Chegada · 27 Onde Flávio perdeu",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T28_Casca_InfoAbre",
+      "T28_Casca_InfoFecha",
+      "T28_Casca_InfoFora",
+      "T28_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T28",
+    "sections": {
+      "T28": {
+        "visualContainers": {
+          "T28_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T28_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T28_Casca_InfoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T28_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

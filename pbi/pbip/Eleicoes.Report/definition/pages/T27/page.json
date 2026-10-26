@@ -1,0 +1,110 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "T27",
+  "displayName": "26 De onde vieram",
+  "displayOption": "FitToPage",
+  "width": 1920,
+  "height": 1080,
+  "objects": {
+    "background": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F1EBDF'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspace": [
+      {
+        "properties": {
+          "color": {
+            "solid": {
+              "color": {
+                "expr": {
+                  "Literal": {
+                    "Value": "'#F1EBDF'"
+                  }
+                }
+              }
+            }
+          },
+          "transparency": {
+            "expr": {
+              "Literal": {
+                "Value": "0D"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "visualInteractions": [
+    {
+      "source": "T27_Lista_Cidades",
+      "target": "T27_Apoios_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T27_Lista_Cidades",
+      "target": "T27_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T27_Lista_Cidades",
+      "target": "T27_Fluxo_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T27_Lista_Cidades",
+      "target": "T27_Mapa_Municipios",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T27_Lista_Cidades",
+      "target": "T27_Resposta_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T27_Mapa_Municipios",
+      "target": "T27_Apoios_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T27_Mapa_Municipios",
+      "target": "T27_Casca_Filtro",
+      "type": "NoFilter"
+    },
+    {
+      "source": "T27_Mapa_Municipios",
+      "target": "T27_Fluxo_Html",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T27_Mapa_Municipios",
+      "target": "T27_Lista_Cidades",
+      "type": "DataFilter"
+    },
+    {
+      "source": "T27_Mapa_Municipios",
+      "target": "T27_Resposta_Html",
+      "type": "DataFilter"
+    }
+  ]
+}

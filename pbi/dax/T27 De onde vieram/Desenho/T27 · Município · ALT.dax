@@ -1,0 +1,9 @@
+/*
+@pasta: T27 De onde vieram\Desenho
+@formato: texto
+@descricao: Alternativa acessível do dossiê.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+SELECTEDVALUE ( 'Município'[Rótulo], "Recorte" ) & ": saldo de comparecimento " & FORMAT ( [T27 · saldo comparecimento], "+#,0;-#,0;0" )
+    & "; saldo de abstenções " & FORMAT ( [T27 · saldo abstenções], "+#,0;-#,0;0" ) & ". A comparação de 2022 exige município presente nos dois anos."

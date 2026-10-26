@@ -1,41 +1,15 @@
 /*
 @pasta: T18 Apuração\Desenho
 @formato: texto
-@descricao: Dossiê da UF no mapa (página de tooltip ttT18Uf). Com votos apurados: os dois percentuais com a barra, votos, diferença, seções, abstenção, hora do TSE e a nota à mão de quem está na frente. Antes dos primeiros votos da UF: quando a apuração começa, o eleitorado e as seções, e como a UF votou no 1º turno (contas da tela 13).
+@descricao: Dossiê final da UF: votos, abstenção e comparação com o primeiro turno.
 */
-VAR _uf = SELECTEDVALUE ( 'UF'[Nome] )
-VAR _lider = [Apuração · líder]
-VAR _l = [Apuração · Lula %]
-VAR _f = [Apuração · Flávio %]
-VAR _hora = [Apuração · atualizado no TSE]
-VAR _apurou = [Apuração · válidos] > 0
-VAR _l1 = [T12 · Lula % 2026]
-VAR _f1 = [T12 · PL % 2026]
-VAR _antes =
-    "<div class='tela tt18'><div class='fita'></div><div class='rot'>" & UPPER ( _uf ) & "</div>"
-        & "<div class='linha'><span class='num'>" & FORMAT ( [Apuração · eleitorado], "#,0" ) & "</span>"
-        & "<span class='rot'>ELEITORES</span></div>"
-        & "<div class='txt'>A apuração começa às 17h de domingo, 25/10: " & FORMAT ( [Apuração · seções], "#,0" )
-        & " seções a contar.</div>"
-        & IF (
-            NOT ISBLANK ( _l1 ),
-            "<div class='nota'>No 1º turno: Lula " & FORMAT ( _l1 * 100, "0.0" ) & "% × Flávio "
-                & FORMAT ( _f1 * 100, "0.0" ) & "% dos válidos.</div>"
-        )
-        & "<div class='mao'>ainda sem votos</div>"
-        & "</div>"
-VAR _depois =
-    "<div class='tela tt18'><div class='fita'></div><div class='rot'>" & UPPER ( _uf ) & "</div>"
-        & "<div class='linha'><span class='lula num'>" & FORMAT ( _l * 100, "0.00" ) & "%</span><span class='rot'>LULA</span></div>"
-        & "<div class='barra'><i class='bl' style='width:" & FORMAT ( _l * 100, "0.0##", "en-US" ) & "%'></i><i class='bf' style='width:"
-        & FORMAT ( _f * 100, "0.0##", "en-US" ) & "%'></i></div>"
-        & "<div class='linha'><span class='flavio num'>" & FORMAT ( _f * 100, "0.00" ) & "%</span><span class='rot'>FLÁVIO</span></div>"
-        & "<div class='txt'>" & FORMAT ( [Apuração · Lula votos], "#,0" ) & " × " & FORMAT ( [Apuração · Flávio votos], "#,0" )
-        & " votos · diferença de " & FORMAT ( [Apuração · diferença], "#,0" ) & "</div>"
-        & "<div class='nota'>" & FORMAT ( [Apuração · seções %] * 100, "0.00" ) & "% das seções · abstenção "
-        & FORMAT ( [Apuração · abstenção %] * 100, "0.00" ) & "%"
-        & IF ( ISBLANK ( _hora ), "", " · atualizado às " & FORMAT ( _hora, "HH:mm" ) ) & "</div>"
-        & IF ( _lider <> "—", "<div class='mao " & IF ( _lider = "Lula", "lula-esc", "flavio-esc" ) & "'>" & _lider & " na frente</div>" )
-        & "</div>"
-RETURN
-    IF ( _apurou, _depois, _antes )
+VAR _nome = SELECTEDVALUE ( 'UF'[Nome] )
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+RETURN "<div class='tela tt18'><div class='fita'></div><div class='rot'>" & UPPER ( _esc )
+    & " · RESULTADO FINAL</div><div class='linha'><span class='lula num'>"
+    & FORMAT ( [Apuração · Lula votos], "#,0" ) & "</span><span class='rot'>LULA</span></div>"
+    & "<div class='linha'><span class='flavio num'>" & FORMAT ( [Apuração · Flávio votos], "#,0" )
+    & "</span><span class='rot'>FLÁVIO</span></div><div class='txt'>No 1º turno: Lula "
+    & FORMAT ( [T12 · Lula % 2026], "0.0%" ) & " × Flávio " & FORMAT ( [T12 · PL % 2026], "0.0%" )
+    & ".</div><div class='nota'>Abstenção no 2º turno: " & FORMAT ( [Apuração · abstenção %], "0.00%" )
+    & ". Diferença: " & FORMAT ( [Apuração · diferença], "#,0" ) & " votos.</div></div>"

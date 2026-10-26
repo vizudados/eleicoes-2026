@@ -1,39 +1,16 @@
 # -*- coding: utf-8 -*-
-"""17 · 2º turno — e agora, o que as pesquisas dizem do 2º turno? (dono: agente das telas da campanha)
+"""20 · 2º turno — pesquisas diante do resultado final (dono: campanha).
 
-A história: antes do 1º turno, as simulações de 2º turno estavam divididas (79: Lula à frente em 34, Flávio em 36,
-9 empates); depois do 1º turno, Flávio lidera 43 de 49 pesquisas (até 24/10, 21h20). A média dos 10 dias virou para Flávio em 09/09 e não
-voltou mais. A rejeição não forma série entre institutos (cada um pergunta de um jeito): compara-se dentro de cada um.
+A manchete conta as pesquisas de votos totais depois do 1º turno e compara a direção com a urna final do TSE.
+Os dois quadriculados conservam o antes/depois do 1º turno e recebem a referência final ao lado.
+A curva normaliza cada pesquisa entre Lula e Flávio (soma 100%) para comparar com os válidos da urna;
+o resumo superior preserva os percentuais publicados em votos totais e válidos.
 
-  T17_Placar_Html       "43 de 49" (contadores), as médias, a manchete e dois quadriculados (antes: 79 simulações;
-                        depois: 49 pesquisas), um quadradinho por pesquisa na cor de quem liderava
-  T17_Rejeicao_Html     cabeçalho da rejeição: "8 de 10 institutos" e como ler os quadrinhos
-  T17_Rejeicao_Paineis  um quadrinho por instituto comparável (granularidade 'Rejeição'[Instituto]): a última medição
-                        antes do 1º turno → a última depois, Lula e Flávio; dossiê ttT17Rejeicao (a série do instituto)
-  T17_Curva_Html        fundo da curva: zonas "Flávio à frente" e "Lula à frente", grade, datas, 1º turno, os dois
-                        debates do 2º turno (Band, 18/10, e Globo, 23/10: uma linha pontilhada e o nome de cada um) e
-                        o 2º turno, a média móvel de 10 dias (traço que se desenha) e a nota à mão na virada.
-                        Decisão de 24/10/2026: a Globo ganhou marca porque o filtro Período já se organiza em volta dos
-                        dois debates (antes e depois de cada um) e as pesquisas divulgadas depois de 23/10 vão cair à
-                        direita dela; sem a linha, pareceriam "depois do debate" da Band. A Band é a regra explícita
-                        'T17 · debate · data' (Emissora = Band, Turno = 2) e a Globo, 'T17 · debate da Globo · data'
-                        (Emissora = Globo, Turno = 2), nunca o MAX(Data) das linhas com os dois.
-  T17_Curva_Pontos      um ponto por pesquisa (granularidade Pesquisa[Id]): vazado = simulação antes do 1º turno,
-                        cheio = depois; dossiê ttT17Pesquisa (instituto, campo, a anterior do mesmo instituto, a média)
-
-Filtro cruzado (23/10/2026, pedido do Alisson: "clicar num instituto destaca a série e muda o painel de rejeição"):
-  clique num quadrinho  → a série daquele instituto se acende na curva (traço ligando as pesquisas dele, o nome na
-                          última, os outros pontos esmaecem) e o placar contorna os quadradinhos dele, com a contagem dele
-  clique num ponto      → a série do mesmo instituto se acende (regras :has da folha dos pontos), o quadrinho dele fica em
-                          destaque (ou a nota diz que ele não tem quadrinho) e o placar contorna os quadradinhos dele
-  nada clicado          → a tela como antes
-
-Filtro de período (23/10/2026, aprovado pelo dono; a pílula e o VizuFilter são da casca, tabela 'Período', o mesmo
-filtro das Buscas e das Redes): o placar conta só as pesquisas com o campo inteiro dentro do período (a que atravessa o
-dia do debate fica fora, a regra da T07; no período "depois", o dia do debate também fica fora da janela do campo),
-com a manchete do período e os quadriculados com as do período em destaque; a curva ganha a faixa do campo do período
-e a manchete dele, e os pontos fora do período esmaecem. Período sem pesquisa: "nenhuma pesquisa"; Depois da Globo: a
-espera honesta (o levantamento é de 22/10). Sem período, a tela é a de sempre, texto por texto.
+O período da casca destaca apenas pesquisas de campo inteiro dentro da janela de cada debate.
+Campo atravessando debate não entra no recorte. Ausência no levantamento não promete coleta futura.
+O ponto grande na data da eleição é a urna; os demais pontos têm grão Pesquisa[Id] e dossiê próprio.
+Clique no ponto ou quadrinho de rejeição destaca a série do instituto; a curva de fundo não recebe o clique.
+A rejeição compara a última medição antes/depois somente dentro do mesmo instituto.
 """
 from __future__ import annotations
 
@@ -53,6 +30,9 @@ REJEICAO = (1010, 140, 760, 350)
 CURVA = (150, 505, 1620, 495)
 
 CSS_PLACAR = (
+    ".t17a .urna-final{position:absolute;left:584px;top:232px;width:236px;border-left:1px solid var(--areia);padding-left:16px;font-size:15px;line-height:1.7}"
+    ".t17a .urna-final .num{font-size:23px}.t17a .urna-final .rot{margin-bottom:2px}"
+
     ".t17a .linha{position:absolute;left:0;top:26px;display:flex;align-items:flex-start;gap:28px}"
     ".t17a .hero{display:flex;align-items:baseline;gap:12px;white-space:nowrap}"
     ".t17a .hero .num{font-size:112px;letter-spacing:-.04em}"
@@ -61,10 +41,10 @@ CSS_PLACAR = (
     ".t17a .lado .man{font-size:20px;line-height:1.3}"
     ".t17a .lado .txt{font-size:15px;margin-top:6px;line-height:1.35}"
     ".t17a .manchete{position:absolute;left:0;top:160px;width:820px;font-size:24px}"
-    ".t17a .waf{position:absolute;top:238px}"
+    ".t17a .waf{position:absolute;top:232px}"
     ".t17a .waf .rot{margin-bottom:8px}"
-    ".t17a .grade{display:grid;grid-template-columns:repeat(20,13px);gap:3px}"
-    ".t17a .grade i{display:block;width:13px;height:13px;border-radius:2px;transform-origin:center;"
+    ".t17a .grade{display:grid;grid-template-columns:repeat(16,11px);gap:3px}"
+    ".t17a .grade i{display:block;width:11px;height:11px;border-radius:2px;transform-origin:center;"
     "animation-name:eEscala,qCor17;animation-duration:.5s,1.4s;animation-timing-function:cubic-bezier(.2,.9,.3,1.3),"
     "ease-out;animation-fill-mode:both,both}"
     "@keyframes qCor17{from{background:var(--creme)}}"
@@ -77,7 +57,7 @@ CSS_PLACAR = (
     ".t17a .grade i.fora{opacity:.22}"
     f".t17a .grade i.fx{{box-shadow:0 0 0 1.5px {C['papel']},0 0 0 3px {C['tinta']}}}"
     ".t17a .cont .fo{font-weight:600;color:var(--tinta);white-space:nowrap}"
-    # período sem pesquisa (nenhuma, ou ainda não chegou): o texto no lugar do número grande, nunca um zero
+    # período sem pesquisa (nenhuma registrada no recorte): o texto no lugar do número grande, nunca um zero
     ".t17a .vazio{font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1.05;color:var(--grafite);"
     "padding-top:26px;white-space:nowrap}"
 )
@@ -129,6 +109,7 @@ def corpo_curva() -> str:
         f".t17g .ex.b{{font-weight:700;fill:{C['tinta']}}}"
         f".t17g .zt{{font-size:15px;font-weight:600;font-family:var(--fonte)}}"
         f".t17g .zt.f{{fill:{C['azul_escuro']}}}.t17g .zt.l{{fill:{C['vermelho_escuro']}}}"
+        ".t17g .ur{fill:var(--vermelho);stroke:var(--papel);stroke-width:3} .t17g .ur-t{fill:var(--vermelho-escuro);font-size:15px;font-weight:700;font-family:var(--fonte)}"
         f".t17g .mk{{stroke:{C['tinta']};stroke-width:1.4;stroke-dasharray:5 6}}"
         f".t17g .mk.s{{stroke:{C['cinza']};stroke-dasharray:2 5}}"
         f".t17g .mm{{stroke:{C['tinta']};stroke-width:3.6;fill:none;stroke-linecap:round;stroke-linejoin:round}}"

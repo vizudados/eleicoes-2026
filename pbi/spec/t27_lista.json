@@ -1,0 +1,259 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "width": {
+    "signal": "pbiContainerWidth"
+  },
+  "height": {
+    "signal": "pbiContainerHeight"
+  },
+  "padding": 0,
+  "autosize": {
+    "type": "none",
+    "contains": "padding"
+  },
+  "background": null,
+  "signals": [
+    {
+      "name": "hoverCod",
+      "value": null,
+      "on": [
+        {
+          "events": "@marcaAlvos:mouseover",
+          "update": "datum.cod"
+        },
+        {
+          "events": "@marcaAlvos:mouseout",
+          "update": "null"
+        }
+      ]
+    },
+    {
+      "name": "clique",
+      "value": null,
+      "on": [
+        {
+          "events": {
+            "source": "scope",
+            "type": "mouseup",
+            "markname": "marcaAlvos"
+          },
+          "update": "pbiCrossFilterApply(event)"
+        },
+        {
+          "events": {
+            "source": "view",
+            "type": "mouseup",
+            "filter": [
+              "!event.item || event.item.mark.name != 'marcaAlvos'"
+            ]
+          },
+          "update": "pbiCrossFilterClear()"
+        }
+      ]
+    }
+  ],
+  "data": [
+    {
+      "name": "dataset"
+    },
+    {
+      "name": "linhas",
+      "source": "dataset",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum.val)"
+        },
+        {
+          "type": "window",
+          "sort": {
+            "field": [
+              "val",
+              "cod"
+            ],
+            "order": [
+              "descending",
+              "ascending"
+            ]
+          },
+          "ops": [
+            "row_number"
+          ],
+          "as": [
+            "pos"
+          ]
+        },
+        {
+          "type": "filter",
+          "expr": "datum.pos<=8"
+        }
+      ]
+    }
+  ],
+  "scales": [
+    {
+      "name": "x",
+      "type": "linear",
+      "domain": {
+        "data": "linhas",
+        "field": "val"
+      },
+      "range": [
+        350,
+        680
+      ],
+      "zero": true,
+      "nice": true
+    }
+  ],
+  "marks": [
+    {
+      "name": "marcaBarras",
+      "type": "rect",
+      "from": {
+        "data": "linhas"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "min(scale('x',datum.val),scale('x',0))"
+          },
+          "x2": {
+            "signal": "max(scale('x',datum.val),scale('x',0))"
+          },
+          "y": {
+            "signal": "30+(datum.pos-1)*29+7"
+          },
+          "height": {
+            "value": 14
+          },
+          "cornerRadius": {
+            "value": 4
+          },
+          "fill": {
+            "signal": "datum.val>=0 ? '#B8322A' : '#31699B'"
+          },
+          "opacity": {
+            "signal": "(hoverCod != null && hoverCod != datum.cod) || datum.__selected__=='off' ? 0.25 : 0.85"
+          }
+        }
+      }
+    },
+    {
+      "name": "marcaNomes",
+      "type": "text",
+      "from": {
+        "data": "linhas"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "value": 0
+          },
+          "y": {
+            "signal": "30+(datum.pos-1)*29+16"
+          },
+          "text": {
+            "field": "rotulo"
+          },
+          "limit": {
+            "value": 335
+          },
+          "font": {
+            "value": "Sora Vizu"
+          },
+          "fontSize": {
+            "value": 17
+          },
+          "fill": {
+            "value": "#1C1915"
+          },
+          "opacity": {
+            "signal": "(hoverCod != null && hoverCod != datum.cod) || datum.__selected__=='off' ? 0.4 : 1"
+          }
+        }
+      }
+    },
+    {
+      "name": "marcaValores",
+      "type": "text",
+      "from": {
+        "data": "linhas"
+      },
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "width-5"
+          },
+          "y": {
+            "signal": "30+(datum.pos-1)*29+16"
+          },
+          "align": {
+            "value": "right"
+          },
+          "text": {
+            "field": "valorTexto"
+          },
+          "font": {
+            "value": "Sora Vizu"
+          },
+          "fontSize": {
+            "value": 18
+          },
+          "fontWeight": {
+            "value": 600
+          },
+          "fill": {
+            "value": "#1C1915"
+          },
+          "opacity": {
+            "signal": "(hoverCod != null && hoverCod != datum.cod) || datum.__selected__=='off' ? 0.4 : 1"
+          }
+        }
+      }
+    },
+    {
+      "name": "marcaAlvos",
+      "type": "rect",
+      "from": {
+        "data": "linhas"
+      },
+      "encode": {
+        "update": {
+          "x": {
+            "value": 0
+          },
+          "width": {
+            "signal": "width"
+          },
+          "y": {
+            "signal": "30+(datum.pos-1)*29"
+          },
+          "height": {
+            "value": 28
+          },
+          "fill": {
+            "value": "#1C1915"
+          },
+          "fillOpacity": {
+            "value": 0
+          },
+          "tooltip": {
+            "signal": "datum"
+          },
+          "cursor": {
+            "value": "pointer"
+          }
+        },
+        "hover": {
+          "fillOpacity": {
+            "value": 0.06
+          }
+        }
+      }
+    }
+  ]
+}

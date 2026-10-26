@@ -1,0 +1,8 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Flávio 2026 menos Jair 2022, mesma conta em votos da comparação de Lula.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( NOT ISBLANK ( [T27 · Jair 2022] ), [T27 · Flávio 2º] - [T27 · Jair 2022] )

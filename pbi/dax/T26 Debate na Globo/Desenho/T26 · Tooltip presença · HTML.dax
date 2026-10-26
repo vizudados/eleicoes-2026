@@ -19,8 +19,8 @@ VAR _tit =
     SWITCH (
         TRUE (),
         _sit = "cancelado", "O debate foi cancelado",
-        _pres = "ausente", IF ( _sit = "realizado", "Não foi ao debate", "Não vai ao debate" ),
-        _pres = "a_confirmar", "Presença a confirmar",
+        _pres = "ausente", IF ( _sit = "realizado", "Não foi ao debate", "Não foi ao debate" ),
+        _pres = "a_confirmar", "Presença não registrada",
         _sit = "realizado", "Esteve no debate",
         "Presença confirmada"
     )

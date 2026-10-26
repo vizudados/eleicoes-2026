@@ -1,0 +1,8 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Saldo em votos de Lula: segundo menos primeiro turno, sem exterior.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+[T27 · Lula 2º] - [T27 · Lula 1º]

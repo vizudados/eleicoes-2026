@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Contas
 @formato: 0
-@descricao: 1 quando o período escolhido começa depois da última divulgação do levantamento (22/10) e não tem pesquisa: os números ainda não chegaram (Depois da Globo); 0 nos outros; vazio sem período.
+@descricao: 1 quando o período escolhido começa depois da última divulgação do levantamento (22/10) e não tem pesquisa: os números não constam do levantamento (Depois da Globo); 0 nos outros; vazio sem período.
 @oraculo: Depois da Globo 1; os outros 0
 */
 VAR _de = [T17 · período · campo de]

@@ -1,0 +1,9 @@
+/*
+@pasta: T18 Apuração\Contas
+@formato: dd/MM/yyyy HH:mm
+@descricao: Primeiro registro da noite em que Flávio superou Lula.
+*/
+CALCULATE (
+    MIN ( 'Apuração histórico'[AtualizadoTSE] ), REMOVEFILTERS ( 'Apuração histórico' ),
+    'Apuração histórico'[FlavioVotos] > 'Apuração histórico'[LulaVotos]
+)

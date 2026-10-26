@@ -15,7 +15,7 @@ RETURN
         "Índice de popularidade digital da Quaest, " & [Período · rótulo] & ": "
             & IF (
                 ISBLANK ( _pDia ),
-                IF ( _per = 4, "o índice ainda não chegou.", "sem dado no período." ),
+                IF ( _per = 4, "o índice não consta do levantamento.", "sem dado no período." ),
                 "em " & FORMAT ( _pDia, "dd/MM" ) & ", Lula " & FORMAT ( [T09 · período · IPD · Lula], "0.0" )
                     & " e Flávio " & FORMAT ( [T09 · período · IPD · Flávio], "0.0" ) & ". Mede popularidade, não voto."
             )

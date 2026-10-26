@@ -5,7 +5,7 @@
     "x": 144,
     "y": 216,
     "z": 1020,
-    "height": 80,
+    "height": 68,
     "width": 316,
     "tabOrder": 200
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'00 · Capa: Afinal, qual Brasil foi às urnas no 1º turno?'"
+                  "Value": "'00 · Capa: Afinal, qual Brasil foi às urnas nesta eleição?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'00 · Capa: Afinal, qual Brasil foi às urnas no 1º turno?'"
+                  "Value": "'00 · Capa: Afinal, qual Brasil foi às urnas nesta eleição?'"
                 }
               }
             },

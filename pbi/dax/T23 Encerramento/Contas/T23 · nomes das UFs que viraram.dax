@@ -1,0 +1,11 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: texto
+@descricao: Nomes das UFs que mudaram de vencedor, para o achado final.
+*/
+CALCULATE (
+    CONCATENATEX (
+        FILTER ( ALL ( 'UF' ), 'UF'[Tipo] = "UF"
+            && ( CALCULATE ( [T28 · virou para Lula] ) = 1 || CALCULATE ( [T28 · virou para Flávio] ) = 1 ) ),
+        'UF'[Nome], ", ", 'UF'[Nome], ASC ),
+    REMOVEFILTERS ( 'UF' ), REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'Ano' ) )

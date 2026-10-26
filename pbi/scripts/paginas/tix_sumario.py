@@ -26,9 +26,9 @@ COLUNAS = [
     ("II · O 1º TURNO", ["T01", "T03", "T05", "T06", "T25"]),
     ("III · O MAPA", ["T11", "T12", "T13", "T24", "T14", "T15"]),
     ("IV · EXPLORE VOCÊ MESMO", ["T19", "T20", "T21", "T22"]),
-    ("V · O 2º TURNO · FIM", ["T16", "T17", "T07", "T26", "T08", "T09", "T18", "T23"]),
+    ("V · O 2º TURNO · FIM", ["T16", "T17", "T07", "T26", "T08", "T09", "T18", "T27", "T28", "T23"]),
 ]
-X0, Y0, LARGURA_COL, VAO, ALTURA_ITEM = 150, 172, 304, 25, 88
+X0, Y0, LARGURA_COL, VAO, ALTURA_ITEM = 150, 172, 304, 25, 76
 
 
 def _x_coluna(cod: str) -> int:
@@ -97,8 +97,8 @@ def corpo() -> str:
         f"<div class='cab'><div class='sob sobe'>SUMÁRIO</div><div class='tit sobe d1'>{len(roteiro.TELAS)} telas, "
         "cinco atos: escolha por onde começar</div></div>"
         + "".join(partes)
-        + f"<div class='nota entra d14'>a {roteiro.numero('T18')} fica ao vivo no domingo, 25/10, a partir das "
-        "17h →</div>"
+        + f"<div class='nota entra d14'>a {roteiro.numero('T18')} conta a noite de 25/10 e o resultado final "
+        "→</div>"
         f"<div class='pe'><span>{estilo.logo_vizu(C['marrom'])}</span><span class='fonte'>Vizu Dados · dados e código "
         "em github.com/vizudados/eleicoes-2026</span></div></div>{{content}}"
     )

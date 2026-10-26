@@ -37,7 +37,7 @@ VAR _quemIni = IF ( _mmIni < 0, "Lula", "Flávio" )
 VAR _quemFim = IF ( _mmFim < 0, "Lula", "Flávio" )
 VAR _txtMan =
     "Em agosto, a média dava " & _quemIni & " " & FORMAT ( ABS ( _mmIni ), "0.0" ) & " pontos à frente; virou em "
-        & FORMAT ( _vir, "dd/MM" ) & " e, desde então, " & _quemFim & " segue à frente na média."
+        & FORMAT ( _vir, "dd/MM" ) & " e, desde então, " & _quemFim & " permaneceu à frente na média até a última pesquisa."
 VAR _txtFim = _quemFim & " +" & FORMAT ( ABS ( _mmFim ), "0.0" )
 VAR _pJanela =
     SWITCH (
@@ -49,8 +49,8 @@ VAR _pJanela =
 VAR _txtManP =
     SWITCH (
         TRUE (),
-        _espera = 1, _pNome & ", ainda não dá para dizer: as pesquisas com campo depois do debate de "
-            & FORMAT ( _pDebData, "dd/MM" ) & " ainda não chegaram",
+        _espera = 1, _pNome & ", não há pesquisa de campo inteiro: as pesquisas com campo depois do debate de "
+            & FORMAT ( _pDebData, "dd/MM" ) & " não constam do levantamento",
         _nP = 0, _pNome & ", nenhuma pesquisa teve o campo inteiro " & _pJanela
             & IF ( _parte > 0, "; " & _parte & IF ( _parte = 1, " pegou", " pegaram" ) & " só parte do período" ),
         _nP = 1, _pNome & ", só uma pesquisa teve o campo inteiro " & _pJanela & ": " & _unica & ", "
@@ -142,8 +142,13 @@ VAR _svg =
             & FORMAT ( _d2, "dd/MM" ) & "</text>"
         & "<polyline points='" & _linhaA & "' pathLength='1' class='mm traco' filter='url(#rbu)' style='animation-delay:.6s'/>"
         & "<polyline points='" & _linhaD & "' pathLength='1' class='mm traco-rapido' filter='url(#rbu)' style='animation-delay:2.4s'/>"
+        & "<circle class='ur brota' cx='" & FORMAT ( _x2, _f, "en-US" ) & "' cy='"
+        & FORMAT ( 190 - [T17 · urna · diferença] / 10 * 170, _f, "en-US" ) & "' r='8'/>"
+        & "<text class='ur-t' text-anchor='end' x='" & FORMAT ( _x2 - 15, _f, "en-US" ) & "' y='"
+        & FORMAT ( 190 - [T17 · urna · diferença] / 10 * 170 + 26, _f, "en-US" ) & "'>Urna: Lula +"
+        & FORMAT ( ABS ( [T17 · urna · diferença] ), "0.00" ) & "</text>"
     & "</svg>"
-VAR _urna =
+VAR _iconeUrna =
     "<div class='urna entra d10' style='left:" & FORMAT ( _x2 - 24, _f, "en-US" ) & "px;top:" & FORMAT ( 72 + 20, _f, "en-US" )
         & "px'></div>"
 VAR _fim =
@@ -158,14 +163,14 @@ VAR _nota =
 RETURN
     "<div class='tela t17g'>"
         & "<div class='cab'><div class='sob sobe'>Lula × Flávio no 2º turno, pesquisa a pesquisa · " & _n
-        & " pesquisas · votos totais" & IF ( NOT ISBLANK ( _per ), " · em destaque, " & _pNome ) & "</div><div class='man sobe d2'>"
+        & " pesquisas · entre os dois candidatos (soma = 100%)" & IF ( NOT ISBLANK ( _per ), " · em destaque, " & _pNome ) & "</div><div class='man sobe d2'>"
         & IF ( ISBLANK ( _per ), _txtMan, _txtManP ) & "</div></div>"
-        & _svg & _urna & _fim & IF ( ISBLANK ( _per ), _nota )
+        & _svg & _iconeUrna & _fim & IF ( ISBLANK ( _per ), _nota )
         & "<div class='leg entra d12'><b><i style='background:var(--azul)'></i>Flávio à frente</b>"
         & "<b><i style='background:var(--vermelho)'></i>Lula à frente</b>"
         & IF (
             ISBLANK ( _per ),
-            "Cada ponto é uma pesquisa; a distância até o empate é a vantagem, em pontos · vazado: simulação antes do 1º turno"
+            "Ponto grande: urna; demais: pesquisas normalizadas entre Lula e Flávio; a distância até o empate é a vantagem, em pontos · vazado: simulação antes do 1º turno"
                 & " · traço: média dos 10 dias anteriores, com 3 pesquisas ou mais",
             "Em destaque, as pesquisas com o campo inteiro no período (a faixa é o campo; o ponto fica no dia da divulgação)"
                 & " · esmaecidas, as outras · traço: média dos 10 dias"

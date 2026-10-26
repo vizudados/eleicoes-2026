@@ -1,8 +1,7 @@
 # Eleições 2026 · o voto de perto
 
-Repositório: https://github.com/vizudados/eleicoes-2026 · Painel em Power BI no estilo apresentação (Vizu Dados), que conta o 1º turno presidencial de 2026 do resultado ao porquê,
-da zona eleitoral ao país, e acompanha a apuração do 2º turno ao vivo. Inspirado no documentário "Lula vs Flávio: o que os
-números dizem" (Spotniks). Mockup no Figma: arquivo `f6nFM7Go5USMK1tXc46uxP` ("Eleições 2026 · Mockup").
+Repositório: https://github.com/vizudados/eleicoes-2026 · Painel em Power BI no estilo apresentação (Vizu Dados), que conta os dois turnos presidenciais de 2026, do resultado ao porquê,
+da zona eleitoral ao país, com roteiro e direção visual próprios. Mockup no Figma: arquivo `f6nFM7Go5USMK1tXc46uxP` ("Eleições 2026 · Mockup").
 
 ## Pastas
 
@@ -62,7 +61,7 @@ python -I -X utf8 pipeline/exportar_t20.py
 
 ## O painel no Power BI (`pbi/`)
 
-27 telas a 1920 × 1080 (00 Capa … 26 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos, do antes para o depois:
+29 telas a 1920 × 1080 (00 Capa … 28 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos, do antes para o depois:
 I · Antes da urna, II · O 1º turno, III · O mapa, IV · Explore você mesmo e V · O 2º turno, logo antes do
 encerramento. A 12 · Quem vota cruza o
 voto com renda, escolaridade, Bolsa Família e IDH (`pipeline/extrair_social.py`); a 21 · Debate Band e a 22 · Debate
@@ -105,31 +104,24 @@ Provas: `pbi/scripts/previa.py <TELA>` (foto fora do Power BI), `pbi/scripts/cdp
 do Desktop aberto com `-Cdp 9347`), `pbi/scripts/conferir_apuracao.py` (apuração contra o TSE),
 `pbi/scripts/smoke_medidas.py` e `pbi/scripts/desempenho.py` (tempo de cada consulta e peso de cada página).
 
-## Apuração ao vivo (2º turno, 25/10/2026)
+## Registro da apuração do 2º turno (25/10/2026)
 
-1. O coletor lê `resultados.tse.jus.br/oficial/ele2026/6258/dados/<uf>/<uf>-c0001-e006258-u.json` para o Brasil e as
-   27 UFs (mais o exterior) e grava `dados/apuracao/`. O código 6258 é o 2º turno da eleição federal (o 1º turno, 6257,
-   serve de ensaio com o resultado final).
-2. O workflow roda a cada 5 minutos das 16h às 23h55 de Brasília em 25/10, com 4 coletas por execução (uma por
-   minuto), e faz commit só quando o TSE muda a hora de totalização.
-3. O Power BI lê os CSV pelo endereço raw do GitHub (`pbi/m/Apuracao.m`, parâmetro `pRepositorioRaw`).
-4. Para a tela andar sozinha: com os segredos `PBI_TENANT_ID`, `PBI_CLIENT_ID`, `PBI_CLIENT_SECRET`,
-   `PBI_WORKSPACE_ID` e `PBI_DATASET_ID` no repositório, cada coleta pede a atualização do modelo pela API. Em
-   workspace Pro há teto de 8 atualizações por dia; para a noite da eleição, use PPU, Premium ou Fabric.
+O coletor leu a API pública do TSE (`ele2026/6258`) para o Brasil, as 27 UFs e o exterior e gravou
+`dados/apuracao/`. Na noite de 25/10, o workflow foi agendado a cada cinco minutos, com quatro coletas por execução,
+uma por minuto, gravando uma nova linha no histórico a cada mudança da totalização do TSE. O modelo leu os CSV pelo
+raw do GitHub; havia integração opcional de atualização pela API do Power BI.
 
-Teste local:
+A totalização final foi às 23h26: 100% das seções; Lula 64.256.232 votos (51,79% dos válidos), Flávio Bolsonaro
+59.826.041 (48,21%); diferença de 4.430.191 votos e abstenção de 19,22%. A tela 25 conserva o resultado final e a
+curva daquela noite. Os workflows **`apuracao`, `vigia` e `teste-chave` foram desligados em 26/10/2026**.
 
-```bash
-python -I apuracao/coletar.py --eleicao 6257 --saida dados/apuracao/ensaio-1turno
-```
+As telas 26 · De onde vieram (T27) e 27 · Onde Flávio perdeu (T28) usam o segundo turno por município, sem exterior.
+A T27 fecha a identidade dos ganhos observados, sem repartir uma suposta transferência individual entre candidatos. A integração está descrita em
+`pbi/INTEGRACAO-POS-ELEICAO.md`.
 
 ## Debate da Globo (2º turno, 23/10/2026)
 
-A tela 22 · Debate Globo (código T26) ficou pronta antes do debate e se preenche quando
-`dados/pbi/debate_globo.csv` muda no repositório: uma linha por fato ou número (situação do debate, presença de cada
-candidato, regras e os cinco números da noite: buscas, audiência, transmissão na internet, redes e pesquisas). Campo
-vazio aparece como "aguardando", com a hora e a fonte esperadas; nada é estimado. O que é cada campo, de onde vem e
-como atualizar está em `dados/bruto/debate/FONTES.md` (seção "Debate da Globo, 23/10/2026").
+A tela 22 · Debate Globo (T26) conserva os fatos e números do debate de 23/10/2026 em `dados/pbi/debate_globo.csv`: situação, presença, regras, buscas, audiência, transmissão na internet, redes e pesquisas. Ausência de publicação é identificada na tela; nada é estimado. O dicionário de campos e as fontes estão em `dados/bruto/debate/FONTES.md`.
 
 ## Fontes
 

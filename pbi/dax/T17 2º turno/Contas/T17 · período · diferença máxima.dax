@@ -9,7 +9,7 @@ RETURN
     IF (
         NOT ISBLANK ( _de ),
         CALCULATE (
-            MAXX ( Pesquisa, Pesquisa[Flavio] - Pesquisa[Lula] ),
+            MAXX ( Pesquisa, DIVIDE ( Pesquisa[Flavio] - Pesquisa[Lula], Pesquisa[Flavio] + Pesquisa[Lula] ) * 100 ),
             REMOVEFILTERS ( Pesquisa ),
             Pesquisa[Cenário] = "2º turno",
             Pesquisa[Tipo] = "totais",

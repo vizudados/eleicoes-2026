@@ -1,0 +1,8 @@
+/*
+@pasta: T00 Capa\Contas
+@formato: 0.00%
+@descricao: Percentual final nacional dos votos válidos do segundo turno.
+@oraculo: TSE nacional com exterior; UF segundo turno 2026; viradas municipais sem exterior
+@gerado: pbi/scripts/desenho_t00.py
+*/
+DIVIDE ( [T00 · 2º turno · Lula votos], [T00 · 2º turno · válidos] )

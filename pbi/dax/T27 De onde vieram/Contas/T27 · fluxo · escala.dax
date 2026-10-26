@@ -1,0 +1,8 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Máximo absoluto dos ganhos, geometria dos traços.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+MAX ( ABS ( [T27 · ganho Lula] ), ABS ( [T27 · ganho Flávio] ) )

@@ -1,0 +1,9 @@
+/*
+@pasta: T00 Capa\Contas
+@formato: #,0
+@descricao: Municípios que trocaram de vencedor entre os turnos de 2026, sem empates ou exterior.
+@oraculo: TSE nacional com exterior; UF segundo turno 2026; viradas municipais sem exterior
+@gerado: pbi/scripts/desenho_t00.py
+*/
+CALCULATE ( [T28 · virou para Lula · municípios],
+    REMOVEFILTERS ( 'UF' ), REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'Ano' ) )

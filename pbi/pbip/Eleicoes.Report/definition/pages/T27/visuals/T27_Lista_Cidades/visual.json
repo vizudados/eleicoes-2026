@@ -1,0 +1,422 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "T27_Lista_Cidades",
+  "position": {
+    "x": 150,
+    "y": 730,
+    "z": 303,
+    "height": 270,
+    "width": 840,
+    "tabOrder": 130
+  },
+  "visual": {
+    "visualType": "STANDALONEdeneb7E15AEF80B9E4D4F8E12924291ECE89A",
+    "query": {
+      "queryState": {
+        "dataset": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Município"
+                    }
+                  },
+                  "Property": "CodIBGE"
+                }
+              },
+              "queryRef": "Município.CodIBGE",
+              "nativeQueryRef": "cod",
+              "displayName": "cod"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Município"
+                    }
+                  },
+                  "Property": "UF"
+                }
+              },
+              "queryRef": "Município.UF",
+              "nativeQueryRef": "uf",
+              "displayName": "uf"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Município"
+                    }
+                  },
+                  "Property": "Rótulo"
+                }
+              },
+              "queryRef": "Município.Rótulo",
+              "nativeQueryRef": "rotulo",
+              "displayName": "rotulo"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Município"
+                    }
+                  },
+                  "Property": "X"
+                }
+              },
+              "queryRef": "Município.X",
+              "nativeQueryRef": "x",
+              "displayName": "x"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Município"
+                    }
+                  },
+                  "Property": "Y"
+                }
+              },
+              "queryRef": "Município.Y",
+              "nativeQueryRef": "y",
+              "displayName": "y"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T27 · mapa · valor"
+                }
+              },
+              "queryRef": "_Medidas.T27 · mapa · valor",
+              "nativeQueryRef": "val",
+              "displayName": "val"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T27 · mapa · tamanho"
+                }
+              },
+              "queryRef": "_Medidas.T27 · mapa · tamanho",
+              "nativeQueryRef": "tam",
+              "displayName": "tam"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T27 · valor formatado"
+                }
+              },
+              "queryRef": "_Medidas.T27 · valor formatado",
+              "nativeQueryRef": "valorTexto",
+              "displayName": "valorTexto"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "vega": [
+        {
+          "properties": {
+            "jsonSpec": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\n  \"$schema\": \"https://vega.github.io/schema/vega/v6.json\",\n  \"width\": {\n    \"signal\": \"pbiContainerWidth\"\n  },\n  \"height\": {\n    \"signal\": \"pbiContainerHeight\"\n  },\n  \"padding\": 0,\n  \"autosize\": {\n    \"type\": \"none\",\n    \"contains\": \"padding\"\n  },\n  \"background\": null,\n  \"signals\": [\n    {\n      \"name\": \"hoverCod\",\n      \"value\": null,\n      \"on\": [\n        {\n          \"events\": \"@marcaAlvos:mouseover\",\n          \"update\": \"datum.cod\"\n        },\n        {\n          \"events\": \"@marcaAlvos:mouseout\",\n          \"update\": \"null\"\n        }\n      ]\n    },\n    {\n      \"name\": \"clique\",\n      \"value\": null,\n      \"on\": [\n        {\n          \"events\": {\n            \"source\": \"scope\",\n            \"type\": \"mouseup\",\n            \"markname\": \"marcaAlvos\"\n          },\n          \"update\": \"pbiCrossFilterApply(event)\"\n        },\n        {\n          \"events\": {\n            \"source\": \"view\",\n            \"type\": \"mouseup\",\n            \"filter\": [\n              \"!event.item || event.item.mark.name != ''marcaAlvos''\"\n            ]\n          },\n          \"update\": \"pbiCrossFilterClear()\"\n        }\n      ]\n    }\n  ],\n  \"data\": [\n    {\n      \"name\": \"dataset\"\n    },\n    {\n      \"name\": \"linhas\",\n      \"source\": \"dataset\",\n      \"transform\": [\n        {\n          \"type\": \"filter\",\n          \"expr\": \"isValid(datum.val)\"\n        },\n        {\n          \"type\": \"window\",\n          \"sort\": {\n            \"field\": [\n              \"val\",\n              \"cod\"\n            ],\n            \"order\": [\n              \"descending\",\n              \"ascending\"\n            ]\n          },\n          \"ops\": [\n            \"row_number\"\n          ],\n          \"as\": [\n            \"pos\"\n          ]\n        },\n        {\n          \"type\": \"filter\",\n          \"expr\": \"datum.pos<=8\"\n        }\n      ]\n    }\n  ],\n  \"scales\": [\n    {\n      \"name\": \"x\",\n      \"type\": \"linear\",\n      \"domain\": {\n        \"data\": \"linhas\",\n        \"field\": \"val\"\n      },\n      \"range\": [\n        350,\n        680\n      ],\n      \"zero\": true,\n      \"nice\": true\n    }\n  ],\n  \"marks\": [\n    {\n      \"name\": \"marcaBarras\",\n      \"type\": \"rect\",\n      \"from\": {\n        \"data\": \"linhas\"\n      },\n      \"interactive\": false,\n      \"encode\": {\n        \"update\": {\n          \"x\": {\n            \"signal\": \"min(scale(''x'',datum.val),scale(''x'',0))\"\n          },\n          \"x2\": {\n            \"signal\": \"max(scale(''x'',datum.val),scale(''x'',0))\"\n          },\n          \"y\": {\n            \"signal\": \"30+(datum.pos-1)*29+7\"\n          },\n          \"height\": {\n            \"value\": 14\n          },\n          \"cornerRadius\": {\n            \"value\": 4\n          },\n          \"fill\": {\n            \"signal\": \"datum.val>=0 ? ''#B8322A'' : ''#31699B''\"\n          },\n          \"opacity\": {\n            \"signal\": \"(hoverCod != null && hoverCod != datum.cod) || datum.__selected__==''off'' ? 0.25 : 0.85\"\n          }\n        }\n      }\n    },\n    {\n      \"name\": \"marcaNomes\",\n      \"type\": \"text\",\n      \"from\": {\n        \"data\": \"linhas\"\n      },\n      \"interactive\": false,\n      \"encode\": {\n        \"update\": {\n          \"x\": {\n            \"value\": 0\n          },\n          \"y\": {\n            \"signal\": \"30+(datum.pos-1)*29+16\"\n          },\n          \"text\": {\n            \"field\": \"rotulo\"\n          },\n          \"limit\": {\n            \"value\": 335\n          },\n          \"font\": {\n            \"value\": \"Sora Vizu\"\n          },\n          \"fontSize\": {\n            \"value\": 17\n          },\n          \"fill\": {\n            \"value\": \"#1C1915\"\n          },\n          \"opacity\": {\n            \"signal\": \"(hoverCod != null && hoverCod != datum.cod) || datum.__selected__==''off'' ? 0.4 : 1\"\n          }\n        }\n      }\n    },\n    {\n      \"name\": \"marcaValores\",\n      \"type\": \"text\",\n      \"from\": {\n        \"data\": \"linhas\"\n      },\n      \"interactive\": false,\n      \"encode\": {\n        \"update\": {\n          \"x\": {\n            \"signal\": \"width-5\"\n          },\n          \"y\": {\n            \"signal\": \"30+(datum.pos-1)*29+16\"\n          },\n          \"align\": {\n            \"value\": \"right\"\n          },\n          \"text\": {\n            \"field\": \"valorTexto\"\n          },\n          \"font\": {\n            \"value\": \"Sora Vizu\"\n          },\n          \"fontSize\": {\n            \"value\": 18\n          },\n          \"fontWeight\": {\n            \"value\": 600\n          },\n          \"fill\": {\n            \"value\": \"#1C1915\"\n          },\n          \"opacity\": {\n            \"signal\": \"(hoverCod != null && hoverCod != datum.cod) || datum.__selected__==''off'' ? 0.4 : 1\"\n          }\n        }\n      }\n    },\n    {\n      \"name\": \"marcaAlvos\",\n      \"type\": \"rect\",\n      \"from\": {\n        \"data\": \"linhas\"\n      },\n      \"encode\": {\n        \"update\": {\n          \"x\": {\n            \"value\": 0\n          },\n          \"width\": {\n            \"signal\": \"width\"\n          },\n          \"y\": {\n            \"signal\": \"30+(datum.pos-1)*29\"\n          },\n          \"height\": {\n            \"value\": 28\n          },\n          \"fill\": {\n            \"value\": \"#1C1915\"\n          },\n          \"fillOpacity\": {\n            \"value\": 0\n          },\n          \"tooltip\": {\n            \"signal\": \"datum\"\n          },\n          \"cursor\": {\n            \"value\": \"pointer\"\n          }\n        },\n        \"hover\": {\n          \"fillOpacity\": {\n            \"value\": 0.06\n          }\n        }\n      }\n    }\n  ]\n}'"
+                }
+              }
+            },
+            "jsonConfig": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{}'"
+                }
+              }
+            },
+            "provider": {
+              "expr": {
+                "Literal": {
+                  "Value": "'vega'"
+                }
+              }
+            },
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'6.4.0'"
+                }
+              }
+            },
+            "renderMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'svg'"
+                }
+              }
+            },
+            "enableTooltips": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "enableSelection": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "selectionMode": {
+              "expr": {
+                "Literal": {
+                  "Value": "'advanced'"
+                }
+              }
+            },
+            "selectionMaxDataPoints": {
+              "expr": {
+                "Literal": {
+                  "Value": "50D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "stateManagement": [
+        {
+          "properties": {
+            "viewportHeight": {
+              "expr": {
+                "Literal": {
+                  "Value": "270D"
+                }
+              }
+            },
+            "viewportWidth": {
+              "expr": {
+                "Literal": {
+                  "Value": "840D"
+                }
+              }
+            },
+            "supportFieldConfiguration": {
+              "expr": {
+                "Literal": {
+                  "Value": "'{\"cod\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"uf\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"rotulo\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"x\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"y\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":false,\"formatted\":false,\"names\":false},\"val\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"tam\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false},\"valorTexto\":{\"highlight\":false,\"highlightStatus\":false,\"highlightComparator\":false,\"format\":true,\"formatted\":true,\"names\":false}}'"
+                }
+              }
+            },
+            "denebMetaVersion": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2'"
+                }
+              }
+            },
+            "consolidateFieldParameters": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "developer": [
+        {
+          "properties": {
+            "version": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2.0.0.0'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "background": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "border": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "dropShadow": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'T27_Lista_Cidades'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualHeader": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "type": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Canvas'"
+                }
+              }
+            },
+            "section": {
+              "expr": {
+                "Literal": {
+                  "Value": "'ttT27Municipio'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "padding": [
+        {
+          "properties": {
+            "top": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "bottom": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "left": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            },
+            "right": {
+              "expr": {
+                "Literal": {
+                  "Value": "0D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {
+            "altText": {
+              "expr": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "T27 · Resposta · ALT"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

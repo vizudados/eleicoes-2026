@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "T23_Fecho_Ir14",
   "position": {
-    "x": 140,
+    "x": 145,
     "y": 719,
     "z": 1020,
     "height": 35,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 13: Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.'"
+                  "Value": "'Voltar à tela 13: Pela 2ª vez em seis eleições, o PT terminou o 1º turno em segundo.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 13: Pela 2ª vez em seis eleições, o PT termina o 1º turno em segundo.'"
+                  "Value": "'Voltar à tela 13: Pela 2ª vez em seis eleições, o PT terminou o 1º turno em segundo.'"
                 }
               }
             },

@@ -7,6 +7,8 @@ VAR _n = [Histórico · atualizações]
 RETURN
     IF (
         _n = 0,
-        "A curva da noite começa às 17h de 25/10, com a primeira atualização do TSE.",
-        "A curva da noite no Brasil: " & _n & IF ( _n = 1, " atualização", " atualizações" ) & " do TSE guardadas."
+        "O histórico da noite não consta do levantamento carregado.",
+        "Curva da noite no Brasil: Flávio passou à frente às " & SUBSTITUTE ( FORMAT ( [T18 · noite · Flávio passou à frente], "HH:mm" ), ":", "h" )
+            & "; Lula retomou às " & SUBSTITUTE ( FORMAT ( [T18 · noite · Lula retomou a frente], "HH:mm" ), ":", "h" )
+            & ". Escala ampliada de 40% a 60%; primeiras parciais fora dessa faixa."
     )

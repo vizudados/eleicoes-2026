@@ -1,0 +1,9 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Ressalva territorial em MT: Boa Esperança do Norte, Sorriso, Nova Ubiratã, Paranatinga e Vera; sem reconstrução em área constante.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( SELECTEDVALUE ( 'Município'[CodIBGE] )
+    IN { "5101837", "5107925", "5106240", "5106307", "5108502" }, 1, 0 )

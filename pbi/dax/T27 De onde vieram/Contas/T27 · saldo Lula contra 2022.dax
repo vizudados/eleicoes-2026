@@ -1,0 +1,8 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Lula 2026 menos Lula 2022, ambos no segundo turno.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( NOT ISBLANK ( [T27 · Lula 2022] ), [T27 · Lula 2º] - [T27 · Lula 2022] )

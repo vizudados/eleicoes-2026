@@ -5,4 +5,4 @@
 */
 VAR _rot = [T26 · linha · rótulo]
 RETURN
-    "Dossiê do cartão " & _rot & ": o que mede, quando e de onde o número chega, e a mesma medida no debate da Band."
+    "Dossiê do cartão " & _rot & ": o que mede, quando o número foi divulgado e de onde veio, e a mesma medida no debate da Band."

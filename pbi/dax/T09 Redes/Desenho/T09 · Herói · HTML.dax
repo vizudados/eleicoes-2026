@@ -1,7 +1,7 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: O número da tela (quantas vezes as interações de um foram as do outro no 2º turno, contador), a frase ao lado, a manchete (quem dominou as interações no 2º turno e quem ganhou mais seguidores na campanha do 1º) e o que é interação. Com um período escolhido no filtro (Período · escolhido): o número e a manchete passam a ser os da janela de interações da Bites que cabe inteira no período (Antes da Band, 05 a 17/10; Depois da Band, as 24 h depois do debate) e dos seguidores ganhos na janela que cabe nele, com a janela real escrita; sem janela que caiba, 'sem dado no período'; Depois da Globo, 'aguardando'. Só lê contas 'T09 · …' e 'Período · …'.
+@descricao: O número da tela (quantas vezes as interações de um foram as do outro no 2º turno, contador), a frase ao lado, a manchete (quem dominou as interações no 2º turno e quem ganhou mais seguidores na campanha do 1º) e o que é interação. Com um período escolhido no filtro (Período · escolhido): o número e a manchete passam a ser os da janela de interações da Bites que cabe inteira no período (Antes da Band, 05 a 17/10; Depois da Band, as 24 h depois do debate) e dos seguidores ganhos na janela que cabe nele, com a janela real escrita; sem janela que caiba, 'sem dado no período'; Depois da Globo, 'não divulgado'. Só lê contas 'T09 · …' e 'Período · …'.
 */
 -- 1 · Leituras
 VAR _l2 = [T09 · interações · 2º turno · Lula]
@@ -67,7 +67,7 @@ VAR _pSob =
 VAR _pMan =
     SWITCH (
         TRUE (),
-        _espera, _pNome & ", os números das redes ainda não chegaram",
+        _espera, _pNome & ", os números das redes não constam do levantamento",
         NOT _temI, _pNome & ", nenhuma medição das interações dos dois cabe só nesses dias",
         _pNome & ", as interações foram de " & _pQuemI
             & SWITCH (
@@ -81,7 +81,7 @@ VAR _pMan =
 VAR _pTxt =
     SWITCH (
         TRUE (),
-        _espera, "Até a manhã de domingo, 25/10, a Bites não tinha publicado as interações dos dois depois do debate. "
+        _espera, "No levantamento encerrado em 25/10, a Bites não tinha publicado as interações dos dois depois do debate. "
             & "Interação é toda reação a uma publicação: curtida, comentário, compartilhamento.",
         NOT _temI, "As medições publicadas terminam antes ou atravessam o período, e aqui só entra a que cabe "
             & "inteira nele. Interação é toda reação a uma publicação.",
@@ -95,14 +95,14 @@ VAR _pTxt =
 VAR _pNum =
     SWITCH (
         TRUE (),
-        _espera, "<div class='hero sobe d1'><span class='vazio mao'>aguardando</span></div>",
+        _espera, "<div class='hero sobe d1'><span class='vazio mao'>não divulgado</span></div>",
         NOT _temI, "<div class='hero sobe d1'><span class='vazio'>sem dado no período</span></div>",
         "<div class='hero sobe d1'><span class='num'>" & FORMAT ( _pVezes, "0.0" ) & "</span><span class='u'>vezes</span></div>"
     )
 VAR _pLado =
     SWITCH (
         TRUE (),
-        _espera, "os números depois do debate da Globo ainda não chegaram",
+        _espera, "os números depois do debate da Globo não constam do levantamento",
         NOT _temI, "nenhuma medição das interações dos dois cabe em " & _janPer,
         "mais interações para " & _pQuemI & " do que para " & _pOutroI & IF ( _p24, " nas 24 h depois do debate", "" )
     )

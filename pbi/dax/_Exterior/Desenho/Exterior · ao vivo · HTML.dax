@@ -1,15 +1,11 @@
 /*
 @pasta: _Exterior\Desenho
 @formato: texto
-@descricao: Tooltip rico do exterior na apuração do 2º turno: Lula × Flávio por país, com a % de seções; antes dos primeiros votos, o 1º turno com o aviso de que a apuração ainda não começou.
+@descricao: Resultado final do exterior por país; ausência de dados por país é identificada sem substituir pelo primeiro turno.
 */
 IF (
     [Apuração exterior · válidos] = 0,
-    SUBSTITUTE (
-        [Exterior · 1º turno · HTML],
-        "<div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026",
-        "<div class='aviso'>a apuração começa às 17h de 25/10; até lá, o voto do 1º turno</div><div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026"
-    ),
+    "<div class='tela tx'><div class='fita'></div><div class='rot topo-rot'>EXTERIOR · 2º TURNO</div><div class='txt'>O resultado final por país não consta do levantamento carregado.</div></div>",
 -- 1 · Leituras: os países com mais votos válidos (os 12 maiores) e o resto somado
 VAR _paises = VALUES ( 'Apuração exterior'[País] )
 VAR _t =
@@ -48,7 +44,7 @@ VAR _nf = [Apuração exterior · países com Flávio à frente]
 VAR _ns = [Apuração exterior · países sem vencedor]
 RETURN
     "<div class='tela tx'><div class='fita'></div>"
-        & "<div class='rot topo-rot'>" & "EXTERIOR AO VIVO · " & [Apuração · turno] & "º TURNO · " & FORMAT ( [Apuração exterior · seções %] * 100, "0" ) & "% DAS SEÇÕES · " & [Apuração exterior · países] & " PAÍSES" & "</div>"
+        & "<div class='rot topo-rot'>" & "EXTERIOR · RESULTADO FINAL · " & [Apuração · turno] & "º TURNO · " & FORMAT ( [Apuração exterior · seções %] * 100, "0" ) & "% DAS SEÇÕES · " & [Apuração exterior · países] & " PAÍSES" & "</div>"
         & "<div class='topo'><div class='c'><span class='num lula'>" & FORMAT ( _tl * 100, "0.0" ) & "%</span>"
         & "<span class='rot lula-esc'>LULA</span></div><div class='c'><span class='num flavio'>"
         & FORMAT ( _tf * 100, "0.0" ) & "%</span><span class='rot flavio-esc'>FLÁVIO</span></div>"
@@ -59,5 +55,5 @@ RETURN
         & "<div class='cab rot'><span>PAÍS</span><span>LULA</span><span></span><span>FLÁVIO</span><span>SEÇÕES</span></div>"
         & "<div class='lista'>" & _linhas & "</div>" & _outros
         & "<div class='pe nota'>" & IF ( _ns > 0, "Nos outros " & _ns & IF ( _ns = 1, " país, ", " países, " )
-        & IF ( [Apuração exterior · seções %] >= 1, "empate ou nenhum voto válido", "empate ou nenhum voto apurado ainda" ) & ". " ) & "Países pelos votos válidos já apurados" & IF ( [Apuração · turno] = 2, "; no 2º turno, Lula e Flávio somam 100%.", "; no 1º turno, o resto é dos outros candidatos." ) & "</div></div>"
+        & "empate ou nenhum voto válido. " ) & "Países pelos votos válidos finais" & IF ( [Apuração · turno] = 2, "; no 2º turno, Lula e Flávio somam 100%.", "; no 1º turno, o resto é dos outros candidatos." ) & "</div></div>"
 )

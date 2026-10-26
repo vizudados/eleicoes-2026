@@ -1,0 +1,8 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Contexto acessível dos apoios.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+"Apoios por território e porte; saldos em votos, sem exterior. No filtro do alto, escolha uma UF ou região para explorar."

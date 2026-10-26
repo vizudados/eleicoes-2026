@@ -1,8 +1,14 @@
 /*
 @pasta: T00 Capa\Desenho
 @formato: texto
-@descricao: Texto alternativo da capa.
+@descricao: Leitura acessível da capa, com os dois resultados e viradas entre turnos.
+@oraculo: TSE nacional com exterior; UF segundo turno 2026; viradas municipais sem exterior
+@gerado: pbi/scripts/desenho_t00.py
 */
-"Eleições 2026, 1º turno presidencial: o voto, de perto. Flávio Bolsonaro " & FORMAT ( [T00 · Flávio %], "0.0%" )
-    & " dos válidos, Lula " & FORMAT ( [T00 · Lula %], "0.0%" ) & "; " & FORMAT ( [T00 · municípios que viraram], "#,0" )
-    & " municípios mudaram de lado."
+"Eleições 2026. 2º: Lula " & FORMAT ( [T00 · 2º turno · Lula votos] / 1e6, "0.00" )
+    & " mi, " & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & " (eleito); Flávio "
+    & FORMAT ( [T00 · 2º turno · Flávio votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" )
+    & ". 1º: Lula " & FORMAT ( [T00 · Lula votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · Lula %], "0.00%" )
+    & "; Flávio " & FORMAT ( [T00 · Flávio votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · Flávio %], "0.00%" ) & ". "
+    & FORMAT ( [T00 · entre turnos · Flávio para Lula], "#,0" ) & " municípios Flávio → Lula; "
+    & FORMAT ( [T00 · entre turnos · Lula para Flávio], "#,0" ) & " no sentido contrário entre turnos."

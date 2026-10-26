@@ -78,7 +78,7 @@ def linha(chave: str, coluna: str, agg: str = "MAX") -> str:
 
 
 def moldura(w: int, h: int) -> str:
-    """Retângulo à mão, tracejado (o lugar do número que ainda não chegou), como literal de texto DAX."""
+    """Retângulo à mão, tracejado (o lugar do número que não consta do levantamento), como literal de texto DAX."""
     d = (f"M4 5 C {w * .3:.0f} 2, {w * .7:.0f} 4, {w - 4} 5 C {w - 2} {h * .4:.0f}, {w - 5} {h * .7:.0f}, {w - 4} {h - 4} "
          f"C {w * .65:.0f} {h - 1}, {w * .3:.0f} {h - 3}, 5 {h - 5} C 3 {h * .6:.0f}, 6 {h * .3:.0f}, 4 5 Z")
     return (f"<svg class='mold' width='{w}' height='{h}' viewBox='0 0 {w} {h}'><path d='{d}' "
@@ -389,7 +389,7 @@ VAR _aN = [T26 · pesquisas · antes · n]
 -- 2 · Textos
 VAR _sitEf = IF ( _sit IN { "marcado", "no_ar" } && _n > 0, "realizado", _sit )
 VAR _selo =
-    SWITCH ( _sit, "no_ar", "NO AR", "realizado", "REALIZADO", "adiado", "ADIADO", "cancelado", "CANCELADO", "MARCADO" )
+    SWITCH ( _sit, "no_ar", "REGISTRO PARCIAL", "realizado", "REALIZADO", "adiado", "ADIADO", "cancelado", "CANCELADO", "REGISTRO" )
 VAR _hora = IF ( ISBLANK ( _ini ), "—", FORMAT ( _ini, "HH" ) & "h" & FORMAT ( _ini, "nn" ) )
 VAR _dia = IF ( ISBLANK ( _ini ), "", UPPER ( FORMAT ( _ini, "dddd" ) ) & ", " & FORMAT ( _ini, "dd/MM" ) & " · " )
 VAR _aud = IF ( NOT ISBLANK ( _audC ), _audC, _audP )
@@ -399,8 +399,8 @@ VAR _frAus =
     SWITCH (
         TRUE (),
         _aus = "", "",
-        _aus = "Lula e Flávio", IF ( _sitEf = "realizado", "Nem Lula nem Flávio foram ao debate. ", "Nem Lula nem Flávio vão ao debate. " ),
-        _aus & IF ( _sitEf = "realizado", " não foi ao debate. ", " não vai ao debate. " )
+        _aus = "Lula e Flávio", IF ( _sitEf = "realizado", "Nem Lula nem Flávio foram ao debate. ", "Nem Lula nem Flávio foram ao debate. " ),
+        _aus & IF ( _sitEf = "realizado", " não foi ao debate. ", " não foi ao debate. " )
     )
 VAR _man =
     SWITCH (
@@ -411,10 +411,10 @@ VAR _man =
         _sitEf = "marcado",
             IF (
                 _aus = "",
-                "Ainda não dá para dizer. Os números chegam entre a noite de sexta e o sábado, véspera da eleição.",
-                _frAus & "Os números da noite chegam entre sexta e sábado, véspera da eleição."
+                "O levantamento não registrou números suficientes para responder.",
+                _frAus & "Os números da noite não constam do levantamento."
             ),
-        _sitEf = "no_ar", _frAus & "O debate está no ar; os primeiros números chegam quando ele acabar.",
+        _sitEf = "no_ar", _frAus & "O registro disponível é parcial; os números finais não constam do levantamento.",
         _pN > 0,
             _frAus & "Nas " & IF ( _pN = 1, "pesquisa feita inteira", FORMAT ( _pN, "0" ) & " pesquisas feitas inteiras" )
                 & " depois do debate, Lula tem " & FORMAT ( _pL, "0.0" ) & "% e Flávio, " & FORMAT ( _pF, "0.0" ) & "%"
@@ -423,7 +423,7 @@ VAR _man =
             _frAus & "Na Grande SP, a Globo marcou " & FORMAT ( _aud, "0.0" ) & " pontos"
                 & IF ( ISBLANK ( _audC ), " na prévia", "" ) & ", " & _cmp & " os " & #N1(_ref)#
                 & IF ( ISBLANK ( _audC ), " da prévia da Band.", " da Band." ),
-        _frAus & "O debate acabou, e os números ainda não chegaram."
+        _frAus & "O debate acabou, e os números não constam do levantamento."
     )
 VAR _sub =
     IF (
@@ -440,8 +440,8 @@ RETURN
         [T26 · arquivo · linhas] = 0,
         "<div class='tela t26f'><div class='selo entra'><span>SEM DADOS</span></div>"
             & "<div class='dia rot entra d1'>O ÚLTIMO DEBATE ANTES DO 2º TURNO</div>"
-            & "<div class='man sobe d2' style='top:72px'>O arquivo do debate ainda não chegou ao painel. A ficha, os púlpitos "
-            & "e os números da noite aparecem quando ele for lido.</div></div>",
+            & "<div class='man sobe d2' style='top:72px'>O arquivo do debate não consta do levantamento ao painel. A ficha, os púlpitos "
+            & "e os números da noite não constam do levantamento.</div></div>",
     "<div class='tela t26f s-" & _sit & "'>"
         & "<div class='selo entra'><span>" & _selo & "</span></div>"
         & "<div class='dia rot entra d1'>" & _dia & "O ÚLTIMO DEBATE ANTES DO 2º TURNO</div>"
@@ -489,7 +489,7 @@ VAR _status =
         TRUE (),
         _sit = "cancelado", "debate cancelado",
         _sit = "adiado", "debate adiado",
-        _pres = "ausente", IF ( _sit = "realizado", "não foi ao debate", "não vai ao debate" ),
+        _pres = "ausente", IF ( _sit = "realizado", "não foi ao debate", "não foi ao debate" ),
         _pres = "a_confirmar", "presença a confirmar",
         _sit = "realizado", "esteve no debate",
         "presença confirmada"
@@ -550,7 +550,7 @@ RETURN
         & "<div class='urna entra d8'></div>"
     & "</div>"'''
 
-NOITE_ALT = r'''"Fita do tempo da noite do debate até a eleição, domingo, 25/10: " & FORMAT ( [T26 · cartões · total], "0" )
+NOITE_ALT = r'''"Fita do tempo da noite do debate até a eleição de 25/10: " & FORMAT ( [T26 · cartões · total], "0" )
     & " números esperados; " & FORMAT ( [T26 · cartões · chegaram], "0" )
     & IF ( [T26 · cartões · chegaram] = 1, " já chegou.", " já chegaram." )'''
 
@@ -632,7 +632,7 @@ VAR _vazioUm =
         TRUE (),
         _parado, "<div class='vz pa'>#MOLD_UM#<div class='mao'>sem número</div></div>",
         _est = "nao_divulgado", "<div class='vz nd'><div class='ndt'>não divulgado</div></div>",
-        "<div class='vz ag'>#MOLD_UM#<div class='mao'>aguardando</div></div>"
+        "<div class='vz ag'>#MOLD_UM#<div class='mao'>não divulgado</div></div>"
     )
 -- o par (Lula e Flávio, o mesmo tratamento): o número de cada um, ou o lugar dele tracejado
 VAR _parLula =
@@ -657,7 +657,7 @@ VAR _vazioMeio =
         TRUE (),
         _parado, "#MOLD_MEIO#<div class='mao'>sem número</div>",
         _est = "nao_divulgado", "<div class='ndt'>" & IF ( _c = "pesquisas", "nenhuma", "não saiu" ) & "</div>",
-        "#MOLD_MEIO#<div class='mao'>aguardando</div>"
+        "#MOLD_MEIO#<div class='mao'>não divulgado</div>"
     )
 VAR _par =
     "<div class='vz par'>"
@@ -844,7 +844,7 @@ VAR _mao =
         "nao_divulgado", IF ( _c = "pesquisas", "nenhuma com o campo todo depois", "não saiu" ),
         "cancelado", "sem debate",
         "adiado", "debate adiado",
-        "ainda não chegou"
+        "não consta do levantamento"
     )
 -- 4 · Marcação
 RETURN
@@ -867,7 +867,7 @@ RETURN
 
 TT_CARTAO_ALT = r'''VAR _rot = [T26 · linha · rótulo]
 RETURN
-    "Dossiê do cartão " & _rot & ": o que mede, quando e de onde o número chega, e a mesma medida no debate da Band."'''
+    "Dossiê do cartão " & _rot & ": o que mede, quando o número foi divulgado e de onde veio, e a mesma medida no debate da Band."'''
 
 # ------------------------------------------------------------------------------------------------ dossiê da presença
 TT_PRESENCA = COMUM_LEITURA + r'''VAR _grupo = [T26 · linha · grupo]
@@ -885,7 +885,7 @@ VAR _tit =
     SWITCH (
         TRUE (),
         _sit = "cancelado", "O debate foi cancelado",
-        _pres = "ausente", IF ( _sit = "realizado", "Não foi ao debate", "Não vai ao debate" ),
+        _pres = "ausente", IF ( _sit = "realizado", "Não foi ao debate", "Não foi ao debate" ),
         _pres = "a_confirmar", "Presença a confirmar",
         _sit = "realizado", "Esteve no debate",
         "Presença confirmada"
@@ -933,7 +933,7 @@ DESENHOS = [
      "cor dele, o púlpito em traço (vazio e tracejado se faltar ou se o debate cair) e a situação. Alvo do dossiê "
      "ttT26Presenca.", PALCO),
     ("T26 · Palco · ALT", "Texto puro do palco.", PALCO_ALT),
-    ("T26 · Noite · HTML", "Fundo da faixa da noite: título, a fita do tempo do início do debate à eleição de domingo.",
+    ("T26 · Noite · HTML", "Fundo da faixa da noite: título, a fita do tempo do início do debate à eleição de 25/10.",
      NOITE),
     ("T26 · Noite · ALT", "Texto puro da fita da noite.", NOITE_ALT),
     ("T26 · Cartões · HTML", "Um cartão por métrica da noite (grão 'T26 Debate Globo'[Cartão]): quando chega, o título, o "

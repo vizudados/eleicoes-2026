@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 25 Apuração'"
+                  "Value": "'Voltar: 27 Onde Flávio perdeu'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar: 25 Apuração'"
+                  "Value": "'Voltar: 27 Onde Flávio perdeu'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T18_CHEGADA_01'"
+                  "Value": "'T28_CHEGADA_01'"
                 }
               }
             }

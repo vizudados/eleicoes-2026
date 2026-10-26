@@ -76,7 +76,7 @@ VAR _mao =
         "nao_divulgado", IF ( _c = "pesquisas", "nenhuma com o campo todo depois", "não saiu" ),
         "cancelado", "sem debate",
         "adiado", "debate adiado",
-        "ainda não chegou"
+        "não consta do levantamento"
     )
 -- 4 · Marcação
 RETURN

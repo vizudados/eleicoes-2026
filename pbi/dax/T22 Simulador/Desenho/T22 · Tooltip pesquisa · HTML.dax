@@ -28,7 +28,7 @@ VAR _media = [T22 · pesquisa · demais pela média]
 VAR _inst = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _inst0, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
 VAR _txtSoma =
     "No total, Lula ganha <b class='lula'>" & FORMAT ( _ganhaL / 1000000, "0.00" ) & " mi" & "</b> e Flávio, <b class='flavio'>" & FORMAT ( _ganhaF / 1000000, "0.00" ) & " mi"
-        & "</b>; " & FORMAT ( _ninguem / 1000000, "0.00" ) & " mi" & " não vão para nenhum dos dois."
+        & "</b>; " & FORMAT ( _ninguem / 1000000, "0.00" ) & " mi" & " não iriam para nenhum dos dois."
 VAR _nota =
     SWITCH (
         TRUE (),
@@ -68,7 +68,7 @@ RETURN
         NOT ISBLANK ( _data ),
         "<div class='tela tt22p'>"
             & "<div class='nm sobe'>" & _inst & " · " & FORMAT ( _data, "dd/MM" ) & "</div>"
-            & "<div class='rot sobe d1'>Para onde vão os " & FORMAT ( _outros / 1000000, "0.00" ) & " mi" & " de votos dos outros</div>"
+            & "<div class='rot sobe d1'>Pesquisas · " & FORMAT ( _outros / 1000000, "0.00" ) & " mi" & " de votos dos outros</div>"
             & "<div class='leg sobe d2'><i class='l'></i>Lula <i class='f'></i>Flávio <i class='n'></i>nenhum dos dois</div>"
             & _gCu & _gRe & _gCa & _gde
             & "<div class='pe sobe d8'>" & _txtSoma & "</div>"

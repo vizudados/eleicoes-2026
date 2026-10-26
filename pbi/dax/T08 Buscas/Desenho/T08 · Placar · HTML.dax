@@ -186,7 +186,7 @@ VAR _ladoP =
 VAR _manP =
     SWITCH (
         TRUE (),
-        _semDadoP, IF ( _modo = "uf", _uNo & ", ainda não há dado " & _pNomeMin, _pNome & ", ainda não há dado de buscas" ),
+        _semDadoP, IF ( _modo = "uf", _uNo & ", não há dado no levantamento " & _pNomeMin, _pNome & ", não há dado no levantamento de buscas" ),
         _modo = "uf", _manUfP,
         _manBrasilP
     )
@@ -209,7 +209,7 @@ RETURN
             & IF (
                 _semDadoP,
                 -- período sem dado: a espera no lugar dos números (nunca zero)
-                "<div class='mao sobe d1' style='font-size:64px;color:var(--grafite);padding-bottom:14px'>aguardando</div>",
+                "<div class='mao sobe d1' style='font-size:64px;color:var(--grafite);padding-bottom:14px'>não divulgado</div>",
                 "<div class='cand l sobe d1'><div class='rot'>Lula</div><div class='num'>" & _numL & "</div></div>"
                     & "<div class='x entra d2'>×</div>"
                     & "<div class='cand f sobe d2'><div class='rot'>Flávio</div><div class='num'>" & _numF & "</div></div>"

@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "T23_Fecho_Ir10",
   "position": {
-    "x": 140,
+    "x": 145,
     "y": 414,
     "z": 1020,
     "height": 35,
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 03: Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
+                  "Value": "'Voltar à tela 03: Até a véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 03: Na véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
+                  "Value": "'Voltar à tela 03: Até a véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
                 }
               }
             },

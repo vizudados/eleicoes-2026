@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
-"""00 · Capa — afinal, qual Brasil foi às urnas no 1º turno? (dono: main). Tela escura, sem filtro.
+"""00 · Capa — afinal, qual Brasil foi às urnas nesta eleição? (dono: main). Tela escura, sem filtro.
 
 Conceito (pedido do Alisson, 23/10/2026: "o mapa do Brasil e várias paisagens, a bandeira aparecendo", com uma capa
-própria, que não repita a de outro painel da casa): as 27 estrelas da bandeira viram as UFs no mapa, os 5.571 municípios acendem pela margem e as
-paisagens se desenham num horizonte contínuo, de Norte a Sul. Composição simétrica e centrada: o título no alto, os dois
+própria, que não repita a de outro painel da casa): as 27 estrelas da bandeira viram as UFs no mapa, os municípios acendem pelo primeiro turno e uma segunda onda repinta pelo segundo.
+As paisagens se desenham num horizonte contínuo, de Norte a Sul. Composição simétrica e centrada: o título no alto, os dois
 candidatos em blocos espelhados à esquerda e à direita, o mapa no meio.
 
-  T00_Capa_Html   o vídeo (Remotion, GitHub Pages: midia/capa/capa.mp4 e .webm, toca uma vez e para no quadro final;
-                  pôster capa-final.jpg; com movimento reduzido, só o pôster), o título e a composição fixa no
+  T00_Capa_Html   o vídeo (Remotion, GitHub Pages: midia/capa/capa-2t.mp4 e .webm, toca uma vez e para no quadro final;
+                  pôster capa-2t-final.jpg; com movimento reduzido, só o pôster), o título e a composição fixa no
                   bodyTemplate, e os números (contador) da medida [T00 · Capa · HTML]
   T00_Capa_Comecar   botão sobre o convite "começar" (vai à tela 01)
 """
@@ -23,15 +23,18 @@ P = "T00"
 CSS = "Estilo · CSS"
 C = estilo.COR
 MIDIA = "https://vizudados.github.io/eleicoes-2026/midia"
+# docs/midia/capa/LEIAME.md: primeiro ponto colorido no quadro 280, segunda onda no quadro 396, 30 fps.
+# Se o roteiro mudar, trocar aqui: os valores vão para as variáveis CSS da capa.
+ROTULO_INICIO_S = 280 / 30
+ROTULO_SEGUNDO_S = 396 / 30
 
 
 def corpo() -> str:
     css = (
-        ".cp{color:var(--creme)}"
+        f".cp{{--rotulo-inicio:{ROTULO_INICIO_S:.9f}s;--rotulo-segundo:{ROTULO_SEGUNDO_S:.9f}s;color:var(--creme)}}"
         ".cp video,.cp .poster{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover}"
         # o vídeo começa no céu escuro (pôster capa-inicio); se ele não carregar, o quadro final entra no lugar
         ".cp .poster{display:none}"
-        "@media (prefers-reduced-motion:reduce){.cp video{display:none}.cp .poster{display:block}}"
         ".cp .topo{position:absolute;left:300px;right:300px;top:118px;text-align:center}"
         f".cp .topo .sob{{color:{C['areia']};font-size:16px}}"
         ".cp .topo .tg{font-size:88px;font-weight:700;letter-spacing:-.035em;line-height:1;margin-top:14px}"
@@ -39,13 +42,29 @@ def corpo() -> str:
         ".cp .bl{position:absolute;top:430px;width:420px}"
         ".cp .bl.esq{left:140px}.cp .bl.dir{left:1360px;text-align:right}"
         f".cp .bl .rot{{color:{C['areia']};font-size:15px}}"
-        ".cp .bl .v{font-size:76px;margin:14px 0 10px 0}"
+        ".cp .bl .etapa{font-size:13px;margin-top:9px;letter-spacing:.10em}"
+        ".cp .bl .v{font-size:76px;margin:10px 0 10px 0}"
         f".cp .flavio-c{{color:{C['azul_claro']}}}.cp .lula-c{{color:{C['rosa']}}}"
         ".cp .bl .p{font-size:22px;font-weight:500}"
+        ".cp .bl .primeiro{font-size:16px;font-weight:500;color:var(--areia);margin-top:18px}"
+        ".cp .bl .primeiro .num{font-size:20px;line-height:1.2}"
+        ".cp .selo-eleito{display:inline-block;font-family:var(--mao);font-size:26px;line-height:1;letter-spacing:.04em;"
+        "color:var(--creme);border:1.5px solid var(--areia);padding:3px 12px 5px;margin-top:14px;transform:rotate(-4deg)}"
         ".cp .pe-esq,.cp .pe-dir{position:absolute;top:706px;font-size:20px;font-weight:500}"
-        ".cp .pe-esq{left:140px}.cp .pe-dir{right:140px;text-align:right}"
+        ".cp .pe-esq{left:140px;width:450px;font-size:16px;line-height:28px}.cp .pe-dir{right:140px;text-align:right}"
+        ".cp .pe-esq .num{font-size:24px;line-height:28px}"
         ".cp .pe-esq .num,.cp .pe-dir .num{font-size:28px;font-weight:700}"
         ".cp .vir{position:relative;display:inline-block;padding:0 6px}"
+        ".cp .mapa-rotulo{position:absolute;left:760px;top:866px;width:400px;height:28px;display:grid;place-items:center;"
+        "color:var(--areia);font-size:14px;font-weight:500;pointer-events:none;text-shadow:0 0 5px var(--tinta),0 0 5px var(--tinta);"
+        "animation:rotuloEntra .35s ease var(--rotulo-inicio) both}"
+        ".cp .mapa-rotulo span{grid-area:1/1}.cp .mapa-rotulo .t1{opacity:0;animation:rotuloSai .35s ease var(--rotulo-segundo) both}"
+        ".cp .mapa-rotulo .t2{opacity:1;animation:rotuloEntra .35s ease var(--rotulo-segundo) both}"
+        "@keyframes rotuloEntra{from{opacity:0}to{opacity:1}}@keyframes rotuloSai{from{opacity:1}to{opacity:0}}"
+        ".cp .mapa-rotulo,.cp .mapa-rotulo span{animation-play-state:var(--mapa-movimento,paused)}"
+        ".cp.sem-video .mapa-rotulo,.cp.sem-video .mapa-rotulo span{animation:none}"
+        "@media (prefers-reduced-motion:reduce){.cp video{display:none}.cp .poster{display:block}"
+        ".cp .mapa-rotulo,.cp .mapa-rotulo span{animation:none}}"
         f".cp .sumario{{position:absolute;left:150px;top:60px;font-size:14px;font-weight:600;letter-spacing:.16em;"
         f"text-transform:uppercase;color:{C['areia']}}}"
         ".cp .sumario span{font-size:18px;margin-right:6px}"
@@ -59,17 +78,22 @@ def corpo() -> str:
              .replace("url(#rbl)", "url(#rbc)").replace("class='sub'", "class='sb'"))
     return (
         f"<style>{css}</style><div class='tela cp'>"
-        f"<video autoplay muted playsinline preload='auto' poster='{MIDIA}/capa/capa-inicio.jpg' "
-        "onerror=\"this.style.display='none';this.nextElementSibling.style.display='block'\">"
-        f"<source src='{MIDIA}/capa/capa.mp4' type='video/mp4'/><source src='{MIDIA}/capa/capa.webm' type='video/webm' "
-        "onerror=\"var v=this.parentNode;v.style.display='none';v.nextElementSibling.style.display='block'\"/>"
+        f"<video autoplay muted playsinline preload='auto' poster='{MIDIA}/capa/capa-2t-inicio.jpg' "
+        "onplaying=\"this.closest('.cp').style.setProperty('--mapa-movimento','running')\" "
+        "onwaiting=\"this.closest('.cp').style.setProperty('--mapa-movimento','paused')\" "
+        "onpause=\"this.closest('.cp').style.setProperty('--mapa-movimento','paused')\" "
+        "onerror=\"this.style.display='none';this.nextElementSibling.style.display='block';this.closest('.cp').classList.add('sem-video')\">"
+        f"<source src='{MIDIA}/capa/capa-2t.mp4' type='video/mp4'/><source src='{MIDIA}/capa/capa-2t.webm' type='video/webm' "
+        "onerror=\"var v=this.parentNode;v.style.display='none';v.nextElementSibling.style.display='block';v.closest('.cp').classList.add('sem-video')\"/>"
         "</video>"
-        f"<img class='poster' alt='' src='{MIDIA}/capa/capa-final.jpg'/>"
-        "<div class='topo'><div class='sob sobe d1'>ELEIÇÕES 2026 · 1º TURNO PRESIDENCIAL</div>"
+        f"<img class='poster' alt='' src='{MIDIA}/capa/capa-2t-final.jpg'/>"
+        "<div class='topo'><div class='sob sobe d1'>ELEIÇÕES 2026 · OS DOIS TURNOS</div>"
         "<div class='tg sobe d2'>O voto, de perto.</div>"
-        "<div class='q sobe d4'>Afinal, qual Brasil foi às urnas no 1º turno?</div></div>"
+        "<div class='q sobe d4'>Afinal, qual Brasil foi às urnas nesta eleição?</div></div>"
         "<div class='comecar entra d14'>começar</div>"
         "<div class='sumario entra d14'><span>☰</span> sumário</div>"
+        "<div class='mapa-rotulo' aria-hidden='true'><span class='t1'>1º turno · 4 de outubro</span>"
+        "<span class='t2'>2º turno · 25 de outubro</span></div>"
         "{{content}}"
         # o traço à mão embaixo do número de municípios que viraram (span .risco dentro do .vir, no bloco do pé)
         f"<style>.cp .vir .risco{{position:absolute;left:6px;right:6px;bottom:-9px;height:10px}}"

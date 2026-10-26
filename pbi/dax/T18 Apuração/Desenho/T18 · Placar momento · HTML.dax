@@ -17,7 +17,7 @@ VAR _nulos = [T18 · momento · nulos]
 VAR _pos = [T18 · momento · posição]
 VAR _n = [T18 · momento · atualizações da noite]
 -- 2 · Textos
-VAR _hora = FORMAT ( _m, "HH:mm" )
+VAR _hora = SUBSTITUTE ( FORMAT ( _m, "HH:mm" ), ":", "h" )
 VAR _lulaTxt = FORMAT ( _lulaP * 100, "0.00" ) & "%"
 VAR _flavioTxt = FORMAT ( _flavioP * 100, "0.00" ) & "%"
 VAR _secoesTxt = FORMAT ( _secoes * 100, "0.00" ) & "%"
@@ -41,7 +41,7 @@ VAR _barra =
         & "<div class='enche barra-x' style='width:" & FORMAT ( _secoes * 100, "0.0##", "en-US" ) & "%'></div>"
         & "<span class='num'>" & _secoesTxt & "</span></div><div class='nota'>Brancos " & FORMAT ( _brancos, "#,0" )
         & " · nulos " & FORMAT ( _nulos, "#,0" ) & " · atualização " & _pos & " de " & _n
-        & " · clique de novo na curva para voltar ao agora</div></div>"
+        & " · clique de novo na curva para voltar ao resultado final</div></div>"
 VAR _topo =
     "<div class='rot topo entra'>NAQUELE MOMENTO · TSE ÀS " & _hora & " DE " & FORMAT ( _m, "dd/MM" ) & " · BRASIL</div>"
 -- 4 · Marcação

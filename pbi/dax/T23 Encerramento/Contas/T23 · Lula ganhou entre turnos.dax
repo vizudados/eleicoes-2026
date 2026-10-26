@@ -1,0 +1,8 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: #,0
+@descricao: Achados finais do encerramento, sem filtro.
+*/
+CALCULATE ( SUM ( 'Apuração Brasil'[LulaVotos] ), REMOVEFILTERS ( 'UF' ) )
+    - CALCULATE ( SUM ( 'Candidato ano'[Votos] ), REMOVEFILTERS ( 'Ano' ), REMOVEFILTERS ( 'Candidato ano' ),
+        'Candidato ano'[Ano] = 2026, 'Candidato ano'[Partido] = "PT" )

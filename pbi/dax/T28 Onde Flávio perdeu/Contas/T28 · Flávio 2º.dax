@@ -1,0 +1,9 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Votos de Flávio em 2026, 2º turno, sem exterior; respeita Município e UF.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+CALCULATE ( SUM ( 'Município segundo turno'[VotosAdversario] ),
+    REMOVEFILTERS ( 'Ano' ), 'Município segundo turno'[Ano] = 2026 )

@@ -3,9 +3,9 @@
   "name": "TIX_Sumario_Ir23",
   "position": {
     "x": 1460,
-    "y": 832,
+    "y": 900,
     "z": 1020,
-    "height": 80,
+    "height": 68,
     "width": 316,
     "tabOrder": 223
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'26 · Encerramento: E o que fica desta eleição?'"
+                  "Value": "'28 · Encerramento: E o que fica desta eleição?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'26 · Encerramento: E o que fica desta eleição?'"
+                  "Value": "'28 · Encerramento: E o que fica desta eleição?'"
                 }
               }
             },

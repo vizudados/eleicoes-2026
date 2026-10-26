@@ -1,0 +1,24 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Dossiê municipal acrescenta comparecimento, abstenção, inválidos e Jair 2022.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+-- 1 · Leituras
+VAR _nome = SELECTEDVALUE ( 'Município'[Rótulo], "Municípios do recorte" )
+VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+-- 4 · Marcação
+RETURN "<div class='tela st-tt'><div class='fita'></div><div class='tit'>" & _esc
+    & "</div><div class='rot'>DO 1º PARA O 2º TURNO · VOTOS</div><div class='duo'><div class='lula-esc'>Lula <b class='num'>"
+    & FORMAT ( [T28 · ganho Lula], "+#,0;-#,0;0" ) & "</b></div><div class='flavio-esc'>Flávio <b class='num'>"
+    & FORMAT ( [T28 · ganho Flávio], "+#,0;-#,0;0" ) & "</b></div></div><div class='txt'>O saldo de Lula menos Flávio passou de "
+    & FORMAT ( [T28 · vantagem Lula 1º], "+#,0;-#,0;0" ) & " para " & FORMAT ( [T28 · vantagem Lula 2º], "+#,0;-#,0;0" )
+    & IF ( ABS ( [T28 · vantagem Lula 2º] ) = 1, " voto.", " votos." ) & "</div><div class='txt'>Comparecimento: " & FORMAT ( [T28 · saldo comparecimento], "+#,0;-#,0;0" )
+    & "; abstenções: " & FORMAT ( [T28 · saldo abstenções], "+#,0;-#,0;0" ) & "; brancos: " & FORMAT ( [T28 · saldo brancos], "+#,0;-#,0;0" )
+    & "; nulos: " & FORMAT ( [T28 · saldo nulos], "+#,0;-#,0;0" ) & ".</div><div class='txt'>"
+    & IF ( ISBLANK ( [T28 · Jair 2022] ), "Sem base de 2022; comparação com Jair indisponível.",
+        "Frente ao 2º turno de 2022: Lula " & FORMAT ( [T28 · saldo Lula contra 2022], "+#,0;-#,0;0" ) & IF ( ABS ( [T28 · saldo Lula contra 2022] ) = 1, " voto; Flávio ", " votos; Flávio " )
+        & FORMAT ( [T28 · saldo Flávio contra 2022], "+#,0;-#,0;0" ) & IF ( ABS ( [T28 · saldo Flávio contra 2022] ) = 1, " voto frente a Jair.", " votos frente a Jair." ) )
+    & IF ( [T28 · território alterado] = 1, " Limites territoriais mudaram em MT; a comparação não foi reconstruída em área constante.", "" )
+    & "</div><div class='mao'>saldo não é trajetória</div></div>"

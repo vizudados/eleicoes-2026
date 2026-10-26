@@ -65,8 +65,17 @@ VAR _rotulos =
             & "<text x='" & _xt & "' y='" & FORMAT ( _ylu + IF ( _lu > _fu, -14, 26 ), "0.0", "en-US" )
             & "' text-anchor='" & _ancora & "' class='rl entra d9'>Lula " & FORMAT ( _lu * 100, "0.00" ) & "%</text>"
     )
-VAR _vazio = IF ( _n = 0, "<text x='455' y='96' text-anchor='middle' class='vz'>a curva começa às 17h</text>" )
+VAR _a = [T18 · noite · Flávio passou à frente]
+VAR _b = [T18 · noite · Lula retomou a frente]
+VAR _xa = 70 + ( _a - _base ) * 24 / 7 * 770 -- geometria
+VAR _xb = 70 + ( _b - _base ) * 24 / 7 * 770 -- geometria
+VAR _faixa = "<rect x='" & FORMAT ( _xa, "0.0", "en-US" ) & "' y='20' width='"
+    & FORMAT ( _xb - _xa, "0.0", "en-US" ) & "' height='230' fill='#31699B' opacity='.10'/>"
+    & "<text class='ex' x='" & FORMAT ( _xa, "0.0", "en-US" ) & "' y='267' text-anchor='end'>"
+    & SUBSTITUTE ( FORMAT ( _a, "HH:mm" ), ":", "h" ) & "</text><text class='ex' x='" & FORMAT ( _xb, "0.0", "en-US" )
+    & "' y='267' text-anchor='start'>" & SUBSTITUTE ( FORMAT ( _b, "HH:mm" ), ":", "h" ) & "</text>"
 RETURN
     "<div class='tela t18c'><div class='rot entra'>A CURVA DA NOITE · % DOS VÁLIDOS A CADA ATUALIZAÇÃO DO TSE · BRASIL</div>"
-        & "<svg viewBox='0 0 900 290' width='900' height='290'>" & _grade & _horas & _series & _rotulos & _vazio
-        & "</svg></div>"
+        & "<div class='escala'>Escala ampliada de 40% a 60%; as primeiras parciais ficaram fora dessa faixa.</div>"
+        & "<svg viewBox='0 0 900 290' width='900' height='290'>" & _faixa & _grade & _horas & _series & _rotulos
+        & "<text x='115' y='52' class='parada entra d8'>divulgação parada até as 19h</text></svg></div>"

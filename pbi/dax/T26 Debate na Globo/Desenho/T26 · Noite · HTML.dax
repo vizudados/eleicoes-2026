@@ -1,7 +1,7 @@
 /*
 @pasta: T26 Debate na Globo\Desenho
 @formato: texto
-@descricao: Fundo da faixa da noite: título, a fita do tempo do início do debate à eleição de domingo.
+@descricao: Fundo da faixa da noite: título, a fita do tempo do início do debate à eleição de 25/10.
 */
 -- 1 · Leituras (contas de T26 Debate na Globo\Contas)
 VAR _sit = [T26 · debate · situação]

@@ -1,0 +1,7 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: #,0
+@descricao: Municípios que passaram estritamente de Flávio para Lula entre os turnos.
+*/
+CALCULATE ( [T28 · virou para Lula · municípios],
+    REMOVEFILTERS ( 'UF' ), REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'Ano' ) )

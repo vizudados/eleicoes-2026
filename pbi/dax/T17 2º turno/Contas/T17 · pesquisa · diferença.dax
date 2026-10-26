@@ -5,5 +5,5 @@
 */
 IF (
     NOT ISBLANK ( [T17 · pesquisa · momento] ),
-    [T17 · pesquisa · Flávio] - [T17 · pesquisa · Lula]
+    DIVIDE ( [T17 · pesquisa · Flávio] - [T17 · pesquisa · Lula], [T17 · pesquisa · Flávio] + [T17 · pesquisa · Lula] ) * 100
 )

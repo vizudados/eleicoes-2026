@@ -1,7 +1,7 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Fundo da coluna da direita, só seguidores (os anúncios na Meta foram para o dossiê ttT09Lado): título, frase e fonte dos seguidores ganhos na campanha do 1º turno; o bloco do ritmo logo depois do 1º turno (mesma fonte e mesmas quatro redes, ganho por dia) e a nota de que depois de 08/10 as fontes divergem. As barras e os números de cada um são outro visual (T09 · Linhas · HTML), na mesma caixa. Com um período escolhido no filtro: os seguidores ganhos na janela que cabe inteira no período (Antes da Band, Bites de 05 a 17/10; Depois da Band, Quaest, só Instagram, 18/10), com a janela real e a fonte escritas, e o ritmo por dia na mesma janela (sem ritmo numa janela de um dia); sem janela, o lugar das barras tracejado com 'sem dado no período' (Depois da Globo, 'aguardando').
+@descricao: Fundo da coluna da direita, só seguidores (os anúncios na Meta foram para o dossiê ttT09Lado): título, frase e fonte dos seguidores ganhos na campanha do 1º turno; o bloco do ritmo logo depois do 1º turno (mesma fonte e mesmas quatro redes, ganho por dia) e a nota de que depois de 08/10 as fontes divergem. As barras e os números de cada um são outro visual (T09 · Linhas · HTML), na mesma caixa. Com um período escolhido no filtro: os seguidores ganhos na janela que cabe inteira no período (Antes da Band, Bites de 05 a 17/10; Depois da Band, Quaest, só Instagram, 18/10), com a janela real e a fonte escritas, e o ritmo por dia na mesma janela (sem ritmo numa janela de um dia); sem janela, o lugar das barras tracejado com 'sem dado no período' (Depois da Globo, 'não divulgado').
 */
 -- 1 · Leituras
 VAR _sL = [T09 · seguidores ganhos · campanha · Lula]
@@ -45,7 +45,7 @@ VAR _pQuem = SWITCH ( TRUE (), _psL > _psF, "Lula", _psF > _psL, "Flávio" )
 VAR _pMan =
     SWITCH (
         TRUE (),
-        _espera, _pNome & ", os números ainda não chegaram",
+        _espera, _pNome & ", os números não constam do levantamento",
         NOT _temP, _pNome & ": sem dado no período",
         ISBLANK ( _pQuem ), _pNome & ", os dois ganharam o mesmo número de seguidores",
         _pNome & ", quem mais ganhou seguidores foi " & _pQuem
@@ -53,7 +53,7 @@ VAR _pMan =
 VAR _pNota =
     SWITCH (
         TRUE (),
-        _espera, "Até a manhã de domingo, 25/10, nenhuma medição do ganho dos dois cabia inteira em " & _janPer & ".",
+        _espera, "No levantamento encerrado em 25/10, nenhuma medição do ganho dos dois cabia inteira em " & _janPer & ".",
         NOT _temP, "Nenhuma medição do ganho dos dois cabe inteira em " & _janPer & ".",
         _janS & IF ( _psD = 1 && _psI = [Período · debate · data], ", dia do debate", "" ) & " · "
             & IF ( _psIg, "só Instagram", "a fonte não detalha as redes" ) & " · " & _psFonte
@@ -79,7 +79,7 @@ VAR _periodo =
                     & "<div class='txt sobe d9'>" & _pRitmo & "</div>"
                 & "</div>",
             "<div class='vazio entra d6'>"
-                & IF ( _espera, "<span class='mao'>aguardando</span>", "<span class='rot'>sem dado no período</span>" )
+                & IF ( _espera, "<span class='mao'>não divulgado</span>", "<span class='rot'>sem dado no período</span>" )
             & "</div>"
         )
         & "<div class='ress entra d14'>Só entra a medição que cabe inteira no período; as fontes contam redes e dias "

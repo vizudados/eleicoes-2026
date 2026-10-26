@@ -16,7 +16,7 @@ RETURN
         [Período · rótulo] & ": "
             & IF (
                 ISBLANK ( _pL ) || ISBLANK ( _pF ),
-                IF ( _per = 4, "os números das redes ainda não chegaram.", "sem dado no período para as interações dos dois." ),
+                IF ( _per = 4, "os números das redes não constam do levantamento.", "sem dado no período para as interações dos dois." ),
                 "Lula " & FORMAT ( _pL / 1000000, "0.0" ) & " mi e Flávio " & FORMAT ( _pF / 1000000, "0.0" )
                     & " mi de interações nos perfis oficiais (Bites" & IF ( _p24, ", 24 h após o debate", "" ) & ")."
             )

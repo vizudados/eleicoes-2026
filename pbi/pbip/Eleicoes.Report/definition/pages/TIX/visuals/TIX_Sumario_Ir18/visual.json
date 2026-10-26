@@ -3,9 +3,9 @@
   "name": "TIX_Sumario_Ir18",
   "position": {
     "x": 1460,
-    "y": 744,
+    "y": 672,
     "z": 1020,
-    "height": 80,
+    "height": 68,
     "width": 316,
     "tabOrder": 218
   },
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'25 · Apuração: Quem está na frente na apuração do 2º turno?'"
+                  "Value": "'25 · Apuração: Como foi a apuração do 2º turno?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'25 · Apuração: Quem está na frente na apuração do 2º turno?'"
+                  "Value": "'25 · Apuração: Como foi a apuração do 2º turno?'"
                 }
               }
             },

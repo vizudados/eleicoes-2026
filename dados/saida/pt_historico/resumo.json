@@ -1,0 +1,33 @@
+{
+  "turnos": 18,
+  "linhas_uf": 504,
+  "provas_fontes_adotadas": 594,
+  "provas_todas_batem": true,
+  "comparacoes_publicacoes": 43,
+  "comparacoes_publicacoes_que_divergem": 16,
+  "anos_com_versoes_divergentes": [
+    1989,
+    1994,
+    1998,
+    2002,
+    2010,
+    2018
+  ],
+  "campos_divergentes_detalhe_nominal_1989": 7,
+  "regra_exterior": "ZZ separado nas UFs e incluído uma vez no Brasil em todos os anos",
+  "regra_transito_2010": "VT distribuído por capital declarada no bruto para a UF onde ocorreu a votação; cada registro conservado",
+  "recorde": {
+    "votacao_recorde": 64256232,
+    "candidato_recorde": "Lula",
+    "ano": 2026,
+    "turno": 2,
+    "recorde_anterior": 60345999,
+    "ano_anterior": 2022,
+    "candidato_anterior": "LUIZ INÁCIO LULA DA SILVA",
+    "supera_em_votos": 3910233,
+    "candidaturas_turnos_comparadas_desde_1989": 127,
+    "eleicoes_anteriores_com_limite_superior_oficial": 15,
+    "maior_votacao_antes_1989": 5636623,
+    "limite_do_metodo": "Compara todas as candidaturas/turnos desde 1989; antes disso usa o mais votado de cada eleição direta como limite superior de todos os concorrentes, sem afirmar ter transcrito todos os derrotados"
+  }
+}

@@ -54,18 +54,17 @@ def molde(fonte):
         resto_v = "CALCULATE ( SUM ( 'Apuração exterior'[Validos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) )"
         resto_l = "CALCULATE ( SUM ( 'Apuração exterior'[LulaVotos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) )"
         resto_f = "CALCULATE ( SUM ( 'Apuração exterior'[FlavioVotos] ), TREATAS ( _resto, 'Apuração exterior'[País] ) )"
-        rotulo = ('"EXTERIOR AO VIVO · " & [Apuração · turno] & "º TURNO · " '
+        rotulo = ('"EXTERIOR · RESULTADO FINAL · " & [Apuração · turno] & "º TURNO · " '
                   '& FORMAT ( [Apuração exterior · seções %] * 100, "0" ) & "% DAS SEÇÕES · " '
                   '& [Apuração exterior · países] & " PAÍSES"')
         coluna3 = "SEÇÕES"
         celula3 = '"<span class=\'dv\'>" & FORMAT ( [@s] * 100, "0" ) & "%</span>"'
         lula_n, flavio_n = "[Apuração exterior · países com Lula à frente]", "[Apuração exterior · países com Flávio à frente]"
         sem_n = "[Apuração exterior · países sem vencedor]"
-        sem_txt = ('IF ( [Apuração exterior · seções %] >= 1, "empate ou nenhum voto válido", '
-                   '"empate ou nenhum voto apurado ainda" )')
+        sem_txt = '"empate ou nenhum voto válido"'
         total_v, total_l, total_f = ("[Apuração exterior · válidos]", "[Apuração exterior · Lula %]",
                                      "[Apuração exterior · Flávio %]")
-        nota_pe = ('"Países pelos votos válidos já apurados" & IF ( [Apuração · turno] = 2, "; no 2º turno, Lula e '
+        nota_pe = ('"Países pelos votos válidos finais" & IF ( [Apuração · turno] = 2, "; no 2º turno, Lula e '
                    'Flávio somam 100%.", "; no 1º turno, o resto é dos outros candidatos." )')
     return f"""
 -- 1 · Leituras: os países com mais votos válidos (os {TOP} maiores) e o resto somado
@@ -129,21 +128,16 @@ def main():
     & ", em " & [Exterior · países] & " países; Lula à frente em " & [Exterior · países com Lula à frente] & "."
 """)
     vivo = molde("vivo")
-    gravar("Exterior · ao vivo · HTML", "Tooltip rico do exterior na apuração do 2º turno: Lula × Flávio por país, com a % "
-           "de seções; antes dos primeiros votos, o 1º turno com o aviso de que a apuração ainda não começou.", f"""
+    gravar("Exterior · ao vivo · HTML", "Resultado final do exterior por país; ausência identificada sem substituir pelo primeiro turno.", f"""
 IF (
     [Apuração exterior · válidos] = 0,
-    SUBSTITUTE (
-        [Exterior · 1º turno · HTML],
-        "<div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026",
-        "<div class='aviso'>a apuração começa às 17h de 25/10; até lá, o voto do 1º turno</div><div class='rot topo-rot'>EXTERIOR · 1º TURNO DE 2026"
-    ),
+    "<div class='tela tx'><div class='fita'></div><div class='rot topo-rot'>EXTERIOR · 2º TURNO</div><div class='txt'>O resultado final por país não consta do levantamento carregado.</div></div>",
 {vivo.strip()}
 )""")
     gravar("Exterior · ao vivo · ALT", "Texto alternativo do tooltip do exterior na apuração.", """
 IF (
     [Apuração exterior · válidos] = 0,
-    "Exterior: a apuração começa às 17h de 25/10; no 1º turno, Lula " & FORMAT ( [Exterior · Lula %], "0.0%" ) & " e Flávio " & FORMAT ( [Exterior · Flávio %], "0.0%" ) & ".",
+    "O resultado final do segundo turno por país não consta do levantamento carregado.",
     "Exterior, apuração do 2º turno: Lula " & FORMAT ( [Apuração exterior · Lula %], "0.0%" ) & ", Flávio " & FORMAT ( [Apuração exterior · Flávio %], "0.0%" ) & "."
 )
 """)

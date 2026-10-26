@@ -1,0 +1,7 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: #,0
+@descricao: Número de UFs inteiras que mudaram de vencedor entre turnos, nos dois sentidos.
+*/
+CALCULATE ( [T28 · virou para Lula · UFs] + [T28 · virou para Flávio · UFs],
+    REMOVEFILTERS ( 'UF' ), REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'Ano' ) )

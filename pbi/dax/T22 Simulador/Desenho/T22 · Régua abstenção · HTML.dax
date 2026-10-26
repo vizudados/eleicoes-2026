@@ -12,6 +12,6 @@ VAR _txt =
 -- 3 · Marcação (trilho, botão e os rótulos 0% e 50% são do VizuFilter no modo régua, por cima)
 RETURN
     "<div class='tela t22c'>"
-        & "<div class='pergunta sobe'>Quantos deles não vão escolher ninguém?</div>"
+        & "<div class='pergunta sobe'>Quantos deles teriam deixado de escolher alguém?</div>"
         & "<div class='valor sobe d1'>" & _txt & "</div>"
     & "</div>"

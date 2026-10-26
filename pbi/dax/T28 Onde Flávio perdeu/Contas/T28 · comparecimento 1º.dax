@@ -1,0 +1,9 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: comparecimento, 1º turno, recorte municipal de 2026.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+CALCULATE ( SUM ( 'Município ano'[Comparecimento] ),
+    REMOVEFILTERS ( 'Ano' ), 'Município ano'[Ano] = 2026 )

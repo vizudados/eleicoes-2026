@@ -1,23 +1,11 @@
 # -*- coding: utf-8 -*-
-"""18 · Apuração — quem está na frente na apuração do 2º turno (dono: main). A tela se atualiza sozinha: o coletor
-(apuracao/coletar.py) grava a API do TSE no GitHub a cada minuto e o Power BI lê os arquivos (pbi/modelo/apuracao.py).
+"""25 · Apuração — resultado final do 2º turno de 25/10/2026 (dono: main).
 
-  T18_Placar_Html   placar: horas do TSE e da coleta, os dois candidatos (contador), selo do estado, frase do momento,
-                    relógio até as 17h de 25/10 (aguardando; conta no navegador) e a barra de seções. Recebe o filtro
-                    de estado da casca (árvore Região › Estado, 24/10/2026) e o clique no mapa: as contas somam as UFs
-                    do recorte (um estado, uma região, vários estados) e o texto lê o nome comum do recorte (Recorte ·
-                    nome/em); com a eleição definida, a frase separa o eleito no Brasil de quem lidera no recorte; o
-                    clique no mapa fora do filtro dá um aviso (T18 · recorte vazio)
-  T18_Curva_Html    a curva da noite (Brasil): as linhas se desenham a cada hora nova do TSE
-  T18_Curva_Pontos  por cima da curva, uma faixa de clique por atualização do TSE (granularidade 'Apuração
-                    histórico'[AtualizadoTSE]): no mouse, a linha da hora e os dois pontos; dossiê ttT18Momento (o que
-                    entrou desde a anterior e como a diferença se moveu); clique: o placar mostra o retrato daquele
-                    momento (T18 · Placar momento · HTML) e a hora fica marcada; clique de novo volta ao agora
-  T18_Mapa_Html     mapa de quadrados (granularidade UF): cor de quem lidera; clique filtra o placar; dossiê da UF no
-                    tooltip ttT18Uf. Não recebe o filtro de estado da casca (mostra sempre as 27 + exterior) e não
-                    filtra a lista dele (o clique num quadrado não encolhe a árvore Região › Estado)
-  T18_Mapa_Exterior alvo transparente sobre o EX do mapa: abre o tooltip do exterior país a país (ttT18Exterior) e,
-                    no clique, filtra o placar pelo exterior como o quadrado de baixo
+Lula foi eleito. A curva nacional conserva os momentos da noite: Flávio passou à frente às 19h45 e Lula retomou
+a liderança às 20h24min14s. O clique numa hora consulta o resultado parcial daquele momento; outro clique retorna ao
+resultado final. Mapa e resultado leem as UFs escolhidas pela casca; a curva permanece nacional.
+Os identificadores técnicos Placar foram preservados para manter a linhagem dos visuais e das medidas.
+Não há relógio regressivo, hora de coleta nem atualização contínua.
 """
 from __future__ import annotations
 
@@ -46,28 +34,18 @@ CSS_PLACAR = (
     f".t18p .selo{{position:absolute;right:6px;top:-62px;transform:rotate(-5deg);border:3px solid "
     f"{C['tinta']};outline:1.5px solid {C['tinta']};outline-offset:3px;padding:10px 16px;font-weight:700;"
     "font-size:15px;letter-spacing:.16em;white-space:nowrap}"
-    ".t18p .frase{position:absolute;left:0;right:0;top:300px;display:flex;align-items:center;gap:14px}"
+    ".t18p .frase{position:absolute;left:0;right:0;top:280px;font-size:23px;line-height:1.35;display:flex;align-items:center;gap:14px}"
     ".t18p .visto{font-family:var(--mao);font-size:44px;line-height:1;color:var(--tinta);margin-top:-8px}"
-    ".t18p .relogio{position:absolute;left:0;top:368px;display:flex;align-items:baseline;gap:18px}"
-    ".t18p .relogio .num{font-size:56px;font-variant-numeric:tabular-nums}"
-    ".t18p .relogio + .txt{position:absolute;left:0;top:446px}"
-    ".t18p .secoes{position:absolute;left:0;right:0;top:362px}"
+        ".t18p .secoes{position:absolute;left:0;right:0;top:362px}"
     f".t18p .trilho{{position:relative;height:30px;background:{C['creme']};margin:10px 0 12px 0;overflow:hidden}}"
     f".t18p .enche{{height:100%;background:{C['tinta']}}}"
     f".t18p .trilho .num{{position:absolute;left:12px;top:4px;font-size:20px;color:{C['papel']};mix-blend-mode:difference}}"
     ".t18p .secoes .nota{font-size:15px;color:var(--grafite)}"
 )
 
-# relógio regressivo até as 17h de 25/10 (20h UTC), no navegador: a tela "anda" mesmo sem nova coleta
-JS_RELOGIO = (
-    "<script>(function(){var W=window;function t(){var e=document.getElementById('t18rel');if(!e){return;}"
-    "var d=Date.UTC(2026,9,25,20,0,0)-Date.now();if(d<=0){e.textContent='as urnas já fecharam';return;}"
-    "var D=Math.floor(d/864e5),h=Math.floor(d%864e5/36e5),m=Math.floor(d%36e5/6e4),s=Math.floor(d%6e4/1e3);"
-    "e.textContent=(D?D+(D===1?' dia, ':' dias, '):'')+h+' h '+(m<10?'0':'')+m+' min '+(s<10?'0':'')+s+' s';}"
-    "if(W.__t18){clearInterval(W.__t18);}t();W.__t18=setInterval(t,1000);})();</script>"
-)
-
 CSS_CURVA = (
+    ".t18c .parada{font-family:var(--mao);font-size:28px;fill:var(--grafite)}"
+    ".t18c .escala{position:absolute;left:0;top:25px;font-size:13px;color:var(--grafite)}"
     ".t18c .rot{position:absolute;left:0;top:6px}"
     ".t18c svg{position:absolute;left:0;top:44px}"
     f".t18c .g{{stroke:{C['areia']};stroke-width:1}}.t18c .g.meio{{stroke:{C['grafite']};stroke-dasharray:4 5}}"
@@ -103,9 +81,9 @@ CSS_MAPA = (
     "color:var(--grafite)}"
 )
 CORPO_MAPA = (
-    f"<style>{CSS_MAPA}</style><div class='mapa-fixo'><div class='rot entra'>QUEM LIDERA EM CADA UNIDADE · "
-    f"% DAS SEÇÕES NO CANTO</div><div class='leg entra d10'><span><i style='background:{C['rosa']}'></i>Lula lidera"
-    f"</span><span><i style='background:{C['azul_claro']}'></i>Flávio lidera</span><span><i style='border:2px dashed "
+    f"<style>{CSS_MAPA}</style><div class='mapa-fixo'><div class='rot entra'>QUEM VENCEU EM CADA UNIDADE · "
+    f"% DAS SEÇÕES NO CANTO</div><div class='leg entra d10'><span><i style='background:{C['rosa']}'></i>Lula venceu"
+    f"</span><span><i style='background:{C['azul_claro']}'></i>Flávio venceu</span><span><i style='border:2px dashed "
     f"{C['grafite']}'></i>EX = exterior</span></div><div class='dica entra d12'>clique num estado</div></div>"
     "{{content}}"
 )
@@ -156,7 +134,7 @@ CSS_TT_MOMENTO = (
 def declarar(ctx):
     return [
         Visual(P, lib.visual_html("T18_Placar_Html", *PLACAR, "T18 · Placar · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=f"<style>{CSS_PLACAR}</style>{{{{content}}}}{JS_RELOGIO}",
+                                  modelo_corpo=f"<style>{CSS_PLACAR}</style>{{{{content}}}}",
                                   alt=lib.medida("T18 · Placar · ALT"), z=lib.CAMADAS["conteudo"], tab=100)),
         Visual(P, lib.visual_html("T18_Curva_Html", *CURVA, "T18 · Curva · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_CURVA}</style>{{{{content}}}}",
@@ -170,7 +148,7 @@ def declarar(ctx):
                             ordem=182, folha_de_estilo=CSS,
                             modelo_corpo=f"<style>{CSS_TT}{CSS_TT_MOMENTO}</style>{{{{content}}}}"),
         # o clique numa atualização da curva muda só o placar (o retrato daquele momento): a curva de fundo não recebe
-        # (o filtro em AtualizadoTSE a reduziria a um ponto), o mapa e o exterior seguem no agora (o histórico só tem o
+        # (o filtro em AtualizadoTSE a reduziria a um ponto), o mapa e o exterior seguem no resultado final (o histórico só tem o
         # Brasil) e o filtro de UF não tem o que mostrar com ele
         Interacao(P, "T18_Curva_Pontos", "T18_Curva_Html", "NoFilter"),
         Interacao(P, "T18_Curva_Pontos", "T18_Mapa_Html", "NoFilter"),

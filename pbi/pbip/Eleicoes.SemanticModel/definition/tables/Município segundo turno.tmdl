@@ -1,0 +1,137 @@
+/// Segundo turno por município, 2022 e 2026, sem exterior. Município ausente em 2022 permanece ausente; não equivale a zero. Fonte: TSE, exportação validada por pipeline/exportar_2turno.py.
+table 'Município segundo turno'
+	isHidden
+	lineageTag: b56aa50b-9304-51ce-adc7-bd877b1efe23
+
+	/// Código IBGE, chave da dimensão Município.
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: bede8a38-80bd-5447-810a-f2957ca7faa4
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ano, somente segundo turno.
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0e163edc-6ad7-5e80-b731-be732e7db3a7
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Lula.
+	column VotosPT
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c4e7ebd7-2027-513e-981b-a7a3b31e0adc
+		summarizeBy: none
+		sourceColumn: VotosPT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos de Flávio em 2026 e Jair Bolsonaro em 2022.
+	column VotosAdversario
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 2369e8ca-1e98-5e9f-bc56-be35c7e63853
+		summarizeBy: none
+		sourceColumn: VotosAdversario
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Demais candidatos; zero no segundo turno.
+	column VotosDemais
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 6b65a16d-11ec-5b25-b1f4-2a9b946dcb34
+		summarizeBy: none
+		sourceColumn: VotosDemais
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos válidos.
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 73a79e1f-be68-5387-89bf-94ca79ef0438
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Eleitores aptos.
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: a053791c-a5a2-515f-beca-5a3136c9920e
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Comparecimento registrado pelo TSE.
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: e36acc68-9db7-59ac-9178-62027c1916f9
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Abstenções registradas pelo TSE.
+	column Abstencoes
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c8bdc46a-e51c-55e4-8ea5-c716d189ccb3
+		summarizeBy: none
+		sourceColumn: Abstencoes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos brancos.
+	column Brancos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 1a691dc3-968c-5917-9034-6296eec4aaa3
+		summarizeBy: none
+		sourceColumn: Brancos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos nulos.
+	column Nulos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 3e362612-bd7c-550a-ad54-84533f220382
+		summarizeBy: none
+		sourceColumn: Nulos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Município segundo turno' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/municipio_2turno.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"cd_ibge", "ano", "pt", "adv", "demais", "validos", "aptos", "comparecimento", "abstencoes", "brancos", "nulos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"cd_ibge", type text}, {"ano", Int64.Type}, {"pt", Int64.Type}, {"adv", Int64.Type}, {"demais", Int64.Type}, {"validos", Int64.Type}, {"aptos", Int64.Type}, {"comparecimento", Int64.Type}, {"abstencoes", Int64.Type}, {"brancos", Int64.Type}, {"nulos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"cd_ibge", "CodIBGE"}, {"ano", "Ano"}, {"pt", "VotosPT"}, {"adv", "VotosAdversario"}, {"demais", "VotosDemais"}, {"validos", "Validos"}, {"aptos", "Aptos"}, {"comparecimento", "Comparecimento"}, {"abstencoes", "Abstencoes"}, {"brancos", "Brancos"}, {"nulos", "Nulos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

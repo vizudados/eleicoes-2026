@@ -1,0 +1,21 @@
+{
+  "status": "PASSOU",
+  "campos_conferidos": 2762,
+  "linhas_uf": 504,
+  "linhas_brasil": 18,
+  "candidaturas_turnos_conferidas": 127,
+  "recorde": 64256232,
+  "recorde_anterior": 60345999,
+  "diferenca_recorde": 3910233,
+  "mais_mudancas": {
+    "AM": 3,
+    "AP": 3,
+    "DF": 3,
+    "MG": 3,
+    "RJ": 3
+  },
+  "metodo": "ZIP original de 1989, parser HTML independente de 1994, CSV linha a linha e mapa por código VT de 2010, JSON de UFs para 2026/2; sem pandas e sem importar o exportador",
+  "divergencias_entre_publicacoes": 16,
+  "campos_nominais_divergentes_no_detalhe_1989": 7,
+  "ressalva": "Confirma a transcrição e as contas das fontes adotadas. Não elimina as divergências entre publicações oficiais registradas em comparacao_publicacoes.csv"
+}

@@ -1,0 +1,15 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Manchete responde à pergunta com contas do recorte.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+-- 1 · Leituras e 2 · Textos
+VAR _frase = "A vantagem de Flávio " & IF ( [T28 · mudança de vantagem] >= 0, "diminuiu ", "aumentou " ) & (SWITCH ( TRUE (), ABS ( [T28 · mudança de vantagem] ) >= 1e6, FORMAT ( ABS ( [T28 · mudança de vantagem] ) / 1e6, "0.00" ) & " mi", ABS ( [T28 · mudança de vantagem] ) >= 1000, FORMAT ( ABS ( [T28 · mudança de vantagem] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T28 · mudança de vantagem] ), "#,0" ) )) & IF ( ABS ( [T28 · mudança de vantagem] ) >= 1e6, " de votos", IF ( ABS ( [T28 · mudança de vantagem] ) = 1, " voto", " votos" ) )
+VAR _apoio = "Lula " & IF ( [T28 · ganho Lula] >= 0, "ganhou ", "perdeu " ) & ((SWITCH ( TRUE (), ABS ( [T28 · ganho Lula] ) >= 1e6, FORMAT ( ABS ( [T28 · ganho Lula] ) / 1e6, "0.00" ) & " mi", ABS ( [T28 · ganho Lula] ) >= 1000, FORMAT ( ABS ( [T28 · ganho Lula] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T28 · ganho Lula] ), "#,0" ) )) & IF ( ABS ( [T28 · ganho Lula] ) >= 1e6, " de votos", IF ( ABS ( [T28 · ganho Lula] ) = 1, " voto", " votos" ) )) & "; Flávio " & IF ( [T28 · ganho Flávio] >= 0, "ganhou ", "perdeu " ) & ((SWITCH ( TRUE (), ABS ( [T28 · ganho Flávio] ) >= 1e6, FORMAT ( ABS ( [T28 · ganho Flávio] ) / 1e6, "0.00" ) & " mi", ABS ( [T28 · ganho Flávio] ) >= 1000, FORMAT ( ABS ( [T28 · ganho Flávio] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T28 · ganho Flávio] ), "#,0" ) )) & IF ( ABS ( [T28 · ganho Flávio] ) >= 1e6, " de votos", IF ( ABS ( [T28 · ganho Flávio] ) = 1, " voto", " votos" ) )) & ". Perder vantagem não significa perder votos em termos absolutos."
+VAR _numero = SWITCH ( TRUE (), ABS ( [T28 · mudança de vantagem] ) >= 1e6, FORMAT ( ABS ( [T28 · mudança de vantagem] ) / 1e6, "0.00" ) & " mi", ABS ( [T28 · mudança de vantagem] ) >= 1000, FORMAT ( ABS ( [T28 · mudança de vantagem] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T28 · mudança de vantagem] ), "#,0" ) )
+VAR _titulo = SUBSTITUTE ( _frase, _numero, "<b class='num hero'>" & _numero & "</b>" )
+-- 4 · Marcação
+RETURN "<div class='tela st-res'><div class='sob'>DO 1º PARA O 2º TURNO · " & UPPER ( [Recorte · nome] )
+    & " · SEM EXTERIOR</div><div class='man sobe'>" & _titulo & "</div><div class='txt sobe d2'>" & _apoio & "</div></div>"

@@ -1,7 +1,7 @@
 /*
 @pasta: T17 2º turno\Contas
 @formato: +0.0;-0.0;0.0
-@descricao: Média de Flávio − Lula (pontos, votos totais) nas pesquisas do período escolhido (positivo = Flávio à frente).
+@descricao: Média de Flávio − Lula (pontos entre os dois candidatos, normalizados para 100) nas pesquisas do período escolhido (positivo = Flávio à frente).
 */
 VAR _de = [T17 · período · campo de]
 VAR _ate = [T17 · período · campo até]
@@ -9,7 +9,7 @@ RETURN
     IF (
         NOT ISBLANK ( _de ),
         CALCULATE (
-            AVERAGEX ( Pesquisa, Pesquisa[Flavio] - Pesquisa[Lula] ),
+            AVERAGEX ( Pesquisa, DIVIDE ( Pesquisa[Flavio] - Pesquisa[Lula], Pesquisa[Flavio] + Pesquisa[Lula] ) * 100 ),
             REMOVEFILTERS ( Pesquisa ),
             Pesquisa[Cenário] = "2º turno",
             Pesquisa[Tipo] = "totais",

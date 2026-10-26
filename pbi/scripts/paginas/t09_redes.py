@@ -32,7 +32,7 @@ dia do debate conta como depois; entre as que cabem, a mais longa) e escreve a j
 as interações da Bites (Antes da Band = 05 a 17/10; Depois da Band = as 24 h depois do debate); a coluna da direita,
 os seguidores ganhos (Bites, 05 a 17/10; Quaest, só Instagram, 18/10); o índice da Quaest, a faixa do período com o
 resto esmaecido; o dossiê do lado, os anúncios da Biblioteca que cabem (19/10). Sem medição que caiba: 'sem dado no
-período', nunca zero; Depois da Globo, 'aguardando' (como na tela da Globo).
+período', nunca zero; Depois da Globo, 'não divulgado' (como na tela da Globo).
 """
 from __future__ import annotations
 
@@ -60,7 +60,7 @@ CSS_HEROI = (
     ".t09a .lado{font-size:22px;font-weight:600;line-height:1.25;padding-bottom:18px;max-width:330px}"
     ".t09a .man{position:absolute;left:0;top:178px;width:820px}"
     ".t09a .txt{position:absolute;left:0;top:246px;width:820px}"
-    # período sem medição que caiba ('sem dado no período') ou à espera ('aguardando'): o lugar do número tracejado
+    # período sem medição que caiba ('sem dado no período') ou ausente ('não divulgado'): o lugar do número tracejado
     f".t09a .vazio{{display:inline-block;border:2px dashed {C['areia']};border-radius:8px;padding:22px 30px;"
     "font-size:30px;font-weight:600;line-height:1.1;color:var(--cinza);white-space:nowrap}"
     ".t09a .vazio.mao{font-family:var(--mao);font-size:46px;color:var(--grafite);padding:14px 34px}"

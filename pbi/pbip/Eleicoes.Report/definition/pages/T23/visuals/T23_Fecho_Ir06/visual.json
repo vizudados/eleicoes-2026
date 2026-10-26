@@ -2,7 +2,7 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "T23_Fecho_Ir06",
   "position": {
-    "x": 140,
+    "x": 145,
     "y": 514,
     "z": 1020,
     "height": 35,

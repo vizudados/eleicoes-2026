@@ -1,0 +1,49 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T27_CHEGADA_01",
+  "displayName": "Chegada · 26 De onde vieram",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T27_Casca_InfoAbre",
+      "T27_Casca_InfoFecha",
+      "T27_Casca_InfoFora",
+      "T27_Casca_Leitura"
+    ],
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T27",
+    "sections": {
+      "T27": {
+        "visualContainers": {
+          "T27_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T27_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T27_Casca_InfoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T27_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

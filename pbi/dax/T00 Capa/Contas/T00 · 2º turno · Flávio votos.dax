@@ -1,0 +1,10 @@
+/*
+@pasta: T00 Capa\Contas
+@formato: #,0
+@descricao: Resultado nacional final do segundo turno, com exterior; independe do filtro de UF.
+@oraculo: TSE nacional com exterior; UF segundo turno 2026; viradas municipais sem exterior
+@gerado: pbi/scripts/desenho_t00.py
+*/
+CALCULATE ( SUM ( 'UF segundo turno'[VotosAdversario] ),
+    REMOVEFILTERS ( 'UF' ), REMOVEFILTERS ( 'Ano' ), REMOVEFILTERS ( 'UF segundo turno' ),
+    'UF segundo turno'[Ano] = 2026 )

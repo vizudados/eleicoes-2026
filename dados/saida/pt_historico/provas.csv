@@ -1,0 +1,595 @@
+ano,turno,tipo,unidade,campo,obtido,esperado,diferenca,bate,fonte
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,128010,128010,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,861470,861470,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,595869,595869,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,87271,87271,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,4051075,4051075,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,2601856,2601856,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,759480,759480,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1183570,1183570,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,1769511,1769511,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,1299262,1299262,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,7756892,7756892,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,820163,820163,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,740275,740275,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,1525326,1525326,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1300191,1300191,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,2826828,2826828,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,965072,965072,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,4277224,4277224,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,7401503,7401503,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,979484,979484,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,386734,386734,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,53797,53797,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,5207189,5207189,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,2411062,2411062,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,593879,593879,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,16741344,16741344,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,289000,289000,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,12549,12549,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,11622321,11622321,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,20611030,20611030,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,67625886,67625886,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,72290216,72290216,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,82074718,82074718,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,128798,128798,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,899097,899097,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,594534,594534,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,83706,83706,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,4099214,4099214,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,2597655,2597655,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,720743,720743,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1163578,1163578,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,1695588,1695588,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,1388941,1388941,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,7541783,7541783,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,794923,794923,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,715532,715532,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,1525289,1525289,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1346654,1346654,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,2964849,2964849,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1002408,1002408,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,4150972,4150972,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,7169385,7169385,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1017658,1017658,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,370395,370395,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,52280,52280,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,4899619,4899619,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,2320419,2320419,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,612309,612309,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,16009904,16009904,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,289605,289605,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,10171,10171,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,31075803,31075803,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,35090206,35090206,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Soma 27 UFs e ZZ x controle nacional,BR,validos,66166009,66166009,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,70260701,70260701,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1989,2,Soma 27 UFs e ZZ x controle nacional,BR,aptos,82074718,82074718,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1989
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,166885,166885,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,689165,689165,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,693841,693841,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,129252,129252,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,3723890,3723890,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,2480413,2480413,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,814438,814438,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1190822,1190822,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,1736129,1736129,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,1261715,1261715,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,6998847,6998847,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,805950,805950,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,771413,771413,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,1484952,1484952,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1208408,1208408,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,2567671,2567671,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,924924,924924,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,3948550,3948550,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,6576308,6576308,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,943633,943633,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,409462,409462,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,84714,84714,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,4810460,4810460,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,2376413,2376413,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,572042,572042,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,15570323,15570323,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,345013,345013,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,26698,26698,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994
+1994,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,17122127,17122127,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994/brasil (cinco tabelas regionais + exterior)
+1994,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,34364961,34364961,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994/brasil (cinco tabelas regionais + exterior)
+1994,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,63312331,63312331,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994/brasil (cinco tabelas regionais + exterior)
+1994,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,77948464,77948464,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994/brasil (cinco tabelas regionais + exterior)
+1994,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,94782803,94782803,0,True,https://www.tse.jus.br/eleicoes/eleicoes-anteriores/eleicoes-1994/resultados-das-eleicoes-1994/brasil (cinco tabelas regionais + exterior)
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,193081,193081,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,720653,720653,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,826810,826810,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,161318,161318,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,3884008,3884008,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,2656103,2656103,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,967142,967142,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1258011,1258011,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,1891401,1891401,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,1513709,1513709,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,7588797,7588797,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,849670,849670,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,908053,908053,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,1796838,1796838,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1195480,1195480,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,2861352,2861352,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1003634,1003634,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,4206908,4206908,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,6737388,6737388,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1036781,1036781,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,487529,487529,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,115896,115896,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,5016906,5016906,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,2539592,2539592,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,627489,627489,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,16258818,16258818,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,398020,398020,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,20916,20916,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,21475211,21475211,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,35936382,35936382,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,67722303,67722303,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,83297773,83297773,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+1998,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,106100575,106100575,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-1998
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,264889,264889,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1076186,1076186,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1111042,1111042,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,233273,233273,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,5245047,5245047,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,3438374,3438374,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1208415,1208415,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1611996,1611996,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,2540283,2540283,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,2062392,2062392,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,9413131,9413131,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1076108,1076108,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1252744,1252744,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,2532141,2532141,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1579200,1579200,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,3569322,3569322,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1315285,1315285,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,5067229,5067229,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8176005,8176005,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1331410,1331410,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,628971,628971,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,160017,160017,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,5903760,5903760,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3038457,3038457,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,807631,807631,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,19749403,19749403,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,522667,522667,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,37134,37134,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,39455233,39455233,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,19705445,19705445,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,84952512,84952512,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,94805583,94805583,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,115253816,115253816,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,234166,234166,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1093911,1093911,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1033209,1033209,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,227573,227573,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,5648680,5648680,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,3478752,3478752,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1249193,1249193,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1590666,1590666,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,2495306,2495306,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,2102439,2102439,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,9608650,9608650,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1077135,1077135,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1191795,1191795,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,2502096,2502096,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1727430,1727430,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,3852805,3852805,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1358860,1358860,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,4946625,4946625,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8000576,8000576,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1333575,1333575,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,601584,601584,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,158779,158779,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,5905463,5905463,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,2985186,2985186,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,853912,853912,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,20337469,20337469,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,533754,533754,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,34514,34514,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,52793364,52793364,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,33370739,33370739,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Soma 27 UFs e ZZ x controle nacional,BR,validos,86164103,86164103,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,91664259,91664259,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2002,2,Soma 27 UFs e ZZ x controle nacional,BR,aptos,115253816,115253816,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2002
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,312606,312606,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1340715,1340715,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1371508,1371508,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,295379,295379,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,6441057,6441057,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,4005498,4005498,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1347805,1347805,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1800394,1800394,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,2846061,2846061,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,2818598,2818598,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,10220573,10220573,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1222462,1222462,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1441636,1441636,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,3150676,3150676,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1926654,1926654,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,4220344,4220344,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1568953,1568953,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,5571418,5571418,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8322533,8322533,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1583545,1583545,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,731420,731420,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,189022,189022,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6206741,6206741,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3337622,3337622,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1006465,1006465,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,22009043,22009043,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,668928,668928,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,39077,39077,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,46662365,46662365,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,39968369,39968369,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,95996733,95996733,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,104820459,104820459,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,125913235,125913235,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,289495,289495,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1338564,1338564,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1336047,1336047,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,272299,272299,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,6644731,6644731,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,4119997,4119997,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1343145,1343145,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1816311,1816311,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,2711291,2711291,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,2694628,2694628,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,10443645,10443645,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1191457,1191457,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1431161,1431161,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,3060718,3060718,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1970902,1970902,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,4155058,4155058,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1573721,1573721,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,5408120,5408120,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,7938771,7938771,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1576362,1576362,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,718133,718133,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,173822,173822,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6297574,6297574,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3258120,3258120,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1016234,1016234,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,22381714,22381714,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,637340,637340,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,38860,38860,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,58295042,58295042,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,37543178,37543178,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Soma 27 UFs e ZZ x controle nacional,BR,validos,95838220,95838220,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,101998221,101998221,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2006,2,Soma 27 UFs e ZZ x controle nacional,BR,aptos,125913235,125913235,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2006
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,346258,346258,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1394881,1394881,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1527689,1527689,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,341686,341686,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,6689577,6689577,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,4201327,4201327,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1463833,1463833,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1927345,1927345,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3085467,3085467,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,2945723,2945723,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,10789252,10789252,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1303388,1303388,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1537897,1537897,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,3548760,3548760,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1939516,1939516,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,4454430,4454430,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1623189,1623189,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,5938575,5938575,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8548271,8548271,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1637242,1637242,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,791497,791497,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,223397,223397,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6407784,6407784,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3626119,3626119,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1064629,1064629,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,23436258,23436258,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,711860,711860,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,84303,84303,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,47651434,47651434,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,33132283,33132283,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,101590153,101590153,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,111193747,111193747,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,135804433,135804433,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,320110,320110,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1375256,1375256,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1419039,1419039,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,317747,317747,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,6687018,6687018,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,4253698,4253698,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1347528,1347528,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1880613,1880613,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,2938655,2938655,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,2902240,2902240,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,10645315,10645315,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1238803,1238803,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1493715,1493715,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,3369310,3369310,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,1998617,1998617,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,4573382,4573382,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1590435,1590435,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,5822139,5822139,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8160491,8160491,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1647245,1647245,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,734453,734453,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,213854,213854,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6356648,6356648,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3588818,3588818,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1063307,1063307,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,22779043,22779043,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,665413,665413,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,81025,81025,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,55752529,55752529,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,43711388,43711388,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Soma 27 UFs e ZZ x controle nacional,BR,validos,99463917,99463917,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,106606214,106606214,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2010,2,Soma 27 UFs e ZZ x controle nacional,BR,aptos,135804433,135804433,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2010
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,399135,399135,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1409536,1409536,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1679115,1679115,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,389599,389599,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,6987943,6987943,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,4522185,4522185,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1579692,1579692,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1975322,1975322,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3228160,3228160,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,3145547,3145547,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,11112954,11112954,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1352208,1352208,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1559619,1559619,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,3838783,3838783,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,2098811,2098811,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,4810876,4810876,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1749876,1749876,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,6067868,6067868,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8346514,8346514,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1664918,1664918,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,828232,828232,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,250016,250016,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6371774,6371774,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3712293,3712293,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1095939,1095939,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,22980372,22980372,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,733776,733776,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,132739,132739,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,43267668,43267668,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,34897211,34897211,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,104023802,104023802,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,115122883,115122883,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,142822046,142822046,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,382659,382659,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1515767,1515767,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1590002,1590002,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,370289,370289,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,7212971,7212971,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,4591053,4591053,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1528525,1528525,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,1977876,1977876,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3185103,3185103,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,3143808,3143808,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,11413627,11413627,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1353762,1353762,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1583022,1583022,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,3665217,3665217,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,2149780,2149780,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,4899108,4899108,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1769422,1769422,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,6178731,6178731,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8174982,8174982,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1718255,1718255,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,806911,806911,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,237177,237177,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6453759,6453759,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3826917,3826917,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1153136,1153136,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,23804284,23804284,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,720950,720950,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,135180,135180,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,54501118,54501118,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,51041155,51041155,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Soma 27 UFs e ZZ x controle nacional,BR,validos,105542273,105542273,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,112683879,112683879,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2014,2,Soma 27 UFs e ZZ x controle nacional,BR,aptos,142822046,142822046,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2014
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,421778,421778,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1535746,1535746,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1853591,1853591,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,409757,409757,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,7368545,7368545,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,4880155,4880155,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1604517,1604517,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,2049148,2049148,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3264789,3264789,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,3366947,3366947,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,10987714,10987714,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1396945,1396945,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1634136,1634136,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,4142735,4142735,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,2165544,2165544,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,4725216,4725216,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1848943,1848943,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,6145689,6145689,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8543393,8543393,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1792253,1792253,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,864901,864901,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,276788,276788,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6372436,6372436,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3955783,3955783,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1140380,1140380,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,23352779,23352779,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,756760,756760,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,193381,193381,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,31342051,31342051,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,49277010,49277010,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,107050749,107050749,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,117364654,117364654,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,147306295,147306295,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,381876,381876,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1522127,1522127,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1761246,1761246,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,368712,368712,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,7545283,7545283,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,4792117,4792117,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1543751,1543751,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,2024379,2024379,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3242799,3242799,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,3315478,3315478,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,10483059,10483059,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1337074,1337074,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1634825,1634825,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,3854957,3854957,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,2233436,2233436,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,4959107,4959107,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,1839208,1839208,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,6173206,6173206,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,8342445,8342445,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,1783589,1783589,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,824311,824311,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,256140,256140,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6156908,6156908,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,3906966,3906966,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1123921,1123921,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,22518155,22518155,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,728277,728277,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,185401,185401,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,47040906,47040906,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,57797847,57797847,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Soma 27 UFs e ZZ x controle nacional,BR,validos,104838753,104838753,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,115933451,115933451,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2018,2,Soma 27 UFs e ZZ x controle nacional,BR,aptos,147306294,147306294,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2018
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,440917,440917,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1724217,1724217,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,2056676,2056676,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,432161,432161,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,8423008,8423008,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,5429264,5429264,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1762575,1762575,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,2221130,2221130,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3681469,3681469,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,3781645,3781645,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,12016633,12016633,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1506989,1506989,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1842888,1842888,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,4679936,4679936,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,2421688,2421688,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,5452009,5452009,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,2044386,2044386,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,6566764,6566764,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,9456677,9456677,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,2007264,2007264,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,903235,903235,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,298369,298369,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6637752,6637752,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,4330984,4330984,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1298432,1298432,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,25656334,25656334,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,861792,861792,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,294525,294525,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,57259504,57259504,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,51072345,51072345,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,118229719,118229719,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,123682372,123682372,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,156454011,156454011,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,409316,409316,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1664658,1664658,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,1966732,1966732,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,390465,390465,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,8454843,8454843,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,5442368,5442368,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1770626,1770626,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,2208912,2208912,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3735156,3735156,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,3751174,3751174,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,12332270,12332270,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1480153,1480153,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1869516,1869516,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,4582979,4582979,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,2404455,2404455,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,5439765,5439765,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,2018448,2018448,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,6665948,6665948,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,9560111,9560111,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,2038166,2038166,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,896140,896140,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,280646,280646,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6625036,6625036,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,4399548,4399548,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1284037,1284037,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,25736469,25736469,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,846247,846247,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,298169,298169,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,60345999,60345999,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,58206354,58206354,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Soma 27 UFs e ZZ x controle nacional,BR,validos,118552353,118552353,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,124252796,124252796,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2022,2,Soma 27 UFs e ZZ x controle nacional,BR,aptos,156454011,156454011,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2022
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,469066,469066,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1818856,1818856,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,2170763,2170763,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,464858,464858,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,8560291,8560291,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,5617814,5617814,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1772808,1772808,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,2251078,2251078,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3827823,3827823,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,4010439,4010439,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,11976235,11976235,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1490278,1490278,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,1993288,1993288,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,4863172,4863172,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,2513747,2513747,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,5601017,5601017,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,2146394,2146394,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,6585243,6585243,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,9369700,9369700,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,2071898,2071898,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,968059,968059,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,325545,325545,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6423046,6423046,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,4500897,4500897,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1364196,1364196,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,24882948,24882948,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,930447,930447,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,330882,330882,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,53879538,53879538,0,True,https://resultados.tse.jus.br/oficial/ele2026/6257/dados/br/br-c0001-e006257-u.json
+2026,1,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,56104503,56104503,0,True,https://resultados.tse.jus.br/oficial/ele2026/6257/dados/br/br-c0001-e006257-u.json
+2026,1,Soma 27 UFs e ZZ x controle nacional,BR,validos,119300788,119300788,0,True,https://resultados.tse.jus.br/oficial/ele2026/6257/dados/br/br-c0001-e006257-u.json
+2026,1,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,125275835,125275835,0,True,https://resultados.tse.jus.br/oficial/ele2026/6257/dados/br/br-c0001-e006257-u.json
+2026,1,Soma 27 UFs e ZZ x controle nacional,BR,aptos,158745502,158745502,0,True,https://resultados.tse.jus.br/oficial/ele2026/6257/dados/br/br-c0001-e006257-u.json
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AC,validos,432228,432228,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AL,validos,1896761,1896761,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AM,validos,2121028,2121028,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),AP,validos,421642,421642,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),BA,validos,9094019,9094019,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),CE,validos,5855602,5855602,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),DF,validos,1804766,1804766,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ES,validos,2296469,2296469,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),GO,validos,3930889,3930889,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MA,validos,4038202,4038202,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MG,validos,12592885,12592885,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MS,validos,1556865,1556865,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),MT,validos,2045266,2045266,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PA,validos,4890389,4890389,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PB,validos,2659269,2659269,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PE,validos,5950067,5950067,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PI,validos,2179848,2179848,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),PR,validos,6857948,6857948,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RJ,validos,9734426,9734426,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RN,validos,2151005,2151005,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RO,validos,968828,968828,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RR,validos,303180,303180,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),RS,validos,6698930,6698930,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SC,validos,4638385,4638385,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SE,validos,1422395,1422395,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),SP,validos,26258452,26258452,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),TO,validos,910878,910878,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Candidatos x válidos adotados (1989: soma nominal; demais: detalhe),ZZ,validos,371651,371651,0,True,https://dadosabertos.tse.jus.br/dataset/resultados-2026
+2026,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_pt,64256232,64256232,0,True,https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.json
+2026,2,Soma 27 UFs e ZZ x controle nacional,BR,votos_adv,59826041,59826041,0,True,https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.json
+2026,2,Soma 27 UFs e ZZ x controle nacional,BR,validos,124082273,124082273,0,True,https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.json
+2026,2,Soma 27 UFs e ZZ x controle nacional,BR,comparecimento,128236074,128236074,0,True,https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.json
+2026,2,Soma 27 UFs e ZZ x controle nacional,BR,aptos,158745502,158745502,0,True,https://resultados.tse.jus.br/oficial/ele2026/6258/dados/br/br-c0001-e006258-u.json
