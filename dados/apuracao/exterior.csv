@@ -63,7 +63,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 29351,Barcelona,Espanha,Europa,25/10/2026 22:05:24,100.0,22,22,6237,4821,1416
 30066,Madri,Espanha,Europa,25/10/2026 22:05:24,100.0,30,30,7345,4472,2873
 39080,Atlanta,Estados Unidos,América do Norte,25/10/2026 19:54:39,100.0,22,22,5600,1673,3927
-29416,Boston,Estados Unidos,América do Norte,25/10/2026 20:05:36,34.78,69,24,6243,1558,4685
+29416,Boston,Estados Unidos,América do Norte,25/10/2026 20:09:51,100.0,69,69,19007,5402,13605
 29513,Chicago,Estados Unidos,América do Norte,25/10/2026 19:04:55,100.0,18,18,3225,2059,1166
 30902,Hartford,Estados Unidos,América do Norte,25/10/2026 19:56:18,100.0,12,12,2336,807,1529
 29807,Houston,Estados Unidos,América do Norte,25/10/2026 19:07:32,100.0,23,23,4726,1744,2982
@@ -91,7 +91,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 39263,Malabo,Guiné Equatorial,África,25/10/2026 23:02:54,100.0,1,1,0,0,0
 29394,Bissau,Guiné-Bissau,África,25/10/2026 23:17:03,100.0,1,1,41,19,22
 30333,Porto Príncipe,Haiti,América Central e Caribe,,0.0,1,0,0,0,0
-30600,Tegucigalpa,Honduras,América Central e Caribe,,0.0,1,0,0,0,0
+30600,Tegucigalpa,Honduras,América Central e Caribe,25/10/2026 18:09:14,100.0,1,1,64,20,44
 29459,Budapeste,Hungria,Europa,25/10/2026 22:05:26,100.0,2,2,472,355,117
 29840,Jacarta,Indonésia,Ásia,26/10/2026 03:05:25,100.0,1,1,38,15,23
 99171,Bagdá,Iraque,Ásia,26/10/2026 01:02:54,100.0,1,1,0,0,0
