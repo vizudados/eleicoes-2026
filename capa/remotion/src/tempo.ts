@@ -1,6 +1,6 @@
-// Roteiro em segundos (30 fps, 18 s = 540 quadros) e funções de tempo.
+// Roteiro em segundos (30 fps, 21 s = 630 quadros) e funções de tempo.
 export const FPS = 30;
-export const SEGUNDOS = 18;
+export const SEGUNDOS = 21;
 export const QUADROS = SEGUNDOS * FPS;
 
 export const T = {
@@ -27,10 +27,14 @@ export const T = {
   acende: 0.45,
   corAtraso: 1.25,
   corDur: 1.05,
+  // Segunda onda: mesma ordem espacial do 1º turno, mesma duração de esmaecimento por ponto.
+  segundoTurno: [13.2, 16.7] as const,
+  brilhoTrocaDur: 0.6, // pulso creme igual nos dois sentidos, centrado no meio da transição local
   // Ato 4 · o horizonte de Norte a Sul
   horizonte: [11.0, 15.7] as const,
   // Ato 5 · assenta
   calmo: 16.6,
+  assenta: 18.0, // o tempo de TODAS as camadas congela aqui; 3 s finais realmente parados
 };
 
 export const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);

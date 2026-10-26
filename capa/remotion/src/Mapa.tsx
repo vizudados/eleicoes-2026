@@ -1,7 +1,8 @@
 // O mapa do voto: contorno do Brasil e divisas das UFs em traço de caneta; 5.570 municípios que acendem como
-// estrelas pequenas, em ondas a partir da estrela de cada UF, e esmaecem do creme para a cor da margem de 2026.
+// estrelas pequenas, em ondas a partir da estrela de cada UF; depois mostram as margens dos dois turnos de 2026.
 import React, {useMemo} from 'react';
 import {CHEGADA, DADOS} from './dados';
+import {brilhoTroca, inicioCor1, iniciosCor2} from './municipios';
 import {COR, T, hexRgb, leve, mistura, prog, rgb, saida, suave} from './tempo';
 
 const Traco: React.FC<{d: string; p: number; largura: number; opacidade: number}> = ({d, p, largura, opacidade}) =>
@@ -26,19 +27,25 @@ const CREME = hexRgb(COR.creme);
 export const Mapa: React.FC<{t: number}> = ({t}) => {
   const m = DADOS.municipios;
   const pontos = useMemo(
-    () =>
-      m.x.map((x, i) => {
+    () => {
+      const cores1 = m.d.map((d, i) => inicioCor1(d, m.u[i]));
+      const cores2 = iniciosCor2(cores1);
+      return m.x.map((x, i) => {
         const on = T.pontos + m.d[i] / T.velOnda + 0.35 * m.u[i];
         return {
           x,
           y: m.y[i],
           r: m.r[i],
           on,
-          cor: on + T.corAtraso + 0.4 * ((m.u[i] * 7.3) % 1),
-          final: hexRgb(m.cor[i]),
+          cor: cores1[i],
+          cor2: cores2[i],
+          primeiro: hexRgb(m.cor[i]),
+          segundo: hexRgb(m.cor2[i]),
+          troca: m.troca[i],
           faisca: m.r[i] > 1.9,
         };
-      }),
+      });
+    },
     [m],
   );
 
@@ -74,6 +81,7 @@ export const Mapa: React.FC<{t: number}> = ({t}) => {
 
   const circulos: React.ReactNode[] = [];
   const faiscas: React.ReactNode[] = [];
+  const viradas: React.ReactNode[] = [];
   if (t >= T.pontos) {
     for (let i = 0; i < pontos.length; i++) {
       const p = pontos[i];
@@ -81,8 +89,21 @@ export const Mapa: React.FC<{t: number}> = ({t}) => {
       const a = prog(t, p.on, p.on + T.acende);
       const r = p.r * mistura(2.3, 1, saida(a));
       const corP = prog(t, p.cor, p.cor + T.corDur);
-      const cor = corP > 0 ? rgb(CREME, p.final, suave(corP)) : rgb(BRANCO_QUENTE, CREME, a);
+      const cor2P = prog(t, p.cor2, p.cor2 + T.corDur);
+      const cor = cor2P > 0
+        ? rgb(p.primeiro, p.segundo, suave(cor2P))
+        : corP > 0 ? rgb(CREME, p.primeiro, suave(corP)) : rgb(BRANCO_QUENTE, CREME, a);
       circulos.push(<circle key={i} cx={p.x} cy={p.y} r={r.toFixed(2)} fill={cor} opacity={Math.min(1, a * 3)} />);
+      const brilho = brilhoTroca(t, p.cor2, p.troca);
+      if (brilho > 0) {
+        // Halo finito, sem blur, preso à área do mapa. Não move nem redimensiona o ponto.
+        viradas.push(
+          <g key={`v${i}`} data-municipio={m.cd_ibge[i]} opacity={brilho}>
+            <circle cx={p.x} cy={p.y} r={6.5} fill="url(#brilho-virada)" />
+            <circle cx={p.x} cy={p.y} r={p.r + 1.2} fill="none" stroke={COR.estrela} strokeWidth={0.75} opacity={0.8} />
+          </g>,
+        );
+      }
       if (p.faisca && a < 1) {
         const l = (3 + p.r * 2.2) * Math.sin(Math.PI * a);
         faiscas.push(
@@ -97,6 +118,14 @@ export const Mapa: React.FC<{t: number}> = ({t}) => {
 
   return (
     <g>
+      <defs>
+        <radialGradient id="brilho-virada">
+          <stop offset="0" stopColor={COR.estrela} stopOpacity={0.85} />
+          <stop offset="0.4" stopColor={COR.estrela} stopOpacity={0.4} />
+          <stop offset="1" stopColor={COR.estrela} stopOpacity={0} />
+        </radialGradient>
+        <clipPath id="limite-viradas"><rect x={688} y={303} width={544} height={560} /></clipPath>
+      </defs>
       {divisas}
       <Traco d={c.d2} p={pc2} largura={0.9} opacidade={0.32} />
       <Traco d={c.d1} p={pc} largura={1.45} opacidade={0.92} />
@@ -104,6 +133,7 @@ export const Mapa: React.FC<{t: number}> = ({t}) => {
       {ponta}
       <g>{circulos}</g>
       <g>{faiscas}</g>
+      <g clipPath="url(#limite-viradas)">{viradas}</g>
     </g>
   );
 };

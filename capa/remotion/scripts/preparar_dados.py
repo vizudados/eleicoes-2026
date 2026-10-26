@@ -1,7 +1,8 @@
 """Prepara os dados da capa animada (Remotion): mapa em pixels com traço de caneta, estrelas da bandeira e municípios.
 
-- Malhas do IBGE (TopoJSON, `dados/bruto/ibge/`) e votos do TSE (`dados/saida/votos_municipio.csv`), como em
-  `pipeline/mapas.py`: projeção lon·cos(15°) × lat, margem 2026 = (Lula − Flávio) ÷ válidos.
+- Malhas do IBGE (TopoJSON, `dados/bruto/ibge/`) e votos do TSE (1º turno em `dados/saida/votos_municipio.csv`,
+  2º turno em `dados/pbi/municipio_2turno.csv`), como em `pipeline/mapas.py`: projeção lon·cos(15°) × lat,
+  margens de 2026 = (Lula − Flávio) ÷ válidos. O raio do 1º turno fica fixo nos dois mapas.
 - Traço de caneta: cada arco da malha é simplificado, reamostrado e ganha um tremor suave com semente fixa
   (render determinístico). O contorno do Brasil vira um anel só, que a caneta percorre do extremo norte, no sentido
   horário; as divisas entre UFs são arcos soltos, com pequenas sobras nas pontas, como num esboço.
@@ -70,6 +71,15 @@ def cor_margem(m):
             rgb = hex_rgb(c0) * (1 - f) + hex_rgb(c1) * f
             return "#%02X%02X%02X" % tuple(int(round(v)) for v in rgb)
     return ESCALA[-1][1]
+
+
+def direcao_troca(pt1, adv1, pt2, adv2):
+    """+1: Flávio → Lula; −1: Lula → Flávio; empates em qualquer turno não são troca."""
+    if pt1 < adv1 and pt2 > adv2:
+        return 1
+    if pt1 > adv1 and pt2 < adv2:
+        return -1
+    return 0
 
 
 def arcos_topo(topo):
@@ -283,7 +293,7 @@ def main():
         estrelas.append({"nome": nome, "constelacao": const, "x": sx, "y": sy, "g": grandeza, "uf": uf,
                          "ax": round(float(ax), 1), "ay": round(float(ay), 1)})
 
-    # Municípios: centroide do maior polígono, margem e válidos de 2026.
+    # Municípios: centroide do maior polígono, duas margens e raio fixo pelo 1º turno de 2026.
     topo_mu = json.loads((IBGE / "malha_municipios.json").read_text(encoding="utf-8"))
     arcos_mu = arcos_topo(topo_mu)
     centros = {}
@@ -294,20 +304,51 @@ def main():
     v26 = votos[votos.ano == 2026].groupby("cd_ibge")[["pt", "adv", "validos"]].sum()
     v26 = v26[v26.index.isin(centros.keys()) & (v26.validos > 0)]
     v26["m"] = (v26.pt - v26.adv) / v26.validos
+    votos2 = pd.read_csv(RAIZ / "dados" / "pbi" / "municipio_2turno.csv", dtype={"cd_ibge": str})
+    v2 = votos2[votos2.ano == 2026].set_index("cd_ibge")[["pt", "adv", "validos"]]
+    if v2.index.has_duplicates:
+        raise ValueError("2º turno de 2026: cd_ibge duplicado")
+    numeros = v2.to_numpy(dtype=float)
+    if not np.isfinite(numeros).all() or (numeros < 0).any() or (numeros != np.floor(numeros)).any():
+        raise ValueError("2º turno de 2026: votos ausentes, negativos ou não inteiros")
+    if (v2.validos <= 0).any() or not (v2.pt + v2.adv == v2.validos).all():
+        raise ValueError("2º turno de 2026: válidos devem ser positivos e iguais a pt + adv")
+    faltantes = v26.index.difference(v2.index)
+    fora = v2.index.difference(v26.index)
+    if len(faltantes) or set(fora) != {"5101837"} or "5101837" in centros:
+        raise ValueError(f"Cobertura inesperada: sem 2º turno {list(faltantes)}; fora do desenho {list(fora)}")
+    desenhados2 = v2.loc[v26.index].copy()  # mesma ordem, mesma posição, mesma semente por município
+    desenhados2["m"] = (desenhados2.pt - desenhados2.adv) / desenhados2.validos
+    trocas = [direcao_troca(a.pt, a.adv, b.pt, b.adv)
+              for (_, a), (_, b) in zip(v26.iterrows(), desenhados2.iterrows())]
+    if (trocas.count(1), trocas.count(-1)) != (211, 1):
+        raise ValueError(f"Trocas inesperadas: Flávio → Lula {trocas.count(1)}; Lula → Flávio {trocas.count(-1)}")
+    soma_csv = int(v2.validos.sum())
+    soma_fora = int(v2.loc[fora, "validos"].sum())
+    soma_desenho = int(desenhados2.validos.sum())
+    if soma_desenho != soma_csv - soma_fora:
+        raise ValueError("A soma de válidos do desenho não reconcilia com o CSV")
     xy = px(np.array([centros[c] for c in v26.index]))
     vmax = v26.validos.max()
-    mun = {"x": [], "y": [], "r": [], "cor": [], "d": [], "u": [], "uf": [], "m": []}
-    for (cod, r), (x, y) in zip(v26.iterrows(), xy):
+    mun = {k: [] for k in ("cd_ibge", "x", "y", "r", "cor", "cor2", "d", "u", "uf", "m", "m2",
+                           "validos", "validos2", "troca")}
+    for (cod, r), (_, r2), (x, y), troca in zip(v26.iterrows(), desenhados2.iterrows(), xy, trocas):
         uf = SIGLA[cod[:2]]
         ax, ay = ancora[uf]
+        mun["cd_ibge"].append(cod)
         mun["x"].append(round(float(x), 1))
         mun["y"].append(round(float(y), 1))
         mun["r"].append(round(float(1.05 + 1.9 * math.sqrt(r.validos / vmax)), 2))
         mun["cor"].append(cor_margem(r.m))
+        mun["cor2"].append(cor_margem(r2.m))
         mun["d"].append(round(float(math.hypot(x - ax, y - ay)), 1))
         mun["u"].append(round(float(rng.uniform()), 3))
         mun["uf"].append(uf)
-        mun["m"].append(round(float(r.m), 3))
+        mun["m"].append(round(float(r.m), 8))
+        mun["m2"].append(round(float(r2.m), 8))
+        mun["validos"].append(int(r.validos))
+        mun["validos2"].append(int(r2.validos))
+        mun["troca"].append(troca)
 
     # Céu de fundo: estrelas fracas fora do título, das setas, do cabeçalho/rodapé e do mapa.
     mascara = Image.new("L", (LARG, ALT), 0)
@@ -371,6 +412,8 @@ def main():
           f"{len(divisas)} divisas · {len(ilhas)} ilhas · {len(ceu)} estrelas de fundo")
     print(f"mapa x {caixa[:, 0].min():.0f}–{caixa[:, 0].max():.0f} · y {caixa[:, 1].min():.0f}–{caixa[:, 1].max():.0f}"
           f" · contorno {comp1:.0f} px")
+    print(f"Trocas entre os pontos: Flávio → Lula {trocas.count(1)} · Lula → Flávio {trocas.count(-1)}")
+    print(f"Válidos 2º turno: desenho {soma_desenho:,} = CSV {soma_csv:,} − sem coordenada {soma_fora:,}")
     for e in estrelas:
         print(f"  {e['uf']} {e['nome']:<20} grandeza {e['g']} → ({e['ax']:.0f}, {e['ay']:.0f})")
 

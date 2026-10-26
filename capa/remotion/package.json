@@ -5,10 +5,11 @@
   "description": "Capa animada do painel Eleições 2026 · o voto de perto (Vizu Dados), em Remotion.",
   "scripts": {
     "estudio": "remotion studio src/index.ts",
-    "dados": "python -I -X utf8 scripts/preparar_dados.py && python -I -X utf8 scripts/preparar_arte.py",
-    "quadros": "node scripts/quadros.mjs 0 120 240 330 420 539",
-    "render": "remotion render src/index.ts Capa out/seq --sequence --image-format=png",
-    "codificar": "pwsh -NoProfile -File scripts/codificar.ps1"
+    "dados": "python -I -X utf8 scripts/preparar_dados.py",
+    "quadros": "node scripts/quadros.mjs 0 120 240 372 396 436 449 501 540 629",
+    "render": "remotion render src/index.ts Capa out/seq-2t --sequence --image-format=png",
+    "codificar": "powershell -NoProfile -File scripts/codificar.ps1",
+    "test": "node --test --test-isolation=none scripts/testar_animacao.cjs"
   },
   "dependencies": {
     "@remotion/cli": "4.0.533",
