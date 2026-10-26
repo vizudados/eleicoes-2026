@@ -39,11 +39,13 @@ def ref(p, nome):
 
 
 def lista_t27():
-    conta('T27','lista · posição', '''VAR _v = [T27 · ganho Lula]
-VAR _cod = SELECTEDVALUE ( 'Município'[CodIBGE] )
-VAR _rank = RANKX ( ALLSELECTED ( 'Município'[CodIBGE] ), [T27 · ganho Lula], _v, DESC, SKIP )
-VAR _empatesAntes = COUNTROWS ( FILTER ( ALLSELECTED ( 'Município'[CodIBGE] ), 'Município'[CodIBGE] < _cod && [T27 · ganho Lula] = _v ) )
-RETURN IF ( HASONEVALUE ( 'Município'[CodIBGE] ), _rank + _empatesAntes )''',
+    conta('T27','lista · posição', '''-- desempate pelo código dentro do RANKX (sem um segundo FILTER por linha, que levava ~14 s; 26/10/2026)
+VAR _v = [T27 · ganho Lula]
+RETURN IF (
+    HASONEVALUE ( 'Município'[CodIBGE] ),
+    RANKX ( ALLSELECTED ( 'Município'[CodIBGE] ), [T27 · ganho Lula] - 'Município'[CodIBGE] / 100000000,
+        _v - SELECTEDVALUE ( 'Município'[CodIBGE] ) / 100000000, DESC, SKIP )
+)''',
           'Posição da cidade no recorte, mesmo critério descendente da lista anterior; só oito entradas são emitidas.')
     for extremo in ['mínimo','máximo']:
         valor = '_lo' if extremo=='mínimo' else '_hi'

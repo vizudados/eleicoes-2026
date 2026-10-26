@@ -4,12 +4,16 @@
 @descricao: Posição do município no recorte: 1 = mais votos válidos em 2026; a lista emite só as primeiras 16 posições, com a busca do filtro existente.
 @oraculo: mockup/data/eleicoes.json › Explorador › padrao.linhas (ordem)
 */
+-- Desempate pelo código IBGE dentro do próprio RANKX: o valor perde código/10^8 (menos de 0,1 voto), então cidades com
+-- os mesmos votos ficam em ordem estável sem um segundo FILTER por linha (com ele, a consulta levava ~20 s; 26/10/2026)
 VAR _valor = [T19 · válidos no recorte]
-VAR _rotulo = SELECTEDVALUE ( 'Município'[Rótulo] )
-VAR _rank = RANKX ( ALLSELECTED ( 'Município'[Rótulo] ), [T19 · válidos no recorte], _valor, DESC, SKIP )
-VAR _empatesAntes = COUNTROWS ( FILTER ( ALLSELECTED ( 'Município'[Rótulo] ),
-    'Município'[Rótulo] < _rotulo && [T19 · válidos no recorte] = _valor ) )
 RETURN IF (
     HASONEVALUE ( 'Município'[Rótulo] ) && NOT ISBLANK ( _valor ),
-    _rank + _empatesAntes
+    RANKX (
+        ALLSELECTED ( 'Município'[Rótulo], 'Município'[CodIBGE] ),
+        [T19 · válidos no recorte] - 'Município'[CodIBGE] / 100000000,
+        _valor - SELECTEDVALUE ( 'Município'[CodIBGE] ) / 100000000,
+        DESC,
+        SKIP
+    )
 )

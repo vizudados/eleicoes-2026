@@ -5,8 +5,10 @@
 @oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
 @gerado: pbi/scripts/desenho_t27_t28.py
 */
+-- desempate pelo código dentro do RANKX (sem um segundo FILTER por linha, que levava ~14 s; 26/10/2026)
 VAR _v = [T27 · ganho Lula]
-VAR _cod = SELECTEDVALUE ( 'Município'[CodIBGE] )
-VAR _rank = RANKX ( ALLSELECTED ( 'Município'[CodIBGE] ), [T27 · ganho Lula], _v, DESC, SKIP )
-VAR _empatesAntes = COUNTROWS ( FILTER ( ALLSELECTED ( 'Município'[CodIBGE] ), 'Município'[CodIBGE] < _cod && [T27 · ganho Lula] = _v ) )
-RETURN IF ( HASONEVALUE ( 'Município'[CodIBGE] ), _rank + _empatesAntes )
+RETURN IF (
+    HASONEVALUE ( 'Município'[CodIBGE] ),
+    RANKX ( ALLSELECTED ( 'Município'[CodIBGE] ), [T27 · ganho Lula] - 'Município'[CodIBGE] / 100000000,
+        _v - SELECTEDVALUE ( 'Município'[CodIBGE] ) / 100000000, DESC, SKIP )
+)
