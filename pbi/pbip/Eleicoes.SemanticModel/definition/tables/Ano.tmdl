@@ -32,7 +32,7 @@ table Ano
 		annotation SummarizationSetBy = Automatic
 
 	/// Mais votado fora do PT no 1º turno.
-	column 'Adversário'
+	column Adversário
 		dataType: string
 		lineageTag: 26501932-0498-510e-a6da-01c33fb5046f
 		summarizeBy: none
@@ -68,3 +68,4 @@ table Ano
 				    Anos
 
 	annotation PBI_ResultType = Table
+

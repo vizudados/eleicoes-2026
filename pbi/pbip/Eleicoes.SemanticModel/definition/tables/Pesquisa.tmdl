@@ -15,7 +15,7 @@ table Pesquisa
 		annotation SummarizationSetBy = Automatic
 
 	/// 1º turno ou 2º turno (Lula × Flávio).
-	column 'Cenário'
+	column Cenário
 		dataType: string
 		lineageTag: 1042bbcd-d9ec-5ceb-ae3e-283609aaaad5
 		summarizeBy: none
@@ -64,7 +64,7 @@ table Pesquisa
 		annotation SummarizationSetBy = Automatic
 
 	/// Data de divulgação.
-	column 'Divulgação'
+	column Divulgação
 		dataType: dateTime
 		isHidden
 		formatString: dd/MM/yyyy
@@ -235,3 +235,4 @@ table Pesquisa
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

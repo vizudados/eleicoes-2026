@@ -15,7 +15,7 @@ table 'Candidato ano'
 		annotation SummarizationSetBy = Automatic
 
 	/// Número do candidato.
-	column 'Número'
+	column Número
 		dataType: int64
 		formatString: 0
 		lineageTag: 9441f8cb-e63f-5126-8273-7dbbe8087a85
@@ -65,7 +65,7 @@ table 'Candidato ano'
 		annotation SummarizationSetBy = Automatic
 
 	/// Colocação no 1º turno.
-	column 'Posição'
+	column Posição
 		dataType: int64
 		formatString: 0
 		lineageTag: 6dddd2b0-0634-5a43-bf38-53e2070c9a14
@@ -86,3 +86,4 @@ table 'Candidato ano'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

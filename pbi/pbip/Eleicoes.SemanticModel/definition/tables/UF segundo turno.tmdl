@@ -135,3 +135,4 @@ table 'UF segundo turno'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

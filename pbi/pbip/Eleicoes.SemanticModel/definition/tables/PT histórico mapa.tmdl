@@ -46,7 +46,7 @@ table 'PT histórico mapa'
 		annotation SummarizationSetBy = Automatic
 
 	/// Adversário
-	column 'Adversário'
+	column Adversário
 		dataType: string
 		isHidden
 		lineageTag: 06b2296a-7271-5c69-a8fe-ea274de65784
@@ -205,3 +205,4 @@ table 'PT histórico mapa'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

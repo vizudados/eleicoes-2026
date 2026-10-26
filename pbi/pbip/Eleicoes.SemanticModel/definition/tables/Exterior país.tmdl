@@ -15,7 +15,7 @@ table 'Exterior país'
 		annotation SummarizationSetBy = Automatic
 
 	/// País (Guiana Francesa à parte da França; Hong Kong dentro da China).
-	column 'País'
+	column País
 		dataType: string
 		lineageTag: 404f5fc9-da23-57b3-806b-2eec58122fad
 		summarizeBy: none
@@ -88,3 +88,4 @@ table 'Exterior país'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

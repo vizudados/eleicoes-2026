@@ -22,7 +22,7 @@ table Apoio
 		annotation SummarizationSetBy = Automatic
 
 	/// Lula, Flávio, neutro, liberou…
-	column 'Posição'
+	column Posição
 		dataType: string
 		lineageTag: c02318b9-94f7-5068-9177-cdc84c6d24a5
 		summarizeBy: none
@@ -41,7 +41,7 @@ table Apoio
 		annotation SummarizationSetBy = Automatic
 
 	/// Citação curta.
-	column 'Citação'
+	column Citação
 		dataType: string
 		lineageTag: 9226a475-3e8a-522e-baaf-c021eba08f6c
 		summarizeBy: none
@@ -60,7 +60,7 @@ table Apoio
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column 'Observação'
+	column Observação
 		dataType: string
 		isHidden
 		lineageTag: 11373cb4-a68b-51ef-8384-3f69d8ab1c2c
@@ -81,3 +81,4 @@ table Apoio
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

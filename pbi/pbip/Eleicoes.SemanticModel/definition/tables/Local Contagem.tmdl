@@ -43,7 +43,7 @@ table 'Local Contagem'
 		annotation SummarizationSetBy = Automatic
 
 	/// Endereço.
-	column 'Endereço'
+	column Endereço
 		dataType: string
 		isHidden
 		lineageTag: 7928d405-3311-59c9-9bd9-44f7f3d880ba
@@ -86,7 +86,7 @@ table 'Local Contagem'
 		annotation SummarizationSetBy = Automatic
 
 	/// Seções no local.
-	column 'Seções'
+	column Seções
 		dataType: int64
 		isHidden
 		formatString: #,0
@@ -183,3 +183,4 @@ table 'Local Contagem'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

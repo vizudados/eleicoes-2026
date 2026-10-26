@@ -13,35 +13,6 @@ table 'T20 Local'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Código IBGE da cidade do local.
-	column CodIBGE
-		dataType: string
-		isHidden
-		lineageTag: 399ccad7-9e05-5109-afe3-2bbd5ad69bfe
-		summarizeBy: none
-		sourceColumn: CodIBGE
-
-		annotation SummarizationSetBy = Automatic
-
-	/// Cidade do local, com a UF: Contagem (MG).
-	column Cidade
-		dataType: string
-		lineageTag: b2508642-bbd6-5136-ae46-d9c8d79bb29a
-		summarizeBy: none
-		sourceColumn: Cidade
-
-		annotation SummarizationSetBy = Automatic
-
-	/// Sigla da UF da cidade.
-	column UF
-		dataType: string
-		isHidden
-		lineageTag: 67edb9b4-a2ae-5320-9ffa-7449f2fe04cd
-		summarizeBy: none
-		sourceColumn: UF
-
-		annotation SummarizationSetBy = Automatic
-
 	/// Chave do local, única no modelo inteiro: o nome; repetido em outra cidade, com a cidade junto. A tela mostra Nome.
 	column Local
 		dataType: string
@@ -49,15 +20,6 @@ table 'T20 Local'
 		summarizeBy: none
 		sourceColumn: Local
 		sortByColumn: Id
-
-		annotation SummarizationSetBy = Automatic
-
-	/// Nome legível do local (escola); único na cidade (repetido ganha o número).
-	column Nome
-		dataType: string
-		lineageTag: bf071db7-7c5c-5e2b-b203-7c2117c58908
-		summarizeBy: none
-		sourceColumn: Nome
 
 		annotation SummarizationSetBy = Automatic
 
@@ -82,7 +44,7 @@ table 'T20 Local'
 		annotation SummarizationSetBy = Automatic
 
 	/// Número do local na zona.
-	column 'Número'
+	column Número
 		dataType: int64
 		isHidden
 		formatString: 0
@@ -93,7 +55,7 @@ table 'T20 Local'
 		annotation SummarizationSetBy = Automatic
 
 	/// Seções no local em 2026.
-	column 'Seções'
+	column Seções
 		dataType: int64
 		isHidden
 		formatString: #,0
@@ -224,6 +186,44 @@ table 'T20 Local'
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Código IBGE da cidade do local.
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: 399ccad7-9e05-5109-afe3-2bbd5ad69bfe
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cidade do local, com a UF: Contagem (MG).
+	column Cidade
+		dataType: string
+		lineageTag: b2508642-bbd6-5136-ae46-d9c8d79bb29a
+		summarizeBy: none
+		sourceColumn: Cidade
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Sigla da UF da cidade.
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 67edb9b4-a2ae-5320-9ffa-7449f2fe04cd
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nome legível do local (escola); único na cidade (repetido ganha o número).
+	column Nome
+		dataType: string
+		lineageTag: bf071db7-7c5c-5e2b-b203-7c2117c58908
+		summarizeBy: none
+		sourceColumn: Nome
+
+		annotation SummarizationSetBy = Automatic
+
 	/// Por que o local não aparece no mapa: 'sem endereço' (sem coordenada no cadastro do TSE) ou 'fora do recorte' (longe da mancha urbana, nas cidades em recorte); vazio no mapa.
 	column 'Fora do mapa'
 		dataType: string
@@ -272,3 +272,4 @@ table 'T20 Local'
 				    Final
 
 	annotation PBI_ResultType = Table
+

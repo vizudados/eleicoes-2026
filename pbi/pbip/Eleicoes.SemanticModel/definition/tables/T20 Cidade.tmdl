@@ -128,7 +128,7 @@ table 'T20 Cidade'
 		annotation SummarizationSetBy = Automatic
 
 	/// Mediana da distância entre locais vizinhos no mapa, em % da largura da moldura (dá o tamanho dos pontos).
-	column 'Espaço'
+	column Espaço
 		dataType: double
 		isHidden
 		formatString: 0.00
@@ -200,3 +200,4 @@ table 'T20 Cidade'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

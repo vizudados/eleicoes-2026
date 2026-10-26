@@ -15,7 +15,7 @@ table 'Abstenção perfil'
 		annotation SummarizationSetBy = Automatic
 
 	/// Recorte: faixa etária, escolaridade, gênero, estado civil…
-	column 'Dimensão'
+	column Dimensão
 		dataType: string
 		lineageTag: e42c9796-213f-51bf-bd38-82ee9fe36204
 		summarizeBy: none
@@ -77,3 +77,4 @@ table 'Abstenção perfil'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

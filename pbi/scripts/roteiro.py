@@ -44,7 +44,7 @@ class Tela:
 
 
 TELAS = [
-    Tela("T00", "Capa", "Afinal, qual Brasil foi às urnas nesta eleição?", "Abertura", escura=True,
+    Tela("T00", "Capa", "A eleição de 2026, do primeiro ao segundo turno, município por município.", "Abertura", escura=True,
          fonte="Fonte: TSE e IBGE · 1º turno (04/10) e 2º turno (25/10/2026)"),
     # I · Antes da urna: quem são os dois e o que as pesquisas diziam
     Tela("T02", "Lula · quem é", "Quem é Luiz Inácio Lula da Silva?", "I · Antes da urna",

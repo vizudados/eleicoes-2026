@@ -1,5 +1,5 @@
 /// Os quatro períodos em volta dos debates do 2º turno (Band 18/10, Globo 23/10) para o filtro Período das telas Buscas, Redes e 2º turno. Desconectada: as medidas leem a escolha.
-table 'Período'
+table Período
 	lineageTag: a2233e99-9616-5b55-90ca-ae7f33c23f4b
 
 	/// Ordem do período (1 a 4).
@@ -14,7 +14,7 @@ table 'Período'
 		annotation SummarizationSetBy = Automatic
 
 	/// Rótulo do filtro: o nome e as datas ('Antes da Band · 05 a 17/10').
-	column 'Período'
+	column Período
 		dataType: string
 		lineageTag: 6700fc40-b001-584c-a4ba-ec08039fb1ff
 		summarizeBy: none
@@ -34,7 +34,7 @@ table 'Período'
 		annotation SummarizationSetBy = Automatic
 
 	/// Primeiro dia do período.
-	column 'Início'
+	column Início
 		dataType: dateTime
 		isHidden
 		formatString: dd/MM/yyyy
@@ -86,7 +86,7 @@ table 'Período'
 
 		annotation SummarizationSetBy = Automatic
 
-	partition 'Período' = m
+	partition Período = m
 		mode: import
 		source =
 				let
@@ -103,3 +103,4 @@ table 'Período'
 				    Fonte
 
 	annotation PBI_ResultType = Table
+

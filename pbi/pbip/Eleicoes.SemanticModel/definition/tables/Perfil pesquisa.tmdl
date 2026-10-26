@@ -13,7 +13,7 @@ table 'Perfil pesquisa'
 		annotation SummarizationSetBy = Automatic
 
 	/// Data de divulgação.
-	column 'Divulgação'
+	column Divulgação
 		dataType: dateTime
 		isHidden
 		formatString: dd/MM/yyyy
@@ -83,6 +83,16 @@ table 'Perfil pesquisa'
 
 		annotation SummarizationSetBy = Automatic
 
+	/// Endereço da fonte.
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 627fff8b-96eb-57f6-8484-6ded99783a9f
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
 	/// Fatia do grupo na amostra (base ponderada ÷ n), quando o instituto publicou; 1 no total.
 	column Fatia
 		dataType: double
@@ -91,16 +101,6 @@ table 'Perfil pesquisa'
 		lineageTag: 3708257e-edb0-5c94-86f0-44bff4716031
 		summarizeBy: none
 		sourceColumn: Fatia
-
-		annotation SummarizationSetBy = Automatic
-
-	/// Endereço da fonte.
-	column Fonte
-		dataType: string
-		isHidden
-		lineageTag: 627fff8b-96eb-57f6-8484-6ded99783a9f
-		summarizeBy: none
-		sourceColumn: Fonte
 
 		annotation SummarizationSetBy = Automatic
 
@@ -116,3 +116,4 @@ table 'Perfil pesquisa'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

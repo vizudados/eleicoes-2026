@@ -22,7 +22,7 @@ ref table 'Apuração exterior'
 ref table 'Apuração status'
 ref table UF
 ref table Ano
-ref table 'Município'
+ref table Município
 ref table 'Município ano'
 ref table 'Candidato ano'
 ref table 'Candidato UF'
@@ -32,27 +32,16 @@ ref table Pesquisa
 ref table Debate
 ref table 'Trends tempo'
 ref table 'Trends UF'
-ref table 'Trends UF tempo'
 ref table Seguidores
 ref table Monitoramento
-ref table 'Anúncios'
-ref table 'Trajetória'
-ref table 'Transferência'
-ref table 'Rejeição'
+ref table Anúncios
+ref table Trajetória
+ref table Transferência
+ref table Rejeição
 ref table Apoio
 ref table 'Local Contagem'
 ref table 'Exterior país'
-ref table 'Período'
-ref table 'PT histórico UF'
-ref table 'PT histórico Brasil'
-ref table 'PT histórico mapa'
-ref table 'Município segundo turno'
-ref table 'UF segundo turno'
-ref table 'T13 Célula'
-ref table 'T19 Filtro'
 ref table 'T20 Local'
-ref table 'T20 Cidade'
-ref table 'T20 Filtro'
 ref table 'T22 Para Lula'
 ref table 'T22 Não votam'
 ref table 'T22 Comparecimento'
@@ -60,10 +49,22 @@ ref table 'Social município'
 ref table 'T24 Lente'
 ref table 'T24 Degrau'
 ref table 'Perfil pesquisa'
+ref table _Medidas
+ref table 'T13 Célula'
 ref table 'T25 Faixa'
 ref table 'T25 Abstenção faixa'
 ref table 'T25 Abstenção exterior'
+ref table 'T19 Filtro'
+ref table 'T20 Cidade'
+ref table 'T20 Filtro'
+ref table 'Trends UF tempo'
+ref table Período
 ref table 'T26 Debate Globo'
-ref table _Medidas
+ref table 'PT histórico UF'
+ref table 'PT histórico Brasil'
+ref table 'PT histórico mapa'
+ref table 'Município segundo turno'
+ref table 'UF segundo turno'
 
 ref cultureInfo pt-BR
+

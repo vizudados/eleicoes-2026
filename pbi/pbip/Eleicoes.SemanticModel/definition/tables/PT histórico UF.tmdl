@@ -46,7 +46,7 @@ table 'PT histórico UF'
 		annotation SummarizationSetBy = Automatic
 
 	/// Adversário
-	column 'Adversário'
+	column Adversário
 		dataType: string
 		isHidden
 		lineageTag: a6a68917-ac40-50db-812d-778410e5eec5
@@ -132,3 +132,4 @@ table 'PT histórico UF'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

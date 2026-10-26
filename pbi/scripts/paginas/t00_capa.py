@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""00 · Capa — afinal, qual Brasil foi às urnas nesta eleição? (dono: main). Tela escura, sem filtro.
+"""00 · Capa — a eleição de 2026, do primeiro ao segundo turno, município por município (dono: main). Tela escura, sem filtro.
 
 Conceito (pedido do Alisson, 23/10/2026: "o mapa do Brasil e várias paisagens, a bandeira aparecendo", com uma capa
 própria, que não repita a de outro painel da casa): as 27 estrelas da bandeira viram as UFs no mapa, os municípios acendem pelo primeiro turno e uma segunda onda repinta pelo segundo.
@@ -89,7 +89,7 @@ def corpo() -> str:
         f"<img class='poster' alt='' src='{MIDIA}/capa/capa-2t-final.jpg'/>"
         "<div class='topo'><div class='sob sobe d1'>ELEIÇÕES 2026 · OS DOIS TURNOS</div>"
         "<div class='tg sobe d2'>O voto, de perto.</div>"
-        "<div class='q sobe d4'>Afinal, qual Brasil foi às urnas nesta eleição?</div></div>"
+        "<div class='q sobe d4'>A eleição de 2026, do primeiro ao segundo turno, município por município.</div></div>"
         "<div class='comecar entra d14'>começar</div>"
         "<div class='sumario entra d14'><span>☰</span> sumário</div>"
         "<div class='mapa-rotulo' aria-hidden='true'><span class='t1'>1º turno · 4 de outubro</span>"

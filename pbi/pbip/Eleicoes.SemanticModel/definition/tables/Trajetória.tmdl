@@ -1,5 +1,5 @@
 /// Os marcos da trajetória política de Lula e de Flávio, com a foto histórica (redesenhada em traço) quando há foto de licença aberta.
-table 'Trajetória'
+table Trajetória
 	isHidden
 	lineageTag: df9b760c-91b9-5cde-9326-78f4fcfa0232
 
@@ -42,7 +42,7 @@ table 'Trajetória'
 		annotation SummarizationSetBy = Automatic
 
 	/// Título curto do marco.
-	column 'Título'
+	column Título
 		dataType: string
 		lineageTag: 508f3f29-87c7-5bc7-92b0-98c1452c9eef
 		summarizeBy: none
@@ -108,7 +108,7 @@ table 'Trajetória'
 
 		annotation SummarizationSetBy = Automatic
 
-	partition 'Trajetória' = m
+	partition Trajetória = m
 		mode: import
 		source =
 				let
@@ -120,3 +120,4 @@ table 'Trajetória'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

@@ -6,8 +6,8 @@ eleitoral ao país.
 
 - **Quem lê e onde:** público geral e clientes da Vizu (vitrine de storytelling em BI); notebook e projetor, de ponta a
   ponta, como apresentação.
-- **Fio da narrativa (ordem de 23/10/2026, do antes para o depois):** a pergunta da capa — "Afinal, qual Brasil foi
-  às urnas?" — se abre em cinco atos: **I · Antes da urna** (quem são os dois e o que as pesquisas diziam), **II · O 1º
+- **Fio da narrativa (ordem de 23/10/2026, do antes para o depois):** a frase da capa — "A eleição de 2026, do
+  primeiro ao segundo turno, município por município." — se abre em cinco atos: **I · Antes da urna** (quem são os dois e o que as pesquisas diziam), **II · O 1º
   turno** (o resultado e quem não foi), **III · O mapa** (onde e em quem o voto mudou, até a sua cidade), **IV · Explore
   você mesmo** e, por último, antes do encerramento, **V · O 2º turno** (os votos dos outros, as pesquisas, os dois
   debates colados, buscas e redes com filtro de período em volta dos debates, e a apuração). Cada tela termina apontando a próxima pergunta (`proxima_pergunta` no
@@ -20,7 +20,7 @@ eleitoral ao país.
 
 | # | Ato | Pergunta | Resposta | Base |
 |---|---|---|---|---|
-| 00 | Abertura | Afinal, qual Brasil foi às urnas nesta eleição? (Capa, T00) | título + 3 linhas | TSE |
+| 00 | Abertura | A eleição de 2026, do primeiro ao segundo turno, município por município. (Capa, T00) | título + 3 linhas | TSE |
 | 01 | I · Antes da urna | Quem é Luiz Inácio Lula da Silva? (Lula · quem é, T02) | trajetória em linha do tempo, com fotos históricas redesenhadas em traço | trajetória |
 | 02 | I · Antes da urna | Quem é Flávio Bolsonaro? (Flávio · quem é, T04) | trajetória em linha do tempo, com fotos históricas redesenhadas em traço | trajetória |
 | 03 | I · Antes da urna | O que as pesquisas diziam antes da urna? (Pesquisas, T10) | Nas últimas rodadas disponíveis até a véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio por 1,9 ponto | pesquisas |

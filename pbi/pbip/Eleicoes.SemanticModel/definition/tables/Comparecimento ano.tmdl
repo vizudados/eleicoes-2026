@@ -81,3 +81,4 @@ table 'Comparecimento ano'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

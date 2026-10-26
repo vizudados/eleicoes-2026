@@ -85,3 +85,4 @@ table 'Apuração status'
 				    Linha
 
 	annotation PBI_ResultType = Table
+

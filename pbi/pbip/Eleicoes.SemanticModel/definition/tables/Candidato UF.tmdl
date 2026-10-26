@@ -25,7 +25,7 @@ table 'Candidato UF'
 		annotation SummarizationSetBy = Automatic
 
 	/// Número do candidato.
-	column 'Número'
+	column Número
 		dataType: int64
 		formatString: 0
 		lineageTag: 5e96fac8-0123-50ac-82fd-6dc347c53827
@@ -75,3 +75,4 @@ table 'Candidato UF'
 				    Nomes
 
 	annotation PBI_ResultType = Table
+

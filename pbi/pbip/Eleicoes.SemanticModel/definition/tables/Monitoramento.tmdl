@@ -13,7 +13,7 @@ table Monitoramento
 		annotation SummarizationSetBy = Automatic
 
 	/// Início do período.
-	column 'Início'
+	column Início
 		dataType: dateTime
 		isHidden
 		formatString: dd/MM/yyyy
@@ -35,7 +35,7 @@ table Monitoramento
 		annotation SummarizationSetBy = Automatic
 
 	/// O que foi medido.
-	column 'Métrica'
+	column Métrica
 		dataType: string
 		lineageTag: bbd723d8-3c4f-52a7-ac75-63c6b83be5b0
 		summarizeBy: none
@@ -84,7 +84,7 @@ table Monitoramento
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column 'Observação'
+	column Observação
 		dataType: string
 		isHidden
 		lineageTag: 19bf959c-ff9f-548b-8d96-b37f4643401a
@@ -105,3 +105,4 @@ table Monitoramento
 				    Nomes
 
 	annotation PBI_ResultType = Table
+
