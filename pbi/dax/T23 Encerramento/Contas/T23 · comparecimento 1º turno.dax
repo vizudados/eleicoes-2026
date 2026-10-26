@@ -1,0 +1,10 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: #,0
+@descricao: Total nacional do turno com exterior; mesma cobertura nos dois turnos.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
+@gerado: pbi/scripts/desenho_t23.py
+*/
+CALCULATE ( SUM ( 'PT histórico Brasil'[Comparecimento] ),
+    REMOVEFILTERS ( 'PT histórico Brasil' ),
+    'PT histórico Brasil'[Ano] = 2026, 'PT histórico Brasil'[Turno] = 1 )

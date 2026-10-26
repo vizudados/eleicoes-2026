@@ -2,6 +2,7 @@
 @pasta: T23 Encerramento\Desenho
 @formato: texto
 @descricao: Encerramento acessível, resultados e navegação.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
 @gerado: pbi/scripts/desenho_t23.py
 */
 "Da zona eleitoral ao resultado. 2º turno: Lula "

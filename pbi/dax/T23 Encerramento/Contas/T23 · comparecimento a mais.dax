@@ -1,0 +1,8 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: #,0
+@descricao: Variação líquida do comparecimento nacional entre turnos, com exterior; não identifica os mesmos eleitores.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
+@gerado: pbi/scripts/desenho_t23.py
+*/
+[T23 · comparecimento 2º turno] - [T23 · comparecimento 1º turno]

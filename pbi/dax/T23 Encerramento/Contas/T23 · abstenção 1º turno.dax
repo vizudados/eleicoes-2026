@@ -1,0 +1,9 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: 0.00%
+@descricao: Abstenção nacional do primeiro turno antes do arredondamento; um menos comparecimento sobre aptos.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
+@gerado: pbi/scripts/desenho_t23.py
+*/
+VAR _aptos = [T23 · aptos 1º turno]
+RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos ) )

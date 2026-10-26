@@ -116,6 +116,21 @@
      "x": 610,
      "y": 210,
      "s": 70
+    },
+    "turno": {
+     "x": 610,
+     "y": 128,
+     "s": 17
+    },
+    "adv": {
+     "x": 710,
+     "y": 309,
+     "s": 15
+    },
+    "outros": {
+     "x": 677,
+     "y": 334,
+     "s": 15
     }
    }
   },
@@ -191,6 +206,18 @@
   {
    "name": "txtPt",
    "update": "length(data('quadros')) == 10 ? ''+round(data('quadros')[estado.de].pt + (data('quadros')[estado.para].pt-data('quadros')[estado.de].pt)*e) : ''"
+  },
+  {
+   "name": "txtTurno",
+   "update": "length(data('quadros')) == 10 ? ''+data('quadros')[estado.para].turno : ''"
+  },
+  {
+   "name": "txtAdv",
+   "update": "length(data('quadros')) == 10 ? ''+round(data('quadros')[estado.de].adv + (data('quadros')[estado.para].adv-data('quadros')[estado.de].adv)*e) : ''"
+  },
+  {
+   "name": "txtOutros",
+   "update": "length(data('quadros')) == 10 ? ''+round(data('quadros')[estado.de].outros + (data('quadros')[estado.para].outros-data('quadros')[estado.de].outros)*e) : ''"
   }
  ],
  "data": [
@@ -547,13 +574,61 @@
     {
      "k": "pt",
      "i": 3
+    },
+    {
+     "k": "turno",
+     "i": 0
+    },
+    {
+     "k": "turno",
+     "i": 1
+    },
+    {
+     "k": "turno",
+     "i": 2
+    },
+    {
+     "k": "turno",
+     "i": 3
+    },
+    {
+     "k": "adv",
+     "i": 0
+    },
+    {
+     "k": "adv",
+     "i": 1
+    },
+    {
+     "k": "adv",
+     "i": 2
+    },
+    {
+     "k": "adv",
+     "i": 3
+    },
+    {
+     "k": "outros",
+     "i": 0
+    },
+    {
+     "k": "outros",
+     "i": 1
+    },
+    {
+     "k": "outros",
+     "i": 2
+    },
+    {
+     "k": "outros",
+     "i": 3
     }
    ],
    "transform": [
     {
      "type": "formula",
      "as": "txt",
-     "expr": "datum.k == 'ano' ? txtAno : txtPt"
+     "expr": "datum.k == 'ano' ? txtAno : (datum.k == 'pt' ? txtPt : (datum.k == 'turno' ? txtTurno : (datum.k == 'adv' ? txtAdv : txtOutros)))"
     },
     {
      "type": "filter",
@@ -747,266 +822,6 @@
    }
   },
   {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "610*(width / 810)"
-     },
-     "y": {
-      "signal": "128*(width / 810)"
-     },
-     "text": {
-      "signal": "length(data('quadros')) == 10 ? data('quadros')[estado.para].turno+'º turno' : ''"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "17*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "610*(width / 810)"
-     },
-     "y": {
-      "signal": "240*(width / 810)"
-     },
-     "text": {
-      "value": "de 27 estados"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "17*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "610*(width / 810)"
-     },
-     "y": {
-      "signal": "264*(width / 810)"
-     },
-     "text": {
-      "value": "com o PT à frente"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "15*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "610*(width / 810)"
-     },
-     "y": {
-      "signal": "309*(width / 810)"
-     },
-     "text": {
-      "signal": "length(data('quadros')) == 10 ? 'Adversário: '+data('quadros')[estado.para].adv : ''"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "15*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "610*(width / 810)"
-     },
-     "y": {
-      "signal": "334*(width / 810)"
-     },
-     "text": {
-      "signal": "length(data('quadros')) == 10 ? 'Outros: '+data('quadros')[estado.para].outros : ''"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "15*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "610*(width / 810)"
-     },
-     "y": {
-      "signal": "385*(width / 810)"
-     },
-     "text": {
-      "value": "1994 e 1998:"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "15*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "610*(width / 810)"
-     },
-     "y": {
-      "signal": "408*(width / 810)"
-     },
-     "text": {
-      "value": "decisão no 1º turno"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "15*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "610*(width / 810)"
-     },
-     "y": {
-      "signal": "453*(width / 810)"
-     },
-     "text": {
-      "signal": "anoAtual == 1998 ? 'CE: Ciro · PPS' : ''"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "15*(width / 810)"
-     },
-     "fill": {
-      "value": "#7A5A43"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "10*(width / 810)"
-     },
-     "y": {
-      "signal": "598*(width / 810)"
-     },
-     "text": {
-      "value": "Cor: vencedor · intensidade: vantagem sobre o 2º colocado"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "14*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "10*(width / 810)"
-     },
-     "y": {
-      "signal": "622*(width / 810)"
-     },
-     "text": {
-      "value": "PT: vermelho · adversário nacional: azul · outros: marrom"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fontSize": {
-      "signal": "14*(width / 810)"
-     },
-     "fill": {
-      "value": "#48423A"
-     }
-    }
-   }
-  },
-  {
    "type": "rule",
    "interactive": false,
    "encode": {
@@ -1080,38 +895,6 @@
      },
      "cursor": {
       "value": "pointer"
-     }
-    }
-   }
-  },
-  {
-   "type": "text",
-   "interactive": false,
-   "from": {
-    "data": "quadros"
-   },
-   "encode": {
-    "update": {
-     "x": {
-      "signal": "[104, 178, 252, 326, 400, 474, 548, 622, 696, 770][datum.i]*(width / 810)"
-     },
-     "y": {
-      "signal": "687*(width / 810)"
-     },
-     "text": {
-      "field": "ano"
-     },
-     "align": {
-      "value": "center"
-     },
-     "fontSize": {
-      "signal": "14*(width / 810)"
-     },
-     "font": {
-      "value": "Sora Eleicoes"
-     },
-     "fill": {
-      "value": "#1C1915"
      }
     }
    }

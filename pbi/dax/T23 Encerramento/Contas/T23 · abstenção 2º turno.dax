@@ -1,0 +1,8 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: 0.00%
+@descricao: Taxa final nacional do TSE, mesma conta da T18: abstenção sobre comparecimento mais abstenção nas seções instaladas, com exterior.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
+@gerado: pbi/scripts/desenho_t23.py
+*/
+CALCULATE ( [Apuração · abstenção %], REMOVEFILTERS ( 'UF' ) )

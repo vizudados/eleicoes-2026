@@ -1,5 +1,5 @@
 {
- "gerado": "2026-10-26T12:21:55",
+ "gerado": "2026-10-26T12:38:30",
  "arquivos": [
   ".gitignore",
   "Eleicoes.Report/.platform",
@@ -453,6 +453,7 @@
   "Eleicoes.Report/definition/pages/T23/visuals/T23_Fecho_Ir27/visual.json",
   "Eleicoes.Report/definition/pages/T23/visuals/T23_Fecho_Ir28/visual.json",
   "Eleicoes.Report/definition/pages/T23/visuals/T23_Fecho_Ir29/visual.json",
+  "Eleicoes.Report/definition/pages/T23/visuals/T23_Resumo_Numeros/visual.json",
   "Eleicoes.Report/definition/pages/T24/page.json",
   "Eleicoes.Report/definition/pages/T24/visuals/T24_Casca_Anterior/visual.json",
   "Eleicoes.Report/definition/pages/T24/visuals/T24_Casca_Fundo/visual.json",
@@ -544,11 +545,13 @@
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Casca_Proxima/visual.json",
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Contexto_Html/visual.json",
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Fontes_Versoes/visual.json",
+  "Eleicoes.Report/definition/pages/T29/visuals/T29_Grafico_Eixos/visual.json",
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Grafico_Notas/visual.json",
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Grafico_Recorde/visual.json",
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Grafico_Titulo/visual.json",
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Grafico_Votos/visual.json",
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Mapa_Estados/visual.json",
+  "Eleicoes.Report/definition/pages/T29/visuals/T29_Mapa_Rotulos/visual.json",
   "Eleicoes.Report/definition/pages/T29/visuals/T29_Resposta_Html/visual.json",
   "Eleicoes.Report/definition/pages/TIX/page.json",
   "Eleicoes.Report/definition/pages/TIX/visuals/TIX_Sumario_Html/visual.json",

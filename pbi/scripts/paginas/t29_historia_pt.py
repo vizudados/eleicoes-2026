@@ -2,6 +2,7 @@
 
 Um protagonista: 27 UFs com play automático finito, régua clicável, vencedor real e intensidade pela distância
 ao segundo colocado. Apoios: a série de votos das duas candidaturas e os denominadores históricos.
+Textos e eixos em HTML/Sora atrás do canvas; no Deneb, somente formas e números em glifos (padrão da T21).
 """
 import desenho_t29 as D
 import pagina_lib
@@ -47,13 +48,19 @@ def declarar(ctx):
     return [
         Visual(P, lib.visual_html('T29_Resposta_Html', 150, 140, 1620, 130, 'T29 · Resposta · HTML',
             folha_de_estilo=CSS, modelo_corpo=corpo(), alt=lib.medida('T29 · Resposta · ALT'), z=Z, tab=100)),
+        Visual(P, lib.visual_html('T29_Mapa_Rotulos', 150, 290, D.MAPA_W, D.MAPA_H, 'Casca · vazio',
+            folha_de_estilo=CSS, modelo_corpo=D.corpo_mapa_rotulos(),
+            alt='Rótulos do mapa e régua das dez eleições; números do ano em tela desenhados em glifos.', z=Z, tab=110)),
         Visual(P, mapa),
         Visual(P, lib.visual_html('T29_Grafico_Titulo', 1020, 290, 750, 90, 'Casca · vazio', folha_de_estilo=CSS,
             modelo_corpo=corpo().replace('{{content}}', "<div class='tela rot29'><div class='rot'>VOTOS NO PAÍS · MESMA ESCALA NOS DOIS TURNOS</div>"
                 "<div class='leg'><span><i style='background:var(--vermelho)'></i>PT</span>"
                 "<span><i style='background:var(--azul)'></i>Principal adversário nacional</span></div></div>{{content}}"),
             alt='Votos do PT e do principal adversário, com tratamento e escala iguais.', z=Z, tab=130)),
-        Visual(P, lib.visual_deneb('T29_Grafico_Votos', 1020, 385, 750, 510, 'spec/t29_votos.json', [
+        Visual(P, lib.visual_html('T29_Grafico_Eixos', 1020, 385, D.GRAFICO_W, D.GRAFICO_H, 'Casca · vazio',
+            folha_de_estilo=CSS, modelo_corpo=D.corpo_grafico_rotulos(),
+            alt='Eixos dos dois turnos: mesmos anos e escala de votos, na Sora embutida do painel.', z=Z, tab=135)),
+        Visual(P, lib.visual_deneb('T29_Grafico_Votos', 1020, 385, D.GRAFICO_W, D.GRAFICO_H, 'spec/t29_votos.json', [
             lib.campo_coluna('ano', 'PT histórico Brasil', 'Ano'), lib.campo_coluna('turno', 'PT histórico Brasil', 'Turno'),
             lib.campo_medida('pt', 'T29 · PT votos'), lib.campo_medida('adv', 'T29 · adversário votos')],
             alt=lib.medida('T29 · Gráfico · ALT'), tooltip_pagina='ttT29Eleicao', z=Z+1, tab=140)),

@@ -1,124 +1,86 @@
-# Integração pós-eleição · rodada 3 · 26/10/2026
+# Integração pós-eleição · rodada 4 · acabamento
 
-Handoff vigente, após a integração e as provas reais da rodada 2 (`1bce008`, informadas pela main).
-Desktop, modelo em execução, PBIP gerado, commit, push e publicação não foram operados nesta rodada.
-As fotos da main em `pbi/qa/previa/` continuam sendo a evidência de motor da rodada anterior.
+Handoff vigente, sobre a rodada 3 integrada pela main (`283a14d`, smoke sem erro e prévias reais informadas no brief).
+Esta rodada altera fontes de medidas, páginas e specs. **Nenhuma tabela, coluna, relação, CSV ou fonte nova.**
+São as mesmas 49 tabelas e 24 relações: não há exigência de ciclo completo por mudança estrutural nem arquivo de
+dados para publicar. Desktop, PBIP gerado, commit e push ficam com a main.
 
-## O que mudou
+## T29 · fonte independente do canvas
 
-- **T00:** rótulo do mapa em `x=1040, y=808, 270×28`, alinhado à esquerda, no céu à direita do RS, acima do horizonte
-  que começa em y=853. O “começar” foi para `x=1800, y=590`, abaixo da seta e fora do bloco de números; o alvo do
-  botão acompanha a posição. Os tempos do vídeo continuam em 9,333333333 s e 13,2 s, conforme o LEIAME da capa.
-- **T27:** “A urna não mostra quem trocou de candidato.”, com inicial maiúscula. Conta e método preservados.
-- **T28:** perda frente a Jair passa a `−144,0 mil`, `−93,6 mil` etc.; a conta positiva usada no ranking permanece
-  igual. Só a representação da perda recebeu o sinal negativo.
-- **T29 / 28 · História do PT:** nova página do ato V, sem filtro, entre T28 e T23. Protagonista: mapa das 27 UFs,
-  dez eleições de 1989 a 2026, turno decisivo, vencedor real e intensidade da vantagem sobre o segundo colocado.
-  Autoplay começa quando os dez quadros chegam, avança a cada 1,9 s e para em 2026; transição de 650 ms, pausa,
-  replay e régua clicável. Atualização incremental ligada, contadores nacionais por ano e dossiê por UF.
-  Apoios: gráfico de votos com dois painéis/mesma escala (PT e principal adversário nacional), e comparação dos
-  denominadores. As lacunas de 1994/1998 interrompem a linha do segundo turno; a queda de 2014→2018 é preservada.
-  O dossiê estadual mostra os dois turnos, incluindo traços quando não houve segundo; o dossiê do gráfico identifica
-  as duas candidaturas, válidos e participação. Nota de versões históricas visível e ressalvas completas no i.
-- **T23 / 29 · Encerramento:** par escuro da capa, título “Da zona eleitoral ao resultado.”, blocos espelhados
-  Flávio/Lula com os mesmos tamanhos e as mesmas contas da capa: segundo turno maior, primeiro menor e selo eleito.
-  A urna grande saiu. Onze achados/atalhos em cinco atos, com o ato V completo: 20, 25, 26, 27 e 28. As caixas dos
-  links e o HTML usam uma única geometria em `t23_encerramento.py`; os achados encurtaram para preservar o resultado.
-- **Roteiro/sumário:** 30 telas, 28 História do PT, 29 Encerramento; a última coluna do sumário usa passos de 68 px
-  para caberem onze itens. Regex de visual, tooltip e bookmark aceita T29. README e perguntas acompanham a ordem.
+- Removidas todas as marcas de texto nativo do Vega nos dois specs. Os eixos mantêm linhas, grade e marcas, com
+  `labels=false`; seus rótulos e os títulos de turno agora são HTML com a Sora embutida do painel.
+- `T29_Mapa_Rotulos` fica atrás de `T29_Mapa_Estados`, na mesma caixa, z de conteúdo e conteúdo+1 (padrão da T21).
+  Tem os textos dos contadores, legenda e anos da régua. A nota “1998 · CE: Ciro (PPS)” é uma ressalva fixa,
+  explicitamente datada; não depende de sincronizar outro visual ao relógio do mapa.
+- Ano, quantidade do PT, número do turno, quantidade do adversário e de outros são **cinco contadores em caminhos
+  de glifos da Sora** dentro do Vega. O número do turno muda entre 1 e 2 junto com o mapa; não foi fixado no HTML.
+- `T29_Grafico_Eixos` fica atrás do gráfico e usa a mesma geometria/escalas declaradas em `desenho_t29.py`.
+  Nenhum texto visível desses dois canvas depende de uma fonte instalada no computador. A Sora e as setas do HTML
+  continuam embutidas pelo estilo comum, sem nova fonte ou recurso externo.
+- Play, pausa, régua clicável, atualização incremental, contadores, margem, cores, lacunas e contexto dos dossiês
+  foram preservados. O teste local garante também que os SVGs emitidos pelos dois specs não contêm `<text>`.
 
-## Modelo mudou: ciclo completo obrigatório
+Fontes: `pbi/scripts/desenho_t29.py`, `paginas/t29_historia_pt.py` e `pbi/spec/t29_mapa.json` / `t29_votos.json`.
 
-Novo módulo `pbi/modelo/pt_historico.py`, carregado automaticamente pelo gerador:
+## T23 · fecho no centro
 
-| Tabela | CSV | Grão / uso | Relação |
-|---|---|---|---|
-| PT histórico UF | `dados/pbi/pt_historico_uf.csv` | 504 linhas, UF × ano × turno; série completa do dossiê estadual | UF → UF[UF] |
-| PT histórico Brasil | `dados/pbi/pt_historico_brasil.csv` | 18 linhas, ano × turno, exterior incluído uma vez; gráfico/recorde | desconectada: BR não é uma UF |
-| PT histórico mapa | **`dados/pbi/t29_mapa.csv`** | 280 linhas, UF × eleição, turno decisivo e vencedor real | UF → UF[UF] |
+Novo visual `T23_Resumo_Numeros`, caixa **620, 292, 680 × 245**, entre os dois candidatos, acima dos achados.
+Mostra a diferença final de **4.430.191 votos**, abstenção **21,08% → 19,22%** do primeiro para o segundo turno,
+e **2.960.239 a mais votaram** no segundo turno. Traço discreto abaixo da legenda, sem cruzar os dígitos.
+Números com contador automático, cor neutra, diferença a 64 px e apoios a 22/24 px; os resultados espelhados ficam
+com os tamanhos anteriores. O maior texto do apoio ocupa cerca de 389 dos 680 px disponíveis.
 
-Não ligar essas tabelas a `Ano`: a dimensão atual começa em 2006, e a série nova começa em 1989. As duas relações
-novas são unidirecionais, padrão fato → dimensão na declaração do projeto; não há relacionamento entre os fatos.
-UF histórico e Brasil já estavam no GitHub segundo o brief; **o único CSV novo a publicar é `t29_mapa.csv`**.
+Sete contas novas em `pbi/dax/T23 Encerramento/Contas/`:
 
-O derivado é reproduzido por `pipeline/exportar_t29.py`, lendo `mapa_turno_decisivo.csv` e
-`todos_candidatos_uf.csv` das saídas históricas. Não substitui o vencedor da UF pelo principal adversário nacional:
-Ceará/1998 = Ciro Gomes (PPS), vantagem de 37.112 sobre o segundo colocado. A intensidade usa a mesma conta em
-todas as UFs: `(votos do vencedor − votos do segundo) / válidos`. Exterior existe nos fatos e não tem geometria;
-é descartado antes de desenhar, e não entra nos contadores das 27 UFs.
+- `T23 · comparecimento 1º turno`, `T23 · comparecimento 2º turno` e `T23 · aptos 1º turno`;
+- `T23 · abstenção 1º turno`, `T23 · abstenção 2º turno`;
+- `T23 · comparecimento a mais` e `T23 · diferença final`.
 
-Publicar o CSV derivado e confirmar resposta 200 do raw antes do refresh/ciclo (L135). Depois, a main fecha o
-Desktop pelo procedimento de casa, gera o modelo, aplica as páginas e reabre com refresh. **Não é só medidas/páginas.**
+Dois desenhos novos: `T23 · Resumo · HTML` e `T23 · Resumo · ALT`. O i do encerramento inclui o fecho e a cobertura.
+O gerador `desenho_t23.py` é a fonte dessas medidas e dos achados existentes.
 
-Preparação segura, sem Desktop ou geração de PBIP:
+Conta nacional, **com exterior nos dois turnos**: comparecimento 125.275.835 → 128.236.074, saldo 2.960.239.
+Os comparecimentos vêm de `PT histórico Brasil`, ano 2026, com contexto nacional fixo. A abstenção do primeiro
+turno usa seus aptos; a do segundo reutiliza a conta final da T18, abstenção dividida por comparecimento mais
+abstenção nas seções instaladas, como o TSE. Não usar o eleitorado cadastrado no denominador do segundo turno:
+há seções não instaladas no exterior. Não confundir este ganho nacional com o municipal sem exterior da T27
+(2.920.562); ambos mantêm seus universos.
+
+## Preparação e provas
+
+Sem atuar no Desktop ou gravar PBIP:
 
 ```powershell
-python -X utf8 pipeline/exportar_t29.py
 python -X utf8 pbi/scripts/desenho_t29.py
 python -X utf8 pbi/scripts/desenho_t23.py
-python -X utf8 pbi/scripts/desenho_t27_t28.py
 python -X utf8 pbi/scripts/validar_dax_gerado.py --autoteste
 python -X utf8 pbi/scripts/validar_t29.py
 node pbi/tools/testar_t29.mjs
 python -X utf8 pbi/scripts/validar_pos_eleicao.py
 ```
 
-Checar `$LASTEXITCODE` após cada comando no PowerShell 5.1. Os geradores de desenho gravam só suas fontes DAX/spec;
-não chamam `gerar_modelo`, `montar_pbip --aplicar`, Desktop, refresh ou git.
+Checar `$LASTEXITCODE` após cada comando no PowerShell 5.1. O teste Vega usa fixtures locais em `pbi/qa/rodada3/`
+(nome histórico da pasta); o JSON de resultado agora inclui `textosNativosVega: 0` e `contadoresEmGlifos: 5`.
+Esses testes não substituem o DAX ou o gesto no Power BI. O validador estrutural não é parser DAX oficial.
 
-## Números conferidos localmente
+Prova consolidada: `pbi/qa/rodada4/provas-locais.json`. Conferidos os quatro números do centro contra os CSV,
+49 tabelas/24 relações sem alteração de fontes, 64 arquivos idênticos após regeneração e os testes de animação
+e glifos. Validação estrutural: 1.909 medidas e dez autotestes, sem erro. Lint das duas telas: zero erro e 35
+avisos de estilo/classificação. `git diff --check` sem erro; referências e caminhos do plano combinado válidos.
 
-- **Recorde:** Lula 64.256.232 em 2026/2; marca anterior, dele, 60.345.999 em 2022/2; diferença **3.910.233**.
-  Ranking por candidatura em um único turno, sem somar eleições ou turnos. A formulação presidencial direta vem
-  do método H5: 127 candidaturas/turnos desde 1989 e limites dos mais votados nas eleições diretas anteriores.
-- **Fatia dos válidos:** 61,27% em 2002/2 e 51,79% em 2026/2; eleitorado 82.074.718 em 1989 e 158.745.502 em 2026.
-- **UFs com PT à frente:** 1989: 4; 1994: 2; 1998: 2; 2002: 26; 2006: 20; 2010: 16; 2014: 15; 2018: 11;
-  2022: 13; 2026: 13. Em 1998 são 24 para o adversário nacional, 2 para o PT e 1 para Ciro.
-- **Queda 2014→2018:** PT −11.925.617 no primeiro turno; −7.460.212 no segundo.
-- **Resultados da capa/encerramento:** Lula 64.256.232, 51,79%; Flávio 59.826.041, 48,21%; diferença 4.430.191.
-  A T27 continua sem exterior, com ganhos +10.333.927 e +3.693.941 e identidade total +14.027.868; o encerramento
-  usa a conta nacional da rodada anterior, +10,38 mi e +3,72 mi, com exterior.
+### A main prova nesta rodada
 
-## Provas locais e limite da evidência
+1. **T29, foto real em 1920 e a 61%:** textos do mapa, legendas, anos da régua, títulos e eixos do gráfico na Sora;
+   nenhum fallback serifado. Conferir o alinhamento do dígito com “º turno”, dos números com “Adversário/Outros”
+   e dos rótulos dos eixos com as respectivas marcas.
+2. **T29 play/gesto:** 1989 → 2026 e relógio parado; clique em 1994/1998 mostra 1º turno, 1998 mostra 24 para o
+   adversário e 1 para outros, Ceará de Ciro; 2026 mostra 2º turno, PT 13, adversário 14, outros 0.
+   Rótulos HTML atrás do canvas não devem bloquear régua, play, hover ou dossiê.
+3. **T29 gráfico e dossiês:** lacunas de 1994/1998, hover dos dois lados, dossiê do estado e da eleição, i abrir/fechar.
+4. **T23, foto real em 1920 e a 61%:** centro sem contato com os blocos dos candidatos ou com os achados;
+   contador e traço legíveis, rótulo “1º → 2º turno”, valores iguais aos acima. Atalhos dos cinco atos seguem livres.
+5. **Smoke T23 e T29:** zero erro; testar também `previa.py T23 --animado` e T29 animada pelo fluxo da main.
+   A T29 continua com a variante estática final para foto/exportação.
 
-`pbi/qa/rodada3/validacao-t29.json`: 504 linhas estaduais, 18 nacionais e 280 decisivas; 90 fechamentos por campo;
-280 vencedores conferidos contra o ranking de todas as candidaturas; recorde, diferença, quedas e contadores.
-`validacao-vega.json`: specs executadas no Vega local, 27 caminhos, autoplay pelos dez anos, relógio parado no fim,
-ano preservado após atualização incremental, Ciro/1998 e quatro lacunas (dois anos × dois lados). `__row__`
-permanece nos mapas e nos pontos válidos do gráfico, para o tooltip resolver o contexto original.
-
-Os componentes foram renderizados em SVG e revisados localmente em `pbi/qa/rodada3/T29-mapa-local.svg` e
-`T29-votos-local.svg`; são fixtures de CSV, **não prévias do motor**. Não substituem os PNG reais em `qa/previa`.
-O validador estrutural verificou 1.900 medidas e dez casos de autoteste sem erro; ele não é parser DAX oficial.
-O plano combinado com as novas declarações não apontou referências/caminhos inválidos. Lint conta × desenho:
-zero erro, avisos de estilo/linhas longas, escapes e classificações dos campos serializados.
-Os quatro geradores foram repetidos: **168 arquivos idênticos**, incluindo CSV, medidas e specs. As 26 referências
-distintas de colunas da T29 existem nas declarações; o modelo passa a 49 tabelas e 24 relações declaradas.
-
-A mecânica segue a T21/L123 e os contratos de [signals](https://vega.github.io/vega/docs/signals/) e
-[event streams do Vega](https://vega.github.io/vega/docs/event-streams/). `estatico` mostra 2026 na prévia/PDF;
-o sinal `reduceMotion=true` fixa a variante sem animação para exportação, além do botão de pausa disponível na tela.
-
-## O que a main precisa provar após integrar
-
-1. **Smoke T00, T23, T27, T28 e T29.** Novas tabelas e 46 medidas T29 só passam no motor após o ciclo completo.
-2. **T00 a 1920 e 61%:** céu livre atrás do rótulo, sem horizonte sob o texto; “começar” afastado de porcentagem,
-   primeira votação e selo. Ver vídeo nas janelas 1º/2º e movimento reduzido, mantendo os tempos anteriores.
-3. **T23 a 1920 e 61%:** título, resultado espelhado, selo, todos os onze achados sem corte. Clicar nos cinco links
-   do ato V e voltar; validar que 28 abre História e 29 é Encerramento. Fonte/crédito no i.
-4. **T27/T28, Brasil e MG:** inicial maiúscula, identidade igual à rodada 2; perdas de Jair com sinal de menos.
-   Roraima/AC continuam com o tratamento de recortes em que um dos candidatos perdeu votos.
-5. **T29 Brasil, foto estática e play real:** esperar cerca de 20 s desde o dado chegar; inicia em 1989, termina
-   em 2026 e não reinicia ao atualizar a seleção/tooltip. Pausar, retomar, clicar em 1998 e 2002, replay do fim.
-   Conferir os contadores da lista acima; 1998/CE marrom/Ciro, 1994/1998 indicados como primeiro turno.
-6. **T29 gráfico:** turnos separados, mesma escala 0–70 mi, lacuna visível entre 1989/2 e 2002/2, sem inventar
-   pontos em 1994/1998. Queda 2014→2018; nota à mão do recorde sem encostar em linha/número; hover realça um lado.
-7. **T29 tooltips:** no mapa, CE e MG abrem o dossiê estadual inteiro (710 px de altura) com dez linhas e os dois
-   turnos, sem cortar as notas finais; 1994/1998 com traço no segundo turno. No gráfico, 2026/2 e 1989/2 abrem o
-   dossiê nacional com candidaturas, votos e participação, sem levar o contexto de outra linha.
-8. **T29 i / navegação / sumário:** fontes e ressalvas H11 legíveis, abrir/fechar, setas T28 → T29 → T23, novo item
-   no sumário sem colidir com rodapé. Não exigir coincidência com todas as publicações históricas do TSE: as versões
-   divergentes estão preservadas e documentadas, sem ajuste artificial.
-
-Não há mudança de vídeo, arte gerada, coletor ou infraestrutura nesta rodada. A prova de composição completa e de
-interação no Power BI permanece pendente da main; não foi alegada aprovação visual de motor para estas alterações.
+Prévias reais novas e aprovação de composição/interação permanecem com a main. Não foram sobrescritos os PNGs
+aprovados em `pbi/qa/previa/` nem operado o Desktop nesta rodada.

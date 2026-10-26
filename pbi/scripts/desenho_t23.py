@@ -4,19 +4,42 @@ import roteiro
 from paginas.t23_encerramento import GRUPOS
 from validar_dax_gerado import problemas
 
-PASTA = Path(__file__).resolve().parents[1] / 'dax/T23 Encerramento/Desenho'
+PASTA = Path(__file__).resolve().parents[1] / 'dax/T23 Encerramento'
 
 
-def gravar(nome, expr, desc):
+def gravar(nome, expr, desc, fmt='texto', conta=False):
     erros = problemas(expr, comentario_inline=True)
     if erros:
         raise ValueError('; '.join(erros))
-    (PASTA / f'T23 · {nome}.dax').write_text(
-        f'/*\n@pasta: T23 Encerramento\\Desenho\n@formato: texto\n@descricao: {desc}\n'
+    sub = 'Contas' if conta else 'Desenho'
+    (PASTA / sub).mkdir(parents=True, exist_ok=True)
+    (PASTA / sub / f'T23 · {nome}.dax').write_text(
+        f'/*\n@pasta: T23 Encerramento\\{sub}\n@formato: {fmt}\n@descricao: {desc}\n'
+        '@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv\n'
         '@gerado: pbi/scripts/desenho_t23.py\n*/\n'+expr.strip()+'\n', encoding='utf-8')
 
 
 def main():
+    for turno in [1, 2]:
+        for nome, coluna in [('comparecimento', 'Comparecimento'), ('aptos', 'Aptos')]:
+            if turno == 2 and nome == 'aptos':
+                continue
+            gravar(f'{nome} {turno}º turno', f'''CALCULATE ( SUM ( 'PT histórico Brasil'[{coluna}] ),
+    REMOVEFILTERS ( 'PT histórico Brasil' ),
+    'PT histórico Brasil'[Ano] = 2026, 'PT histórico Brasil'[Turno] = {turno} )''',
+                'Total nacional do turno com exterior; mesma cobertura nos dois turnos.', '#,0', True)
+        if turno == 1:
+            expr = '''VAR _aptos = [T23 · aptos 1º turno]
+RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos ) )'''
+            descricao = 'Abstenção nacional do primeiro turno antes do arredondamento; um menos comparecimento sobre aptos.'
+        else:
+            expr = "CALCULATE ( [Apuração · abstenção %], REMOVEFILTERS ( 'UF' ) )"
+            descricao = 'Taxa final nacional do TSE, mesma conta da T18: abstenção sobre comparecimento mais abstenção nas seções instaladas, com exterior.'
+        gravar(f'abstenção {turno}º turno', expr, descricao, '0.00%', True)
+    gravar('comparecimento a mais', '[T23 · comparecimento 2º turno] - [T23 · comparecimento 1º turno]',
+        'Variação líquida do comparecimento nacional entre turnos, com exterior; não identifica os mesmos eleitores.', '#,0', True)
+    gravar('diferença final', 'ABS ( [T00 · 2º turno · Lula votos] - [T00 · 2º turno · Flávio votos] )',
+        'Diferença final entre as duas candidaturas, votos nacionais com exterior.', '#,0', True)
     blocos = []
     for cand, pos, cls in [('Flávio', 'esq', 'flavio'), ('Lula', 'dir', 'lula')]:
         nome = 'FLÁVIO BOLSONARO · PL' if cand == 'Flávio' else 'LULA · PT'
@@ -51,6 +74,16 @@ def main():
     & "<b>{roteiro.numero(cod)}</b><span>" & ({textos[cod]}) & "</span></div>"''')
     gravar('Achados · HTML', 'VAR _html = ' + '\n    & '.join(blocos) + '\nRETURN _html',
            'Resultado espelhado dos dois turnos e onze achados/atalhos distribuídos nos cinco atos.')
+    gravar('Resumo · HTML', '''"<div class='tela resumo-final'><div class='rot sobe d4'>DIFERENÇA FINAL</div>"
+    & "<div class='num diferenca sobe d5'>" & FORMAT ( [T23 · diferença final], "#,0" ) & "</div>"
+    & "<div class='de'>votos entre Lula e Flávio</div><div class='risco-fecho'></div>"
+    & "<div class='abst'>Abstenção · 1º → 2º turno: <b class='num'>" & FORMAT ( [T23 · abstenção 1º turno], "0.00%" )
+    & "</b> → <b class='num'>" & FORMAT ( [T23 · abstenção 2º turno], "0.00%" ) & "</b></div>"
+    & "<div class='comparecimento'><b class='num'>" & FORMAT ( [T23 · comparecimento a mais], "#,0" )
+    & "</b> a mais votaram no 2º turno</div></div>"''', 'Fecho numérico central: diferença final e participação, com contador automático.')
+    gravar('Resumo · ALT', '''"Diferença final: " & FORMAT ( [T23 · diferença final], "#,0" ) & " votos. Abstenção de "
+    & FORMAT ( [T23 · abstenção 1º turno], "0.00%" ) & " para " & FORMAT ( [T23 · abstenção 2º turno], "0.00%" )
+    & " entre os turnos; " & FORMAT ( [T23 · comparecimento a mais], "#,0" ) & " pessoas a mais compareceram, incluindo exterior."''', 'Resumo acessível da diferença e da participação.')
     gravar('Achados · ALT', '''"Da zona eleitoral ao resultado. 2º turno: Lula "
     & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & "; Flávio "
     & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" )

@@ -1,0 +1,8 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: #,0
+@descricao: Diferença final entre as duas candidaturas, votos nacionais com exterior.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
+@gerado: pbi/scripts/desenho_t23.py
+*/
+ABS ( [T00 · 2º turno · Lula votos] - [T00 · 2º turno · Flávio votos] )

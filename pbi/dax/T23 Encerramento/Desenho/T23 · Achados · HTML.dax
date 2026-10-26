@@ -2,6 +2,7 @@
 @pasta: T23 Encerramento\Desenho
 @formato: texto
 @descricao: Resultado espelhado dos dois turnos e onze achados/atalhos distribuídos nos cinco atos.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
 @gerado: pbi/scripts/desenho_t23.py
 */
 VAR _html = "<div class='bl esq sobe d3'><div class='rot'>FLÁVIO BOLSONARO · PL</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"

@@ -11,6 +11,48 @@ PBI = Path(__file__).resolve().parents[1]
 ANOS = [1989, 1994, 1998, 2002, 2006, 2010, 2014, 2018, 2022, 2026]
 MAPA_W, MAPA_H = 810, 700
 PASSO, TRANSICAO, ENTRADA = 1900, 650, 1800
+REGUA_X = [104 + i * 74 for i in range(10)]
+MAPA_NUMEROS = {
+    'ano': {'x': 610, 'y': 96, 's': 48}, 'pt': {'x': 610, 'y': 210, 's': 70},
+    'turno': {'x': 610, 'y': 128, 's': 17}, 'adv': {'x': 710, 'y': 309, 's': 15},
+    'outros': {'x': 677, 'y': 334, 's': 15},
+}
+GRAFICO_W, GRAFICO_H = 750, 510
+GRAFICO_X, GRAFICO_DIREITA, GRAFICO_ALTURA = 44, 18, 190
+GRAFICO_TOPOS = [20, 280]
+GRAFICO_MAXIMO = 70000000
+GRAFICO_MARCAS = [0, 20000000, 40000000, 60000000]
+
+
+def corpo_mapa_rotulos():
+    """Textos fixos em HTML/Sora, atrás do canvas; valores que mudam no play são glifos no Vega."""
+    css = (".labels29{color:var(--grafite)}.labels29 .lb{position:absolute;font-size:15px;line-height:22px;white-space:nowrap}"
+           ".labels29 .ano{position:absolute;top:675px;width:68px;text-align:center;font-size:14px;line-height:18px;color:var(--tinta)}")
+    labels = [(623, 110, 'º turno', 17), (610, 226, 'de 27 estados', 17),
+              (610, 250, 'com o PT à frente', 15), (610, 295, 'Adversário:', 15), (610, 320, 'Outros:', 15),
+              (610, 371, '1994 e 1998:', 15), (610, 394, 'decisão no 1º turno', 15),
+              (610, 438, '1998 · CE: Ciro (PPS)', 14),
+              (10, 584, 'Cor: vencedor · intensidade: vantagem sobre o 2º colocado', 14),
+              (10, 608, 'PT: vermelho · adversário nacional: azul · outros: marrom', 14)]
+    partes = [f"<div class='lb' style='left:{x}px;top:{y}px;font-size:{s}px'>{txt}</div>" for x, y, txt, s in labels]
+    partes += [f"<div class='ano' style='left:{x-34}px'>{ano}</div>" for x, ano in zip(REGUA_X, ANOS)]
+    return f"<style>{css}</style><div class='tela labels29'>{''.join(partes)}</div>{{{{content}}}}"
+
+
+def corpo_grafico_rotulos():
+    """Eixos e títulos na Sora embutida do HTML; geometria única compartilhada com as escalas Vega."""
+    css = (".eixos29{color:var(--grafite)}.eixos29 .lbl{position:absolute;font-size:13px;line-height:18px;white-space:nowrap}"
+           ".eixos29 .turno{position:absolute;font-size:14px;line-height:18px;font-weight:650}")
+    partes = []
+    for turno, topo in enumerate(GRAFICO_TOPOS, 1):
+        partes.append(f"<div class='turno' style='left:{GRAFICO_X}px;top:{topo-20}px'>{turno}º TURNO</div>")
+        for v in GRAFICO_MARCAS:
+            y = topo + GRAFICO_ALTURA * (1 - v / GRAFICO_MAXIMO)
+            partes.append(f"<div class='lbl' style='left:0;top:{y-9:.3f}px;width:36px;text-align:right'>{v//1000000} mi</div>")
+        for ano in ANOS:
+            x = GRAFICO_X + (GRAFICO_W-GRAFICO_X-GRAFICO_DIREITA) * (ano-ANOS[0]) / (ANOS[-1]-ANOS[0])
+            partes.append(f"<div class='lbl' style='left:{x-25:.3f}px;top:{topo+GRAFICO_ALTURA+7}px;width:50px;text-align:center'>{ano}</div>")
+    return f"<style>{css}</style><div class='tela eixos29'>{''.join(partes)}</div>{{{{content}}}}"
 
 
 def gravar(nome, expr, desc, fmt='texto', conta=False):
@@ -145,7 +187,7 @@ RETURN "<div class='tela dossier29'><div class='fita'></div><div class='rot'>DOS
 def mapa_spec():
     c = estilo.COR
     sx = '(width / 810)'
-    anos_x = [104 + i * 74 for i in range(10)]
+    anos_x = REGUA_X
     # Contornos em rabisco e comprimentos reaproveitados da T21; os dados históricos vêm do motor.
     caminhos = T21.ufs()
     signals = [
@@ -175,10 +217,13 @@ def mapa_spec():
         {'name': 'anoAtual', 'update': 'anosLista[estado.para]'},
         {'name': 'sobre', 'value': None, 'on': [{'events': '@marcaUF:mouseover', 'update': 'datum.uf'},
                                               {'events': '@marcaUF:mouseout', 'update': 'null'}]},
-        {'name': 'cfg', 'value': {'ano': {'x': 610, 'y': 96, 's': 48}, 'pt': {'x': 610, 'y': 210, 's': 70}}},
+        {'name': 'cfg', 'value': MAPA_NUMEROS},
         {'name': 'glifos', 'value': T21.glifos()},
         {'name': 'txtAno', 'update': "''+anoAtual"},
         {'name': 'txtPt', 'update': "length(data('quadros')) == 10 ? ''+round(data('quadros')[estado.de].pt + (data('quadros')[estado.para].pt-data('quadros')[estado.de].pt)*e) : ''"},
+        {'name': 'txtTurno', 'update': "length(data('quadros')) == 10 ? ''+data('quadros')[estado.para].turno : ''"},
+        *[{'name': nome, 'update': f"length(data('quadros')) == 10 ? ''+round(data('quadros')[estado.de].{campo} + (data('quadros')[estado.para].{campo}-data('quadros')[estado.de].{campo})*e) : ''"}
+          for nome, campo in [('txtAdv', 'adv'), ('txtOutros', 'outros')]],
     ]
     data = [
         {'name': 'dataset'},
@@ -200,19 +245,14 @@ def mapa_spec():
             {'type': 'filter', 'expr': 'isValid(datum.path)'},
             {'type': 'formula', 'as': 'corAtual', 'expr': "datum.atual[1] == 'PT' ? scale('corPT',toNumber(datum.atual[2])) : (datum.atual[1] == 'Adversário' ? scale('corAdv',toNumber(datum.atual[2])) : scale('corOutros',toNumber(datum.atual[2])))"},
             {'type': 'formula', 'as': 'corAnterior', 'expr': "datum.anterior[1] == 'PT' ? scale('corPT',toNumber(datum.anterior[2])) : (datum.anterior[1] == 'Adversário' ? scale('corAdv',toNumber(datum.anterior[2])) : scale('corOutros',toNumber(datum.anterior[2])))"}]},
-        {'name': 'algarismos', 'values': [{'k': k, 'i': i} for k in ['ano', 'pt'] for i in range(4)], 'transform': [
-            {'type': 'formula', 'as': 'txt', 'expr': "datum.k == 'ano' ? txtAno : txtPt"},
+        {'name': 'algarismos', 'values': [{'k': k, 'i': i} for k in MAPA_NUMEROS for i in range(4)], 'transform': [
+            {'type': 'formula', 'as': 'txt', 'expr': "datum.k == 'ano' ? txtAno : (datum.k == 'pt' ? txtPt : (datum.k == 'turno' ? txtTurno : (datum.k == 'adv' ? txtAdv : txtOutros)))"},
             {'type': 'filter', 'expr': 'datum.i < length(datum.txt)'},
             {'type': 'formula', 'as': 'ch', 'expr': 'substring(datum.txt,datum.i,datum.i+1)'},
             {'type': 'formula', 'as': 'w', 'expr': 'glifos[datum.ch].w'},
             {'type': 'window', 'groupby': ['k'], 'sort': {'field': 'i'}, 'ops': ['sum'], 'fields': ['w'], 'as': ['cum']},
             {'type': 'formula', 'as': 'x0', 'expr': 'datum.cum-datum.w'}]},
     ]
-    def texto(x, y, label, size=15, **extras):
-        return {'type': 'text', 'interactive': False, 'encode': {'update': {
-            'x': {'signal': f'{x}*{sx}'}, 'y': {'signal': f'{y}*{sx}'},
-            'text': {'value': label}, 'font': {'value': 'Sora Eleicoes'}, 'fontSize': {'signal': f'{size}*{sx}'},
-            'fill': {'value': c['grafite']}, **extras}}}
     marks = [
         {'type': 'path', 'name': 'marcaUF', 'from': {'data': 'ufsDados'}, 'encode': {'update': {
             'path': {'field': 'path'}, 'x': {'signal': f'10*{sx}'}, 'y': {'signal': f'8*{sx}'},
@@ -232,14 +272,6 @@ def mapa_spec():
             'y': {'signal': f'cfg[datum.k].y*{sx}'},
             'scaleX': {'signal': f'cfg[datum.k].s/1000*{sx}'}, 'scaleY': {'signal': f'-cfg[datum.k].s/1000*{sx}'},
             'fill': {'value': c['tinta']}}}},
-        texto(610, 128, '', 17, text={'signal': "length(data('quadros')) == 10 ? data('quadros')[estado.para].turno+'º turno' : ''"}),
-        texto(610, 240, 'de 27 estados', 17), texto(610, 264, 'com o PT à frente', 15),
-        texto(610, 309, '', 15, text={'signal': "length(data('quadros')) == 10 ? 'Adversário: '+data('quadros')[estado.para].adv : ''"}),
-        texto(610, 334, '', 15, text={'signal': "length(data('quadros')) == 10 ? 'Outros: '+data('quadros')[estado.para].outros : ''"}),
-        texto(610, 385, '1994 e 1998:', 15), texto(610, 408, 'decisão no 1º turno', 15),
-        texto(610, 453, '', 15, text={'signal': "anoAtual == 1998 ? 'CE: Ciro · PPS' : ''"}, fill={'value': c['marrom']}),
-        texto(10, 598, 'Cor: vencedor · intensidade: vantagem sobre o 2º colocado', 14),
-        texto(10, 622, 'PT: vermelho · adversário nacional: azul · outros: marrom', 14),
         {'type': 'rule', 'interactive': False, 'encode': {'update': {
             'x': {'signal': f'104*{sx}'}, 'x2': {'signal': f'770*{sx}'}, 'y': {'signal': f'663*{sx}'}, 'stroke': {'value': c['areia']}}}},
         {'type': 'rect', 'name': 'marcaAnoAlvo', 'from': {'data': 'quadros'}, 'encode': {'update': {
@@ -250,9 +282,6 @@ def mapa_spec():
             'size': {'signal': f'(datum.i == estado.para ? 280 : 110)*{sx}*{sx}'},
             'fill': {'signal': f"datum.i == estado.para ? '{c['tinta']}' : '{c['papel']}'"},
             'stroke': {'value': c['tinta']}, 'cursor': {'value': 'pointer'}}}},
-        {'type': 'text', 'interactive': False, 'from': {'data': 'quadros'}, 'encode': {'update': {
-            'x': {'signal': f'{anos_x}[datum.i]*{sx}'}, 'y': {'signal': f'687*{sx}'}, 'text': {'field': 'ano'},
-            'align': {'value': 'center'}, 'fontSize': {'signal': f'14*{sx}'}, 'font': {'value': 'Sora Eleicoes'}, 'fill': {'value': c['tinta']}}}},
         {'type': 'symbol', 'name': 'marcaPlay', 'encode': {'update': {
             'x': {'signal': f'30*{sx}'}, 'y': {'signal': f'660*{sx}'}, 'size': {'signal': f'2500*{sx}*{sx}'},
             'fill': {'value': c['tinta']}, 'cursor': {'value': 'pointer'}}}},
@@ -280,20 +309,17 @@ def grafico_spec():
         linhas.append({'name': data_nome, 'source': 'curvas', 'transform': [{'type': 'filter', 'expr': f'datum.turno == {turno}'}]})
     groups = []
     for turno in [1, 2]:
-        ytop = 20 if turno == 1 else 280
+        ytop = GRAFICO_TOPOS[turno-1]
         groups.append({'type': 'group', 'name': f'grupoTurno{turno}', 'encode': {'update': {
-            'x': {'value': 44}, 'y': {'value': ytop}, 'width': {'signal': 'width-62'}, 'height': {'value': 190}}},
-            'signals': [{'name': 'width', 'update': 'pbiContainerWidth-62'}, {'name': 'height', 'value': 190}],
+            'x': {'value': GRAFICO_X}, 'y': {'value': ytop}, 'width': {'signal': f'width-{GRAFICO_X+GRAFICO_DIREITA}'}, 'height': {'value': GRAFICO_ALTURA}}},
+            'signals': [{'name': 'width', 'update': f'pbiContainerWidth-{GRAFICO_X+GRAFICO_DIREITA}'}, {'name': 'height', 'value': GRAFICO_ALTURA}],
             'scales': [{'name': 'x', 'type': 'linear', 'domain': [1989, 2026], 'range': [0, {'signal': 'width'}], 'zero': False},
-                       {'name': 'y', 'type': 'linear', 'domain': [0, 70000000], 'range': [{'signal': 'height'}, 0], 'zero': True}],
-            'axes': [{'orient': 'left', 'scale': 'y', 'values': [0, 20000000, 40000000, 60000000],
-                      'grid': True, 'domain': False, 'ticks': False, 'labelFontSize': 13, 'labelPadding': 8,
-                      'gridColor': c['areia'], 'encode': {'labels': {'update': {'text': {'signal': "datum.value/1e6+' mi'"}}}}},
-                     {'orient': 'bottom', 'scale': 'x', 'values': ANOS, 'format': 'd', 'domainColor': c['areia'],
-                      'tickSize': 3, 'labelFontSize': 13, 'labelPadding': 7}],
+                       {'name': 'y', 'type': 'linear', 'domain': [0, GRAFICO_MAXIMO], 'range': [{'signal': 'height'}, 0], 'zero': True}],
+            'axes': [{'orient': 'left', 'scale': 'y', 'values': GRAFICO_MARCAS,
+                      'grid': True, 'domain': False, 'ticks': False, 'labels': False, 'gridColor': c['areia']},
+                     {'orient': 'bottom', 'scale': 'x', 'values': ANOS, 'domainColor': c['areia'],
+                      'tickSize': 3, 'labels': False}],
             'marks': [
-                {'type': 'text', 'interactive': False, 'encode': {'update': {'x': {'value': 0}, 'y': {'value': -10},
-                    'text': {'value': f'{turno}º TURNO'}, 'fontSize': {'value': 14}, 'fontWeight': {'value': 'bold'}, 'fill': {'value': c['grafite']}}}},
                 {'type': 'group', 'from': {'facet': {'name': f'serie{turno}', 'data': f'painel{turno}', 'groupby': 'lado'}},
                  'marks': [{'type': 'line', 'interactive': False, 'from': {'data': f'serie{turno}'}, 'sort': {'field': 'datum.ano'},
                             'encode': {'update': {'x': {'scale': 'x', 'field': 'ano'}, 'y': {'scale': 'y', 'field': 'votos'},

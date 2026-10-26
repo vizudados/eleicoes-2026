@@ -1,0 +1,10 @@
+/*
+@pasta: T23 Encerramento\Desenho
+@formato: texto
+@descricao: Resumo acessível da diferença e da participação.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
+@gerado: pbi/scripts/desenho_t23.py
+*/
+"Diferença final: " & FORMAT ( [T23 · diferença final], "#,0" ) & " votos. Abstenção de "
+    & FORMAT ( [T23 · abstenção 1º turno], "0.00%" ) & " para " & FORMAT ( [T23 · abstenção 2º turno], "0.00%" )
+    & " entre os turnos; " & FORMAT ( [T23 · comparecimento a mais], "#,0" ) & " pessoas a mais compareceram, incluindo exterior."

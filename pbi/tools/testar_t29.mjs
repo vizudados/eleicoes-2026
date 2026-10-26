@@ -10,6 +10,14 @@ vega.expressionFunction('windowSize', () => [1920, 1080]);
 function criar(nome, estatico = false) {
   const entrada = JSON.parse(readFileSync(new URL(`t29_${nome}_entrada.json`, raiz), 'utf8'));
   const s = entrada.spec;
+  function semFonteInstalada(scope) {
+    for (const m of scope.marks ?? []) {
+      assert.notEqual(m.type, 'text', 'texto do visual precisa estar no HTML ou em caminhos de glifos');
+      semFonteInstalada(m);
+    }
+    for (const a of scope.axes ?? []) assert.equal(a.labels, false, 'eixos devem ter rótulos no HTML');
+  }
+  semFonteInstalada(s);
   s.width = entrada.largura; s.height = entrada.altura;
   s.signals ??= [];
   for (const [name, value] of [['pbiContainerWidth', s.width], ['pbiContainerHeight', s.height]]) s.signals.push({name, value});
@@ -22,8 +30,18 @@ const estatico = criar('mapa', true);
 await estatico.runAsync();
 assert.equal(estatico.signal('anoAtual'), 2026);
 assert.equal(estatico.signal('txtPt'), '13');
+assert.equal(estatico.signal('txtTurno'), '2');
+assert.equal(estatico.signal('txtAdv'), '14');
+assert.equal(estatico.signal('txtOutros'), '0');
 assert.equal(estatico.data('ufsDados').length, 27);
 assert(estatico.data('ufsDados').every(r => Number.isInteger(r.__row__)));
+assert(!/<text\b/.test(await estatico.toSVG()), 'mapa não pode emitir texto nativo que dependa de fonte instalada');
+estatico.signal('estado', {de:2,para:2,t0:0,tocando:false,iniciado:true});
+await estatico.runAsync();
+assert.equal(estatico.signal('txtTurno'), '1');
+assert.equal(estatico.signal('txtAdv'), '24');
+assert.equal(estatico.signal('txtOutros'), '1');
+assert.deepEqual([...new Set(estatico.data('algarismos').map(r => r.k))].sort(), ['adv','ano','outros','pt','turno']);
 estatico.finalize();
 
 const mapa = criar('mapa');
@@ -61,9 +79,10 @@ await votos.runAsync();
 const curvas = votos.data('curvas');
 assert.equal(curvas.filter(r => r.votos == null && r.turno === 2).length, 4, 'duas lacunas para cada lado');
 assert(curvas.filter(r => r.votos != null).every(r => Number.isInteger(r.__row__)), 'pontos devem manter a linha original para tooltip');
+assert(!/<text\b/.test(await votos.toSVG()), 'gráfico não pode emitir texto nativo que dependa de fonte instalada');
 votos.finalize();
 const resultado = {escopo:'Runtime Vega local, sem Power BI', anos:percorridos, estatico2026:true,
   ufs:27, autoplay:true, relogio_parou:true, incremental_preservou_ano:true, ce1998:'Outros',
-  lacunasSegundoTurno:4, rowTooltipPreservado:true};
+  lacunasSegundoTurno:4, rowTooltipPreservado:true, textosNativosVega:0, contadoresEmGlifos:5};
 writeFileSync(new URL('validacao-vega.json', raiz), JSON.stringify(resultado,null,2)+'\n');
 console.log(JSON.stringify(resultado,null,2));
