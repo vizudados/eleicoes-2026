@@ -68,7 +68,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30902,Hartford,Estados Unidos,América do Norte,25/10/2026 19:56:18,100.0,12,12,2336,807,1529
 29807,Houston,Estados Unidos,América do Norte,,0.0,23,0,0,0,0
 29980,Los Angeles,Estados Unidos,América do Norte,,0.0,25,0,0,0,0
-30112,Miami,Estados Unidos,América do Norte,,0.0,51,0,0,0,0
+30112,Miami,Estados Unidos,América do Norte,25/10/2026 20:02:32,100.0,51,51,13705,3201,10504
 30228,Nova York,Estados Unidos,América do Norte,,0.0,53,0,0,0,0
 99490,Orlando,Estados Unidos,América do Norte,,0.0,34,0,0,0,0
 30503,São Francisco,Estados Unidos,América do Norte,,0.0,20,0,0,0,0
@@ -100,7 +100,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30619,Tel Aviv,Israel,Ásia,25/10/2026 23:05:25,100.0,5,5,865,166,699
 30120,Milão,Itália,Europa,25/10/2026 22:05:26,100.0,37,37,8268,4723,3545
 30449,Roma,Itália,Europa,25/10/2026 22:05:25,100.0,22,22,4936,3198,1738
-99430,Kingston-Jamaica,Jamaica,América Central e Caribe,,0.0,1,0,0,0,0
+99430,Kingston-Jamaica,Jamaica,América Central e Caribe,25/10/2026 19:02:08,100.0,1,1,16,5,11
 29742,Hamamatsu,Japão,Ásia,26/10/2026 05:05:22,100.0,18,18,6710,1226,5484
 30198,Nagóia,Japão,Ásia,26/10/2026 05:05:23,100.0,58,58,16161,2877,13284
 30627,Tóquio,Japão,Ásia,26/10/2026 05:05:22,100.0,43,43,12765,2995,9770
