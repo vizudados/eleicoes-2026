@@ -4,8 +4,8 @@
 @descricao: Votos de Lula (PT, 13) em 2022 no recorte de UF (Candidato UF).
 @gerado: pbi/scripts/desenho_t12.py
 */
-CALCULATE (
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'UF segundo turno'[VotosPT] ), 'UF segundo turno'[Ano] = 2022 ), CALCULATE (
     SUM ( 'Candidato UF'[Votos] ),
     'Candidato UF'[Ano] = 2022,
     'Candidato UF'[Número] = 13
-)
+) )

@@ -1,0 +1,8 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: texto
+@descricao: Etapas observadas da ponte; campo serializado para o desenho, sem números calculados no HTML.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( [T28 · ponte · municipal] = 1, [T28 · ponte · etapas municípios], [T28 · ponte · etapas estados] )

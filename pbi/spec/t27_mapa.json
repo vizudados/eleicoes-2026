@@ -104,7 +104,14 @@
   ],
   "data": [
     {
-      "name": "dataset"
+      "name": "dataset",
+      "transform": [
+        {
+          "type": "formula",
+          "as": "tam",
+          "expr": "abs(datum.val)"
+        }
+      ]
     },
     {
       "name": "ufsAtivas",

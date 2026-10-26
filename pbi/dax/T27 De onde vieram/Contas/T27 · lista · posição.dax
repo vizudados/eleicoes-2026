@@ -1,0 +1,12 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Posição da cidade no recorte, mesmo critério descendente da lista anterior; só oito entradas são emitidas.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+VAR _v = [T27 · ganho Lula]
+VAR _cod = SELECTEDVALUE ( 'Município'[CodIBGE] )
+VAR _rank = RANKX ( ALLSELECTED ( 'Município'[CodIBGE] ), [T27 · ganho Lula], _v, DESC, SKIP )
+VAR _empatesAntes = COUNTROWS ( FILTER ( ALLSELECTED ( 'Município'[CodIBGE] ), 'Município'[CodIBGE] < _cod && [T27 · ganho Lula] = _v ) )
+RETURN IF ( HASONEVALUE ( 'Município'[CodIBGE] ), _rank + _empatesAntes )

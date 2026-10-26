@@ -1,7 +1,7 @@
 /*
 @pasta: T01 Placar\Contas
 @formato: #,0
-@descricao: Votos de Flávio (número 22) no 1º turno de 2026, no recorte.
-@oraculo: paginas[1].candidatos › Flávio = 56.104.503
+@descricao: Votos de Flávio (número 22) no turno escolhido de 2026, no recorte.
+@oraculo: Pré: paginas[1].candidatos › Flávio = 56.104.503
 */
-CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 22 )
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'UF segundo turno'[VotosAdversario] ), 'UF segundo turno'[Ano] = 2026 ), CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 22 ) )

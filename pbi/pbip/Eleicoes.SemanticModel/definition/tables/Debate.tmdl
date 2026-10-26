@@ -63,7 +63,7 @@ table Debate
 		annotation SummarizationSetBy = Automatic
 
 	/// Mediadores.
-	column Mediação
+	column 'Mediação'
 		dataType: string
 		isHidden
 		lineageTag: 33b22a11-a29d-5f42-8fa0-ab1cbac9b81a
@@ -73,7 +73,7 @@ table Debate
 		annotation SummarizationSetBy = Automatic
 
 	/// Pontos de audiência na Grande SP.
-	column Audiência
+	column 'Audiência'
 		dataType: double
 		isHidden
 		formatString: 0.0
@@ -115,7 +115,7 @@ table Debate
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column Observação
+	column 'Observação'
 		dataType: string
 		isHidden
 		lineageTag: c64e0232-5f47-576b-89fa-bfc2b5c24dfa
@@ -136,4 +136,3 @@ table Debate
 				    Nomes
 
 	annotation PBI_ResultType = Table
-

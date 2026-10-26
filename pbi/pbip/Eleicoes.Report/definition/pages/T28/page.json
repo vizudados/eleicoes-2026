@@ -57,54 +57,29 @@
   },
   "visualInteractions": [
     {
-      "source": "T28_Lista_Cidades",
-      "target": "T28_Apoios_Html",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T28_Lista_Cidades",
-      "target": "T28_Casca_Filtro",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T28_Lista_Cidades",
-      "target": "T28_Fluxo_Html",
-      "type": "DataFilter"
-    },
-    {
-      "source": "T28_Lista_Cidades",
-      "target": "T28_Mapa_Municipios",
-      "type": "DataFilter"
-    },
-    {
-      "source": "T28_Lista_Cidades",
-      "target": "T28_Resposta_Html",
-      "type": "DataFilter"
-    },
-    {
-      "source": "T28_Mapa_Municipios",
-      "target": "T28_Apoios_Html",
-      "type": "NoFilter"
-    },
-    {
       "source": "T28_Mapa_Municipios",
       "target": "T28_Casca_Filtro",
       "type": "NoFilter"
     },
     {
       "source": "T28_Mapa_Municipios",
-      "target": "T28_Fluxo_Html",
-      "type": "DataFilter"
+      "target": "T28_Jair_Html",
+      "type": "NoFilter"
     },
     {
       "source": "T28_Mapa_Municipios",
-      "target": "T28_Lista_Cidades",
-      "type": "DataFilter"
+      "target": "T28_Ponte_Html",
+      "type": "NoFilter"
     },
     {
       "source": "T28_Mapa_Municipios",
       "target": "T28_Resposta_Html",
-      "type": "DataFilter"
+      "type": "NoFilter"
+    },
+    {
+      "source": "T28_Mapa_Municipios",
+      "target": "T28_Viradas_Titulo",
+      "type": "NoFilter"
     }
   ]
 }

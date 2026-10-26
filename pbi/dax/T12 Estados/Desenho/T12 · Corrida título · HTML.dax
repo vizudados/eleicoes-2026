@@ -6,12 +6,11 @@
 */
 -- 1 · Leituras
 VAR _nSubiu = [T12 · unidades onde a margem subiu]
-VAR _subiu = [T12 · onde a margem subiu]
+VAR _caiuBrasil = [T12 · unidades onde a margem caiu]
 VAR _lugar = [T12 · lugar clicado]
 VAR _m22 = [T12 · margem 2022]
 VAR _m26 = [T12 · margem 2026]
 VAR _d = [T12 · variação]
-VAR _ordem = [T12 · ordem da queda]
 VAR _nUf = [T12 · estados da região]
 VAR _nCaiu = [T12 · unidades do lugar onde a margem caiu]
 -- 2 · Textos
@@ -27,19 +26,18 @@ VAR _man =
     SWITCH (
         TRUE (),
         NOT ISBLANK ( _lugar ) && _ehUF,
-            _lugar & ": a margem de Lula " & IF ( _d < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _d ) * 100, "0.0" )
-                & " pontos" & IF ( _d < 0 && NOT ISBLANK ( _ordem ), " (" & FORMAT ( _ordem, "0" ) & "ª maior queda)", "" )
-                & _lado,
+            _lugar & ": a margem de Lula " & IF ( _d = 0, "não variou", IF ( _d < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _d ) * 100, "0.0" )
+                & " p.p."
+                & _lado ),
         NOT ISBLANK ( _lugar ),
-            _lugar & ": a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" )
-                & IF ( _nUf = 1, " unidade", " unidades" ) & "; na região, de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para "
-                & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos",
-        -- "na direção de Flávio", e não "para a esquerda" (24/10/2026): num painel de eleição, "esquerda" se lê como
-        -- lado político, o contrário do dado (a margem andou para o lado de Flávio no eixo do gráfico)
-        _nSubiu = 0, "Todas andaram na direção de Flávio",
-        _nSubiu = 1, "Quase todas andaram na direção de Flávio; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
-            & _subiu & ", na de Lula",
-        "A maioria andou na direção de Flávio; " & FORMAT ( _nSubiu, "0" ) & " unidades, na de Lula"
+            _lugar & ": " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" )
+                & IF ( _nUf = 1, " unidade com queda", " unidades com queda" ) & "; margem " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " → "
+                & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " p.p.",
+        _nSubiu >= _caiuBrasil,
+            FORMAT ( _nSubiu, "0" ) & IF ( _nSubiu = 1, " unidade foi", " unidades foram" )
+                & " na direção de Lula; " & FORMAT ( _caiuBrasil, "0" ) & ", na de Flávio",
+        FORMAT ( _caiuBrasil, "0" ) & IF ( _caiuBrasil = 1, " unidade foi", " unidades foram" )
+            & " na direção de Flávio; " & FORMAT ( _nSubiu, "0" ) & ", na de Lula"
     )
 -- 4 · Marcação
 RETURN

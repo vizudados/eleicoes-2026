@@ -1,0 +1,8 @@
+/*
+@pasta: T21 20 anos\Contas
+@formato: #,0
+@descricao: Coordenada de desenho em centésimos; recupera exatamente as duas casas do CSV; ausência preservada.
+@oraculo: dados/pbi/municipio.csv; duas casas exatas
+*/
+VAR _v = MAX ( 'Município'[Y] )
+RETURN IF ( NOT ISBLANK ( _v ), ROUND ( _v * 100, 0 ) )

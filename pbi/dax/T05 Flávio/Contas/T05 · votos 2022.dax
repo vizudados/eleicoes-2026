@@ -4,4 +4,4 @@
 @descricao: Votos do candidato do PL no 1º turno de 2022, no recorte.
 @oraculo: paginas[5].comparacao_2022.votos_2022_txt
 */
-CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2022, 'Candidato UF'[Número] = 22 )
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'UF segundo turno'[VotosAdversario] ), 'UF segundo turno'[Ano] = 2022 ), CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2022, 'Candidato UF'[Número] = 22 ) )

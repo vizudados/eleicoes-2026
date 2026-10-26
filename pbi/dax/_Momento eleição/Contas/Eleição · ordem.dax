@@ -1,0 +1,6 @@
+/*
+@pasta: _Momento eleição\Contas
+@formato: 0
+@descricao: Ordem do item do filtro.
+*/
+SELECTEDVALUE ( 'Momento eleição'[Ordem] )

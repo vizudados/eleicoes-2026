@@ -14,7 +14,7 @@ table 'Trends UF'
 		annotation SummarizationSetBy = Automatic
 
 	/// Candidato, tipo de consulta e medida.
-	column Série
+	column 'Série'
 		dataType: string
 		lineageTag: 77ddfec3-0342-53c2-a83e-d4cd3f3db497
 		summarizeBy: none
@@ -23,7 +23,7 @@ table 'Trends UF'
 		annotation SummarizationSetBy = Automatic
 
 	/// Índice ou participação (%).
-	column Índice
+	column 'Índice'
 		dataType: int64
 		isHidden
 		formatString: 0
@@ -34,7 +34,7 @@ table 'Trends UF'
 		annotation SummarizationSetBy = Automatic
 
 	/// Período da consulta.
-	column Período
+	column 'Período'
 		dataType: string
 		lineageTag: 26196464-adb8-51c4-bf37-d074484771c4
 		summarizeBy: none
@@ -64,4 +64,3 @@ table 'Trends UF'
 				    Nomes
 
 	annotation PBI_ResultType = Table
-

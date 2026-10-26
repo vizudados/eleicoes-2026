@@ -1,0 +1,8 @@
+/*
+@pasta: T21 20 anos\Contas
+@formato: 0
+@descricao: Quadros globais seguem em uma única linha do dataset, a menor chave do recorte; não repetem 5.571 vezes.
+@oraculo: Brasil: somente código 1100015 envia os quadros
+*/
+VAR _primeiro = MINX ( FILTER ( ALLSELECTED ( 'Município' ), NOT ISBLANK ( 'Município'[CodIBGE] ) ), VALUE ( 'Município'[CodIBGE] ) )
+RETURN IF ( VALUE ( SELECTEDVALUE ( 'Município'[CodIBGE] ) ) = _primeiro, 1, 0 )

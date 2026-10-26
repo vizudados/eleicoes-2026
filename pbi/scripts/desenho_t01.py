@@ -16,9 +16,10 @@ from pathlib import Path
 
 sys.dont_write_bytecode = True
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from desenho_t01_t06_comum import Gravador, dax  # noqa: E402
+from desenho_t01_t06_comum import dax  # noqa: E402
+from contas_momento import ContasResultado  # noqa: E402
 
-G = Gravador("T01 Placar")
+G = ContasResultado("T01 Placar")
 URL = "https://vizudados.github.io/eleicoes-2026/midia"
 CU = "'Candidato UF'"
 
@@ -278,7 +279,7 @@ def desenho_placar():
         -- 2 · Textos
         RETURN
             LEFT (
-                "Resultado do 1º turno, " & _rec & ": Flávio Bolsonaro " & @MI(_fv)@ & " (" & @PCT(_fp)@ & "), Lula "
+                "Resultado do " & [Eleição · turno] & "º turno, " & _rec & ": Flávio Bolsonaro " & @MI(_fv)@ & " (" & @PCT(_fp)@ & "), Lula "
                     & @MI(_lv)@ & " (" & @PCT(_lp)@ & "). Diferença de " & @INT(_dif)@ & " votos.",
                 250
             )
@@ -434,7 +435,7 @@ def desenho_virada():
                 & "<div class='mao anot entra d12'>" & _nota & "</div>"
         VAR _html =
             "<div class='tela t1v'>"
-                & "<div class='sob sobe'>De 2022 para 2026 · votos no 1º turno</div>"
+                & "<div class='sob sobe'>De 2022 para 2026 · votos no " & [Eleição · turno] & "º turno</div>"
                 & "<div class='man sobe d1'>" & _manchete & "</div>"
                 & "<div class='grafico'>" & _svg & _rotulos
                     & "<div class='ano a1'>2022</div><div class='ano a2'>2026</div>"

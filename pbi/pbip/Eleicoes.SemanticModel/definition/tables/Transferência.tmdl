@@ -1,5 +1,5 @@
 /// Para onde vão, no 2º turno, os eleitores de cada candidato do 1º turno, segundo as pesquisas que publicaram o cruzamento (votos totais).
-table Transferência
+table 'Transferência'
 	isHidden
 	lineageTag: ad35f578-b20e-568c-a086-de46f9afc33d
 
@@ -13,7 +13,7 @@ table Transferência
 		annotation SummarizationSetBy = Automatic
 
 	/// Data de divulgação.
-	column Divulgação
+	column 'Divulgação'
 		dataType: dateTime
 		formatString: dd/MM/yyyy
 		lineageTag: c67f8fa1-9e26-5612-b55a-4a1a2b598c91
@@ -139,7 +139,7 @@ table Transferência
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column Observação
+	column 'Observação'
 		dataType: string
 		isHidden
 		lineageTag: ed42929d-f0b1-5d28-ab11-252645f79221
@@ -148,7 +148,7 @@ table Transferência
 
 		annotation SummarizationSetBy = Automatic
 
-	partition Transferência = m
+	partition 'Transferência' = m
 		mode: import
 		source =
 				let
@@ -160,4 +160,3 @@ table Transferência
 				    Nomes
 
 	annotation PBI_ResultType = Table
-

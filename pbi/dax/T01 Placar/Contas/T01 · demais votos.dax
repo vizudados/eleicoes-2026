@@ -2,7 +2,7 @@
 @pasta: T01 Placar\Contas
 @formato: #,0
 @descricao: Votos somados dos candidatos do 5º lugar em diante, no recorte.
-@oraculo: paginas[1].demais.votos = 3.192.291
+@oraculo: Pré: paginas[1].demais.votos = 3.192.291
 */
 VAR _lista =
     FILTER (

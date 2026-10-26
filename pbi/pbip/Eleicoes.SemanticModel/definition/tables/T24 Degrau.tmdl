@@ -24,4 +24,3 @@ table 'T24 Degrau'
 				    Tipos
 
 	annotation PBI_ResultType = Table
-

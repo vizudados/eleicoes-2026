@@ -5,9 +5,9 @@ Tudo que é texto fixo e grande (fontes em base64, CSS) vai na medida de folha d
 pbi/dax/_Estilo/Estilo · CSS.dax por `python -I -X utf8 pbi/scripts/estilo.py`) ou no bodyTemplate do visual; as
 medidas de desenho só montam o HTML do dado (limite de ~32 mil caracteres por valor de texto, L048).
 
-Fontes: Sora (texto, números, títulos; eixo wght 300–800) e Caveat (as notas à mão, ≥ 24 px), as duas SIL OFL 1.1,
-recortadas para Latin-1 + a pontuação tipográfica do português e embutidas como woff2 base64 (L099), sem hinting
-(L112).
+Fontes: Sora (texto, números, títulos; eixo wght 300–800) e Caveat (notas à mão, ≥ 24 px), SIL OFL 1.1,
+subsetadas pelo corpus dos textos/CSV do painel e embutidas como woff2 base64 (L099), sem hinting (L112).
+A base leva só Sora; a folha de Caveat é composta somente nos visuais com escrita à mão.
 
 Movimento (pedido do Alisson, 23/10/2026: números sempre com contadores, mapas desenhados com rabiscos, cores surgindo
 como esmaecer):
@@ -24,6 +24,8 @@ Tudo respeita prefers-reduced-motion e o estado parado é o desenho final (keyfr
 from __future__ import annotations
 
 import base64
+import hashlib
+import json
 import io
 import sys
 from functools import lru_cache
@@ -47,12 +49,12 @@ CARACTERES = ("".join(chr(c) for c in range(0x20, 0x7F)) + "".join(chr(c) for c 
 
 
 # ---------------------------------------------------------------------------------------------------- fontes
-def _recortar(ttf: Path, eixo) -> bytes:
+def _recortar(ttf: Path, eixo, caracteres=CARACTERES) -> bytes:
     """eixo = (mín, máx) mantém a fonte variável no intervalo; um número fixa a instância estática (menor)."""
     from fontTools import subset
     from fontTools.ttLib import TTFont
     from fontTools.varLib import instancer
-    f = TTFont(ttf)
+    f = TTFont(ttf, recalcTimestamp=False)
     if eixo and "fvar" in f:
         f = instancer.instantiateVariableFont(f, {"wght": eixo})
     o = subset.Options()
@@ -65,7 +67,7 @@ def _recortar(ttf: Path, eixo) -> bytes:
     o.flavor = "woff2"
     cmap = f.getBestCmap()
     s = subset.Subsetter(o)
-    s.populate(unicodes=sorted(ord(c) for c in set(CARACTERES) if ord(c) in cmap))
+    s.populate(unicodes=sorted(ord(c) for c in set(caracteres) if ord(c) in cmap))
     s.subset(f)
     f.flavor = "woff2"
     b = io.BytesIO()
@@ -77,6 +79,24 @@ def _recortar(ttf: Path, eixo) -> bytes:
 def woff2(nome: str) -> bytes:
     """Recorte em cache em pbi/assets/fontes/<nome>.woff2 (L108: gravado uma vez, a montagem repete os bytes)."""
     destino = FONTES / f"{nome}.woff2"
+    if nome in ('sora-painel', 'caveat-notas'):
+        from fontes_painel import corpus
+        from fontTools.ttLib import TTFont
+        familia = 'sora' if nome == 'sora-painel' else 'caveat'
+        origem = FONTES / ('sora-wght.ttf' if familia == 'sora' else 'Caveat-wght.ttf')
+        eixo = (300,800) if familia == 'sora' else 600
+        cmap = TTFont(origem).getBestCmap()
+        chars = ''.join(c for c in corpus()[familia] if ord(c) in cmap)
+        chave = hashlib.sha256(origem.read_bytes()+chars.encode('utf-8')+str(eixo).encode()).hexdigest()
+        manifest = FONTES/'subsets-painel.json'
+        estado = json.loads(manifest.read_text(encoding='utf-8')) if manifest.exists() else {}
+        if not destino.exists() or estado.get(nome,{}).get('chave') != chave:
+            dados = _recortar(origem,eixo,chars)
+            destino.write_bytes(dados)
+            estado[nome]={'chave':chave,'unicode':[ord(c) for c in chars],'bytes':len(dados),
+                          'arquivos_varridos':len(corpus()['arquivos_lidos'])}
+            manifest.write_text(json.dumps(estado,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+        return destino.read_bytes()
     if destino.exists():
         return destino.read_bytes()
     origem, eixo = {"sora-eleicoes": (FONTES / "sora-wght.ttf", (300, 800)),
@@ -99,8 +119,7 @@ def css_base() -> str:
     tokens = ";".join(f"--{k.replace('_', '-')}:{v}" for k, v in c.items())
     passos = "".join(f".d{i}{{animation-delay:{i * 80}ms!important}}" for i in range(1, 17))
     return "".join([
-        font_face(FAMILIA, "sora-eleicoes", "300 800"),
-        font_face(FAMILIA_MAO, "caveat-eleicoes", "400 700"),
+        font_face(FAMILIA, "sora-painel", "300 800"),
         # as setas que a Sora e a Caveat não têm (→ ← ↑ ↓ ↗ ↘), com as métricas da Sora (scripts/setas.py); sem elas o
         # "→" caía no Segoe UI, menor e fora da linha de base
         font_face(SETAS, "sora-setas-400", "300 550"),
@@ -212,10 +231,11 @@ def dax_literal(texto: str, pedaco: int = 6000) -> str:
 
 
 def gravar_medida(nome: str, pasta: str, descricao: str, expressao: str, formato: str = "texto",
-                  subpasta: str = "_Estilo") -> Path:
+                  subpasta: str = "_Estilo", oraculo: str | None = None) -> Path:
     destino = PBI / "dax" / subpasta / f"{nome}.dax"
     destino.parent.mkdir(parents=True, exist_ok=True)
-    texto = f"/*\n@pasta: {pasta}\n@formato: {formato}\n@descricao: {descricao}\n*/\n{expressao}\n"
+    controle = f'@oraculo: {oraculo}\n' if oraculo else ''
+    texto = f"/*\n@pasta: {pasta}\n@formato: {formato}\n@descricao: {descricao}\n{controle}*/\n{expressao}\n"
     if not destino.exists() or destino.read_text(encoding="utf-8") != texto:
         destino.write_text(texto, encoding="utf-8")
     return destino
@@ -223,13 +243,16 @@ def gravar_medida(nome: str, pasta: str, descricao: str, expressao: str, formato
 
 def main() -> int:
     css = css_base()
-    gravar_medida("Estilo · CSS", r"_Estilo", "Folha de estilo comum de todos os HTML Content: Sora e Caveat "
-                  "embutidas (woff2 base64), cores, tipografia e o kit de movimento. Gerada por "
+    gravar_medida("Estilo · CSS", r"_Estilo", "Folha comum: Sora subsetada e embutida, cores, tipografia e movimento. Caveat só na folha de notas. Gerada por "
                   "pbi/scripts/estilo.py.", dax_literal(css))
+    mao = font_face(FAMILIA_MAO, 'caveat-notas', '400 700')
+    gravar_medida('Estilo · CSS mão',r'_Estilo','Somente a Caveat subsetada das notas à mão.',dax_literal(mao))
+    gravar_medida('Estilo · CSS com mão',r'_Estilo','Base e Caveat, somente nos visuais com escrita à mão.',
+                  '[Estilo · CSS] & [Estilo · CSS mão]')
     gravar_medida("Casca · vazio", r"_Estilo", "Conteúdo vazio para os HTML Content cujo desenho é todo fixo (o "
                   "bodyTemplate traz a casca da página).", '" "')
-    print(f"Estilo · CSS: {len(css):,} caracteres · Sora {len(woff2('sora-eleicoes')):,} B · "
-          f"Caveat {len(woff2('caveat-eleicoes')):,} B")
+    print(f"CSS base: {len(css):,} caracteres · CSS mão: {len(mao):,} · Sora {len(woff2('sora-painel')):,} B · "
+          f"Caveat {len(woff2('caveat-notas')):,} B")
     return 0
 
 

@@ -5,7 +5,9 @@
 @oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
 @gerado: pbi/scripts/desenho_t23.py
 */
-"Da zona eleitoral ao resultado. 2º turno: Lula "
+"Encerramento. 2º turno: Lula "
     & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & "; Flávio "
     & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" )
-    & ". Primeiro turno menor, resultado final maior. Achados dos cinco atos levam às telas de origem, inclusive à história do PT e ao recorde de votos."
+    & ". Diferença: " & FORMAT ( [T23 · diferença final], "#,0" ) & " votos. Abstenção "
+    & FORMAT ( [T23 · abstenção 1º turno], "0.00%" ) & " → " & FORMAT ( [T23 · abstenção 2º turno], "0.00%" )
+    & "; " & FORMAT ( [T23 · comparecimento a mais], "#,0" ) & " presenças a mais. Achados dos cinco atos levam à origem."

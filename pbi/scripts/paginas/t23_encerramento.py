@@ -51,10 +51,10 @@ def corpo():
     return (f"<style>{css}</style><div class='tela fx'><div class='tg sobe'>Da zona eleitoral ao resultado.</div>"
             "<div class='fecho sobe d12'>O voto de perto, do Brasil à sua cidade.</div>"
             "<div class='fontes'>Fontes e limites em cada tela · dados e código abertos · desenhos em traço, créditos no i.</div>"
-            "{{content}}</div>")
+            + corpo_resumo(embutido=True) + "{{content}}</div>")
 
 
-def corpo_resumo():
+def corpo_resumo(embutido=False):
     css = (".resumo-final{color:var(--creme);text-align:center}"
            ".resumo-final .rot{font-size:13px;color:var(--areia)}"
            ".resumo-final .diferenca{font-size:64px;line-height:1.1;margin-top:8px;font-weight:700}"
@@ -64,19 +64,19 @@ def corpo_resumo():
            ".resumo-final .abst .num{font-size:22px;color:var(--creme)}"
            ".resumo-final .comparecimento{font-size:16px;line-height:34px;color:var(--areia)}"
            ".resumo-final .comparecimento .num{font-size:24px;color:var(--creme)}")
-    risco = (f"<svg width='240' height='12' style='position:absolute;left:220px;top:124px' aria-hidden='true'>"
+    if embutido:
+        css += '.fx .resumo-final{position:absolute;inset:auto;left:620px;top:292px;width:680px;height:245px}'
+    x,y = (840,416) if embutido else (220,124)
+    risco = (f"<svg width='240' height='12' style='position:absolute;left:{x}px;top:{y}px' aria-hidden='true'>"
              f"{estilo.defs_rabisco('rb23fecho', 1.2)}<path d='M3,6 Q82,2 128,6 T237,5' pathLength='1' "
              f"class='traco' filter='url(#rb23fecho)' fill='none' stroke='{C['creme']}' stroke-width='1.6'/></svg>")
-    return f"<style>{css}</style>{risco}{{{{content}}}}"
+    return f"<style>{css}</style>{risco}" + ('' if embutido else '{{content}}')
 
 
 def declarar(ctx):
     itens = [Visual(P, lib.visual_html('T23_Fecho_Html', 0, 0, 1920, 1080, 'T23 · Achados · HTML',
         folha_de_estilo=CSS, modelo_corpo=corpo(), alt=lib.medida('T23 · Achados · ALT'),
         z=lib.CAMADAS['conteudo'], tab=100))]
-    itens.append(Visual(P, lib.visual_html('T23_Resumo_Numeros', 620, 292, 680, 245, 'T23 · Resumo · HTML',
-        folha_de_estilo=CSS, modelo_corpo=corpo_resumo(), alt=lib.medida('T23 · Resumo · ALT'),
-        z=lib.CAMADAS['conteudo']+1, tab=110)))
     for cod, texto, x, y, w, h in _linhas():
         itens.append(Visual(P, lib.visual_botao(f'T23_Fecho_Ir{cod[1:]}', x-5, y, w+10, h,
             lib.acao_bookmark(f'{cod}_CHEGADA_01'), dica=f'Voltar à tela {roteiro.numero(cod)}: {texto}',

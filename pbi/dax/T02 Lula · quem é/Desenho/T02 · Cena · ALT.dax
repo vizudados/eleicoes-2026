@@ -1,0 +1,6 @@
+/*
+@pasta: T02 Lula · quem é\Desenho
+@formato: texto
+@descricao: Descrição acessível do retrato e da imagem escolhida.
+*/
+IF ( [Eleição · pós] = 1, "Retrato oficial de Luiz Inácio Lula da Silva em traço. Noite da vitória, São Paulo, 25 de outubro de 2026.", "Retrato oficial de Luiz Inácio Lula da Silva em traço. Ato na Av. Paulista, São Paulo, 11 de outubro de 2026." )

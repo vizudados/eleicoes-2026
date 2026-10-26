@@ -743,6 +743,10 @@ def visual_html(nome: str, x, y, w, h, medida_conteudo: str, *, alt, z: int = CA
             props["useTransparency"] = lit(bool(transparencia_nao_selecionados))
         objetos["crossFilter"] = [{"properties": props}]
     if folha_de_estilo:
+        if folha_de_estilo == 'Estilo · CSS':
+            from fontes_painel import usa_mao
+            if usa_mao(medida_conteudo, modelo_corpo):
+                folha_de_estilo = 'Estilo · CSS com mão'
         objetos["stylesheet"] = [{"properties": {"stylesheet": expr_medida(folha_de_estilo, tabela)}}]
     # o kit de movimento (movimento.js, 20/10/2026): entra no fim do bodyTemplate, uma vez por visual; por padrão em
     # todo visual de conteúdo, fora das camadas de clique, leituras, cabeçalhos, casca e tooltips (movimento=None)
@@ -813,10 +817,47 @@ def _texto_spec(spec, nome: str) -> str:
 def visual_deneb(nome: str, x, y, w, h, spec, campos: Iterable[tuple], *, alt, z: int = CAMADAS["conteudo"],
                  tab: int | None = None, tooltips: bool = True, selecao: bool = False, max_selecao: int = 50,
                  menu_contexto: bool | None = None, tooltip_pagina: str | None = None, renderizacao: str = "svg",
-                 oculto: bool = False, modo_selecao: str = "simple", pagina_wh: tuple = (LARGURA, ALTURA)) -> dict:
+                 oculto: bool = False, modo_selecao: str = "simple", pagina_wh: tuple = (LARGURA, ALTURA),
+                 uf_por_codigo: bool = False) -> dict:
     """Deneb Standalone com provider Vega. `spec` = caminho relativo a pbi/ ou dict. `campos` = campo_coluna/campo_medida
     na ordem do papel dataset. `tooltip_pagina` liga a página de tooltip (o datum precisa manter __row__)."""
     texto = _texto_spec(spec, nome)
+    campos = list(campos)
+    if uf_por_codigo:
+        import csv
+        # A chave original e __row__ continuam no dataset. A sigla repetida é recuperada do prefixo IBGE,
+        # validado contra todos os municípios do CSV; não altera filtros externos nem tooltip por chave.
+        lookup = {}
+        with (RAIZ.parent/'dados/pbi/municipio.csv').open(encoding='utf-8-sig',newline='') as f:
+            for r in csv.DictReader(f):
+                prefixo = r['cd_ibge'][:2]
+                if prefixo in lookup and lookup[prefixo] != r['uf']:
+                    raise ErroDeclaracao('Prefixo IBGE com duas UFs: '+prefixo)
+                lookup[prefixo] = r['uf']
+        if not any(c[1]=='cod' for c in campos):
+            raise ErroDeclaracao(nome+': uf_por_codigo exige a chave cod')
+        campos = [c for c in campos if c[1]!='uf']
+        s = json.loads(texto)
+        ds = next(d for d in s['data'] if d['name']=='dataset')
+        ds.setdefault('transform',[]).insert(0,{'type':'formula','as':'uf',
+            'expr':json.dumps(lookup,separators=(',',':'))+"[substring(toString(datum.cod),0,2)]"})
+        texto = json.dumps(s,ensure_ascii=False,separators=(',',':'))
+    # L123: sem avanço de relógio nem repintura quando o contêiner está oculto (clientWidth/Height = 0).
+    # Offline/PDF não tem container DOM: mantém o comportamento estático original.
+    s = json.loads(texto)
+    def _pausar_relogios(escopo):
+        for sinal in escopo.get('signals',[]):
+            for evento in sinal.get('on',[]):
+                if 'timer' in str(evento.get('events','')) and 'update' in evento:
+                    ativo = '!isValid(containerSize()[0]) || (containerSize()[0] > 0 && containerSize()[1] > 0)'
+                    novo = f"({ativo}) ? ({evento['update']}) : {sinal['name']}"
+                    if sinal['name']=='t' and any(g['name']=='fim' for g in escopo.get('signals',[])):
+                        novo = f"t >= fim ? t : ({novo})"
+                    evento['update'] = novo
+        for marca in escopo.get('marks',[]):
+            _pausar_relogios(marca)
+    _pausar_relogios(s)
+    texto = json.dumps(s,ensure_ascii=False,separators=(',',':'))
     projecoes, vistos, suporte = [], set(), {}
     for c in campos:
         if not (isinstance(c, tuple) and len(c) == 4 and c[0] in ("coluna", "medida")):
@@ -829,8 +870,11 @@ def visual_deneb(nome: str, x, y, w, h, spec, campos: Iterable[tuple], *, alt, z
             projecoes.append(proj_coluna(tabela, campo, alias=alias, rotulo=alias))
         else:
             projecoes.append(proj_medida(campo, tabela=tabela, alias=alias, rotulo=alias))
+        # O runtime 2.0 emite __format/__formatted por linha quando habilitados. Nenhuma spec atual os lê:
+        # não enviar essas cópias textuais; reabilita automaticamente se uma spec passar a referenciá-las.
         suporte[alias] = {"highlight": False, "highlightStatus": False, "highlightComparator": False,
-                          "format": tipo == "medida", "formatted": tipo == "medida", "names": False}
+                          "format": tipo == "medida" and "__format" in texto,
+                          "formatted": tipo == "medida" and "__formatted" in texto, "names": False}
     if not projecoes:
         raise ErroDeclaracao(f"{nome}: Deneb sem campos")
     vega: dict[str, Any] = {

@@ -1,8 +1,0 @@
-/*
-@pasta: T28 Onde Flávio perdeu\Desenho
-@formato: texto
-@descricao: Rótulo da lista, formatado pelo DAX; Vega só posiciona.
-@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
-@gerado: pbi/scripts/desenho_t27_t28.py
-*/
-FORMAT ( [T28 · mapa · valor], "+#,0;-#,0;0" )

@@ -1,0 +1,10 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Fechamento acessível da ponte.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+"Diferença Lula menos Flávio: " & FORMAT ( [T28 · ponte · início], "+#,0;−#,0;0" ) & " no primeiro turno, mais "
+    & FORMAT ( [T28 · ponte · soma das etapas], "#,0" ) & " de mudança, igual a " & FORMAT ( [T28 · ponte · fim], "+#,0;−#,0;0" )
+    & " no segundo. Até nove contribuições explícitas e demais agrupadas."

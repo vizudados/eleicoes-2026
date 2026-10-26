@@ -23,7 +23,7 @@ table UF
 		annotation SummarizationSetBy = Automatic
 
 	/// Norte, Nordeste, Centro-Oeste, Sudeste, Sul; Exterior.
-	column Região
+	column 'Região'
 		dataType: string
 		lineageTag: 369718c4-3fa2-56b8-aa2f-66a6d669dfe0
 		summarizeBy: none
@@ -148,4 +148,3 @@ table UF
 				    UFs
 
 	annotation PBI_ResultType = Table
-

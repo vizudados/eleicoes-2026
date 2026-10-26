@@ -1,0 +1,14 @@
+/*
+@pasta: T27 De onde vieram\Contas
+@formato: #,0
+@descricao: Limite de desenho equivalente ao nice da escala linear anterior; não é número analítico do leitor.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+VAR _top = TOPN ( 8, ADDCOLUMNS ( ALLSELECTED ( 'Município'[CodIBGE] ), "@v", [T27 · ganho Lula] ), [@v], DESC, 'Município'[CodIBGE], ASC )
+VAR _lo = MIN ( 0, MINX ( _top, [@v] ) )
+VAR _hi = MAX ( 0, MAXX ( _top, [@v] ) )
+VAR _p = POWER ( 10, INT ( LOG10 ( MAX ( 1, _hi - _lo ) / 10 ) ) )
+VAR _erro = MAX ( 1, _hi - _lo ) / 10 / _p
+VAR _passo = _p * SWITCH ( TRUE (), _erro >= SQRT ( 50 ), 10, _erro >= SQRT ( 10 ), 5, _erro >= SQRT ( 2 ), 2, 1 )
+RETURN INT ( _lo / _passo ) * _passo

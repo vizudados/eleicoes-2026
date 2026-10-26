@@ -1,0 +1,6 @@
+/*
+@pasta: T02 Lula · quem é\Desenho
+@formato: texto
+@descricao: Cena em traço e legenda real correspondentes ao momento escolhido.
+*/
+IF ( [Eleição · pós] = 1, "<div class='cena sobe d6'><div class='papel'><img class='ce' alt='Noite da vitória, São Paulo, 25 de outubro de 2026' src='https://vizudados.github.io/eleicoes-2026/midia/trajetoria/lula-2026-reeleicao.png'/></div><img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/><div class='leg'><div class='mao'>Noite da vitória, São Paulo, 25 de outubro de 2026</div><div class='nota'>Desenho CC BY-SA 4.0 a partir de foto de Ricardo Stuckert/Lula Oficial (CC BY-SA 4.0)</div></div></div>", "<div class='cena sobe d6'><div class='papel'><img class='ce' alt='Ato na Av. Paulista, São Paulo, 11 de outubro de 2026' src='https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-lula-tinta.png' data-reserva='https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-lula-tinta.png'/></div><img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/><div class='leg'><div class='mao'>Ato na Av. Paulista, São Paulo, 11 de outubro de 2026</div><div class='nota'>Desenho CC BY-SA 4.0 a partir de foto de Ricardo Stuckert/Lula Oficial (CC BY-SA 4.0)</div></div></div>" )

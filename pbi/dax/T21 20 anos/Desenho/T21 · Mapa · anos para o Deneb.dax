@@ -1,7 +1,7 @@
 /*
 @pasta: T21 20 anos\Desenho
 @formato: texto
-@descricao: Os seis anos num texto só, para o Deneb: 'ano|municípios com o PT à frente|margem nacional' separados por ';' (o mesmo em todas as linhas do mapa). Só lê as contas.
+@descricao: Os seis anos num texto só, para o Deneb: 'ano|municípios com o PT à frente|margem nacional' separados por ';', somente na primeira chave do recorte. Só lê as contas.
 */
 -- 1 · Leituras e 2 · Textos (uma linha por ano)
 VAR _anos =
@@ -12,9 +12,9 @@ VAR _anos =
     ) /* lista */
 -- 4 · Marcação
 RETURN
-    CONCATENATEX (
+    IF ( [T21 · mapa · envia quadro] = 1, CONCATENATEX (
         _anos,
         'Ano'[Ano] & "|" & [@n] & "|" & FORMAT ( [@m], "0.0000", "en-US" ),
         ";",
         'Ano'[Ano], ASC
-    ) /* lista */
+    ) ) /* lista */

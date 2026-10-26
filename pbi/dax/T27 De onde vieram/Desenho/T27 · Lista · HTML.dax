@@ -1,0 +1,23 @@
+/*
+@pasta: T27 De onde vieram\Desenho
+@formato: texto
+@descricao: Oito cidades em HTML/Sora, com a mesma ordem, filtro cruzado, tooltip e escala da antiga lista Deneb.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+VAR _pos = [T27 · lista · posição]
+VAR _v = [T27 · ganho Lula]
+VAR _nome0 = SELECTEDVALUE ( 'Município'[Rótulo] )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+-- geometria
+VAR _lo = [T27 · lista · escala mínimo]
+VAR _hi = [T27 · lista · escala máximo]
+VAR _range = MAX ( 1, _hi - _lo )
+VAR _zero = 350 + 330 * DIVIDE ( -_lo, _range )
+VAR _x = 350 + 330 * DIVIDE ( _v - _lo, _range )
+VAR _y = 30 + ( _pos - 1 ) * 29
+RETURN IF ( NOT ISBLANK ( _pos ) && _pos <= 8,
+    "<div class='tela lista27'><div class='item' style='top:" & FORMAT ( _y, "0", "en-US" ) & "px'><span class='nome'>" & _nome & "</span>"
+    & "<span class='faixa-barra'><i style='left:" & FORMAT ( MIN ( _zero, _x ) - 350, "0.00", "en-US" ) & "px;width:" & FORMAT ( ABS ( _x - _zero ), "0.00", "en-US" )
+    & "px;background:" & IF ( _v < 0, "var(--azul)", "var(--vermelho)" ) & "'></i></span>"
+    & "<b class='valor num'>" & FORMAT ( _v, "+#,0;−#,0;0" ) & "</b></div></div>" )

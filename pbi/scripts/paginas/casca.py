@@ -27,6 +27,7 @@ import estilo
 import leituras
 import pbip_lib as lib
 import roteiro
+import momento_eleicao
 from pbip_lib import Bookmark, Pagina, Visual
 
 CSS = "Estilo · CSS"
@@ -106,7 +107,7 @@ def corpo_casca(t: roteiro.Tela) -> str:
             f"<img class='urna entra' alt='' src='{estilo.imagem_b64(k['urna'], 120)}'/>{cab}{setas}"
             f"<div class='info'>i</div>"
             f"<div class='pe'><span class='logo'>{estilo.logo_vizu(k['logo'])}</span>"
-            f"<span class='fonte'>{e(t.fonte)}</span></div></div>{{{{content}}}}")
+            f"<span class='fonte'>{e(momento_eleicao.fonte(t))}</span></div></div>{{{{content}}}}")
 
 
 def _texto_leitura(t: roteiro.Tela) -> dict:
@@ -287,4 +288,7 @@ def declarar(ctx):
         itens.append(Bookmark(lib.bookmark_chegada(f"{p}_CHEGADA_01", p, fechada, titulo=f"Chegada · {t.titulo_pagina}"),
                               grupo=("Chegadas", "Chegadas")))
         itens += _filtro(t)
+        # Um único grupo Antes/Depois, sem interferir nos filtros existentes.
+        if p in momento_eleicao.TELAS:
+            itens.append(momento_eleicao.filtro(t))
     return itens

@@ -1,6 +1,6 @@
-"""Gera as contas, os desenhos e os specs das duas telas finais, sem alterar o PBIP ou o motor.
+"""Gera T27 e delega a composição própria da T28, sem alterar o PBIP ou o motor.
 
-Mesma gramática, mesmas contas para os dois candidatos. T27 fecha a identidade observada dos ganhos;
+Contas coerentes para os dois candidatos. T27 fecha a identidade observada dos ganhos;
 não estima de qual grupo veio o voto individual de Lula ou Flávio.
 """
 from __future__ import annotations
@@ -18,10 +18,12 @@ def gravar(pasta, nome, expressao, descricao, formato='texto', conta=False):
     tipo = 'Contas' if conta else 'Desenho'
     p = PBI / 'dax' / pasta / tipo / (nome + '.dax')
     p.parent.mkdir(parents=True, exist_ok=True)
-    p.write_text(f'/*\n@pasta: {pasta}\\{tipo}\n@formato: {formato}\n@descricao: {descricao}\n'
+    texto = (f'/*\n@pasta: {pasta}\\{tipo}\n@formato: {formato}\n@descricao: {descricao}\n'
                  '@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv\n'
                  '@gerado: pbi/scripts/desenho_t27_t28.py\n*/\n'
-                 + expressao.strip() + '\n', encoding='utf-8')
+                 + expressao.strip() + '\n')
+    if not p.exists() or p.read_text(encoding='utf-8') != texto:
+        p.write_text(texto, encoding='utf-8')
 
 
 def conta(p, nome, expr, desc, fmt='#,0'):
@@ -34,6 +36,47 @@ def desenho(p, nome, expr, desc):
 
 def ref(p, nome):
     return f'[{p} · {nome}]'
+
+
+def lista_t27():
+    conta('T27','lista · posição', '''VAR _v = [T27 · ganho Lula]
+VAR _cod = SELECTEDVALUE ( 'Município'[CodIBGE] )
+VAR _rank = RANKX ( ALLSELECTED ( 'Município'[CodIBGE] ), [T27 · ganho Lula], _v, DESC, SKIP )
+VAR _empatesAntes = COUNTROWS ( FILTER ( ALLSELECTED ( 'Município'[CodIBGE] ), 'Município'[CodIBGE] < _cod && [T27 · ganho Lula] = _v ) )
+RETURN IF ( HASONEVALUE ( 'Município'[CodIBGE] ), _rank + _empatesAntes )''',
+          'Posição da cidade no recorte, mesmo critério descendente da lista anterior; só oito entradas são emitidas.')
+    for extremo in ['mínimo','máximo']:
+        valor = '_lo' if extremo=='mínimo' else '_hi'
+        arred = 'INT ( _lo / _passo ) * _passo' if extremo=='mínimo' else '-INT ( -_hi / _passo ) * _passo'
+        conta('T27','lista · escala '+extremo, f'''VAR _top = TOPN ( 8, ADDCOLUMNS ( ALLSELECTED ( 'Município'[CodIBGE] ), "@v", [T27 · ganho Lula] ), [@v], DESC, 'Município'[CodIBGE], ASC )
+VAR _lo = MIN ( 0, MINX ( _top, [@v] ) )
+VAR _hi = MAX ( 0, MAXX ( _top, [@v] ) )
+VAR _p = POWER ( 10, INT ( LOG10 ( MAX ( 1, _hi - _lo ) / 10 ) ) )
+VAR _erro = MAX ( 1, _hi - _lo ) / 10 / _p
+VAR _passo = _p * SWITCH ( TRUE (), _erro >= SQRT ( 50 ), 10, _erro >= SQRT ( 10 ), 5, _erro >= SQRT ( 2 ), 2, 1 )
+RETURN {arred}''', 'Limite de desenho equivalente ao nice da escala linear anterior; não é número analítico do leitor.')
+    desenho_lista_t27()
+
+
+def desenho_lista_t27():
+    desenho('T27','Lista · HTML', '''VAR _pos = [T27 · lista · posição]
+VAR _v = [T27 · ganho Lula]
+VAR _nome0 = SELECTEDVALUE ( 'Município'[Rótulo] )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome0, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+-- geometria
+VAR _lo = [T27 · lista · escala mínimo]
+VAR _hi = [T27 · lista · escala máximo]
+VAR _range = MAX ( 1, _hi - _lo )
+VAR _zero = 350 + 330 * DIVIDE ( -_lo, _range )
+VAR _x = 350 + 330 * DIVIDE ( _v - _lo, _range )
+VAR _y = 30 + ( _pos - 1 ) * 29
+RETURN IF ( NOT ISBLANK ( _pos ) && _pos <= 8,
+    "<div class='tela lista27'><div class='item' style='top:" & FORMAT ( _y, "0", "en-US" ) & "px'><span class='nome'>" & _nome & "</span>"
+    & "<span class='faixa-barra'><i style='left:" & FORMAT ( MIN ( _zero, _x ) - 350, "0.00", "en-US" ) & "px;width:" & FORMAT ( ABS ( _x - _zero ), "0.00", "en-US" )
+    & "px;background:" & IF ( _v < 0, "var(--azul)", "var(--vermelho)" ) & "'></i></span>"
+    & "<b class='valor num'>" & FORMAT ( _v, "+#,0;−#,0;0" ) & "</b></div></div>" )''',
+            'Oito cidades em HTML/Sora, com a mesma ordem, filtro cruzado, tooltip e escala da antiga lista Deneb.')
+    desenho('T27','Lista · ALT','"As oito maiores contribuições de cidades ao ganho de Lula no recorte, em votos. Clique para filtrar o mapa; passe o mouse para abrir o dossiê."','Lista municipal acessível.')
 
 
 def compacto(valor, assinado=False):
@@ -259,7 +302,7 @@ def specs(p):
                 {'events':{'source':'view','type':'mouseup','filter':["!event.item || event.item.mark.name != 'marcaMunicipios'"]},'update':'pbiCrossFilterClear()'}]}
         ],
         'data':[
-            {'name':'dataset'},
+            {'name':'dataset','transform':[{'type':'formula','as':'tam','expr':'abs(datum.val)'}]},
             {'name':'ufsAtivas','source':'dataset','transform':[{'type':'aggregate','groupby':['uf']}]},
             {'name':'contornos','values':ufs},
             {'name':'contornosAtivos','source':'contornos','transform':[{'type':'filter','expr':"indata('ufsAtivas','uf',datum.uf)"}]},
@@ -284,48 +327,24 @@ def specs(p):
                 'hover':{'stroke':{'value':'#1C1915'},'strokeWidth':{'value':2},'fillOpacity':{'value':1}}}}
         ]}
     (PBI/f'spec/{p.lower()}_mapa.json').write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    lista={
-        '$schema':'https://vega.github.io/schema/vega/v6.json','width':{'signal':'pbiContainerWidth'},'height':{'signal':'pbiContainerHeight'},
-        'padding':0,'autosize':{'type':'none','contains':'padding'},'background':None,
-        'signals':[
-            {'name':'hoverCod','value':None,'on':[{'events':'@marcaAlvos:mouseover','update':'datum.cod'}, {'events':'@marcaAlvos:mouseout','update':'null'}]},
-            {'name':'clique','value':None,'on':[{'events':{'source':'scope','type':'mouseup','markname':'marcaAlvos'},'update':'pbiCrossFilterApply(event)'},{'events':{'source':'view','type':'mouseup','filter':["!event.item || event.item.mark.name != 'marcaAlvos'"]},'update':'pbiCrossFilterClear()'}]},
-        ],
-        'data':[{'name':'dataset'}, {'name':'linhas','source':'dataset','transform':[
-            {'type':'filter','expr':'isValid(datum.val)'},
-            {'type':'window','sort':{'field':['val','cod'],'order':['descending','ascending']},'ops':['row_number'],'as':['pos']},
-            {'type':'filter','expr':'datum.pos<=8'}]}],
-        'scales':[{'name':'x','type':'linear','domain':{'data':'linhas','field':'val'},'range':[350,680],'zero':True,'nice':True}],
-        'marks':[
-            {'name':'marcaBarras','type':'rect','from':{'data':'linhas'},'interactive':False,'encode':{'update':{
-                'x':{'signal':"min(scale('x',datum.val),scale('x',0))"},'x2':{'signal':"max(scale('x',datum.val),scale('x',0))"},
-                'y':{'signal':'30+(datum.pos-1)*29+7'},'height':{'value':14},'cornerRadius':{'value':4},
-                'fill':{'signal':"datum.val>=0 ? '#B8322A' : '#31699B'"},
-                'opacity':{'signal':"(hoverCod != null && hoverCod != datum.cod) || datum.__selected__=='off' ? 0.25 : 0.85"}}}},
-            {'name':'marcaNomes','type':'text','from':{'data':'linhas'},'interactive':False,'encode':{'update':{
-                'x':{'value':0},'y':{'signal':'30+(datum.pos-1)*29+16'},'text':{'field':'rotulo'},'limit':{'value':335},
-                'font':{'value':'Sora Vizu'},'fontSize':{'value':17},'fill':{'value':'#1C1915'},
-                'opacity':{'signal':"(hoverCod != null && hoverCod != datum.cod) || datum.__selected__=='off' ? 0.4 : 1"}}}},
-            {'name':'marcaValores','type':'text','from':{'data':'linhas'},'interactive':False,'encode':{'update':{
-                'x':{'signal':'width-5'},'y':{'signal':'30+(datum.pos-1)*29+16'},'align':{'value':'right'},
-                'text':{'field':'valorTexto'},'font':{'value':'Sora Vizu'},'fontSize':{'value':18},'fontWeight':{'value':600},'fill':{'value':'#1C1915'},
-                'opacity':{'signal':"(hoverCod != null && hoverCod != datum.cod) || datum.__selected__=='off' ? 0.4 : 1"}}}},
-            {'name':'marcaAlvos','type':'rect','from':{'data':'linhas'},'encode':{'update':{
-                'x':{'value':0},'width':{'signal':'width'},'y':{'signal':'30+(datum.pos-1)*29'},'height':{'value':28},
-                'fill':{'value':'#1C1915'},'fillOpacity':{'value':0},'tooltip':{'signal':'datum'},'cursor':{'value':'pointer'}},
-                'hover':{'fillOpacity':{'value':0.06}}}}
-        ]}
-    (PBI/f'spec/{p.lower()}_lista.json').write_text(json.dumps(lista,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    desenho(p,'valor formatado',f'FORMAT ( {ref(p,"mapa · valor")}, "+#,0;-#,0;0" )','Rótulo da lista, formatado pelo DAX; Vega só posiciona.')
+
 
 
 def main():
-    for p in ['T27','T28']:
-        contas(p)
-        desenhos(p)
-        specs(p)
-    print('T27 e T28: contas, desenhos e specs gerados; nenhum PBIP ou motor alterado.')
+    contas('T27')
+    desenhos('T27')
+    specs('T27')
+    lista_t27()
+    from desenho_t28 import main as gerar_t28
+    gerar_t28()
+    print('T27 e T28 geradas com composições próprias; nenhum PBIP ou motor alterado.')
 
 
 if __name__=='__main__':
-    main()
+    import argparse
+    ap=argparse.ArgumentParser()
+    ap.add_argument('--somente-lista',action='store_true')
+    if ap.parse_args().somente_lista:
+        desenho_lista_t27()
+    else:
+        main()

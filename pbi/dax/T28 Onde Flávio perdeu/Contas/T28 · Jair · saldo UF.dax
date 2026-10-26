@@ -1,0 +1,9 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Flávio 2026 menos Jair 2022, segundo turno, por UF; perda tem sinal negativo.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+CALCULATE ( SUM ( 'UF segundo turno'[VotosAdversario] ), REMOVEFILTERS ( 'Ano' ), 'UF segundo turno'[Ano] = 2026 )
+    - CALCULATE ( SUM ( 'UF segundo turno'[VotosAdversario] ), REMOVEFILTERS ( 'Ano' ), 'UF segundo turno'[Ano] = 2022 )

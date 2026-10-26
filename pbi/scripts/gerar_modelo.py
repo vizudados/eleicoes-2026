@@ -203,11 +203,11 @@ def tmdl_tabela(t):
             linhas.append(f"\t\tdataCategory: {c['categoria']}")
         linhas.append(f"\t\tsummarizeBy: {c['agregar']}")
         fonte = c["nome"] if t.get("renomeada") or not c["origem"] else c["origem"]
-        linhas.append(f"\t\tsourceColumn: {fonte}")
+        linhas.append(f"\t\tsourceColumn: {'[' + fonte + ']' if t.get('dax') else fonte}")
         if c["ordenar_por"]:
             linhas.append(f"\t\tsortByColumn: {q(c['ordenar_por'])}")
         linhas += ["", "\t\tannotation SummarizationSetBy = Automatic", ""]
-    linhas += [f"\tpartition {q(nome)} = m", "\t\tmode: import", "\t\tsource =", recuo(t["m"], 4), "",
+    linhas += [f"\tpartition {q(nome)} = {'calculated' if t.get('dax') else 'm'}", "\t\tmode: import", "\t\tsource =", recuo(t.get('dax') or t["m"], 4), "",
                "\tannotation PBI_ResultType = Table", ""]
     return "\n".join(linhas)
 

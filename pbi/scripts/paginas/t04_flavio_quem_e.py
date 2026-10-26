@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """T04 · Flávio · quem é (dono: agente das telas 01–06). Mesma geometria e mesmo gerador da outra tela "quem é"
-(neutralidade): tudo em pbi/scripts/desenho_t02_t04.py, o lado é parâmetro. Sem filtro."""
+(neutralidade): tudo em pbi/scripts/desenho_t02_t04.py, o lado é parâmetro. Antes/Depois pela casca."""
 from __future__ import annotations
 
 import sys

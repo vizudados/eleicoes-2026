@@ -1,0 +1,6 @@
+/*
+@pasta: _Momento eleição\Desenho
+@formato: texto
+@descricao: Exterior no mesmo turno da tela; Pós usa totalização final por país.
+*/
+IF ( [Eleição · pós] = 1, [Exterior · ao vivo · HTML], [Exterior · 1º turno · HTML] )

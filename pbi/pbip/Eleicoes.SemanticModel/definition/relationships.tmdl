@@ -3,12 +3,12 @@ relationship 6d6f0063-29cb-5c81-91ba-d1462e5aeafb
 	toColumn: UF.UF
 
 relationship 150e861f-8ab5-511f-aa52-ceebdc92dade
-	fromColumn: Município.UF
+	fromColumn: 'Município'.UF
 	toColumn: UF.UF
 
 relationship ab2f0a97-74b0-58e7-9e14-d078343e5655
 	fromColumn: 'Município ano'.CodIBGE
-	toColumn: Município.CodIBGE
+	toColumn: 'Município'.CodIBGE
 
 relationship 63151749-1003-5900-8240-90a2c72ee3f4
 	fromColumn: 'Município ano'.Ano
@@ -38,13 +38,46 @@ relationship 9a44cd5c-10f9-5635-8593-a0f9537b4765
 	fromColumn: 'Trends UF'.UF
 	toColumn: UF.UF
 
+relationship 7002e579-d386-5920-b8b1-f307f4ae1dcd
+	fromColumn: 'Trends UF tempo'.UF
+	toColumn: UF.UF
+
+relationship e11eaadc-942c-5ebd-91f0-8bc24c957d8c
+	fromColumn: 'PT histórico UF'.UF
+	toColumn: UF.UF
+
+relationship 8138557f-ee49-5d0a-b43b-1226e38322da
+	fromColumn: 'PT histórico mapa'.UF
+	toColumn: UF.UF
+
+relationship e1fa0645-c8a7-5505-b75d-0e1649906e67
+	fromColumn: 'Município segundo turno'.CodIBGE
+	toColumn: 'Município'.CodIBGE
+
+relationship 9f10e90e-971b-50a1-bb33-7ece75566d05
+	fromColumn: 'Município segundo turno'.Ano
+	toColumn: Ano.Ano
+
+relationship ff714e19-909b-5d02-83c7-3ba33a71a025
+	fromColumn: 'UF segundo turno'.UF
+	toColumn: UF.UF
+
+relationship b8dc92a8-d0f5-53d3-a915-997640e20d53
+	fromColumn: 'UF segundo turno'.Ano
+	toColumn: Ano.Ano
+
 relationship 922afb0a-a8df-5a0f-a70a-9bd35488330f
-	fromColumn: Município.CodIBGE
+	fromColumn: 'Município'.CodIBGE
 	toColumn: 'T13 Célula'.CodIBGE
+
+relationship f44d7124-117e-5716-b9ba-f8db9a85c519
+	isActive: false
+	fromColumn: 'T19 Filtro'.CodIBGE
+	toColumn: 'Município'.CodIBGE
 
 relationship 6209f28c-9c07-517f-b93b-a1a68ff7e668
 	fromColumn: 'T25 Abstenção faixa'.CodIBGE
-	toColumn: Município.CodIBGE
+	toColumn: 'Município'.CodIBGE
 
 relationship e25e2337-5713-554f-b278-c50c74dcecaf
 	fromColumn: 'T25 Abstenção faixa'.Ano
@@ -61,37 +94,3 @@ relationship c9d3a910-6bfd-5d42-95cc-488d6a7b1ea7
 relationship 3db4dde4-80b4-5096-af0d-d7b933e0da12
 	fromColumn: 'T25 Abstenção exterior'.FaixaOrdem
 	toColumn: 'T25 Faixa'.Ordem
-
-relationship f44d7124-117e-5716-b9ba-f8db9a85c519
-	isActive: false
-	fromColumn: 'T19 Filtro'.CodIBGE
-	toColumn: Município.CodIBGE
-
-relationship 7002e579-d386-5920-b8b1-f307f4ae1dcd
-	fromColumn: 'Trends UF tempo'.UF
-	toColumn: UF.UF
-
-relationship e11eaadc-942c-5ebd-91f0-8bc24c957d8c
-	fromColumn: 'PT histórico UF'.UF
-	toColumn: UF.UF
-
-relationship 8138557f-ee49-5d0a-b43b-1226e38322da
-	fromColumn: 'PT histórico mapa'.UF
-	toColumn: UF.UF
-
-relationship e1fa0645-c8a7-5505-b75d-0e1649906e67
-	fromColumn: 'Município segundo turno'.CodIBGE
-	toColumn: Município.CodIBGE
-
-relationship 9f10e90e-971b-50a1-bb33-7ece75566d05
-	fromColumn: 'Município segundo turno'.Ano
-	toColumn: Ano.Ano
-
-relationship ff714e19-909b-5d02-83c7-3ba33a71a025
-	fromColumn: 'UF segundo turno'.UF
-	toColumn: UF.UF
-
-relationship b8dc92a8-d0f5-53d3-a915-997640e20d53
-	fromColumn: 'UF segundo turno'.Ano
-	toColumn: Ano.Ano
-

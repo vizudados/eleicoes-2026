@@ -1,0 +1,6 @@
+/*
+@pasta: _Momento eleição\Contas
+@formato: 0
+@descricao: Turno correspondente à escolha.
+*/
+IF ( [Eleição · pós] = 1, 2, 1 )

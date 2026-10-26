@@ -1,0 +1,15 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Rankings separados de perdas estaduais e municipais; sinal sempre negativo, mesma conta em votos.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+VAR _g0 = TOPN ( 4, ADDCOLUMNS ( VALUES ( 'UF'[Nome] ), "@v", [T28 · Jair · perda UF] ), [@v], ASC, 'UF'[Nome], ASC )
+VAR _h0 = CONCATENATEX ( _g0, IF ( NOT ISBLANK ( [@v] ), "<div class='perda-linha'><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( 'UF'[Nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span><b class='num'>−" & (SWITCH ( TRUE (), ABS ( [@v] ) >= 1e6, FORMAT ( ABS ( [@v] ) / 1e6, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( ABS ( [@v] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [@v] ), "#,0" ) )) & "</b></div>" ), "", [@v], ASC )
+VAR _g1 = TOPN ( 4, ADDCOLUMNS ( VALUES ( 'Município'[Rótulo] ), "@v", [T28 · Jair · perda cidade] ), [@v], ASC, 'Município'[Rótulo], ASC )
+VAR _h1 = CONCATENATEX ( _g1, IF ( NOT ISBLANK ( [@v] ), "<div class='perda-linha'><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( 'Município'[Rótulo], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</span><b class='num'>−" & (SWITCH ( TRUE (), ABS ( [@v] ) >= 1e6, FORMAT ( ABS ( [@v] ) / 1e6, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( ABS ( [@v] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [@v] ), "#,0" ) )) & "</b></div>" ), "", [@v], ASC )
+RETURN "<div class='tela jair'><div class='rot'>ABAIXO DE JAIR EM 2022 · PERDA EM VOTOS</div>"
+    & "<div class='colunas'><div><h3>Estados</h3>" & IF ( _h0 = "", "Nenhum estado no recorte", _h0 ) & "</div>"
+    & "<div><h3>Cidades</h3>" & IF ( _h1 = "", "Nenhuma cidade no recorte", _h1 ) & "</div></div>"
+    & "<p>Flávio em 2026 menos Jair em 2022, ambos no 2º turno. São comparações de votos, não trajetórias individuais.</p></div>"

@@ -1,6 +1,6 @@
 /*
 @pasta: T02 Lula · quem é\Contas
 @formato: texto
-@descricao: O que aconteceu no marco da linha (até ~200 caracteres).
+@descricao: Último marco responde ao Antes/Depois; os demais ficam intactos.
 */
-SELECTEDVALUE ( 'Trajetória'[Texto] )
+IF ( [T02 · desfecho] = 1, "Foi reeleito em 25/10/2026 com 64.256.232 votos (51,79% dos válidos), o maior total de uma candidatura presidencial em um turno no Brasil. Fonte: TSE.", SELECTEDVALUE ( 'Trajetória'[Texto] ) )

@@ -1,10 +1,15 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: 0
-@descricao: Posição do município na lista: 1 = mais votos válidos em 2026 entre os municípios que a lista mostra (o filtro de 14 do visual).
+@descricao: Posição do município no recorte: 1 = mais votos válidos em 2026; a lista emite só as primeiras 16 posições, com a busca do filtro existente.
 @oraculo: mockup/data/eleicoes.json › Explorador › padrao.linhas (ordem)
 */
-IF (
-    HASONEVALUE ( 'Município'[Rótulo] ),
-    RANKX ( ALLSELECTED ( 'Município'[Rótulo] ), [T19 · válidos 2026], , DESC, SKIP )
+VAR _valor = [T19 · válidos no recorte]
+VAR _rotulo = SELECTEDVALUE ( 'Município'[Rótulo] )
+VAR _rank = RANKX ( ALLSELECTED ( 'Município'[Rótulo] ), [T19 · válidos no recorte], _valor, DESC, SKIP )
+VAR _empatesAntes = COUNTROWS ( FILTER ( ALLSELECTED ( 'Município'[Rótulo] ),
+    'Município'[Rótulo] < _rotulo && [T19 · válidos no recorte] = _valor ) )
+RETURN IF (
+    HASONEVALUE ( 'Município'[Rótulo] ) && NOT ISBLANK ( _valor ),
+    _rank + _empatesAntes
 )

@@ -1,7 +1,7 @@
 /*
 @pasta: T01 Placar\Contas
 @formato: #,0
-@descricao: Votos de Lula (número 13) no 1º turno de 2026, no recorte.
-@oraculo: paginas[1].candidatos › Lula = 53.879.538
+@descricao: Votos de Lula (número 13) no turno escolhido de 2026, no recorte.
+@oraculo: Pré: paginas[1].candidatos › Lula = 53.879.538
 */
-CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 13 )
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'UF segundo turno'[VotosPT] ), 'UF segundo turno'[Ano] = 2026 ), CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 13 ) )

@@ -1,9 +1,9 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
 @formato: texto
-@descricao: Onde e quando a foto original do marco da linha foi feita (pode ser de outro momento que o do marco). Fonte: dados/bruto/trajetoria/desenhos.csv.
+@descricao: Legenda e crédito com data real da foto; adaptação CC BY-SA 4.0.
 */
-VAR _f = [T04 · Trajetória · foto]
+IF ( [T04 · desfecho] = 1, "Pronunciamento após o resultado, 25 de outubro de 2026", VAR _f = [T04 · Trajetória · foto]
 RETURN
     SWITCH (
         _f,
@@ -17,5 +17,6 @@ RETURN
 "flavio-2025-csp", "Reunião da Comissão de Segurança Pública do Senado, Brasília, 19 de agosto de 2025",
 "flavio-2025-precandidatura", "Comissão do Senado, Brasília, 3 de setembro de 2025",
 "flavio-2026-primeiro-turno", "Discurso no plenário do Senado, Brasília, 1º de setembro de 2026",
+"flavio-2026-pronunciamento", "Pronunciamento após o resultado, 25 de outubro de 2026",
         BLANK ()
-    )
+    ) )

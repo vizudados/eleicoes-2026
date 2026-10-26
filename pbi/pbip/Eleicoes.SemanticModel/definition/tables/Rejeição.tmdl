@@ -1,5 +1,5 @@
 /// Rejeição de cada candidato por instituto e data (a pergunta muda entre institutos: não forma série única).
-table Rejeição
+table 'Rejeição'
 	isHidden
 	lineageTag: 0f8ca2e1-1c4a-5d28-b50f-d496571ccab8
 
@@ -13,7 +13,7 @@ table Rejeição
 		annotation SummarizationSetBy = Automatic
 
 	/// Data de divulgação.
-	column Divulgação
+	column 'Divulgação'
 		dataType: dateTime
 		formatString: dd/MM/yyyy
 		lineageTag: 5e6af299-472b-5d44-997d-87a594646b07
@@ -63,7 +63,7 @@ table Rejeição
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column Observação
+	column 'Observação'
 		dataType: string
 		isHidden
 		lineageTag: 27753cf3-a3df-5e68-8adf-f9885c407388
@@ -72,7 +72,7 @@ table Rejeição
 
 		annotation SummarizationSetBy = Automatic
 
-	partition Rejeição = m
+	partition 'Rejeição' = m
 		mode: import
 		source =
 				let
@@ -84,4 +84,3 @@ table Rejeição
 				    Nomes
 
 	annotation PBI_ResultType = Table
-

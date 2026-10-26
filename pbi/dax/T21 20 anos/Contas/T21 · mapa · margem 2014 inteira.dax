@@ -1,0 +1,8 @@
+/*
+@pasta: T21 20 anos\Contas
+@formato: #,0
+@descricao: Margem só para cor do mapa, em milionésimos; erro máximo de 0,00005 ponto percentual. Contas e tooltips originais preservados.
+@oraculo: T21 · margem 2014; erro máximo de fração 0,0000005
+*/
+VAR _m = [T21 · margem 2014]
+RETURN IF ( NOT ISBLANK ( _m ), ROUND ( _m * 1000000, 0 ) )

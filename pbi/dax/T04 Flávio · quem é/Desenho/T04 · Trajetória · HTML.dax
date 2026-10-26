@@ -13,6 +13,7 @@ VAR _temFoto = [T04 · Trajetória · tem foto]
 VAR _ilus = [T04 · Trajetória · é ilustração]
 VAR _ini = [T04 · Trajetória · primeiro ano]
 VAR _fim = [T04 · Trajetória · último ano]
+VAR _destaque = [T04 · destaque do marco]
 -- 2 · Textos
 VAR _txtTit = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _tit, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
 VAR _icone =
@@ -46,14 +47,14 @@ VAR _eb = DIVIDE ( 1560 - _wa - _vao, _b1 - _b0 ) -- geometria
 VAR _xd =
     IF (
         _corte,
-        IF ( _tempo <= _a1, 30 + ( _tempo - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( _tempo - _b0 ) * _eb ),
+        IF ( _tempo <= _a1, 30 + ( _tempo - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( _tempo - _b0 ) * _eb ), -- geometria
         30 + ( _tempo - _t0 ) * _escala
     ) -- geometria
 VAR _xs = ( _ordem - 0.5 ) * DIVIDE ( 1620, _n ) -- geometria
 VAR _txd = FORMAT ( _xd, "0.0##", "en-US" ) -- geometria
 VAR _txs = FORMAT ( _xs, "0.0##", "en-US" ) -- geometria
 VAR _fio =
-    "M" & _txs & ",176 L" & _txs & ",200 L" & _txd & ",262 L" & _txd & ",287" -- geometria
+    "M" & _txs & IF ( _destaque = 1, ",232 L", ",176 L" ) & _txs & IF ( _destaque = 1, ",242 L", ",200 L" ) & _txd & ",262 L" & _txd & ",287" -- geometria
 VAR _atraso = MIN ( _ordem + 4, 16 ) -- geometria
 VAR _anosInteira = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value], "@c", 0 ) /* lista */
 VAR _anosCorte =
@@ -61,15 +62,16 @@ VAR _anosCorte =
         ROW ( "@a", _ini, "@c", 1 ),
         SELECTCOLUMNS ( GENERATESERIES ( CEILING ( _b0, 5 ), FLOOR ( _b1, 5 ), 5 ), "@a", [Value], "@c", 1 )
     ) /* lista */
-VAR _anos = FILTER ( UNION ( _anosInteira, _anosCorte ), [@c] = IF ( _corte, 1, 0 ) ) /* lista */
+VAR _anos = UNION ( _anosInteira, _anosCorte ) /* lista de marcas geométricas */
 VAR _marcas =
     CONCATENATEX (
         _anos,
         VAR _x =
             FORMAT ( IF ( _corte, IF ( [@a] <= _a1, 30 + ( [@a] - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( [@a] - _b0 ) * _eb ), 30 + ( [@a] - _t0 ) * _escala ), "0.0##", "en-US" ) -- geometria
         RETURN
-            "<line x1='" & _x & "' y1='290' x2='" & _x & "' y2='302'/>"
-                & "<text x='" & _x & "' y='324'>" & [@a] & "</text>",
+            IF ( [@c] = IF ( _corte, 1, 0 ),
+                "<line x1='" & _x & "' y1='290' x2='" & _x & "' y2='302'/>"
+                    & "<text x='" & _x & "' y='324'>" & [@a] & "</text>" ),
         "",
         [@a], ASC
     )
@@ -93,10 +95,10 @@ VAR _html =
     "<div class='tela m'>" & _regua
         & "<svg class='liga' width='1620' height='364' viewBox='0 0 1620 364'>"
         & "<path class='fio traco d" & _atraso & "' pathLength='1' d='" & _fio & "'/>"
-        & "<circle class='ponto brota d" & _atraso & "' cx='" & _txd & "' cy='296' r='7'/></svg>"
-        & "<div class='alvo card sobe d" & _atraso & "' style='left:" & FORMAT ( _xs - 76, "0.0##", "en-US" ) & "px'>"
+        & "<circle class='ponto brota d" & _atraso & "' cx='" & _txd & "' cy='296' r='" & IF ( _destaque = 1, "12", "7" ) & "'/></svg>"
+        & "<div class='alvo card " & IF ( _destaque = 1, "recorde ", "" ) & "sobe d" & _atraso & "' style='left:" & FORMAT ( _xs - 76, "0.0##", "en-US" ) & "px'>"
         & "<div class='ano nc'>" & _ano & _icone & "</div>"
-        & "<div class='tt'>" & _txtTit & "</div></div>"
+        & "<div class='tt'>" & _txtTit & "</div>" & IF ( _destaque = 1, "<div class='mao nota-recorde'>recorde</div>" ) & "</div>"
     & "</div>"
 RETURN
     IF ( NOT ISBLANK ( _ordem ), _html )

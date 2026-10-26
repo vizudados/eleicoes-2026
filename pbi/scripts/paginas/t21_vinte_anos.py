@@ -26,9 +26,9 @@ CAIXA = (150, 140, D.W, D.H)
 
 
 def _mapa() -> dict:
-    campos = [lib.campo_coluna("cod", "Município", "CodIBGE"), lib.campo_coluna("x", "Município", "X"),
-              lib.campo_coluna("y", "Município", "Y")]
-    campos += [lib.campo_medida(f"m{a % 100:02d}", f"T21 · margem {a}") for a in D.ANOS]
+    campos = [lib.campo_coluna("cod", "Município", "CodIBGE"), lib.campo_medida("x", "T21 · mapa · x inteiro"),
+              lib.campo_medida("y", "T21 · mapa · y inteiro")]
+    campos += [lib.campo_medida(f"m{a % 100:02d}", f"T21 · mapa · margem {a} inteira") for a in D.ANOS]
     campos.append(lib.campo_medida("anos", "T21 · Mapa · anos para o Deneb"))
     doc = lib.visual_deneb("T21_Mapa_Deneb", *CAIXA, "spec/t21_mapa.json", campos,
                            alt=lib.medida("T21 · Mapa · ALT"), z=Z + 1, tab=110, tooltip_pagina="ttT19Municipio",

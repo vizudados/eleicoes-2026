@@ -19,6 +19,8 @@ import math
 import re
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from momento_eleicao import municipal_2022_2026
 
 AQUI = Path(__file__).resolve().parent
 PBI = AQUI.parent
@@ -31,6 +33,7 @@ MEDIDAS: list[dict] = []
 
 
 def conta(nome: str, formato: str, descricao: str, expr: str, oraculo: str | None = None) -> None:
+    expr = municipal_2022_2026(expr)
     MEDIDAS.append({"nome": nome, "sub": "Contas", "pasta": f"{TELA}\\Contas", "formato": formato,
                     "descricao": descricao, "expr": expr, "oraculo": oraculo})
 
@@ -450,7 +453,7 @@ VAR _man =
 VAR _legVol =
     IF ( _vol > 0, "<span><i class='c-vl'></i>trocou Flávio por Lula</span>", "" )
 VAR _dica =
-    IF ( _nSel > 0, "clique fora dos pontos para limpar", "clique num ponto ou arraste uma área" )
+    IF ( _nSel > 0, "clique fora para limpar", "clique ou arraste" )
 -- 4 · Marcação
 RETURN
     "<div class='tela t11t'>"
@@ -613,11 +616,12 @@ VAR _anos =
     ) /* lista */
 -- 2 · Textos
 VAR _txtNome = {ESC.format(v="_nome")}
-VAR _selo = SWITCH ( _sit, 2, "VIROU EM 2026", 3, "VOLTOU AO PT", 0, "PT À FRENTE", 1, "ADVERSÁRIO À FRENTE", "EMPATE" )
+VAR _selo = IF ( [Eleição · pós] = 1, "HISTÓRICO · 1º TURNO", SWITCH ( _sit, 2, "VIROU EM 2026", 3, "VOLTOU AO PT", 0, "PT À FRENTE", 1, "ADVERSÁRIO À FRENTE", "EMPATE" ) )
 VAR _clsSelo = IF ( _sit = 2 || _sit = 1, "selo az", "selo vm" )
 VAR _mao =
     SWITCH (
         TRUE (),
+        [Eleição · pós] = 1, "histórico do 1º turno",
         _sit = 2 && _nAdv = 1, "1ª vez sem o PT na frente",
         _sit = 2, "já tinha virado em " & _ult,
         _nAdv = 0, "sempre com o PT",
@@ -655,7 +659,7 @@ RETURN
     "<div class='tela tt11s'><div class='fita'></div>"
         & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
         & "<div class='nm sobe'>" & _txtNome & " <span class='uf'>" & _uf & "</span></div>"
-        & "<div class='rot entra d1'>MARGEM DO PT, ELEIÇÃO A ELEIÇÃO</div>"
+        & "<div class='rot entra d1'>MARGEM DO PT · 1º TURNO, ELEIÇÃO A ELEIÇÃO</div>"
         & "<svg class='serie' width='392' height='176' viewBox='0 0 392 176'>"
             & "<line class='zero' x1='0' x2='392' y1='70' y2='70'/>" & _barras
         & "</svg>"

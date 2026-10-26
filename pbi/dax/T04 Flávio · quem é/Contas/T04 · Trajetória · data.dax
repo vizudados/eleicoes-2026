@@ -1,8 +1,8 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
 @formato: dd/mm/yyyy
-@descricao: Data do marco da linha; vazio quando a fonte só dá o ano.
+@descricao: Data real do marco, 25/10/2026 no desfecho.
 */
 VAR _d = SELECTEDVALUE ( 'Trajetória'[Data] )
-RETURN
-    IF ( LEN ( _d ) = 10, DATE ( VALUE ( LEFT ( _d, 4 ) ), VALUE ( MID ( _d, 6, 2 ) ), VALUE ( RIGHT ( _d, 2 ) ) ) )
+RETURN IF ( [T04 · desfecho] = 1, DATE ( 2026, 10, 25 ),
+    IF ( LEN ( _d ) = 10, DATE ( VALUE ( LEFT ( _d, 4 ) ), VALUE ( MID ( _d, 6, 2 ) ), VALUE ( RIGHT ( _d, 2 ) ) ) ) )

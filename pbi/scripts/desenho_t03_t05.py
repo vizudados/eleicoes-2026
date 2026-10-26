@@ -40,6 +40,7 @@ sys.dont_write_bytecode = True
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
 from desenho_t01_t06_comum import PBI, URL_MIDIA, Gravador, dax  # noqa: E402
+from momento_eleicao import segundo, soma_municipal, soma_uf  # noqa: E402
 
 CU = "'Candidato UF'"
 MA = "'Município ano'"
@@ -108,10 +109,10 @@ def contas(P: str, L: dict, G: Gravador) -> None:
         """), "texto")
     # ---- resultado oficial do recorte ('Candidato UF', com o exterior no Brasil)
     c(f"{P} · votos", f"Votos de {L['cand']} (número {n}) no 1º turno de 2026, no recorte (com o exterior no Brasil).",
-      f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026, {CU}[Número] = {n} )", "#,0",
+      segundo(f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026, {CU}[Número] = {n} )", soma_uf(col)), "#,0",
       f"paginas[{P[2]}].votos")
     c(f"{P} · válidos", "Votos válidos do 1º turno de 2026 no recorte.",
-      f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026 )", "#,0")
+      segundo(f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026 )", soma_uf('Validos')), "#,0")
     c(f"{P} · %", f"Parcela de {L['cand']} nos válidos de 2026 do recorte (0–1); na linha de uma UF, o % da UF.",
       f"DIVIDE ( [{P} · votos], [{P} · válidos] )", "0.0%", f"paginas[{P[2]}].pct")
     c(f"{P} · posição", f"Colocação de {L['cand']} no 1º turno de 2026, no recorte.", dax(f"""
@@ -122,13 +123,15 @@ def contas(P: str, L: dict, G: Gravador) -> None:
                 "@v", CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026 )
             )
         RETURN
-            1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) )
+            IF ( [Eleição · pós] = 1,
+                1 + INT ( {soma_uf(colo)} > _v ),
+                1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) ) )
         """), "0", f"paginas[{P[2]}].posicao_txt")
     c(f"{P} · votos 2022", f"Votos do candidato do {L['sigla']} no 1º turno de 2022, no recorte.",
-      f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2022, {CU}[Número] = {n} )", "#,0",
+      segundo(f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2022, {CU}[Número] = {n} )", soma_uf(col, 2022)), "#,0",
       f"paginas[{P[2]}].comparacao_2022.votos_2022_txt")
     c(f"{P} · válidos 2022", "Votos válidos do 1º turno de 2022 no recorte.",
-      f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2022 )", "#,0")
+      segundo(f"CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2022 )", soma_uf('Validos', 2022)), "#,0")
     c(f"{P} · % 2022", f"Parcela do {L['sigla']} nos válidos de 2022 do recorte (0–1).",
       f"DIVIDE ( [{P} · votos 2022], [{P} · válidos 2022] )", "0.0%", f"paginas[{P[2]}].comparacao_2022.pct_2022_txt")
     c(f"{P} · candidato 2022", f"Nome de urna do candidato do {L['sigla']} em 2022.",
@@ -148,7 +151,7 @@ def contas(P: str, L: dict, G: Gravador) -> None:
             ("votos do adversário 2022 (municípios)", colo, 2022, "Votos do adversário em 2022 somados nos municípios"),
             ("válidos 2022 (municípios)", "Validos", 2022, "Votos válidos de 2022 somados nos municípios")):
         c(f"{P} · {nome}", desc + " (sem o exterior).",
-          f"CALCULATE ( SUM ( {MA}[{coluna}] ), {MA}[Ano] = {ano} )", "#,0")
+          soma_municipal(coluna, ano), "#,0")
     c(f"{P} · % (municípios)", f"Parcela de {L['cand']} nos válidos de 2026 dos municípios do contexto (0–1).",
       f"DIVIDE ( [{P} · votos (municípios)], [{P} · válidos (municípios)] )", "0.0%")
     c(f"{P} · adversário % (municípios)", f"Parcela de {L['outro']} nos válidos de 2026 dos municípios do contexto.",
@@ -416,7 +419,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _grandePop = [{P} · cidade grande mais forte população]
         -- 2 · Textos
         VAR _txtRec = @ESC(_recorte)@
-        VAR _txtPct = @PCT(_pct)@
+        VAR _txtPct = IF ( [Eleição · pós] = 1, FORMAT ( _pct, "0.00%" ), @PCT(_pct)@ )
         VAR _txtVotos = @MI(_votos)@
         VAR _txtNFrente = @INT(_nFrente)@
         VAR _txtNMun = @INT(_nMun)@
@@ -448,7 +451,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _html =
             "<div class='tela rv'>"
                 & "<div class='sob sobe'>{L['completo']} · {sigla} · {L['numero']} · " & _txtRec & "</div>"
-                & "<div class='topo'><div class='big {cls} sobe d1'>" & _txtPct & "</div>"
+                & "<div class='topo'><div class='big {cls} sobe d1" & IF ( [Eleição · pós] = 1, " pos", "" ) & "'>" & _txtPct & "</div>"
                 & "<div class='lado sobe d2'><div class='vv {cls}'>" & _txtVotos & "</div>"
                 & "<div class='txt'>de votos · " & _pos & "º lugar</div></div></div>"
                 & "<div class='man mc sobe d3'>" & _manchete & "</div>"
@@ -1187,6 +1190,7 @@ def _css_resumo(L: dict) -> str:
         ".rv .topo{top:30px;display:flex;align-items:flex-end;gap:22px}"
         ".rv .big{font-size:112px;font-weight:700;letter-spacing:-.04em;line-height:.92;"
         "font-variant-numeric:tabular-nums lining-nums}"
+        ".rv .big.pos{font-size:96px}"
         ".rv .lado{padding-bottom:6px}.rv .lado .vv{font-size:32px;font-weight:700;letter-spacing:-.02em}"
         ".rv .lado .txt{margin-top:2px}"
         ".rv .mc{top:162px;font-size:27px;line-height:1.22}.rv .mc.l{font-size:23px}"
@@ -1308,7 +1312,7 @@ def declarar_votos(P: str) -> list:
               lib.campo_medida("uf", f"{P} · UF do município"),
               lib.campo_medida("tam", f"{P} · votos (municípios)"), lib.campo_medida("val", f"{P} · margem")]
     mapa = lib.visual_deneb(f"{P}_Mapa_Pontos", *MAPA, spec, campos, alt=lib.medida(f"{P} · Mapa · ALT"), z=z + 2,
-                            tab=200, tooltip_pagina=tt, renderizacao="canvas", selecao=True, max_selecao=1)
+                            tab=200, tooltip_pagina=tt, renderizacao="canvas", selecao=True, max_selecao=1,uf_por_codigo=True)
     # L123: o clique num ponto não recompila a vista (a entrada do mapa não se repete a cada clique)
     mapa["visual"]["objects"]["dataLimit"] = [{"properties": {"enableIncrementalDataUpdates": lib.lit(True)}}]
     clipe = f"{URL_MIDIA}/arte/dossie/clipe-tinta.png"
@@ -1343,6 +1347,7 @@ def declarar_votos(P: str) -> list:
             if alvo != origem:
                 itens.append(Interacao(P, origem, alvo, "DataFilter"))
         itens.append(Interacao(P, origem, f"{P}_Casca_Filtro", "NoFilter"))
+        itens.append(Interacao(P, origem, f"{P}_Filtro_Momento", "NoFilter"))
     return itens
 
 

@@ -2,7 +2,7 @@
 @pasta: T01 Placar\Contas
 @formato: texto
 @descricao: UF onde o candidato do item teve a maior parcela dos válidos: entre as 27 (sem escolha ou com um estado só) ou entre as UFs do recorte (região ou vários estados).
-@oraculo: Flávio: Roraima 71,1%
+@oraculo: Pré: Flávio: Roraima 71,1%
 */
 VAR _noRecorte = [T01 · dossiê no recorte]
 VAR _sel = CALCULATETABLE ( VALUES ( 'UF'[UF] ), 'UF'[Tipo] = "UF" )

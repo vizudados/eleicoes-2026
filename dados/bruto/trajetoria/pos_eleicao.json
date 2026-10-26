@@ -1,0 +1,40 @@
+{
+  "T02": {
+    "arquivo": "lula-2026-reeleicao",
+    "legenda": "Noite da vitória, São Paulo, 25 de outubro de 2026",
+    "credito": "Desenho CC BY-SA 4.0 a partir de foto de Ricardo Stuckert/Lula Oficial (CC BY-SA 4.0)",
+    "autor": "Ricardo Stuckert/Lula Oficial",
+    "licenca": "CC BY-SA 4.0",
+    "licenca_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+    "foto_url": "https://www.flickr.com/photos/157736962@N05/55612564286/",
+    "commons_url": "https://commons.wikimedia.org/wiki/File:25.10.2026_-_Lula_%C3%A9_reeleito_Presidente_do_Brasil_-_55612564286.jpg",
+    "data_legenda": "2026-10-25",
+    "data_exif": "2026-10-26 02:03:36",
+    "nota": "A legenda oficial data o evento em 25/10; o EXIF marca 26/10 02:03:36, sem fuso. Mantida a data do evento da legenda, sem converter o EXIF por inferência."
+  },
+  "T04": {
+    "arquivo": "flavio-2026-pronunciamento",
+    "legenda": "Pronunciamento após o resultado, 25 de outubro de 2026",
+    "credito": "Desenho CC BY-SA 4.0 a partir de imagem da TV Senado (atribuição)",
+    "autor": "TV Senado",
+    "licenca": "Atribuição (Attribution-TVSenadoBr)",
+    "licenca_url": "https://commons.wikimedia.org/wiki/Template:Attribution-TVSenadoBr",
+    "licenca_desenho": "CC BY-SA 4.0",
+    "politica_uso_url": "https://www12.senado.leg.br/noticias/politica-de-uso",
+    "fonte_url": "https://www.youtube.com/watch?v=bB0z-mMDk3A",
+    "commons_url": "https://commons.wikimedia.org/wiki/File:Fl%C3%A1vio_Bolsonaro_cita_ministro_ao_aventar_possibilidade_de_anula%C3%A7%C3%A3o_do_resultado_das_elei%C3%A7%C3%B5es.webm",
+    "video_url": "https://upload.wikimedia.org/wikipedia/commons/9/98/Fl%C3%A1vio_Bolsonaro_cita_ministro_ao_aventar_possibilidade_de_anula%C3%A7%C3%A3o_do_resultado_das_elei%C3%A7%C3%B5es.webm",
+    "tipo_origem": "quadro de vídeo",
+    "data_legenda": "2026-10-25",
+    "periodo_evento": "noite",
+    "data_publicacao_fonte": "2026-10-26",
+    "cidade": null,
+    "quadro_busca_segundos": 105,
+    "quadro_pts_segundos": 105.012,
+    "crop_original": {"x": 576, "y": 135, "largura": 660, "altura": 600},
+    "referencia_video": "arte/ref/historicas/flavio-2026-pronunciamento-tv-senado.webm",
+    "referencia_quadro": "arte/ref/historicas/flavio-2026-pronunciamento-quadro-0105-corte.png",
+    "license_review": "pendente no Commons; template LicenseReview sem revisor/data",
+    "nota": "A descrição da fonte confirma coletiva na noite de domingo, 25/10/2026. A data 26/10 do metadado é a publicação; a cidade não foi confirmada e foi omitida. Atribuição conferida no template, na página e na política oficial do Senado; LicenseReview não foi tratado como aprovação."
+  }
+}

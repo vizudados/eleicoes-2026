@@ -1,0 +1,8 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: 0
+@descricao: 1: uma UF escolhida, ponte municipal; demais recortes: unidades federativas.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( [Recorte · tipo] = "UF", 1, 0 )

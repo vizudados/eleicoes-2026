@@ -1,0 +1,18 @@
+/*
+@pasta: T12 Estados\Contas
+@formato: texto
+@descricao: Até três siglas de UFs onde a margem subiu, em ordem alfabética, para o resumo não crescer com a quantidade de unidades.
+@oraculo: Pré: DF; Pós: AC, AL e AM (siglas em ordem alfabética)
+@gerado: pbi/scripts/desenho_t12.py
+*/
+VAR _t =
+    CALCULATETABLE (
+        TOPN ( 3, FILTER ( VALUES ( 'UF'[UF] ), [T12 · variação] > 0 ), 'UF'[UF], ASC ),
+        REMOVEFILTERS ( 'UF' ),
+        'UF'[Tipo] = "UF"
+    )
+VAR _n = COUNTROWS ( _t )
+VAR _ultimo = MAXX ( _t, 'UF'[UF] )
+VAR _resto = CONCATENATEX ( FILTER ( _t, 'UF'[UF] <> _ultimo ), 'UF'[UF], ", ", 'UF'[UF], ASC )
+RETURN
+    SWITCH ( TRUE (), _n = 0, BLANK (), _n = 1, _ultimo, _resto & " e " & _ultimo )

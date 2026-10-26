@@ -2,7 +2,7 @@
 @pasta: T01 Placar\Contas
 @formato: 0
 @descricao: Em quantas UFs do dossiê o candidato do item foi o mais votado: das 27 (sem escolha ou com um estado só) ou das UFs do recorte (região ou vários estados).
-@oraculo: Flávio 18 · Lula 9 (soma 27)
+@oraculo: Pré: Flávio 18 · Lula 9 (soma 27)
 */
 VAR _cand = SELECTEDVALUE ( 'Candidato UF'[Candidato] )
 VAR _noRecorte = [T01 · dossiê no recorte]

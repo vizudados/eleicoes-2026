@@ -1,10 +1,6 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
-@formato: 0.0%
-@descricao: Parcela de Flávio nos votos válidos do 1º turno de 2026, no Brasil (0–1).
-@oraculo: Lula 45,2% · Flávio 47,0%
+@formato: 0.00%
+@descricao: Parcela nos válidos do turno escolhido, incluindo exterior.
 */
-DIVIDE (
-    [T04 · votos 2026],
-    CALCULATE ( SUM ( 'Candidato UF'[Votos] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2026 )
-)
+DIVIDE ( [T04 · votos 2026], IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'UF segundo turno'[Validos] ), REMOVEFILTERS ( 'UF' ), 'UF segundo turno'[Ano] = 2026 ), CALCULATE ( SUM ( 'Candidato UF'[Votos] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2026 ) ) )

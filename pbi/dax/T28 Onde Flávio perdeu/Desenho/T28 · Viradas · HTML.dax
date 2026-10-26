@@ -1,0 +1,13 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Contagem e legenda do mapa restrito às trocas de vencedor; recorte vazio tem aviso explícito.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( [T28 · virou para Lula · municípios] = 0 && [T28 · virou para Flávio · municípios] = 0,
+    "<div class='tela viradas-head'>Nenhum município trocou de vencedor neste recorte.</div>",
+    "<div class='tela viradas-head'><span class='num lula'>" & FORMAT ( [T28 · virou para Lula · municípios], "#,0" )
+    & "</span> " & IF ( [T28 · virou para Lula · municípios] = 1, "município passou", "municípios passaram" )
+    & " de Flávio para Lula · <b class='num flavio'>" & FORMAT ( [T28 · virou para Flávio · municípios], "#,0" )
+    & "</b> no caminho contrário</div>" )

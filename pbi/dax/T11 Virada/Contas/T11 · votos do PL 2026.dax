@@ -4,7 +4,10 @@
 @descricao: Votos do adversário do PL em 2026 (Flávio Bolsonaro), somados no recorte.
 @gerado: pbi/scripts/desenho_t11.py
 */
-CALCULATE (
+IF ( [Eleição · pós] = 1, CALCULATE (
+    SUM ( 'Município segundo turno'[VotosAdversario] ),
+    'Município segundo turno'[Ano] = 2026
+), CALCULATE (
     SUM ( 'Município ano'[VotosAdversario] ),
     'Município ano'[Ano] = 2026
-)
+) )

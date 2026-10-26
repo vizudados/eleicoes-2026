@@ -55,7 +55,7 @@ TELAS = [
          fonte="Fonte: pesquisas registradas no TSE (levantamento de 22/10/2026) e resultado do TSE"),
     # II · O 1º turno: o resultado
     # "Resultado", não "Placar" (pedido do dono, 24/10/2026: tirar "placar" do painel e dos vídeos)
-    Tela("T01", "Resultado", "Quem venceu o 1º turno, e por quanto?", "II · O 1º turno", filtro="UF"),
+    Tela("T01", "Resultado", "Quem ficou à frente, e por quanto?", "II · O 1º turno", filtro="UF"),
     Tela("T03", "Votos de Lula", "Onde estão os votos de Lula?", "II · O 1º turno", filtro="UF"),
     Tela("T05", "Votos de Flávio", "Onde estão os votos de Flávio?", "II · O 1º turno", filtro="UF"),
     Tela("T06", "Ausência", "Quantos brasileiros não escolheram ninguém?", "II · O 1º turno", filtro="UF",
@@ -101,7 +101,7 @@ TELAS = [
     Tela("T27", "De onde vieram", "De onde vieram os votos que elegeram Lula?", "V · O 2º turno", filtro="UF",
          fonte="Fontes: TSE · 1º e 2º turnos de 2026, sem exterior · IBGE, Censo 2022"),
     Tela("T28", "Onde Flávio perdeu", "Onde Flávio perdeu a eleição?", "V · O 2º turno", filtro="UF",
-         fonte="Fontes: TSE · 1º e 2º turnos de 2026 e 2º turno de 2022, sem exterior · IBGE, Censo 2022"),
+         fonte="Fontes: TSE e IBGE · 2026 e comparação com 2022 · ponte do Brasil com exterior; mapa municipal sem exterior"),
     Tela("T29", "História do PT", "Como o voto no PT chegou ao recorde?", "V · O 2º turno",
          fonte="Fonte: TSE · eleições presidenciais de 1989 a 2026 (resultados por UF)"),
     Tela("T23", "Encerramento", "E o que fica desta eleição?", "Fim", escura=True,

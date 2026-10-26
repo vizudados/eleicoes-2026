@@ -3,4 +3,4 @@
 @formato: #,0
 @descricao: Votos de Flávio em 2026 somados nos municípios (sem o exterior).
 */
-CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2026 )
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'Município segundo turno'[VotosAdversario] ), 'Município segundo turno'[Ano] = 2026 ), CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2026 ) )

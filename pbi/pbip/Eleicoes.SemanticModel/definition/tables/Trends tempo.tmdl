@@ -25,7 +25,7 @@ table 'Trends tempo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Termo e consulta, ex.: 'Lula [tópico | T2]'.
-	column Série
+	column 'Série'
 		dataType: string
 		lineageTag: ee53aad3-420b-50d6-88b8-3f58337e69d9
 		summarizeBy: none
@@ -34,7 +34,7 @@ table 'Trends tempo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Índice relativo 0–100 dentro da consulta.
-	column Índice
+	column 'Índice'
 		dataType: int64
 		isHidden
 		formatString: 0
@@ -65,7 +65,7 @@ table 'Trends tempo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column Observação
+	column 'Observação'
 		dataType: string
 		isHidden
 		lineageTag: cf80f507-647a-5387-993d-1b370eaf77b8
@@ -87,4 +87,3 @@ table 'Trends tempo'
 				    Final
 
 	annotation PBI_ResultType = Table
-

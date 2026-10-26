@@ -1,0 +1,27 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: texto
+@descricao: Acumulados e agrupamentos observados da ponte; começo + todas as contribuições = fim. 9 unidades explícitas, demais agrupadas.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+VAR _inicio = [T28 · ponte · início]
+VAR _fim = [T28 · ponte · fim]
+VAR _base = ADDCOLUMNS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), NOT ISBLANK ( 'Município'[CodIBGE] ) ), "@v", [T28 · mudança de vantagem], "@nome", CALCULATE ( SELECTEDVALUE ( 'Município'[Município] ) ) )
+VAR _top = TOPN ( 9, _base, [@v], DESC, 'Município'[CodIBGE], ASC )
+VAR _ext = 0
+VAR _nOutros = MAX ( 0, COUNTROWS ( _base ) - 9 )
+VAR _sTop = SUMX ( _top, [@v] )
+VAR _ord = ADDCOLUMNS ( _top,
+    "@i", VAR _d = [@v] VAR _k = 'Município'[CodIBGE]
+        RETURN 1 + COUNTROWS ( FILTER ( _top, [@v] > _d || ( [@v] = _d && 'Município'[CodIBGE] < _k ) ) ),
+    "@de", VAR _d = [@v] VAR _k = 'Município'[CodIBGE]
+        RETURN _inicio + SUMX ( FILTER ( _top, [@v] > _d || ( [@v] = _d && 'Município'[CodIBGE] < _k ) ), [@v] ) )
+VAR _linhas = SELECTCOLUMNS ( _ord, "i", [@i], "nome", [@nome], "de", [@de], "ate", [@de] + [@v], "v", [@v], "tipo", "passo" )
+VAR _extras = FILTER ( UNION (
+    ROW ( "i", 0, "nome", "1º turno", "de", 0, "ate", _inicio, "v", _inicio, "tipo", "inicio" ),
+    ROW ( "i", 10, "nome", "Outros " & _nOutros & " cidades", "de", _inicio + _sTop, "ate", _fim - _ext, "v", _fim - _ext - _inicio - _sTop, "tipo", IF ( _nOutros > 0, "passo", "oculto" ) ),
+    ROW ( "i", 11, "nome", "Exterior", "de", _fim - _ext, "ate", _fim, "v", _ext, "tipo", IF ( _ext <> 0, "passo", "oculto" ) ),
+    ROW ( "i", 12, "nome", "2º turno", "de", 0, "ate", _fim, "v", _fim, "tipo", "fim" ) ), [tipo] <> "oculto" )
+VAR _todas = UNION ( _linhas, _extras )
+RETURN CONCATENATEX ( _todas, [i] & "^" & SUBSTITUTE ( SUBSTITUTE ( [nome], "^", " " ), "~", " " ) & "^" & [de] & "^" & [ate] & "^" & [v] & "^" & [tipo], "~", [i], ASC )

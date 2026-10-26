@@ -1242,7 +1242,7 @@ def declarar_quem_falta() -> list:
               lib.campo_medida("tam", "T25 · abstenções"), lib.campo_medida("val", "T25 · abstenção relativa")]
     mapa = lib.visual_deneb("T25_Mapa_Pontos", *MAPA, "spec/t25_mapa.json", campos,
                             alt=lib.medida("T25 · Mapa · ALT"), z=z + 10, tab=300, selecao=True, max_selecao=50,
-                            tooltip_pagina=tt_mun, renderizacao="canvas")
+                            tooltip_pagina=tt_mun, renderizacao="canvas",uf_por_codigo=True)
     # L123: a vista do Deneb não é recompilada a cada filtro (a entrada não se repete; o clique não zera o relógio)
     mapa["visual"]["objects"]["dataLimit"] = [{"properties": {"enableIncrementalDataUpdates": lib.lit(True)}}]
     itens = [

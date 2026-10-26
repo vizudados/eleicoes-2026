@@ -336,7 +336,7 @@
     {
      "type": "formula",
      "as": "onda",
-     "expr": "datum.y / 1000"
+     "expr": "datum.y / 100000"
     }
    ]
   },
@@ -692,13 +692,13 @@
    "name": "cor",
    "type": "linear",
    "domain": [
-    -0.6,
-    -0.3,
-    -0.12,
-    0.0,
-    0.12,
-    0.3,
-    0.6
+    -600000,
+    -300000,
+    -120000,
+    0,
+    120000,
+    300000,
+    600000
    ],
    "range": [
     "#1D3C6E",
@@ -767,10 +767,10 @@
    "encode": {
     "update": {
      "x": {
-      "signal": "ox + datum.x * k"
+      "signal": "ox + datum.x / 100 * k"
      },
      "y": {
-      "signal": "oy + datum.y * k"
+      "signal": "oy + datum.y / 100 * k"
      },
      "shape": {
       "value": "circle"

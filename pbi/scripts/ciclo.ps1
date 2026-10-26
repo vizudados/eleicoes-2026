@@ -8,7 +8,7 @@ $S = $PSScriptRoot
 $Pbi = Split-Path -Parent $S
 Set-Location $Pbi
 & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $S 'desktop.ps1') -Acao fechar
-python -I -X utf8 (Join-Path $S 'estilo.py')
+python -X utf8 (Join-Path $S 'estilo.py')
 if ($LASTEXITCODE -ne 0) { throw 'estilo.py falhou' }
 python -I -X utf8 (Join-Path $S 'gerar_modelo.py') | Select-Object -Last 1
 if ($LASTEXITCODE -ne 0) { throw 'gerar_modelo.py falhou' }

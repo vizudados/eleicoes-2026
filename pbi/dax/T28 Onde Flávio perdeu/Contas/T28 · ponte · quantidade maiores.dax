@@ -1,0 +1,10 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: 0
+@descricao: Quantidade efetiva até três; Distrito Federal tem uma unidade municipal no modelo.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+MIN ( 3, IF ( [T28 · ponte · municipal] = 1,
+    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), NOT ISBLANK ( 'Município'[CodIBGE] ) ) ),
+    COUNTROWS ( FILTER ( VALUES ( 'UF'[UF] ), NOT ISBLANK ( 'UF'[UF] ) && 'UF'[UF] <> "ZZ" ) ) ) )

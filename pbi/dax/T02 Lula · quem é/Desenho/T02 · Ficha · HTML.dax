@@ -9,12 +9,15 @@ VAR _anos = [T02 · anos de vida pública]
 VAR _votos = [T02 · votos 2026]
 VAR _pct = [T02 · % 2026]
 VAR _pos = [T02 · posição 2026]
+VAR _posEleicao = [Eleição · pós]
 VAR _marcos = [T02 · Trajetória · marcos]
 VAR _fotos = [T02 · Trajetória · marcos com foto]
 VAR _ilus = [T02 · Trajetória · marcos ilustrados]
 -- 2 · Textos
 VAR _txtVotos = SWITCH ( TRUE (), ABS ( _votos ) >= 1000000, FORMAT ( _votos / 1000000, "0.00" ) & " mi", ABS ( _votos ) >= 1000, FORMAT ( _votos / 1000, "0.0" ) & " mil", FORMAT ( _votos, "#,0" ) )
-VAR _txtPct = FORMAT ( _pct, "0.0%" )
+VAR _txtPct = IF ( _posEleicao = 1, FORMAT ( _pct, "0.00%" ), FORMAT ( _pct, "0.0%" ) )
+VAR _turno = IF ( _posEleicao = 1, "2º", "1º" )
+VAR _resultado = IF ( _posEleicao = 1 && _pos = 1, "eleito", _pos & "º lugar" )
 VAR _txtFotos =
     SWITCH (
         TRUE (),
@@ -30,9 +33,9 @@ VAR _html =
     "<div class='tela fc'>"
         & "<div class='lin sobe d3'><div class='rot'>Na vida pública desde</div>"
         & "<div class='val'><span class='nc'>" & _desde & "</span><small>há <span>" & _anos & "</span> anos</small></div></div>"
-        & "<div class='lin sobe d4'><div class='rot'>No 1º turno de 2026</div>"
+        & "<div class='lin sobe d4'><div class='rot'>No " & _turno & " turno de 2026</div>"
         & "<div class='val'><span class='lula'>" & _txtVotos & "</span><small>de votos · " & _txtPct
-        & " · " & _pos & "º lugar</small></div></div>"
+        & " · " & _resultado & "</small></div></div>"
         & "<div class='lin sobe d5'><div class='rot'>Na linha do tempo abaixo</div>"
         & "<div class='val'><span>" & _marcos & "</span><small>marcos, " & _txtFotos & _txtIlus
         & "</small></div></div>"

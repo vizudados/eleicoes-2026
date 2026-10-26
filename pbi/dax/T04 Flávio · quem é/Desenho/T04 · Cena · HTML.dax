@@ -1,0 +1,6 @@
+/*
+@pasta: T04 Flávio · quem é\Desenho
+@formato: texto
+@descricao: Cena em traço e legenda real correspondentes ao momento escolhido.
+*/
+IF ( [Eleição · pós] = 1, "<div class='cena sobe d6'><div class='papel'><img class='ce' alt='Pronunciamento após o resultado, 25 de outubro de 2026' src='https://vizudados.github.io/eleicoes-2026/midia/trajetoria/flavio-2026-pronunciamento.png'/></div><img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/><div class='leg'><div class='mao'>Pronunciamento após o resultado, 25 de outubro de 2026</div><div class='nota'>Desenho CC BY-SA 4.0 a partir de imagem da TV Senado (atribuição)</div></div></div>", "<div class='cena sobe d6'><div class='papel'><img class='ce' alt='Ato de 7 de Setembro de 2021, Av. Paulista, São Paulo' src='https://vizudados.github.io/eleicoes-2026/midia/comicio/comicio-flavio-tinta.png' data-reserva='https://vizudados.github.io/eleicoes-2026/midia/arte/comicio-flavio-tinta.png'/></div><img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/><div class='leg'><div class='mao'>Ato de 7 de Setembro de 2021, Av. Paulista, São Paulo</div><div class='nota'>Desenho CC BY-SA 4.0 a partir de foto de Isac Nóbrega/PR (CC BY 2.0)</div></div></div>" )

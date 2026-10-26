@@ -23,7 +23,7 @@ table 'T26 Debate Globo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Cartão da noite a que a métrica pertence (buscas, audiencia, streaming, redes, pesquisas); vazio fora das métricas.
-	column Cartão
+	column 'Cartão'
 		dataType: string
 		lineageTag: 0a7f48ce-c2d4-58ad-af9c-c08824f26aec
 		summarizeBy: none
@@ -53,7 +53,7 @@ table 'T26 Debate Globo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Título que a tela mostra.
-	column Rótulo
+	column 'Rótulo'
 		dataType: string
 		isHidden
 		lineageTag: 76edebc2-9b71-509a-a278-5066ce082736
@@ -73,7 +73,7 @@ table 'T26 Debate Globo'
 		annotation SummarizationSetBy = Automatic
 
 	/// debate: marcado, no_ar, realizado, adiado, cancelado · presenca: confirmada, a_confirmar, ausente · metrica: aguardando, publicado, nao_divulgado.
-	column Situação
+	column 'Situação'
 		dataType: string
 		isHidden
 		lineageTag: 40df0f47-faa8-5c64-ae5f-ebaa0dbc737c
@@ -185,7 +185,7 @@ table 'T26 Debate Globo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Ressalva de leitura (vai para o dossiê).
-	column Observação
+	column 'Observação'
 		dataType: string
 		isHidden
 		lineageTag: cec2a411-1c09-506b-9946-0349b003758d
@@ -207,4 +207,3 @@ table 'T26 Debate Globo'
 				    Final
 
 	annotation PBI_ResultType = Table
-

@@ -1,9 +1,9 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
 @formato: texto
-@descricao: Crédito curto do desenho e da foto original do marco da linha. Fonte: dados/bruto/trajetoria/desenhos.csv; na falta, autor e licença da tabela Trajetória.
+@descricao: Legenda e crédito com data real da foto; adaptação CC BY-SA 4.0.
 */
-VAR _f = [T04 · Trajetória · foto]
+IF ( [T04 · desfecho] = 1, "Desenho CC BY-SA 4.0 a partir de imagem da TV Senado (atribuição)", VAR _f = [T04 · Trajetória · foto]
 VAR _reserva =
     "Desenho a partir de foto de " & SELECTEDVALUE ( 'Trajetória'[Autor da foto] ) & " ("
         & SELECTEDVALUE ( 'Trajetória'[Licença da foto] ) & ")"
@@ -22,6 +22,7 @@ RETURN
         "flavio-2025-csp", "Desenho CC BY-SA 4.0 a partir de foto de Edilson Rodrigues/Agência Senado (CC BY-SA 4.0)",
         "flavio-2025-precandidatura", "Desenho CC BY-SA 4.0 a partir de foto de Andressa Anholete/Agência Senado (CC BY-SA 4.0)",
         "flavio-2026-primeiro-turno", "Desenho CC BY-SA 4.0 a partir de foto de Carlos Moura/Agência Senado (CC BY-SA 4.0)",
+        "flavio-2026-pronunciamento", "Desenho CC BY-SA 4.0 a partir de imagem da TV Senado (atribuição)",
             _reserva
         )
-    )
+    ) )

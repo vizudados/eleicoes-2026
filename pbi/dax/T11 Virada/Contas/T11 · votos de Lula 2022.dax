@@ -4,7 +4,10 @@
 @descricao: Votos de Lula (PT) em 2022, somados no recorte (sem o exterior).
 @gerado: pbi/scripts/desenho_t11.py
 */
-CALCULATE (
+IF ( [Eleição · pós] = 1, CALCULATE (
+    SUM ( 'Município segundo turno'[VotosPT] ),
+    'Município segundo turno'[Ano] = 2022
+), CALCULATE (
     SUM ( 'Município ano'[VotosPT] ),
     'Município ano'[Ano] = 2022
-)
+) )

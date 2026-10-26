@@ -17,6 +17,8 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from momento_eleicao import municipal_2022_2026, segundo, soma_uf
 
 AQUI = Path(__file__).resolve().parent
 PBI = AQUI.parent
@@ -29,6 +31,11 @@ MEDIDAS: list[dict] = []
 
 
 def conta(nome: str, formato: str, descricao: str, expr: str, oraculo: str | None = None) -> None:
+    expr = municipal_2022_2026(expr)
+    for base, col in [('votos de Lula', 'VotosPT'), ('votos do PL', 'VotosAdversario'), ('válidos', 'Validos')]:
+        for ano in (2022, 2026):
+            if nome == f'T12 · {base} {ano}':
+                expr = segundo(expr, soma_uf(col, ano))
     MEDIDAS.append({"nome": nome, "sub": "Contas", "pasta": f"{TELA}\\Contas", "formato": formato,
                     "descricao": descricao, "expr": expr, "oraculo": oraculo})
 
@@ -139,6 +146,20 @@ conta("T12 · onde a margem subiu", "texto", "Nomes das UFs em que a margem de L
     REMOVEFILTERS ( 'UF' ),
     'UF'[Tipo] = "UF"
 )""", ORACULO + " › excecoes › Distrito Federal")
+conta("T12 · exemplos onde a margem subiu", "texto", "Até três siglas de UFs onde a margem subiu, em ordem alfabética, "
+      "para o resumo não crescer com a quantidade de unidades.",
+      """VAR _t =
+    CALCULATETABLE (
+        TOPN ( 3, FILTER ( VALUES ( 'UF'[UF] ), [T12 · variação] > 0 ), 'UF'[UF], ASC ),
+        REMOVEFILTERS ( 'UF' ),
+        'UF'[Tipo] = "UF"
+    )
+VAR _n = COUNTROWS ( _t )
+VAR _ultimo = MAXX ( _t, 'UF'[UF] )
+VAR _resto = CONCATENATEX ( FILTER ( _t, 'UF'[UF] <> _ultimo ), 'UF'[UF], ", ", 'UF'[UF], ASC )
+RETURN
+    SWITCH ( TRUE (), _n = 0, BLANK (), _n = 1, _ultimo, _resto & " e " & _ultimo )""",
+      "Pré: DF; Pós: AC, AL e AM (siglas em ordem alfabética)")
 conta("T12 · alta onde a margem subiu", "0.0%", "Variação da margem na UF em que ela subiu (quando é uma só).",
       """CALCULATE (
     MAXX ( FILTER ( VALUES ( 'UF'[UF] ), [T12 · variação] > 0 ), [T12 · variação] ),
@@ -277,6 +298,7 @@ VAR _caiu = [T12 · unidades onde a margem caiu]
 VAR _tot = [T12 · unidades]
 VAR _nSubiu = [T12 · unidades onde a margem subiu]
 VAR _subiu = [T12 · onde a margem subiu]
+VAR _exSubiu = [T12 · exemplos onde a margem subiu]
 VAR _alta = [T12 · alta onde a margem subiu]
 VAR _mudaram = [T12 · mudaram para o adversário]
 VAR _nMud = [T12 · quantas mudaram para o adversário]
@@ -304,16 +326,17 @@ VAR _txtSubiu =
         _nSubiu = 0, "A margem de Lula não subiu em nenhuma unidade.",
         _nSubiu = 1, "Só " & IF ( _subiu = "Distrito Federal", "o ", "" ) & _subiu & " foi na direção de Lula: <b>"
             & {_pp("_alta")} & " p.p.</b>",
-        FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula: " & _subiu & "."
+        FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula. Entre elas: " & _exSubiu & "."
     )
 VAR _txtUnid = IF ( _caiu = 1, "unidade em que", "unidades em que" )
+VAR _txtMudancaLugar =
+    IF ( _dBr = 0, "não variou", IF ( _dBr < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) )
 VAR _txtLugar =
     IF (
         ISBLANK ( _lugar ),
-        "No Brasil, foi de " & {_pp("_m22")} & " para " & {_pp("_m26")} & " pontos: " & IF ( _dBr < 0, "caiu ", "subiu " )
-            & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) & ".",
+        "No Brasil, foi de " & {_pp("_m22")} & " para " & {_pp("_m26")} & " pontos: " & _txtMudancaLugar & ".",
         "<b>" & _lugar & "</b>: de " & {_pp("_m22")} & " para " & {_pp("_m26")} & " pontos, "
-            & IF ( _dBr < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) & "."
+            & _txtMudancaLugar & "."
     )
 -- 3 · Geometria (barras: 100% = 300 px)
 VAR _wl22 = 300 * _l22 -- geometria
@@ -345,13 +368,13 @@ RETURN
             & "<svg width='300' height='14' viewBox='0 0 300 14'><path class='traco' style='animation-delay:1100ms' "
             & "pathLength='1' d='M3,9 C60,4 150,12 296,5' fill='none' stroke='var(--azul)' stroke-width='5' "
             & "stroke-linecap='round'/></svg></div>"
-        & "<div class='txt t3 entra d5'>" & _txtSubiu & "</div>"
+        & "<div class='apoio'><div class='txt t3 entra d5'>" & _txtSubiu & "</div>"
         & "<div class='margem'>"
             & "<div class='rot entra d6'>O QUE É MARGEM</div>"
             & "<div class='txt ex entra d6'>É a distância entre os votos de Lula e os do adversário, em pontos dos "
                 & "votos válidos: positiva, Lula à frente; negativa, o adversário. " & _txtLugar & "</div>"
             & _brasil
-        & "</div>"
+        & "</div></div>"
     & "</div>\"""")
 
 desenho("T12 · Resposta · ALT", "Texto alternativo da coluna da resposta.",
@@ -413,7 +436,7 @@ desenho("T12 · Regiões · ALT", "Texto alternativo das regiões.",
 VAR _r = [T12 · região da unidade]
 -- 2 · Textos
 RETURN
-    "As cinco regiões, da maior queda da margem de Lula à menor; clique numa região para ver só as unidades dela na "
+    "As cinco regiões, da menor para a maior variação da margem de Lula; clique numa região para ver só as unidades dela na "
         & "corrida.\"""")
 
 desenho("T12 · Corrida título · HTML",
@@ -421,12 +444,11 @@ desenho("T12 · Corrida título · HTML",
         "diz o lugar e o que aconteceu com a margem nele.",
         f"""-- 1 · Leituras
 VAR _nSubiu = [T12 · unidades onde a margem subiu]
-VAR _subiu = [T12 · onde a margem subiu]
+VAR _caiuBrasil = [T12 · unidades onde a margem caiu]
 VAR _lugar = [T12 · lugar clicado]
 VAR _m22 = [T12 · margem 2022]
 VAR _m26 = [T12 · margem 2026]
 VAR _d = [T12 · variação]
-VAR _ordem = [T12 · ordem da queda]
 VAR _nUf = [T12 · estados da região]
 VAR _nCaiu = [T12 · unidades do lugar onde a margem caiu]
 -- 2 · Textos
@@ -442,19 +464,18 @@ VAR _man =
     SWITCH (
         TRUE (),
         NOT ISBLANK ( _lugar ) && _ehUF,
-            _lugar & ": a margem de Lula " & IF ( _d < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _d ) * 100, "0.0" )
-                & " pontos" & IF ( _d < 0 && NOT ISBLANK ( _ordem ), " (" & FORMAT ( _ordem, "0" ) & "ª maior queda)", "" )
-                & _lado,
+            _lugar & ": a margem de Lula " & IF ( _d = 0, "não variou", IF ( _d < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _d ) * 100, "0.0" )
+                & " p.p."
+                & _lado ),
         NOT ISBLANK ( _lugar ),
-            _lugar & ": a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" )
-                & IF ( _nUf = 1, " unidade", " unidades" ) & "; na região, de " & {_pp("_m22")} & " para "
-                & {_pp("_m26")} & " pontos",
-        -- "na direção de Flávio", e não "para a esquerda" (24/10/2026): num painel de eleição, "esquerda" se lê como
-        -- lado político, o contrário do dado (a margem andou para o lado de Flávio no eixo do gráfico)
-        _nSubiu = 0, "Todas andaram na direção de Flávio",
-        _nSubiu = 1, "Quase todas andaram na direção de Flávio; só " & IF ( _subiu = "Distrito Federal", "o ", "" )
-            & _subiu & ", na de Lula",
-        "A maioria andou na direção de Flávio; " & FORMAT ( _nSubiu, "0" ) & " unidades, na de Lula"
+            _lugar & ": " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" )
+                & IF ( _nUf = 1, " unidade com queda", " unidades com queda" ) & "; margem " & {_pp("_m22")} & " → "
+                & {_pp("_m26")} & " p.p.",
+        _nSubiu >= _caiuBrasil,
+            FORMAT ( _nSubiu, "0" ) & IF ( _nSubiu = 1, " unidade foi", " unidades foram" )
+                & " na direção de Lula; " & FORMAT ( _caiuBrasil, "0" ) & ", na de Flávio",
+        FORMAT ( _caiuBrasil, "0" ) & IF ( _caiuBrasil = 1, " unidade foi", " unidades foram" )
+            & " na direção de Flávio; " & FORMAT ( _nSubiu, "0" ) & ", na de Lula"
     )
 -- 4 · Marcação
 RETURN
@@ -470,11 +491,12 @@ RETURN
 desenho("T12 · Corrida título · ALT", "Texto alternativo do título da corrida.",
         """-- 1 · Leituras
 VAR _nSubiu = [T12 · unidades onde a margem subiu]
+VAR _nCaiu = [T12 · unidades onde a margem caiu]
 VAR _lugar = [T12 · lugar clicado]
 -- 2 · Textos
 RETURN
     "Margem de Lula em cada unidade, de 2022 para 2026, ordenada da maior queda à alta; "
-        & FORMAT ( _nSubiu, "0" ) & IF ( _nSubiu = 1, " unidade subiu.", " unidades subiram." )
+        & "no Brasil, a margem subiu em " & FORMAT ( _nSubiu, "0" ) & " e caiu em " & FORMAT ( _nCaiu, "0" ) & " unidades."
         & IF ( ISBLANK ( _lugar ), "", " Lugar escolhido: " & _lugar & "." )""")
 
 desenho("T12 · Corrida · HTML",
@@ -561,15 +583,17 @@ VAR _selo =
         _m22 > 0 && _m26 < 0, "MUDOU DE LADO",
         _m22 < 0 && _m26 > 0, "MUDOU DE LADO",
         _m26 > 0, "LULA À FRENTE",
-        "FLÁVIO À FRENTE"
+        _m26 < 0, "FLÁVIO À FRENTE",
+        "EMPATE"
     )
 VAR _clsSelo = IF ( _m26 < 0, "selo az", "selo vm" ) & IF ( ( _m22 > 0 ) = ( _m26 > 0 ), " leve", "" )
 VAR _txtOrdem =
     IF (
         ISBLANK ( _ordem ),
         "votos de brasileiros que moram fora: " & FORMAT ( _val, "#,0" ) & " válidos em 2026",
-        IF ( _m26 > _m22, "a margem de Lula subiu aqui",
+        IF ( _m26 = _m22, "a margem de Lula não variou aqui", IF ( _m26 > _m22, "a margem de Lula subiu aqui",
             FORMAT ( _ordem, "0" ) & "ª maior queda entre as 27 unidades" )
+        )
     )
 VAR _nTop = MIN ( 3, _vir )
 VAR _maiores =
@@ -597,7 +621,9 @@ VAR _mao =
     SWITCH (
         TRUE (),
         _m22 > 0 && _m26 < 0, "virou o estado",
-        _m26 > _m22, "foi contra a maré",
+        _m22 < 0 && _m26 > 0, "virou para Lula",
+        _m26 > _m22, "a margem subiu",
+        _m26 = _m22, "a margem não variou",
         _vir = 0 && NOT ISBLANK ( _ordem ), "nenhuma cidade virou",
         "caiu, sem mudar de lado"
     )
@@ -654,7 +680,13 @@ VAR _vir = [T12 · municípios que viraram]
 VAR _mun = [T12 · municípios]
 VAR _lista = [T12 · maiores cidades que viraram]
 -- 2 · Textos
-VAR _selo = IF ( _m22 > 0 && _m26 < 0, "MUDOU DE LADO", IF ( _m26 > 0, "LULA À FRENTE", "FLÁVIO À FRENTE" ) )
+VAR _selo = SWITCH (
+    TRUE (),
+    _m22 > 0 && _m26 < 0 || _m22 < 0 && _m26 > 0, "MUDOU DE LADO",
+    _m26 > 0, "LULA À FRENTE",
+    _m26 < 0, "FLÁVIO À FRENTE",
+    "EMPATE"
+)
 VAR _clsSelo = IF ( _m26 < 0, "selo az", "selo vm" ) & IF ( ( _m22 > 0 ) = ( _m26 > 0 ), " leve", "" )
 VAR _txtUf =
     "a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" ) & IF ( _nUf = 1, " estado", " estados" )
@@ -669,6 +701,8 @@ VAR _mao =
     SWITCH (
         TRUE (),
         _m22 > 0 && _m26 < 0, "a região virou",
+        _m22 < 0 && _m26 > 0, "a região virou para Lula",
+        _nCaiu = 0, "não caiu em nenhum",
         _nCaiu = _nUf, "caiu em todos",
         "nem todos caíram"
     )

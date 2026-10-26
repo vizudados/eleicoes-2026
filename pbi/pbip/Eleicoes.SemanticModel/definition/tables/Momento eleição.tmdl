@@ -1,0 +1,31 @@
+/// Antes/depois da eleição de 2026. Desconectada; medidas leem a escolha. Sem seleção = Pós.
+table 'Momento eleição'
+	lineageTag: 73d8b981-37cb-591f-ad61-301c37bf0212
+
+	/// Momento
+	column Momento
+		dataType: string
+		lineageTag: 86c24b35-87cc-5b3d-b0fd-a573067ccaf7
+		summarizeBy: none
+		sourceColumn: [Momento]
+		sortByColumn: Ordem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ordem
+	column Ordem
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 97f92538-7137-5c72-8da7-7236adaebc23
+		summarizeBy: none
+		sourceColumn: [Ordem]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Momento eleição' = calculated
+		mode: import
+		source =
+				DATATABLE ( "Momento", STRING, "Ordem", INTEGER, { { "Pré Eleições 2026", 1 }, { "Pós Eleições 2026", 2 } } )
+
+	annotation PBI_ResultType = Table

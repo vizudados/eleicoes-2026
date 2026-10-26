@@ -5,7 +5,7 @@
     "x": 1180,
     "y": 124,
     "z": 4000,
-    "height": 660,
+    "height": 821,
     "width": 600,
     "tabOrder": 950
   },
@@ -78,7 +78,7 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Estilo · CSS"
+                  "Property": "Estilo · CSS com mão"
                 }
               }
             }
@@ -91,7 +91,7 @@
             "bodyTemplate": {
               "expr": {
                 "Literal": {
-                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#F1EBDF;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>Onde a vantagem mudou</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>A redução da vantagem de Flávio é o ganho de Lula menos o ganho de Flávio entre turnos, em votos; valores negativos indicam aumento da vantagem de Flávio. Mapa e lista se filtram pelo clique. Os apoios de estados inteiros e da comparação com Jair conservam o recorte do filtro de UF do alto.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>TSE: 1º e 2º turnos de 2026 e 2º turno de 2022, ligados pelo código IBGE do município. Os estados são somas de votos; Minas Gerais virou e terminou com Lula 109.313 votos à frente, uma conta diferente da mudança de vantagem entre turnos.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>Perder vantagem não implica perder votos em termos absolutos. Virada exige vitória estrita nos dois turnos, sem contar empates; a comparação com Jair usa só municípios presentes nos dois anos e não afirma causa. Não há exterior nestas análises.</div></div></div></div>{{content}}'"
+                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#F1EBDF;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>Onde a vantagem mudou</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>A ponte começa na vantagem de Flávio no primeiro turno e termina na de Lula no segundo: cada degrau mostra quanto a diferença andou naquele lugar. Nove contribuições aparecem pelo nome; as menores ficam agrupadas, e o exterior tem degrau próprio no Brasil. Com uma UF escolhida no filtro, a ponte mostra os municípios dela; com região ou várias UFs, mostra os estados do recorte.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>Resultados do TSE, primeiro e segundo turnos de 2026; a ponte do Brasil inclui o exterior e fecha de −2.224.965 para +4.430.191, com movimento de 6.655.156 votos na diferença Lula menos Flávio. O mapa contém somente as trocas estritas de vencedor: 211 municípios de Flávio para Lula e Uirapuru, GO, no sentido contrário; empates não contam. O ranking compara Flávio 2026 menos Jair 2022, ambos no segundo turno, por estado e por cidade, com sinal negativo nas perdas e sem tratar ausência de município como zero.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>Perder vantagem não significa perder votos em termos absolutos, e o movimento da diferença não identifica quem mudou de candidato. O mapa é municipal, sem exterior; seus cliques abrem o dossiê e destacam a cidade, sem refazer a ponte ou o ranking histórico. Em recortes municipais, as três maiores contribuições podem superar 100% do saldo se outras cidades compensaram parte delas.</div></div></div></div>{{content}}'"
                 }
               }
             }

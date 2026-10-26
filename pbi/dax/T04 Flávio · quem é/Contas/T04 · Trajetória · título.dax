@@ -1,6 +1,6 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
 @formato: texto
-@descricao: Título curto do marco da linha.
+@descricao: Último marco responde ao Antes/Depois; os demais ficam intactos.
 */
-SELECTEDVALUE ( 'Trajetória'[Título] )
+IF ( [T04 · desfecho] = 1, "Ficou em segundo lugar", SELECTEDVALUE ( 'Trajetória'[Título] ) )

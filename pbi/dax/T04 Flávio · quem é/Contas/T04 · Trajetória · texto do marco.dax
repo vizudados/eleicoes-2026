@@ -1,6 +1,6 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
 @formato: texto
-@descricao: O que aconteceu no marco da linha (até ~200 caracteres).
+@descricao: Último marco responde ao Antes/Depois; os demais ficam intactos.
 */
-SELECTEDVALUE ( 'Trajetória'[Texto] )
+IF ( [T04 · desfecho] = 1, "Terminou o 2º turno de 25/10/2026 em 2º lugar, com 59.826.041 votos (48,21% dos válidos). Lula foi eleito. Fonte: TSE.", SELECTEDVALUE ( 'Trajetória'[Texto] ) )

@@ -124,7 +124,7 @@ VAR _pesq0 =
         "@d", [T22 · pesquisa · data],
         "@a", [T22 · pesquisa · parte para Lula entre os que votam]
     ) /* lista */
-VAR _pesq = FILTER ( _pesq0, NOT ISBLANK ( [@d] ) ) /* lista */
+VAR _pesq = _pesq0
 -- 2 · Textos
 VAR _txtA = FORMAT ( _a * 100, "0" ) & "% Lula"
 VAR _txtF = FORMAT ( ( 1 - _a ) * 100, "0" ) & "% Flávio"
@@ -139,7 +139,7 @@ VAR _x1 = {A_X0} + _max * 100 * {passo_a} -- geometria
 VAR _marcas =
     CONCATENATEX (
         _pesq,
-        "<i class='pq' style='left:" & FORMAT ( {A_X0} + [@a] * 100 * {passo_a} - 1, "0.0##", "en-US" ) & "px'></i>",
+        IF ( NOT ISBLANK ( [@d] ), "<i class='pq' style='left:" & FORMAT ( {A_X0} + [@a] * 100 * {passo_a} - 1, "0.0##", "en-US" ) & "px'></i>" ),
         ""
     ) /* lista */
 -- 4 · Marcação
@@ -181,7 +181,7 @@ VAR _txt =
 -- 3 · Marcação (trilho, botão e os rótulos 0% e 50% são do VizuFilter no modo régua, por cima)
 RETURN
     "<div class='tela t22c'>"
-        & "<div class='pergunta sobe'>Quantos deles teriam deixado de escolher alguém?</div>"
+        & "<div class='pergunta sobe'>Quantos não teriam escolhido ninguém?</div>"
         & "<div class='valor sobe d1'>" & _txt & "</div>"
     & "</div>"
 """)
@@ -516,7 +516,7 @@ def corpo_heroi() -> str:
         ".t22v img{width:42px}"
     )
     return (f"<style>{css}</style><div class='t22v entra d5'><img alt='' src='{balanca}'/>Simulação, não previsão: "
-            f"você decide para onde vão os votos; o painel só faz a conta.</div>{{{{content}}}}")
+            f"você decide para onde as pesquisas indicavam os votos; o painel só faz a conta.</div>{{{{content}}}}")
 
 
 def corpo_regua_a() -> str:
@@ -545,10 +545,32 @@ def corpo_regua_a() -> str:
 def corpo_regua_bc() -> str:
     css = (
         ".t22c{pointer-events:none}"
-        ".t22c .pergunta{position:absolute;left:0;top:0;font-size:16px;font-weight:600}"
-        ".t22c .valor{position:absolute;left:0;top:24px;font-size:14px;color:var(--grafite);white-space:nowrap}"
+        ".t22c .pergunta{position:absolute;left:0;top:0;width:410px;font-size:16px;line-height:20px;font-weight:600;white-space:nowrap}"
+        ".t22c .valor{position:absolute;left:0;top:24px;font-size:14px;line-height:20px;color:var(--grafite);white-space:nowrap}"
     )
     return f"<style>{css}</style>{{{{content}}}}"
+
+
+def corpo_reguas() -> str:
+    """Uma moldura HTML para os três fundos. Os três VizuFilter e suas caixas não mudam."""
+    a = corpo_regua_a().replace('{{content}}','').replace("class='tela t22a'","class='tela t22a regua-a'")
+    bc = corpo_regua_bc().replace('{{content}}','')
+    css = ('.regua-a,.regua-b,.regua-c{position:absolute!important;inset:auto!important}'
+           '.regua-a{left:0!important;top:0!important;width:860px;height:150px}'
+           '.regua-b{left:0!important;top:166px!important;width:410px;height:104px}'
+           '.regua-c{left:450px!important;top:166px!important;width:410px;height:104px}')
+    return a+bc+f'<style>{css}</style>{{{{content}}}}'
+
+
+def medidas_reguas():
+    gravar('T22 · Réguas · HTML','Três fundos de régua no mesmo HTML; controles e contas permanecem independentes.',r'''
+VAR _a = SUBSTITUTE ( [T22 · Régua Lula · HTML], "class='tela t22a'", "class='tela t22a regua-a'" )
+VAR _b = SUBSTITUTE ( [T22 · Régua abstenção · HTML], "class='tela t22c'", "class='tela t22c regua-b'" )
+VAR _c = SUBSTITUTE ( [T22 · Régua comparecimento · HTML], "class='tela t22c'", "class='tela t22c regua-c'" )
+RETURN _a & _b & _c
+''')
+    gravar('T22 · Réguas · ALT','Descrição dos três fundos de régua; cada VizuFilter conserva seu ALT e teclado.',
+           '"Três réguas independentes: parte dos outros votos para Lula (0 a 100%), quem não escolhe ninguém (0 a 50%) e mudança do comparecimento (menos 5 a mais 5 pontos). Arraste os controles ou use suas setas."')
 
 
 def corpo_pesquisas() -> str:
@@ -570,9 +592,10 @@ def corpo_pesquisas() -> str:
         ".t22p .pa{left:466px;font-weight:700;color:var(--vermelho)}"
         ".t22p .r{left:560px}"
     )
-    cab = ("<div class='cab'><span style='left:6px'>Instituto</span><span style='left:190px'>Para onde as pesquisas indicavam os "
-           "9,3 mi</span><span style='left:466px'>Lula leva</span>"
-           "<span style='left:560px'>2º turno daria</span></div>")
+    cab = ("<div class='cab'><span style='left:6px;width:108px'>Instituto</span>"
+           "<span style='left:190px;width:260px'>Destino dos outros votos</span>"
+           "<span style='left:466px;width:84px'>Lula leva</span>"
+           "<span style='left:560px;width:290px'>2º turno daria</span></div>")
     return (f"<style>{css}</style><div class='tela t22t'><div class='rot sobe'>E se os outros votarem como diz cada "
             f"pesquisa?</div><div class='sub sobe d1'>A última de cada instituto depois do 1º turno. Clique numa "
             f"linha para ver o cenário que ela sugere.</div>"
@@ -688,6 +711,7 @@ def corpo_tooltip_pesquisa() -> str:
 
 def main() -> int:
     medidas()
+    medidas_reguas()
     print(f"T22: medidas de desenho em {DAX}")
     return 0
 

@@ -115,8 +115,10 @@ A totalização final foi às 23h26: 100% das seções; Lula 64.256.232 votos (5
 59.826.041 (48,21%); diferença de 4.430.191 votos e abstenção de 19,22%. A tela 25 conserva o resultado final e a
 curva daquela noite. Os workflows **`apuracao`, `vigia` e `teste-chave` foram desligados em 26/10/2026**.
 
-As telas 26 · De onde vieram (T27) e 27 · Onde Flávio perdeu (T28) usam o segundo turno por município, sem exterior.
-A T27 fecha a identidade dos ganhos observados, sem repartir uma suposta transferência individual entre candidatos. A integração está descrita em
+Na 26 · De onde vieram (T27), a identidade dos ganhos é municipal, sem exterior, sem repartir uma suposta transferência individual entre candidatos.
+A 27 · Onde Flávio perdeu (T28) tem uma ponte da diferença por estado, incluindo exterior no Brasil; com uma UF,
+a ponte passa aos municípios dela. Seu mapa contém só as 212 trocas de vencedor e o apoio compara perdas frente a Jair em 2022.
+A integração e as otimizações de peso estão descritas em
 `pbi/INTEGRACAO-POS-ELEICAO.md`.
 
 A 28 · História do PT (T29) percorre as dez eleições de 1989 a 2026: mapa por UF no turno decisivo, vencedor real

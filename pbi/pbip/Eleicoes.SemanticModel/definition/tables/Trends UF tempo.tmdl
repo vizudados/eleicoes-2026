@@ -25,7 +25,7 @@ table 'Trends UF tempo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Termo e consulta: 'Lula [tópico | U2]' ou 'Flávio Bolsonaro [tópico | U2]'.
-	column Série
+	column 'Série'
 		dataType: string
 		lineageTag: f7855467-b2ca-5422-a5b4-6374ec93b96b
 		summarizeBy: none
@@ -34,7 +34,7 @@ table 'Trends UF tempo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Índice relativo 0–100 dentro da consulta da UF.
-	column Índice
+	column 'Índice'
 		dataType: int64
 		isHidden
 		formatString: 0
@@ -55,7 +55,7 @@ table 'Trends UF tempo'
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column Observação
+	column 'Observação'
 		dataType: string
 		isHidden
 		lineageTag: 61855d8b-7641-5d4a-9e4f-43872675762b
@@ -77,4 +77,3 @@ table 'Trends UF tempo'
 				    Filtro
 
 	annotation PBI_ResultType = Table
-

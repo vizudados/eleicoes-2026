@@ -2,7 +2,7 @@
 @pasta: T01 Placar\Contas
 @formato: texto
 @descricao: Nomes dos candidatos do 5º lugar em diante, do mais ao menos votado ('A, B e C').
-@oraculo: paginas[1].demais.nomes
+@oraculo: Pré: paginas[1].demais.nomes
 */
 VAR _lista =
     FILTER (

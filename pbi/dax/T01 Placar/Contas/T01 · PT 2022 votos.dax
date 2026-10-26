@@ -1,7 +1,7 @@
 /*
 @pasta: T01 Placar\Contas
 @formato: #,0
-@descricao: Votos do candidato do PT (número 13) no 1º turno de 2022, no recorte.
-@oraculo: paginas[1].de_2022_para_2026 › PT.de.votos = 57.259.504
+@descricao: Votos do candidato do PT (número 13) no turno escolhido de 2022, no recorte.
+@oraculo: Pré: paginas[1].de_2022_para_2026 › PT.de.votos = 57.259.504
 */
-CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2022, 'Candidato UF'[Número] = 13 )
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'UF segundo turno'[VotosPT] ), 'UF segundo turno'[Ano] = 2022 ), CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2022, 'Candidato UF'[Número] = 13 ) )

@@ -11,4 +11,6 @@ VAR _todos =
         "@v", CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026 )
     )
 RETURN
-    1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) )
+    IF ( [Eleição · pós] = 1,
+        1 + INT ( CALCULATE ( SUM ( 'UF segundo turno'[VotosAdversario] ), 'UF segundo turno'[Ano] = 2026 ) > _v ),
+        1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) ) )

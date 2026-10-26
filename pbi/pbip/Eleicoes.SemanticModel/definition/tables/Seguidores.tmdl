@@ -53,7 +53,7 @@ table Seguidores
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column Observação
+	column 'Observação'
 		dataType: string
 		isHidden
 		lineageTag: d9202dc1-f31a-5db0-930b-84cbcbb2ddf3
@@ -74,4 +74,3 @@ table Seguidores
 				    Nomes
 
 	annotation PBI_ResultType = Table
-

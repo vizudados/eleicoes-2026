@@ -27,15 +27,17 @@ VAR _selo =
         _m22 > 0 && _m26 < 0, "MUDOU DE LADO",
         _m22 < 0 && _m26 > 0, "MUDOU DE LADO",
         _m26 > 0, "LULA À FRENTE",
-        "FLÁVIO À FRENTE"
+        _m26 < 0, "FLÁVIO À FRENTE",
+        "EMPATE"
     )
 VAR _clsSelo = IF ( _m26 < 0, "selo az", "selo vm" ) & IF ( ( _m22 > 0 ) = ( _m26 > 0 ), " leve", "" )
 VAR _txtOrdem =
     IF (
         ISBLANK ( _ordem ),
         "votos de brasileiros que moram fora: " & FORMAT ( _val, "#,0" ) & " válidos em 2026",
-        IF ( _m26 > _m22, "a margem de Lula subiu aqui",
+        IF ( _m26 = _m22, "a margem de Lula não variou aqui", IF ( _m26 > _m22, "a margem de Lula subiu aqui",
             FORMAT ( _ordem, "0" ) & "ª maior queda entre as 27 unidades" )
+        )
     )
 VAR _nTop = MIN ( 3, _vir )
 VAR _maiores =
@@ -63,7 +65,9 @@ VAR _mao =
     SWITCH (
         TRUE (),
         _m22 > 0 && _m26 < 0, "virou o estado",
-        _m26 > _m22, "foi contra a maré",
+        _m22 < 0 && _m26 > 0, "virou para Lula",
+        _m26 > _m22, "a margem subiu",
+        _m26 = _m22, "a margem não variou",
         _vir = 0 && NOT ISBLANK ( _ordem ), "nenhuma cidade virou",
         "caiu, sem mudar de lado"
     )

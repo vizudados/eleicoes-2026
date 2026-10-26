@@ -24,6 +24,7 @@ sys.dont_write_bytecode = True
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
 from desenho_t01_t06_comum import RAIZ, URL_MIDIA, Gravador, dax  # noqa: E402
+from momento_eleicao import segundo, soma_uf  # noqa: E402
 
 TR = "'Trajetória'"
 CU = "'Candidato UF'"
@@ -37,6 +38,7 @@ LADOS = {
                 tooltip="ttT02Marco", ordem_tt=120),
     "T04": dict(pasta="T04 Flávio · quem é", cand="Flávio", completo="Flávio Bolsonaro", rot="Flávio · PL · 22",
                 numero=22, cls="flavio", hex="#2B5797", hexesc="#1D3C6E", retrato="retrato-flavio-azul_escuro",
+                foto_posicao_tooltip="50% 40%",
                 comicio="comicio-flavio-tinta",
                 cred_retrato="Retrato em traço a partir da foto oficial (Agência Senado)",
                 tooltip="ttT04Marco", ordem_tt=140),
@@ -179,10 +181,82 @@ def contas(P: str, L: dict, G: Gravador) -> None:
         RETURN
             1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) )
         """), "0", "Lula 2 · Flávio 1")
+    # Preserva o último registro do Pré no CSV; o desfecho só substitui sua leitura no Pós.
+    _contas_pos(P, L, G)
+
+
+def _contas_pos(P, L, G):
+    c = G.conta
+    col = 'VotosPT' if P == 'T02' else 'VotosAdversario'
+    votos_pre = f"CALCULATE ( SUM ( {CU}[Votos] ), REMOVEFILTERS ( 'UF' ), {CU}[Ano] = 2026, {CU}[Número] = {L['numero']} )"
+    c(f'{P} · votos 2026', 'Votos nacionais no turno escolhido, incluindo exterior.',
+      segundo(votos_pre, soma_uf(col, remover_uf=True)), '#,0')
+    validos_pre = f"CALCULATE ( SUM ( {CU}[Votos] ), REMOVEFILTERS ( 'UF' ), {CU}[Ano] = 2026 )"
+    c(f'{P} · % 2026', 'Parcela nos válidos do turno escolhido, incluindo exterior.',
+      f'DIVIDE ( [{P} · votos 2026], {segundo(validos_pre, soma_uf("Validos", remover_uf=True))} )', '0.00%')
+    c(f'{P} · posição 2026', 'Colocação nacional no turno escolhido.',
+      segundo('2' if P == 'T02' else '1', '1' if P == 'T02' else '2'), '0')
+    c(f'{P} · desfecho', '1 no último marco, somente depois da eleição.',
+      f'INT ( [Eleição · pós] = 1 && SELECTEDVALUE ( {TR}[Ordem] ) = 10 )', '0')
+    c(f'{P} · destaque do marco', 'O marco do recorde recebe maior destaque, por pedido do dono.',
+      f'[{P} · desfecho]' if P == 'T02' else '0', '0')
+    titulo = 'Reeleito com recorde histórico' if P == 'T02' else 'Ficou em segundo lugar'
+    # Texto a partir do mesmo CSV que alimenta UF segundo turno, conferido antes de emitir.
+    with (RAIZ / 'dados/pbi/uf_2turno.csv').open(encoding='utf-8-sig') as f:
+        rows = [r for r in csv.DictReader(f) if r['ano'] == '2026']
+    pt = sum(int(r['pt']) for r in rows); adv = sum(int(r['adv']) for r in rows)
+    total = sum(int(r['validos']) for r in rows)
+    assert pt == 64256232 and adv == 59826041 and pt - adv == 4430191
+    numero = lambda v: f'{v:,}'.replace(',', '.')
+    pct = lambda v: f'{100*v/total:.2f}'.replace('.', ',') + '%'
+    texto = (f'Foi reeleito em 25/10/2026 com {numero(pt)} votos ({pct(pt)} dos válidos), '
+             'o maior total de uma candidatura presidencial em um turno no Brasil. Fonte: TSE.' if P == 'T02' else
+             f'Terminou o 2º turno de 25/10/2026 em 2º lugar, com {numero(adv)} votos '
+             f'({pct(adv)} dos válidos). Lula foi eleito. Fonte: TSE.')
+    assert len(texto) <= 220 and len(titulo.split()) <= 6
+    # Sem foto nova licenciada, mantém foto vazia no desfecho; nunca reaproveita foto de outra data como 25/10.
+    pos = imagens_pos().get(P, {})
+    for nome, pre, post in [
+        ('título', f'SELECTEDVALUE ( {TR}[Título] )', literal(titulo)),
+        ('texto do marco', f'SELECTEDVALUE ( {TR}[Texto] )', literal(texto)),
+        ('foto', f'SELECTEDVALUE ( {TR}[Foto] )', literal(pos.get('arquivo', ''))),
+    ]:
+        c(f'{P} · Trajetória · {nome}', 'Último marco responde ao Antes/Depois; os demais ficam intactos.',
+          f'IF ( [{P} · desfecho] = 1, {post}, {pre} )', 'texto')
+    c(f'{P} · Trajetória · data', 'Data real do marco, 25/10/2026 no desfecho.', dax(f'''
+        VAR _d = SELECTEDVALUE ( {TR}[Data] )
+        RETURN IF ( [{P} · desfecho] = 1, DATE ( 2026, 10, 25 ),
+            IF ( LEN ( _d ) = 10, DATE ( VALUE ( LEFT ( _d, 4 ) ), VALUE ( MID ( _d, 6, 2 ) ), VALUE ( RIGHT ( _d, 2 ) ) ) ) )
+        '''), 'dd/mm/yyyy')
+    c(f'{P} · Trajetória · tem foto', 'Foto licenciada efetivamente disponível para o marco.',
+      f'INT ( LEN ( [{P} · Trajetória · foto] ) > 0 )', '0')
+    # Metadados antigos já têm seu SWITCH; acrescenta somente o último registro.
+    for nome, campo in [('legenda da foto', 'legenda'), ('crédito da foto', 'credito')]:
+        arq = G.raiz / 'Contas' / f'{P} · Trajetória · {nome}.dax'
+        original = arq.read_text(encoding='utf-8').split('*/', 1)[1].strip()
+        c(f'{P} · Trajetória · {nome}', 'Legenda e crédito com data real da foto; adaptação CC BY-SA 4.0.',
+          f'IF ( [{P} · desfecho] = 1, {literal(pos.get(campo, ""))}, {original} )', 'texto')
+    if not pos:
+        c(f'{P} · Trajetória · marcos com foto', 'Contagem exclui o desfecho sem foto licenciada.',
+          segundo('8' if P == 'T02' else '10', '7' if P == 'T02' else '9'), '0')
+
+
+def imagens_pos():
+    import json
+    arq = RAIZ / 'dados/bruto/trajetoria/pos_eleicao.json'
+    return json.loads(arq.read_text(encoding='utf-8')) if arq.exists() else {}
 
 
 # ---------------------------------------------------------------------------------------------------- desenho
 def desenho(P: str, L: dict, G: Gravador) -> None:
+    pos = imagens_pos().get(P)
+    foto_posicao = L.get('foto_posicao_tooltip', '15% 50%')
+    G.desenho(f'{P} · Cena · HTML', 'Cena em traço e legenda real correspondentes ao momento escolhido.',
+              segundo(literal(cena_html(L)), literal(cena_html(L, pos=pos, depois=True))))
+    G.desenho(f'{P} · Cena · ALT', 'Descrição acessível do retrato e da imagem escolhida.', segundo(
+        literal(f"Retrato oficial de {L['completo']} em traço. {desenhos_csv()[L['comicio']]['legenda']}."),
+        literal(f"Retrato oficial de {L['completo']} em traço. " +
+                (pos['legenda'] + '.' if pos else 'Foto após o resultado sem licença aberta confirmada.'))))
     G.desenho(f"{P} · Ficha · HTML", f"Ficha de {L['cand']} (alto à esquerda da tela): desde quando está na vida "
               "pública, o 1º turno de 2026 e quantos marcos a linha do tempo tem (com foto da época e em ilustração "
               "recriada). Só lê contas.", dax(f"""
@@ -192,12 +266,15 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _votos = [{P} · votos 2026]
         VAR _pct = [{P} · % 2026]
         VAR _pos = [{P} · posição 2026]
+        VAR _posEleicao = [Eleição · pós]
         VAR _marcos = [{P} · Trajetória · marcos]
         VAR _fotos = [{P} · Trajetória · marcos com foto]
         VAR _ilus = [{P} · Trajetória · marcos ilustrados]
         -- 2 · Textos
         VAR _txtVotos = @MI(_votos)@
-        VAR _txtPct = @PCT(_pct)@
+        VAR _txtPct = IF ( _posEleicao = 1, FORMAT ( _pct, "0.00%" ), @PCT(_pct)@ )
+        VAR _turno = IF ( _posEleicao = 1, "2º", "1º" )
+        VAR _resultado = IF ( _posEleicao = 1 && _pos = 1, "eleito", _pos & "º lugar" )
         VAR _txtFotos =
             SWITCH (
                 TRUE (),
@@ -213,9 +290,9 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
             "<div class='tela fc'>"
                 & "<div class='lin sobe d3'><div class='rot'>Na vida pública desde</div>"
                 & "<div class='val'><span class='nc'>" & _desde & "</span><small>há <span>" & _anos & "</span> anos</small></div></div>"
-                & "<div class='lin sobe d4'><div class='rot'>No 1º turno de 2026</div>"
+                & "<div class='lin sobe d4'><div class='rot'>No " & _turno & " turno de 2026</div>"
                 & "<div class='val'><span class='{L['cls']}'>" & _txtVotos & "</span><small>de votos · " & _txtPct
-                & " · " & _pos & "º lugar</small></div></div>"
+                & " · " & _resultado & "</small></div></div>"
                 & "<div class='lin sobe d5'><div class='rot'>Na linha do tempo abaixo</div>"
                 & "<div class='val'><span>" & _marcos & "</span><small>marcos, " & _txtFotos & _txtIlus
                 & "</small></div></div>"
@@ -225,9 +302,9 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         """))
     G.desenho(f"{P} · Ficha · ALT", "Texto para leitor de tela da ficha.", dax(f"""
         LEFT (
-            "{L['completo']}, na vida pública desde " & [{P} · Trajetória · primeiro ano] & ". No 1º turno de 2026, "
-                & @MI([{P} · votos 2026])@ & " de votos (" & @PCT([{P} · % 2026])@ & "), "
-                & [{P} · posição 2026] & "º lugar.",
+            "{L['completo']}, na vida pública desde " & [{P} · Trajetória · primeiro ano] & ". No " & [Eleição · turno] & "º turno de 2026, "
+                & @MI([{P} · votos 2026])@ & " de votos (" & IF ( [Eleição · pós] = 1, FORMAT ( [{P} · % 2026], "0.00%" ), @PCT([{P} · % 2026])@ ) & "), "
+                & IF ( [Eleição · pós] = 1 && [{P} · posição 2026] = 1, "eleito", [{P} · posição 2026] & "º lugar" ) & ".",
             250
         )
         """))
@@ -246,6 +323,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _ilus = [{P} · Trajetória · é ilustração]
         VAR _ini = [{P} · Trajetória · primeiro ano]
         VAR _fim = [{P} · Trajetória · último ano]
+        VAR _destaque = [{P} · destaque do marco]
         -- 2 · Textos
         VAR _txtTit = @ESC(_tit)@
         VAR _icone =
@@ -279,14 +357,14 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _xd =
             IF (
                 _corte,
-                IF ( _tempo <= _a1, {REGUA_X0} + ( _tempo - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( _tempo - _b0 ) * _eb ),
+                IF ( _tempo <= _a1, {REGUA_X0} + ( _tempo - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( _tempo - _b0 ) * _eb ), -- geometria
                 {REGUA_X0} + ( _tempo - _t0 ) * _escala
             ) -- geometria
         VAR _xs = ( _ordem - 0.5 ) * DIVIDE ( 1620, _n ) -- geometria
         VAR _txd = @CSS(_xd)@ -- geometria
         VAR _txs = @CSS(_xs)@ -- geometria
         VAR _fio =
-            "M" & _txs & ",176 L" & _txs & ",200 L" & _txd & ",262 L" & _txd & ",{REGUA_Y - 9}" -- geometria
+            "M" & _txs & IF ( _destaque = 1, ",232 L", ",176 L" ) & _txs & IF ( _destaque = 1, ",242 L", ",200 L" ) & _txd & ",262 L" & _txd & ",{REGUA_Y - 9}" -- geometria
         VAR _atraso = MIN ( _ordem + 4, 16 ) -- geometria
         VAR _anosInteira = SELECTCOLUMNS ( GENERATESERIES ( _t0, _t1, 5 ), "@a", [Value], "@c", 0 ) /* lista */
         VAR _anosCorte =
@@ -294,15 +372,16 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
                 ROW ( "@a", _ini, "@c", 1 ),
                 SELECTCOLUMNS ( GENERATESERIES ( CEILING ( _b0, 5 ), FLOOR ( _b1, 5 ), 5 ), "@a", [Value], "@c", 1 )
             ) /* lista */
-        VAR _anos = FILTER ( UNION ( _anosInteira, _anosCorte ), [@c] = IF ( _corte, 1, 0 ) ) /* lista */
+        VAR _anos = UNION ( _anosInteira, _anosCorte ) /* lista de marcas geométricas */
         VAR _marcas =
             CONCATENATEX (
                 _anos,
                 VAR _x =
                     @CSS(IF ( _corte, IF ( [@a] <= _a1, {REGUA_X0} + ( [@a] - _a0 ) * DIVIDE ( _wa, _a1 - _a0 ), _xb + ( [@a] - _b0 ) * _eb ), {REGUA_X0} + ( [@a] - _t0 ) * _escala ))@ -- geometria
                 RETURN
-                    "<line x1='" & _x & "' y1='{REGUA_Y - 6}' x2='" & _x & "' y2='{REGUA_Y + 6}'/>"
-                        & "<text x='" & _x & "' y='{REGUA_Y + 28}'>" & [@a] & "</text>",
+                    IF ( [@c] = IF ( _corte, 1, 0 ),
+                        "<line x1='" & _x & "' y1='{REGUA_Y - 6}' x2='" & _x & "' y2='{REGUA_Y + 6}'/>"
+                            & "<text x='" & _x & "' y='{REGUA_Y + 28}'>" & [@a] & "</text>" ),
                 "",
                 [@a], ASC
             )
@@ -326,10 +405,10 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
             "<div class='tela m'>" & _regua
                 & "<svg class='liga' width='1620' height='364' viewBox='0 0 1620 364'>"
                 & "<path class='fio traco d" & _atraso & "' pathLength='1' d='" & _fio & "'/>"
-                & "<circle class='ponto brota d" & _atraso & "' cx='" & _txd & "' cy='{REGUA_Y}' r='7'/></svg>"
-                & "<div class='alvo card sobe d" & _atraso & "' style='left:" & @CSS(_xs - 76)@ & "px'>"
+                & "<circle class='ponto brota d" & _atraso & "' cx='" & _txd & "' cy='{REGUA_Y}' r='" & IF ( _destaque = 1, "12", "7" ) & "'/></svg>"
+                & "<div class='alvo card " & IF ( _destaque = 1, "recorde ", "" ) & "sobe d" & _atraso & "' style='left:" & @CSS(_xs - 76)@ & "px'>"
                 & "<div class='ano nc'>" & _ano & _icone & "</div>"
-                & "<div class='tt'>" & _txtTit & "</div></div>"
+                & "<div class='tt'>" & _txtTit & "</div>" & IF ( _destaque = 1, "<div class='mao nota-recorde'>recorde</div>" ) & "</div>"
             & "</div>"
         RETURN
             IF ( NOT ISBLANK ( _ordem ), _html )
@@ -376,7 +455,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _quadro =
             IF (
                 _temFoto = 1,
-                "<img class='foto' alt='' src='{URL_MIDIA}/trajetoria/" & @ESC(_foto)@ & ".png' data-reserva='"
+                "<img class='foto' alt='' style='" & IF ( [{P} · desfecho] = 1, "object-position:{foto_posicao}", "" ) & "' src='{URL_MIDIA}/trajetoria/" & @ESC(_foto)@ & ".png' data-reserva='"
                     & _srcIcone & "'/>",
                 "<img class='foto reserva' alt='' src='" & _srcIcone & "'/>"
                     & "<div class='sem mao'>sem foto de licença aberta</div>"
@@ -387,7 +466,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
                 & "<div class='nota cr'>" & @ESC(_cred)@ & "</div>" )
         -- 4 · Marcação
         VAR _html =
-            "<div class='tt2'>"
+            "<div class='tt2" & IF ( [{P} · desfecho] = 1, " final", "" ) & "'>"
                 & "<div class='pol'>" & _quadro & "<div class='ano mao nc'>" & _ano & "</div>"
                 & "<img class='fita' alt='' src='{URL_MIDIA}/arte/dossie/fita-tinta.png'/></div>"
                 & "<div class='col'><div class='rot {L['cls']}-esc sobe'>" & _txtData & "</div>"
@@ -407,6 +486,23 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
 
 
 # ---------------------------------------------------------------------------------------------------- página
+def cena_html(L, pos=None, depois=False):
+    from html import escape
+    if depois and not pos:
+        return ("<div class='cena'><div class='papel cena-pendente'><span class='mao'>"
+                "Foto com licença aberta ainda não disponível</span></div></div>")
+    row = pos if depois else desenhos_csv()[L['comicio']]
+    nome = row['arquivo'] if depois else L['comicio']
+    pasta = 'trajetoria' if depois else 'comicio'
+    leg = row['legenda']
+    cred = row['credito'] if depois else row['credito_curto']
+    reserva = '' if depois else f" data-reserva='{URL_MIDIA}/arte/{nome}.png'"
+    return (f"<div class='cena sobe d6'><div class='papel'><img class='ce' alt='{escape(leg, quote=True)}' "
+            f"src='{URL_MIDIA}/{pasta}/{nome}.png'{reserva}/></div>"
+            f"<img class='fita' alt='' src='{URL_MIDIA}/arte/dossie/fita-tinta.png'/>"
+            f"<div class='leg'><div class='mao'>{escape(leg)}</div><div class='nota'>{escape(cred)}</div></div></div>")
+
+
 JS_RESERVA = ("<script>(function(){try{var W=window,D=document;var f=function(i){if(i.__res){return;}i.__res=1;"
               "var t=function(){var r=i.getAttribute('data-reserva');if(r&&i.getAttribute('src')!==r){"
               "i.setAttribute('src',r);i.classList.add('reserva');}};if(i.complete&&i.naturalWidth===0){t();}"
@@ -435,6 +531,7 @@ def _css_topo(L: dict) -> str:
         "transform-origin:0 0}"
         ".qe .cena .leg .mao{font-size:26px;color:var(--tinta);line-height:1.1}"
         ".qe .cena .leg .nota{margin-top:4px}"
+        ".qe .cena-pendente{height:389px;display:flex;align-items:center;justify-content:center;padding:50px;text-align:center}"
     )
 
 
@@ -472,6 +569,9 @@ def _css_traj(L: dict) -> str:
         ".m .card .tt{margin-top:8px;font-size:15px;line-height:1.32;color:var(--tinta);display:-webkit-box;"
         "-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}"
         ".m .card:hover{background:var(--branco);box-shadow:0 0 0 1.2px var(--areia),2px 4px 10px rgba(28,25,21,.1)}"
+        ".m .card.recorde{height:180px;background:#E9B5AA44;border:1px solid #B8322A;padding:10px}"
+        ".m .recorde .tt{font-weight:600;-webkit-line-clamp:5}"
+        ".m .nota-recorde{font-size:31px;color:#8E2620;line-height:1;transform:rotate(-7deg);margin-top:10px}"
         ".m:has(.card:hover) .fio{stroke:var(--tinta);stroke-width:2}"
         ".m:has(.card:hover) .ponto{r:10}"
         "#htmlContent:has(.card:hover) .m:not(:has(.card:hover)) .card,"
@@ -498,6 +598,9 @@ def _css_tooltip(L: dict) -> str:
         ".tt2 .col .pe{margin-top:12px;border-top:1px dashed var(--areia);padding-top:8px}"
         ".tt2 .col .nota{font-size:13px;line-height:1.35}.tt2 .col .lg{color:var(--grafite)}"
         ".tt2 .col .cr{margin-top:4px}"
+        ".tt2.final .col{top:22px}.tt2.final .col .man{font-size:20px;line-height:1.15}"
+        ".tt2.final .col .txt{font-size:14px;line-height:1.35;margin-top:8px}"
+        ".tt2.final .col .pe{margin-top:8px;padding-top:6px}"
     )
 
 
@@ -506,25 +609,16 @@ def declarar_quem_e(P: str) -> list:
     import pbip_lib as lib
     from pbip_lib import Pagina, Visual
     L = LADOS[P]
-    csv_ = desenhos_csv().get(L["comicio"], {})
-    leg_cena = csv_.get("legenda", "")
-    cred_cena = csv_.get("credito_curto", "")
     css = "Estilo · CSS"
     z = lib.CAMADAS["conteudo"]
-    novo = f"{URL_MIDIA}/comicio/{L['comicio']}.png"
-    antigo = f"{URL_MIDIA}/arte/{L['comicio']}.png"
     topo_fixo = (
         f"<style>{_css_topo(L)}</style><div class='tela qe'>"
         f"<div class='rot rotc {L['cls']}-esc sobe'>{L['rot'].upper()}</div>"
         f"<h1 class='sobe d1'>{L['completo']}</h1>"
         f"<img class='ret entra d2' alt='Retrato de {L['completo']} em traço' "
         f"src='{URL_MIDIA}/arte/{L['retrato']}.png'/>"
-        f"<div class='cena sobe d6'><div class='papel'><img class='ce' alt='Cena do comício em traço' "
-        f"src='{novo}' data-reserva='{antigo}'/></div>"
-        f"<img class='fita' alt='' src='{URL_MIDIA}/arte/dossie/fita-tinta.png'/>"
-        f"<div class='leg'><div class='mao'>{leg_cena}</div><div class='nota'>{cred_cena}</div></div></div>"
         f"<div class='nota cred'>{L['cred_retrato'].replace('CC BY ', 'CC&nbsp;BY&nbsp;')}</div></div>"
-        "{{content}}" + JS_RESERVA)
+        "<div class='tela qe'>{{content}}</div>" + JS_RESERVA)
     ficha = (f"<style>{_css_ficha(L)}</style>" + "{{content}}")
     traj = (f"<style>{_css_traj(L)}</style>" + "{{content}}")
     filtro = lib.filtro_visual_categorico(f"traj{L['cand'].replace('á', 'a')}", "Trajetória", "Candidato", [L["cand"]])
@@ -534,8 +628,8 @@ def declarar_quem_e(P: str) -> list:
     tt = L["tooltip"]
     x, y, w, h = TOPO
     itens = [
-        Visual(P, lib.visual_html(f"{P}_Quem_Html", x, y, w, h, "Casca · vazio", folha_de_estilo=css, z=z, tab=100,
-                                  alt=f"{L['completo']}: retrato em traço e cena de comício. {leg_cena}."[:250],
+        Visual(P, lib.visual_html(f"{P}_Quem_Html", x, y, w, h, f"{P} · Cena · HTML", folha_de_estilo=css, z=z, tab=100,
+                                  alt=lib.medida(f"{P} · Cena · ALT"),
                                   modelo_corpo=topo_fixo)),
         Visual(P, lib.visual_html(f"{P}_Ficha_Html", 150, 140 + 128, 560, 250, f"{P} · Ficha · HTML",
                                   folha_de_estilo=css, z=z + 2, tab=110, alt=lib.medida(f"{P} · Ficha · ALT"),

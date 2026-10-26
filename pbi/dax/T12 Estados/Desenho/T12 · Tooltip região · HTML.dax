@@ -18,7 +18,13 @@ VAR _vir = [T12 · municípios que viraram]
 VAR _mun = [T12 · municípios]
 VAR _lista = [T12 · maiores cidades que viraram]
 -- 2 · Textos
-VAR _selo = IF ( _m22 > 0 && _m26 < 0, "MUDOU DE LADO", IF ( _m26 > 0, "LULA À FRENTE", "FLÁVIO À FRENTE" ) )
+VAR _selo = SWITCH (
+    TRUE (),
+    _m22 > 0 && _m26 < 0 || _m22 < 0 && _m26 > 0, "MUDOU DE LADO",
+    _m26 > 0, "LULA À FRENTE",
+    _m26 < 0, "FLÁVIO À FRENTE",
+    "EMPATE"
+)
 VAR _clsSelo = IF ( _m26 < 0, "selo az", "selo vm" ) & IF ( ( _m22 > 0 ) = ( _m26 > 0 ), " leve", "" )
 VAR _txtUf =
     "a margem caiu em " & FORMAT ( _nCaiu, "0" ) & " de " & FORMAT ( _nUf, "0" ) & IF ( _nUf = 1, " estado", " estados" )
@@ -33,6 +39,8 @@ VAR _mao =
     SWITCH (
         TRUE (),
         _m22 > 0 && _m26 < 0, "a região virou",
+        _m22 < 0 && _m26 > 0, "a região virou para Lula",
+        _nCaiu = 0, "não caiu em nenhum",
         _nCaiu = _nUf, "caiu em todos",
         "nem todos caíram"
     )

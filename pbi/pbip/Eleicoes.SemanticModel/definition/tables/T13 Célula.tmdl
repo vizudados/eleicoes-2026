@@ -55,7 +55,7 @@ table 'T13 Célula'
 		annotation SummarizationSetBy = Automatic
 
 	/// A célula da matriz: porte × quinto de renda (25 combinações).
-	column Célula
+	column 'Célula'
 		dataType: string
 		lineageTag: e16d8cd8-c53d-575b-a258-afe86c78a17d
 		summarizeBy: none
@@ -89,4 +89,3 @@ table 'T13 Célula'
 				    Final
 
 	annotation PBI_ResultType = Table
-

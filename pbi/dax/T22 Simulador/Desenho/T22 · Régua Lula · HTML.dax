@@ -15,7 +15,7 @@ VAR _pesq0 =
         "@d", [T22 · pesquisa · data],
         "@a", [T22 · pesquisa · parte para Lula entre os que votam]
     ) /* lista */
-VAR _pesq = FILTER ( _pesq0, NOT ISBLANK ( [@d] ) ) /* lista */
+VAR _pesq = _pesq0
 -- 2 · Textos
 VAR _txtA = FORMAT ( _a * 100, "0" ) & "% Lula"
 VAR _txtF = FORMAT ( ( 1 - _a ) * 100, "0" ) & "% Flávio"
@@ -30,7 +30,7 @@ VAR _x1 = 30 + _max * 100 * 8.0 -- geometria
 VAR _marcas =
     CONCATENATEX (
         _pesq,
-        "<i class='pq' style='left:" & FORMAT ( 30 + [@a] * 100 * 8.0 - 1, "0.0##", "en-US" ) & "px'></i>",
+        IF ( NOT ISBLANK ( [@d] ), "<i class='pq' style='left:" & FORMAT ( 30 + [@a] * 100 * 8.0 - 1, "0.0##", "en-US" ) & "px'></i>" ),
         ""
     ) /* lista */
 -- 4 · Marcação

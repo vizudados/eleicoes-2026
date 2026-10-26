@@ -1,0 +1,9 @@
+/*
+@pasta: T22 Simulador\Desenho
+@formato: texto
+@descricao: Três fundos de régua no mesmo HTML; controles e contas permanecem independentes.
+*/
+VAR _a = SUBSTITUTE ( [T22 · Régua Lula · HTML], "class='tela t22a'", "class='tela t22a regua-a'" )
+VAR _b = SUBSTITUTE ( [T22 · Régua abstenção · HTML], "class='tela t22c'", "class='tela t22c regua-b'" )
+VAR _c = SUBSTITUTE ( [T22 · Régua comparecimento · HTML], "class='tela t22c'", "class='tela t22c regua-c'" )
+RETURN _a & _b & _c

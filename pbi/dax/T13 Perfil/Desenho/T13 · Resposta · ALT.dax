@@ -19,6 +19,6 @@ RETURN
         _sel = 1,
         "A célula escolhida, cidades " & _cp & " e " & _cq & ": " & FORMAT ( _cv * 100, "+0.0;−0.0;0.0" ) & " pontos. A maior queda: "
             & FORMAT ( _pv * 100, "+0.0;−0.0;0.0" ) & " pontos.",
-        "A margem de Lula caiu mais nas cidades " & _pp & " e " & _pq & ": " & FORMAT ( _pv * 100, "+0.0;−0.0;0.0" ) & " pontos. A menor queda: "
+        "A menor variação da margem de Lula foi nas cidades " & _pp & " e " & _pq & ": " & FORMAT ( _pv * 100, "+0.0;−0.0;0.0" ) & " pontos. A maior variação: "
             & FORMAT ( _mv * 100, "+0.0;−0.0;0.0" ) & " pontos."
     )

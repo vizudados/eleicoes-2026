@@ -1,0 +1,9 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Votação estadual no segundo turno, incluindo ZZ no Brasil.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+CALCULATE ( SUM ( 'UF segundo turno'[VotosAdversario] ), REMOVEFILTERS ( 'Ano' ),
+    'UF segundo turno'[Ano] = 2026 )

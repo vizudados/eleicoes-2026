@@ -47,7 +47,7 @@ eleitoral ao país.
 | 24 | V · O 2º turno | Quem dominou as redes? (Redes, T09) | seguidores, interações e anúncios dos dois · filtro de período em volta dos debates | digital |
 | 25 | V · O 2º turno | Como foi a apuração do 2º turno? (Apuração, T18) | Lula foi eleito por 4.430.191 votos; Flávio liderou das 19h45 às 20h24 (primeiro registro) | API do TSE |
 | 26 | V · O 2º turno | De onde vieram os votos que elegeram Lula? (De onde vieram, T27) | ganhos de Lula e Flávio, identidade dos volumes observados, comparecimento e território | TSE e IBGE, sem exterior |
-| 27 | V · O 2º turno | Onde Flávio perdeu a eleição? (Onde Flávio perdeu, T28) | redução da vantagem em votos, viradas e comparação com Jair em 2022 | TSE e IBGE, sem exterior |
+| 27 | V · O 2º turno | Onde Flávio perdeu a eleição? (Onde Flávio perdeu, T28) | SP, MG e RJ somaram 41,5% da virada; ponte por estado (por município no filtro de uma UF), mapa só das 212 trocas e perdas frente a Jair em 2022 | TSE e IBGE; ponte do Brasil com exterior, mapa municipal sem exterior |
 | 28 | V · O 2º turno | Como o voto no PT chegou ao recorde? (História do PT, T29) | 64.256.232 votos, recorde presidencial direto em um único turno; mapa dos estados de 1989 a 2026 e turnos separados na série | TSE, versões históricas documentadas |
 | 29 | Fim | E o que fica desta eleição? (Encerramento, T23) | Da zona eleitoral ao resultado: os dois turnos em espelho e os achados dos cinco atos, com retorno à origem | — |
 

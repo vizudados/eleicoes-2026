@@ -159,4 +159,3 @@ table 'Apuração histórico'
 				    Horas
 
 	annotation PBI_ResultType = Table
-

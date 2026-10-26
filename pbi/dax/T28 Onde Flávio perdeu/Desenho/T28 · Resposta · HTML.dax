@@ -1,15 +1,26 @@
 /*
 @pasta: T28 Onde Flávio perdeu\Desenho
 @formato: texto
-@descricao: Manchete responde à pergunta com contas do recorte.
+@descricao: Manchete da ponte, com universo explícito e soma das três maiores contribuições.
 @oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
 @gerado: pbi/scripts/desenho_t27_t28.py
 */
--- 1 · Leituras e 2 · Textos
-VAR _frase = "A vantagem de Flávio " & IF ( [T28 · mudança de vantagem] >= 0, "diminuiu ", "aumentou " ) & (SWITCH ( TRUE (), ABS ( [T28 · mudança de vantagem] ) >= 1e6, FORMAT ( ABS ( [T28 · mudança de vantagem] ) / 1e6, "0.00" ) & " mi", ABS ( [T28 · mudança de vantagem] ) >= 1000, FORMAT ( ABS ( [T28 · mudança de vantagem] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T28 · mudança de vantagem] ), "#,0" ) )) & IF ( ABS ( [T28 · mudança de vantagem] ) >= 1e6, " de votos", IF ( ABS ( [T28 · mudança de vantagem] ) = 1, " voto", " votos" ) )
-VAR _apoio = "Lula " & IF ( [T28 · ganho Lula] >= 0, "ganhou ", "perdeu " ) & ((SWITCH ( TRUE (), ABS ( [T28 · ganho Lula] ) >= 1e6, FORMAT ( ABS ( [T28 · ganho Lula] ) / 1e6, "0.00" ) & " mi", ABS ( [T28 · ganho Lula] ) >= 1000, FORMAT ( ABS ( [T28 · ganho Lula] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T28 · ganho Lula] ), "#,0" ) )) & IF ( ABS ( [T28 · ganho Lula] ) >= 1e6, " de votos", IF ( ABS ( [T28 · ganho Lula] ) = 1, " voto", " votos" ) )) & "; Flávio " & IF ( [T28 · ganho Flávio] >= 0, "ganhou ", "perdeu " ) & ((SWITCH ( TRUE (), ABS ( [T28 · ganho Flávio] ) >= 1e6, FORMAT ( ABS ( [T28 · ganho Flávio] ) / 1e6, "0.00" ) & " mi", ABS ( [T28 · ganho Flávio] ) >= 1000, FORMAT ( ABS ( [T28 · ganho Flávio] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T28 · ganho Flávio] ), "#,0" ) )) & IF ( ABS ( [T28 · ganho Flávio] ) >= 1e6, " de votos", IF ( ABS ( [T28 · ganho Flávio] ) = 1, " voto", " votos" ) )) & ". Perder vantagem não significa perder votos em termos absolutos."
-VAR _numero = SWITCH ( TRUE (), ABS ( [T28 · mudança de vantagem] ) >= 1e6, FORMAT ( ABS ( [T28 · mudança de vantagem] ) / 1e6, "0.00" ) & " mi", ABS ( [T28 · mudança de vantagem] ) >= 1000, FORMAT ( ABS ( [T28 · mudança de vantagem] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [T28 · mudança de vantagem] ), "#,0" ) )
-VAR _titulo = SUBSTITUTE ( _frase, _numero, "<b class='num hero'>" & _numero & "</b>" )
--- 4 · Marcação
-RETURN "<div class='tela st-res'><div class='sob'>DO 1º PARA O 2º TURNO · " & UPPER ( [Recorte · nome] )
-    & " · SEM EXTERIOR</div><div class='man sobe'>" & _titulo & "</div><div class='txt sobe d2'>" & _apoio & "</div></div>"
+VAR _local = [T28 · ponte · municipal]
+VAR _nomes = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T28 · ponte · nomes três], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _p = [T28 · ponte · parcela três]
+VAR _uma = _local = 1 && [T28 · ponte · quantidade maiores] = 1
+VAR _movimento = [T28 · ponte · total]
+VAR _fim = [T28 · ponte · fim]
+VAR _chamadaLocal = IF ( [T28 · ponte · quantidade maiores] = 2, "As duas maiores contribuições somaram ", "As três maiores contribuições somaram " )
+RETURN "<div class='tela perda-head'><div class='sob'>DO 1º PARA O 2º TURNO · "
+    & IF ( [Recorte · com escolha] = 0, "BRASIL · COM EXTERIOR", SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [Recorte · nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · SEM EXTERIOR" )
+    & "</div><div class='man'>" & IF ( _uma,
+        IF ( SELECTEDVALUE ( 'UF'[UF] ) = "DF", "No DF, ", "Neste recorte, " ) & "a diferença andou <span class='num'>"
+        & FORMAT ( ABS ( _movimento ), "#,0" ) & "</span> votos para " & IF ( _movimento >= 0, "Lula", "Flávio" ),
+        IF ( _local = 1, _chamadaLocal, _nomes & " somaram " ) & "<span class='num'>" & FORMAT ( _p, "0.0%" )
+        & "</span> " & IF ( [Recorte · com escolha] = 0, "da virada", "da mudança" ) ) & "</div><div class='txt'>"
+    & IF ( _uma, IF ( _fim = 0, "O 2º turno terminou empatado neste recorte.",
+        IF ( _fim < 0, "Flávio", "Lula" ) & " terminou o 2º turno à frente por " & FORMAT ( ABS ( _fim ), "#,0" ) & " votos." ),
+        FORMAT ( [T28 · ponte · três maiores], "#,0" ) & " de " & FORMAT ( _movimento, "#,0" ) & " votos. "
+        & IF ( _local = 1, "A ponte mostra os municípios " & [Recorte · de] & ".", "No país, Minas foi o único estado que trocou Flávio por Lula." ) )
+    & "</div></div>"

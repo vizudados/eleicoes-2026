@@ -4,7 +4,7 @@
 @descricao: Votos válidos (soma de todos os candidatos) em 2026 no recorte de UF.
 @gerado: pbi/scripts/desenho_t12.py
 */
-CALCULATE (
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'UF segundo turno'[Validos] ), 'UF segundo turno'[Ano] = 2026 ), CALCULATE (
     SUM ( 'Candidato UF'[Votos] ),
     'Candidato UF'[Ano] = 2026
-)
+) )

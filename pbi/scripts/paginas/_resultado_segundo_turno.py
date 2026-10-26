@@ -1,4 +1,4 @@
-"""Gramática comum às T27/T28: mesmos dois candidatos, mesmas contas, mapa e lista no grão municipal."""
+"""T27: fluxo observado, mapa e lista municipal em HTML. A T28 tem composição própria."""
 from __future__ import annotations
 import estilo
 import pagina_lib
@@ -22,9 +22,6 @@ ESTILO=(
     '.st-fluxo .candidato{position:absolute;left:0;font-size:15px;font-weight:700}'
     '.st-fluxo .origem{position:absolute;left:0;font-size:36px}.st-fluxo .destino{position:absolute;left:590px;font-size:36px}'
     '.st-fluxo .ponte{position:absolute;left:260px}.st-fluxo .saldo{position:absolute;left:300px;font-size:22px}'
-    '.st-fluxo .participacao{position:absolute;left:0;right:0;top:220px;font-size:15px;color:var(--grafite)}'
-    '.st-fluxo .resumo-viradas{position:absolute;left:0;right:0;top:250px;border-top:1px solid var(--areia);padding-top:10px}'
-    '.st-fluxo .resumo-viradas>.rot{font-size:13px;margin-bottom:8px}'
     '.st-fluxo .conta-observada{position:absolute;left:0;right:0;top:234px;border-top:1px solid var(--areia);padding-top:10px}'
     '.st-fluxo .conta-observada>.rot{font-size:13px;margin-bottom:7px}'
     '.st-fluxo .parcela{display:flex;align-items:baseline;justify-content:space-between;gap:20px;font-size:15px;line-height:29px}'
@@ -32,12 +29,15 @@ ESTILO=(
     '.st-fluxo .parcela.total{border-top:1px solid var(--areia);margin-top:5px;padding-top:4px;font-weight:600}'
     '.st-fluxo .conta-observada .nota{font-size:15px;line-height:1.35;margin-top:8px}'
     '.st-fluxo .nota{font-size:13px;margin-top:9px;line-height:1.45;color:var(--grafite)}'
-    '.st-fluxo .viradas{display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:28px}'
-    '.st-fluxo .viradas b{display:block;font-size:40px}.st-fluxo .viradas span{font-size:15px;display:block;margin-top:8px}'
     '.st-apoios{display:grid;grid-template-columns:1fr 1fr;gap:28px;border-top:1px solid var(--areia);padding-top:8px}'
     '.st-apoios .rot{font-size:13px;margin-bottom:6px}.st-apoios>div>div:not(.rot){display:flex;gap:10px;justify-content:space-between;font-size:15px;line-height:26px}'
     '.st-apoios span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:235px}.st-apoios b{white-space:nowrap}'
     '.st-titulo .rot{font-size:13px}.st-titulo .nota{font-size:13px;margin-top:6px}'
+    '.lista27{pointer-events:none}.lista27 .item{position:absolute;left:0;width:840px;height:28px;pointer-events:auto;cursor:pointer}'
+    '.lista27 .item:hover{background:rgba(28,25,21,.05)}.lista27 .nome{position:absolute;left:0;top:3px;font-size:17px;'
+    'width:335px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lista27 i{position:absolute;top:7px;height:14px;border-radius:4px;opacity:.85}'
+    '.lista27 .faixa-barra{position:absolute;left:350px;top:0;width:330px;height:28px;overflow:hidden}'
+    '.lista27 .valor{position:absolute;right:5px;top:4px;font-size:18px;font-weight:600;line-height:22px}'
 )
 TT=(
     '.st-tt{background:var(--branco);border:1px solid var(--areia);padding:24px;color:var(--tinta)}'
@@ -52,11 +52,8 @@ TT=(
 def campos(p):
     return [lib.campo_coluna('cod','Município','CodIBGE'),
             lib.campo_coluna('uf','Município','UF'),
-            lib.campo_coluna('rotulo','Município','Rótulo'),
             lib.campo_coluna('x','Município','X'),lib.campo_coluna('y','Município','Y'),
-            lib.campo_medida('val',f'{p} · mapa · valor'),
-            lib.campo_medida('tam',f'{p} · mapa · tamanho'),
-            lib.campo_medida('valorTexto',f'{p} · valor formatado')]
+            lib.campo_medida('val',f'{p} · mapa · valor')]
 
 
 def declarar(p,ctx):
@@ -68,8 +65,12 @@ def declarar(p,ctx):
               if p=='T27' else 'Mapa municipal em traço. Vermelho: mudança de vantagem para Lula; azul: para Flávio. Tamanho representa a magnitude em votos. Clique filtra a lista.')
     lista='CIDADES · SALDO DE VOTOS DE LULA' if p=='T27' else 'CIDADES · MUDANÇA DE VANTAGEM'
     # Cabeçalhos ficam no corpo dos próprios visuais; nada é desenhado na casca.
-    spec_lista=lib.visual_deneb(f'{p}_Lista_Cidades',*LISTA,f'spec/{p.lower()}_lista.json',campos(p),
-        alt=lib.medida(medida('Resposta · ALT')),selecao=True,modo_selecao='advanced',tooltip_pagina=f'tt{p}Municipio',tab=130)
+    spec_lista=lib.visual_html(f'{p}_Lista_Cidades',*LISTA,medida('Lista · HTML'),folha_de_estilo=CSS,
+        modelo_corpo=corpo()+f'<div class="tela st-titulo" style="pointer-events:none"><div class="rot">{lista}</div></div>',
+        alt=lib.medida(medida('Lista · ALT')),granularidade=('Município','CodIBGE'),filtro_cruzado=True,
+        transparencia_nao_selecionados=True,tooltip_pagina=f'tt{p}Municipio',tab=130,
+        filtros=lib.filtro_visual_topn(f'{p}ListaTop8','Município','CodIBGE',f'{p} · ganho Lula',8),
+        ordenacao=[lib.ordem_medida(f'{p} · ganho Lula','Descending')])
     spec_lista['position']['z']=Z+3
     itens=[
         Visual(p,lib.visual_html(f'{p}_Resposta_Html',*RESPOSTA,medida('Resposta · HTML'),
@@ -85,11 +86,8 @@ def declarar(p,ctx):
             alt=legenda,z=Z+1,tab=121)),
         Visual(p,lib.visual_deneb(f'{p}_Mapa_Municipios',*MAPA,f'spec/{p.lower()}_mapa.json',campos(p),
             alt=mapa_alt,
-            selecao=True,modo_selecao='advanced',tooltip_pagina=f'tt{p}Municipio',tab=120)),
+            selecao=True,modo_selecao='advanced',tooltip_pagina=f'tt{p}Municipio',tab=120,uf_por_codigo=True)),
         Visual(p,spec_lista),
-        Visual(p,lib.visual_html(f'{p}_Lista_Titulo',LISTA[0],LISTA[1],LISTA[2],28,'Casca · vazio',
-            folha_de_estilo=CSS,modelo_corpo=f'<div class="tela st-titulo"><div class="rot">{lista}</div></div>{{{{content}}}}',
-            alt=lista,z=Z+4,tab=129)),
         Visual(p,lib.visual_html(f'{p}_Apoios_Html',*APOIOS,medida('Apoios · HTML'),folha_de_estilo=CSS,
             modelo_corpo=corpo(),alt=lib.medida(medida('Apoios · ALT')),z=Z+2,tab=140)),
         *pagina_lib.tooltip(f'tt{p}Municipio','Município · dossiê',520,400,medida('Município · HTML'),

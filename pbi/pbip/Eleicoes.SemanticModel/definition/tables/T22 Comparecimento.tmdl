@@ -23,4 +23,3 @@ table 'T22 Comparecimento'
 				    Tipos
 
 	annotation PBI_ResultType = Table
-

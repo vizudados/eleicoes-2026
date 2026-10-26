@@ -96,8 +96,20 @@ def gravar(nome: str, descricao: str, expressao: str) -> None:
 
 
 def medidas() -> None:
+    for eixo in ['X','Y']:
+        estilo.gravar_medida(f'T21 · mapa · {eixo.lower()} inteiro',r'T21 20 anos\Contas',
+            'Coordenada de desenho em centésimos; recupera exatamente as duas casas do CSV; ausência preservada.',
+            f"VAR _v = MAX ( 'Município'[{eixo}] )\nRETURN IF ( NOT ISBLANK ( _v ), ROUND ( _v * 100, 0 ) )",'#,0',subpasta='T21 20 anos/Contas',oraculo='dados/pbi/municipio.csv; duas casas exatas')
+    for ano in ANOS:
+        estilo.gravar_medida(f'T21 · mapa · margem {ano} inteira',r'T21 20 anos\Contas',
+            'Margem só para cor do mapa, em milionésimos; erro máximo de 0,00005 ponto percentual. Contas e tooltips originais preservados.',
+            f'VAR _m = [T21 · margem {ano}]\nRETURN IF ( NOT ISBLANK ( _m ), ROUND ( _m * 1000000, 0 ) )','#,0',subpasta='T21 20 anos/Contas',oraculo=f'T21 · margem {ano}; erro máximo de fração 0,0000005')
+    estilo.gravar_medida('T21 · mapa · envia quadro',r'T21 20 anos\Contas',
+        'Quadros globais seguem em uma única linha do dataset, a menor chave do recorte; não repetem 5.571 vezes.',
+        "VAR _primeiro = MINX ( FILTER ( ALLSELECTED ( 'Município' ), NOT ISBLANK ( 'Município'[CodIBGE] ) ), VALUE ( 'Município'[CodIBGE] ) )\n"
+        "RETURN IF ( VALUE ( SELECTEDVALUE ( 'Município'[CodIBGE] ) ) = _primeiro, 1, 0 )",'0',subpasta='T21 20 anos/Contas',oraculo='Brasil: somente código 1100015 envia os quadros')
     gravar("T21 · Mapa · anos para o Deneb", "Os seis anos num texto só, para o Deneb: 'ano|municípios com o PT à "
-           "frente|margem nacional' separados por ';' (o mesmo em todas as linhas do mapa). Só lê as contas.", r"""
+           "frente|margem nacional' separados por ';', somente na primeira chave do recorte. Só lê as contas.", r"""
 -- 1 · Leituras e 2 · Textos (uma linha por ano)
 VAR _anos =
     ADDCOLUMNS (
@@ -107,12 +119,12 @@ VAR _anos =
     ) /* lista */
 -- 4 · Marcação
 RETURN
-    CONCATENATEX (
+    IF ( [T21 · mapa · envia quadro] = 1, CONCATENATEX (
         _anos,
         'Ano'[Ano] & "|" & [@n] & "|" & FORMAT ( [@m], "0.0000", "en-US" ),
         ";",
         'Ano'[Ano], ASC
-    ) /* lista */
+    ) ) /* lista */
 """)
     pares = "\n".join(
         f"VAR _pt{a % 100:02d} = CALCULATE ( [T21 · candidato do PT], 'Ano'[Ano] = {a} )\n"
@@ -244,7 +256,7 @@ def spec() -> dict:
             {"name": "pts", "source": "dataset",
              "transform": [
                  {"type": "filter", "expr": "isValid(datum.x) && isValid(datum.y)"},
-                 {"type": "formula", "as": "onda", "expr": "datum.y / 1000"}]},
+                  {"type": "formula", "as": "onda", "expr": "datum.y / 100000"}]},
             {"name": "ufs", "values": ufs(),
              "transform": [{"type": "formula", "as": "atraso", "expr": "200 + 700 * datum.cx / 1000"}]},
             {"name": "letras", "values": slots,
@@ -259,7 +271,7 @@ def spec() -> dict:
                  {"type": "formula", "as": "x0", "expr": "datum.cum - datum.w"}]},
         ],
         "scales": [
-            {"name": "cor", "type": "linear", "domain": COR_DOMINIO, "range": [c[k] for k in COR_FAIXA],
+            {"name": "cor", "type": "linear", "domain": [round(v*1000000) for v in COR_DOMINIO], "range": [c[k] for k in COR_FAIXA],
              "clamp": True, "interpolate": "rgb"},
         ],
         "marks": [
@@ -276,7 +288,7 @@ def spec() -> dict:
             # pontos dos municípios: a cor desliza da margem do ano de partida para a do ano de chegada
             {"type": "symbol", "name": "pontos", "from": {"data": "pts"},
              "encode": {"update": {
-                 "x": {"signal": "ox + datum.x * k"}, "y": {"signal": "oy + datum.y * k"},
+                  "x": {"signal": "ox + datum.x / 100 * k"}, "y": {"signal": "oy + datum.y / 100 * k"},
                  "shape": {"value": "circle"}, "size": {"signal": "pow(3.1 * sqrt(k / 0.86), 2)"},
                  "fill": {"signal": "isValid(datum[campoDe]) && isValid(datum[campoPara]) ? "
                                     "scale('cor', datum[campoDe] + (datum[campoPara] - datum[campoDe]) * e) : "

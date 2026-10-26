@@ -1,0 +1,11 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: texto
+@descricao: Siglas das três maiores contribuições estaduais.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+VAR _top = TOPN ( 3, ADDCOLUMNS ( FILTER ( VALUES ( 'UF'[UF] ), NOT ISBLANK ( 'UF'[UF] ) && 'UF'[UF] <> "ZZ" ),
+    "@v", [T28 · ponte · movimento UF] ), [@v], DESC, 'UF'[UF], ASC )
+VAR _nomes = CONCATENATEX ( _top, 'UF'[UF], ", ", [@v], DESC )
+RETURN IF ( COUNTROWS ( _top ) = 3, SUBSTITUTE ( _nomes, ", ", " e ", 2 ), SUBSTITUTE ( _nomes, ", ", " e " ) )

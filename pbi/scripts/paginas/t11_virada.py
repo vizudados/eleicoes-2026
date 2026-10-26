@@ -74,12 +74,12 @@ CSS_RESPOSTA = (
 CSS_TITULO = (
     ".t11t .rot{position:absolute;left:0;top:0}"
     ".t11t .man{position:absolute;left:0;top:24px;right:0;font-size:24px}"
-    ".t11t .leg{position:absolute;left:0;top:70px;display:flex;gap:24px;font-size:15px;color:var(--grafite)}"
+    ".t11t .leg{position:absolute;left:0;right:0;top:70px;display:flex;align-items:baseline;gap:12px;font-size:15px;color:var(--grafite)}"
     ".t11t .leg i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:-1px}"
     ".t11t .c-l{background:var(--rosa)}.t11t .c-f{background:var(--azul-claro)}"
     ".t11t .c-v{background:var(--azul)}.t11t .c-vl{background:var(--vermelho)}"
     ".t11t .leg span{white-space:nowrap}"
-    ".t11t .leg .dica{margin-left:auto;font-size:13px;color:var(--cinza)}"
+    ".t11t .leg .dica{margin-left:auto;flex:none;font-size:13px;color:var(--cinza)}"
 )
 
 CSS_MAIORES = (
@@ -177,7 +177,7 @@ def _mapa(campos: list) -> dict:
     doc = lib.visual_deneb("T11_Mapa_Pontos", *MAPA, "spec/t11_mapa.json", campos,
                            alt=lib.medida("T11 · Mapa · ALT"), z=Z + 2, tab=120, selecao=True,
                            modo_selecao="advanced", max_selecao=2500, tooltip_pagina="ttT11Municipio",
-                           renderizacao="canvas")
+                           renderizacao="canvas", uf_por_codigo=True)
     obj = doc["visual"]["objects"]
     # realce vindo da lista (HighlightFilter): o Deneb expõe sit__highlightStatus (o mesmo jeito da T19)
     obj["vega"][0]["properties"]["enableHighlight"] = lib.lit(True)

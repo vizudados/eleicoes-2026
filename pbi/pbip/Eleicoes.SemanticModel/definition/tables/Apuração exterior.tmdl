@@ -24,7 +24,7 @@ table 'Apuração exterior'
 		annotation SummarizationSetBy = Automatic
 
 	/// País da cidade (dados/bruto/exterior/cidade_pais.csv).
-	column País
+	column 'País'
 		dataType: string
 		isHidden
 		lineageTag: 5568ed18-2c65-5e6f-8ddd-14df5ba1faab
@@ -133,4 +133,3 @@ table 'Apuração exterior'
 				    Horas
 
 	annotation PBI_ResultType = Table
-

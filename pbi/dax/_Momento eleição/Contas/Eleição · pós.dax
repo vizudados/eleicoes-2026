@@ -1,0 +1,6 @@
+/*
+@pasta: _Momento eleição\Contas
+@formato: 0
+@descricao: Sem seleção, ou seleção múltipla, assume Pós.
+*/
+INT ( SELECTEDVALUE ( 'Momento eleição'[Momento], "Pós Eleições 2026" ) <> "Pré Eleições 2026" )

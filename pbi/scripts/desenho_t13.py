@@ -20,6 +20,8 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from momento_eleicao import municipal_2022_2026
 
 AQUI = Path(__file__).resolve().parent
 PBI = AQUI.parent
@@ -32,6 +34,7 @@ MEDIDAS: list[dict] = []
 
 
 def conta(nome: str, formato: str, descricao: str, expr: str, oraculo: str | None = None) -> None:
+    expr = municipal_2022_2026(expr)
     MEDIDAS.append({"nome": nome, "sub": "Contas", "pasta": f"{TELA}\\Contas", "formato": formato,
                     "descricao": descricao, "expr": expr, "oraculo": oraculo})
 
@@ -486,16 +489,16 @@ VAR _txtPos =
     SWITCH (
         TRUE (),
         ISBLANK ( _pos ), "Com tão poucas cidades, a célula escolhida fica fora da comparação: um caso só pesa demais.",
-        _pos = 1, "A célula escolhida é a própria maior queda.",
-        _pos = _ncel, "A célula escolhida tem a menor queda entre as " & FORMAT ( _ncel, "0" )
+        _pos = 1, "A célula escolhida tem a menor variação.",
+        _pos = _ncel, "A célula escolhida tem a maior variação entre as " & FORMAT ( _ncel, "0" )
             & " células que entram na comparação.",
-        "A célula escolhida é a " & FORMAT ( _pos, "0" ) & "ª maior queda entre as " & FORMAT ( _ncel, "0" )
+        "A célula escolhida é a " & FORMAT ( _pos, "0" ) & "ª na ordem da menor para a maior variação, entre as " & FORMAT ( _ncel, "0" )
             & " células que entram na comparação."
     )
 VAR _blocoMenor =
     IF (
         _sel = 1,
-        "<div class='rot entra d6'>PARA COMPARAR · A MAIOR QUEDA</div>"
+        "<div class='rot entra d6'>PARA COMPARAR · " & IF ( _pv < 0, "A MAIOR QUEDA", "A MENOR ALTA" ) & "</div>"
             & "<div class='num v sobe d7'>" & {_pp("_pv")} & "<small> p.p.</small></div>"
             & "<div class='txt entra d8'>" & _grupoP & ". " & _txtPos & "</div>",
         "<div class='rot entra d6'>" & IF ( _mv > 0, "ONDE A MARGEM DE LULA MAIS SUBIU", "A MENOR QUEDA" ) & "</div>"
@@ -528,7 +531,7 @@ RETURN
             & "<div class='amostra" & _clsAmostra & " entra d10'><span class='num'>" & IF ( ISBLANK ( _av ), "—", {_pp("_av")} )
                 & "</span><span class='n'>" & FORMAT ( _an, "#,0" ) & IF ( _an = 1, " cidade", " cidades" ) & "</span></div>"
             & "<div class='nota qual entra d10'>" & _qual & "</div>"
-            & "<div class='mao a1 entra d11'>quanto a margem caiu</div>"
+            & "<div class='mao a1 entra d11'>mudança da margem</div>"
             & "<div class='mao a2 entra d12'>quantas cidades</div>"
             & "<svg class='setas' width='200' height='110' viewBox='0 0 200 110'>"
                 & "<path class='traco-rapido' style='animation-delay:1300ms' pathLength='1' d='M6,22 C30,18 46,20 62,26' "
@@ -558,7 +561,7 @@ RETURN
         _sel = 1,
         "A célula escolhida, cidades " & _cp & " e " & _cq & ": " & {_pp("_cv")} & " pontos. A maior queda: "
             & {_pp("_pv")} & " pontos.",
-        "A margem de Lula caiu mais nas cidades " & _pp & " e " & _pq & ": " & {_pp("_pv")} & " pontos. A menor queda: "
+        "A menor variação da margem de Lula foi nas cidades " & _pp & " e " & _pq & ": " & {_pp("_pv")} & " pontos. A maior variação: "
             & {_pp("_mv")} & " pontos."
     )""")
 

@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'04 · Resultado: Quem venceu o 1º turno, e por quanto?'"
+                  "Value": "'04 · Resultado: Quem ficou à frente, e por quanto?'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'04 · Resultado: Quem venceu o 1º turno, e por quanto?'"
+                  "Value": "'04 · Resultado: Quem ficou à frente, e por quanto?'"
                 }
               }
             },

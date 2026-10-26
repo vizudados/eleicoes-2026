@@ -5,7 +5,7 @@
     "x": 1180,
     "y": 124,
     "z": 4000,
-    "height": 637,
+    "height": 683,
     "width": 600,
     "tabOrder": 950
   },
@@ -78,7 +78,7 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Estilo · CSS"
+                  "Property": "Estilo · CSS com mão"
                 }
               }
             }
@@ -91,7 +91,7 @@
             "bodyTemplate": {
               "expr": {
                 "Literal": {
-                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#F1EBDF;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>Onde os votos mudaram de lado?</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>Cada ponto do mapa é um município: os claros mostram quem ficou à frente em 2026; os azuis fortes, as cidades que passaram de Lula para Flávio. Clique num ponto, ou arraste para marcar uma área, e a tela passa a contar só aquele pedaço; clique no vazio para voltar. Na lista ao lado, clique numa cidade para o mapa ir até ela.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>Votos do 1º turno de 2022 e de 2026 por município, do TSE, sem o exterior. Uma cidade virou quando Lula tinha mais votos que o adversário em 2022 e menos em 2026.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>Margem é a diferença entre os votos de Lula e os do adversário, em pontos dos votos válidos. Passe o mouse num ponto para o dossiê da cidade, ou numa cidade da lista para ver como ela votou desde 2006. O filtro de estado (um estado, uma região inteira ou vários estados) aproxima o mapa e refaz todas as contas.</div></div></div></div>{{content}}'"
+                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#F1EBDF;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>Onde os votos mudaram de lado?</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>Cada ponto do mapa é um município: os claros mostram quem ficou à frente em 2026; os azuis fortes, as cidades que passaram de Lula para Flávio. Clique num ponto, ou arraste para marcar uma área, e a tela passa a contar só aquele pedaço; clique no vazio para voltar. Na lista ao lado, clique numa cidade para o mapa ir até ela.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>TSE, sem exterior. Pré compara os primeiros turnos de 2022 e 2026; Pós compara os segundos turnos dos mesmos anos. Uma cidade virou quando Lula tinha mais votos em 2022 e menos em 2026. O tooltip da série 2006–2026 permanece identificado como histórico do 1º turno.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>Margem é a diferença entre os votos de Lula e os do adversário, em pontos dos votos válidos. Passe o mouse num ponto para o dossiê da cidade, ou numa cidade da lista para ver como ela votou desde 2006. O filtro de estado (um estado, uma região inteira ou vários estados) aproxima o mapa e refaz todas as contas.</div></div></div></div>{{content}}'"
                 }
               }
             }

@@ -1,0 +1,6 @@
+/*
+@pasta: _Momento eleição\Desenho
+@formato: texto
+@descricao: Texto acessível do exterior no turno escolhido.
+*/
+IF ( [Eleição · pós] = 1, [Exterior · ao vivo · ALT], [Exterior · 1º turno · ALT] )

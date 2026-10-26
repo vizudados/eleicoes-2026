@@ -2,7 +2,7 @@
 @pasta: T01 Placar\Contas
 @formato: 0
 @descricao: Quantos candidatos ficaram do 5º lugar em diante, no recorte.
-@oraculo: paginas[1].demais.qtd = 8
+@oraculo: Pré: paginas[1].demais.qtd = 8
 */
 VAR _lista =
     FILTER (

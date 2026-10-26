@@ -3,4 +3,8 @@
 @formato: #,0
 @descricao: Votos do candidato do item (barra/legenda) em 2026, no recorte.
 */
-CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026 )
+IF ( [Eleição · pós] = 1, VAR _n = CALCULATE ( SELECTEDVALUE ( 'Candidato UF'[Número] ), 'Candidato UF'[Ano] = 2026 )
+RETURN SWITCH ( _n,
+    13, CALCULATE ( SUM ( 'UF segundo turno'[VotosPT] ), 'UF segundo turno'[Ano] = 2026 ),
+    22, CALCULATE ( SUM ( 'UF segundo turno'[VotosAdversario] ), 'UF segundo turno'[Ano] = 2026 ),
+    BLANK () ), CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026 ) )

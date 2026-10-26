@@ -1,6 +1,6 @@
 /*
 @pasta: T02 Lula · quem é\Contas
 @formato: texto
-@descricao: Título curto do marco da linha.
+@descricao: Último marco responde ao Antes/Depois; os demais ficam intactos.
 */
-SELECTEDVALUE ( 'Trajetória'[Título] )
+IF ( [T02 · desfecho] = 1, "Reeleito com recorde histórico", SELECTEDVALUE ( 'Trajetória'[Título] ) )

@@ -2,6 +2,6 @@
 @pasta: T01 Placar\Contas
 @formato: 0.0%
 @descricao: Parcela dos candidatos do 5º lugar em diante nos válidos (0–1).
-@oraculo: paginas[1].demais.pct_txt = 2,7%
+@oraculo: Pré: paginas[1].demais.pct_txt = 2,7%
 */
 DIVIDE ( [T01 · demais votos], [T01 · válidos] )

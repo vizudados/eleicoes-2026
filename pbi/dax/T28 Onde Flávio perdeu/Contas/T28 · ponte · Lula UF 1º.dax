@@ -1,0 +1,9 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Votação estadual no primeiro turno, incluindo ZZ no Brasil.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+CALCULATE ( SUM ( 'Candidato UF'[Votos] ), REMOVEFILTERS ( 'Ano' ),
+    'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 13 )

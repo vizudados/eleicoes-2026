@@ -1,14 +1,6 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
 @formato: 0
-@descricao: Colocação de Flávio no 1º turno de 2026, no Brasil.
-@oraculo: Lula 2 · Flávio 1
+@descricao: Colocação nacional no turno escolhido.
 */
-VAR _v = [T04 · votos 2026]
-VAR _todos =
-    ADDCOLUMNS (
-        CALCULATETABLE ( VALUES ( 'Candidato UF'[Número] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2026 ),
-        "@v", CALCULATE ( SUM ( 'Candidato UF'[Votos] ), REMOVEFILTERS ( 'UF' ), 'Candidato UF'[Ano] = 2026 )
-    )
-RETURN
-    1 + COUNTROWS ( FILTER ( _todos, [@v] > _v ) )
+IF ( [Eleição · pós] = 1, 2, 1 )

@@ -1,0 +1,6 @@
+/*
+@pasta: T04 Flávio · quem é\Desenho
+@formato: texto
+@descricao: Descrição acessível do retrato e da imagem escolhida.
+*/
+IF ( [Eleição · pós] = 1, "Retrato oficial de Flávio Bolsonaro em traço. Pronunciamento após o resultado, 25 de outubro de 2026.", "Retrato oficial de Flávio Bolsonaro em traço. Ato de 7 de Setembro de 2021, Av. Paulista, São Paulo." )

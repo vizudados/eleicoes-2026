@@ -1,5 +1,5 @@
 /// Os 5.571 municípios do IBGE com população e renda domiciliar per capita do Censo 2022, porte, quinto de renda e o centro do município projetado no quadro 1000 × 1000 dos mapas do painel.
-table Município
+table 'Município'
 	lineageTag: f0e2fbb2-4eae-5e30-ad93-1fc052e8df27
 
 	/// Código IBGE de 7 dígitos (chave).
@@ -23,7 +23,7 @@ table Município
 		annotation SummarizationSetBy = Automatic
 
 	/// Nome do município.
-	column Município
+	column 'Município'
 		dataType: string
 		lineageTag: 506e58b7-2eb0-5105-ad57-cdd48b1e73d0
 		summarizeBy: none
@@ -42,7 +42,7 @@ table Município
 		annotation SummarizationSetBy = Automatic
 
 	/// Região do município.
-	column Região
+	column 'Região'
 		dataType: string
 		isHidden
 		lineageTag: 398ddb0a-d04c-5cf4-868d-6bee5fd01a56
@@ -52,7 +52,7 @@ table Município
 		annotation SummarizationSetBy = Automatic
 
 	/// Nome (UF), único: o que a busca e as listas mostram.
-	column Rótulo
+	column 'Rótulo'
 		dataType: string
 		lineageTag: 0292f458-0d0f-5093-aa84-e4a4d692a165
 		summarizeBy: none
@@ -61,7 +61,7 @@ table Município
 		annotation SummarizationSetBy = Automatic
 
 	/// População residente, Censo 2022.
-	column População
+	column 'População'
 		dataType: int64
 		formatString: #,0
 		lineageTag: 1c03054f-593c-5460-8f4d-dded0759a674
@@ -168,7 +168,7 @@ table Município
 
 		annotation SummarizationSetBy = Automatic
 
-	partition Município = m
+	partition 'Município' = m
 		mode: import
 		source =
 				let
@@ -180,4 +180,3 @@ table Município
 				    Nomes
 
 	annotation PBI_ResultType = Table
-

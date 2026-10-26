@@ -1,0 +1,8 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Só estados com perda de votos; vazio nos demais e no exterior.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( SELECTEDVALUE ( 'UF'[UF] ) <> "ZZ" && [T28 · Jair · saldo UF] < 0, [T28 · Jair · saldo UF] )

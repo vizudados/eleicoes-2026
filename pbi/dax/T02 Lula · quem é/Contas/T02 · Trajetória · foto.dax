@@ -1,6 +1,6 @@
 /*
 @pasta: T02 Lula · quem é\Contas
 @formato: texto
-@descricao: Nome do desenho da foto do marco da linha; vazio quando não há foto livre.
+@descricao: Último marco responde ao Antes/Depois; os demais ficam intactos.
 */
-SELECTEDVALUE ( 'Trajetória'[Foto] )
+IF ( [T02 · desfecho] = 1, "lula-2026-reeleicao", SELECTEDVALUE ( 'Trajetória'[Foto] ) )

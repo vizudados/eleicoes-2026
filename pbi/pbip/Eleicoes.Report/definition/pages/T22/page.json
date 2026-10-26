@@ -73,17 +73,7 @@
     },
     {
       "source": "T22_Grade_Html",
-      "target": "T22_ReguaAbst_Html",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T22_Grade_Html",
       "target": "T22_ReguaAbst_Regua",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T22_Grade_Html",
-      "target": "T22_ReguaComp_Html",
       "type": "NoFilter"
     },
     {
@@ -93,12 +83,12 @@
     },
     {
       "source": "T22_Grade_Html",
-      "target": "T22_ReguaLula_Html",
+      "target": "T22_ReguaLula_Regua",
       "type": "NoFilter"
     },
     {
       "source": "T22_Grade_Html",
-      "target": "T22_ReguaLula_Regua",
+      "target": "T22_Reguas_Html",
       "type": "NoFilter"
     },
     {
@@ -108,17 +98,7 @@
     },
     {
       "source": "T22_Pesquisas_Html",
-      "target": "T22_ReguaAbst_Html",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T22_Pesquisas_Html",
       "target": "T22_ReguaAbst_Regua",
-      "type": "NoFilter"
-    },
-    {
-      "source": "T22_Pesquisas_Html",
-      "target": "T22_ReguaComp_Html",
       "type": "NoFilter"
     },
     {
@@ -128,12 +108,12 @@
     },
     {
       "source": "T22_Pesquisas_Html",
-      "target": "T22_ReguaLula_Html",
+      "target": "T22_ReguaLula_Regua",
       "type": "NoFilter"
     },
     {
       "source": "T22_Pesquisas_Html",
-      "target": "T22_ReguaLula_Regua",
+      "target": "T22_Reguas_Html",
       "type": "NoFilter"
     }
   ]

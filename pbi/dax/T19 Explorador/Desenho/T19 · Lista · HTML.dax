@@ -31,24 +31,21 @@ VAR _atraso = "d" & MIN ( _pos, 16 )
 VAR _y = 36 + ( _pos - 1 ) * 44 -- geometria
 VAR _base = { ( 0, 4.0, _m06 ), ( 1, 29.6, _m10 ), ( 2, 55.2, _m14 ), ( 3, 80.8, _m18 ), ( 4, 106.4, _m22 ), ( 5, 132.0, _m26 ) } /* lista */
 VAR _pts =
-    FILTER ( /* lista */
         SELECTCOLUMNS (
             _base,
             "i", [Value1],
             "x", [Value2],
             "y", IF ( ISBLANK ( [Value3] ), BLANK (), 15.0 - MAX ( -0.6, MIN ( 0.6, [Value3] ) ) / 0.6 * 13.0 )
-        ),
-        NOT ISBLANK ( [y] )
-    ) -- geometria
-VAR _primeiro = MINX ( _pts, [i] ) /* lista */
+        ) -- geometria
+VAR _primeiro = MINX ( _pts, IF ( NOT ISBLANK ( [y] ), [i] ) ) -- geometria
 VAR _d =
-    CONCATENATEX (
+    TRIM ( CONCATENATEX (
         _pts,
-        IF ( [i] = _primeiro, "M", "L" ) & FORMAT ( [x], "0.0##", "en-US" ) & "," & FORMAT ( [y], "0.0##", "en-US" ),
+        IF ( NOT ISBLANK ( [y] ), IF ( [i] = _primeiro, "M", "L" ) & FORMAT ( [x], "0.0##", "en-US" ) & "," & FORMAT ( [y], "0.0##", "en-US" ) ),
         " ",
         [i], ASC
-    ) /* lista */
-VAR _yFim = MAXX ( FILTER ( _pts, [i] = 5 ), [y] ) /* lista */
+    ) ) /* lista */
+VAR _yFim = MAXX ( _pts, IF ( [i] = 5, [y] ) ) -- geometria
 VAR _ponto =
     IF (
         NOT ISBLANK ( _yFim ),
@@ -57,7 +54,7 @@ VAR _ponto =
 -- 4 · Marcação
 RETURN
     IF (
-        NOT ISBLANK ( _pos ),
+        NOT ISBLANK ( _pos ) && _pos <= 16,
         "<div class='tela t19l'><div class='ln sobe " & _atraso & "' style='top:" & _y & "px'>"
             & "<span class='c-nome' title='" & _nome & "'>" & _nome & "</span>"
             & "<span class='c-l lula tnum'>" & _txtLula & "</span>"

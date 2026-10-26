@@ -1,6 +1,6 @@
 {"titulo": "Onde os votos mudaram de lado?",
  "blocos": [
   ["Como ler", "Cada ponto do mapa é um município: os claros mostram quem ficou à frente em 2026; os azuis fortes, as cidades que passaram de Lula para Flávio. Clique num ponto, ou arraste para marcar uma área, e a tela passa a contar só aquele pedaço; clique no vazio para voltar. Na lista ao lado, clique numa cidade para o mapa ir até ela."],
-  ["De onde vêm os números", "Votos do 1º turno de 2022 e de 2026 por município, do TSE, sem o exterior. Uma cidade virou quando Lula tinha mais votos que o adversário em 2022 e menos em 2026."],
+  ["De onde vêm os números", "TSE, sem exterior. Pré compara os primeiros turnos de 2022 e 2026; Pós compara os segundos turnos dos mesmos anos. Uma cidade virou quando Lula tinha mais votos em 2022 e menos em 2026. O tooltip da série 2006–2026 permanece identificado como histórico do 1º turno."],
   ["Para lembrar", "Margem é a diferença entre os votos de Lula e os do adversário, em pontos dos votos válidos. Passe o mouse num ponto para o dossiê da cidade, ou numa cidade da lista para ver como ela votou desde 2006. O filtro de estado (um estado, uma região inteira ou vários estados) aproxima o mapa e refaz todas as contas."]
  ]}

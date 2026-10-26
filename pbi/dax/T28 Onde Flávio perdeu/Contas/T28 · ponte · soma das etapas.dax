@@ -1,0 +1,10 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Soma independente das contribuições territoriais, incluindo ZZ quando pertence ao recorte.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( [T28 · ponte · municipal] = 1,
+    SUMX ( VALUES ( 'Município'[CodIBGE] ), [T28 · mudança de vantagem] ),
+    SUMX ( VALUES ( 'UF'[UF] ), [T28 · ponte · movimento UF] ) )

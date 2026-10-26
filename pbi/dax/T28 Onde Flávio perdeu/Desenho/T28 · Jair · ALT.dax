@@ -1,0 +1,8 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Comparação histórica acessível.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+"Onde Flávio recebeu menos votos que Jair em 2022: maiores perdas por estado e por cidade, no segundo turno. Perdas têm sinal negativo. Município sem base de 2022 não é tratado como zero."

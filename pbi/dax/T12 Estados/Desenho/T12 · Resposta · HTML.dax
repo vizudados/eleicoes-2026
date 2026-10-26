@@ -9,6 +9,7 @@ VAR _caiu = [T12 · unidades onde a margem caiu]
 VAR _tot = [T12 · unidades]
 VAR _nSubiu = [T12 · unidades onde a margem subiu]
 VAR _subiu = [T12 · onde a margem subiu]
+VAR _exSubiu = [T12 · exemplos onde a margem subiu]
 VAR _alta = [T12 · alta onde a margem subiu]
 VAR _mudaram = [T12 · mudaram para o adversário]
 VAR _nMud = [T12 · quantas mudaram para o adversário]
@@ -36,16 +37,17 @@ VAR _txtSubiu =
         _nSubiu = 0, "A margem de Lula não subiu em nenhuma unidade.",
         _nSubiu = 1, "Só " & IF ( _subiu = "Distrito Federal", "o ", "" ) & _subiu & " foi na direção de Lula: <b>"
             & FORMAT ( _alta * 100, "+0.0;−0.0;0.0" ) & " p.p.</b>",
-        FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula: " & _subiu & "."
+        FORMAT ( _nSubiu, "0" ) & " unidades foram na direção de Lula. Entre elas: " & _exSubiu & "."
     )
 VAR _txtUnid = IF ( _caiu = 1, "unidade em que", "unidades em que" )
+VAR _txtMudancaLugar =
+    IF ( _dBr = 0, "não variou", IF ( _dBr < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) )
 VAR _txtLugar =
     IF (
         ISBLANK ( _lugar ),
-        "No Brasil, foi de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos: " & IF ( _dBr < 0, "caiu ", "subiu " )
-            & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) & ".",
+        "No Brasil, foi de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos: " & _txtMudancaLugar & ".",
         "<b>" & _lugar & "</b>: de " & FORMAT ( _m22 * 100, "+0.0;−0.0;0.0" ) & " para " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " pontos, "
-            & IF ( _dBr < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _dBr ) * 100, "0.0" ) & "."
+            & _txtMudancaLugar & "."
     )
 -- 3 · Geometria (barras: 100% = 300 px)
 VAR _wl22 = 300 * _l22 -- geometria
@@ -77,11 +79,11 @@ RETURN
             & "<svg width='300' height='14' viewBox='0 0 300 14'><path class='traco' style='animation-delay:1100ms' "
             & "pathLength='1' d='M3,9 C60,4 150,12 296,5' fill='none' stroke='var(--azul)' stroke-width='5' "
             & "stroke-linecap='round'/></svg></div>"
-        & "<div class='txt t3 entra d5'>" & _txtSubiu & "</div>"
+        & "<div class='apoio'><div class='txt t3 entra d5'>" & _txtSubiu & "</div>"
         & "<div class='margem'>"
             & "<div class='rot entra d6'>O QUE É MARGEM</div>"
             & "<div class='txt ex entra d6'>É a distância entre os votos de Lula e os do adversário, em pontos dos "
                 & "votos válidos: positiva, Lula à frente; negativa, o adversário. " & _txtLugar & "</div>"
             & _brasil
-        & "</div>"
+        & "</div></div>"
     & "</div>"

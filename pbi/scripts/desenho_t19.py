@@ -181,24 +181,21 @@ VAR _atraso = "d" & MIN ( _pos, 16 )
 VAR _y = {LISTA_CAB} + ( _pos - 1 ) * {LISTA_H} -- geometria
 VAR _base = {{ {pontos} }} /* lista */
 VAR _pts =
-    FILTER ( /* lista */
         SELECTCOLUMNS (
             _base,
             "i", [Value1],
             "x", [Value2],
             "y", IF ( ISBLANK ( [Value3] ), BLANK (), {meio} - MAX ( -0.6, MIN ( 0.6, [Value3] ) ) / 0.6 * {meio - 2} )
-        ),
-        NOT ISBLANK ( [y] )
-    ) -- geometria
-VAR _primeiro = MINX ( _pts, [i] ) /* lista */
+        ) -- geometria
+VAR _primeiro = MINX ( _pts, IF ( NOT ISBLANK ( [y] ), [i] ) ) -- geometria
 VAR _d =
-    CONCATENATEX (
+    TRIM ( CONCATENATEX (
         _pts,
-        IF ( [i] = _primeiro, "M", "L" ) & FORMAT ( [x], "0.0##", "en-US" ) & "," & FORMAT ( [y], "0.0##", "en-US" ),
+        IF ( NOT ISBLANK ( [y] ), IF ( [i] = _primeiro, "M", "L" ) & FORMAT ( [x], "0.0##", "en-US" ) & "," & FORMAT ( [y], "0.0##", "en-US" ) ),
         " ",
         [i], ASC
-    ) /* lista */
-VAR _yFim = MAXX ( FILTER ( _pts, [i] = 5 ), [y] ) /* lista */
+    ) ) /* lista */
+VAR _yFim = MAXX ( _pts, IF ( [i] = 5, [y] ) ) -- geometria
 VAR _ponto =
     IF (
         NOT ISBLANK ( _yFim ),
@@ -207,7 +204,7 @@ VAR _ponto =
 -- 4 · Marcação
 RETURN
     IF (
-        NOT ISBLANK ( _pos ),
+        NOT ISBLANK ( _pos ) && _pos <= 16,
         "<div class='tela t19l'><div class='ln sobe " & _atraso & "' style='top:" & _y & "px'>"
             & "<span class='c-nome' title='" & _nome & "'>" & _nome & "</span>"
             & "<span class='c-l lula tnum'>" & _txtLula & "</span>"
@@ -328,35 +325,32 @@ VAR _selo = IF ( _virou = 1, "<div class='selo'>virou</div>", "" )
 -- 3 · Geometria
 VAR _base = {{ {tabela} }} /* lista */
 VAR _serie =
-    FILTER ( /* lista */
-        SELECTCOLUMNS ( _base, "i", [Value1], "x", [Value2], "ano", [Value3], "m", [Value4] ),
-        NOT ISBLANK ( [m] )
-    ) -- geometria
+    SELECTCOLUMNS ( _base, "i", [Value1], "x", [Value2], "ano", [Value3], "m", [Value4] )
 VAR _maior = MAXX ( _serie, ABS ( [m] ) ) /* geometria */
 VAR _escala = MAX ( 0.2, CEILING ( _maior * 10, 1 ) / 10 ) -- geometria
 VAR _pts =
-    ADDCOLUMNS ( _serie, "y", 70 - [m] / _escala * 52 ) -- geometria
-VAR _primeiro = MINX ( _pts, [i] ) /* lista */
+    ADDCOLUMNS ( _serie, "y", IF ( NOT ISBLANK ( [m] ), 70 - [m] / _escala * 52 ) ) -- geometria
+VAR _primeiro = MINX ( _pts, IF ( NOT ISBLANK ( [y] ), [i] ) ) -- geometria
 VAR _d =
-    CONCATENATEX (
+    TRIM ( CONCATENATEX (
         _pts,
-        IF ( [i] = _primeiro, "M", "L" ) & [x] & "," & FORMAT ( [y], "0.0##", "en-US" ),
+        IF ( NOT ISBLANK ( [y] ), IF ( [i] = _primeiro, "M", "L" ) & [x] & "," & FORMAT ( [y], "0.0##", "en-US" ) ),
         " ",
         [i], ASC
-    ) /* lista */
+    ) ) /* lista */
 VAR _marcas =
     CONCATENATEX (
         _pts,
-        "<circle class='" & IF ( [m] > 0, "l", "f" ) & "' cx='" & [x] & "' cy='" & FORMAT ( [y], "0.0##", "en-US" )
+        IF ( NOT ISBLANK ( [y] ), "<circle class='" & IF ( [m] > 0, "l", "f" ) & "' cx='" & [x] & "' cy='" & FORMAT ( [y], "0.0##", "en-US" )
             & "' r='4.6'/>"
             & "<text class='v " & IF ( [m] > 0, "l", "f" ) & "' x='" & [x] & "' y='"
             & FORMAT ( IF ( [m] > 0, [y] - 10, [y] + 19 ), "0.0##", "en-US" ) & "'>"
-            & FORMAT ( [m] * 100, "+0.0;−0.0;0.0" ) & "</text>",
+            & FORMAT ( [m] * 100, "+0.0;−0.0;0.0" ) & "</text>" ),
         "",
         [i], ASC
     ) /* lista */
 VAR _anos =
-    CONCATENATEX ( _serie, "<text class='a' x='" & [x] & "' y='150'>" & [ano] & "</text>", "", [i], ASC ) /* lista */
+    CONCATENATEX ( _serie, IF ( NOT ISBLANK ( [m] ), "<text class='a' x='" & [x] & "' y='150'>" & [ano] & "</text>" ), "", [i], ASC ) /* lista */
 -- 4 · Marcação
 RETURN
     IF (

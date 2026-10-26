@@ -102,7 +102,7 @@ VAR _rotulos =
         & "<div class='mao anot entra d12'>" & _nota & "</div>"
 VAR _html =
     "<div class='tela t1v'>"
-        & "<div class='sob sobe'>De 2022 para 2026 · votos no 1º turno</div>"
+        & "<div class='sob sobe'>De 2022 para 2026 · votos no " & [Eleição · turno] & "º turno</div>"
         & "<div class='man sobe d1'>" & _manchete & "</div>"
         & "<div class='grafico'>" & _svg & _rotulos
             & "<div class='ano a1'>2022</div><div class='ano a2'>2026</div>"

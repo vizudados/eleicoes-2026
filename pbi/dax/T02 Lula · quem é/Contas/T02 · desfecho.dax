@@ -1,0 +1,6 @@
+/*
+@pasta: T02 Lula · quem é\Contas
+@formato: 0
+@descricao: 1 no último marco, somente depois da eleição.
+*/
+INT ( [Eleição · pós] = 1 && SELECTEDVALUE ( 'Trajetória'[Ordem] ) = 10 )

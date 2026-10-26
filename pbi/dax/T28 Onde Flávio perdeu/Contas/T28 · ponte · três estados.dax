@@ -1,0 +1,8 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Contribuição das três maiores unidades, com desempate por chave.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+SUMX ( TOPN ( 3, ADDCOLUMNS ( FILTER ( VALUES ( 'UF'[UF] ), NOT ISBLANK ( 'UF'[UF] ) && 'UF'[UF] <> "ZZ" ), "@v", [T28 · ponte · movimento UF] ), [@v], DESC, 'UF'[UF], ASC ), [@v] )

@@ -1,6 +1,6 @@
 /*
 @pasta: T04 Flávio · quem é\Contas
 @formato: texto
-@descricao: Nome do desenho da foto do marco da linha; vazio quando não há foto livre.
+@descricao: Último marco responde ao Antes/Depois; os demais ficam intactos.
 */
-SELECTEDVALUE ( 'Trajetória'[Foto] )
+IF ( [T04 · desfecho] = 1, "flavio-2026-pronunciamento", SELECTEDVALUE ( 'Trajetória'[Foto] ) )

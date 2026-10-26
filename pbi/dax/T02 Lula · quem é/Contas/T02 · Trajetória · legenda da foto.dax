@@ -1,9 +1,9 @@
 /*
 @pasta: T02 Lula · quem é\Contas
 @formato: texto
-@descricao: Onde e quando a foto original do marco da linha foi feita (pode ser de outro momento que o do marco). Fonte: dados/bruto/trajetoria/desenhos.csv.
+@descricao: Legenda e crédito com data real da foto; adaptação CC BY-SA 4.0.
 */
-VAR _f = [T02 · Trajetória · foto]
+IF ( [T02 · desfecho] = 1, "Noite da vitória, São Paulo, 25 de outubro de 2026", VAR _f = [T02 · Trajetória · foto]
 RETURN
     SWITCH (
         _f,
@@ -17,5 +17,6 @@ RETURN
 "lula-2021-anulacao", "Encontro com movimentos sociais em Pernambuco, 16 de agosto de 2021",
 "lula-2022-eleicao", "Noite da eleição na Av. Paulista, São Paulo, 30 de outubro de 2022",
 "lula-2026-primeiro-turno", "Pronunciamento após o 1º turno, São Paulo, 4 de outubro de 2026",
+"lula-2026-reeleicao", "Noite da vitória, São Paulo, 25 de outubro de 2026",
         BLANK ()
-    )
+    ) )

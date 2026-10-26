@@ -1,0 +1,44 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Ponte em traço: lê etapas observadas, desenha acumulados e fecha a conta; mesmos sinais e escala para ambos os candidatos.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+VAR _dados = [T28 · ponte · etapas]
+VAR _caminho = SUBSTITUTE ( _dados, "~", "|" )
+VAR _linhas = ADDCOLUMNS ( GENERATESERIES ( 1, PATHLENGTH ( _caminho ) ), "@linha", SUBSTITUTE ( PATHITEM ( _caminho, [Value] ), "^", "|" ) )
+VAR _t = ADDCOLUMNS ( _linhas, "@nome", PATHITEM ( [@linha], 2 ), "@de", VALUE ( PATHITEM ( [@linha], 3 ) ),
+    "@ate", VALUE ( PATHITEM ( [@linha], 4 ) ), "@v", VALUE ( PATHITEM ( [@linha], 5 ) ), "@tipo", PATHITEM ( [@linha], 6 ) )
+-- geometria
+VAR _n = PATHLENGTH ( _caminho )
+VAR _min = MIN ( 0, MINX ( _t, MIN ( [@de], [@ate] ) ) )
+VAR _max = MAX ( 0, MAXX ( _t, MAX ( [@de], [@ate] ) ) )
+VAR _amplitude = MAX ( 1, _max - _min )
+VAR _passo = 1550 / _n
+VAR _largura = MIN ( IF ( _n = 3, 170, 85 ), _passo * 0.68 )
+VAR _zero = 32 + 254 * _max / _amplitude
+VAR _barras = CONCATENATEX ( _t,
+    VAR _x = 35 + ( [Value] - 0.5 ) * _passo
+    VAR _y0 = 32 + 254 * ( _max - [@de] ) / _amplitude
+    VAR _y1 = 32 + 254 * ( _max - [@ate] ) / _amplitude
+    VAR _topo = MIN ( _y0, _y1 )
+    VAR _altura = MAX ( 1.5, ABS ( _y0 - _y1 ) )
+    VAR _cor = IF ( [@v] < 0, "var(--azul)", "var(--vermelho)" )
+    VAR _eixo = [@tipo] <> "passo"
+    VAR _label = IF ( _eixo, IF ( [@v] < 0, "Flávio", "Lula" ) & " +" & (SWITCH ( TRUE (), ABS ( [@v] ) >= 1e6, FORMAT ( ABS ( [@v] ) / 1e6, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( ABS ( [@v] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [@v] ), "#,0" ) )), (IF ( [@v] > 0, "+", IF ( [@v] < 0, "−", "" ) ) & (SWITCH ( TRUE (), ABS ( [@v] ) >= 1e6, FORMAT ( ABS ( [@v] ) / 1e6, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( ABS ( [@v] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [@v] ), "#,0" ) ))))
+    VAR _yy = IF ( _eixo, 309, IF ( _altura < 9, MAX ( _y0, _y1 ) + 23, MAX ( 28, _topo - 9 ) ) )
+    VAR _corte = IF ( LEN ( [@nome] ) > 13, FIND ( " ", [@nome], 11, LEN ( [@nome] ) + 1 ), LEN ( [@nome] ) + 1 )
+    RETURN "<g class='etapa'><title>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@nome], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ": " & FORMAT ( [@v], "+#,0;−#,0;0" ) & " votos na diferença</title>"
+        & "<rect class='cor' x='" & FORMAT ( _x - _largura / 2, "0.00", "en-US" ) & "' y='" & FORMAT ( _topo, "0.00", "en-US" )
+        & "' width='" & FORMAT ( _largura, "0.00", "en-US" ) & "' height='" & FORMAT ( _altura, "0.00", "en-US" ) & "' fill='" & _cor & "'/>"
+        & IF ( [Value] < _n, "<line x1='" & FORMAT ( _x + _largura / 2, "0.00", "en-US" ) & "' x2='" & FORMAT ( _x + _passo - _largura / 2, "0.00", "en-US" )
+            & "' y1='" & FORMAT ( _y1, "0.00", "en-US" ) & "' y2='" & FORMAT ( _y1, "0.00", "en-US" ) & "'/>", "" )
+        & "<text class='v num' x='" & FORMAT ( _x, "0.00", "en-US" ) & "' y='" & FORMAT ( _yy, "0.00", "en-US" ) & "'>" & _label & "</text>"
+        & "<text class='nome' text-anchor='middle' x='" & FORMAT ( _x, "0.00", "en-US" ) & "' y='324'>"
+        & "<tspan>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( LEFT ( [@nome], _corte - 1 ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</tspan><tspan x='" & FORMAT ( _x, "0.00", "en-US" ) & "' dy='16'>"
+        & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( MID ( [@nome], _corte + 1, 200 ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</tspan></text></g>", "", [Value], ASC )
+RETURN "<div class='tela ponte'><svg viewBox='0 0 1620 355' width='1620' height='355'><line class='zero' x1='20' x2='1600' y1='"
+    & FORMAT ( _zero, "0.00", "en-US" ) & "' y2='" & FORMAT ( _zero, "0.00", "en-US" ) & "'/>" & _barras & "</svg>"
+    & "<div class='fecha'>Diferença para Lula: <b class='num'>" & FORMAT ( [T28 · ponte · início], "+#,0;−#,0;0" ) & "</b> + <b class='num'>"
+    & FORMAT ( [T28 · ponte · soma das etapas], "#,0" ) & "</b> = <b class='num'>" & FORMAT ( [T28 · ponte · fim], "+#,0;−#,0;0" ) & "</b> votos</div></div>"

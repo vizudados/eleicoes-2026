@@ -3,4 +3,4 @@
 @formato: #,0
 @descricao: Votos do adversário em 2022 somados nos municípios (sem o exterior).
 */
-CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = 2022 )
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'Município segundo turno'[VotosPT] ), 'Município segundo turno'[Ano] = 2022 ), CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = 2022 ) )

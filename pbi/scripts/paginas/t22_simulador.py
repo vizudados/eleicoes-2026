@@ -76,21 +76,15 @@ def declarar(ctx):
     itens = [
         Visual(P, lib.visual_html("T22_Heroi_Html", *D.HEROI, "T22 · Herói · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=D.corpo_heroi(), alt=lib.medida("T22 · Herói · ALT"), z=Z, tab=100)),
-        Visual(P, lib.visual_html("T22_ReguaLula_Html", *D.REGUA_A, "T22 · Régua Lula · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=D.corpo_regua_a(), alt=lib.medida("T22 · Régua Lula · ALT"), z=Z + 1,
+        Visual(P, lib.visual_html("T22_Reguas_Html",150,410,860,270, "T22 · Réguas · HTML", folha_de_estilo=CSS,
+                                  modelo_corpo=D.corpo_reguas(), alt=lib.medida("T22 · Réguas · ALT"), z=Z + 1,
                                   tab=110)),
         _regua("T22_ReguaLula_Regua", D.caixa_regua_a(), "T22 Para Lula", "Para Lula", CFG_REGUA_A,
                "Régua: arraste o botão (ou use as setas) para escolher quantos eleitores dos outros escolhem Lula, de 0 "
                "a 100%", 111),
-        Visual(P, lib.visual_html("T22_ReguaAbst_Html", *D.REGUA_B, "T22 · Régua abstenção · HTML",
-                                  folha_de_estilo=CSS, modelo_corpo=D.corpo_regua_bc(),
-                                  alt=lib.medida("T22 · Régua abstenção · ALT"), z=Z + 2, tab=120)),
         _regua("T22_ReguaAbst_Regua", D.caixa_regua_bc(D.REGUA_B), "T22 Não votam", "Não votam", CFG_REGUA_B,
                "Régua: arraste o botão (ou use as setas) para escolher quantos eleitores dos outros não escolhem "
                "ninguém, de 0 a 50%", 121),
-        Visual(P, lib.visual_html("T22_ReguaComp_Html", *D.REGUA_C, "T22 · Régua comparecimento · HTML",
-                                  folha_de_estilo=CSS, modelo_corpo=D.corpo_regua_bc(),
-                                  alt=lib.medida("T22 · Régua comparecimento · ALT"), z=Z + 3, tab=130)),
         _regua("T22_ReguaComp_Regua", D.caixa_regua_bc(D.REGUA_C), "T22 Comparecimento", "Comparecimento",
                CFG_REGUA_C, "Régua: arraste o botão (ou use as setas) para mudar o comparecimento, de 5 pontos a "
                "menos a 5 a mais", 131),
@@ -118,12 +112,12 @@ def declarar(ctx):
                            "Exterior · simulador · HTML", ordem=321, altura=exterior.ALTURA + 50),
     ]
     # a lista das pesquisas escolhe o cenário do resultado e do mapa; a régua segue mostrando todas as pesquisas
-    for alvo in ("T22_ReguaLula_Html", "T22_Heroi_Html", "T22_ReguaAbst_Html", "T22_ReguaComp_Html",
+    for alvo in ("T22_Reguas_Html", "T22_Heroi_Html",
                  "T22_ReguaLula_Regua", "T22_ReguaAbst_Regua", "T22_ReguaComp_Regua"):
         itens.append(Interacao(P, "T22_Pesquisas_Html", alvo, "NoFilter"))
     # o clique numa UF do mapa (23/10/2026) leva o resultado àquela UF (e o rótulo diz qual); a resposta, as réguas, a
     # lista das pesquisas (o 2º turno de cada uma é o do Brasil) e o alvo do exterior seguem no Brasil
-    for alvo in ("T22_Heroi_Html", "T22_ReguaLula_Html", "T22_ReguaAbst_Html", "T22_ReguaComp_Html",
+    for alvo in ("T22_Heroi_Html", "T22_Reguas_Html",
                  "T22_ReguaLula_Regua", "T22_ReguaAbst_Regua", "T22_ReguaComp_Regua", "T22_Pesquisas_Html",
                  "T22_Exterior_Alvo"):
         itens.append(Interacao(P, "T22_Grade_Html", alvo, "NoFilter"))

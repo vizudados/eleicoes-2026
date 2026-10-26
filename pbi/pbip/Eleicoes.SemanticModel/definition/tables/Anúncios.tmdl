@@ -1,5 +1,5 @@
 /// Gasto com anúncios (Biblioteca de Anúncios da Meta e prestação de contas ao TSE).
-table Anúncios
+table 'Anúncios'
 	isHidden
 	lineageTag: e301433a-034c-5737-ab5e-8b1115e439c2
 
@@ -22,7 +22,7 @@ table Anúncios
 		annotation SummarizationSetBy = Automatic
 
 	/// Período.
-	column Período
+	column 'Período'
 		dataType: string
 		lineageTag: 2aa94d91-3a14-5f56-ab09-ca82c08c9258
 		summarizeBy: none
@@ -52,7 +52,7 @@ table Anúncios
 		annotation SummarizationSetBy = Automatic
 
 	/// Nota do levantamento (método, ressalva).
-	column Observação
+	column 'Observação'
 		dataType: string
 		isHidden
 		lineageTag: a76a3031-5a6a-56f3-b138-dd375941f9fa
@@ -61,7 +61,7 @@ table Anúncios
 
 		annotation SummarizationSetBy = Automatic
 
-	partition Anúncios = m
+	partition 'Anúncios' = m
 		mode: import
 		source =
 				let
@@ -73,4 +73,3 @@ table Anúncios
 				    Nomes
 
 	annotation PBI_ResultType = Table
-

@@ -1,0 +1,8 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Contas
+@formato: #,0
+@descricao: Só cidades comparáveis com perda de votos; vazio nas demais.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+IF ( [T28 · saldo Flávio contra 2022] < 0, [T28 · saldo Flávio contra 2022] )

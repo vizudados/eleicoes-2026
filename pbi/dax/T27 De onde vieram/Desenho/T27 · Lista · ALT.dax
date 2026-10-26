@@ -1,0 +1,8 @@
+/*
+@pasta: T27 De onde vieram\Desenho
+@formato: texto
+@descricao: Lista municipal acessível.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+"As oito maiores contribuições de cidades ao ganho de Lula no recorte, em votos. Clique para filtrar o mapa; passe o mouse para abrir o dossiê."

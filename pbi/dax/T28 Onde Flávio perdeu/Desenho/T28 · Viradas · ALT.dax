@@ -1,0 +1,9 @@
+/*
+@pasta: T28 Onde Flávio perdeu\Desenho
+@formato: texto
+@descricao: Mapa de trocas acessível.
+@oraculo: dados/saida/2turno/comparacao_municipios.csv; dados/pbi/municipio_ano.csv; municipio_2turno.csv
+@gerado: pbi/scripts/desenho_t27_t28.py
+*/
+FORMAT ( [T28 · virou para Lula · municípios], "#,0" ) & " municípios de Flávio para Lula e "
+    & FORMAT ( [T28 · virou para Flávio · municípios], "#,0" ) & " no sentido contrário. Mapa só das trocas estritas; empate não conta."

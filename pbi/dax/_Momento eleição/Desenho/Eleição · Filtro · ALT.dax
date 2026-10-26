@@ -1,0 +1,6 @@
+/*
+@pasta: _Momento eleição\Desenho
+@formato: texto
+@descricao: Texto acessível da escolha e seu efeito.
+*/
+IF ( [Eleição · pós] = 1, "Pós Eleições 2026: resultado do segundo turno de 25/10/2026.", "Pré Eleições 2026: primeiro turno e trajetória até a disputa do segundo turno." )

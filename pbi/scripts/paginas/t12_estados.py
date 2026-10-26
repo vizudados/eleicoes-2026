@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-"""12 · Estados — como cada estado se moveu? (dono: agente das telas 11–15). Sem filtro.
+"""12 · Estados — como cada estado se moveu? (dono: agente das telas 11–15). Antes/Depois na casca.
 
-Lula perdeu margem em 26 das 27 unidades; Minas Gerais e Tocantins mudaram de lado; só o Distrito Federal subiu.
+Pré: a margem de Lula caiu em 26 das 27 UFs; Pós: caiu em 11 e subiu em 16. As frases seguem o turno escolhido.
 
   T12_Resposta_Html   coluna da resposta: "26 de 27" (contador), quem mudou de lado (sublinhado à mão), a exceção e o que
                       é margem (o Brasil 2022 e 2026 em barras; com uma unidade ou região clicada, o lugar clicado)
@@ -63,9 +63,10 @@ CSS_RESPOSTA = (
     ".t12r .t2{position:absolute;left:0;top:200px;width:540px;font-size:24px}"
     ".t12r .t2 .sub{color:var(--azul-escuro)}"
     ".t12r .t2 svg{display:block;margin-top:2px}"
-    ".t12r .t3{position:absolute;left:0;top:266px;width:540px}"
+    ".t12r .apoio{position:absolute;left:0;top:266px;width:540px;display:flex;flex-direction:column;gap:20px}"
+    ".t12r .t3{width:540px}"
     ".t12r .t3 b{color:var(--vermelho);white-space:nowrap}"
-    ".t12r .margem{position:absolute;left:0;top:322px;width:540px}"
+    ".t12r .margem{width:540px}"
     ".t12r .margem .ex{margin:8px 0 12px 0;font-size:15px}"
     ".t12r .br .lnb{display:grid;grid-template-columns:44px 300px 1fr 74px;align-items:center;gap:10px;height:34px}"
     ".t12r .br .ano{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--cinza)}"
@@ -210,7 +211,7 @@ def declarar(ctx):
         *pagina_lib.tooltip("ttT12Regiao", "Estados · região", 440, 330, "T12 · Tooltip região · HTML",
                             ordem=ORDEM_TT + 2, folha_de_estilo=CSS, modelo_corpo=_corpo_tt(CSS_TOOLTIP, "pino-tinta.png")),
         # o exterior ganha o tooltip país a país (pedido do Alisson, 23/10/2026)
-        *exterior.declarar(P, "T12_Exterior_Alvo", _caixa_exterior(), "Exterior · 1º turno · HTML", ordem=ORDEM_TT + 1,
+        *exterior.declarar(P, "T12_Exterior_Alvo", _caixa_exterior(), "Eleição · Exterior · HTML", ordem=ORDEM_TT + 1,
                            css_alvo=".ax{cursor:default;border-radius:2px}.ax:hover{background:rgba(28,25,21,.07)}"),
         # o clique numa unidade não filtra as regiões (o mapa da tela inteira) nem o alvo do exterior
         Interacao(P, "T12_Corrida_Html", "T12_Regioes_Html", "NoFilter"),

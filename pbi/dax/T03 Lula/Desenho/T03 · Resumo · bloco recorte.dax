@@ -26,7 +26,7 @@ VAR _grandeP = [T03 · cidade grande mais forte %]
 VAR _grandePop = [T03 · cidade grande mais forte população]
 -- 2 · Textos
 VAR _txtRec = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
-VAR _txtPct = FORMAT ( _pct, "0.0%" )
+VAR _txtPct = IF ( [Eleição · pós] = 1, FORMAT ( _pct, "0.00%" ), FORMAT ( _pct, "0.0%" ) )
 VAR _txtVotos = SWITCH ( TRUE (), ABS ( _votos ) >= 1000000, FORMAT ( _votos / 1000000, "0.00" ) & " mi", ABS ( _votos ) >= 1000, FORMAT ( _votos / 1000, "0.0" ) & " mil", FORMAT ( _votos, "#,0" ) )
 VAR _txtNFrente = FORMAT ( _nFrente, "#,0" )
 VAR _txtNMun = FORMAT ( _nMun, "#,0" )
@@ -58,7 +58,7 @@ VAR _fatoGrande =
 VAR _html =
     "<div class='tela rv'>"
         & "<div class='sob sobe'>Luiz Inácio Lula da Silva · PT · 13 · " & _txtRec & "</div>"
-        & "<div class='topo'><div class='big lula sobe d1'>" & _txtPct & "</div>"
+        & "<div class='topo'><div class='big lula sobe d1" & IF ( [Eleição · pós] = 1, " pos", "" ) & "'>" & _txtPct & "</div>"
         & "<div class='lado sobe d2'><div class='vv lula'>" & _txtVotos & "</div>"
         & "<div class='txt'>de votos · " & _pos & "º lugar</div></div></div>"
         & "<div class='man mc sobe d3'>" & _manchete & "</div>"

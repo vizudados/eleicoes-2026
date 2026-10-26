@@ -4,7 +4,10 @@
 @descricao: Votos de Lula menos os do adversário em 2022, pelos municípios (sem exterior).
 @gerado: pbi/scripts/desenho_t12.py
 */
-CALCULATE (
+IF ( [Eleição · pós] = 1, CALCULATE (
+    SUM ( 'Município segundo turno'[VotosPT] ) - SUM ( 'Município segundo turno'[VotosAdversario] ),
+    'Município segundo turno'[Ano] = 2022
+), CALCULATE (
     SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ),
     'Município ano'[Ano] = 2022
-)
+) )

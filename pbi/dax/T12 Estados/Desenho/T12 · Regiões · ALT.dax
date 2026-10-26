@@ -8,5 +8,5 @@
 VAR _r = [T12 · região da unidade]
 -- 2 · Textos
 RETURN
-    "As cinco regiões, da maior queda da margem de Lula à menor; clique numa região para ver só as unidades dela na "
+    "As cinco regiões, da menor para a maior variação da margem de Lula; clique numa região para ver só as unidades dela na "
         & "corrida."

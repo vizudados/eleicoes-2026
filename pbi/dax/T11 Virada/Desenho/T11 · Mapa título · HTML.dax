@@ -46,7 +46,7 @@ VAR _man =
 VAR _legVol =
     IF ( _vol > 0, "<span><i class='c-vl'></i>trocou Flávio por Lula</span>", "" )
 VAR _dica =
-    IF ( _nSel > 0, "clique fora dos pontos para limpar", "clique num ponto ou arraste uma área" )
+    IF ( _nSel > 0, "clique fora para limpar", "clique ou arraste" )
 -- 4 · Marcação
 RETURN
     "<div class='tela t11t'>"

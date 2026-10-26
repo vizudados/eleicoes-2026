@@ -40,7 +40,7 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
         'Variação líquida do comparecimento nacional entre turnos, com exterior; não identifica os mesmos eleitores.', '#,0', True)
     gravar('diferença final', 'ABS ( [T00 · 2º turno · Lula votos] - [T00 · 2º turno · Flávio votos] )',
         'Diferença final entre as duas candidaturas, votos nacionais com exterior.', '#,0', True)
-    blocos = []
+    blocos = ['[T23 · Resumo · HTML]']
     for cand, pos, cls in [('Flávio', 'esq', 'flavio'), ('Lula', 'dir', 'lula')]:
         nome = 'FLÁVIO BOLSONARO · PL' if cand == 'Flávio' else 'LULA · PT'
         selo = "<span class='selo-eleito' aria-label='Lula eleito'>eleito</span>" if cand == 'Lula' else ''
@@ -84,10 +84,12 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
     gravar('Resumo · ALT', '''"Diferença final: " & FORMAT ( [T23 · diferença final], "#,0" ) & " votos. Abstenção de "
     & FORMAT ( [T23 · abstenção 1º turno], "0.00%" ) & " para " & FORMAT ( [T23 · abstenção 2º turno], "0.00%" )
     & " entre os turnos; " & FORMAT ( [T23 · comparecimento a mais], "#,0" ) & " pessoas a mais compareceram, incluindo exterior."''', 'Resumo acessível da diferença e da participação.')
-    gravar('Achados · ALT', '''"Da zona eleitoral ao resultado. 2º turno: Lula "
+    gravar('Achados · ALT', '''"Encerramento. 2º turno: Lula "
     & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & "; Flávio "
     & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" )
-    & ". Primeiro turno menor, resultado final maior. Achados dos cinco atos levam às telas de origem, inclusive à história do PT e ao recorde de votos."''',
+    & ". Diferença: " & FORMAT ( [T23 · diferença final], "#,0" ) & " votos. Abstenção "
+    & FORMAT ( [T23 · abstenção 1º turno], "0.00%" ) & " → " & FORMAT ( [T23 · abstenção 2º turno], "0.00%" )
+    & "; " & FORMAT ( [T23 · comparecimento a mais], "#,0" ) & " presenças a mais. Achados dos cinco atos levam à origem."''',
            'Encerramento acessível, resultados e navegação.')
     print('T23: encerramento dos dois turnos e achados por ato gerados; PBIP preservado.')
 

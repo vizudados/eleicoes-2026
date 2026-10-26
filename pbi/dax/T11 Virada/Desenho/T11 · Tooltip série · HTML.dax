@@ -19,11 +19,12 @@ VAR _anos =
     ) /* lista */
 -- 2 · Textos
 VAR _txtNome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nome, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" )
-VAR _selo = SWITCH ( _sit, 2, "VIROU EM 2026", 3, "VOLTOU AO PT", 0, "PT À FRENTE", 1, "ADVERSÁRIO À FRENTE", "EMPATE" )
+VAR _selo = IF ( [Eleição · pós] = 1, "HISTÓRICO · 1º TURNO", SWITCH ( _sit, 2, "VIROU EM 2026", 3, "VOLTOU AO PT", 0, "PT À FRENTE", 1, "ADVERSÁRIO À FRENTE", "EMPATE" ) )
 VAR _clsSelo = IF ( _sit = 2 || _sit = 1, "selo az", "selo vm" )
 VAR _mao =
     SWITCH (
         TRUE (),
+        [Eleição · pós] = 1, "histórico do 1º turno",
         _sit = 2 && _nAdv = 1, "1ª vez sem o PT na frente",
         _sit = 2, "já tinha virado em " & _ult,
         _nAdv = 0, "sempre com o PT",
@@ -61,7 +62,7 @@ RETURN
     "<div class='tela tt11s'><div class='fita'></div>"
         & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
         & "<div class='nm sobe'>" & _txtNome & " <span class='uf'>" & _uf & "</span></div>"
-        & "<div class='rot entra d1'>MARGEM DO PT, ELEIÇÃO A ELEIÇÃO</div>"
+        & "<div class='rot entra d1'>MARGEM DO PT · 1º TURNO, ELEIÇÃO A ELEIÇÃO</div>"
         & "<svg class='serie' width='392' height='176' viewBox='0 0 392 176'>"
             & "<line class='zero' x1='0' x2='392' y1='70' y2='70'/>" & _barras
         & "</svg>"

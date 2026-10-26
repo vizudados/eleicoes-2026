@@ -99,6 +99,7 @@ def main() -> int:
         tempos = [tempos]
     linhas = ["# Teste de desempenho · painel Eleições 2026", "",
               f"{len(tempos)} consultas (uma por visual de dado + folhas de estilo), frio = cache do motor limpo.", "",
+              "Caracteres contam somente campos de texto; números e metadados do DataView não entram. Não é o payload integral do navegador.", "",
               "| Visual | frio (ms) | quente (ms) | linhas | caracteres | situação |", "|---|---:|---:|---:|---:|---|"]
     ruins = 0
     for t in sorted(tempos, key=lambda t: -(t.get("frio") or 0)):

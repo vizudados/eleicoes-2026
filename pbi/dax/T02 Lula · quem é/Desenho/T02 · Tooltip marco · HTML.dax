@@ -33,7 +33,7 @@ VAR _srcIcone = "https://vizudados.github.io/eleicoes-2026/midia/arte/icones/" &
 VAR _quadro =
     IF (
         _temFoto = 1,
-        "<img class='foto' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/trajetoria/" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _foto, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ".png' data-reserva='"
+        "<img class='foto' alt='' style='" & IF ( [T02 · desfecho] = 1, "object-position:15% 50%", "" ) & "' src='https://vizudados.github.io/eleicoes-2026/midia/trajetoria/" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _foto, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & ".png' data-reserva='"
             & _srcIcone & "'/>",
         "<img class='foto reserva' alt='' src='" & _srcIcone & "'/>"
             & "<div class='sem mao'>sem foto de licença aberta</div>"
@@ -44,7 +44,7 @@ VAR _rodape =
         & "<div class='nota cr'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _cred, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>" )
 -- 4 · Marcação
 VAR _html =
-    "<div class='tt2'>"
+    "<div class='tt2" & IF ( [T02 · desfecho] = 1, " final", "" ) & "'>"
         & "<div class='pol'>" & _quadro & "<div class='ano mao nc'>" & _ano & "</div>"
         & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/></div>"
         & "<div class='col'><div class='rot lula-esc sobe'>" & _txtData & "</div>"
