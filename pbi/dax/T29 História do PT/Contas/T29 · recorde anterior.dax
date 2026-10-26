@@ -1,0 +1,9 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: #,0
+@descricao: Referência nacional fixa, com exterior; recorde por candidatura em um único turno.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+CALCULATE ( [T29 · PT votos], REMOVEFILTERS ( 'PT histórico Brasil' ),
+    'PT histórico Brasil'[Ano] = 2022, 'PT histórico Brasil'[Turno] = 2 )

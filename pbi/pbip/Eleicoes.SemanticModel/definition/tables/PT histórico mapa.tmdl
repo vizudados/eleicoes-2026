@@ -1,0 +1,207 @@
+/// Turno decisivo de cada eleição. Vencedor e segundo colocado efetivos de todas as candidaturas; 1998/CE = Ciro, PPS. Fonte: pipeline/exportar_t29.py.
+table 'PT histórico mapa'
+	isHidden
+	lineageTag: eeaff18e-48df-522b-9cb7-3efabe996267
+
+	/// Ano
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9c2741f0-6172-54df-a110-cfcc8df8de4a
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Turno
+	column Turno
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: feb5c0ea-1444-51c4-a7fc-f67af3e727f6
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// UF
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 4bfcd65b-1f80-5e6d-a7eb-6a3daa3290e2
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Candidato PT
+	column 'Candidato PT'
+		dataType: string
+		isHidden
+		lineageTag: ef2be462-5aa4-5b5b-a077-18b3b5affabd
+		summarizeBy: none
+		sourceColumn: Candidato PT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Adversário
+	column 'Adversário'
+		dataType: string
+		isHidden
+		lineageTag: 06b2296a-7271-5c69-a8fe-ea274de65784
+		summarizeBy: none
+		sourceColumn: Adversário
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Partido adversário
+	column 'Partido adversário'
+		dataType: string
+		isHidden
+		lineageTag: 52a10862-843e-5876-9d2b-b34da7bab713
+		summarizeBy: none
+		sourceColumn: Partido adversário
+
+		annotation SummarizationSetBy = Automatic
+
+	/// VotosPT
+	column VotosPT
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 01dc48bc-21aa-5937-b90f-91046e3d6498
+		summarizeBy: none
+		sourceColumn: VotosPT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// VotosAdversario
+	column VotosAdversario
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: a49ed0bd-f37c-5e81-b6d8-4a48db869c69
+		summarizeBy: none
+		sourceColumn: VotosAdversario
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Validos
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 5a0546ad-3dab-59b5-9fac-21781e276cfd
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Comparecimento
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 73c38143-d59a-5b54-96e5-9f30371c3e2f
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Aptos
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 3586a0a4-40e2-5ab0-9df6-7c48b9620969
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Vencedor
+	column Vencedor
+		dataType: string
+		isHidden
+		lineageTag: dfd79504-a4bf-5880-bb91-05231e19c99b
+		summarizeBy: none
+		sourceColumn: Vencedor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Partido vencedor
+	column 'Partido vencedor'
+		dataType: string
+		isHidden
+		lineageTag: 9586e1ff-581a-5a3d-8a2a-6304bafa8134
+		summarizeBy: none
+		sourceColumn: Partido vencedor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Segundo colocado
+	column 'Segundo colocado'
+		dataType: string
+		isHidden
+		lineageTag: 59e2ef7c-51b3-5658-b8e3-b8cf86c148c6
+		summarizeBy: none
+		sourceColumn: Segundo colocado
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Grupo vencedor
+	column 'Grupo vencedor'
+		dataType: string
+		isHidden
+		lineageTag: ba6fe134-61a3-5dfe-9038-cdb616be8d02
+		summarizeBy: none
+		sourceColumn: Grupo vencedor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos vencedor
+	column 'Votos vencedor'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c3d0c27d-cc45-5f1b-9ffa-76ca697fd647
+		summarizeBy: none
+		sourceColumn: Votos vencedor
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Votos segundo
+	column 'Votos segundo'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 14eb4451-9f7f-5fff-8f20-bc83f55a258f
+		summarizeBy: none
+		sourceColumn: Votos segundo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Vantagem vencedor
+	column 'Vantagem vencedor'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c8cf447b-2a4e-59fd-b415-1e14a13596c1
+		summarizeBy: none
+		sourceColumn: Vantagem vencedor
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PT histórico mapa' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/t29_mapa.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "turno", "uf", "candidato_pt", "adversario", "partido_adversario", "votos_pt", "votos_adv", "validos", "comparecimento", "aptos", "vencedor", "partido_vencedor", "segundo", "grupo_vencedor", "votos_vencedor", "votos_segundo", "vantagem_vencedor"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"turno", Int64.Type}, {"uf", type text}, {"candidato_pt", type text}, {"adversario", type text}, {"partido_adversario", type text}, {"votos_pt", Int64.Type}, {"votos_adv", Int64.Type}, {"validos", Int64.Type}, {"comparecimento", Int64.Type}, {"aptos", Int64.Type}, {"vencedor", type text}, {"partido_vencedor", type text}, {"segundo", type text}, {"grupo_vencedor", type text}, {"votos_vencedor", Int64.Type}, {"votos_segundo", Int64.Type}, {"vantagem_vencedor", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"turno", "Turno"}, {"uf", "UF"}, {"candidato_pt", "Candidato PT"}, {"adversario", "Adversário"}, {"partido_adversario", "Partido adversário"}, {"votos_pt", "VotosPT"}, {"votos_adv", "VotosAdversario"}, {"validos", "Validos"}, {"comparecimento", "Comparecimento"}, {"aptos", "Aptos"}, {"vencedor", "Vencedor"}, {"partido_vencedor", "Partido vencedor"}, {"segundo", "Segundo colocado"}, {"grupo_vencedor", "Grupo vencedor"}, {"votos_vencedor", "Votos vencedor"}, {"votos_segundo", "Votos segundo"}, {"vantagem_vencedor", "Vantagem vencedor"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

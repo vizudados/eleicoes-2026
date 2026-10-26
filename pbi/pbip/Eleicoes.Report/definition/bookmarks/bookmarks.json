@@ -61,6 +61,8 @@
         "T27_LEITURA_FECHA_01",
         "T28_LEITURA_ABRE_01",
         "T28_LEITURA_FECHA_01",
+        "T29_LEITURA_ABRE_01",
+        "T29_LEITURA_FECHA_01",
         "T23_LEITURA_ABRE_01",
         "T23_LEITURA_FECHA_01"
       ]
@@ -97,6 +99,7 @@
         "T18_CHEGADA_01",
         "T27_CHEGADA_01",
         "T28_CHEGADA_01",
+        "T29_CHEGADA_01",
         "T23_CHEGADA_01",
         "TIX_CHEGADA_01"
       ]

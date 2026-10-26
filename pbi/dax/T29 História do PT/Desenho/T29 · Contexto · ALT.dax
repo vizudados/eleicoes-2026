@@ -1,0 +1,11 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Denominadores acessíveis.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+"PT: " & FORMAT ( [T29 · fatia 2002], "0.00%" ) & " dos válidos em 2002 e "
+    & FORMAT ( [T29 · fatia 2026], "0.00%" ) & " em 2026. Eleitorado: "
+    & FORMAT ( [T29 · aptos 1989] / 1e6, "0.0" ) & " milhões em 1989 e "
+    & FORMAT ( [T29 · aptos 2026] / 1e6, "0.0" ) & " milhões em 2026."

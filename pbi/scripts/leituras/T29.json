@@ -1,0 +1,8 @@
+{
+  "titulo": "Como ler a história do voto no PT",
+  "blocos": [
+    ["Como ler", "O mapa passa pelas dez eleições de 1989 a 2026 e para no fim; pause ou escolha um ano na régua. Ele usa o segundo turno quando houve, e o primeiro em 1994 e 1998: cor de quem venceu a UF, intensidade da vantagem sobre o segundo colocado entre todas as candidaturas. Passe numa UF para ler sua série no dossiê; o gráfico separa os turnos e trata o PT e o principal adversário nacional com a mesma escala."],
+    ["De onde vêm os números", "Resultados por UF do TSE: Brasil inclui as 27 UFs e o exterior uma vez; os contadores do mapa usam só os 27 estados. O recorde compara uma candidatura em um único turno presidencial direto: 127 candidaturas/turnos desde 1989 e o limite do mais votado nas eleições diretas anteriores, conforme o TSE. Fontes e critérios estão em docs/video/segundo-turno/PT-HISTORICO-METODO.md e dados/saida/pt_historico/fontes.csv."],
+    ["Para lembrar", "Recorde em votos não é recorde percentual: o eleitorado também cresceu, e a votação do PT caiu de 2014 para 2018. As fontes históricas adotadas fecham as contas, mas há versões oficiais divergentes: 16 de 43 comparações diferem, inclusive 1989, 1994, 1998, 2002, 2010 e 2018; não foram ajustadas para coincidir. Em 1989 os válidos estaduais são a soma das candidaturas; em 2010 o voto em trânsito foi atribuído à UF da capital onde ocorreu a votação."]
+  ]
+}

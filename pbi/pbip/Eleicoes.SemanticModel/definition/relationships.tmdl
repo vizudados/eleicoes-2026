@@ -42,6 +42,14 @@ relationship 7002e579-d386-5920-b8b1-f307f4ae1dcd
 	fromColumn: 'Trends UF tempo'.UF
 	toColumn: UF.UF
 
+relationship e11eaadc-942c-5ebd-91f0-8bc24c957d8c
+	fromColumn: 'PT histórico UF'.UF
+	toColumn: UF.UF
+
+relationship 8138557f-ee49-5d0a-b43b-1226e38322da
+	fromColumn: 'PT histórico mapa'.UF
+	toColumn: UF.UF
+
 relationship e1fa0645-c8a7-5505-b75d-0e1649906e67
 	fromColumn: 'Município segundo turno'.CodIBGE
 	toColumn: 'Município'.CodIBGE

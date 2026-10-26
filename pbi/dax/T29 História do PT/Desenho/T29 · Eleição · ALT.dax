@@ -1,0 +1,11 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Dossiê nacional acessível.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+"Eleição " & SELECTEDVALUE ( 'PT histórico Brasil'[Ano] ) & ", "
+    & SELECTEDVALUE ( 'PT histórico Brasil'[Turno] ) & "º turno. " & [T29 · candidato PT] & ": "
+    & FORMAT ( [T29 · PT votos], "#,0" ) & " votos; " & [T29 · adversário] & ": "
+    & FORMAT ( [T29 · adversário votos], "#,0" ) & " votos. Dossiê com válidos e participação."

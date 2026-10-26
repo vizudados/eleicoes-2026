@@ -1,0 +1,8 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: #,0
+@descricao: Resultado nacional do ano e turno em contexto, com exterior; não acumular eleições.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+SUM ( 'PT histórico Brasil'[VotosPT] )

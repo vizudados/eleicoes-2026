@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "T23_Fecho_Ir28",
   "position": {
-    "x": 1255,
-    "y": 865,
+    "x": 1175,
+    "y": 830,
     "z": 1020,
-    "height": 85,
-    "width": 470,
+    "height": 70,
+    "width": 600,
     "tabOrder": 228
   },
   "visual": {
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 27: Onde a vantagem de Flávio encolheu'"
+                  "Value": "'Voltar à tela 27: As viradas de municípios e estados'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 27: Onde a vantagem de Flávio encolheu'"
+                  "Value": "'Voltar à tela 27: As viradas de municípios e estados'"
                 }
               }
             },

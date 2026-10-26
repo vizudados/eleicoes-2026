@@ -1,0 +1,9 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: #,0
+@descricao: Quantidade de UFs, entre 27, com cada vencedor no ano; exterior excluído, tooltip de UF não altera o país.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+COALESCE ( CALCULATE ( COUNTROWS ( 'PT histórico mapa' ),
+    REMOVEFILTERS ( 'UF' ), 'PT histórico mapa'[UF] <> "ZZ", 'PT histórico mapa'[Grupo vencedor] = "PT" ), 0 )

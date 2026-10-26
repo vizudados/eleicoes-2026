@@ -3,10 +3,10 @@
   "name": "T23_Fecho_Ir10",
   "position": {
     "x": 145,
-    "y": 414,
+    "y": 620,
     "z": 1020,
-    "height": 35,
-    "width": 1020,
+    "height": 64,
+    "width": 450,
     "tabOrder": 210
   },
   "visual": {
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 03: Até a véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
+                  "Value": "'Voltar à tela 03: Pesquisas diante da urna do primeiro turno'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 03: Até a véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.'"
+                  "Value": "'Voltar à tela 03: Pesquisas diante da urna do primeiro turno'"
                 }
               }
             },

@@ -5,7 +5,7 @@
     "x": 1180,
     "y": 124,
     "z": 4000,
-    "height": 476,
+    "height": 545,
     "width": 600,
     "tabOrder": 950
   },
@@ -91,7 +91,7 @@
             "bodyTemplate": {
               "expr": {
                 "Literal": {
-                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#E5DBC8;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>O que ficou da eleição</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>Cada achado leva à tela de onde veio. À direita estão as pesquisas diante da urna, o resultado final, os ganhos entre turnos e as viradas de municípios e estados.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>As mesmas fontes das telas: TSE, IBGE, pesquisas registradas e fontes digitais identificadas em cada página. Os resultados finais são de 25/10/2026.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>Dados e código do painel estão abertos em github.com/vizudados/eleicoes-2026.</div></div></div></div>{{content}}'"
+                  "Value": "'<style>.lt{position:absolute;left:0;top:14px;width:600px;background:#E5DBC8;color:#1C1915;padding:40px 40px 32px 40px;border:1.5px solid #CBBDA2;box-shadow:0 18px 40px rgba(28,25,21,.22)}.lt .fita{position:absolute;left:230px;top:-14px;width:140px;height:26px;background:#CBBDA2;opacity:.8;transform:rotate(-2deg)}.lt .x{position:absolute;right:16px;top:14px;width:40px;height:40px;border-radius:20px;border:1.5px solid #CBBDA2;display:flex;align-items:center;justify-content:center;font-size:22px;line-height:1;color:#48423A}.lt .ast{font-family:var(--mao);font-size:30px;color:var(--vermelho-escuro);margin-right:8px}.lt .tt{font-size:24px;font-weight:600;margin:0 0 22px 0;padding-right:50px}.lt .bl{margin-bottom:20px}.lt .bl:last-child{margin-bottom:0}.lt .bl .rot{margin-bottom:6px}.lt .bl .txt{font-size:16px;color:var(--tinta)}</style><div class=''tela''><div class=''lt''><div class=''fita''></div><div class=''x''>×</div><div class=''tt sobe''><span class=''ast''>*</span>O que ficou da eleição</div><div class=''bl sobe d2''><div class=''rot''>Como ler</div><div class=''txt''>O resultado dos dois turnos usa o mesmo desenho da capa: Flávio à esquerda e Lula à direita, com o segundo turno em destaque. Os achados dos cinco atos levam às telas de origem; o ato V inclui a história do PT e o recorde de votos.</div></div><div class=''bl sobe d3''><div class=''rot''>De onde vêm os números</div><div class=''txt''>As mesmas fontes das telas: TSE, IBGE, pesquisas registradas e fontes digitais identificadas em cada página. Os resultados finais são de 25/10/2026; a série histórica e suas divergências de versões estão explicadas no i da História do PT.</div></div><div class=''bl sobe d4''><div class=''rot''>Para lembrar</div><div class=''txt''>Dados e código do painel estão abertos em github.com/vizudados/eleicoes-2026.</div></div></div></div>{{content}}'"
                 }
               }
             }
@@ -225,7 +225,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Como ler a tela 28 · Encerramento'"
+                  "Value": "'Como ler a tela 29 · Encerramento'"
                 }
               }
             }

@@ -1,0 +1,8 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: #,0
+@descricao: Resultado da UF no turno decisivo; vencedor efetivo entre todos os candidatos.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+SUM ( 'PT histórico mapa'[VotosPT] )

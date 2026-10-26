@@ -1,0 +1,134 @@
+/// 18 pares de ano/turno, 27 UFs e ZZ. Fonte TSE, versões documentadas.
+table 'PT histórico UF'
+	isHidden
+	lineageTag: c8d661fc-1ace-5c5d-8fe1-0f1e86135dfe
+
+	/// Ano
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 943716b8-0096-5aa4-9013-d7697e140095
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Turno
+	column Turno
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0c5dd6e1-9068-5bbb-979a-23ee8fa06f7f
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// UF
+	column UF
+		dataType: string
+		isHidden
+		lineageTag: 4a27d341-f54e-528c-923a-7b14a7ab05bc
+		summarizeBy: none
+		sourceColumn: UF
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Candidato PT
+	column 'Candidato PT'
+		dataType: string
+		isHidden
+		lineageTag: 1ec44618-39f5-5609-b8cf-269f10017528
+		summarizeBy: none
+		sourceColumn: Candidato PT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Adversário
+	column 'Adversário'
+		dataType: string
+		isHidden
+		lineageTag: a6a68917-ac40-50db-812d-778410e5eec5
+		summarizeBy: none
+		sourceColumn: Adversário
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Partido adversário
+	column 'Partido adversário'
+		dataType: string
+		isHidden
+		lineageTag: ce3b5e2d-f88c-50c8-a9b6-52c5304ebad8
+		summarizeBy: none
+		sourceColumn: Partido adversário
+
+		annotation SummarizationSetBy = Automatic
+
+	/// VotosPT
+	column VotosPT
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 18485e3d-1e90-52a3-b8fb-fac108cef717
+		summarizeBy: none
+		sourceColumn: VotosPT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// VotosAdversario
+	column VotosAdversario
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4db4a71e-426c-5778-9f3d-e69fbe088ee2
+		summarizeBy: none
+		sourceColumn: VotosAdversario
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Validos
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 7b6f5d5c-dcdb-5b97-ac8c-317562bab185
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Comparecimento
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: b3baab10-e471-55b5-b359-a54bb3d6f8c0
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Aptos
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: a6b248a7-51c7-5af3-903e-4876008b704e
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'PT histórico UF' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/pt_historico_uf.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "turno", "uf", "candidato_pt", "adversario", "partido_adversario", "votos_pt", "votos_adv", "validos", "comparecimento", "aptos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"turno", Int64.Type}, {"uf", type text}, {"candidato_pt", type text}, {"adversario", type text}, {"partido_adversario", type text}, {"votos_pt", Int64.Type}, {"votos_adv", Int64.Type}, {"validos", Int64.Type}, {"comparecimento", Int64.Type}, {"aptos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"turno", "Turno"}, {"uf", "UF"}, {"candidato_pt", "Candidato PT"}, {"adversario", "Adversário"}, {"partido_adversario", "Partido adversário"}, {"votos_pt", "VotosPT"}, {"votos_adv", "VotosAdversario"}, {"validos", "Validos"}, {"comparecimento", "Comparecimento"}, {"aptos", "Aptos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

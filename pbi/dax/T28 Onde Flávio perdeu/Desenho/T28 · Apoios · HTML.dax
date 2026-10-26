@@ -12,7 +12,7 @@ VAR _t0 = CONCATENATEX ( _g0,
 VAR _g1 = TOPN ( 2, ADDCOLUMNS ( VALUES ( 'Município'[Rótulo] ), "@v", [T28 · perda positiva para Jair] ), [@v], DESC, 'Município'[Rótulo], ASC )
 VAR _t1 = CONCATENATEX ( _g1,
     IF ( NOT ISBLANK ( [@v] ), "<div><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( 'Município'[Rótulo], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
-    & "</span><b>" & (IF ( [@v] > 0, "+", IF ( [@v] < 0, "−", "" ) ) & (SWITCH ( TRUE (), ABS ( [@v] ) >= 1e6, FORMAT ( ABS ( [@v] ) / 1e6, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( ABS ( [@v] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [@v] ), "#,0" ) ))) & "</b></div>" ), "", [@v], DESC )
+    & "</span><b>" & ("−" & (SWITCH ( TRUE (), ABS ( [@v] ) >= 1e6, FORMAT ( ABS ( [@v] ) / 1e6, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( ABS ( [@v] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [@v] ), "#,0" ) ))) & "</b></div>" ), "", [@v], DESC )
 VAR _viradas = TOPN ( 2, ADDCOLUMNS ( VALUES ( 'UF'[Nome] ), "@v", [T28 · estado virou · mudança] ), [@v], DESC, 'UF'[Nome], ASC )
 VAR _ufVirada = CONCATENATEX ( _viradas, IF ( NOT ISBLANK ( [@v] ), 'UF'[Nome] & " " ), "" )
 RETURN "<div class='tela st-apoios'><div><div class='rot'>Estados · mudança em votos</div>" & _t0

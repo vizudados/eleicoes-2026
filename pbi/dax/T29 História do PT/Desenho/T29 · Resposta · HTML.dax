@@ -1,0 +1,11 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Manchete responde à pergunta; recorde em contagem, sem atribuir crescimento contínuo ou causalidade.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+"<div class='tela h29'><div class='man sobe'><span class='num'>"
+    & FORMAT ( [T29 · recorde], "#,0" ) & "</span> votos: o recorde presidencial</div>"
+    & "<div class='txt sobe d2'>Lula teve a maior votação de uma candidatura em um turno de eleição presidencial direta no Brasil. "
+    & "<b>" & FORMAT ( [T29 · acima do recorde anterior], "#,0" ) & " votos</b> acima da marca dele em 2022.</div></div>"

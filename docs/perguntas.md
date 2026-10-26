@@ -48,7 +48,8 @@ eleitoral ao país.
 | 25 | V · O 2º turno | Como foi a apuração do 2º turno? (Apuração, T18) | Lula foi eleito por 4.430.191 votos; Flávio liderou das 19h45 às 20h24 (primeiro registro) | API do TSE |
 | 26 | V · O 2º turno | De onde vieram os votos que elegeram Lula? (De onde vieram, T27) | ganhos de Lula e Flávio, identidade dos volumes observados, comparecimento e território | TSE e IBGE, sem exterior |
 | 27 | V · O 2º turno | Onde Flávio perdeu a eleição? (Onde Flávio perdeu, T28) | redução da vantagem em votos, viradas e comparação com Jair em 2022 | TSE e IBGE, sem exterior |
-| 28 | Fim | E o que fica desta eleição? (Encerramento, T23) | Da zona eleitoral ao resultado: os achados de cada ato + fontes + créditos das fotos | — |
+| 28 | V · O 2º turno | Como o voto no PT chegou ao recorde? (História do PT, T29) | 64.256.232 votos, recorde presidencial direto em um único turno; mapa dos estados de 1989 a 2026 e turnos separados na série | TSE, versões históricas documentadas |
+| 29 | Fim | E o que fica desta eleição? (Encerramento, T23) | Da zona eleitoral ao resultado: os dois turnos em espelho e os achados dos cinco atos, com retorno à origem | — |
 
 Tela 16 · Zona eleitoral (código T20, capítulo IV): **Como votou cada zona eleitoral da cidade?** — as zonas eleitorais de 34 cidades
 (as 27 capitais, as 6 maiores que trocaram Lula por Flávio de 2022 para 2026 e Contagem; a tela abre no Rio de
@@ -56,7 +57,7 @@ Janeiro), escolhidas no filtro do topo. Resposta no Rio: 1.449 locais de votaç�
 e 35 de Flávio para Lula, com a margem da cidade quase parada (−3,6 → −4,0 pontos). TSE (seções e cadastro de locais)
 × malha do IBGE.
 
-Tela 22 · Debate Globo (código T26, capítulo V, colada na 21 · Debate Band; painel com 29 telas): **O último debate mudou alguma coisa?** — o debate da TV Globo de 23/10/2026, o último antes do 2º turno,
+Tela 22 · Debate Globo (código T26, capítulo V, colada na 21 · Debate Band; painel com 30 telas): **O último debate mudou alguma coisa?** — o debate da TV Globo de 23/10/2026, o último antes do 2º turno,
 numa tela que conserva a ficha da noite, os dois púlpitos e os números divulgados de buscas, audiência, transmissão na internet, redes e pesquisas de campo inteiro depois do debate. O que não foi divulgado permanece identificado, sem promessa de atualização futura. Cada número usa a régua da Band de 18/10.
 Base: `dados/pbi/debate_globo.csv` (emissora, imprensa, Kantar IBOPE, Google Trends, Bites) e pesquisas registradas no
 TSE.

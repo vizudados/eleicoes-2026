@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "T23_Fecho_Ir25",
+  "name": "T23_Fecho_Ir19",
   "position": {
-    "x": 145,
-    "y": 549,
+    "x": 645,
+    "y": 810,
     "z": 1020,
-    "height": 35,
-    "width": 1020,
-    "tabOrder": 225
+    "height": 64,
+    "width": 450,
+    "tabOrder": 219
   },
   "visual": {
     "visualType": "actionButton",
@@ -588,7 +588,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T23_Fecho_Ir25'"
+                  "Value": "'T23_Fecho_Ir19'"
                 }
               }
             }
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 08: Quem tem 70 anos ou mais falta 3,9 vezes mais que quem tem 16 ou 17.'"
+                  "Value": "'Voltar à tela 15: Explore o voto na sua cidade'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 08: Quem tem 70 anos ou mais falta 3,9 vezes mais que quem tem 16 ou 17.'"
+                  "Value": "'Voltar à tela 15: Explore o voto na sua cidade'"
                 }
               }
             },
@@ -702,7 +702,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T25_CHEGADA_01'"
+                  "Value": "'T19_CHEGADA_01'"
                 }
               }
             }

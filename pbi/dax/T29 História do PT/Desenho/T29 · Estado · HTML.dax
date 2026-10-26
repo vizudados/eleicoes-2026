@@ -1,0 +1,26 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Dossiê estadual da série, sem presumir que o principal adversário venceu toda UF não petista.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SELECTEDVALUE ( 'UF'[Nome], "Estado" ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _anos = ADDCOLUMNS ( VALUES ( 'PT histórico mapa'[Ano] ),
+    "@pt1", [T29 · estado · PT 1º], "@pt2", [T29 · estado · PT 2º],
+    "@adv1", [T29 · estado · adversário 1º], "@adv2", [T29 · estado · adversário 2º],
+    "@partido", [T29 · mapa · partido vencedor], "@t", [T29 · mapa · turno] )
+VAR _linhas = CONCATENATEX ( _anos,
+    "<tr><td>" & 'PT histórico mapa'[Ano] & " · " & [@t] & "º</td><td>" & FORMAT ( [@pt1] / 1e6, "0.00" ) & " / "
+    & IF ( ISBLANK ( [@pt2] ), "—", FORMAT ( [@pt2] / 1e6, "0.00" ) )
+    & "</td><td>" & FORMAT ( [@adv1] / 1e6, "0.00" ) & " / "
+    & IF ( ISBLANK ( [@adv2] ), "—", FORMAT ( [@adv2] / 1e6, "0.00" ) )
+    & "</td><td>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@partido], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</td></tr>",
+    "", 'PT histórico mapa'[Ano], ASC )
+RETURN "<div class='tela dossier29'><div class='fita'></div><div class='rot'>DOSSIÊ · HISTÓRIA DO ESTADO</div>"
+    & "<h2>" & _nome & "</h2><p>Votos em milhões · 1º / 2º turno. Traço: não houve 2º turno.</p>"
+    & "<table><thead><tr><th>Ano · decisão</th><th class='lula'>PT · 1º / 2º</th><th class='flavio'>Adv. · 1º / 2º</th><th>Venceu</th></tr></thead>"
+    & "<tbody>" & _linhas & "</tbody></table><p>PT: Lula; Dilma em 2010/2014; Haddad em 2018.</p>"
+    & "<p>Adversário é o mais votado fora do PT no país; o vencedor da UF pode ser outro. Em 1998, Ceará: Ciro (PPS).</p>"
+    & "<div class='mao'>cada estado tem sua história</div>"
+    & "<small>Fontes: TSE · versões históricas descritas no i da página.</small></div>"

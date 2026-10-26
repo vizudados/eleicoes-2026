@@ -1,4 +1,4 @@
-"""roteiro — as 29 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
+"""roteiro — as 30 telas do painel, na ordem da história (docs/perguntas.md e o mockup do Figma, rodada 3).
 
 Cada tela: código (nome da página no PBIR e prefixo de visuais e medidas), nome curto, pergunta (o título da tela, na
 voz de quem assiste), ato, se é escura (capa e encerramento), o filtro que a tela tem (só onde muda a leitura, pedido
@@ -102,6 +102,8 @@ TELAS = [
          fonte="Fontes: TSE · 1º e 2º turnos de 2026, sem exterior · IBGE, Censo 2022"),
     Tela("T28", "Onde Flávio perdeu", "Onde Flávio perdeu a eleição?", "V · O 2º turno", filtro="UF",
          fonte="Fontes: TSE · 1º e 2º turnos de 2026 e 2º turno de 2022, sem exterior · IBGE, Censo 2022"),
+    Tela("T29", "História do PT", "Como o voto no PT chegou ao recorde?", "V · O 2º turno",
+         fonte="Fonte: TSE · eleições presidenciais de 1989 a 2026 (resultados por UF)"),
     Tela("T23", "Encerramento", "E o que fica desta eleição?", "Fim", escura=True,
          fonte="Vizu Dados · vizudados.com.br · dados e código em github.com/vizudados/eleicoes-2026"),
 ]

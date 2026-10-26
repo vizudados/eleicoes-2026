@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "T00_Capa_Comecar",
   "position": {
-    "x": 1680,
-    "y": 560,
+    "x": 1792,
+    "y": 584,
     "z": 1020,
-    "height": 70,
-    "width": 120,
+    "height": 60,
+    "width": 100,
     "tabOrder": 110
   },
   "visual": {

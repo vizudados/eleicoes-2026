@@ -1,0 +1,8 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: 0
+@descricao: Segundo turno quando houve; 1994 e 1998 no primeiro.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+MAX ( 'PT histórico mapa'[Turno] )

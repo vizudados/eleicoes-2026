@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "T23_Fecho_Ir24",
+  "name": "T23_Fecho_Ir29",
   "position": {
-    "x": 145,
-    "y": 684,
+    "x": 1175,
+    "y": 900,
     "z": 1020,
-    "height": 35,
-    "width": 1020,
-    "tabOrder": 224
+    "height": 70,
+    "width": 600,
+    "tabOrder": 229
   },
   "visual": {
     "visualType": "actionButton",
@@ -588,7 +588,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T23_Fecho_Ir24'"
+                  "Value": "'T23_Fecho_Ir29'"
                 }
               }
             }
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 12: Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%.'"
+                  "Value": "'Voltar à tela 28: História do PT e recorde de votos'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 12: Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%.'"
+                  "Value": "'Voltar à tela 28: História do PT e recorde de votos'"
                 }
               }
             },
@@ -702,7 +702,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T24_CHEGADA_01'"
+                  "Value": "'T29_CHEGADA_01'"
                 }
               }
             }

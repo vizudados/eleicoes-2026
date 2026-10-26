@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 28 Encerramento — E o que fica desta eleição?'"
+                  "Value": "'Próxima: 28 História do PT — Como o voto no PT chegou ao recorde?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 28 Encerramento — E o que fica desta eleição?'"
+                  "Value": "'Próxima: 28 História do PT — Como o voto no PT chegou ao recorde?'"
                 }
               }
             },
@@ -722,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T23_CHEGADA_01'"
+                  "Value": "'T29_CHEGADA_01'"
                 }
               }
             }

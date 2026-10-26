@@ -1,0 +1,8 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: texto
+@descricao: Identidade da candidatura no turno decisivo da UF.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+SELECTEDVALUE ( 'PT histórico mapa'[Partido vencedor] )

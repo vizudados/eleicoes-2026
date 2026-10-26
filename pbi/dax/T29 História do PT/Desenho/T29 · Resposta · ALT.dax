@@ -1,0 +1,10 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Manchete acessível.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+"Lula recebeu " & FORMAT ( [T29 · recorde], "#,0" )
+    & " votos, recorde de uma candidatura em um turno presidencial direto; "
+    & FORMAT ( [T29 · acima do recorde anterior], "#,0" ) & " acima de 2022. Recorde em votos não significa recorde percentual."

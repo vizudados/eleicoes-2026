@@ -169,7 +169,7 @@ RETURN "<div class='tela st-res'><div class='sob'>DO 1º PARA O 2º TURNO · " &
             tabela+=f'''\n    & "<div class='parcela'><span>" & ({label}) & "</span><b class='num'>" & FORMAT ( {r(medida)}, "+#,0;-#,0;0" ) & "</b></div>"'''
         tabela+=f'''\n    & "<div class='parcela total'><span>" & IF ( {r('ganhos da dupla')} >= 0, "Ganho total da dupla", "Saldo total da dupla" )
     & "</span><b class='num'>= " & FORMAT ( {r('ganhos da dupla')}, "+#,0;-#,0;0" ) & "</b></div>"
-    & "<div class='nota'>a urna não mostra quem trocou de candidato.</div></div>"'''
+    & "<div class='nota'>A urna não mostra quem trocou de candidato.</div></div>"'''
     else:
         tabela=f'''"<div class='resumo-viradas'><div class='rot'>ONDE O VENCEDOR MUDOU · MUNICÍPIOS · VITÓRIA ESTRITA</div>"
     & "<div class='viradas'><div><b class='num lula-esc'>" & FORMAT ( {r('virou para Lula · municípios')}, "#,0" )
@@ -195,11 +195,14 @@ VAR _html = "<div class='tela st-fluxo'><div class='rot antes'>1º TURNO</div><d
         valor=r('ganho Lula' if p=='T27' else 'mudança de vantagem')
         if p=='T28' and j==1:
             valor=r('perda positiva para Jair')
+        texto_valor = compacto('[@v]', not (p=='T28' and j==1))
+        if p=='T28' and j==1:
+            texto_valor = '"−" & (' + texto_valor + ')'
         lista=f'ADDCOLUMNS ( VALUES ( {col} ), "@v", {valor} )'
         partes.append(f'''VAR _g{j} = TOPN ( 2, {lista}, [@v], DESC, {col}, ASC )
 VAR _t{j} = CONCATENATEX ( _g{j},
     IF ( NOT ISBLANK ( [@v] ), "<div><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( {col}, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
-    & "</span><b>" & ({compacto('[@v]',True)}) & "</b></div>" ), "", [@v], DESC )''')
+    & "</span><b>" & ({texto_valor}) & "</b></div>" ), "", [@v], DESC )''')
     extra=''
     if p=='T28':
         partes.append(f'''VAR _viradas = TOPN ( 2, ADDCOLUMNS ( VALUES ( 'UF'[Nome] ), "@v", {r('estado virou · mudança')} ), [@v], DESC, 'UF'[Nome], ASC )

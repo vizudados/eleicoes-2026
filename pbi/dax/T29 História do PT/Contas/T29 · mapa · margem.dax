@@ -1,0 +1,8 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: 0.00%
+@descricao: Vantagem real do vencedor sobre o segundo colocado, sobre os válidos. Mesma escala para todos os partidos.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+DIVIDE ( [T29 · mapa · vantagem votos], [T29 · mapa · válidos] )

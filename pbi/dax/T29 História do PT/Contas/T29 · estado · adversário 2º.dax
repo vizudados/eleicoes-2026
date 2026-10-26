@@ -1,0 +1,10 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: #,0
+@descricao: Série estadual completa do dossiê. Ano vem da linha decisiva; turno ausente permanece BLANK, nunca zero.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+VAR _ano = SELECTEDVALUE ( 'PT histórico mapa'[Ano] )
+RETURN CALCULATE ( SUM ( 'PT histórico UF'[VotosAdversario] ),
+    'PT histórico UF'[Ano] = _ano, 'PT histórico UF'[Turno] = 2 )

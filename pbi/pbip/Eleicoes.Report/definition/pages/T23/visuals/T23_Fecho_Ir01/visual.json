@@ -3,10 +3,10 @@
   "name": "T23_Fecho_Ir01",
   "position": {
     "x": 145,
-    "y": 479,
+    "y": 746,
     "z": 1020,
-    "height": 35,
-    "width": 1020,
+    "height": 64,
+    "width": 450,
     "tabOrder": 201
   },
   "visual": {
@@ -661,7 +661,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 04: Flávio terminou 2,22 mi de votos à frente de Lula.'"
+                  "Value": "'Voltar à tela 04: A vantagem de Flávio no primeiro turno'"
                 }
               }
             }
@@ -688,7 +688,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 04: Flávio terminou 2,22 mi de votos à frente de Lula.'"
+                  "Value": "'Voltar à tela 04: A vantagem de Flávio no primeiro turno'"
                 }
               }
             },

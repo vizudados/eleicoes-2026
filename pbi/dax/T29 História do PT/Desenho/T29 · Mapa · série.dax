@@ -1,0 +1,12 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Campo de desenho do Deneb: valores observados de cada UF, uma linha original por UF.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+VAR _anos = ADDCOLUMNS ( VALUES ( 'PT histórico mapa'[Ano] ),
+    "@grupo", [T29 · mapa · grupo], "@m", [T29 · mapa · margem], "@t", [T29 · mapa · turno] )
+RETURN CONCATENATEX ( _anos,
+    'PT histórico mapa'[Ano] & "|" & [@grupo] & "|" & FORMAT ( [@m], "0.00000000", "en-US" ) & "|" & [@t],
+    ";", 'PT histórico mapa'[Ano], ASC )

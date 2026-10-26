@@ -32,6 +32,6 @@ VAR _html = "<div class='tela st-fluxo'><div class='rot antes'>1º TURNO</div><d
     & "<div class='parcela'><span>" & (IF ( [T27 · queda de brancos e nulos] >= 0, "Brancos e nulos a menos", "Brancos e nulos a mais" )) & "</span><b class='num'>" & FORMAT ( [T27 · queda de brancos e nulos], "+#,0;-#,0;0" ) & "</b></div>"
     & "<div class='parcela total'><span>" & IF ( [T27 · ganhos da dupla] >= 0, "Ganho total da dupla", "Saldo total da dupla" )
     & "</span><b class='num'>= " & FORMAT ( [T27 · ganhos da dupla], "+#,0;-#,0;0" ) & "</b></div>"
-    & "<div class='nota'>a urna não mostra quem trocou de candidato.</div></div>"
+    & "<div class='nota'>A urna não mostra quem trocou de candidato.</div></div>"
     & "</div>"
 RETURN _html

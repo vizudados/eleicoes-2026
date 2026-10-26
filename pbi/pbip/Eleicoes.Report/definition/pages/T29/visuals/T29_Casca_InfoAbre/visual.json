@@ -1,13 +1,13 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
-  "name": "T23_Fecho_Ir14",
+  "name": "T29_Casca_InfoAbre",
   "position": {
-    "x": 145,
-    "y": 719,
-    "z": 1020,
-    "height": 35,
-    "width": 1020,
-    "tabOrder": 214
+    "x": 1724,
+    "y": 62,
+    "z": 5500,
+    "height": 44,
+    "width": 44,
+    "tabOrder": 6
   },
   "visual": {
     "visualType": "actionButton",
@@ -64,7 +64,7 @@
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "92D"
+                  "Value": "90D"
                 }
               }
             },
@@ -73,7 +73,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E5DBC8'"
+                      "Value": "'#1C1915'"
                     }
                   }
                 }
@@ -96,7 +96,7 @@
             "transparency": {
               "expr": {
                 "Literal": {
-                  "Value": "86D"
+                  "Value": "82D"
                 }
               }
             },
@@ -105,7 +105,7 @@
                 "color": {
                   "expr": {
                     "Literal": {
-                      "Value": "'#E5DBC8'"
+                      "Value": "'#1C1915'"
                     }
                   }
                 }
@@ -533,6 +533,26 @@
             "id": "disabled"
           }
         }
+      ],
+      "shape": [
+        {
+          "properties": {
+            "tileShape": {
+              "expr": {
+                "Literal": {
+                  "Value": "'rectangleRounded'"
+                }
+              }
+            },
+            "roundEdge": {
+              "expr": {
+                "Literal": {
+                  "Value": "40D"
+                }
+              }
+            }
+          }
+        }
       ]
     },
     "visualContainerObjects": {
@@ -588,7 +608,7 @@
             "text": {
               "expr": {
                 "Literal": {
-                  "Value": "'T23_Fecho_Ir14'"
+                  "Value": "'T29_Casca_InfoAbre'"
                 }
               }
             }
@@ -661,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 13: Pela 2ª vez em seis eleições, o PT terminou o 1º turno em segundo.'"
+                  "Value": "'Como ler esta tela e de onde vêm os números'"
                 }
               }
             }
@@ -688,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Voltar à tela 13: Pela 2ª vez em seis eleições, o PT terminou o 1º turno em segundo.'"
+                  "Value": "'Como ler esta tela e de onde vêm os números'"
                 }
               }
             },
@@ -702,7 +722,7 @@
             "bookmark": {
               "expr": {
                 "Literal": {
-                  "Value": "'T14_CHEGADA_01'"
+                  "Value": "'T29_LEITURA_ABRE_01'"
                 }
               }
             }

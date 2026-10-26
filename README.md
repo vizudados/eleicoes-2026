@@ -61,7 +61,7 @@ python -I -X utf8 pipeline/exportar_t20.py
 
 ## O painel no Power BI (`pbi/`)
 
-29 telas a 1920 × 1080 (00 Capa … 28 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos, do antes para o depois:
+30 telas a 1920 × 1080 (00 Capa … 29 Encerramento, `pbi/scripts/roteiro.py`), em cinco atos, do antes para o depois:
 I · Antes da urna, II · O 1º turno, III · O mapa, IV · Explore você mesmo e V · O 2º turno, logo antes do
 encerramento. A 12 · Quem vota cruza o
 voto com renda, escolaridade, Bolsa Família e IDH (`pipeline/extrair_social.py`); a 21 · Debate Band e a 22 · Debate
@@ -118,6 +118,10 @@ curva daquela noite. Os workflows **`apuracao`, `vigia` e `teste-chave` foram de
 As telas 26 · De onde vieram (T27) e 27 · Onde Flávio perdeu (T28) usam o segundo turno por município, sem exterior.
 A T27 fecha a identidade dos ganhos observados, sem repartir uma suposta transferência individual entre candidatos. A integração está descrita em
 `pbi/INTEGRACAO-POS-ELEICAO.md`.
+
+A 28 · História do PT (T29) percorre as dez eleições de 1989 a 2026: mapa por UF no turno decisivo, vencedor real
+e vantagem sobre o segundo colocado. A série nacional separa os turnos e preserva as quedas; o recorde nominal de
+2026 não é recorde percentual. Fontes e divergências de versões: `docs/video/segundo-turno/PT-HISTORICO-METODO.md`.
 
 ## Debate da Globo (2º turno, 23/10/2026)
 

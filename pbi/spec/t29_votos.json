@@ -1,0 +1,548 @@
+{
+ "$schema": "https://vega.github.io/schema/vega/v6.json",
+ "description": "T29: PT e principal adversário nacional, dois painéis e mesma escala de votos. Segundo turno interrompido em 1994/1998, sem inventar resultado.",
+ "width": {
+  "signal": "pbiContainerWidth"
+ },
+ "height": {
+  "signal": "pbiContainerHeight"
+ },
+ "padding": 0,
+ "autosize": {
+  "type": "none",
+  "contains": "padding"
+ },
+ "background": null,
+ "signals": [
+  {
+   "name": "sobreLado",
+   "value": null,
+   "on": [
+    {
+     "events": "@marcaVoto1:mouseover, @marcaVoto2:mouseover",
+     "update": "datum.lado"
+    },
+    {
+     "events": "@marcaVoto1:mouseout, @marcaVoto2:mouseout",
+     "update": "null"
+    }
+   ]
+  }
+ ],
+ "data": [
+  {
+   "name": "dataset"
+  },
+  {
+   "name": "ausencias",
+   "values": [
+    {
+     "ano": 1994,
+     "turno": 2,
+     "pt": null,
+     "adv": null
+    },
+    {
+     "ano": 1998,
+     "turno": 2,
+     "pt": null,
+     "adv": null
+    }
+   ]
+  },
+  {
+   "name": "curvas",
+   "source": [
+    "dataset",
+    "ausencias"
+   ],
+   "transform": [
+    {
+     "type": "fold",
+     "fields": [
+      "pt",
+      "adv"
+     ],
+     "as": [
+      "lado",
+      "votos"
+     ]
+    },
+    {
+     "type": "collect",
+     "sort": {
+      "field": [
+       "turno",
+       "lado",
+       "ano"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "name": "painel1",
+   "source": "curvas",
+   "transform": [
+    {
+     "type": "filter",
+     "expr": "datum.turno == 1"
+    }
+   ]
+  },
+  {
+   "name": "painel2",
+   "source": "curvas",
+   "transform": [
+    {
+     "type": "filter",
+     "expr": "datum.turno == 2"
+    }
+   ]
+  }
+ ],
+ "marks": [
+  {
+   "type": "group",
+   "name": "grupoTurno1",
+   "encode": {
+    "update": {
+     "x": {
+      "value": 44
+     },
+     "y": {
+      "value": 20
+     },
+     "width": {
+      "signal": "width-62"
+     },
+     "height": {
+      "value": 190
+     }
+    }
+   },
+   "signals": [
+    {
+     "name": "width",
+     "update": "pbiContainerWidth-62"
+    },
+    {
+     "name": "height",
+     "value": 190
+    }
+   ],
+   "scales": [
+    {
+     "name": "x",
+     "type": "linear",
+     "domain": [
+      1989,
+      2026
+     ],
+     "range": [
+      0,
+      {
+       "signal": "width"
+      }
+     ],
+     "zero": false
+    },
+    {
+     "name": "y",
+     "type": "linear",
+     "domain": [
+      0,
+      70000000
+     ],
+     "range": [
+      {
+       "signal": "height"
+      },
+      0
+     ],
+     "zero": true
+    }
+   ],
+   "axes": [
+    {
+     "orient": "left",
+     "scale": "y",
+     "values": [
+      0,
+      20000000,
+      40000000,
+      60000000
+     ],
+     "grid": true,
+     "domain": false,
+     "ticks": false,
+     "labelFontSize": 13,
+     "labelPadding": 8,
+     "gridColor": "#CBBDA2",
+     "encode": {
+      "labels": {
+       "update": {
+        "text": {
+         "signal": "datum.value/1e6+' mi'"
+        }
+       }
+      }
+     }
+    },
+    {
+     "orient": "bottom",
+     "scale": "x",
+     "values": [
+      1989,
+      1994,
+      1998,
+      2002,
+      2006,
+      2010,
+      2014,
+      2018,
+      2022,
+      2026
+     ],
+     "format": "d",
+     "domainColor": "#CBBDA2",
+     "tickSize": 3,
+     "labelFontSize": 13,
+     "labelPadding": 7
+    }
+   ],
+   "marks": [
+    {
+     "type": "text",
+     "interactive": false,
+     "encode": {
+      "update": {
+       "x": {
+        "value": 0
+       },
+       "y": {
+        "value": -10
+       },
+       "text": {
+        "value": "1º TURNO"
+       },
+       "fontSize": {
+        "value": 14
+       },
+       "fontWeight": {
+        "value": "bold"
+       },
+       "fill": {
+        "value": "#48423A"
+       }
+      }
+     }
+    },
+    {
+     "type": "group",
+     "from": {
+      "facet": {
+       "name": "serie1",
+       "data": "painel1",
+       "groupby": "lado"
+      }
+     },
+     "marks": [
+      {
+       "type": "line",
+       "interactive": false,
+       "from": {
+        "data": "serie1"
+       },
+       "sort": {
+        "field": "datum.ano"
+       },
+       "encode": {
+        "update": {
+         "x": {
+          "scale": "x",
+          "field": "ano"
+         },
+         "y": {
+          "scale": "y",
+          "field": "votos"
+         },
+         "defined": {
+          "signal": "isValid(datum.votos)"
+         },
+         "stroke": {
+          "signal": "datum.lado == 'pt' ? '#B8322A' : '#2B5797'"
+         },
+         "strokeWidth": {
+          "value": 2.5
+         },
+         "opacity": {
+          "signal": "!sobreLado || sobreLado == datum.lado ? 1 : .4"
+         }
+        }
+       }
+      },
+      {
+       "type": "symbol",
+       "name": "marcaVoto1",
+       "from": {
+        "data": "serie1"
+       },
+       "encode": {
+        "update": {
+         "x": {
+          "scale": "x",
+          "field": "ano"
+         },
+         "y": {
+          "scale": "y",
+          "field": "votos"
+         },
+         "opacity": {
+          "signal": "isValid(datum.votos) ? (!sobreLado || sobreLado == datum.lado ? 1 : .4) : 0"
+         },
+         "size": {
+          "value": 70
+         },
+         "fill": {
+          "signal": "datum.lado == 'pt' ? '#B8322A' : '#2B5797'"
+         },
+         "stroke": {
+          "value": "#F1EBDF"
+         },
+         "strokeWidth": {
+          "value": 1
+         },
+         "tooltip": {
+          "signal": "datum.ano+' · '+datum.turno+'º turno'"
+         }
+        }
+       }
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "group",
+   "name": "grupoTurno2",
+   "encode": {
+    "update": {
+     "x": {
+      "value": 44
+     },
+     "y": {
+      "value": 280
+     },
+     "width": {
+      "signal": "width-62"
+     },
+     "height": {
+      "value": 190
+     }
+    }
+   },
+   "signals": [
+    {
+     "name": "width",
+     "update": "pbiContainerWidth-62"
+    },
+    {
+     "name": "height",
+     "value": 190
+    }
+   ],
+   "scales": [
+    {
+     "name": "x",
+     "type": "linear",
+     "domain": [
+      1989,
+      2026
+     ],
+     "range": [
+      0,
+      {
+       "signal": "width"
+      }
+     ],
+     "zero": false
+    },
+    {
+     "name": "y",
+     "type": "linear",
+     "domain": [
+      0,
+      70000000
+     ],
+     "range": [
+      {
+       "signal": "height"
+      },
+      0
+     ],
+     "zero": true
+    }
+   ],
+   "axes": [
+    {
+     "orient": "left",
+     "scale": "y",
+     "values": [
+      0,
+      20000000,
+      40000000,
+      60000000
+     ],
+     "grid": true,
+     "domain": false,
+     "ticks": false,
+     "labelFontSize": 13,
+     "labelPadding": 8,
+     "gridColor": "#CBBDA2",
+     "encode": {
+      "labels": {
+       "update": {
+        "text": {
+         "signal": "datum.value/1e6+' mi'"
+        }
+       }
+      }
+     }
+    },
+    {
+     "orient": "bottom",
+     "scale": "x",
+     "values": [
+      1989,
+      1994,
+      1998,
+      2002,
+      2006,
+      2010,
+      2014,
+      2018,
+      2022,
+      2026
+     ],
+     "format": "d",
+     "domainColor": "#CBBDA2",
+     "tickSize": 3,
+     "labelFontSize": 13,
+     "labelPadding": 7
+    }
+   ],
+   "marks": [
+    {
+     "type": "text",
+     "interactive": false,
+     "encode": {
+      "update": {
+       "x": {
+        "value": 0
+       },
+       "y": {
+        "value": -10
+       },
+       "text": {
+        "value": "2º TURNO"
+       },
+       "fontSize": {
+        "value": 14
+       },
+       "fontWeight": {
+        "value": "bold"
+       },
+       "fill": {
+        "value": "#48423A"
+       }
+      }
+     }
+    },
+    {
+     "type": "group",
+     "from": {
+      "facet": {
+       "name": "serie2",
+       "data": "painel2",
+       "groupby": "lado"
+      }
+     },
+     "marks": [
+      {
+       "type": "line",
+       "interactive": false,
+       "from": {
+        "data": "serie2"
+       },
+       "sort": {
+        "field": "datum.ano"
+       },
+       "encode": {
+        "update": {
+         "x": {
+          "scale": "x",
+          "field": "ano"
+         },
+         "y": {
+          "scale": "y",
+          "field": "votos"
+         },
+         "defined": {
+          "signal": "isValid(datum.votos)"
+         },
+         "stroke": {
+          "signal": "datum.lado == 'pt' ? '#B8322A' : '#2B5797'"
+         },
+         "strokeWidth": {
+          "value": 2.5
+         },
+         "opacity": {
+          "signal": "!sobreLado || sobreLado == datum.lado ? 1 : .4"
+         }
+        }
+       }
+      },
+      {
+       "type": "symbol",
+       "name": "marcaVoto2",
+       "from": {
+        "data": "serie2"
+       },
+       "encode": {
+        "update": {
+         "x": {
+          "scale": "x",
+          "field": "ano"
+         },
+         "y": {
+          "scale": "y",
+          "field": "votos"
+         },
+         "opacity": {
+          "signal": "isValid(datum.votos) ? (!sobreLado || sobreLado == datum.lado ? 1 : .4) : 0"
+         },
+         "size": {
+          "value": 70
+         },
+         "fill": {
+          "signal": "datum.lado == 'pt' ? '#B8322A' : '#2B5797'"
+         },
+         "stroke": {
+          "value": "#F1EBDF"
+         },
+         "strokeWidth": {
+          "value": 1
+         },
+         "tooltip": {
+          "signal": "datum.ano+' · '+datum.turno+'º turno'"
+         }
+        }
+       }
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,19 +1,49 @@
 /*
 @pasta: T23 Encerramento\Desenho
 @formato: texto
-@descricao: Achados finais do encerramento, sem filtro.
+@descricao: Resultado espelhado dos dois turnos e onze achados/atalhos distribuídos nos cinco atos.
+@gerado: pbi/scripts/desenho_t23.py
 */
-VAR _nCidades = [T23 · municípios Flávio para Lula]
-VAR _nUfs = [T23 · UFs que viraram]
-VAR _nomes = SUBSTITUTE ( [T23 · nomes das UFs que viraram], "Minas Gerais", "Minas" )
-VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nomes, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
-VAR _virada = IF ( _nUfs = 1, _esc & " foi o único estado a virar",
-    IF ( _nUfs = 0, "nenhum estado mudou de vencedor", FORMAT ( _nUfs, "#,0" ) & " estados mudaram de vencedor" ) )
-RETURN
-"<div class='fx tela'><div class='ach'><div class='grupo rot'>I · ANTES DA URNA</div><div class='linha sobe'><b>03</b><span>Até a véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.</span></div><div class='grupo rot'>II · O 1º TURNO</div><div class='linha sobe'><b>04</b><span>Flávio terminou 2,22 mi de votos à frente de Lula.</span></div><div class='linha sobe'><b>07</b><span>33,5 milhões não foram votar: 15 vezes a diferença entre os dois.</span></div><div class='linha sobe'><b>08</b><span>Quem tem 70 anos ou mais falta 3,9 vezes mais que quem tem 16 ou 17.</span></div><div class='grupo rot'>III · O MAPA</div><div class='linha sobe'><b>09</b><span>711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso.</span></div><div class='linha sobe'><b>11</b><span>Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno.</span></div><div class='linha sobe'><b>12</b><span>Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%.</span></div><div class='linha sobe'><b>13</b><span>Pela 2ª vez em seis eleições, o PT terminou o 1º turno em segundo.</span></div></div><div class='finais'><div class='rot'>V · O 2º TURNO · CLIQUE NO ACHADO</div>"
-    & "<div class='final sobe'><b>20</b><span>" & ("Flávio liderava " & [T17 · depois · Flávio à frente] & " de " & [T17 · depois · pesquisas] & " pesquisas; a urna deu Lula.") & "</span></div>"
-    & "<div class='final sobe'><b>25</b><span>" & ("Lula foi eleito por " & FORMAT ( [Apuração · diferença], "#,0" ) & " votos; Lula voltou à frente às " & SUBSTITUTE ( FORMAT ( [T18 · noite · Lula retomou a frente], "HH:mm" ), ":", "h" ) & ".") & "</span></div>"
-    & "<div class='final sobe'><b>26</b><span>" & ("Entre os turnos, Lula ganhou " & FORMAT ( [T23 · Lula ganhou entre turnos] / 1e6, "0.00" ) & " mi de votos; Flávio, " & FORMAT ( [T23 · Flávio ganhou entre turnos] / 1e6, "0.00" ) & " mi.") & "</span></div>"
-    & "<div class='final sobe'><b>27</b><span>" & (FORMAT ( _nCidades, "#,0" ) & IF ( _nCidades = 1, " município trocou", " municípios trocaram" )
-        & " Flávio por Lula entre os turnos; " & _virada & ".") & "</span></div>"
-    & "</div></div>"
+VAR _html = "<div class='bl esq sobe d3'><div class='rot'>FLÁVIO BOLSONARO · PL</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
+    & "<div class='num v flavio-c'>" & FORMAT ( [T00 · 2º turno · Flávio votos] / 1e6, "0.00" )
+    & " mi</div><div class='p'>" & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" ) & " dos válidos</div>"
+    & "<div class='primeiro'>1º turno · <span class='num'>" & FORMAT ( [T00 · Flávio votos] / 1e6, "0.00" )
+    & " mi</span> · " & FORMAT ( [T00 · Flávio %], "0.00%" ) & "</div></div>"
+    & "<div class='bl dir sobe d3'><div class='rot'>LULA · PT</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
+    & "<div class='num v lula-c'>" & FORMAT ( [T00 · 2º turno · Lula votos] / 1e6, "0.00" )
+    & " mi</div><div class='p'>" & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & " dos válidos</div>"
+    & "<div class='primeiro'>1º turno · <span class='num'>" & FORMAT ( [T00 · Lula votos] / 1e6, "0.00" )
+    & " mi</span> · " & FORMAT ( [T00 · Lula %], "0.00%" ) & "</div><span class='selo-eleito' aria-label='Lula eleito'>eleito</span></div>"
+    & "<div class='grupo' style='left:150px;top:590px;width:440px'>I · ANTES DA URNA</div>"
+    & "<div class='linha sobe' style='left:150px;top:620px;width:440px;height:64px'>"
+    & "<b>03</b><span>" & (FORMAT ( [T10 · institutos · Lula à frente], "0" ) & " de " & FORMAT ( [T10 · institutos], "0" )
+            & " institutos davam Lula à frente; a urna deu Flávio.") & "</span></div>"
+    & "<div class='grupo' style='left:150px;top:716px;width:440px'>II · O 1º TURNO</div>"
+    & "<div class='linha sobe' style='left:150px;top:746px;width:440px;height:64px'>"
+    & "<b>04</b><span>" & ("Flávio terminou o 1º turno com " & FORMAT ( [T06 · diferença Flávio Lula] / 1e6, "0.00" ) & " mi de votos de vantagem.") & "</span></div>"
+    & "<div class='linha sobe' style='left:150px;top:810px;width:440px;height:64px'>"
+    & "<b>07</b><span>" & ("A ausência foi " & FORMAT ( [T06 · vezes a diferença em 2026], "0" ) & " vezes a diferença entre os dois no 1º turno.") & "</span></div>"
+    & "<div class='grupo' style='left:650px;top:590px;width:440px'>III · O MAPA</div>"
+    & "<div class='linha sobe' style='left:650px;top:620px;width:440px;height:64px'>"
+    & "<b>09</b><span>" & (FORMAT ( [T11 · viraram], "#,0" ) & " municípios trocaram Lula por Flávio de 2022 para o 1º turno de 2026.") & "</span></div>"
+    & "<div class='linha sobe' style='left:650px;top:684px;width:440px;height:64px'>"
+    & "<b>11</b><span>" & ("Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno no 1º turno.") & "</span></div>"
+    & "<div class='grupo' style='left:650px;top:780px;width:440px'>IV · EXPLORE VOCÊ MESMO</div>"
+    & "<div class='linha sobe' style='left:650px;top:810px;width:440px;height:64px'>"
+    & "<b>15</b><span>" & (FORMAT ( [T00 · municípios no mapa], "#,0" ) & " municípios para explorar o voto.") & "</span></div>"
+    & "<div class='grupo' style='left:1180px;top:590px;width:590px'>V · O 2º TURNO · CLIQUE NO ACHADO</div>"
+    & "<div class='linha sobe' style='left:1180px;top:620px;width:590px;height:70px'>"
+    & "<b>20</b><span>" & ("Flávio liderava " & FORMAT ( [T17 · depois · Flávio à frente], "0" ) & " de "
+            & FORMAT ( [T17 · depois · pesquisas], "0" ) & " pesquisas; a urna deu Lula.") & "</span></div>"
+    & "<div class='linha sobe' style='left:1180px;top:690px;width:590px;height:70px'>"
+    & "<b>25</b><span>" & ("Lula foi eleito por " & FORMAT ( [Apuração · diferença], "#,0" )
+            & " votos; voltou à frente às " & SUBSTITUTE ( FORMAT ( [T18 · noite · Lula retomou a frente], "HH:mm" ), ":", "h" ) & ".") & "</span></div>"
+    & "<div class='linha sobe' style='left:1180px;top:760px;width:590px;height:70px'>"
+    & "<b>26</b><span>" & ("Entre os turnos, Lula ganhou " & FORMAT ( [T23 · Lula ganhou entre turnos] / 1e6, "0.00" )
+            & " mi de votos; Flávio, " & FORMAT ( [T23 · Flávio ganhou entre turnos] / 1e6, "0.00" ) & " mi.") & "</span></div>"
+    & "<div class='linha sobe' style='left:1180px;top:830px;width:590px;height:70px'>"
+    & "<b>27</b><span>" & (FORMAT ( [T23 · municípios Flávio para Lula], "#,0" ) & " municípios trocaram Flávio por Lula; Minas foi o único estado a virar.") & "</span></div>"
+    & "<div class='linha sobe' style='left:1180px;top:900px;width:590px;height:70px'>"
+    & "<b>28</b><span>" & ("Lula chegou ao recorde de " & FORMAT ( [T29 · recorde] / 1e6, "0.00" ) & " mi de votos, "
+            & FORMAT ( [T29 · acima do recorde anterior] / 1e6, "0.00" ) & " mi acima de 2022.") & "</span></div>"
+RETURN _html

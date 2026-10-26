@@ -1,0 +1,8 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Série com os turnos separados e lacunas preservadas.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+"Votos do PT e do principal adversário em cada eleição, em dois painéis com a mesma escala. Não houve segundo turno em 1994 ou 1998; a linha é interrompida. A queda de 2014 para 2018 permanece visível. Lula bate o recorde em 2026."

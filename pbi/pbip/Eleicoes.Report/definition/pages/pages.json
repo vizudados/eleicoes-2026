@@ -30,6 +30,7 @@
     "T18",
     "T27",
     "T28",
+    "T29",
     "T23",
     "ttT01Candidato",
     "ttT01Ponto",
@@ -78,7 +79,9 @@
     "ttT25Ano",
     "ttT25Idade",
     "ttT27Municipio",
-    "ttT28Municipio"
+    "ttT28Municipio",
+    "ttT29Estado",
+    "ttT29Eleicao"
   ],
   "activePageName": "T00"
 }

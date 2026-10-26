@@ -1,0 +1,19 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Os mesmos votos e percentuais para as duas candidaturas, mais participação.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+VAR _ano = SELECTEDVALUE ( 'PT histórico Brasil'[Ano] )
+VAR _turno = SELECTEDVALUE ( 'PT histórico Brasil'[Turno] )
+VAR _pt = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T29 · candidato PT], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+VAR _adv = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T29 · adversário], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+RETURN "<div class='tela dossier29'><div class='fita'></div><div class='rot'>DOSSIÊ · ELEIÇÃO PRESIDENCIAL</div>"
+    & "<h2>" & _ano & " · " & _turno & "º turno</h2><p>Brasil, com exterior · comparação no mesmo turno.</p>"
+    & "<div class='par'><b class='lula'>" & _pt & " · PT</b><strong>" & FORMAT ( [T29 · PT votos], "#,0" )
+    & " votos</strong><span>" & FORMAT ( [T29 · PT %], "0.00%" ) & " dos válidos</span></div>"
+    & "<div class='par'><b class='flavio'>" & _adv & "</b><strong>" & FORMAT ( [T29 · adversário votos], "#,0" )
+    & " votos</strong><span>" & FORMAT ( [T29 · adversário %], "0.00%" ) & " dos válidos</span></div>"
+    & "<p>" & FORMAT ( [T29 · aptos], "#,0" ) & " eleitores aptos; " & FORMAT ( [T29 · comparecimento], "#,0" )
+    & " compareceram.</p><small>Fontes: TSE · versões históricas descritas no i.</small></div>"

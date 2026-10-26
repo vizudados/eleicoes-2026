@@ -26,9 +26,13 @@ COLUNAS = [
     ("II · O 1º TURNO", ["T01", "T03", "T05", "T06", "T25"]),
     ("III · O MAPA", ["T11", "T12", "T13", "T24", "T14", "T15"]),
     ("IV · EXPLORE VOCÊ MESMO", ["T19", "T20", "T21", "T22"]),
-    ("V · O 2º TURNO · FIM", ["T16", "T17", "T07", "T26", "T08", "T09", "T18", "T27", "T28", "T23"]),
+    ("V · O 2º TURNO · FIM", ["T16", "T17", "T07", "T26", "T08", "T09", "T18", "T27", "T28", "T29", "T23"]),
 ]
 X0, Y0, LARGURA_COL, VAO, ALTURA_ITEM = 150, 172, 304, 25, 76
+
+
+def _altura(cods):
+    return 68 if len(cods) > 10 else ALTURA_ITEM
 
 
 def _x_coluna(cod: str) -> int:
@@ -41,7 +45,7 @@ def _y_nota() -> int:
     """A nota à mão da apuração fica na coluna à esquerda da T18, na altura dela, com a seta apontando para ela (desde
     23/10/2026 a coluna do 2º turno termina no encerramento e não sobra lugar embaixo)."""
     cods = next(c for _, c in COLUNAS if "T18" in c)
-    return Y0 + 44 + cods.index("T18") * ALTURA_ITEM + 10
+    return Y0 + 44 + cods.index("T18") * _altura(cods) + 10
 
 
 def _x_nota() -> int:
@@ -54,7 +58,7 @@ def _itens():
     for i, (_, cods) in enumerate(COLUNAS):
         x = X0 + i * (LARGURA_COL + VAO)
         for j, cod in enumerate(cods):
-            saida.append((cod, x, Y0 + 44 + j * ALTURA_ITEM))
+            saida.append((cod, x, Y0 + 44 + j * _altura(cods)))
     return saida
 
 
@@ -87,7 +91,8 @@ def corpo() -> str:
         t = roteiro.POR_CODIGO[cod]
         k += 1
         classe = " ao" if cod == "T18" else ""
-        partes.append(f"<div class='it{classe} sobe d{min(16, 2 + k // 2)}' style='left:{x}px;top:{y}px'>"
+        altura = _altura(next(c for _, c in COLUNAS if cod in c))
+        partes.append(f"<div class='it{classe} sobe d{min(16, 2 + k // 2)}' style='left:{x}px;top:{y}px;height:{altura-10}px'>"
                       f"<div><b>{t.numero}</b><span class='nm'>{e(t.nome)}</span></div>"
                       f"<div class='pg'>{e(t.pergunta).replace('º turno', 'º&nbsp;turno')}</div></div>")
     urna = estilo.imagem_b64("arte/limpos/urna.png", 120)
@@ -117,7 +122,7 @@ def declarar(ctx):
     for cod, x, y in _itens():
         t = roteiro.POR_CODIGO[cod]
         itens.append(Visual(P, lib.visual_botao(
-            f"TIX_Sumario_Ir{cod[1:]}", x - 6, y, LARGURA_COL + 12, ALTURA_ITEM - 8,
+            f"TIX_Sumario_Ir{cod[1:]}", x - 6, y, LARGURA_COL + 12, _altura(next(c for _, c in COLUNAS if cod in c)) - 8,
             lib.acao_bookmark(f"{cod}_CHEGADA_01"), dica=f"{t.numero} · {t.nome}: {t.pergunta}",
             z=lib.CAMADAS["acao"], tab=200 + int(cod[1:]), realce=C["tinta"], realce_transp=(93, 88))))
     itens.append(Visual(P, lib.visual_botao("TIX_Sumario_Voltar", 40, 40, 92, 92, lib.acao_bookmark("T00_CHEGADA_01"),

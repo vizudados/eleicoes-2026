@@ -80,13 +80,13 @@ CAMADAS = {"filtro": 20, "conteudo": 300, "acao": 1020, "leitura": 4000, "drawer
 TOOLTIP_LARGURA_MINIMA = 400
 
 RE_NOME = re.compile(r"^[A-Za-z0-9_-]+$")
-# T00 Capa … T23 Encerramento, T24 Quem vota, T25 Quem falta e T26 Debate na Globo (entram no meio do roteiro) · TIX
+# Códigos estáveis T00…T29; a posição para o leitor vem do roteiro. TIX é o sumário fora da sequência.
 # (sumário) · TT (tooltip)
-RE_NOME_VISUAL = re.compile(r"^(T(?:[01][0-9]|2[0-8])|TT|TIX)_[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9]+$")
-RE_TOOLTIP = re.compile(r"^ttT(?:[01][0-9]|2[0-8])[A-Z][A-Za-z0-9]*$")
+RE_NOME_VISUAL = re.compile(r"^(T(?:[01][0-9]|2[0-9])|TT|TIX)_[A-Za-z][A-Za-z0-9]*_[A-Za-z0-9]+$")
+RE_TOOLTIP = re.compile(r"^ttT(?:[01][0-9]|2[0-9])[A-Z][A-Za-z0-9]*$")
 RE_ALIAS = re.compile(r"^[A-Za-z][A-Za-z0-9_]*$")
 RE_RECURSO = re.compile(r"^[A-Za-z0-9_.-]+\.(svg|png|jpg|jpeg|json)$")
-RE_BOOKMARK = re.compile(r"^(?:T(?:[01][0-9]|2[0-8])|TIX)_[A-Z0-9]+(?:_[A-Z0-9]+)*_\d{2}$")
+RE_BOOKMARK = re.compile(r"^(?:T(?:[01][0-9]|2[0-9])|TIX)_[A-Z0-9]+(?:_[A-Z0-9]+)*_\d{2}$")
 RE_HEX = re.compile(r"^#[0-9A-Fa-f]{6}$")
 MAX_NOME_VISUAL = 50
 MAX_ALT = 250

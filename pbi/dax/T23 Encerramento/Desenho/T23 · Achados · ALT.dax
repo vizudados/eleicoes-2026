@@ -1,6 +1,10 @@
 /*
 @pasta: T23 Encerramento\Desenho
 @formato: texto
-@descricao: Achados finais do encerramento, sem filtro.
+@descricao: Encerramento acessível, resultados e navegação.
+@gerado: pbi/scripts/desenho_t23.py
 */
-"Achados dos dois turnos. Lula foi eleito com " & FORMAT ( [Apuração · Lula votos], "#,0" ) & " votos. Atalhos às pesquisas, à apuração, às origens do crescimento e aos lugares em que Flávio perdeu vantagem."
+"Da zona eleitoral ao resultado. 2º turno: Lula "
+    & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & "; Flávio "
+    & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" )
+    & ". Primeiro turno menor, resultado final maior. Achados dos cinco atos levam às telas de origem, inclusive à história do PT e ao recorde de votos."

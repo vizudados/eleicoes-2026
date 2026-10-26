@@ -1,0 +1,8 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: texto
+@descricao: Identidade nacional da candidatura do turno.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+SELECTEDVALUE ( 'PT histórico Brasil'[Candidato PT] )

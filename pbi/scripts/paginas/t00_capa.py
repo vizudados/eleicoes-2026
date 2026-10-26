@@ -55,7 +55,7 @@ def corpo() -> str:
         ".cp .pe-esq .num{font-size:24px;line-height:28px}"
         ".cp .pe-esq .num,.cp .pe-dir .num{font-size:28px;font-weight:700}"
         ".cp .vir{position:relative;display:inline-block;padding:0 6px}"
-        ".cp .mapa-rotulo{position:absolute;left:760px;top:866px;width:400px;height:28px;display:grid;place-items:center;"
+        ".cp .mapa-rotulo{position:absolute;left:1040px;top:808px;width:270px;height:28px;display:grid;align-items:center;justify-items:start;"
         "color:var(--areia);font-size:14px;font-weight:500;pointer-events:none;text-shadow:0 0 5px var(--tinta),0 0 5px var(--tinta);"
         "animation:rotuloEntra .35s ease var(--rotulo-inicio) both}"
         ".cp .mapa-rotulo span{grid-area:1/1}.cp .mapa-rotulo .t1{opacity:0;animation:rotuloSai .35s ease var(--rotulo-segundo) both}"
@@ -68,7 +68,7 @@ def corpo() -> str:
         f".cp .sumario{{position:absolute;left:150px;top:60px;font-size:14px;font-weight:600;letter-spacing:.16em;"
         f"text-transform:uppercase;color:{C['areia']}}}"
         ".cp .sumario span{font-size:18px;margin-right:6px}"
-        ".cp .comecar{position:absolute;left:1690px;top:585px;font-family:var(--mao);font-size:26px;"
+        ".cp .comecar{position:absolute;left:1800px;top:590px;font-family:var(--mao);font-size:26px;"
         f"color:{C['areia']};transform:rotate(-6deg)}}"
     )
     # o traço à mão embaixo do número de municípios que viraram (o laço em volta cruzava os dígitos e o "m" de
@@ -121,7 +121,7 @@ def declarar(ctx):
         Visual(P, lib.visual_botao("T00_Capa_Sumario", 136, 44, 180, 52, lib.acao_bookmark("TIX_CHEGADA_01"),
                                    dica="Sumário: todas as telas", z=lib.CAMADAS["acao"], tab=105, realce=C["creme"],
                                    raio=8, realce_transp=(92, 86))),
-        Visual(P, lib.visual_botao("T00_Capa_Comecar", 1680, 560, 120, 70, lib.acao_bookmark(f"{roteiro.TELAS[1].codigo}_CHEGADA_01"),
+        Visual(P, lib.visual_botao("T00_Capa_Comecar", 1792, 584, 100, 60, lib.acao_bookmark(f"{roteiro.TELAS[1].codigo}_CHEGADA_01"),
                                    dica=f"Começar: {roteiro.TELAS[1].numero} · {roteiro.TELAS[1].nome}",
                                    z=lib.CAMADAS["acao"], tab=110, realce=C["creme"],
                                    raio=30, realce_transp=(92, 86))),

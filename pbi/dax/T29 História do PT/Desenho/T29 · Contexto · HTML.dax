@@ -1,0 +1,12 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Válidos e eleitorado: denominadores explícitos da comparação histórica.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+"<div class='tela contexto29'><div>Recorde em votos, não em fatia: <b>"
+    & FORMAT ( [T29 · fatia 2002], "0.00%" ) & "</b> dos válidos em 2002 × <b>"
+    & FORMAT ( [T29 · fatia 2026], "0.00%" ) & "</b> em 2026.</div><div>O eleitorado também cresceu: <b>"
+    & FORMAT ( [T29 · aptos 1989] / 1e6, "0.0" ) & " mi</b> em 1989 → <b>"
+    & FORMAT ( [T29 · aptos 2026] / 1e6, "0.0" ) & " mi</b> em 2026.</div></div>"

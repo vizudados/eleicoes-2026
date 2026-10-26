@@ -26510,28 +26510,60 @@ table _Medidas
 		displayFolder: T23 Encerramento\Contas
 		lineageTag: 98b62996-d897-5d6a-921a-2c68e972698c
 
-	/// Achados finais do encerramento, sem filtro.
+	/// Encerramento acessível, resultados e navegação.
 	measure 'T23 · Achados · ALT' =
-			"Achados dos dois turnos. Lula foi eleito com " & FORMAT ( [Apuração · Lula votos], "#,0" ) & " votos. Atalhos às pesquisas, à apuração, às origens do crescimento e aos lugares em que Flávio perdeu vantagem."
+			"Da zona eleitoral ao resultado. 2º turno: Lula "
+			    & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & "; Flávio "
+			    & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" )
+			    & ". Primeiro turno menor, resultado final maior. Achados dos cinco atos levam às telas de origem, inclusive à história do PT e ao recorde de votos."
 		displayFolder: T23 Encerramento\Desenho
 		lineageTag: 1550739b-910b-5c13-84a0-d20edb7b0f8b
 
-	/// Achados finais do encerramento, sem filtro.
+	/// Resultado espelhado dos dois turnos e onze achados/atalhos distribuídos nos cinco atos.
 	measure 'T23 · Achados · HTML' =
-			VAR _nCidades = [T23 · municípios Flávio para Lula]
-			VAR _nUfs = [T23 · UFs que viraram]
-			VAR _nomes = SUBSTITUTE ( [T23 · nomes das UFs que viraram], "Minas Gerais", "Minas" )
-			VAR _esc = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nomes, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
-			VAR _virada = IF ( _nUfs = 1, _esc & " foi o único estado a virar",
-			    IF ( _nUfs = 0, "nenhum estado mudou de vencedor", FORMAT ( _nUfs, "#,0" ) & " estados mudaram de vencedor" ) )
-			RETURN
-			"<div class='fx tela'><div class='ach'><div class='grupo rot'>I · ANTES DA URNA</div><div class='linha sobe'><b>03</b><span>Até a véspera, 13 de 18 institutos davam Lula à frente; a urna deu Flávio.</span></div><div class='grupo rot'>II · O 1º TURNO</div><div class='linha sobe'><b>04</b><span>Flávio terminou 2,22 mi de votos à frente de Lula.</span></div><div class='linha sobe'><b>07</b><span>33,5 milhões não foram votar: 15 vezes a diferença entre os dois.</span></div><div class='linha sobe'><b>08</b><span>Quem tem 70 anos ou mais falta 3,9 vezes mais que quem tem 16 ou 17.</span></div><div class='grupo rot'>III · O MAPA</div><div class='linha sobe'><b>09</b><span>711 municípios trocaram Lula por Flávio; nenhum fez o caminho inverso.</span></div><div class='linha sobe'><b>11</b><span>Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno.</span></div><div class='linha sobe'><b>12</b><span>Onde mais casas recebem Bolsa Família, Lula teve 66%; onde menos, Flávio teve 61%.</span></div><div class='linha sobe'><b>13</b><span>Pela 2ª vez em seis eleições, o PT terminou o 1º turno em segundo.</span></div></div><div class='finais'><div class='rot'>V · O 2º TURNO · CLIQUE NO ACHADO</div>"
-			    & "<div class='final sobe'><b>20</b><span>" & ("Flávio liderava " & [T17 · depois · Flávio à frente] & " de " & [T17 · depois · pesquisas] & " pesquisas; a urna deu Lula.") & "</span></div>"
-			    & "<div class='final sobe'><b>25</b><span>" & ("Lula foi eleito por " & FORMAT ( [Apuração · diferença], "#,0" ) & " votos; Lula voltou à frente às " & SUBSTITUTE ( FORMAT ( [T18 · noite · Lula retomou a frente], "HH:mm" ), ":", "h" ) & ".") & "</span></div>"
-			    & "<div class='final sobe'><b>26</b><span>" & ("Entre os turnos, Lula ganhou " & FORMAT ( [T23 · Lula ganhou entre turnos] / 1e6, "0.00" ) & " mi de votos; Flávio, " & FORMAT ( [T23 · Flávio ganhou entre turnos] / 1e6, "0.00" ) & " mi.") & "</span></div>"
-			    & "<div class='final sobe'><b>27</b><span>" & (FORMAT ( _nCidades, "#,0" ) & IF ( _nCidades = 1, " município trocou", " municípios trocaram" )
-			        & " Flávio por Lula entre os turnos; " & _virada & ".") & "</span></div>"
-			    & "</div></div>"
+			VAR _html = "<div class='bl esq sobe d3'><div class='rot'>FLÁVIO BOLSONARO · PL</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
+			    & "<div class='num v flavio-c'>" & FORMAT ( [T00 · 2º turno · Flávio votos] / 1e6, "0.00" )
+			    & " mi</div><div class='p'>" & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" ) & " dos válidos</div>"
+			    & "<div class='primeiro'>1º turno · <span class='num'>" & FORMAT ( [T00 · Flávio votos] / 1e6, "0.00" )
+			    & " mi</span> · " & FORMAT ( [T00 · Flávio %], "0.00%" ) & "</div></div>"
+			    & "<div class='bl dir sobe d3'><div class='rot'>LULA · PT</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
+			    & "<div class='num v lula-c'>" & FORMAT ( [T00 · 2º turno · Lula votos] / 1e6, "0.00" )
+			    & " mi</div><div class='p'>" & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & " dos válidos</div>"
+			    & "<div class='primeiro'>1º turno · <span class='num'>" & FORMAT ( [T00 · Lula votos] / 1e6, "0.00" )
+			    & " mi</span> · " & FORMAT ( [T00 · Lula %], "0.00%" ) & "</div><span class='selo-eleito' aria-label='Lula eleito'>eleito</span></div>"
+			    & "<div class='grupo' style='left:150px;top:590px;width:440px'>I · ANTES DA URNA</div>"
+			    & "<div class='linha sobe' style='left:150px;top:620px;width:440px;height:64px'>"
+			    & "<b>03</b><span>" & (FORMAT ( [T10 · institutos · Lula à frente], "0" ) & " de " & FORMAT ( [T10 · institutos], "0" )
+			            & " institutos davam Lula à frente; a urna deu Flávio.") & "</span></div>"
+			    & "<div class='grupo' style='left:150px;top:716px;width:440px'>II · O 1º TURNO</div>"
+			    & "<div class='linha sobe' style='left:150px;top:746px;width:440px;height:64px'>"
+			    & "<b>04</b><span>" & ("Flávio terminou o 1º turno com " & FORMAT ( [T06 · diferença Flávio Lula] / 1e6, "0.00" ) & " mi de votos de vantagem.") & "</span></div>"
+			    & "<div class='linha sobe' style='left:150px;top:810px;width:440px;height:64px'>"
+			    & "<b>07</b><span>" & ("A ausência foi " & FORMAT ( [T06 · vezes a diferença em 2026], "0" ) & " vezes a diferença entre os dois no 1º turno.") & "</span></div>"
+			    & "<div class='grupo' style='left:650px;top:590px;width:440px'>III · O MAPA</div>"
+			    & "<div class='linha sobe' style='left:650px;top:620px;width:440px;height:64px'>"
+			    & "<b>09</b><span>" & (FORMAT ( [T11 · viraram], "#,0" ) & " municípios trocaram Lula por Flávio de 2022 para o 1º turno de 2026.") & "</span></div>"
+			    & "<div class='linha sobe' style='left:650px;top:684px;width:440px;height:64px'>"
+			    & "<b>11</b><span>" & ("Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno no 1º turno.") & "</span></div>"
+			    & "<div class='grupo' style='left:650px;top:780px;width:440px'>IV · EXPLORE VOCÊ MESMO</div>"
+			    & "<div class='linha sobe' style='left:650px;top:810px;width:440px;height:64px'>"
+			    & "<b>15</b><span>" & (FORMAT ( [T00 · municípios no mapa], "#,0" ) & " municípios para explorar o voto.") & "</span></div>"
+			    & "<div class='grupo' style='left:1180px;top:590px;width:590px'>V · O 2º TURNO · CLIQUE NO ACHADO</div>"
+			    & "<div class='linha sobe' style='left:1180px;top:620px;width:590px;height:70px'>"
+			    & "<b>20</b><span>" & ("Flávio liderava " & FORMAT ( [T17 · depois · Flávio à frente], "0" ) & " de "
+			            & FORMAT ( [T17 · depois · pesquisas], "0" ) & " pesquisas; a urna deu Lula.") & "</span></div>"
+			    & "<div class='linha sobe' style='left:1180px;top:690px;width:590px;height:70px'>"
+			    & "<b>25</b><span>" & ("Lula foi eleito por " & FORMAT ( [Apuração · diferença], "#,0" )
+			            & " votos; voltou à frente às " & SUBSTITUTE ( FORMAT ( [T18 · noite · Lula retomou a frente], "HH:mm" ), ":", "h" ) & ".") & "</span></div>"
+			    & "<div class='linha sobe' style='left:1180px;top:760px;width:590px;height:70px'>"
+			    & "<b>26</b><span>" & ("Entre os turnos, Lula ganhou " & FORMAT ( [T23 · Lula ganhou entre turnos] / 1e6, "0.00" )
+			            & " mi de votos; Flávio, " & FORMAT ( [T23 · Flávio ganhou entre turnos] / 1e6, "0.00" ) & " mi.") & "</span></div>"
+			    & "<div class='linha sobe' style='left:1180px;top:830px;width:590px;height:70px'>"
+			    & "<b>27</b><span>" & (FORMAT ( [T23 · municípios Flávio para Lula], "#,0" ) & " municípios trocaram Flávio por Lula; Minas foi o único estado a virar.") & "</span></div>"
+			    & "<div class='linha sobe' style='left:1180px;top:900px;width:590px;height:70px'>"
+			    & "<b>28</b><span>" & ("Lula chegou ao recorde de " & FORMAT ( [T29 · recorde] / 1e6, "0.00" ) & " mi de votos, "
+			            & FORMAT ( [T29 · acima do recorde anterior] / 1e6, "0.00" ) & " mi acima de 2022.") & "</span></div>"
+			RETURN _html
 		displayFolder: T23 Encerramento\Desenho
 		lineageTag: 914214c7-5d03-5b01-8de6-9dc1bd1cbe82
 
@@ -30459,7 +30491,7 @@ table _Medidas
 			    & "<div class='parcela'><span>" & (IF ( [T27 · queda de brancos e nulos] >= 0, "Brancos e nulos a menos", "Brancos e nulos a mais" )) & "</span><b class='num'>" & FORMAT ( [T27 · queda de brancos e nulos], "+#,0;-#,0;0" ) & "</b></div>"
 			    & "<div class='parcela total'><span>" & IF ( [T27 · ganhos da dupla] >= 0, "Ganho total da dupla", "Saldo total da dupla" )
 			    & "</span><b class='num'>= " & FORMAT ( [T27 · ganhos da dupla], "+#,0;-#,0;0" ) & "</b></div>"
-			    & "<div class='nota'>a urna não mostra quem trocou de candidato.</div></div>"
+			    & "<div class='nota'>A urna não mostra quem trocou de candidato.</div></div>"
 			    & "</div>"
 			RETURN _html
 		displayFolder: T27 De onde vieram\Desenho
@@ -30856,7 +30888,7 @@ table _Medidas
 			VAR _g1 = TOPN ( 2, ADDCOLUMNS ( VALUES ( 'Município'[Rótulo] ), "@v", [T28 · perda positiva para Jair] ), [@v], DESC, 'Município'[Rótulo], ASC )
 			VAR _t1 = CONCATENATEX ( _g1,
 			    IF ( NOT ISBLANK ( [@v] ), "<div><span>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( 'Município'[Rótulo], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
-			    & "</span><b>" & (IF ( [@v] > 0, "+", IF ( [@v] < 0, "−", "" ) ) & (SWITCH ( TRUE (), ABS ( [@v] ) >= 1e6, FORMAT ( ABS ( [@v] ) / 1e6, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( ABS ( [@v] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [@v] ), "#,0" ) ))) & "</b></div>" ), "", [@v], DESC )
+			    & "</span><b>" & ("−" & (SWITCH ( TRUE (), ABS ( [@v] ) >= 1e6, FORMAT ( ABS ( [@v] ) / 1e6, "0.00" ) & " mi", ABS ( [@v] ) >= 1000, FORMAT ( ABS ( [@v] ) / 1000, "0.0" ) & " mil", FORMAT ( ABS ( [@v] ), "#,0" ) ))) & "</b></div>" ), "", [@v], DESC )
 			VAR _viradas = TOPN ( 2, ADDCOLUMNS ( VALUES ( 'UF'[Nome] ), "@v", [T28 · estado virou · mudança] ), [@v], DESC, 'UF'[Nome], ASC )
 			VAR _ufVirada = CONCATENATEX ( _viradas, IF ( NOT ISBLANK ( [@v] ), 'UF'[Nome] & " " ), "" )
 			RETURN "<div class='tela st-apoios'><div><div class='rot'>Estados · mudança em votos</div>" & _t0
@@ -30960,6 +30992,379 @@ table _Medidas
 			FORMAT ( [T28 · mapa · valor], "+#,0;-#,0;0" )
 		displayFolder: T28 Onde Flávio perdeu\Desenho
 		lineageTag: b2b8bf83-03cd-578e-9a72-266b933fce02
+
+	/// Diferença nominal entre os segundos turnos de 2026 e 2022.
+	measure 'T29 · acima do recorde anterior' =
+			[T29 · recorde] - [T29 · recorde anterior]
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 55ac30a2-d3da-5960-abd4-eb1b10e86a18
+
+	/// Identidade nacional da candidatura do turno.
+	measure 'T29 · adversário' =
+			SELECTEDVALUE ( 'PT histórico Brasil'[Adversário] )
+		displayFolder: T29 História do PT\Contas
+		lineageTag: a9c4286f-e9f0-5334-b0f8-4230c3999953
+
+	/// Fatia dos válidos no ano e turno.
+	measure 'T29 · adversário %' =
+			DIVIDE ( [T29 · adversário votos], [T29 · válidos] )
+		formatString: 0.00%
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 52148b90-b19f-58f0-923b-f7a8aaaf91d6
+
+	/// Resultado nacional do ano e turno em contexto, com exterior; não acumular eleições.
+	measure 'T29 · adversário votos' =
+			SUM ( 'PT histórico Brasil'[VotosAdversario] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 80a9d774-3bf0-5b65-9852-3fd16f794d81
+
+	/// Resultado nacional do ano e turno em contexto, com exterior; não acumular eleições.
+	measure 'T29 · aptos' =
+			SUM ( 'PT histórico Brasil'[Aptos] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: bf9a9100-78f5-59fd-98d2-d0e8fb328b1f
+
+	/// Referência nacional fixa, com exterior; recorde por candidatura em um único turno.
+	measure 'T29 · aptos 1989' =
+			CALCULATE ( [T29 · aptos], REMOVEFILTERS ( 'PT histórico Brasil' ),
+			    'PT histórico Brasil'[Ano] = 1989, 'PT histórico Brasil'[Turno] = 1 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 9bd4043c-64ca-5b98-a982-468a50a66191
+
+	/// Referência nacional fixa, com exterior; recorde por candidatura em um único turno.
+	measure 'T29 · aptos 2026' =
+			CALCULATE ( [T29 · aptos], REMOVEFILTERS ( 'PT histórico Brasil' ),
+			    'PT histórico Brasil'[Ano] = 2026, 'PT histórico Brasil'[Turno] = 1 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 26e1ce63-7675-5983-b5c1-ef9855109e1b
+
+	/// Identidade nacional da candidatura do turno.
+	measure 'T29 · candidato PT' =
+			SELECTEDVALUE ( 'PT histórico Brasil'[Candidato PT] )
+		displayFolder: T29 História do PT\Contas
+		lineageTag: daca3d93-c201-548e-aa4a-659aa59d6b66
+
+	/// Resultado nacional do ano e turno em contexto, com exterior; não acumular eleições.
+	measure 'T29 · comparecimento' =
+			SUM ( 'PT histórico Brasil'[Comparecimento] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 0d40e23e-42a4-5685-a844-a12e05f39525
+
+	/// Série estadual completa do dossiê. Ano vem da linha decisiva; turno ausente permanece BLANK, nunca zero.
+	measure 'T29 · estado · adversário 1º' =
+			VAR _ano = SELECTEDVALUE ( 'PT histórico mapa'[Ano] )
+			RETURN CALCULATE ( SUM ( 'PT histórico UF'[VotosAdversario] ),
+			    'PT histórico UF'[Ano] = _ano, 'PT histórico UF'[Turno] = 1 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: bba35392-52cd-5ba9-9a8d-196bdb3da9df
+
+	/// Série estadual completa do dossiê. Ano vem da linha decisiva; turno ausente permanece BLANK, nunca zero.
+	measure 'T29 · estado · adversário 2º' =
+			VAR _ano = SELECTEDVALUE ( 'PT histórico mapa'[Ano] )
+			RETURN CALCULATE ( SUM ( 'PT histórico UF'[VotosAdversario] ),
+			    'PT histórico UF'[Ano] = _ano, 'PT histórico UF'[Turno] = 2 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 366be01c-1b82-5136-aab1-424efaa96275
+
+	/// Série estadual completa do dossiê. Ano vem da linha decisiva; turno ausente permanece BLANK, nunca zero.
+	measure 'T29 · estado · PT 1º' =
+			VAR _ano = SELECTEDVALUE ( 'PT histórico mapa'[Ano] )
+			RETURN CALCULATE ( SUM ( 'PT histórico UF'[VotosPT] ),
+			    'PT histórico UF'[Ano] = _ano, 'PT histórico UF'[Turno] = 1 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 52351ec8-89a3-55a4-8788-d8547593fd2a
+
+	/// Série estadual completa do dossiê. Ano vem da linha decisiva; turno ausente permanece BLANK, nunca zero.
+	measure 'T29 · estado · PT 2º' =
+			VAR _ano = SELECTEDVALUE ( 'PT histórico mapa'[Ano] )
+			RETURN CALCULATE ( SUM ( 'PT histórico UF'[VotosPT] ),
+			    'PT histórico UF'[Ano] = _ano, 'PT histórico UF'[Turno] = 2 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: be9efdbe-691b-5625-80d1-c9d95ba0c58e
+
+	/// Referência nacional fixa, com exterior; recorde por candidatura em um único turno.
+	measure 'T29 · fatia 2002' =
+			CALCULATE ( [T29 · PT %], REMOVEFILTERS ( 'PT histórico Brasil' ),
+			    'PT histórico Brasil'[Ano] = 2002, 'PT histórico Brasil'[Turno] = 2 )
+		formatString: 0.00%
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 968238a2-b49e-5291-b08e-67e8d344e31f
+
+	/// Referência nacional fixa, com exterior; recorde por candidatura em um único turno.
+	measure 'T29 · fatia 2026' =
+			CALCULATE ( [T29 · PT %], REMOVEFILTERS ( 'PT histórico Brasil' ),
+			    'PT histórico Brasil'[Ano] = 2026, 'PT histórico Brasil'[Turno] = 2 )
+		formatString: 0.00%
+		displayFolder: T29 História do PT\Contas
+		lineageTag: d414ab02-a5aa-5744-8bcf-9e6e3b8185f1
+
+	/// Identidade da candidatura no turno decisivo da UF.
+	measure 'T29 · mapa · adversário' =
+			SELECTEDVALUE ( 'PT histórico mapa'[Adversário] )
+		displayFolder: T29 História do PT\Contas
+		lineageTag: f8a3cac0-4ffd-5d68-8bf0-e4f80841fd5e
+
+	/// Resultado da UF no turno decisivo; vencedor efetivo entre todos os candidatos.
+	measure 'T29 · mapa · adversário votos' =
+			SUM ( 'PT histórico mapa'[VotosAdversario] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 603d2491-3c4a-5df6-9cea-710456789002
+
+	/// Identidade da candidatura no turno decisivo da UF.
+	measure 'T29 · mapa · candidato PT' =
+			SELECTEDVALUE ( 'PT histórico mapa'[Candidato PT] )
+		displayFolder: T29 História do PT\Contas
+		lineageTag: c584a6ed-4700-50c3-be04-d401c98af4e8
+
+	/// Quantidade de UFs, entre 27, com cada vencedor no ano; exterior excluído, tooltip de UF não altera o país.
+	measure 'T29 · mapa · estados adversário' =
+			COALESCE ( CALCULATE ( COUNTROWS ( 'PT histórico mapa' ),
+			    REMOVEFILTERS ( 'UF' ), 'PT histórico mapa'[UF] <> "ZZ", 'PT histórico mapa'[Grupo vencedor] = "Adversário" ), 0 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 31343909-e75a-5d34-b7eb-b8c0e53fbc13
+
+	/// Quantidade de UFs, entre 27, com cada vencedor no ano; exterior excluído, tooltip de UF não altera o país.
+	measure 'T29 · mapa · estados outros' =
+			COALESCE ( CALCULATE ( COUNTROWS ( 'PT histórico mapa' ),
+			    REMOVEFILTERS ( 'UF' ), 'PT histórico mapa'[UF] <> "ZZ", 'PT histórico mapa'[Grupo vencedor] = "Outros" ), 0 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 4bfe901d-0bf4-59e6-b5c9-68c48e75eeae
+
+	/// Quantidade de UFs, entre 27, com cada vencedor no ano; exterior excluído, tooltip de UF não altera o país.
+	measure 'T29 · mapa · estados PT' =
+			COALESCE ( CALCULATE ( COUNTROWS ( 'PT histórico mapa' ),
+			    REMOVEFILTERS ( 'UF' ), 'PT histórico mapa'[UF] <> "ZZ", 'PT histórico mapa'[Grupo vencedor] = "PT" ), 0 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 1485d63a-08f7-5a35-b82f-d79b718b3053
+
+	/// Identidade da candidatura no turno decisivo da UF.
+	measure 'T29 · mapa · grupo' =
+			SELECTEDVALUE ( 'PT histórico mapa'[Grupo vencedor] )
+		displayFolder: T29 História do PT\Contas
+		lineageTag: f7c4d733-a92e-5acf-8b3d-f3f695b05fff
+
+	/// Vantagem real do vencedor sobre o segundo colocado, sobre os válidos. Mesma escala para todos os partidos.
+	measure 'T29 · mapa · margem' =
+			DIVIDE ( [T29 · mapa · vantagem votos], [T29 · mapa · válidos] )
+		formatString: 0.00%
+		displayFolder: T29 História do PT\Contas
+		lineageTag: c98e2b62-bd44-5e8a-9f45-14b67ab04666
+
+	/// Identidade da candidatura no turno decisivo da UF.
+	measure 'T29 · mapa · partido vencedor' =
+			SELECTEDVALUE ( 'PT histórico mapa'[Partido vencedor] )
+		displayFolder: T29 História do PT\Contas
+		lineageTag: f8507d70-c764-59fb-98f3-9ca0659b24ef
+
+	/// Resultado da UF no turno decisivo; vencedor efetivo entre todos os candidatos.
+	measure 'T29 · mapa · PT votos' =
+			SUM ( 'PT histórico mapa'[VotosPT] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 76810e01-2599-5c66-b421-2ed6bea6776c
+
+	/// Segundo turno quando houve; 1994 e 1998 no primeiro.
+	measure 'T29 · mapa · turno' =
+			MAX ( 'PT histórico mapa'[Turno] )
+		formatString: 0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: b0377ad8-538a-5b6a-a7f2-a4239f487d07
+
+	/// Resultado da UF no turno decisivo; vencedor efetivo entre todos os candidatos.
+	measure 'T29 · mapa · vantagem votos' =
+			SUM ( 'PT histórico mapa'[Vantagem vencedor] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: ba2b6549-1c4b-5d28-9150-30b04b2ec5d3
+
+	/// Identidade da candidatura no turno decisivo da UF.
+	measure 'T29 · mapa · vencedor' =
+			SELECTEDVALUE ( 'PT histórico mapa'[Vencedor] )
+		displayFolder: T29 História do PT\Contas
+		lineageTag: e53d91dd-df5f-5b0f-b034-b25b6cff94f6
+
+	/// Resultado da UF no turno decisivo; vencedor efetivo entre todos os candidatos.
+	measure 'T29 · mapa · válidos' =
+			SUM ( 'PT histórico mapa'[Validos] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: b1fd93ba-2355-520b-b78e-1af9c8f36b10
+
+	/// Fatia dos válidos no ano e turno.
+	measure 'T29 · PT %' =
+			DIVIDE ( [T29 · PT votos], [T29 · válidos] )
+		formatString: 0.00%
+		displayFolder: T29 História do PT\Contas
+		lineageTag: d5ce6e40-615c-5aa9-8697-78c20a405603
+
+	/// Resultado nacional do ano e turno em contexto, com exterior; não acumular eleições.
+	measure 'T29 · PT votos' =
+			SUM ( 'PT histórico Brasil'[VotosPT] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 08a338d0-4b7b-5f9a-acd6-752573c55385
+
+	/// Referência nacional fixa, com exterior; recorde por candidatura em um único turno.
+	measure 'T29 · recorde' =
+			CALCULATE ( [T29 · PT votos], REMOVEFILTERS ( 'PT histórico Brasil' ),
+			    'PT histórico Brasil'[Ano] = 2026, 'PT histórico Brasil'[Turno] = 2 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 8439fab1-a76a-5d6e-b5c9-497f9e459804
+
+	/// Referência nacional fixa, com exterior; recorde por candidatura em um único turno.
+	measure 'T29 · recorde anterior' =
+			CALCULATE ( [T29 · PT votos], REMOVEFILTERS ( 'PT histórico Brasil' ),
+			    'PT histórico Brasil'[Ano] = 2022, 'PT histórico Brasil'[Turno] = 2 )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: 1ec4d074-48fc-57d3-b2f1-accaee0209f7
+
+	/// Resultado nacional do ano e turno em contexto, com exterior; não acumular eleições.
+	measure 'T29 · válidos' =
+			SUM ( 'PT histórico Brasil'[Validos] )
+		formatString: #,0
+		displayFolder: T29 História do PT\Contas
+		lineageTag: edeefd24-d4c2-5671-958c-b8e3326de517
+
+	/// Denominadores acessíveis.
+	measure 'T29 · Contexto · ALT' =
+			"PT: " & FORMAT ( [T29 · fatia 2002], "0.00%" ) & " dos válidos em 2002 e "
+			    & FORMAT ( [T29 · fatia 2026], "0.00%" ) & " em 2026. Eleitorado: "
+			    & FORMAT ( [T29 · aptos 1989] / 1e6, "0.0" ) & " milhões em 1989 e "
+			    & FORMAT ( [T29 · aptos 2026] / 1e6, "0.0" ) & " milhões em 2026."
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: 6c54fdf5-74af-5a3f-b61f-7dab6e3d1d87
+
+	/// Válidos e eleitorado: denominadores explícitos da comparação histórica.
+	measure 'T29 · Contexto · HTML' =
+			"<div class='tela contexto29'><div>Recorde em votos, não em fatia: <b>"
+			    & FORMAT ( [T29 · fatia 2002], "0.00%" ) & "</b> dos válidos em 2002 × <b>"
+			    & FORMAT ( [T29 · fatia 2026], "0.00%" ) & "</b> em 2026.</div><div>O eleitorado também cresceu: <b>"
+			    & FORMAT ( [T29 · aptos 1989] / 1e6, "0.0" ) & " mi</b> em 1989 → <b>"
+			    & FORMAT ( [T29 · aptos 2026] / 1e6, "0.0" ) & " mi</b> em 2026.</div></div>"
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: 0e8b334c-aa36-5504-b8ff-35d23247e290
+
+	/// Dossiê nacional acessível.
+	measure 'T29 · Eleição · ALT' =
+			"Eleição " & SELECTEDVALUE ( 'PT histórico Brasil'[Ano] ) & ", "
+			    & SELECTEDVALUE ( 'PT histórico Brasil'[Turno] ) & "º turno. " & [T29 · candidato PT] & ": "
+			    & FORMAT ( [T29 · PT votos], "#,0" ) & " votos; " & [T29 · adversário] & ": "
+			    & FORMAT ( [T29 · adversário votos], "#,0" ) & " votos. Dossiê com válidos e participação."
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: 71ff6a43-1e59-5c94-bca3-e2f7212f4ad6
+
+	/// Os mesmos votos e percentuais para as duas candidaturas, mais participação.
+	measure 'T29 · Eleição · HTML' =
+			VAR _ano = SELECTEDVALUE ( 'PT histórico Brasil'[Ano] )
+			VAR _turno = SELECTEDVALUE ( 'PT histórico Brasil'[Turno] )
+			VAR _pt = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T29 · candidato PT], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+			VAR _adv = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [T29 · adversário], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+			RETURN "<div class='tela dossier29'><div class='fita'></div><div class='rot'>DOSSIÊ · ELEIÇÃO PRESIDENCIAL</div>"
+			    & "<h2>" & _ano & " · " & _turno & "º turno</h2><p>Brasil, com exterior · comparação no mesmo turno.</p>"
+			    & "<div class='par'><b class='lula'>" & _pt & " · PT</b><strong>" & FORMAT ( [T29 · PT votos], "#,0" )
+			    & " votos</strong><span>" & FORMAT ( [T29 · PT %], "0.00%" ) & " dos válidos</span></div>"
+			    & "<div class='par'><b class='flavio'>" & _adv & "</b><strong>" & FORMAT ( [T29 · adversário votos], "#,0" )
+			    & " votos</strong><span>" & FORMAT ( [T29 · adversário %], "0.00%" ) & " dos válidos</span></div>"
+			    & "<p>" & FORMAT ( [T29 · aptos], "#,0" ) & " eleitores aptos; " & FORMAT ( [T29 · comparecimento], "#,0" )
+			    & " compareceram.</p><small>Fontes: TSE · versões históricas descritas no i.</small></div>"
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: d54f74dd-cc6b-5be5-9b3b-3ce2650219a5
+
+	/// Série estadual acessível.
+	measure 'T29 · Estado · ALT' =
+			"Dossiê do estado: votos do PT e do principal adversário nacional nos dois turnos de cada eleição, e partido vencedor no turno decisivo. Em 1994 e 1998 não houve segundo turno. Valores em milhões; versões históricas no i."
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: 9ed0a4d5-1b4b-5874-a086-bc63b4fbcc67
+
+	/// Dossiê estadual da série, sem presumir que o principal adversário venceu toda UF não petista.
+	measure 'T29 · Estado · HTML' =
+			VAR _nome = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SELECTEDVALUE ( 'UF'[Nome], "Estado" ), "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" )
+			VAR _anos = ADDCOLUMNS ( VALUES ( 'PT histórico mapa'[Ano] ),
+			    "@pt1", [T29 · estado · PT 1º], "@pt2", [T29 · estado · PT 2º],
+			    "@adv1", [T29 · estado · adversário 1º], "@adv2", [T29 · estado · adversário 2º],
+			    "@partido", [T29 · mapa · partido vencedor], "@t", [T29 · mapa · turno] )
+			VAR _linhas = CONCATENATEX ( _anos,
+			    "<tr><td>" & 'PT histórico mapa'[Ano] & " · " & [@t] & "º</td><td>" & FORMAT ( [@pt1] / 1e6, "0.00" ) & " / "
+			    & IF ( ISBLANK ( [@pt2] ), "—", FORMAT ( [@pt2] / 1e6, "0.00" ) )
+			    & "</td><td>" & FORMAT ( [@adv1] / 1e6, "0.00" ) & " / "
+			    & IF ( ISBLANK ( [@adv2] ), "—", FORMAT ( [@adv2] / 1e6, "0.00" ) )
+			    & "</td><td>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( [@partido], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</td></tr>",
+			    "", 'PT histórico mapa'[Ano], ASC )
+			RETURN "<div class='tela dossier29'><div class='fita'></div><div class='rot'>DOSSIÊ · HISTÓRIA DO ESTADO</div>"
+			    & "<h2>" & _nome & "</h2><p>Votos em milhões · 1º / 2º turno. Traço: não houve 2º turno.</p>"
+			    & "<table><thead><tr><th>Ano · decisão</th><th class='lula'>PT · 1º / 2º</th><th class='flavio'>Adv. · 1º / 2º</th><th>Venceu</th></tr></thead>"
+			    & "<tbody>" & _linhas & "</tbody></table><p>PT: Lula; Dilma em 2010/2014; Haddad em 2018.</p>"
+			    & "<p>Adversário é o mais votado fora do PT no país; o vencedor da UF pode ser outro. Em 1998, Ceará: Ciro (PPS).</p>"
+			    & "<div class='mao'>cada estado tem sua história</div>"
+			    & "<small>Fontes: TSE · versões históricas descritas no i da página.</small></div>"
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: a6a77399-1aa0-5951-8a5f-75636fe19fa2
+
+	/// Série com os turnos separados e lacunas preservadas.
+	measure 'T29 · Gráfico · ALT' =
+			"Votos do PT e do principal adversário em cada eleição, em dois painéis com a mesma escala. Não houve segundo turno em 1994 ou 1998; a linha é interrompida. A queda de 2014 para 2018 permanece visível. Lula bate o recorde em 2026."
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: 97199b78-fed1-5e50-8b2c-fadf319e8e7f
+
+	/// Mapa animado acessível, estado estático em 2026.
+	measure 'T29 · Mapa · ALT' =
+			"Dez mapas estaduais de 1989 a 2026, no turno decisivo. Play automático, pausa e anos clicáveis. Cor = vencedor real; intensidade = vantagem sobre o segundo colocado. Em 1998, Ciro venceu o Ceará. Passe numa UF para ler sua série."
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: ecfd05ed-2fe4-54b6-82f6-657d65cc6066
+
+	/// Contadores calculados no DAX, nunca agregados pelo Vega.
+	measure 'T29 · Mapa · quadros' =
+			VAR _anos = ADDCOLUMNS ( VALUES ( 'PT histórico mapa'[Ano] ),
+			    "@pt", [T29 · mapa · estados PT], "@adv", [T29 · mapa · estados adversário], "@outros", [T29 · mapa · estados outros],
+			    "@t", [T29 · mapa · turno] )
+			RETURN CONCATENATEX ( _anos,
+			    'PT histórico mapa'[Ano] & "|" & [@t] & "|" & [@pt] & "|" & [@adv] & "|" & [@outros],
+			    ";", 'PT histórico mapa'[Ano], ASC )
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: d8f895de-5df5-5a8e-8f8e-cd8674ff2b2d
+
+	/// Campo de desenho do Deneb: valores observados de cada UF, uma linha original por UF.
+	measure 'T29 · Mapa · série' =
+			VAR _anos = ADDCOLUMNS ( VALUES ( 'PT histórico mapa'[Ano] ),
+			    "@grupo", [T29 · mapa · grupo], "@m", [T29 · mapa · margem], "@t", [T29 · mapa · turno] )
+			RETURN CONCATENATEX ( _anos,
+			    'PT histórico mapa'[Ano] & "|" & [@grupo] & "|" & FORMAT ( [@m], "0.00000000", "en-US" ) & "|" & [@t],
+			    ";", 'PT histórico mapa'[Ano], ASC )
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: beb44307-96fc-57ef-987a-fafa93b29626
+
+	/// Manchete acessível.
+	measure 'T29 · Resposta · ALT' =
+			"Lula recebeu " & FORMAT ( [T29 · recorde], "#,0" )
+			    & " votos, recorde de uma candidatura em um turno presidencial direto; "
+			    & FORMAT ( [T29 · acima do recorde anterior], "#,0" ) & " acima de 2022. Recorde em votos não significa recorde percentual."
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: c90dfe1a-e451-553a-b2e7-2a1d78bd9e90
+
+	/// Manchete responde à pergunta; recorde em contagem, sem atribuir crescimento contínuo ou causalidade.
+	measure 'T29 · Resposta · HTML' =
+			"<div class='tela h29'><div class='man sobe'><span class='num'>"
+			    & FORMAT ( [T29 · recorde], "#,0" ) & "</span> votos: o recorde presidencial</div>"
+			    & "<div class='txt sobe d2'>Lula teve a maior votação de uma candidatura em um turno de eleição presidencial direta no Brasil. "
+			    & "<b>" & FORMAT ( [T29 · acima do recorde anterior], "#,0" ) & " votos</b> acima da marca dele em 2022.</div></div>"
+		displayFolder: T29 História do PT\Desenho
+		lineageTag: 395c60ad-a13c-5d47-86da-f69ae9d7ad8d
 
 	column Value
 		dataType: int64

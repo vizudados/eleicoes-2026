@@ -1,0 +1,13 @@
+/*
+@pasta: T29 História do PT\Desenho
+@formato: texto
+@descricao: Contadores calculados no DAX, nunca agregados pelo Vega.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+VAR _anos = ADDCOLUMNS ( VALUES ( 'PT histórico mapa'[Ano] ),
+    "@pt", [T29 · mapa · estados PT], "@adv", [T29 · mapa · estados adversário], "@outros", [T29 · mapa · estados outros],
+    "@t", [T29 · mapa · turno] )
+RETURN CONCATENATEX ( _anos,
+    'PT histórico mapa'[Ano] & "|" & [@t] & "|" & [@pt] & "|" & [@adv] & "|" & [@outros],
+    ";", 'PT histórico mapa'[Ano], ASC )

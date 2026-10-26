@@ -1,0 +1,8 @@
+/*
+@pasta: T29 História do PT\Contas
+@formato: 0.00%
+@descricao: Fatia dos válidos no ano e turno.
+@oraculo: dados/saida/pt_historico; PT-HISTORICO-METODO.md
+@gerado: pbi/scripts/desenho_t29.py
+*/
+DIVIDE ( [T29 · PT votos], [T29 · válidos] )
