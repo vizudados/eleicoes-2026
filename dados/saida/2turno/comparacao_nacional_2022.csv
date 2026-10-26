@@ -1,0 +1,10 @@
+campo,valor_2022,valor_2026,delta,arquivo_origem,campo_origem,metodo
+pt,60345999,64256232,3910233,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes
+adv,58206354,59826041,1619687,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes
+demais,0,0,0,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes
+validos,118552353,124082273,5529920,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes
+aptos,156454011,158745502,2291491,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes
+comparecimento,124252796,128236074,3983278,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes
+abstencoes,32200558,30509005,-1691553,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes
+brancos,1769678,1430496,-339182,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes
+nulos,3930765,2723305,-1207460,dados/pbi/uf_2turno.csv,"pt,adv,demais,validos,aptos,comparecimento,abstencoes,brancos,nulos",Segundo turno de 2026 menos segundo turno de 2022; candidatos adversários diferentes

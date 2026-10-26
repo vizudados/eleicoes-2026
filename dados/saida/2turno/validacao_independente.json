@@ -1,0 +1,97 @@
+{
+  "status": "PASSOU",
+  "checagens": {
+    "contagens_iguais": 100782,
+    "municipios_2026": 5571,
+    "municipios_2022": 5570,
+    "deltas_iguais": 50139,
+    "agrupamentos_iguais": 51,
+    "direcoes_pesquisas": 252,
+    "erros_pesquisas": 38,
+    "coeficientes_regressao": 18,
+    "registros_documentais_validos": 42
+  },
+  "totais_2022": {
+    "adv": 58206354,
+    "pt": 60345999,
+    "aptos": 156454011,
+    "comparecimento": 124252796,
+    "abstencoes": 32200558,
+    "brancos": 1769678,
+    "nulos": 3930765,
+    "validos": 118552353
+  },
+  "totais_2026": {
+    "pt": 64256232,
+    "adv": 59826041,
+    "demais": 0,
+    "validos": 124082273,
+    "aptos": 158745502,
+    "comparecimento": 128236074,
+    "abstencoes": 30509005,
+    "brancos": 1430496,
+    "nulos": 2723305
+  },
+  "eleitores_secoes_nao_instaladas_2022": 657,
+  "eleitores_secoes_nao_instaladas_2026": 423,
+  "uf_nao_instaladas_2026": {
+    "AC": 0,
+    "AL": 0,
+    "AP": 0,
+    "AM": 0,
+    "BA": 0,
+    "CE": 0,
+    "DF": 0,
+    "ES": 0,
+    "ZZ": 423,
+    "GO": 0,
+    "MA": 0,
+    "MT": 0,
+    "MS": 0,
+    "MG": 0,
+    "PR": 0,
+    "PB": 0,
+    "PA": 0,
+    "PE": 0,
+    "PI": 0,
+    "RJ": 0,
+    "RN": 0,
+    "RS": 0,
+    "RO": 0,
+    "RR": 0,
+    "SC": 0,
+    "SE": 0,
+    "SP": 0,
+    "TO": 0
+  },
+  "garantia": {
+    "retrospectivo": "25/10/2026 21:08:14",
+    "conservador": "25/10/2026 21:09:24"
+  },
+  "pesquisas": {
+    "1": {
+      "linhas": 80,
+      "sem_valores": 57,
+      "lula_frente": 17,
+      "pares_numericos": 23,
+      "flavio_frente": 6
+    },
+    "2": {
+      "linhas": 133,
+      "sem_valores": 62,
+      "flavio_frente": 56,
+      "pares_numericos": 71,
+      "lula_frente": 11,
+      "empates": 4
+    }
+  },
+  "viradas": {
+    "Lula → Lula": 2662,
+    "Flávio → Lula": 211,
+    "Flávio → Flávio": 2694,
+    "Flávio → Empate": 1,
+    "Empate → Lula": 2,
+    "Lula → Flávio": 1
+  },
+  "metodo": "Biblioteca padrão, somas inteiras linha a linha, sem importar exportador/analisador e sem pandas/numpy"
+}

@@ -1,0 +1,3 @@
+arquivo,url,sha256,filtro
+dados/bruto/tse/presidente_2022_BR.csv,https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2022.zip,fe7010f3210a478f2df6c4aef58cc5adde124c2df736a16455f2fb888dd47c8b,NR_TURNO=2; CD_CARGO=1; membro com sufixo _BR.csv
+dados/bruto/tse/detalhe_2022_BR.csv,https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_2022.zip,51d219cbe1215fc10b835b382f753b5a5efd4b143f4d5598cd598a4564d9aff1,NR_TURNO=2; CD_CARGO=1; membro com sufixo _BR.csv

@@ -1,0 +1,40 @@
+{
+  "provas": 489,
+  "todas_batem": true,
+  "municipios_por_ano": {
+    "2022": 5570,
+    "2026": 5571
+  },
+  "ufs_por_ano": {
+    "2022": 28,
+    "2026": 28
+  },
+  "exterior_cidades_2026": 186,
+  "totais": [
+    {
+      "ano": 2022,
+      "pt": 60345999,
+      "adv": 58206354,
+      "demais": 0,
+      "validos": 118552353,
+      "aptos": 156454011,
+      "comparecimento": 124252796,
+      "abstencoes": 32200558,
+      "brancos": 1769678,
+      "nulos": 3930765
+    },
+    {
+      "ano": 2026,
+      "pt": 64256232,
+      "adv": 59826041,
+      "demais": 0,
+      "validos": 124082273,
+      "aptos": 158745502,
+      "comparecimento": 128236074,
+      "abstencoes": 30509005,
+      "brancos": 1430496,
+      "nulos": 2723305
+    }
+  ],
+  "comando": "python -I -X utf8 pipeline/exportar_2turno.py"
+}

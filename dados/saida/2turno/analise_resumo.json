@@ -1,0 +1,23 @@
+{
+  "municipios_2026": 5571,
+  "municipios_comparaveis_2022": 5570,
+  "municipios_sem_base_2022": [
+    {
+      "cd_ibge": 5101837,
+      "nome": "Boa Esperança do Norte",
+      "uf": "MT"
+    }
+  ],
+  "viradas_municipais": {
+    "Empate → Lula": 2,
+    "Flávio → Empate": 1,
+    "Flávio → Flávio": 2694,
+    "Flávio → Lula": 211,
+    "Lula → Flávio": 1,
+    "Lula → Lula": 2662
+  },
+  "saldo_brasil_1t": -2224965,
+  "saldo_brasil_2t": 4430191,
+  "ganho_lula_brasil": 10376694,
+  "ganho_flavio_brasil": 3721538
+}

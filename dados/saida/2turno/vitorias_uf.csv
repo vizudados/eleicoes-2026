@@ -1,0 +1,17 @@
+ano,regiao,vencedor,quantidade,arquivo_origem,campo_origem,metodo
+2022,Centro-Oeste,Adversário,4,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2022,Exterior,Lula,1,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2022,Nordeste,Lula,9,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2022,Norte,Adversário,4,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2022,Norte,Lula,3,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2022,Sudeste,Adversário,3,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2022,Sudeste,Lula,1,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2022,Sul,Adversário,3,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2026,Centro-Oeste,Adversário,4,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2026,Exterior,Lula,1,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2026,Nordeste,Lula,9,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2026,Norte,Adversário,4,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2026,Norte,Lula,3,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2026,Sudeste,Adversário,3,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2026,Sudeste,Lula,1,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026
+2026,Sul,Adversário,3,dados/pbi/uf_2turno.csv,"pt,adv,uf",Conta 27 UFs; ZZ aparece somente em Exterior; vencedor Adversário é Jair em 2022 e Flávio em 2026

@@ -1,0 +1,5 @@
+indicador,valor_2022,valor_2026,delta_pontos_percentuais,arquivo_origem,campo_origem,metodo
+pt_pct,50.9024051172,51.7851828843,0.88277776709,dados/pbi/uf_2turno.csv,"pt,adv,validos,comparecimento,abstencoes",Brasil com ZZ; diferença calculada antes do arredondamento; percentual candidato sobre válidos; abstenção sobre presença+abstenção
+adv_pct,49.0975948828,48.2148171157,-0.88277776709,dados/pbi/uf_2turno.csv,"pt,adv,validos,comparecimento,abstencoes",Brasil com ZZ; diferença calculada antes do arredondamento; percentual candidato sobre válidos; abstenção sobre presença+abstenção
+margem_pt_pp,1.80481023434,3.57036576853,1.76555553418,dados/pbi/uf_2turno.csv,"pt,adv,validos,comparecimento,abstencoes",Brasil com ZZ; diferença calculada antes do arredondamento; percentual candidato sobre válidos; abstenção sobre presença+abstenção
+abstencao_pct,20.5815709135,19.2188666207,-1.36270429272,dados/pbi/uf_2turno.csv,"pt,adv,validos,comparecimento,abstencoes",Brasil com ZZ; diferença calculada antes do arredondamento; percentual candidato sobre válidos; abstenção sobre presença+abstenção

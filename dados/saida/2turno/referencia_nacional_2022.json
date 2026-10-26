@@ -1,0 +1,16 @@
+{
+  "url": "https://www.tse.jus.br/comunicacao/noticias/2022/Outubro/100-das-secoes-totalizadas-confira-como-ficou-o-quadro-eleitoral-apos-o-2o-turno/",
+  "consulta": "2026-10-26",
+  "metodo": "Transcrição dos oito totais da notícia oficial, conferida via ferramenta web; oráculo congelado no script",
+  "totais": {
+    "aptos": 156454011,
+    "comparecimento": 124252796,
+    "abstencoes": 32200558,
+    "brancos": 1769678,
+    "nulos": 3930765,
+    "validos": 118552353,
+    "pt": 60345999,
+    "adv": 58206354,
+    "demais": 0
+  }
+}

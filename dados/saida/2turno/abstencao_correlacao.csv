@@ -1,0 +1,3 @@
+candidato,correlacao_ponderada,municipios,arquivo_origem,campo_origem,metodo
+Lula,0.0554253678848,5571,"dados/pbi/municipio_ano.csv (2026, 1º turno); dados/pbi/municipio_2turno.csv (2022 e 2026, 2º turno); dados/pbi/municipio.csv",pt/validos ou adv/validos no 1º turno; delta_abstencao_pp; peso=aptos_1t,Correlação de Pearson ponderada pelo eleitorado; relação municipal sem inferência causal
+Flávio,-0.0142697433659,5571,"dados/pbi/municipio_ano.csv (2026, 1º turno); dados/pbi/municipio_2turno.csv (2022 e 2026, 2º turno); dados/pbi/municipio.csv",pt/validos ou adv/validos no 1º turno; delta_abstencao_pp; peso=aptos_1t,Correlação de Pearson ponderada pelo eleitorado; relação municipal sem inferência causal
