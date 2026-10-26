@@ -1,8 +1,8 @@
 {
  "eleicao": 6258,
  "turno": 2,
- "coletado_em": "25/10/2026 23:26:26",
- "atualizado_tse": "25/10/2026 23:21:51",
+ "coletado_em": "25/10/2026 23:27:30",
+ "atualizado_tse": "25/10/2026 23:26:38",
  "status": "encerrada",
  "brasil": {
   "eleitorado": 158745502,
@@ -17,7 +17,7 @@
   "secoes_totalizadas": 499248,
   "eleitorado_apurado": 158745502,
   "uf": "BR",
-  "atualizado_tse": "25/10/2026 23:21:51",
+  "atualizado_tse": "25/10/2026 23:26:38",
   "secoes_pct": 100.0,
   "abstencao_pct": 19.22,
   "lula_pct": 51.79,
@@ -133,7 +133,7 @@
   },
   {
    "uf": "AM",
-   "atualizado_tse": "25/10/2026 21:08:57",
+   "atualizado_tse": "25/10/2026 22:26:38",
    "secoes_pct": 100.0,
    "eleitorado": 2798661,
    "comparecimento": 2192059,
@@ -158,8 +158,8 @@
      "partido": "PT",
      "votos": 1145783,
      "pct": 54.02,
-     "eleito": false,
-     "situacao": ""
+     "eleito": true,
+     "situacao": "Eleito"
     },
     {
      "numero": 22,
@@ -168,10 +168,10 @@
      "votos": 975245,
      "pct": 45.98,
      "eleito": false,
-     "situacao": ""
+     "situacao": "Não eleito"
     }
    ],
-   "totalizacao_final": false
+   "totalizacao_final": true
   },
   {
    "uf": "AP",
@@ -385,7 +385,7 @@
   },
   {
    "uf": "GO",
-   "atualizado_tse": "25/10/2026 21:33:20",
+   "atualizado_tse": "25/10/2026 23:26:38",
    "secoes_pct": 100.0,
    "eleitorado": 5080385,
    "comparecimento": 4047280,
@@ -411,7 +411,7 @@
      "votos": 2345334,
      "pct": 59.66,
      "eleito": false,
-     "situacao": ""
+     "situacao": "Não eleito"
     },
     {
      "numero": 13,
@@ -419,11 +419,11 @@
      "partido": "PT",
      "votos": 1585555,
      "pct": 40.34,
-     "eleito": false,
-     "situacao": ""
+     "eleito": true,
+     "situacao": "Eleito"
     }
    ],
-   "totalizacao_final": false
+   "totalizacao_final": true
   },
   {
    "uf": "MA",
@@ -469,7 +469,7 @@
   },
   {
    "uf": "MG",
-   "atualizado_tse": "25/10/2026 23:08:43",
+   "atualizado_tse": "25/10/2026 23:26:38",
    "secoes_pct": 100.0,
    "eleitorado": 16372144,
    "comparecimento": 13044203,
@@ -494,8 +494,8 @@
      "partido": "PT",
      "votos": 6351099,
      "pct": 50.43,
-     "eleito": false,
-     "situacao": ""
+     "eleito": true,
+     "situacao": "Eleito"
     },
     {
      "numero": 22,
@@ -504,10 +504,10 @@
      "votos": 6241786,
      "pct": 49.57,
      "eleito": false,
-     "situacao": ""
+     "situacao": "Não eleito"
     }
    ],
-   "totalizacao_final": false
+   "totalizacao_final": true
   },
   {
    "uf": "MS",
@@ -637,7 +637,7 @@
   },
   {
    "uf": "PB",
-   "atualizado_tse": "25/10/2026 21:59:57",
+   "atualizado_tse": "25/10/2026 23:26:38",
    "secoes_pct": 100.0,
    "eleitorado": 3248434,
    "comparecimento": 2743560,
@@ -662,8 +662,8 @@
      "partido": "PT",
      "votos": 1794059,
      "pct": 67.46,
-     "eleito": false,
-     "situacao": ""
+     "eleito": true,
+     "situacao": "Eleito"
     },
     {
      "numero": 22,
@@ -672,10 +672,10 @@
      "votos": 865210,
      "pct": 32.54,
      "eleito": false,
-     "situacao": ""
+     "situacao": "Não eleito"
     }
    ],
-   "totalizacao_final": false
+   "totalizacao_final": true
   },
   {
    "uf": "PE",
@@ -973,7 +973,7 @@
   },
   {
    "uf": "RS",
-   "atualizado_tse": "25/10/2026 21:32:27",
+   "atualizado_tse": "25/10/2026 23:26:38",
    "secoes_pct": 100.0,
    "eleitorado": 8522318,
    "comparecimento": 6889638,
@@ -999,7 +999,7 @@
      "votos": 3874378,
      "pct": 57.84,
      "eleito": false,
-     "situacao": ""
+     "situacao": "Não eleito"
     },
     {
      "numero": 13,
@@ -1007,11 +1007,11 @@
      "partido": "PT",
      "votos": 2824552,
      "pct": 42.16,
-     "eleito": false,
-     "situacao": ""
+     "eleito": true,
+     "situacao": "Eleito"
     }
    ],
-   "totalizacao_final": false
+   "totalizacao_final": true
   },
   {
    "uf": "SC",
