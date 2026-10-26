@@ -1,17 +1,29 @@
 {
-		"version": "2.14.0.0",
-		"author": {"name":"Lucas","email":"lucas@example.com"},
-		"resources": [
-			{
-				"resourceId": "rId0",
-				"sourceType": 5,
-				"file": "resources/smartFilterFixed9B35E14F08BD474496777B2253A30D3A.pbiviz.json"
-			}
-		],
-		"visual": {"name":"smartFilterFixed","displayName":"VizuFilter","guid":"smartFilterFixed9B35E14F08BD474496777B2253A30D3A","visualClassName":"Visual","version":"2.14.0.0","description":"Filtro dropdown, busca, intervalo de datas com calendario configuravel e hierarquia opcional de ate tres niveis (dois campos ou arvore), modo caminho de um campo com quantos niveis o valor tiver e modo regua (botao arrastavel sobre uma coluna numerica).","supportUrl":"https://example.com/support","gitHubUrl":""},
-		"metadata": {
-			"pbivizjson": {
-				"resourceId": "rId0"
-			}
-		}
-	}
+  "version": "2.14.0.0",
+  "author": {
+    "name": "Lucas",
+    "email": "lucas@example.com"
+  },
+  "resources": [
+    {
+      "resourceId": "rId0",
+      "sourceType": 5,
+      "file": "resources/smartFilterFixed9B35E14F08BD474496777B2253A30D3A.pbiviz.json"
+    }
+  ],
+  "visual": {
+    "name": "smartFilterFixed",
+    "displayName": "VizuFilter",
+    "guid": "smartFilterFixed9B35E14F08BD474496777B2253A30D3A",
+    "visualClassName": "Visual",
+    "version": "2.14.0.0",
+    "description": "Filtro dropdown, busca, intervalo de datas com calendario configuravel e hierarquia opcional de ate tres niveis (dois campos ou arvore), modo caminho de um campo com quantos niveis o valor tiver e modo regua (botao arrastavel sobre uma coluna numerica).",
+    "supportUrl": "https://example.com/support",
+    "gitHubUrl": ""
+  },
+  "metadata": {
+    "pbivizjson": {
+      "resourceId": "rId0"
+    }
+  }
+}
