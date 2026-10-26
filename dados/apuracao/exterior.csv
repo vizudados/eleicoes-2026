@@ -6,7 +6,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 29998,Luanda,Angola,África,25/10/2026 21:05:24,100.0,1,1,285,167,118
 99147,Saint Johns,Antígua e Barbuda,América Central e Caribe,25/10/2026 18:02:54,100.0,1,1,0,0,0
 29467,Buenos Aires,Argentina,América do Sul,25/10/2026 20:33:25,100.0,15,15,5962,4184,1778
-29602,Córdoba,Argentina,América do Sul,25/10/2026 19:34:34,100.0,2,2,385,209,176
+29602,Córdoba,Argentina,América do Sul,25/10/2026 23:26:38,100.0,2,2,385,209,176
 39004,Mendoza,Argentina,América do Sul,25/10/2026 19:32:34,100.0,1,1,120,62,58
 30295,Paso Los Libres,Argentina,América do Sul,25/10/2026 21:23:49,100.0,1,1,7,4,3
 99155,Puerto Iguazú,Argentina,América do Sul,25/10/2026 21:25:49,100.0,1,1,20,7,13
@@ -52,7 +52,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30511,São José,Costa Rica,América Central e Caribe,25/10/2026 18:10:02,100.0,1,1,366,180,186
 29254,Abidjã,Costa do Marfim,África,25/10/2026 23:15:45,100.0,1,1,53,31,22
 39020,Zagreb,Croácia,Europa,25/10/2026 22:05:25,100.0,1,1,57,31,26
-29777,Havana,Cuba,América Central e Caribe,25/10/2026 20:22:54,100.0,1,1,44,43,1
+29777,Havana,Cuba,América Central e Caribe,25/10/2026 23:26:38,100.0,1,1,44,43,1
 29599,Copenhague,Dinamarca,Europa,25/10/2026 22:05:24,100.0,4,4,1626,1383,243
 29483,Cairo,Egito,África,25/10/2026 23:05:24,100.0,1,1,76,60,16
 30520,São Salvador,El Salvador,América Central e Caribe,25/10/2026 18:08:55,100.0,1,1,75,26,49
@@ -116,7 +116,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30090,Maputo,Moçambique,África,25/10/2026 22:05:25,100.0,1,1,225,108,117
 30104,Mexico,México,América do Norte,25/10/2026 18:10:24,100.0,6,6,1357,699,658
 30821,Windhoek,Namíbia,África,26/10/2026 01:19:42,100.0,1,1,12,8,4
-29173,Katmandu,Nepal,Ásia,26/10/2026 04:45:11,100.0,1,1,13,1,12
+29173,Katmandu,Nepal,Ásia,25/10/2026 23:26:38,100.0,1,1,13,1,12
 30074,Manágua,Nicarágua,América Central e Caribe,25/10/2026 18:09:43,100.0,1,1,69,30,39
 99198,Abuja,Nigéria,África,25/10/2026 21:05:22,100.0,1,1,0,0,0
 29912,Lagos,Nigéria,África,26/10/2026 00:18:36,100.0,1,1,37,32,5
@@ -162,7 +162,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 30570,Taipé,Taiwan,Ásia,26/10/2026 04:05:24,100.0,1,1,224,94,130
 38962,Dar Es Salaam,Tanzânia,África,26/10/2026 02:22:12,100.0,1,1,17,11,6
 30350,Praga,Tchéquia,Europa,25/10/2026 22:05:25,100.0,1,1,390,304,86
-29645,Díli,Timor-Leste,Ásia,26/10/2026 08:18:07,100.0,1,1,51,18,33
+29645,Díli,Timor-Leste,Ásia,25/10/2026 23:26:38,100.0,1,1,51,18,33
 29963,Lomé,Togo,África,25/10/2026 22:02:54,100.0,1,1,0,0,0
 30325,Port Of Spain,Trinidad e Tobago,América Central e Caribe,25/10/2026 20:24:14,100.0,1,1,21,9,12
 30708,Tunis,Tunísia,África,26/10/2026 00:19:12,100.0,1,1,23,16,7
@@ -170,7 +170,7 @@ cd,cidade,pais,continente,atualizado_tse,secoes_pct,secoes_total,secoes_totaliza
 39306,Istambul,Turquia,Ásia,25/10/2026 23:05:25,100.0,1,1,127,98,29
 29858,Kiev,Ucrânia,Europa,26/10/2026 02:18:16,100.0,1,1,19,3,16
 29319,Artigas,Uruguai,América do Sul,25/10/2026 20:39:32,100.0,1,1,374,113,261
-29521,Chuy,Uruguai,América do Sul,25/10/2026 19:02:54,100.0,1,1,0,0,0
+29521,Chuy,Uruguai,América do Sul,25/10/2026 23:26:38,100.0,1,1,0,0,0
 30147,Montevidéu,Uruguai,América do Sul,25/10/2026 20:11:04,100.0,4,4,1298,766,532
 30430,Rio Branco,Uruguai,América do Sul,25/10/2026 21:24:59,100.0,1,1,20,8,12
 99244,Rivera,Uruguai,América do Sul,25/10/2026 19:02:54,100.0,1,1,0,0,0
