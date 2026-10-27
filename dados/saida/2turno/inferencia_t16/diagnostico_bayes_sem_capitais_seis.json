@@ -1,0 +1,10 @@
+{
+  "utc": "2026-10-27T12:08:52.230956+00:00",
+  "cenario": "sem_capitais",
+  "efeito_uf": true,
+  "grupos": "seis",
+  "convergiu": false,
+  "status": "interrompida_para_usar_desenho_regional_viavel_no_prazo",
+  "amostras_posteriores_concluidas": 0,
+  "motivo": "A versão regional sem desvio UF será confrontada com sua própria base completa. Esta tentativa ainda estava em aquecimento e não fornece resultados."
+}

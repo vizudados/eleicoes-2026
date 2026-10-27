@@ -1,0 +1,791 @@
+﻿arquivo;coluna;descricao
+achados_tela.csv;afirmacao;Campo de auditoria: afirmacao. Ver documentação do método.
+achados_tela.csv;resiste_todos_testes_executados;Campo de auditoria: resiste todos testes executados. Ver documentação do método.
+achados_tela.csv;menor_limite_95_entre_testes_pct;Campo de auditoria: menor limite 95 entre testes pct. Ver documentação do método.
+achados_tela.csv;frase;Campo de auditoria: frase. Ver documentação do método.
+achados_tela.csv;escopo;Campo de auditoria: escopo. Ver documentação do método.
+afirmacoes_testadas.csv;execucao;Campo de auditoria: execucao. Ver documentação do método.
+afirmacoes_testadas.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+afirmacoes_testadas.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+afirmacoes_testadas.csv;area;Brasil sem exterior ou região.
+afirmacoes_testadas.csv;afirmacao;Campo de auditoria: afirmacao. Ver documentação do método.
+afirmacoes_testadas.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+afirmacoes_testadas.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+afirmacoes_testadas.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+afirmacoes_testadas.csv;comparavel;Campo de auditoria: comparavel. Ver documentação do método.
+auditoria_entradas.csv;verificacao;Campo de auditoria: verificacao. Ver documentação do método.
+auditoria_entradas.csv;valor;Campo de auditoria: valor. Ver documentação do método.
+base_municipal.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+base_municipal.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+base_municipal.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+base_municipal.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+base_municipal.csv;populacao;Campo de auditoria: populacao. Ver documentação do método.
+base_municipal.csv;cand_13;Campo de auditoria: cand 13. Ver documentação do método.
+base_municipal.csv;cand_14;Campo de auditoria: cand 14. Ver documentação do método.
+base_municipal.csv;cand_16;Campo de auditoria: cand 16. Ver documentação do método.
+base_municipal.csv;cand_21;Campo de auditoria: cand 21. Ver documentação do método.
+base_municipal.csv;cand_22;Campo de auditoria: cand 22. Ver documentação do método.
+base_municipal.csv;cand_27;Campo de auditoria: cand 27. Ver documentação do método.
+base_municipal.csv;cand_29;Campo de auditoria: cand 29. Ver documentação do método.
+base_municipal.csv;cand_30;Campo de auditoria: cand 30. Ver documentação do método.
+base_municipal.csv;cand_35;Campo de auditoria: cand 35. Ver documentação do método.
+base_municipal.csv;cand_55;Campo de auditoria: cand 55. Ver documentação do método.
+base_municipal.csv;cand_70;Campo de auditoria: cand 70. Ver documentação do método.
+base_municipal.csv;cand_80;Campo de auditoria: cand 80. Ver documentação do método.
+base_municipal.csv;aptos_1;Campo de auditoria: aptos 1. Ver documentação do método.
+base_municipal.csv;comparecimento_1;Campo de auditoria: comparecimento 1. Ver documentação do método.
+base_municipal.csv;abstencoes_1;Campo de auditoria: abstencoes 1. Ver documentação do método.
+base_municipal.csv;brancos_1;Campo de auditoria: brancos 1. Ver documentação do método.
+base_municipal.csv;nulos_1;Campo de auditoria: nulos 1. Ver documentação do método.
+base_municipal.csv;validos_1;Campo de auditoria: validos 1. Ver documentação do método.
+base_municipal.csv;pt_2;Campo de auditoria: pt 2. Ver documentação do método.
+base_municipal.csv;adv_2;Campo de auditoria: adv 2. Ver documentação do método.
+base_municipal.csv;demais_2;Campo de auditoria: demais 2. Ver documentação do método.
+base_municipal.csv;validos_2;Campo de auditoria: validos 2. Ver documentação do método.
+base_municipal.csv;aptos_2;Campo de auditoria: aptos 2. Ver documentação do método.
+base_municipal.csv;comparecimento_2;Campo de auditoria: comparecimento 2. Ver documentação do método.
+base_municipal.csv;abstencoes_2;Campo de auditoria: abstencoes 2. Ver documentação do método.
+base_municipal.csv;brancos_2;Campo de auditoria: brancos 2. Ver documentação do método.
+base_municipal.csv;nulos_2;Campo de auditoria: nulos 2. Ver documentação do método.
+base_municipal.csv;y_0;Campo de auditoria: y 0. Ver documentação do método.
+base_municipal.csv;y_1;Campo de auditoria: y 1. Ver documentação do método.
+base_municipal.csv;y_2;Campo de auditoria: y 2. Ver documentação do método.
+base_municipal.csv;y_3;Campo de auditoria: y 3. Ver documentação do método.
+bayes_slice_principal_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+bayes_slice_principal_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+bayes_slice_principal_seis.csv;area;Brasil sem exterior ou região.
+bayes_slice_principal_seis.csv;origem;Grupo do 1º turno.
+bayes_slice_principal_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+bayes_slice_principal_seis.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+bayes_slice_principal_seis.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+bayes_slice_principal_seis.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+bayes_slice_principal_seis.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+bayes_slice_principal_seis.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+bayes_slice_principal_seis.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+bayes_slice_principal_seis.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+bayes_slice_principal_seis.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+bayes_slice_principal_seis.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+bayes_slice_principal_seis.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+bayes_slice_principal_seis.csv;convergiu;Campo de auditoria: convergiu. Ver documentação do método.
+bayes_slice_principal_seis.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+cadastro_municipal.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+cadastro_municipal.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+cadastro_municipal.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+cadastro_municipal.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+cadastro_municipal.csv;populacao;Campo de auditoria: populacao. Ver documentação do método.
+cadastro_municipal.csv;aptos_1;Campo de auditoria: aptos 1. Ver documentação do método.
+cadastro_municipal.csv;aptos_2;Campo de auditoria: aptos 2. Ver documentação do método.
+cadastro_municipal.csv;delta_aptos;Campo de auditoria: delta aptos. Ver documentação do método.
+catalogo_candidatos.csv;numero;Campo de auditoria: numero. Ver documentação do método.
+catalogo_candidatos.csv;ano;Campo de auditoria: ano. Ver documentação do método.
+catalogo_candidatos.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+catalogo_candidatos.csv;partido;Campo de auditoria: partido. Ver documentação do método.
+catalogo_candidatos.csv;votos;Campo de auditoria: votos. Ver documentação do método.
+catalogo_candidatos.csv;validos;Campo de auditoria: validos. Ver documentação do método.
+catalogo_candidatos.csv;posicao;Campo de auditoria: posicao. Ver documentação do método.
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_bayes_dm_slice_principal_seis.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_oito.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_ate_50mil_habitantes_seis.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_base_aptos_2turno_oito.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_demais_separados_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_demais_separados_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_demais_separados_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_demais_separados_oito.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_demais_separados_oito.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_demais_separados_oito.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_demais_separados_oito.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_demais_separados_oito.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_demais_separados_oito.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_principal_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_principal_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_principal_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_principal_oito.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_principal_oito.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_principal_oito.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_principal_oito.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_principal_oito.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_principal_oito.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_principal_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_principal_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_principal_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_principal_seis.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_principal_seis.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_principal_seis.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_principal_seis.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_principal_seis.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_principal_seis.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_sem_capitais_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_sem_capitais_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_sem_capitais_oito.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_oito.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_oito.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_oito.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_oito.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_oito.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_sem_capitais_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_sem_capitais_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_sem_capitais_seis.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_seis.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_seis.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_seis.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_seis.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_capitais_seis.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;mae_municipal_votos;Campo de auditoria: mae municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;rmse_municipal_votos;Campo de auditoria: rmse municipal votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;mae_ponderado_pp_aptos;Campo de auditoria: mae ponderado pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;p95_erro_absoluto_pp_aptos;Campo de auditoria: p95 erro absoluto pp aptos. Ver documentação do método.
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;residuo_nacional_votos;Campo de auditoria: residuo nacional votos. Ver documentação do método.
+checagem_preditiva_restrito_sem_nao_votou_oito.csv;cobertura_preditiva_95_pct;Campo de auditoria: cobertura preditiva 95 pct. Ver documentação do método.
+comparacao_metodos.csv;metodo_bayes;Campo de auditoria: metodo bayes. Ver documentação do método.
+comparacao_metodos.csv;cenario_bayes;Campo de auditoria: cenario bayes. Ver documentação do método.
+comparacao_metodos.csv;area_bayes;Campo de auditoria: area bayes. Ver documentação do método.
+comparacao_metodos.csv;origem;Grupo do 1º turno.
+comparacao_metodos.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+comparacao_metodos.csv;base_origem_votos_bayes;Campo de auditoria: base origem votos bayes. Ver documentação do método.
+comparacao_metodos.csv;media_pct_bayes;Campo de auditoria: media pct bayes. Ver documentação do método.
+comparacao_metodos.csv;inferior_95_pct_bayes;Campo de auditoria: inferior 95 pct bayes. Ver documentação do método.
+comparacao_metodos.csv;superior_95_pct_bayes;Campo de auditoria: superior 95 pct bayes. Ver documentação do método.
+comparacao_metodos.csv;media_votos_bayes;Campo de auditoria: media votos bayes. Ver documentação do método.
+comparacao_metodos.csv;inferior_95_votos_bayes;Campo de auditoria: inferior 95 votos bayes. Ver documentação do método.
+comparacao_metodos.csv;superior_95_votos_bayes;Campo de auditoria: superior 95 votos bayes. Ver documentação do método.
+comparacao_metodos.csv;tipo_intervalo_bayes;Campo de auditoria: tipo intervalo bayes. Ver documentação do método.
+comparacao_metodos.csv;comparavel_principal_bayes;Campo de auditoria: comparavel principal bayes. Ver documentação do método.
+comparacao_metodos.csv;aviso_bayes;Campo de auditoria: aviso bayes. Ver documentação do método.
+comparacao_metodos.csv;metodo_restrito;Campo de auditoria: metodo restrito. Ver documentação do método.
+comparacao_metodos.csv;cenario_restrito;Campo de auditoria: cenario restrito. Ver documentação do método.
+comparacao_metodos.csv;area_restrito;Campo de auditoria: area restrito. Ver documentação do método.
+comparacao_metodos.csv;base_origem_votos_restrito;Campo de auditoria: base origem votos restrito. Ver documentação do método.
+comparacao_metodos.csv;media_pct_restrito;Campo de auditoria: media pct restrito. Ver documentação do método.
+comparacao_metodos.csv;inferior_95_pct_restrito;Campo de auditoria: inferior 95 pct restrito. Ver documentação do método.
+comparacao_metodos.csv;superior_95_pct_restrito;Campo de auditoria: superior 95 pct restrito. Ver documentação do método.
+comparacao_metodos.csv;media_votos_restrito;Campo de auditoria: media votos restrito. Ver documentação do método.
+comparacao_metodos.csv;inferior_95_votos_restrito;Campo de auditoria: inferior 95 votos restrito. Ver documentação do método.
+comparacao_metodos.csv;superior_95_votos_restrito;Campo de auditoria: superior 95 votos restrito. Ver documentação do método.
+comparacao_metodos.csv;tipo_intervalo_restrito;Campo de auditoria: tipo intervalo restrito. Ver documentação do método.
+comparacao_metodos.csv;comparavel_principal_restrito;Campo de auditoria: comparavel principal restrito. Ver documentação do método.
+comparacao_metodos.csv;aviso_restrito;Campo de auditoria: aviso restrito. Ver documentação do método.
+comparacao_metodos.csv;diferenca_medias_pp;Campo de auditoria: diferenca medias pp. Ver documentação do método.
+comparacao_metodos.csv;sobreposicao_95;Campo de auditoria: sobreposicao 95. Ver documentação do método.
+confronto_pesquisas.csv;instituto;Campo de auditoria: instituto. Ver documentação do método.
+confronto_pesquisas.csv;divulgacao;Campo de auditoria: divulgacao. Ver documentação do método.
+confronto_pesquisas.csv;origem;Grupo do 1º turno.
+confronto_pesquisas.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+confronto_pesquisas.csv;pesquisa_pct_total_segmento;Campo de auditoria: pesquisa pct total segmento. Ver documentação do método.
+confronto_pesquisas.csv;modelo;Campo de auditoria: modelo. Ver documentação do método.
+confronto_pesquisas.csv;modelo_media_pct;Campo de auditoria: modelo media pct. Ver documentação do método.
+confronto_pesquisas.csv;modelo_inferior_95_pct;Campo de auditoria: modelo inferior 95 pct. Ver documentação do método.
+confronto_pesquisas.csv;modelo_superior_95_pct;Campo de auditoria: modelo superior 95 pct. Ver documentação do método.
+confronto_pesquisas.csv;compativel_descritivamente;Campo de auditoria: compativel descritivamente. Ver documentação do método.
+confronto_pesquisas.csv;n_segmento;Campo de auditoria: n segmento. Ver documentação do método.
+confronto_pesquisas.csv;fonte_url;Campo de auditoria: fonte url. Ver documentação do método.
+confronto_pesquisas.csv;ressalva;Campo de auditoria: ressalva. Ver documentação do método.
+confronto_pesquisas_resumo.csv;origem;Grupo do 1º turno.
+confronto_pesquisas_resumo.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+confronto_pesquisas_resumo.csv;modelo;Campo de auditoria: modelo. Ver documentação do método.
+confronto_pesquisas_resumo.csv;media_pesquisas_pct;Campo de auditoria: media pesquisas pct. Ver documentação do método.
+confronto_pesquisas_resumo.csv;minimo_instituto_pct;Campo de auditoria: minimo instituto pct. Ver documentação do método.
+confronto_pesquisas_resumo.csv;maximo_instituto_pct;Campo de auditoria: maximo instituto pct. Ver documentação do método.
+confronto_pesquisas_resumo.csv;institutos;Campo de auditoria: institutos. Ver documentação do método.
+confronto_pesquisas_resumo.csv;modelo_media_pct;Campo de auditoria: modelo media pct. Ver documentação do método.
+confronto_pesquisas_resumo.csv;modelo_inferior_95_pct;Campo de auditoria: modelo inferior 95 pct. Ver documentação do método.
+confronto_pesquisas_resumo.csv;modelo_superior_95_pct;Campo de auditoria: modelo superior 95 pct. Ver documentação do método.
+confronto_pesquisas_resumo.csv;media_dentro_intervalo_modelo;Campo de auditoria: media dentro intervalo modelo. Ver documentação do método.
+confronto_pesquisas_resumo.csv;nota;Campo de auditoria: nota. Ver documentação do método.
+contabilidade.csv;medida;Campo de auditoria: medida. Ver documentação do método.
+contabilidade.csv;observado_1turno_votos;Campo de auditoria: observado 1turno votos. Ver documentação do método.
+contabilidade.csv;observado_2turno_votos;Campo de auditoria: observado 2turno votos. Ver documentação do método.
+contabilidade.csv;diferenca_2menos1_votos;Campo de auditoria: diferenca 2menos1 votos. Ver documentação do método.
+contabilidade.csv;natureza;Campo de auditoria: natureza. Ver documentação do método.
+diagnostico.csv;execucao;Campo de auditoria: execucao. Ver documentação do método.
+diagnostico.csv;utc;Campo de auditoria: utc. Ver documentação do método.
+diagnostico.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+diagnostico.csv;efeito_uf;Campo de auditoria: efeito uf. Ver documentação do método.
+diagnostico.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+diagnostico.csv;convergiu;Campo de auditoria: convergiu. Ver documentação do método.
+diagnostico.csv;status;Campo de auditoria: status. Ver documentação do método.
+diagnostico.csv;amostras_posteriores_concluidas;Campo de auditoria: amostras posteriores concluidas. Ver documentação do método.
+diagnostico.csv;motivo;Campo de auditoria: motivo. Ver documentação do método.
+diagnostico.csv;modelo;Campo de auditoria: modelo. Ver documentação do método.
+diagnostico.csv;prior_dirichlet;Campo de auditoria: prior dirichlet. Ver documentação do método.
+diagnostico.csv;cadeias;Campo de auditoria: cadeias. Ver documentação do método.
+diagnostico.csv;aquecimento;Campo de auditoria: aquecimento. Ver documentação do método.
+diagnostico.csv;amostras_por_cadeia;Campo de auditoria: amostras por cadeia. Ver documentação do método.
+diagnostico.csv;semente;Campo de auditoria: semente. Ver documentação do método.
+diagnostico.csv;rhat_max;Campo de auditoria: rhat max. Ver documentação do método.
+diagnostico.csv;ess_bulk_min;Campo de auditoria: ess bulk min. Ver documentação do método.
+diagnostico.csv;ess_tail_min;Campo de auditoria: ess tail min. Ver documentação do método.
+diagnostico.csv;divergencias;Campo de auditoria: divergencias. Ver documentação do método.
+diagnostico.csv;segundos;Campo de auditoria: segundos. Ver documentação do método.
+diagnostico.csv;aceitacao_media;Campo de auditoria: aceitacao media. Ver documentação do método.
+diagnostico.csv;fracao_limite_arvore;Campo de auditoria: fracao limite arvore. Ver documentação do método.
+diagnostico.csv;aquecimento_planejado;Campo de auditoria: aquecimento planejado. Ver documentação do método.
+diagnostico.csv;amostras_planejadas_por_cadeia;Campo de auditoria: amostras planejadas por cadeia. Ver documentação do método.
+diagnostico.csv;ultima_iteracao_aproximada;Campo de auditoria: ultima iteracao aproximada. Ver documentação do método.
+diagnostico.csv;expoente_regional;Campo de auditoria: expoente regional. Ver documentação do método.
+diagnostico.csv;divergencia_hamiltoniana_aplicavel;Campo de auditoria: divergencia hamiltoniana aplicavel. Ver documentação do método.
+diagnostico.csv;falhas_numericas;Campo de auditoria: falhas numericas. Ver documentação do método.
+diagnostico_bayes_ate_50mil_habitantes_seis_sem_uf.csv;parametro;Campo de auditoria: parametro. Ver documentação do método.
+diagnostico_bayes_ate_50mil_habitantes_seis_sem_uf.csv;indice;Campo de auditoria: indice. Ver documentação do método.
+diagnostico_bayes_ate_50mil_habitantes_seis_sem_uf.csv;rhat;Split R-hat normalizado por ranks e folding. Critério <1,01.
+diagnostico_bayes_ate_50mil_habitantes_seis_sem_uf.csv;ess_bulk;ESS de ranks com cadeias divididas. Critério >400.
+diagnostico_bayes_ate_50mil_habitantes_seis_sem_uf.csv;ess_tail;Menor ESS nos quantis 5%/95%, com cadeias divididas. Critério >400.
+diagnostico_bayes_principal_seis.csv;parametro;Campo de auditoria: parametro. Ver documentação do método.
+diagnostico_bayes_principal_seis.csv;indice;Campo de auditoria: indice. Ver documentação do método.
+diagnostico_bayes_principal_seis.csv;rhat;Split R-hat normalizado por ranks e folding. Critério <1,01.
+diagnostico_bayes_principal_seis.csv;ess_bulk;ESS de ranks com cadeias divididas. Critério >400.
+diagnostico_bayes_principal_seis.csv;ess_tail;Menor ESS nos quantis 5%/95%, com cadeias divididas. Critério >400.
+diagnostico_bayes_principal_seis_sem_uf.csv;parametro;Campo de auditoria: parametro. Ver documentação do método.
+diagnostico_bayes_principal_seis_sem_uf.csv;indice;Campo de auditoria: indice. Ver documentação do método.
+diagnostico_bayes_principal_seis_sem_uf.csv;rhat;Split R-hat normalizado por ranks e folding. Critério <1,01.
+diagnostico_bayes_principal_seis_sem_uf.csv;ess_bulk;ESS de ranks com cadeias divididas. Critério >400.
+diagnostico_bayes_principal_seis_sem_uf.csv;ess_tail;Menor ESS nos quantis 5%/95%, com cadeias divididas. Critério >400.
+diagnostico_bayes_sem_capitais_seis_sem_uf.csv;parametro;Campo de auditoria: parametro. Ver documentação do método.
+diagnostico_bayes_sem_capitais_seis_sem_uf.csv;indice;Campo de auditoria: indice. Ver documentação do método.
+diagnostico_bayes_sem_capitais_seis_sem_uf.csv;rhat;Split R-hat normalizado por ranks e folding. Critério <1,01.
+diagnostico_bayes_sem_capitais_seis_sem_uf.csv;ess_bulk;ESS de ranks com cadeias divididas. Critério >400.
+diagnostico_bayes_sem_capitais_seis_sem_uf.csv;ess_tail;Menor ESS nos quantis 5%/95%, com cadeias divididas. Critério >400.
+diagnostico_bayes_slice_principal_seis.csv;parametro;Campo de auditoria: parametro. Ver documentação do método.
+diagnostico_bayes_slice_principal_seis.csv;indice;Campo de auditoria: indice. Ver documentação do método.
+diagnostico_bayes_slice_principal_seis.csv;rhat;Split R-hat normalizado por ranks e folding. Critério <1,01.
+diagnostico_bayes_slice_principal_seis.csv;ess_bulk;ESS de ranks com cadeias divididas. Critério >400.
+diagnostico_bayes_slice_principal_seis.csv;ess_tail;Menor ESS nos quantis 5%/95%, com cadeias divididas. Critério >400.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_oito.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_ate_50mil_habitantes_seis.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+diagnostico_restrito_base_aptos_2turno_oito.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_base_aptos_2turno_oito.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_base_aptos_2turno_oito.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_base_aptos_2turno_oito.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_base_aptos_2turno_oito.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_base_aptos_2turno_oito.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_base_aptos_2turno_oito.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_base_aptos_2turno_oito.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_base_aptos_2turno_oito.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+diagnostico_restrito_demais_separados_oito.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_demais_separados_oito.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_demais_separados_oito.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_demais_separados_oito.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_demais_separados_oito.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_demais_separados_oito.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_demais_separados_oito.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_demais_separados_oito.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_demais_separados_oito.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+diagnostico_restrito_principal_oito.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_principal_oito.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_principal_oito.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_principal_oito.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_principal_oito.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_principal_oito.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_principal_oito.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_principal_oito.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_principal_oito.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+diagnostico_restrito_principal_seis.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_principal_seis.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_principal_seis.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_principal_seis.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_principal_seis.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_principal_seis.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_principal_seis.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_principal_seis.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_principal_seis.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+diagnostico_restrito_sem_capitais_oito.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_sem_capitais_oito.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_sem_capitais_oito.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_sem_capitais_oito.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_sem_capitais_oito.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_sem_capitais_oito.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_sem_capitais_oito.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_sem_capitais_oito.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_sem_capitais_oito.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+diagnostico_restrito_sem_capitais_seis.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_sem_capitais_seis.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_sem_capitais_seis.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_sem_capitais_seis.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_sem_capitais_seis.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_sem_capitais_seis.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_sem_capitais_seis.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_sem_capitais_seis.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_sem_capitais_seis.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+diagnostico_restrito_sem_nao_votou_oito.csv;area;Brasil sem exterior ou região.
+diagnostico_restrito_sem_nao_votou_oito.csv;n_ufs;Campo de auditoria: n ufs. Ver documentação do método.
+diagnostico_restrito_sem_nao_votou_oito.csv;posto;Campo de auditoria: posto. Ver documentação do método.
+diagnostico_restrito_sem_nao_votou_oito.csv;iteracoes;Campo de auditoria: iteracoes. Ver documentação do método.
+diagnostico_restrito_sem_nao_votou_oito.csv;objetivo;Campo de auditoria: objetivo. Ver documentação do método.
+diagnostico_restrito_sem_nao_votou_oito.csv;condicao;Campo de auditoria: condicao. Ver documentação do método.
+diagnostico_restrito_sem_nao_votou_oito.csv;resolvedor;Campo de auditoria: resolvedor. Ver documentação do método.
+diagnostico_restrito_sem_nao_votou_oito.csv;residuo_primal;Campo de auditoria: residuo primal. Ver documentação do método.
+diagnostico_restrito_sem_nao_votou_oito.csv;residuo_dual;Campo de auditoria: residuo dual. Ver documentação do método.
+dominancias.csv;execucao;Campo de auditoria: execucao. Ver documentação do método.
+dominancias.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+dominancias.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+dominancias.csv;area;Brasil sem exterior ou região.
+dominancias.csv;origem;Grupo do 1º turno.
+dominancias.csv;diferenca_lula_menos_flavio_media_pp;Campo de auditoria: diferenca lula menos flavio media pp. Ver documentação do método.
+dominancias.csv;inferior_95_pp;Campo de auditoria: inferior 95 pp. Ver documentação do método.
+dominancias.csv;superior_95_pp;Campo de auditoria: superior 95 pp. Ver documentação do método.
+dominancias.csv;direcao;Campo de auditoria: direcao. Ver documentação do método.
+dominancias.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+exterior.csv;turno;Campo de auditoria: turno. Ver documentação do método.
+exterior.csv;medida;Campo de auditoria: medida. Ver documentação do método.
+exterior.csv;brasil_sem_exterior;Campo de auditoria: brasil sem exterior. Ver documentação do método.
+exterior.csv;exterior_excluido;Campo de auditoria: exterior excluido. Ver documentação do método.
+exterior.csv;total_incluindo_exterior;Campo de auditoria: total incluindo exterior. Ver documentação do método.
+exterior.csv;peso_exterior_pct;Campo de auditoria: peso exterior pct. Ver documentação do método.
+harmonizacao.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+harmonizacao.csv;votos_observados_2turno;Campo de auditoria: votos observados 2turno. Ver documentação do método.
+harmonizacao.csv;votos_harmonizados_base_1turno;Campo de auditoria: votos harmonizados base 1turno. Ver documentação do método.
+harmonizacao.csv;ajuste_votos;Campo de auditoria: ajuste votos. Ver documentação do método.
+harmonizacao.csv;ajuste_absoluto_municipal;Campo de auditoria: ajuste absoluto municipal. Ver documentação do método.
+limites_sem_hipotese.csv;origem;Grupo do 1º turno.
+limites_sem_hipotese.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+limites_sem_hipotese.csv;limite_inferior_votos;Campo de auditoria: limite inferior votos. Ver documentação do método.
+limites_sem_hipotese.csv;limite_superior_votos;Campo de auditoria: limite superior votos. Ver documentação do método.
+limites_sem_hipotese.csv;limite_inferior_pct;Campo de auditoria: limite inferior pct. Ver documentação do método.
+limites_sem_hipotese.csv;limite_superior_pct;Campo de auditoria: limite superior pct. Ver documentação do método.
+limites_sem_hipotese.csv;natureza;Campo de auditoria: natureza. Ver documentação do método.
+matriz_nacional.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+matriz_nacional.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+matriz_nacional.csv;area;Brasil sem exterior ou região.
+matriz_nacional.csv;origem;Grupo do 1º turno.
+matriz_nacional.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+matriz_nacional.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+matriz_nacional.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+matriz_nacional.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+matriz_nacional.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+matriz_nacional.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+matriz_nacional.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+matriz_nacional.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+matriz_nacional.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+matriz_nacional.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+matriz_nacional.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+matriz_nacional.csv;execucao;Campo de auditoria: execucao. Ver documentação do método.
+matriz_regiao.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+matriz_regiao.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+matriz_regiao.csv;area;Brasil sem exterior ou região.
+matriz_regiao.csv;origem;Grupo do 1º turno.
+matriz_regiao.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+matriz_regiao.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+matriz_regiao.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+matriz_regiao.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+matriz_regiao.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+matriz_regiao.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+matriz_regiao.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+matriz_regiao.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+matriz_regiao.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+matriz_regiao.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+matriz_regiao.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+matriz_restrito_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+matriz_restrito_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+matriz_restrito_oito.csv;area;Brasil sem exterior ou região.
+matriz_restrito_oito.csv;origem;Grupo do 1º turno.
+matriz_restrito_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+matriz_restrito_oito.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+matriz_restrito_oito.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+matriz_restrito_oito.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+matriz_restrito_oito.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+matriz_restrito_oito.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+matriz_restrito_oito.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+matriz_restrito_oito.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+matriz_restrito_oito.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+matriz_restrito_oito.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+matriz_restrito_oito.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+matriz_restrito_oito.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+matriz_votos.csv;origem;Grupo do 1º turno.
+matriz_votos.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+matriz_votos.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+matriz_votos.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+matriz_votos.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+matriz_votos.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+matriz_votos.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+outros_e_comparecimento.csv;execucao;Campo de auditoria: execucao. Ver documentação do método.
+outros_e_comparecimento.csv;medida;Campo de auditoria: medida. Ver documentação do método.
+outros_e_comparecimento.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+outros_e_comparecimento.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+outros_e_comparecimento.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+pesquisas_ultimas.csv;instituto;Campo de auditoria: instituto. Ver documentação do método.
+pesquisas_ultimas.csv;divulgacao;Campo de auditoria: divulgacao. Ver documentação do método.
+pesquisas_ultimas.csv;campo_inicio;Campo de auditoria: campo inicio. Ver documentação do método.
+pesquisas_ultimas.csv;campo_fim;Campo de auditoria: campo fim. Ver documentação do método.
+pesquisas_ultimas.csv;registro_tse;Campo de auditoria: registro tse. Ver documentação do método.
+pesquisas_ultimas.csv;segmento_1turno;Campo de auditoria: segmento 1turno. Ver documentação do método.
+pesquisas_ultimas.csv;n_segmento;Campo de auditoria: n segmento. Ver documentação do método.
+pesquisas_ultimas.csv;lula;Campo de auditoria: lula. Ver documentação do método.
+pesquisas_ultimas.csv;flavio;Campo de auditoria: flavio. Ver documentação do método.
+pesquisas_ultimas.csv;branco_nulo_nao_vota;Campo de auditoria: branco nulo nao vota. Ver documentação do método.
+pesquisas_ultimas.csv;nao_sabe;Campo de auditoria: nao sabe. Ver documentação do método.
+pesquisas_ultimas.csv;base;Campo de auditoria: base. Ver documentação do método.
+pesquisas_ultimas.csv;fonte_url;Campo de auditoria: fonte url. Ver documentação do método.
+pesquisas_ultimas.csv;observacao;Campo de auditoria: observacao. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_bayes_dm_slice_principal_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_bayes_dm_slice_principal_seis.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_bayes_dm_slice_principal_seis.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_bayes_dm_slice_principal_seis.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_ate_50mil_habitantes_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_ate_50mil_habitantes_oito.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_oito.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_ate_50mil_habitantes_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_ate_50mil_habitantes_seis.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_ate_50mil_habitantes_seis.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_base_aptos_2turno_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_base_aptos_2turno_oito.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_base_aptos_2turno_oito.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_base_aptos_2turno_oito.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_demais_separados_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_demais_separados_oito.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_demais_separados_oito.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_demais_separados_oito.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_principal_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_principal_oito.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_principal_oito.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_principal_oito.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_principal_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_principal_seis.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_principal_seis.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_principal_seis.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_sem_capitais_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_sem_capitais_oito.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_sem_capitais_oito.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_oito.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_sem_capitais_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_sem_capitais_seis.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_sem_capitais_seis.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_sem_capitais_seis.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+predicoes_restrito_sem_nao_votou_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+predicoes_restrito_sem_nao_votou_oito.csv;cd_ibge;Campo de auditoria: cd ibge. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;nome;Campo de auditoria: nome. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;uf;Campo de auditoria: uf. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+predicoes_restrito_sem_nao_votou_oito.csv;aptos_base;Campo de auditoria: aptos base. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;observado_harmonizado_votos;Campo de auditoria: observado harmonizado votos. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;predito_media_votos;Campo de auditoria: predito media votos. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;erro_votos;Campo de auditoria: erro votos. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;erro_pp_aptos;Campo de auditoria: erro pp aptos. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;preditivo_inferior_95_votos;Campo de auditoria: preditivo inferior 95 votos. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;preditivo_superior_95_votos;Campo de auditoria: preditivo superior 95 votos. Ver documentação do método.
+predicoes_restrito_sem_nao_votou_oito.csv;observado_no_intervalo_95;Campo de auditoria: observado no intervalo 95. Ver documentação do método.
+residuos_pesquisas.csv;instituto;Campo de auditoria: instituto. Ver documentação do método.
+residuos_pesquisas.csv;divulgacao;Campo de auditoria: divulgacao. Ver documentação do método.
+residuos_pesquisas.csv;segmento_1turno;Campo de auditoria: segmento 1turno. Ver documentação do método.
+residuos_pesquisas.csv;branco_nulo_nao_vota;Campo de auditoria: branco nulo nao vota. Ver documentação do método.
+residuos_pesquisas.csv;nao_sabe;Campo de auditoria: nao sabe. Ver documentação do método.
+residuos_pesquisas.csv;observacao;Campo de auditoria: observacao. Ver documentação do método.
+residuos_pesquisas.csv;comparacao_terminal_direta;Campo de auditoria: comparacao terminal direta. Ver documentação do método.
+restrito_ate_50mil_habitantes_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_ate_50mil_habitantes_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_ate_50mil_habitantes_oito.csv;area;Brasil sem exterior ou região.
+restrito_ate_50mil_habitantes_oito.csv;origem;Grupo do 1º turno.
+restrito_ate_50mil_habitantes_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_ate_50mil_habitantes_oito.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_ate_50mil_habitantes_oito.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_ate_50mil_habitantes_oito.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_ate_50mil_habitantes_oito.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_ate_50mil_habitantes_oito.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_ate_50mil_habitantes_oito.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_ate_50mil_habitantes_oito.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_ate_50mil_habitantes_oito.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_ate_50mil_habitantes_oito.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_ate_50mil_habitantes_oito.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_ate_50mil_habitantes_oito.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+restrito_ate_50mil_habitantes_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_ate_50mil_habitantes_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_ate_50mil_habitantes_seis.csv;area;Brasil sem exterior ou região.
+restrito_ate_50mil_habitantes_seis.csv;origem;Grupo do 1º turno.
+restrito_ate_50mil_habitantes_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_ate_50mil_habitantes_seis.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_ate_50mil_habitantes_seis.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_ate_50mil_habitantes_seis.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_ate_50mil_habitantes_seis.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_ate_50mil_habitantes_seis.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_ate_50mil_habitantes_seis.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_ate_50mil_habitantes_seis.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_ate_50mil_habitantes_seis.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_ate_50mil_habitantes_seis.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_ate_50mil_habitantes_seis.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_ate_50mil_habitantes_seis.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+restrito_base_aptos_2turno_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_base_aptos_2turno_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_base_aptos_2turno_oito.csv;area;Brasil sem exterior ou região.
+restrito_base_aptos_2turno_oito.csv;origem;Grupo do 1º turno.
+restrito_base_aptos_2turno_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_base_aptos_2turno_oito.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_base_aptos_2turno_oito.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_base_aptos_2turno_oito.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_base_aptos_2turno_oito.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_base_aptos_2turno_oito.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_base_aptos_2turno_oito.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_base_aptos_2turno_oito.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_base_aptos_2turno_oito.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_base_aptos_2turno_oito.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_base_aptos_2turno_oito.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_base_aptos_2turno_oito.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+restrito_demais_separados_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_demais_separados_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_demais_separados_oito.csv;area;Brasil sem exterior ou região.
+restrito_demais_separados_oito.csv;origem;Grupo do 1º turno.
+restrito_demais_separados_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_demais_separados_oito.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_demais_separados_oito.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_demais_separados_oito.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_demais_separados_oito.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_demais_separados_oito.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_demais_separados_oito.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_demais_separados_oito.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_demais_separados_oito.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_demais_separados_oito.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_demais_separados_oito.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_demais_separados_oito.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+restrito_principal_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_principal_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_principal_oito.csv;area;Brasil sem exterior ou região.
+restrito_principal_oito.csv;origem;Grupo do 1º turno.
+restrito_principal_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_principal_oito.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_principal_oito.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_principal_oito.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_principal_oito.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_principal_oito.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_principal_oito.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_principal_oito.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_principal_oito.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_principal_oito.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_principal_oito.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_principal_oito.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+restrito_principal_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_principal_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_principal_seis.csv;area;Brasil sem exterior ou região.
+restrito_principal_seis.csv;origem;Grupo do 1º turno.
+restrito_principal_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_principal_seis.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_principal_seis.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_principal_seis.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_principal_seis.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_principal_seis.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_principal_seis.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_principal_seis.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_principal_seis.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_principal_seis.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_principal_seis.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_principal_seis.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+restrito_sem_capitais_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_sem_capitais_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_sem_capitais_oito.csv;area;Brasil sem exterior ou região.
+restrito_sem_capitais_oito.csv;origem;Grupo do 1º turno.
+restrito_sem_capitais_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_sem_capitais_oito.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_sem_capitais_oito.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_sem_capitais_oito.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_sem_capitais_oito.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_sem_capitais_oito.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_sem_capitais_oito.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_sem_capitais_oito.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_sem_capitais_oito.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_sem_capitais_oito.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_sem_capitais_oito.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_sem_capitais_oito.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+restrito_sem_capitais_seis.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_sem_capitais_seis.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_sem_capitais_seis.csv;area;Brasil sem exterior ou região.
+restrito_sem_capitais_seis.csv;origem;Grupo do 1º turno.
+restrito_sem_capitais_seis.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_sem_capitais_seis.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_sem_capitais_seis.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_sem_capitais_seis.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_sem_capitais_seis.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_sem_capitais_seis.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_sem_capitais_seis.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_sem_capitais_seis.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_sem_capitais_seis.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_sem_capitais_seis.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_sem_capitais_seis.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_sem_capitais_seis.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+restrito_sem_nao_votou_oito.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+restrito_sem_nao_votou_oito.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+restrito_sem_nao_votou_oito.csv;area;Brasil sem exterior ou região.
+restrito_sem_nao_votou_oito.csv;origem;Grupo do 1º turno.
+restrito_sem_nao_votou_oito.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+restrito_sem_nao_votou_oito.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+restrito_sem_nao_votou_oito.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+restrito_sem_nao_votou_oito.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+restrito_sem_nao_votou_oito.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+restrito_sem_nao_votou_oito.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+restrito_sem_nao_votou_oito.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+restrito_sem_nao_votou_oito.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+restrito_sem_nao_votou_oito.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+restrito_sem_nao_votou_oito.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+restrito_sem_nao_votou_oito.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+restrito_sem_nao_votou_oito.csv;grupos;Campo de auditoria: grupos. Ver documentação do método.
+sensibilidade.csv;metodo;"restrito: QP regional com bootstrap UF; bayes_dm: mistura ecológica bayesiana DM."
+sensibilidade.csv;cenario;"Recorte/especificação; sem_nao_votou muda a população."
+sensibilidade.csv;area;Brasil sem exterior ou região.
+sensibilidade.csv;origem;Grupo do 1º turno.
+sensibilidade.csv;destino;Lula, Flávio, branco/nulo ou não votou no 2º.
+sensibilidade.csv;base_origem_votos;Total de votos/pessoas da origem na base do cenário.
+sensibilidade.csv;media_pct;Média do percentual da linha no modelo/reamostragens.
+sensibilidade.csv;inferior_95_pct;Quantil 2,5% da distribuição indicada em tipo_intervalo.
+sensibilidade.csv;superior_95_pct;Quantil 97,5% da distribuição indicada em tipo_intervalo.
+sensibilidade.csv;media_votos;"Média do fluxo esperado; não contagem individual observada."
+sensibilidade.csv;inferior_95_votos;Quantil 2,5% do fluxo esperado.
+sensibilidade.csv;superior_95_votos;Quantil 97,5% do fluxo esperado.
+sensibilidade.csv;tipo_intervalo;"Credibilidade posterior condicional ou percentil bootstrap UF; não inclui automaticamente viés ecológico."
+sensibilidade.csv;comparavel_principal;Campo de auditoria: comparavel principal. Ver documentação do método.
+sensibilidade.csv;aviso;Campo de auditoria: aviso. Ver documentação do método.
+sensibilidade.csv;execucao;Campo de auditoria: execucao. Ver documentação do método.
+validacao_qp.csv;regiao;Campo de auditoria: regiao. Ver documentação do método.
+validacao_qp.csv;maior_diferenca_coeficiente_osqp_slsqp;Campo de auditoria: maior diferenca coeficiente osqp slsqp. Ver documentação do método.
+validacao_qp.csv;diferenca_objetivo;Campo de auditoria: diferenca objetivo. Ver documentação do método.
+validacao_qp.csv;simplex_fecha;Campo de auditoria: simplex fecha. Ver documentação do método.

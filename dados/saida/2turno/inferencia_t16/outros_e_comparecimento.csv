@@ -1,0 +1,22 @@
+﻿execucao;medida;media_votos;inferior_95_votos;superior_95_votos
+bayes_slice_principal_seis;Outros candidatos → Lula;4357123,607;4141931,131;4570867,983
+bayes_slice_principal_seis;Outros candidatos → Flávio;3408353,853;3211527,604;3604635,641
+bayes_slice_principal_seis;Outros candidatos → Branco ou nulo;1131675,455;1030793,533;1229608,119
+bayes_slice_principal_seis;Outros candidatos → Não votou;389999,0856;284287,6143;508331,1471
+bayes_slice_principal_seis;Não votou 1º e votou 2º;3342101,448;3199130,483;3494728,575
+bayes_slice_principal_seis;Votou 1º e não votou 2º;1108196,639;959493,2621;1266656,683
+bayes_slice_principal_seis;Saldo de comparecimento modelado;2233904,809;2170513,507;2298327,894
+restrito_principal_oito;Outros candidatos → Lula;4411143,036;3666988,042;4896643,502
+restrito_principal_oito;Outros candidatos → Flávio;3414272,118;2954895,812;3905470,205
+restrito_principal_oito;Outros candidatos → Branco ou nulo;1317164,531;1006834,324;2006579,933
+restrito_principal_oito;Outros candidatos → Não votou;144572,3148;40575,24055;438314,0384
+restrito_principal_oito;Não votou 1º e votou 2º;3714108,171;2981479,692;4787909,668
+restrito_principal_oito;Votou 1º e não votou 2º;919355,3556;283205,5314;2452842,879
+restrito_principal_oito;Saldo de comparecimento modelado;2794752,815;2008177,226;3373559,385
+restrito_principal_seis;Outros candidatos → Lula;4473397,281;3575318,04;5004224,96
+restrito_principal_seis;Outros candidatos → Flávio;3543017,308;3020901,811;4219677,535
+restrito_principal_seis;Outros candidatos → Branco ou nulo;1175285,625;879505,0426;1513780,869
+restrito_principal_seis;Outros candidatos → Não votou;95451,78584;28020,51923;207749,2403
+restrito_principal_seis;Não votou 1º e votou 2º;3700238,558;2960023,25;4743659,741
+restrito_principal_seis;Votou 1º e não votou 2º;886448,8021;274430,0237;2382647,622
+restrito_principal_seis;Saldo de comparecimento modelado;2813789,756;2025569,648;3372371,179

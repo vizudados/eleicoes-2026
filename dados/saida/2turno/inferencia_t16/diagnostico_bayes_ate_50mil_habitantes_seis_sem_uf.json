@@ -1,0 +1,27 @@
+{
+  "utc": "2026-10-27T12:20:01.977505+00:00",
+  "modelo": "regressão ecológica Dirichlet-multinomial com perfis regionais, sem efeito de UF",
+  "grupos": [
+    "Lula",
+    "Flávio",
+    "Cury + Renan + Caiado",
+    "Demais candidatos",
+    "Branco ou nulo",
+    "Não votou"
+  ],
+  "cenario": "ate_50mil_habitantes",
+  "efeito_uf": false,
+  "prior_dirichlet": 1.0,
+  "cadeias": 4,
+  "aquecimento": 1000,
+  "amostras_por_cadeia": 1500,
+  "semente": 20261027,
+  "rhat_max": 1.0546322081100625,
+  "ess_bulk_min": 70.26229365606764,
+  "ess_tail_min": 27.66091525011553,
+  "divergencias": 0,
+  "convergiu": false,
+  "segundos": 647.5273673534393,
+  "aceitacao_media": 0.9679512325188214,
+  "fracao_limite_arvore": 0.00016666666666666666
+}

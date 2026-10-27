@@ -1,0 +1,5 @@
+﻿metodo;cenario;destino;mae_municipal_votos;rmse_municipal_votos;mae_ponderado_pp_aptos;p95_erro_absoluto_pp_aptos;residuo_nacional_votos;cobertura_preditiva_95_pct
+bayes_dm;slice_principal_seis;Lula;246,2536152;1498,568964;0,8692186912;2,59833984;-608125,3124;96,62538144
+bayes_dm;slice_principal_seis;Flávio;218,8095843;958,3492589;0,7723475667;2,261367587;-92670,47074;97,73828756
+bayes_dm;slice_principal_seis;Branco ou nulo;78,24835352;405,3916285;0,2761987124;1,080079252;13977,59254;97,54083647
+bayes_dm;slice_principal_seis;Não votou;319,0599813;1782,855312;1,126208438;3,6940257;686818,1906;88,04523425

@@ -1,0 +1,37 @@
+{
+  "principal": "bayes_slice_principal_seis",
+  "diagnostico": {
+    "utc": "2026-10-27T12:38:11.771412+00:00",
+    "modelo": "regressão ecológica Dirichlet-multinomial com perfis regionais, sem efeito de UF",
+    "cenario": "principal",
+    "grupos": [
+      "Lula",
+      "Flávio",
+      "Cury + Renan + Caiado",
+      "Demais candidatos",
+      "Branco ou nulo",
+      "Não votou"
+    ],
+    "efeito_uf": false,
+    "prior_dirichlet": 2.0,
+    "expoente_regional": true,
+    "cadeias": 4,
+    "aquecimento": 1000,
+    "amostras_por_cadeia": 4000,
+    "semente": 20261027,
+    "rhat_max": 1.0085327344012691,
+    "ess_bulk_min": 1032.1030130904965,
+    "ess_tail_min": 1131.2596818463817,
+    "divergencias": 0,
+    "divergencia_hamiltoniana_aplicavel": false,
+    "falhas_numericas": 0,
+    "convergiu": true
+  },
+  "achados_aprovados": 3,
+  "celulas_comparaveis_sem_sobreposicao": 6,
+  "aviso": "Estimativa de perfis médios condicionais. Não identifica pessoas; somente MCMC aprovado foi usado.",
+  "uso_fluxos_como_fato_recomendado": false,
+  "motivo": "Erro agregado de 686.818 na abstenção, cobertura preditiva 88%; saldo de comparecimento fora do intervalo modelado.",
+  "sensibilidades_bayesianas_aprovadas": false,
+  "matriz_status": "exploratória e condicional; numericamente convergida"
+}

@@ -1,0 +1,5 @@
+﻿metodo;cenario;destino;mae_municipal_votos;rmse_municipal_votos;mae_ponderado_pp_aptos;p95_erro_absoluto_pp_aptos;residuo_nacional_votos;cobertura_preditiva_95_pct
+restrito;ate_50mil_habitantes_seis;Lula;102,6465972;170,1717427;0,9536055937;2,619188535;286,6033923;
+restrito;ate_50mil_habitantes_seis;Flávio;88,67889238;151,7798207;0,8238430707;2,280354506;5038,916636;
+restrito;ate_50mil_habitantes_seis;Branco ou nulo;38,27807847;65,29741031;0,3556103246;1,128889744;-8767,944325;
+restrito;ate_50mil_habitantes_seis;Não votou;144,2729219;261,4965213;1,340321737;3,889170039;3442,424297;

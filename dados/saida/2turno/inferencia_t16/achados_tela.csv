@@ -1,0 +1,5 @@
+﻿afirmacao;resiste_todos_testes_executados;menor_limite_95_entre_testes_pct;frase;escopo
+retencao_lula;True;84,01510563;A maioria de quem votou em Lula permaneceu com Lula: 98,9% (95%: 98,6%–99,1%).;"Médias condicionais dos modelos; não acompanhamento de pessoas. Inclui recortes comparáveis e regiões; exclui retirada de não votou."
+retencao_flavio;True;85,88349503;A maioria de quem votou em Flávio permaneceu com Flávio: 98,9% (95%: 98,7%–99,1%).;"Médias condicionais dos modelos; não acompanhamento de pessoas. Inclui recortes comparáveis e regiões; exclui retirada de não votou."
+persistencia_nao_votou;True;72,89963779;A maioria de quem não votou no 1º turno continuou sem votar: 89,8% (95%: 89,4%–90,3%).;"Médias condicionais dos modelos; não acompanhamento de pessoas. Inclui recortes comparáveis e regiões; exclui retirada de não votou."
+outros_permanecem_validos;False;8,160437808e-17;A maioria dos votos dos candidatos eliminados permaneceu válida no 2º turno: 83,6% (95%: 82,0%–85,2%).;"Médias condicionais dos modelos; não acompanhamento de pessoas. Inclui recortes comparáveis e regiões; exclui retirada de não votou."

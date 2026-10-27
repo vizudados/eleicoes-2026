@@ -1,0 +1,37 @@
+﻿origem;destino;limite_inferior_votos;limite_superior_votos;limite_inferior_pct;limite_superior_pct;natureza
+Lula;Lula;4286352;53706004;7,978742325;99,9699435;Limite determinístico, não IC95.
+Lula;Flávio;0;41095883;0;76,49709149;Limite determinístico, não IC95.
+Lula;Branco ou nulo;0;4144077;0;7,713907435;Limite determinístico, não IC95.
+Lula;Não votou;0;29576484;0;55,05454165;Limite determinístico, não IC95.
+Flávio;Lula;0;45140805;0;80,66532986;Limite determinístico, não IC95.
+Flávio;Flávio;1708932;55826590;3,053812697;99,76052259;Limite determinístico, não IC95.
+Flávio;Branco ou nulo;0;4144077;0;7,405347294;Limite determinístico, não IC95.
+Flávio;Não votou;0;29243424;0;52,25716385;Limite determinístico, não IC95.
+Augusto Cury;Lula;0;3438835;0;100;Limite determinístico, não IC95.
+Augusto Cury;Flávio;0;3438835;0;100;Limite determinístico, não IC95.
+Augusto Cury;Branco ou nulo;0;3288309;0;95,62276178;Limite determinístico, não IC95.
+Augusto Cury;Não votou;0;3438835;0;100;Limite determinístico, não IC95.
+Renan Santos;Lula;0;2667307;0;100;Limite determinístico, não IC95.
+Renan Santos;Flávio;0;2667307;0;100;Limite determinístico, não IC95.
+Renan Santos;Branco ou nulo;0;2627660;0;98,51359442;Limite determinístico, não IC95.
+Renan Santos;Não votou;0;2667307;0;100;Limite determinístico, não IC95.
+Ronaldo Caiado;Lula;0;2600440;0;100;Limite determinístico, não IC95.
+Ronaldo Caiado;Flávio;0;2600440;0;100;Limite determinístico, não IC95.
+Ronaldo Caiado;Branco ou nulo;0;2209166;0;84,95354632;Limite determinístico, não IC95.
+Ronaldo Caiado;Não votou;0;2600153;0;99,98896341;Limite determinístico, não IC95.
+Demais candidatos;Lula;0;580570;0;100;Limite determinístico, não IC95.
+Demais candidatos;Flávio;0;580570;0;100;Limite determinístico, não IC95.
+Demais candidatos;Branco ou nulo;0;579933;0;99,89028024;Limite determinístico, não IC95.
+Demais candidatos;Não votou;0;580570;0;100;Limite determinístico, não IC95.
+Branco ou nulo;Lula;0;5964163;0;100;Limite determinístico, não IC95.
+Branco ou nulo;Flávio;0;5964163;0;100;Limite determinístico, não IC95.
+Branco ou nulo;Branco ou nulo;0;4107480;0;68,86934512;Limite determinístico, não IC95.
+Branco ou nulo;Não votou;0;5964109;0;99,99909459;Limite determinístico, não IC95.
+Não votou;Lula;0;32753834;0;99,57116451;Limite determinístico, não IC95.
+Não votou;Flávio;0;32072775;0;97,50075536;Limite determinístico, não IC95.
+Não votou;Branco ou nulo;0;4144077;0;12,59793198;Limite determinístico, não IC95.
+Não votou;Não votou;0;29594743;0;89,96757522;Limite determinístico, não IC95.
+Outros candidatos (todos);Lula;0;9287152;0;100;Limite determinístico, não IC95.
+Outros candidatos (todos);Flávio;0;9287152;0;100;Limite determinístico, não IC95.
+Outros candidatos (todos);Branco ou nulo;0;4132414;0;44,49603065;Limite determinístico, não IC95.
+Outros candidatos (todos);Não votou;0;9286703;0;99,99516536;Limite determinístico, não IC95.

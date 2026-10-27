@@ -1,0 +1,5 @@
+﻿metodo;cenario;destino;mae_municipal_votos;rmse_municipal_votos;mae_ponderado_pp_aptos;p95_erro_absoluto_pp_aptos;residuo_nacional_votos;cobertura_preditiva_95_pct
+restrito;demais_separados_oito;Lula;203,1786027;914,2113137;0,7171737924;2,659894294;13220,29287;
+restrito;demais_separados_oito;Flávio;183,3343141;596,5321554;0,6471280125;2,276068406;7518,700518;
+restrito;demais_separados_oito;Branco ou nulo;74,06737898;331,31782;0,2614408328;1,044787322;-29189,23975;
+restrito;demais_separados_oito;Não votou;263,7961555;1200,393606;0,9311398287;4,052758492;8450,246353;

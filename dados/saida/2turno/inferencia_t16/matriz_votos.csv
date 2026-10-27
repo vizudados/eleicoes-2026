@@ -1,0 +1,25 @@
+﻿origem;destino;base_origem_votos;media_votos;inferior_95_votos;superior_95_votos;tipo_intervalo
+Lula;Lula;53722151;53123938,86;52994201,46;53250611,99;credibilidade_modelo_95
+Lula;Flávio;53722151;41648,71449;18640,77212;74771,20809;credibilidade_modelo_95
+Lula;Branco ou nulo;53722151;146712,9017;93033,15301;204335,195;credibilidade_modelo_95
+Lula;Não votou;53722151;409850,5233;294255,1552;531516,2605;credibilidade_modelo_95
+Flávio;Lula;55960603;102579,7822;43286,26332;183346,3397;credibilidade_modelo_95
+Flávio;Flávio;55960603;55369051,84;55256849,34;55473345,86;credibilidade_modelo_95
+Flávio;Branco ou nulo;55960603;262641,394;201269,0077;325643,259;credibilidade_modelo_95
+Flávio;Não votou;55960603;226329,9845;148355,7926;308273,8867;credibilidade_modelo_95
+Cury + Renan + Caiado;Lula;8706582;4075948,29;3859765,421;4294140,194;credibilidade_modelo_95
+Cury + Renan + Caiado;Flávio;8706582;3222252,329;3015853,826;3423693,765;credibilidade_modelo_95
+Cury + Renan + Caiado;Branco ou nulo;8706582;1075979,562;975365,1712;1174374,101;credibilidade_modelo_95
+Cury + Renan + Caiado;Não votou;8706582;332401,8188;228899,4391;447854,5869;credibilidade_modelo_95
+Demais candidatos;Lula;580570;281175,3162;203217,2577;357339,3272;credibilidade_modelo_95
+Demais candidatos;Flávio;580570;186101,5239;111076,4417;264693,6897;credibilidade_modelo_95
+Demais candidatos;Branco ou nulo;580570;55695,89311;36205,28356;78010,96832;credibilidade_modelo_95
+Demais candidatos;Não votou;580570;57597,26679;27470,88816;97887,73853;credibilidade_modelo_95
+Branco ou nulo;Lula;5964163;3113137,699;2924953,18;3291413,074;credibilidade_modelo_95
+Branco ou nulo;Flávio;5964163;354251,1734;194308,3393;531113,5039;credibilidade_modelo_95
+Branco ou nulo;Branco ou nulo;5964163;2414757,083;2326125,132;2504618,342;credibilidade_modelo_95
+Branco ou nulo;Não votou;5964163;82017,04522;40633,78308;133843,7675;credibilidade_modelo_95
+Não votou;Lula;32894899;2751161,74;2570772,118;2932010,464;credibilidade_modelo_95
+Não votou;Flávio;32894899;388671,9492;269247,1463;510990,1606;credibilidade_modelo_95
+Não votou;Branco ou nulo;32894899;202267,7591;134053,675;271914,1085;credibilidade_modelo_95
+Não votou;Não votou;32894899;29552797,55;29400170,43;29695768,52;credibilidade_modelo_95

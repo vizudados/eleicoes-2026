@@ -1,0 +1,463 @@
+﻿execucao;metodo;cenario;area;origem;diferenca_lula_menos_flavio_media_pp;inferior_95_pp;superior_95_pp;direcao;comparavel_principal
+bayes_slice_principal_seis;bayes_dm;principal;Brasil;Lula;98,80894409;98,55085538;99,05526373;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Brasil;Flávio;-98,75960782;-99,00929711;-98,46269931;Flávio;True
+bayes_slice_principal_seis;bayes_dm;principal;Brasil;Cury + Renan + Caiado;9,805179132;5,280821525;14,35802182;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Brasil;Demais candidatos;16,37593957;-9,546455625;41,27595491;sem direção definida;True
+bayes_slice_principal_seis;bayes_dm;principal;Brasil;Branco ou nulo;46,25773181;40,36237323;51,67126415;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Brasil;Não votou;7,181933559;6,365168966;7,981509106;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Centro-Oeste;Lula;97,30671191;95,91533328;98,59639994;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Centro-Oeste;Flávio;-99,1507167;-99,63498432;-98,46366369;Flávio;True
+bayes_slice_principal_seis;bayes_dm;principal;Centro-Oeste;Cury + Renan + Caiado;-2,952582577;-7,392800852;1,793586564;sem direção definida;True
+bayes_slice_principal_seis;bayes_dm;principal;Centro-Oeste;Demais candidatos;16,2518736;-30,92592937;59,47757362;sem direção definida;True
+bayes_slice_principal_seis;bayes_dm;principal;Centro-Oeste;Branco ou nulo;42,00430151;28,4160206;51,69859286;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Centro-Oeste;Não votou;6,943153475;4,848015063;8,800551462;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Nordeste;Lula;98,82278301;98,3190623;99,29472655;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Nordeste;Flávio;-98,47020229;-99,29816075;-97,30177818;Flávio;True
+bayes_slice_principal_seis;bayes_dm;principal;Nordeste;Cury + Renan + Caiado;53,6856319;41,72544274;65,56596917;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Nordeste;Demais candidatos;1,598831687;-55,2883554;58,20097334;sem direção definida;True
+bayes_slice_principal_seis;bayes_dm;principal;Nordeste;Branco ou nulo;60,08813148;51,4785161;66,76017681;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Nordeste;Não votou;7,546169911;6,026136137;9,040234138;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Norte;Lula;94,50548283;92,91231383;96,02246259;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Norte;Flávio;-94,61704477;-96,22539836;-92,63236734;Flávio;True
+bayes_slice_principal_seis;bayes_dm;principal;Norte;Cury + Renan + Caiado;37,19818943;13,29890836;57,49578531;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Norte;Demais candidatos;-1,066177413;-52,93482166;50,86420723;sem direção definida;True
+bayes_slice_principal_seis;bayes_dm;principal;Norte;Branco ou nulo;43,85125978;18,87354547;62,3419036;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Norte;Não votou;1,816460825;-0,8824411894;5,234333299;sem direção definida;True
+bayes_slice_principal_seis;bayes_dm;principal;Sudeste;Lula;99,75907023;99,5578634;99,90738524;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Sudeste;Flávio;-99,31344313;-99,51171597;-99,11662002;Flávio;True
+bayes_slice_principal_seis;bayes_dm;principal;Sudeste;Cury + Renan + Caiado;9,243528984;1,80019338;17,04064232;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Sudeste;Demais candidatos;34,11941768;-4,702880044;71,18340222;sem direção definida;True
+bayes_slice_principal_seis;bayes_dm;principal;Sudeste;Branco ou nulo;37,55862895;26,78325795;47,34174066;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Sudeste;Não votou;6,028339566;4,613013095;7,442981907;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Sul;Lula;99,80576276;99,61643515;99,93041824;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Sul;Flávio;-99,51664766;-99,65666692;-99,36880645;Flávio;True
+bayes_slice_principal_seis;bayes_dm;principal;Sul;Cury + Renan + Caiado;-45,3481542;-50,05906444;-40,06884209;Flávio;True
+bayes_slice_principal_seis;bayes_dm;principal;Sul;Demais candidatos;-37,77384453;-64,31838991;-0,4534814414;Flávio;True
+bayes_slice_principal_seis;bayes_dm;principal;Sul;Branco ou nulo;48,62540873;39,88334002;55,59483437;Lula;True
+bayes_slice_principal_seis;bayes_dm;principal;Sul;Não votou;13,32632683;12,16377711;14,27107703;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Brasil;Lula;98,91758588;97,31037024;99,74142688;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Brasil;Flávio;-99,10646026;-99,81913791;-98,01860174;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Brasil;Augusto Cury;30,03209786;15,15978261;44,08319737;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Brasil;Renan Santos;7,539428443;-14,8032066;33,19334703;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Brasil;Ronaldo Caiado;-7,715667827;-31,9156197;17,07099501;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Brasil;Demais candidatos;-25,70583716;-80,84490119;28,75822349;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Brasil;Branco ou nulo;60,26350385;41,93814367;73,06384786;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Brasil;Não votou;6,13947858;4,409877996;8,707840081;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Centro-Oeste;Lula;97,8583498;95,18046025;99,99999998;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Centro-Oeste;Flávio;-99,94055866;-100;-99,40979115;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Centro-Oeste;Augusto Cury;51,43314968;-39,75405924;99,99999999;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Centro-Oeste;Renan Santos;-46,96140666;-99,99999998;40,72588434;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Centro-Oeste;Ronaldo Caiado;-6,391747761;-15,87548525;12,67916312;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Centro-Oeste;Demais candidatos;46,61610103;-69,57493816;100;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Centro-Oeste;Branco ou nulo;59,48955785;30,49249716;75,93367066;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Centro-Oeste;Não votou;6,062455446;2,429929296;10,18808065;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Nordeste;Lula;98,97065341;96,20119572;100;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Nordeste;Flávio;-98,31631083;-100;-95,23387259;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Nordeste;Augusto Cury;27,97019616;-2,808659424;53,8084176;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Nordeste;Renan Santos;94,38261271;60,30964018;100;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Nordeste;Ronaldo Caiado;10,7513924;-67,45882875;78,30591853;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Nordeste;Demais candidatos;-18,14552324;-100;21,56171434;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Nordeste;Branco ou nulo;81,19253596;56,58073553;97,5908397;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Nordeste;Não votou;5,157808903;1,235464325;11,3032186;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Norte;Lula;95,39424389;88,80293422;99,36761178;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Norte;Flávio;-95,48824342;-99,8318886;-86,0337873;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Norte;Augusto Cury;7,730273511;-4,651993984e-09;61,6677055;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Norte;Renan Santos;43,60946902;-66,37862699;100;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Norte;Ronaldo Caiado;10,28400422;-100;100;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Norte;Demais candidatos;-0,8531881173;-100;100;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Norte;Branco ou nulo;55,5420358;-0,6887351603;100;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Norte;Não votou;2,737454969;-3,801206355;18,24105217;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sudeste;Lula;99,88637005;99,05581307;100;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sudeste;Flávio;-99,77978211;-100;-98,16455546;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sudeste;Augusto Cury;48,81436758;25,7372611;76,49124641;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sudeste;Renan Santos;-17,77378671;-63,43737025;48,4032416;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sudeste;Ronaldo Caiado;17,27235941;-67,24649074;87,77825191;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sudeste;Demais candidatos;-6,977804226;-100;100;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sudeste;Branco ou nulo;31,45986252;-15,60688702;57,14898932;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sudeste;Não votou;5,33805083;3,606994515;7,464174819;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sul;Lula;99,99999989;99,99999967;100;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sul;Flávio;-99,99999988;-100;-99,99999957;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sul;Augusto Cury;5,698676956;-4,467285448;28,93068334;sem direção definida;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sul;Renan Santos;-68,69509846;-89,4968034;-46,6370609;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sul;Ronaldo Caiado;-61,8466439;-82,22145021;-35,74923305;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sul;Demais candidatos;-100;-100;-99,99999999;Flávio;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sul;Branco ou nulo;58,73293348;47,11939502;64,06497101;Lula;True
+restrito_ate_50mil_habitantes_oito;restrito;ate_50mil_habitantes;Sul;Não votou;11,82911301;9,890308913;13,19460436;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Brasil;Lula;98,94467749;97,26248799;99,72845961;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Brasil;Flávio;-99,08507324;-99,84869524;-97,94602028;Flávio;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Brasil;Cury + Renan + Caiado;12,53875467;1,413597033;30,63319387;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Brasil;Demais candidatos;-22,49186451;-83,33192059;32,36534984;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Brasil;Branco ou nulo;59,55957938;39,44835018;73,03792098;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Brasil;Não votou;6,105521509;4,141986849;8,860933956;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Centro-Oeste;Lula;97,98593661;94,11891674;99,99999999;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Centro-Oeste;Flávio;-99,98360458;-99,99999999;-99,82558201;Flávio;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Centro-Oeste;Cury + Renan + Caiado;-1,226602225;-15,99219593;62,50142979;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Centro-Oeste;Demais candidatos;62,30560326;-100;100;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Centro-Oeste;Branco ou nulo;61,88629262;35,80835735;79,02607782;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Centro-Oeste;Não votou;6,205777331;-2,048464195;9,777814393;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Nordeste;Lula;99,03598068;96,35402434;100;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Nordeste;Flávio;-98,26585099;-100;-95,10591595;Flávio;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Nordeste;Cury + Renan + Caiado;42,92055238;24,13832659;62,54178349;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Nordeste;Demais candidatos;-17,35229925;-99,87288723;40,10153539;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Nordeste;Branco ou nulo;81,40114819;54,54009815;97,36307529;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Nordeste;Não votou;4,909013295;1,010242022;11,63165176;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Norte;Lula;95,25258544;88,78903085;99,07201557;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Norte;Flávio;-95,52819189;-99,81069706;-85,62242298;Flávio;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Norte;Cury + Renan + Caiado;20,70014355;-11,63852383;74,08878004;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Norte;Demais candidatos;-2,229311222;-100;100;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Norte;Branco ou nulo;56,31281735;-7,971844785;100;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Norte;Não votou;2,490232041;-5,797114021;17,98844702;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sudeste;Lula;99,87095166;98,99151593;100;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sudeste;Flávio;-99,72586913;-100;-98,27579311;Flávio;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sudeste;Cury + Renan + Caiado;25,3575011;3,255365991;78,99045186;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sudeste;Demais candidatos;-2,389961802;-100;94,889245;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sudeste;Branco ou nulo;27,23035767;-24,84653091;55,35174172;sem direção definida;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sudeste;Não votou;5,283408706;3,051601094;6,953231245;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sul;Lula;99,99999998;99,99999983;100;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sul;Flávio;-99,99999998;-100;-99,99999993;Flávio;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sul;Cury + Renan + Caiado;-41,68751824;-44,87238517;-29,71936254;Flávio;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sul;Demais candidatos;-99,74205672;-100;-95,22327251;Flávio;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sul;Branco ou nulo;60,93182058;51,55924248;66,72029194;Lula;True
+restrito_ate_50mil_habitantes_seis;restrito;ate_50mil_habitantes;Sul;Não votou;12,35188571;10,35371557;14,04115016;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Brasil;Lula;99,06016428;97,96495534;99,69843571;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Brasil;Flávio;-99,12565558;-99,99002976;-96,77663495;Flávio;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Brasil;Augusto Cury;15,67029956;-19,51777722;46,92217319;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Brasil;Renan Santos;15,95672311;-29,14769735;59,83083061;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Brasil;Ronaldo Caiado;-1,296678177;-42,72157992;30,80696328;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Brasil;Demais candidatos;11,32868693;-88,06380381;66,47031313;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Brasil;Branco ou nulo;67,6040721;60,18447358;74,42653325;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Brasil;Não votou;5,053330329;2,991310582;7,438607869;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Centro-Oeste;Lula;99,48727815;97,81547348;100;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Centro-Oeste;Flávio;-99,98753986;-100;-99,99999969;Flávio;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Centro-Oeste;Augusto Cury;19,29229236;-99,87303348;97,50626204;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Centro-Oeste;Renan Santos;-10,47564589;-100;77,59052022;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Centro-Oeste;Ronaldo Caiado;3,889214183;-24,10930638;52,44571046;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Centro-Oeste;Demais candidatos;27,93339374;-100;100;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Centro-Oeste;Branco ou nulo;76,07336686;53,04039107;99,90147791;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Centro-Oeste;Não votou;3,565636162;-2,499546248;11,15228719;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Nordeste;Lula;98,86111383;96,55719358;100;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Nordeste;Flávio;-99,81450646;-100;-98,92093548;Flávio;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Nordeste;Augusto Cury;33,92661173;4,259653652;77,14985343;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Nordeste;Renan Santos;81,32168384;30,33732842;100;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Nordeste;Ronaldo Caiado;40,69681196;-28,2184462;95,96315831;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Nordeste;Demais candidatos;-98,65268734;-100;-83,79897181;Flávio;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Nordeste;Branco ou nulo;82,73292279;69,99528241;94,3184145;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Nordeste;Não votou;6,089697149;1,607480096;12,47460465;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Norte;Lula;94,61799152;86,13081351;97,78542846;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Norte;Flávio;-97,19302191;-99,99999998;-90,42372234;Flávio;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Norte;Augusto Cury;75,05316775;20,60746658;100;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Norte;Renan Santos;25,69025385;-100;100;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Norte;Ronaldo Caiado;4,034878564;-96,48062044;100;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Norte;Demais candidatos;-82,77486991;-100;100;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Norte;Branco ou nulo;68,73153506;-5,129607871e-09;100;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Norte;Não votou;0,4467627785;-1,757443589;7,301962603;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sudeste;Lula;99,99999993;99,99999978;100;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sudeste;Flávio;-98,67970279;-100;-93,57051567;Flávio;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sudeste;Augusto Cury;4,420659429;-55,45514583;54,80218594;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sudeste;Renan Santos;9,373870185;-88,32225957;99,66716157;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sudeste;Ronaldo Caiado;3,762102891;-85,85395364;77,68024149;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sudeste;Demais candidatos;31,70721121;-100;100;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sudeste;Branco ou nulo;57,87589134;53,20505721;65,31329333;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sudeste;Não votou;3,855047983;0,6445174585;6,926026503;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sul;Lula;99,99999995;99,99999986;99,99999999;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sul;Flávio;-99,99999994;-100;-99,99999984;Flávio;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sul;Augusto Cury;-11,91619105;-69,34133835;72,23375743;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sul;Renan Santos;-32,77266881;-95,6871633;45,53518157;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sul;Ronaldo Caiado;-63,73736034;-80,92127445;-49,94253848;Flávio;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sul;Demais candidatos;38,04122186;-100;100;sem direção definida;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sul;Branco ou nulo;63,07334556;49,4054965;71,60186171;Lula;True
+restrito_base_aptos_2turno_oito;restrito;base_aptos_2turno;Sul;Não votou;10,47434146;6,563256269;12,2952019;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Lula;99,06450433;97,97262906;99,69962044;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Renan Santos;16,78640105;-18,76188341;63,49182265;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Hertz Dias;58,38614522;46,67212731;74,27712708;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Edmilson Costa;38,4035809;-10,59284532;61,31881541;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Flávio;-99,13033127;-99,99051797;-96,84813116;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Clariana Barao;21,52714639;-16,28018082;63,33990341;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Rui Costa Pimenta;58,98042778;45,73662869;67,94506779;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Zema;-60,98673898;-100;10,45935507;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Veterinário Wilson Grassi;66,37657886;54,95218594;75,0826469;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Ronaldo Caiado;1,406741306;-33,67965828;32,25410591;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Augusto Cury;18,16391556;-20,76181745;47,97237386;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Samara;57,89224677;34,76257892;69,73694967;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Branco ou nulo;66,87046698;59,76341785;73,1465503;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Brasil;Não votou;4,931058053;2,804264734;7,286698883;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Lula;99,56548174;97,87461775;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Renan Santos;-7,933476857;-100;77,73519531;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Hertz Dias;11,63077214;-32,97202085;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Edmilson Costa;37,85585936;-6,198125336;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Flávio;-99,98757854;-100;-99,99999966;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Clariana Barao;7,096605952;-18,52604644;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Rui Costa Pimenta;6,428439871;-53,09251171;90,93926368;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Zema;-34,3744312;-100;65,36787281;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Veterinário Wilson Grassi;-5,180060455;-32,9252555;8,469880174;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Ronaldo Caiado;4,323217615;-24,16073133;56,75612121;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Augusto Cury;22,03133529;-100;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Samara;37,31075919;-46,3225622;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Branco ou nulo;76,71165979;54,43643436;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Centro-Oeste;Não votou;3,385885538;-2,431365757;11,06102332;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Lula;98,86078266;96,56042041;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Renan Santos;79,94955309;28,02490862;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Hertz Dias;-48,78866124;-100;9,194902369e-11;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Edmilson Costa;-29,13961534;-55,93744827;19,51202229;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Flávio;-99,82328757;-100;-98,93333771;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Clariana Barao;-54,31317589;-100;0;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Rui Costa Pimenta;-44,22614164;-100;-23,06169156;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Zema;-95,98695415;-100;-47,95154754;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Veterinário Wilson Grassi;-17,81067996;-58,85289198;20,32171741;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Ronaldo Caiado;39,4502805;-29,70453542;93,85549761;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Augusto Cury;33,58533617;3,878867678;77,45573399;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Samara;-97,71260464;-100;-88,86322125;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Branco ou nulo;82,73548711;70,08748526;94,18710217;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Nordeste;Não votou;6,094886646;1,559463159;12,46202292;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Lula;94,61997839;86,03631251;97,79244813;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Renan Santos;21,04950513;-100;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Hertz Dias;-68,63216133;-100;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Edmilson Costa;5,075933064;-10,60238091;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Flávio;-97,19603484;-100;-90,54576794;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Clariana Barao;-35,24682437;-100;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Rui Costa Pimenta;-67,74318536;-100;6,865444629e-11;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Zema;-99,88094428;-100;-100;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Veterinário Wilson Grassi;6,880313575;-100;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Ronaldo Caiado;3,308524569;-100;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Augusto Cury;75,03885701;21,56508842;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Samara;-11,80628528;-100;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Branco ou nulo;68,78379573;0;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Norte;Não votou;0,4707860338;-1,762022561;7,361463332;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Lula;99,99999988;99,99999837;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Renan Santos;6,316964224;-61,55183797;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Hertz Dias;99,99965582;99,99999999;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Edmilson Costa;84,72529632;-3,636289379e-11;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Flávio;-98,68594308;-100;-93,7235541;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Clariana Barao;43,95311948;-3,173560728e-11;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Rui Costa Pimenta;99,9731551;100;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Zema;-47,65580029;-100;55,85238201;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Veterinário Wilson Grassi;99,91377563;100;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Ronaldo Caiado;11,58639917;-53,9964463;89,45976856;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Augusto Cury;9,788398682;-61,08377567;57,54161078;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Samara;100;99,99999999;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Branco ou nulo;56,43003969;52,37379307;65,01620629;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sudeste;Não votou;3,613749922;-0,106271445;6,212498866;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Lula;99,9999998;99,99999956;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Renan Santos;-17,35493565;-83,7898091;71,39316481;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Hertz Dias;97,92179366;42,27204602;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Edmilson Costa;-18,18179109;-38,66491116;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Flávio;-99,99999968;-100;-99,99999898;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Clariana Barao;81,83181959;2,58074887e-13;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Rui Costa Pimenta;94,52683653;67,46700811;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Zema;-98,24849367;-100;-71,73712247;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Veterinário Wilson Grassi;95,06378847;58,61105518;100;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Ronaldo Caiado;-65,82736576;-80,32183653;-53,71016666;Flávio;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Augusto Cury;-12,47608139;-71,21581107;84,33407786;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Samara;92,8;-100;100;sem direção definida;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Branco ou nulo;62,27126015;44,21443901;70,23322206;Lula;True
+restrito_demais_separados_oito;restrito;demais_separados;Sul;Não votou;10,46957811;6,374245187;12,31991089;Lula;True
+restrito_principal_oito;restrito;principal;Brasil;Lula;99,06002223;97,96489258;99,69842432;Lula;True
+restrito_principal_oito;restrito;principal;Brasil;Flávio;-99,12552802;-99,99001402;-96,7765657;Flávio;True
+restrito_principal_oito;restrito;principal;Brasil;Augusto Cury;15,67108584;-19,51167327;46,91254183;sem direção definida;True
+restrito_principal_oito;restrito;principal;Brasil;Renan Santos;15,95723502;-29,15117888;59,82981066;sem direção definida;True
+restrito_principal_oito;restrito;principal;Brasil;Ronaldo Caiado;-1,275230021;-42,70453583;30,8213445;sem direção definida;True
+restrito_principal_oito;restrito;principal;Brasil;Demais candidatos;11,28223604;-88,07033226;66,46915962;sem direção definida;True
+restrito_principal_oito;restrito;principal;Brasil;Branco ou nulo;67,60739816;60,18556431;74,42762583;Lula;True
+restrito_principal_oito;restrito;principal;Brasil;Não votou;5,052037922;2,989953286;7,437559256;Lula;True
+restrito_principal_oito;restrito;principal;Centro-Oeste;Lula;99,48671457;97,81473092;100;Lula;True
+restrito_principal_oito;restrito;principal;Centro-Oeste;Flávio;-99,98753542;-100;-99,9999997;Flávio;True
+restrito_principal_oito;restrito;principal;Centro-Oeste;Augusto Cury;19,34826271;-99,69935125;97,50095092;sem direção definida;True
+restrito_principal_oito;restrito;principal;Centro-Oeste;Renan Santos;-10,37606207;-100;77,57575901;sem direção definida;True
+restrito_principal_oito;restrito;principal;Centro-Oeste;Ronaldo Caiado;3,902447036;-24,10967837;52,43238457;sem direção definida;True
+restrito_principal_oito;restrito;principal;Centro-Oeste;Demais candidatos;27,02440375;-100;100;sem direção definida;True
+restrito_principal_oito;restrito;principal;Centro-Oeste;Branco ou nulo;76,09604265;53,21040234;99,91474292;Lula;True
+restrito_principal_oito;restrito;principal;Centro-Oeste;Não votou;3,564223565;-2,495943116;11,0819131;sem direção definida;True
+restrito_principal_oito;restrito;principal;Nordeste;Lula;98,86093468;96,55690039;100;Lula;True
+restrito_principal_oito;restrito;principal;Nordeste;Flávio;-99,81452775;-100;-98,92115038;Flávio;True
+restrito_principal_oito;restrito;principal;Nordeste;Augusto Cury;33,91742668;4,273497685;77,12311642;Lula;True
+restrito_principal_oito;restrito;principal;Nordeste;Renan Santos;81,315928;30,32692427;100;Lula;True
+restrito_principal_oito;restrito;principal;Nordeste;Ronaldo Caiado;40,71363421;-28,20942218;95,96895624;sem direção definida;True
+restrito_principal_oito;restrito;principal;Nordeste;Demais candidatos;-98,58262557;-100;-80,80870943;Flávio;True
+restrito_principal_oito;restrito;principal;Nordeste;Branco ou nulo;82,73369951;69,99411361;94,31910604;Lula;True
+restrito_principal_oito;restrito;principal;Nordeste;Não votou;6,089445834;1,605626411;12,47506075;Lula;True
+restrito_principal_oito;restrito;principal;Norte;Lula;94,61763426;86,12978272;97,78385855;Lula;True
+restrito_principal_oito;restrito;principal;Norte;Flávio;-97,19215367;-99,99999998;-90,41875588;Flávio;True
+restrito_principal_oito;restrito;principal;Norte;Augusto Cury;75,04852198;20,63529072;100;Lula;True
+restrito_principal_oito;restrito;principal;Norte;Renan Santos;25,68684302;-100;100;sem direção definida;True
+restrito_principal_oito;restrito;principal;Norte;Ronaldo Caiado;4,02466477;-96,47555085;100;sem direção definida;True
+restrito_principal_oito;restrito;principal;Norte;Demais candidatos;-82,77991418;-100;100;sem direção definida;True
+restrito_principal_oito;restrito;principal;Norte;Branco ou nulo;68,73571962;-4,392164608e-09;100;sem direção definida;True
+restrito_principal_oito;restrito;principal;Norte;Não votou;0,4465555352;-1,758849874;7,302112422;sem direção definida;True
+restrito_principal_oito;restrito;principal;Sudeste;Lula;99,99999993;99,99999978;100;Lula;True
+restrito_principal_oito;restrito;principal;Sudeste;Flávio;-98,67959603;-100;-93,57043861;Flávio;True
+restrito_principal_oito;restrito;principal;Sudeste;Augusto Cury;4,417809588;-55,45524514;54,79997702;sem direção definida;True
+restrito_principal_oito;restrito;principal;Sudeste;Renan Santos;9,365422944;-88,31430342;99,67781307;sem direção definida;True
+restrito_principal_oito;restrito;principal;Sudeste;Ronaldo Caiado;3,801192868;-85,78081548;77,74011394;sem direção definida;True
+restrito_principal_oito;restrito;principal;Sudeste;Demais candidatos;31,69460098;-100;100;sem direção definida;True
+restrito_principal_oito;restrito;principal;Sudeste;Branco ou nulo;57,87770837;53,20569154;65,31851181;Lula;True
+restrito_principal_oito;restrito;principal;Sudeste;Não votou;3,853077808;0,6431790352;6,925840392;Lula;True
+restrito_principal_oito;restrito;principal;Sul;Lula;99,99999996;99,99999986;99,99999999;Lula;True
+restrito_principal_oito;restrito;principal;Sul;Flávio;-99,99999995;-100;-99,99999984;Flávio;True
+restrito_principal_oito;restrito;principal;Sul;Augusto Cury;-11,90654498;-69,32140861;72,30303239;sem direção definida;True
+restrito_principal_oito;restrito;principal;Sul;Renan Santos;-32,77505317;-95,70659932;45,50481216;sem direção definida;True
+restrito_principal_oito;restrito;principal;Sul;Ronaldo Caiado;-63,73369886;-80,91662846;-49,93624217;Flávio;True
+restrito_principal_oito;restrito;principal;Sul;Demais candidatos;38,03845792;-100;100;sem direção definida;True
+restrito_principal_oito;restrito;principal;Sul;Branco ou nulo;63,07984613;49,42060414;71,60957195;Lula;True
+restrito_principal_oito;restrito;principal;Sul;Não votou;10,47284268;6,559556128;12,29348162;Lula;True
+restrito_principal_seis;restrito;principal;Brasil;Lula;99,04441881;97,93023651;99,69944649;Lula;True
+restrito_principal_seis;restrito;principal;Brasil;Flávio;-99,02322503;-99,95450967;-96,27999634;Flávio;True
+restrito_principal_seis;restrito;principal;Brasil;Cury + Renan + Caiado;9,650098954;-10,43853111;23,49274223;sem direção definida;True
+restrito_principal_seis;restrito;principal;Brasil;Demais candidatos;15,53407765;-85,66742706;66,46915962;sem direção definida;True
+restrito_principal_seis;restrito;principal;Brasil;Branco ou nulo;67,10721226;59,88170154;74,2787191;Lula;True
+restrito_principal_seis;restrito;principal;Brasil;Não votou;5,196043396;2,208993798;7,83960788;Lula;True
+restrito_principal_seis;restrito;principal;Centro-Oeste;Lula;99,31766483;96,26323522;100;Lula;True
+restrito_principal_seis;restrito;principal;Centro-Oeste;Flávio;-99,63561779;-100;-97,35691269;Flávio;True
+restrito_principal_seis;restrito;principal;Centro-Oeste;Cury + Renan + Caiado;-2,822713615;-24,83812745;36,66203582;sem direção definida;True
+restrito_principal_seis;restrito;principal;Centro-Oeste;Demais candidatos;28,71007043;-100;100;sem direção definida;True
+restrito_principal_seis;restrito;principal;Centro-Oeste;Branco ou nulo;74,70577787;1,200326241;100;Lula;True
+restrito_principal_seis;restrito;principal;Centro-Oeste;Não votou;4,596164463;-1,997434835;10,56412608;sem direção definida;True
+restrito_principal_seis;restrito;principal;Nordeste;Lula;98,85504539;96,56077252;100;Lula;True
+restrito_principal_seis;restrito;principal;Nordeste;Flávio;-99,72796794;-100;-98,484802;Flávio;True
+restrito_principal_seis;restrito;principal;Nordeste;Cury + Renan + Caiado;51,69796946;37,84774303;69,78306946;Lula;True
+restrito_principal_seis;restrito;principal;Nordeste;Demais candidatos;-97,80390929;-100;-77,04618002;Flávio;True
+restrito_principal_seis;restrito;principal;Nordeste;Branco ou nulo;81,49793596;68,21067544;92,83879054;Lula;True
+restrito_principal_seis;restrito;principal;Nordeste;Não votou;5,967563901;1,295492197;12,21446395;Lula;True
+restrito_principal_seis;restrito;principal;Norte;Lula;94,57131963;84,01510556;97,9784742;Lula;True
+restrito_principal_seis;restrito;principal;Norte;Flávio;-97,149416;-99,99999997;-91,21937198;Flávio;True
+restrito_principal_seis;restrito;principal;Norte;Cury + Renan + Caiado;47,82451524;5,445113721;91,13405186;Lula;True
+restrito_principal_seis;restrito;principal;Norte;Demais candidatos;-88,43357727;-100;100;sem direção definida;True
+restrito_principal_seis;restrito;principal;Norte;Branco ou nulo;65,74319137;-2,344913055e-11;100;sem direção definida;True
+restrito_principal_seis;restrito;principal;Norte;Não votou;0,3274623606;-1,393019557;5,808497657;sem direção definida;True
+restrito_principal_seis;restrito;principal;Sudeste;Lula;99,99999993;99,99999969;100;Lula;True
+restrito_principal_seis;restrito;principal;Sudeste;Flávio;-98,56697718;-100;-92,42924695;Flávio;True
+restrito_principal_seis;restrito;principal;Sudeste;Cury + Renan + Caiado;5,198558172;-39,19369802;36,63114309;sem direção definida;True
+restrito_principal_seis;restrito;principal;Sudeste;Demais candidatos;33,79622407;-99,99999999;100;sem direção definida;True
+restrito_principal_seis;restrito;principal;Sudeste;Branco ou nulo;57,92906795;52,78467716;65,34427057;Lula;True
+restrito_principal_seis;restrito;principal;Sudeste;Não votou;3,950419428;-1,979682086;8,408236345;sem direção definida;True
+restrito_principal_seis;restrito;principal;Sul;Lula;99,99999989;99,99999981;100;Lula;True
+restrito_principal_seis;restrito;principal;Sul;Flávio;-99,99999994;-100;-99,99999982;Flávio;True
+restrito_principal_seis;restrito;principal;Sul;Cury + Renan + Caiado;-37,17385005;-47,44288256;-13,64679033;Flávio;True
+restrito_principal_seis;restrito;principal;Sul;Demais candidatos;57,14296888;-99,99999998;100;sem direção definida;True
+restrito_principal_seis;restrito;principal;Sul;Branco ou nulo;63,99157103;52,78732;74,64593522;Lula;True
+restrito_principal_seis;restrito;principal;Sul;Não votou;10,87070653;7,543305168;12,63741487;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Brasil;Lula;99,16019524;98,02329282;99,73532683;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Brasil;Flávio;-99,41835766;-99,9999999;-98,07751351;Flávio;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Brasil;Augusto Cury;31,18278423;-8,042329337;54,89268934;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Brasil;Renan Santos;14,79661631;-24,61229808;62,75354552;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Brasil;Ronaldo Caiado;-12,31863907;-51,77170369;24,10432688;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Brasil;Demais candidatos;-26,37428948;-95,91928437;40,00189835;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Brasil;Branco ou nulo;66,3487164;57,72496794;76,1613771;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Brasil;Não votou;5,046206004;3,261991001;7,2626455;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Centro-Oeste;Lula;99,21489239;95,67580773;100;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Centro-Oeste;Flávio;-99,99999997;-100;-99,99999992;Flávio;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Centro-Oeste;Augusto Cury;26,17037594;-86,00770659;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Centro-Oeste;Renan Santos;4,144694154;-87,46478226;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Centro-Oeste;Ronaldo Caiado;-2,274622244;-14,07134655;59,08032998;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Centro-Oeste;Demais candidatos;36,71003433;-100;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Centro-Oeste;Branco ou nulo;65,27178535;56,81556218;74,88711906;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Centro-Oeste;Não votou;3,398486397;-0,3371202179;8,291782543;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Nordeste;Lula;99,06853677;96,79587754;100;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Nordeste;Flávio;-99,58285383;-100;-98,23462677;Flávio;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Nordeste;Augusto Cury;44,49368596;17,69515305;75,69946387;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Nordeste;Renan Santos;93,95583552;66,0396357;100;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Nordeste;Ronaldo Caiado;16,24696875;-35,768028;62,63368336;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Nordeste;Demais candidatos;-76,17370364;-100;28,48294939;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Nordeste;Branco ou nulo;78,15349757;64,38520082;91,65206597;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Nordeste;Não votou;5,653124746;2,113197413;10,96353458;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Norte;Lula;94,96634026;90,35466135;99,01838109;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Norte;Flávio;-96,9521846;-99,99999998;-88,27593297;Flávio;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Norte;Augusto Cury;54,60842048;-1,88915165e-09;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Norte;Renan Santos;52,50455419;-93,23000926;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Norte;Ronaldo Caiado;6,175491892;-100;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Norte;Demais candidatos;-66,37092797;-100;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Norte;Branco ou nulo;61,23409504;-2,772978498e-09;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Norte;Não votou;1,409171035;-2,550864977;13,90799813;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sudeste;Lula;99,99825634;99,99999971;100;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sudeste;Flávio;-99,39493143;-100;-96,38984633;Flávio;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sudeste;Augusto Cury;32,32854009;-53,66986935;66,07996712;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sudeste;Renan Santos;-3,467889006;-73,39563352;99,99999994;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sudeste;Ronaldo Caiado;-3,51058933;-94,23380667;78,4806571;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sudeste;Demais candidatos;1,754480151;-100;100;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sudeste;Branco ou nulo;58,97263612;51,24160043;76,11691767;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sudeste;Não votou;3,730904288;1,613262029;7,7312362;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sul;Lula;99,99954719;99,99015784;100;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sul;Flávio;-99,99999996;-100;-99,99999988;Flávio;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sul;Augusto Cury;2,57281502;-58,29833717;59,06684752;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sul;Renan Santos;-25,51149534;-76,56868569;62,26951045;sem direção definida;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sul;Ronaldo Caiado;-69,78575128;-81,70000356;-50,91408657;Flávio;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sul;Demais candidatos;-99,3660182;-100;-88,25959626;Flávio;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sul;Branco ou nulo;66,20347726;57,99536704;73,96300443;Lula;True
+restrito_sem_capitais_oito;restrito;sem_capitais;Sul;Não votou;10,04372907;6,872695649;11,84526278;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Brasil;Lula;99,13746681;97,96087169;99,70642727;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Brasil;Flávio;-99,3205123;-99,9999999;-97,87635591;Flávio;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Brasil;Cury + Renan + Caiado;13,02691016;1,439013947;26,86595323;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Brasil;Demais candidatos;-17,68069791;-92,99087008;57,39493983;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Brasil;Branco ou nulo;66,6094845;57,52375478;77,17747694;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Brasil;Não votou;4,910619521;2,765105196;7,391504128;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Centro-Oeste;Lula;98,74995497;94,7543176;100;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Centro-Oeste;Flávio;-99,99999997;-100;-99,99999988;Flávio;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Centro-Oeste;Cury + Renan + Caiado;1,015458835;-11,77104549;63,37145824;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Centro-Oeste;Demais candidatos;88,93963361;2,979242177;100;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Centro-Oeste;Branco ou nulo;72,24798502;66,87558143;83,5827523;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Centro-Oeste;Não votou;4,004800889;-4,261906022;7,361529566;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Nordeste;Lula;99,10330014;96,77920004;100;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Nordeste;Flávio;-99,45311239;-100;-97,91245775;Flávio;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Nordeste;Cury + Renan + Caiado;55,06268334;38,54278474;73,50895789;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Nordeste;Demais candidatos;-80,22931803;-100;0;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Nordeste;Branco ou nulo;76,87510963;61,85784419;90,1321722;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Nordeste;Não votou;5,365611094;1,94517501;11,00442709;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Norte;Lula;94,74016395;88,54095366;98,65767386;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Norte;Flávio;-96,90846537;-99,99999997;-87,84194037;Flávio;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Norte;Cury + Renan + Caiado;50,46666948;-6,029832509;84,02761231;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Norte;Demais candidatos;-69,61315169;-100;100;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Norte;Branco ou nulo;57,56768743;-2,130551036e-09;100;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Norte;Não votou;1,046960181;-2,580994826;13,10616279;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sudeste;Lula;99,99999992;99,99999969;100;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sudeste;Flávio;-99,23754205;-100;-96,0447946;Flávio;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sudeste;Cury + Renan + Caiado;11,02281983;-11,3348089;36,26188172;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sudeste;Demais candidatos;3,449967221;-100;100;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sudeste;Branco ou nulo;59,99425074;43,96235879;82,06769296;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sudeste;Não votou;3,436087288;-0,9846753077;7,464045117;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sul;Lula;99,99999991;99,9999998;99,99999999;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sul;Flávio;-99,9999999;-100;-99,99999966;Flávio;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sul;Cury + Renan + Caiado;-31,68481075;-39,70470956;-15,93285837;Flávio;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sul;Demais candidatos;-62,89564595;-100;100;sem direção definida;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sul;Branco ou nulo;66,91802539;51,18050132;76,091959;Lula;True
+restrito_sem_capitais_seis;restrito;sem_capitais;Sul;Não votou;10,37135493;8,227379773;11,99854535;Lula;True
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Brasil;Lula;77,52997434;75,7321775;79,92502553;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Brasil;Flávio;-79,86573959;-81,43166378;-77,98026806;Flávio;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Brasil;Augusto Cury;64,14680396;40,18781862;88,20082401;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Brasil;Renan Santos;33,03858199;8,482390558;70,3778713;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Brasil;Ronaldo Caiado;27,49523639;-0,8434705266;54,94928385;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Brasil;Demais candidatos;-20,24845354;-99,99765546;47,4632768;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Brasil;Branco ou nulo;50,77548321;30,76334076;63,29198465;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Centro-Oeste;Lula;78,2455674;71,40599592;83,60285845;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Centro-Oeste;Flávio;-76,41152084;-79,36854786;-71,0143236;Flávio;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Centro-Oeste;Augusto Cury;42,93051806;-69,62880968;100;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Centro-Oeste;Renan Santos;-37,79506703;-100;43,619813;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Centro-Oeste;Ronaldo Caiado;4,546177026;-13,83834843;47,53622348;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Centro-Oeste;Demais candidatos;-80,05234371;-100;86,53404091;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Centro-Oeste;Branco ou nulo;57,28552457;7,196790681;95,27901162;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Nordeste;Lula;79,30311007;76,22251887;82,77376821;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Nordeste;Flávio;-81,94140983;-84,59920679;-77,8195771;Flávio;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Nordeste;Augusto Cury;97,88421606;78,12431551;100;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Nordeste;Renan Santos;98,89516537;84,74467392;100;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Nordeste;Ronaldo Caiado;35,57470976;-16,83854723;92,56604017;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Nordeste;Demais candidatos;-96,40171139;-100;-46,10548973;Flávio;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Nordeste;Branco ou nulo;62,99085882;10,7559159;91,70036286;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Norte;Lula;76,01219304;69,64632321;81,71458429;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Norte;Flávio;-75,2345744;-78,01171061;-72,56869652;Flávio;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Norte;Augusto Cury;45,12877431;-15,5104465;100;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Norte;Renan Santos;-5,982145373;-100;84,53870512;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Norte;Ronaldo Caiado;-18,63536819;-100;100;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Norte;Demais candidatos;-39,5238256;-100;100;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Norte;Branco ou nulo;54,20735376;-8,984192264e-09;100;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sudeste;Lula;75,37030172;72,29544473;79,11850857;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sudeste;Flávio;-79,12955415;-81,7089495;-75,39072306;Flávio;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sudeste;Augusto Cury;47,64894853;-0,5285484598;90,76759368;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sudeste;Renan Santos;27,4300773;-11,90246898;100;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sudeste;Ronaldo Caiado;43,55858459;-4,307046515e-10;93,01064136;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sudeste;Demais candidatos;3,427237903;-100;100;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sudeste;Branco ou nulo;49,61141302;-3,152517957e-09;65,17670465;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sul;Lula;79,03095426;74,32729447;84,82444205;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sul;Flávio;-83,44753463;-85,56613726;-79,25643647;Flávio;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sul;Augusto Cury;79,76495364;54,80422686;86,51490175;Lula;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sul;Renan Santos;14,62117254;-27,5907121;45,39848774;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sul;Ronaldo Caiado;28,57382567;-35,22062468;69,54068847;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sul;Demais candidatos;-29,26465476;-100;100;sem direção definida;False
+restrito_sem_nao_votou_oito;restrito;sem_nao_votou;Sul;Branco ou nulo;18,49796845;-1,812718705e-09;59,80322291;sem direção definida;False

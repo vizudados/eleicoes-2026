@@ -1,0 +1,20 @@
+{
+  "utc": "2026-10-27T12:43:15.761365+00:00",
+  "semente": 20261027,
+  "pacotes": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.0",
+    "scipy": "1.18.1",
+    "osqp": "1.1.3",
+    "jax": "0.12.0.1",
+    "numpyro": "0.22.0"
+  },
+  "scripts_sha256": {
+    "inferencia_t16.py": "6ae336168a9b7b8a1c35b9d947221b4ca27019cef61eff483b8951d54fc34e19",
+    "inferencia_t16_v2.py": "a77640881a67e2355cfd221524614df5e3eefc4e9f3a8436d7711e6a1de7df40",
+    "t16_core.py": "789bdaf063c40df28a075fc873afb03821931fa9851eb711b965db61caa920e3",
+    "finalizar_t16_v2.py": "b4acd7ec68cb32f22d7d898ecbfccfbe5fea0353b14cd96c56432658d3f6aaff",
+    "testar_reinicio_t16.py": "e2f6567220ab20814d75c6bf83aad7a58a7d7dbd6f159c31877a1d7a8bc6f85c"
+  },
+  "principal": "bayes_slice_principal_seis"
+}

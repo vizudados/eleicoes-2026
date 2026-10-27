@@ -1,0 +1,15 @@
+{
+  "utc": "2026-10-27T11:31:11.417685+00:00",
+  "semente": 20261027,
+  "sha256_entradas": {
+    "dados/bruto/tse/presidente_2026_BR.csv": "225a660c6485c9e7dd9e2c613136d24209db69f3788f4e56f1bfe6b268401662",
+    "dados/bruto/tse/detalhe_2026_BR.csv": "9b0afe46d32332aa08e82256f0332aa53a039866bc75a6dce4b5a2c7c2b1867f",
+    "dados/pbi/candidato_ano.csv": "7dd878ceccf3930781bf084b1cefe6a8a7d2e90543410d75fce3ce18a99646d6",
+    "dados/pbi/municipio_ano.csv": "4ff50851e0cc3a27feeb6c99c9b5808749cbb43469d99f280003c6023fc3bfd3",
+    "dados/pbi/municipio_2turno.csv": "374690e90863b49cfde0bf3e0963b0cc4ec5832c82e6d9b335f5f2145fc09e22",
+    "dados/pbi/municipio.csv": "859b4ba08a13cc770fdb7e11213d9cbce176b95a25c405745fbcb941d3992306",
+    "dados/pbi/uf_2turno.csv": "b8fd28f56fd43a84bcf302b0ed0728f351d2c5e53442087633eee2121c4e6f62",
+    "dados/pbi/transferencia.csv": "26c5a2e29f6fa3b5d1118fefa48ea2255035646839e7b48ca97316b8e25f106e"
+  },
+  "exterior": "excluído nos dois turnos"
+}

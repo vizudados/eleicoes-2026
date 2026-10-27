@@ -1,0 +1,7 @@
+{"utc": "2026-10-27T11:32:34.603784+00:00", "evento": "início", "semente": 20261027}
+{"utc": "2026-10-27T11:32:37.559554+00:00", "evento": "bootstrap", "replicacao": 100, "total": 500}
+{"utc": "2026-10-27T11:32:41.444308+00:00", "evento": "bootstrap", "replicacao": 200, "total": 500}
+{"utc": "2026-10-27T11:32:45.601959+00:00", "evento": "bootstrap", "replicacao": 300, "total": 500}
+{"utc": "2026-10-27T11:32:49.726573+00:00", "evento": "bootstrap", "replicacao": 400, "total": 500}
+{"utc": "2026-10-27T11:32:53.675551+00:00", "evento": "bootstrap", "replicacao": 500, "total": 500}
+{"utc": "2026-10-27T11:32:54.888103+00:00", "evento": "concluído", "linhas": 192, "posto_incompleto_bootstrap": 4}

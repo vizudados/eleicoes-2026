@@ -1,0 +1,42 @@
+{"utc": "2026-10-27T11:39:29.999819+00:00", "evento": "início", "semente": 20261027}
+{"utc": "2026-10-27T11:39:43.463713+00:00", "evento": "inicialização", "avaliacoes": 100, "potencial": 96511.54509510743}
+{"utc": "2026-10-27T11:39:43.928509+00:00", "evento": "inicialização", "avaliacoes": 200, "potencial": 96395.1782030979}
+{"utc": "2026-10-27T11:39:44.415442+00:00", "evento": "inicialização", "avaliacoes": 300, "potencial": 96321.08283233513}
+{"utc": "2026-10-27T11:39:44.895117+00:00", "evento": "inicialização", "avaliacoes": 400, "potencial": 96294.25663894908}
+{"utc": "2026-10-27T11:39:45.380220+00:00", "evento": "inicialização", "avaliacoes": 500, "potencial": 96271.76522429647}
+{"utc": "2026-10-27T11:39:45.860819+00:00", "evento": "inicialização", "avaliacoes": 600, "potencial": 96254.93815213618}
+{"utc": "2026-10-27T11:39:46.357001+00:00", "evento": "inicialização", "avaliacoes": 700, "potencial": 96242.26806086216}
+{"utc": "2026-10-27T11:39:46.873457+00:00", "evento": "inicialização", "avaliacoes": 800, "potencial": 96226.51863937968}
+{"utc": "2026-10-27T11:39:47.348688+00:00", "evento": "inicialização", "avaliacoes": 900, "potencial": 96219.78586327225}
+{"utc": "2026-10-27T11:39:47.832126+00:00", "evento": "inicialização", "avaliacoes": 1000, "potencial": 96216.6877898931}
+{"utc": "2026-10-27T11:39:48.315303+00:00", "evento": "inicialização", "avaliacoes": 1100, "potencial": 96215.30059937698}
+{"utc": "2026-10-27T11:39:48.810841+00:00", "evento": "inicialização", "avaliacoes": 1200, "potencial": 96214.61537128422}
+{"utc": "2026-10-27T11:39:49.298869+00:00", "evento": "inicialização", "avaliacoes": 1300, "potencial": 96214.332841124}
+{"utc": "2026-10-27T11:39:49.707597+00:00", "evento": "modo_inicial", "sucesso": false, "iteracoes": 1300, "gradiente_max": 1.7947101247363355}
+{"utc": "2026-10-27T11:39:52.438669+00:00", "evento": "amostragem", "cadeias": 4, "aquecimento": 1000, "amostras": 2000, "parametros": 193}
+{"utc": "2026-10-27T11:41:13.316648+00:00", "evento": "progresso_mcmc", "iteracao": 50, "total": 3000, "cadeia": 3}
+{"utc": "2026-10-27T11:41:19.745970+00:00", "evento": "progresso_mcmc", "iteracao": 50, "total": 3000, "cadeia": 1}
+{"utc": "2026-10-27T11:41:26.980066+00:00", "evento": "progresso_mcmc", "iteracao": 50, "total": 3000, "cadeia": 2}
+{"utc": "2026-10-27T11:41:35.832830+00:00", "evento": "progresso_mcmc", "iteracao": 50, "total": 3000, "cadeia": 0}
+{"utc": "2026-10-27T11:42:40.651015+00:00", "evento": "progresso_mcmc", "iteracao": 100, "total": 3000, "cadeia": 1}
+{"utc": "2026-10-27T11:42:44.631026+00:00", "evento": "progresso_mcmc", "iteracao": 100, "total": 3000, "cadeia": 3}
+{"utc": "2026-10-27T11:42:46.109504+00:00", "evento": "progresso_mcmc", "iteracao": 100, "total": 3000, "cadeia": 2}
+{"utc": "2026-10-27T11:42:56.567261+00:00", "evento": "progresso_mcmc", "iteracao": 100, "total": 3000, "cadeia": 0}
+{"utc": "2026-10-27T11:44:38.468041+00:00", "evento": "progresso_mcmc", "iteracao": 150, "total": 3000, "cadeia": 3}
+{"utc": "2026-10-27T11:44:38.967163+00:00", "evento": "progresso_mcmc", "iteracao": 150, "total": 3000, "cadeia": 1}
+{"utc": "2026-10-27T11:44:42.871917+00:00", "evento": "progresso_mcmc", "iteracao": 150, "total": 3000, "cadeia": 2}
+{"utc": "2026-10-27T11:44:51.095832+00:00", "evento": "progresso_mcmc", "iteracao": 150, "total": 3000, "cadeia": 0}
+{"utc": "2026-10-27T11:46:29.296035+00:00", "evento": "progresso_mcmc", "iteracao": 200, "total": 3000, "cadeia": 3}
+{"utc": "2026-10-27T11:46:33.326902+00:00", "evento": "progresso_mcmc", "iteracao": 200, "total": 3000, "cadeia": 1}
+{"utc": "2026-10-27T11:46:44.341805+00:00", "evento": "progresso_mcmc", "iteracao": 200, "total": 3000, "cadeia": 2}
+{"utc": "2026-10-27T11:46:57.520313+00:00", "evento": "progresso_mcmc", "iteracao": 200, "total": 3000, "cadeia": 0}
+{"utc": "2026-10-27T11:48:09.103382+00:00", "evento": "progresso_mcmc", "iteracao": 250, "total": 3000, "cadeia": 2}
+{"utc": "2026-10-27T11:48:12.845163+00:00", "evento": "progresso_mcmc", "iteracao": 250, "total": 3000, "cadeia": 3}
+{"utc": "2026-10-27T11:48:24.101982+00:00", "evento": "progresso_mcmc", "iteracao": 250, "total": 3000, "cadeia": 1}
+{"utc": "2026-10-27T11:48:41.522563+00:00", "evento": "progresso_mcmc", "iteracao": 250, "total": 3000, "cadeia": 0}
+{"utc": "2026-10-27T11:50:03.815025+00:00", "evento": "progresso_mcmc", "iteracao": 300, "total": 3000, "cadeia": 2}
+{"utc": "2026-10-27T11:50:19.862248+00:00", "evento": "progresso_mcmc", "iteracao": 300, "total": 3000, "cadeia": 3}
+{"utc": "2026-10-27T11:50:24.214483+00:00", "evento": "progresso_mcmc", "iteracao": 300, "total": 3000, "cadeia": 1}
+{"utc": "2026-10-27T11:50:44.886433+00:00", "evento": "progresso_mcmc", "iteracao": 300, "total": 3000, "cadeia": 0}
+{"utc": "2026-10-27T11:51:42.813360+00:00", "evento": "progresso_mcmc", "iteracao": 350, "total": 3000, "cadeia": 2}
+{"utc": "2026-10-27T11:51:44.322926+00:00", "convergiu": false, "status": "interrompida_por_viabilidade_no_prazo_de_90_minutos", "cenario": "principal", "grupos": "oito", "efeito_uf": true, "cadeias": 4, "aquecimento_planejado": 1000, "amostras_planejadas_por_cadeia": 2000, "ultima_iteracao_aproximada": 300, "amostras_posteriores_concluidas": 0, "motivo": "Ritmo observado não permitiria concluir e validar dentro do prazo. Apenas aquecimento; não há matriz utilizável nem diagnóstico de convergência concluído."}
