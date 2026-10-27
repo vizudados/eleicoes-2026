@@ -638,3 +638,322 @@ ano,turno,uf,cd_tse,cd_ibge,cidade,zona,pt,adv,demais,validos,aptos,comparecimen
 2026,2,SP,71072,3550308,São Paulo (SP),421,75122,57619,0,132741,173937,139663,34274,2295,4627,545,,TSE resultado final por município e zona (API eleição 6258),312
 2026,2,SP,71072,3550308,São Paulo (SP),422,57615,53903,0,111518,145904,116748,29156,1716,3514,416,,TSE resultado final por município e zona (API eleição 6258),313
 2026,2,TO,73440,1721000,Palmas (TO),29,69981,106514,0,176495,219771,183158,36613,1734,4929,673,,TSE resultado final por município e zona (API eleição 6258),202
+2018,2,RO,35,1100205,Porto Velho (RO),2,21005,53450,0,74455,101726,80111,21615,1436,4220,346,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,213
+2018,2,RO,35,1100205,Porto Velho (RO),6,18209,40693,0,58902,83394,63419,19975,1082,3435,287,38.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,214
+2018,2,RO,35,1100205,Porto Velho (RO),20,21093,44584,0,65677,91331,70842,20489,1194,3971,312,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,215
+2018,2,RO,35,1100205,Porto Velho (RO),21,14540,27418,0,41958,58292,45421,12871,739,2724,181,17.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,216
+2018,2,AC,1392,1200401,Rio Branco (AC),1,16552,80106,0,96658,129772,101392,28380,1869,2865,413,140.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,230
+2018,2,AC,1392,1200401,Rio Branco (AC),9,16385,78158,0,94543,125788,99476,26312,1930,3003,376,119.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,231
+2018,2,AM,2550,1302603,Manaus (AM),1,23077,52965,0,76042,95535,82938,12597,1670,5226,280,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,175
+2018,2,AM,2550,1302603,Manaus (AM),2,17504,50350,0,67854,85270,73232,12038,1429,3949,221,18.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,176
+2018,2,AM,2550,1302603,Manaus (AM),31,22279,38493,0,60772,76714,66907,9807,1325,4810,207,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,177
+2018,2,AM,2550,1302603,Manaus (AM),32,31184,60611,0,91795,114418,100308,14110,1892,6621,323,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,178
+2018,2,AM,2550,1302603,Manaus (AM),37,23327,49278,0,72605,90781,79726,11055,1561,5560,246,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,179
+2018,2,AM,2550,1302603,Manaus (AM),40,28422,65013,0,93435,116710,101595,15115,1952,6208,298,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,180
+2018,2,AM,2550,1302603,Manaus (AM),58,27483,61603,0,89086,112105,97136,14969,1814,6236,287,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,181
+2018,2,AM,2550,1302603,Manaus (AM),59,29416,48130,0,77546,97899,85733,12166,1653,6534,257,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,182
+2018,2,AM,2550,1302603,Manaus (AM),62,33114,60822,0,93936,120139,102459,17680,1876,6647,303,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,183
+2018,2,AM,2550,1302603,Manaus (AM),63,36524,57902,0,94426,119839,103942,15897,2042,7474,316,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,184
+2018,2,AM,2550,1302603,Manaus (AM),65,31365,55009,0,86374,110299,94293,16006,1862,6057,289,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,185
+2018,2,AM,2550,1302603,Manaus (AM),68,26945,35609,0,62554,80774,69047,11727,1375,5118,215,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,186
+2018,2,AM,2550,1302603,Manaus (AM),70,27724,51214,0,78938,100962,86972,13990,1663,6371,257,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,187
+2018,2,RR,3018,1400100,Boa Vista (RR),1,19081,79199,0,98280,125541,104109,21432,1819,4010,411,87.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,88
+2018,2,RR,3018,1400100,Boa Vista (RR),5,16940,53162,0,70102,92935,73987,18948,1046,2839,266,59.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,89
+2018,2,PA,4154,1500800,Ananindeua (PA),43,57132,63472,0,120604,160896,134416,26480,2651,11161,432,52.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,50
+2018,2,PA,4154,1500800,Ananindeua (PA),72,52581,69118,0,121699,161494,135010,26484,2537,10774,419,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,51
+2018,2,PA,4278,1501402,Belém (PA),1,29220,35190,0,64410,79789,70978,8811,1372,5196,262,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,58
+2018,2,PA,4278,1501402,Belém (PA),28,34810,39931,0,74741,95229,83935,11294,1727,7467,241,22.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,59
+2018,2,PA,4278,1501402,Belém (PA),29,38919,37484,0,76403,96535,85313,11222,1713,7197,258,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,60
+2018,2,PA,4278,1501402,Belém (PA),30,40483,43655,0,84138,111977,95162,16815,2035,8989,271,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,61
+2018,2,PA,4278,1501402,Belém (PA),73,40963,52736,0,93699,119611,104619,14992,2106,8814,280,38.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,62
+2018,2,PA,4278,1501402,Belém (PA),76,25095,41344,0,66439,82580,72954,9626,1368,5147,253,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,63
+2018,2,PA,4278,1501402,Belém (PA),95,30234,46212,0,76446,95659,84762,10897,1765,6551,259,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,64
+2018,2,PA,4278,1501402,Belém (PA),96,38647,39252,0,77899,98405,87090,11315,1682,7509,257,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,65
+2018,2,PA,4278,1501402,Belém (PA),97,43128,46832,0,89960,117295,101346,15949,2096,9290,274,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,66
+2018,2,PA,4278,1501402,Belém (PA),98,29694,45346,0,75040,93947,83442,10505,1724,6678,247,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,67
+2018,2,AP,6050,1600303,Macapá (AP),2,55203,70796,0,125999,167849,135298,32551,2515,6784,529,73.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,167
+2018,2,AP,6050,1600303,Macapá (AP),10,42880,49807,0,92687,125438,99820,25618,1918,5215,354,68.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,168
+2018,2,TO,73440,1721000,Palmas (TO),29,45892,84782,0,130674,185370,141140,44230,1899,8567,568,71.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,202
+2018,2,MA,9210,2111300,São Luís (MA),1,55080,29404,0,84484,111831,90649,21182,1796,4369,332,46.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,251
+2018,2,MA,9210,2111300,São Luís (MA),2,58976,32475,0,91451,119197,97917,21280,1978,4488,384,47.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,252
+2018,2,MA,9210,2111300,São Luís (MA),3,43732,42702,0,86434,112628,92815,19813,2047,4334,347,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,253
+2018,2,MA,9210,2111300,São Luís (MA),10,54621,34365,0,88986,117233,94965,22268,1880,4099,361,49.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,254
+2018,2,MA,9210,2111300,São Luís (MA),76,45226,50650,0,95876,123281,103069,20212,2326,4867,346,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,255
+2018,2,MA,9210,2111300,São Luís (MA),89,49055,34512,0,83567,109256,89776,19480,1844,4365,321,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,256
+2018,2,PI,12190,2211001,Teresina (PI),1,58961,29759,0,88720,112645,94901,17744,1289,4892,301,51.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,314
+2018,2,PI,12190,2211001,Teresina (PI),2,52439,34871,0,87310,111879,93554,18325,1203,5041,312,62.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,315
+2018,2,PI,12190,2211001,Teresina (PI),63,52796,29844,0,82640,105701,88935,16766,1177,5118,307,63.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,316
+2018,2,PI,12190,2211001,Teresina (PI),97,50186,31113,0,81299,103968,87009,16959,1117,4593,314,74.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,317
+2018,2,PI,12190,2211001,Teresina (PI),98,59414,37065,0,96479,122057,102450,19607,1522,4449,327,59.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,318
+2018,2,CE,13897,2304400,Fortaleza (CE),1,45390,39813,0,85203,117517,92932,24585,1955,5774,305,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,136
+2018,2,CE,13897,2304400,Fortaleza (CE),2,45343,32771,0,78114,104248,85362,18886,1516,5732,284,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,137
+2018,2,CE,13897,2304400,Fortaleza (CE),3,36793,47777,0,84570,117879,90559,27320,1815,4174,321,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,138
+2018,2,CE,13897,2304400,Fortaleza (CE),80,43488,37247,0,80735,107405,87371,20034,1621,5015,294,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,139
+2018,2,CE,13897,2304400,Fortaleza (CE),82,47868,34492,0,82360,111070,89923,21147,1605,5958,318,38.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,140
+2018,2,CE,13897,2304400,Fortaleza (CE),83,46321,35846,0,82167,108102,89343,18759,1545,5631,290,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,141
+2018,2,CE,13897,2304400,Fortaleza (CE),85,41013,33768,0,74781,98391,81846,16545,1383,5682,282,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,142
+2018,2,CE,13897,2304400,Fortaleza (CE),93,33975,25459,0,59434,78082,64917,13165,1093,4390,201,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,143
+2018,2,CE,13897,2304400,Fortaleza (CE),94,44324,35863,0,80187,106424,87973,18451,1588,6198,321,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,144
+2018,2,CE,13897,2304400,Fortaleza (CE),95,39967,26552,0,66519,90527,73216,17311,1284,5413,238,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,145
+2018,2,CE,13897,2304400,Fortaleza (CE),112,39782,37300,0,77082,102945,84107,18838,1751,5274,274,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,146
+2018,2,CE,13897,2304400,Fortaleza (CE),113,50068,40113,0,90181,120262,97175,23087,1661,5333,361,49.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,147
+2018,2,CE,13897,2304400,Fortaleza (CE),114,45795,32280,0,78075,104260,85993,18267,1462,6456,279,45.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,148
+2018,2,CE,13897,2304400,Fortaleza (CE),115,47626,39898,0,87524,116001,94866,21135,1670,5672,324,36.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,149
+2018,2,CE,13897,2304400,Fortaleza (CE),116,47947,32561,0,80508,107368,87951,19417,1547,5896,294,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,150
+2018,2,CE,13897,2304400,Fortaleza (CE),117,44053,29161,0,73214,96206,80306,15900,1459,5633,252,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,151
+2018,2,CE,13897,2304400,Fortaleza (CE),118,39512,29132,0,68644,89439,74885,14554,1296,4945,232,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,152
+2018,2,RN,17612,2408102,Natal (RN),1,38775,40802,0,79577,106607,88181,18426,1513,7091,267,50.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,191
+2018,2,RN,17612,2408102,Natal (RN),2,39218,49099,0,88317,117850,96376,21474,1495,6564,322,52.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,192
+2018,2,RN,17612,2408102,Natal (RN),3,40690,53484,0,94174,122444,100417,22027,1526,4717,296,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,193
+2018,2,RN,17612,2408102,Natal (RN),4,37390,36632,0,74022,100246,81821,18425,1380,6419,217,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,194
+2018,2,RN,17612,2408102,Natal (RN),69,39865,40753,0,80618,110568,90105,20463,1624,7863,249,36.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,195
+2018,2,PB,20516,2507507,João Pessoa (PB),1,38160,43372,0,81532,100690,87401,13289,1368,4501,296,52.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,162
+2018,2,PB,20516,2507507,João Pessoa (PB),64,38690,43945,0,82635,101880,89150,12730,1339,5176,311,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,163
+2018,2,PB,20516,2507507,João Pessoa (PB),70,37643,48741,0,86384,106551,93551,13000,1503,5664,296,36.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,164
+2018,2,PB,20516,2507507,João Pessoa (PB),76,34741,48630,0,83371,103283,88370,14913,1411,3588,275,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,165
+2018,2,PB,20516,2507507,João Pessoa (PB),77,39421,44022,0,83443,105690,91822,13868,1682,6697,340,49.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,166
+2018,2,PE,25313,2611606,Recife (PE),1,36731,45319,0,82050,104593,88493,16100,1609,4834,297,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,217
+2018,2,PE,25313,2611606,Recife (PE),2,41589,42827,0,84416,105918,91908,14010,1470,6022,305,35.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,218
+2018,2,PE,25313,2611606,Recife (PE),3,43095,39370,0,82465,105627,91458,14169,1500,7493,301,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,219
+2018,2,PE,25313,2611606,Recife (PE),4,48335,33995,0,82330,103040,88590,14450,1324,4936,303,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,220
+2018,2,PE,25313,2611606,Recife (PE),5,47812,37711,0,85523,105756,92644,13112,1561,5560,296,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,221
+2018,2,PE,25313,2611606,Recife (PE),6,46201,37267,0,83468,105094,91582,13512,1543,6571,300,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,222
+2018,2,PE,25313,2611606,Recife (PE),7,46095,37116,0,83211,103353,89717,13636,1526,4980,296,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,223
+2018,2,PE,25313,2611606,Recife (PE),8,41579,43104,0,84683,104789,91246,13543,1837,4726,309,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,224
+2018,2,PE,25313,2611606,Recife (PE),9,46982,35257,0,82239,103941,90719,13222,1450,7030,283,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,225
+2018,2,PE,25313,2611606,Recife (PE),149,36914,46864,0,83778,107506,91348,16158,1719,5851,312,35.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,226
+2018,2,PE,25313,2611606,Recife (PE),150,47340,37934,0,85274,106032,92757,13275,1423,6060,302,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,227
+2018,2,AL,27855,2704302,Maceió (AL),1,28747,50371,0,79118,103840,86378,17462,1704,5556,302,54.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,170
+2018,2,AL,27855,2704302,Maceió (AL),2,41580,72220,0,113800,152790,124551,28239,2577,8174,398,54.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,171
+2018,2,AL,27855,2704302,Maceió (AL),3,36914,53306,0,90220,121829,100359,21470,2085,8054,381,61.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,172
+2018,2,AL,27855,2704302,Maceió (AL),33,25867,41208,0,67075,96550,74682,21868,1658,5949,219,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,173
+2018,2,AL,27855,2704302,Maceió (AL),54,33730,50922,0,84652,120677,93777,26900,1971,7154,253,36.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,174
+2018,2,SE,31054,2800308,Aracaju (SE),1,54469,44144,0,98613,139044,114107,24937,2314,13180,395,46.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,53
+2018,2,SE,31054,2800308,Aracaju (SE),2,51714,53268,0,104982,141372,115756,25616,2123,8651,491,66.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,54
+2018,2,SE,31054,2800308,Aracaju (SE),27,49709,42191,0,91900,126768,102503,24265,1866,8737,326,48.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,55
+2018,2,BA,38490,2927408,Salvador (BA),1,32006,24622,0,56628,70296,60808,9488,878,3302,203,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,232
+2018,2,BA,38490,2927408,Salvador (BA),2,46550,20989,0,67539,84271,73920,10351,1028,5353,236,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,233
+2018,2,BA,38490,2927408,Salvador (BA),3,60229,21266,0,81495,103635,92207,11428,1328,9384,269,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,234
+2018,2,BA,38490,2927408,Salvador (BA),4,63939,22328,0,86267,112417,98796,13621,1844,10685,300,46.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,235
+2018,2,BA,38490,2927408,Salvador (BA),5,45442,17780,0,63222,79139,70098,9041,994,5882,220,38.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,236
+2018,2,BA,38490,2927408,Salvador (BA),6,46425,25059,0,71484,89289,78684,10605,1209,5991,239,23.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,237
+2018,2,BA,38490,2927408,Salvador (BA),7,46313,24000,0,70313,87285,77284,10001,1084,5887,220,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,238
+2018,2,BA,38490,2927408,Salvador (BA),8,55894,20888,0,76782,99170,87237,11933,1466,8989,262,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,239
+2018,2,BA,38490,2927408,Salvador (BA),9,46771,23608,0,70379,89415,80156,9259,1410,8367,251,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,240
+2018,2,BA,38490,2927408,Salvador (BA),10,59848,38931,0,98779,123229,108027,15202,1785,7463,303,38.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,241
+2018,2,BA,38490,2927408,Salvador (BA),11,62850,23070,0,85920,109945,96835,13110,1573,9342,274,48.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,242
+2018,2,BA,38490,2927408,Salvador (BA),12,56739,28701,0,85440,109861,94674,15187,1501,7733,268,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,243
+2018,2,BA,38490,2927408,Salvador (BA),13,41776,37733,0,79509,99350,86607,12743,1455,5643,268,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,244
+2018,2,BA,38490,2927408,Salvador (BA),14,62883,21200,0,84083,108803,93933,14870,1449,8401,267,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,245
+2018,2,BA,38490,2927408,Salvador (BA),15,47557,16781,0,64338,83520,73967,9553,1237,8392,233,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,246
+2018,2,BA,38490,2927408,Salvador (BA),16,54004,21042,0,75046,95394,83132,12262,1250,6836,251,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,247
+2018,2,BA,38490,2927408,Salvador (BA),17,53136,20860,0,73996,96880,85377,11503,1646,9735,248,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,248
+2018,2,BA,38490,2927408,Salvador (BA),18,40588,16311,0,56899,72459,64120,8339,899,6322,196,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,249
+2018,2,BA,38490,2927408,Salvador (BA),19,62582,26104,0,88686,113831,99280,14551,1477,9117,292,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,250
+2018,2,MG,41238,3106200,Belo Horizonte (MG),26,24736,43886,0,68622,96507,75684,20823,1822,5240,236,20.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,68
+2018,2,MG,41238,3106200,Belo Horizonte (MG),27,22870,45309,0,68179,95602,77158,18444,2230,6749,218,19.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,69
+2018,2,MG,41238,3106200,Belo Horizonte (MG),28,27865,46683,0,74548,108219,86407,21812,2736,9123,248,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,70
+2018,2,MG,41238,3106200,Belo Horizonte (MG),29,23991,48169,0,72160,102889,81482,21407,2196,7126,234,24.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,71
+2018,2,MG,41238,3106200,Belo Horizonte (MG),30,25851,48917,0,74768,107895,84130,23765,2263,7099,274,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,72
+2018,2,MG,41238,3106200,Belo Horizonte (MG),31,28386,56272,0,84658,118147,95413,22734,2668,8087,272,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,73
+2018,2,MG,41238,3106200,Belo Horizonte (MG),32,25765,49869,0,75634,106918,84591,22327,2151,6806,256,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,74
+2018,2,MG,41238,3106200,Belo Horizonte (MG),33,21109,44471,0,65580,95485,70867,24618,1573,3714,234,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,75
+2018,2,MG,41238,3106200,Belo Horizonte (MG),34,26211,55333,0,81544,114096,88993,25103,2055,5394,277,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,76
+2018,2,MG,41238,3106200,Belo Horizonte (MG),35,28730,47923,0,76653,111186,86135,25051,2425,7057,282,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,77
+2018,2,MG,41238,3106200,Belo Horizonte (MG),36,22478,45172,0,67650,97029,76863,20166,1997,7216,234,22.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,78
+2018,2,MG,41238,3106200,Belo Horizonte (MG),37,23077,44730,0,67807,97614,77508,20106,2213,7488,234,20.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,79
+2018,2,MG,41238,3106200,Belo Horizonte (MG),38,25463,51400,0,76863,111330,89024,22306,2699,9462,258,22.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,80
+2018,2,MG,41238,3106200,Belo Horizonte (MG),39,28923,57575,0,86498,120735,98654,22081,2731,9425,262,24.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,81
+2018,2,MG,41238,3106200,Belo Horizonte (MG),331,24997,44233,0,69230,98612,80375,18237,2528,8617,234,22.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,82
+2018,2,MG,41238,3106200,Belo Horizonte (MG),332,27022,49051,0,76073,107952,85714,22238,2342,7299,242,21.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,83
+2018,2,MG,41238,3106200,Belo Horizonte (MG),333,33475,59381,0,92856,134992,108035,26957,3189,11990,297,21.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,84
+2018,2,MG,41238,3106200,Belo Horizonte (MG),334,31938,63139,0,95077,133646,107876,25770,2958,9841,295,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,85
+2018,2,MG,41335,3106705,Betim (MG),316,41716,69338,0,111054,145879,130461,15418,3818,15589,489,50.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,86
+2018,2,MG,41335,3106705,Betim (MG),319,33310,53238,0,86548,113655,100633,13022,2695,11390,427,46.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,87
+2018,2,MG,43710,3118601,Contagem (MG),90,27305,46885,0,74190,97843,86492,11351,2392,9910,304,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,115
+2018,2,MG,43710,3118601,Contagem (MG),91,24605,47980,0,72585,93078,82313,10765,2087,7641,326,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,116
+2018,2,MG,43710,3118601,Contagem (MG),93,27457,52735,0,80192,103617,91830,11787,2212,9426,330,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,117
+2018,2,MG,43710,3118601,Contagem (MG),313,26051,54784,0,80835,105650,93835,11815,2766,10234,333,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,118
+2018,2,MG,48658,3143302,Montes Claros (MG),184,24122,35947,0,60069,86101,69426,16675,1604,7753,291,51.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,188
+2018,2,MG,48658,3143302,Montes Claros (MG),185,23099,33766,0,56865,81531,65425,16106,1359,7201,236,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,189
+2018,2,MG,48658,3143302,Montes Claros (MG),317,30921,38927,0,69848,101966,82258,19708,1794,10616,307,69.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,190
+2018,2,MG,50911,3154606,Ribeirão das Neves (MG),286,29791,41739,0,71530,105153,83707,21446,2738,9439,275,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,228
+2018,2,MG,50911,3154606,Ribeirão das Neves (MG),321,26120,40710,0,66830,97708,78155,19553,2556,8769,277,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,229
+2018,2,ES,57053,3205309,Vitória (ES),1,41608,55164,0,96772,122843,104542,18301,2807,4963,391,54.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,319
+2018,2,ES,57053,3205309,Vitória (ES),52,30456,68570,0,99026,124504,106068,18436,2912,4130,350,47.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,320
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),4,37716,45209,0,82925,125293,90635,34658,1656,6054,320,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,1
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),5,30844,49126,0,79970,128791,87191,41600,1649,5572,353,61.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,2
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),7,31563,44728,0,76291,114338,83888,30450,1549,6048,279,45.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,3
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),8,23001,36216,0,59217,89616,67073,22543,1572,6284,213,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,4
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),9,21658,63544,0,85202,118056,93228,24828,1975,6051,261,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,5
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),10,18474,39894,0,58368,88031,65690,22341,1461,5861,216,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,6
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),14,19819,42294,0,62113,93138,69615,23523,1448,6054,233,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,7
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),16,41855,40006,0,81861,125533,89803,35730,1616,6326,324,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,8
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),17,28942,47982,0,76924,120641,85012,35629,1904,6184,304,35.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,9
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),21,23381,35981,0,59362,90264,68771,21493,1929,7480,222,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,10
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),22,24123,53638,0,77761,117273,88415,28858,2249,8405,291,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,11
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),23,16056,43059,0,59115,87446,66085,21361,1351,5619,222,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,12
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),24,20420,48815,0,69235,104077,80000,24077,2251,8514,231,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,13
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),25,15912,38724,0,54636,79662,63142,16520,1817,6689,185,19.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,14
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),118,14840,29042,0,43882,66277,50393,15884,1359,5152,161,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,15
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),119,26820,70862,0,97682,139194,107153,32041,2116,7355,320,35.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,16
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),120,13631,41802,0,55433,76853,62756,14097,1359,5964,185,23.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,17
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),122,14286,41798,0,56084,78407,63354,15053,1443,5827,185,22.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,18
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),123,16351,45678,0,62029,90321,69598,20723,1538,6031,209,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,19
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),125,18813,46402,0,65215,99856,75789,24067,2191,8383,264,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,20
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),161,25868,31029,0,56897,85672,65771,19901,1839,7035,188,16.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,21
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),162,28749,54499,0,83248,128123,94857,33266,2267,9342,327,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,22
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),167,13894,33163,0,47057,71185,54058,17127,1471,5530,167,18.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,23
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),169,25273,32845,0,58118,89352,66955,22397,1890,6947,210,24.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,24
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),170,40059,54203,0,94262,138708,103804,34904,1918,7624,335,46.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,25
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),176,20238,44104,0,64342,95098,72646,22452,1579,6725,234,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,26
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),179,33293,50443,0,83736,123956,95558,28398,2652,9170,277,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,27
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),180,17686,42845,0,60531,88033,67731,20302,1563,5637,219,22.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,28
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),182,17853,45400,0,63253,90347,70898,19449,1592,6053,207,23.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,29
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),185,22035,52577,0,74612,107663,82754,24909,1618,6524,237,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,30
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),188,31741,60673,0,92414,138045,104712,33333,2425,9873,327,51.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,31
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),191,21848,48813,0,70661,105527,79329,26198,1682,6986,253,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,32
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),192,13553,31144,0,44697,64588,49251,15337,915,3639,145,15.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,33
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),204,30907,38681,0,69588,111774,78473,33301,1842,7043,289,38.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,34
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),211,32692,32888,0,65580,101373,74160,27213,1779,6801,251,24.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,35
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),214,35297,57274,0,92571,139404,103193,36211,2048,8574,337,36.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,36
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),216,19543,36941,0,56484,83674,63540,20134,1421,5635,210,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,37
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),218,20950,48063,0,69013,103804,78078,25726,1738,7327,249,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,38
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),219,21790,48008,0,69798,105957,79971,25986,2069,8104,254,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,39
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),229,32937,42579,0,75516,115929,84282,31647,1768,6998,297,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,40
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),230,11958,29131,0,41089,59535,47399,12136,1314,4996,132,15.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,41
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),233,20142,55360,0,75502,111587,85258,26329,1812,7944,281,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,42
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),234,15657,42963,0,58620,85624,66368,19256,1467,6281,194,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,43
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),238,20060,56496,0,76556,112712,87785,24927,2212,9017,258,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,44
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),241,11890,31771,0,43661,63440,50950,12490,1555,5734,137,13.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,45
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),242,11733,35433,0,47166,69504,53703,15801,1220,5317,176,24.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,46
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),243,12991,33883,0,46874,66957,54105,12852,1459,5772,150,19.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,47
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),245,18020,53889,0,71909,103461,81173,22288,1788,7476,238,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,48
+2018,2,RJ,60011,3304557,Rio de Janeiro (RJ),246,18231,49998,0,68229,97805,79234,18571,2170,8835,222,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,49
+2018,2,SP,62138,3505708,Barueri (SP),199,34979,57810,0,92789,135330,107452,27878,2915,11748,361,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,56
+2018,2,SP,62138,3505708,Barueri (SP),386,29300,51387,0,80687,116864,92847,24017,2578,9582,324,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,57
+2018,2,SP,67890,3534401,Osasco (SP),213,14904,37640,0,52544,74870,58708,16162,1467,4697,213,18.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,196
+2018,2,SP,67890,3534401,Osasco (SP),276,25213,38358,0,63571,93798,73830,19968,2004,8255,254,20.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,197
+2018,2,SP,67890,3534401,Osasco (SP),277,17677,39276,0,56953,81301,64585,16716,1734,5898,231,19.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,198
+2018,2,SP,67890,3534401,Osasco (SP),315,31898,52141,0,84039,126066,98653,27413,3160,11454,343,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,199
+2018,2,SP,67890,3534401,Osasco (SP),331,38626,43771,0,82397,121702,96503,25199,2762,11344,334,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,200
+2018,2,SP,67890,3534401,Osasco (SP),332,15285,34783,0,50068,71869,57058,14811,1568,5422,191,17.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,201
+2018,2,SP,71072,3550308,São Paulo (SP),1,47559,58075,0,105634,163871,117916,45955,2965,9317,531,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,257
+2018,2,SP,71072,3550308,São Paulo (SP),2,46067,76868,0,122935,179931,136937,42994,3553,10449,517,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,258
+2018,2,SP,71072,3550308,São Paulo (SP),3,19671,30150,0,49821,79521,56120,23401,1397,4902,229,17.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,259
+2018,2,SP,71072,3550308,São Paulo (SP),4,29158,82443,0,111601,162483,124949,37534,3082,10266,436,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,260
+2018,2,SP,71072,3550308,São Paulo (SP),5,22716,61325,0,84041,124729,93375,31354,2706,6628,338,20.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,261
+2018,2,SP,71072,3550308,São Paulo (SP),6,35719,76201,0,111920,161666,124713,36953,3348,9445,447,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,262
+2018,2,SP,71072,3550308,São Paulo (SP),20,56693,46952,0,103645,155819,123708,32111,3826,16237,425,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,263
+2018,2,SP,71072,3550308,São Paulo (SP),246,22071,59535,0,81606,117993,91543,26450,2585,7352,339,22.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,264
+2018,2,SP,71072,3550308,São Paulo (SP),247,30096,44707,0,74803,111591,88476,23115,2851,10822,333,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,265
+2018,2,SP,71072,3550308,São Paulo (SP),248,42211,62087,0,104298,157001,124529,32472,4059,16172,411,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,266
+2018,2,SP,71072,3550308,São Paulo (SP),249,20686,60327,0,81013,116623,90154,26469,2263,6878,363,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,267
+2018,2,SP,71072,3550308,São Paulo (SP),250,35214,80586,0,115800,167587,130659,36928,3501,11358,471,53.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,268
+2018,2,SP,71072,3550308,São Paulo (SP),251,30592,48876,0,79468,115598,88788,26810,2485,6835,316,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,269
+2018,2,SP,71072,3550308,São Paulo (SP),252,23352,55023,0,78375,114773,89654,25119,2402,8877,332,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,270
+2018,2,SP,71072,3550308,São Paulo (SP),253,40342,113283,0,153625,219681,174334,45347,4556,16153,679,49.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,271
+2018,2,SP,71072,3550308,São Paulo (SP),254,32009,73115,0,105124,156801,120697,36104,3352,12221,466,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,272
+2018,2,SP,71072,3550308,São Paulo (SP),255,43631,84876,0,128507,190635,149046,41589,4442,16097,534,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,273
+2018,2,SP,71072,3550308,São Paulo (SP),256,38789,80750,0,119539,176189,137910,38279,3918,14453,471,41.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,274
+2018,2,SP,71072,3550308,São Paulo (SP),257,35413,87993,0,123406,179037,140204,38833,3627,13171,507,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,275
+2018,2,SP,71072,3550308,São Paulo (SP),258,31081,99260,0,130341,187588,144734,42854,3834,10559,545,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,276
+2018,2,SP,71072,3550308,São Paulo (SP),259,30825,76106,0,106931,152386,119826,32560,3441,9454,441,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,277
+2018,2,SP,71072,3550308,São Paulo (SP),260,45445,78259,0,123704,181588,140731,40857,3496,13531,502,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,278
+2018,2,SP,71072,3550308,São Paulo (SP),280,47919,69144,0,117063,171465,136899,34566,4057,15779,474,41.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,279
+2018,2,SP,71072,3550308,São Paulo (SP),320,48777,73364,0,122141,183471,143137,40334,4646,16350,502,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,280
+2018,2,SP,71072,3550308,São Paulo (SP),325,22269,46881,0,69150,102121,79825,22296,2242,8433,296,24.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,281
+2018,2,SP,71072,3550308,São Paulo (SP),326,29869,43839,0,73708,109643,87143,22500,2645,10790,320,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,282
+2018,2,SP,71072,3550308,São Paulo (SP),327,28192,53185,0,81377,119523,94219,25304,2703,10139,340,35.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,283
+2018,2,SP,71072,3550308,São Paulo (SP),328,53274,60671,0,113945,170540,135020,35520,4174,16901,458,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,284
+2018,2,SP,71072,3550308,São Paulo (SP),346,33001,63503,0,96504,138448,108863,29585,3168,9191,362,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,285
+2018,2,SP,71072,3550308,São Paulo (SP),347,39255,80107,0,119362,174457,138825,35632,4103,15360,480,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,286
+2018,2,SP,71072,3550308,São Paulo (SP),348,19589,52885,0,72474,104474,83164,21310,2260,8430,287,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,287
+2018,2,SP,71072,3550308,São Paulo (SP),349,29400,56429,0,85829,128760,99703,29057,2984,10890,369,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,288
+2018,2,SP,71072,3550308,São Paulo (SP),350,32385,59739,0,92124,136510,107916,28594,3215,12577,376,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,289
+2018,2,SP,71072,3550308,São Paulo (SP),351,37799,49857,0,87656,133618,103621,29997,3516,12449,363,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,290
+2018,2,SP,71072,3550308,São Paulo (SP),352,61175,74737,0,135912,205387,164138,41249,5529,22697,609,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,291
+2018,2,SP,71072,3550308,São Paulo (SP),353,56717,58777,0,115494,175417,139940,35477,4870,19576,522,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,292
+2018,2,SP,71072,3550308,São Paulo (SP),371,74270,56301,0,130571,192924,155934,36990,4686,20677,530,41.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,293
+2018,2,SP,71072,3550308,São Paulo (SP),372,101722,75598,0,177320,264729,212080,52649,6652,28108,712,54.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,294
+2018,2,SP,71072,3550308,São Paulo (SP),373,44036,43165,0,87201,132224,104170,28054,3403,13566,394,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,295
+2018,2,SP,71072,3550308,São Paulo (SP),374,67973,94034,0,162007,237074,188016,49058,5712,20297,757,71.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,296
+2018,2,SP,71072,3550308,São Paulo (SP),375,77875,86995,0,164870,247252,195935,51317,6059,25006,775,58.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,297
+2018,2,SP,71072,3550308,São Paulo (SP),376,73725,85566,0,159291,241136,190854,50282,6384,25179,668,54.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,298
+2018,2,SP,71072,3550308,São Paulo (SP),381,82444,66114,0,148558,223886,180293,43593,5814,25921,639,57.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,299
+2018,2,SP,71072,3550308,São Paulo (SP),389,59772,64154,0,123926,183067,148117,34950,4530,19661,548,54.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,300
+2018,2,SP,71072,3550308,São Paulo (SP),390,28491,52408,0,80899,118705,94580,24125,2844,10837,351,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,301
+2018,2,SP,71072,3550308,São Paulo (SP),392,31442,54690,0,86132,127013,101556,25457,3244,12180,397,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,302
+2018,2,SP,71072,3550308,São Paulo (SP),397,46427,55960,0,102387,152224,123858,28366,4261,17210,410,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,303
+2018,2,SP,71072,3550308,São Paulo (SP),398,28307,39879,0,68186,101074,81426,19648,2576,10664,310,26.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,
+2018,2,SP,71072,3550308,São Paulo (SP),403,30317,40273,0,70590,103226,83931,19295,2527,10814,293,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,304
+2018,2,SP,71072,3550308,São Paulo (SP),404,68204,54117,0,122321,181976,146763,35213,4600,19842,531,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,305
+2018,2,SP,71072,3550308,São Paulo (SP),405,31399,39458,0,70857,106288,84996,21292,2737,11402,293,23.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,306
+2018,2,SP,71072,3550308,São Paulo (SP),408,49812,53112,0,102924,152704,120624,32080,3627,14073,430,35.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,307
+2018,2,SP,71072,3550308,São Paulo (SP),413,36866,63602,0,100468,145903,116268,29635,3329,12471,404,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,308
+2018,2,SP,71072,3550308,São Paulo (SP),417,31919,50509,0,82428,122596,98016,24580,3067,12521,331,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,309
+2018,2,SP,71072,3550308,São Paulo (SP),418,56004,67132,0,123136,186365,147235,39130,4969,19130,495,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,310
+2018,2,SP,71072,3550308,São Paulo (SP),420,25741,56618,0,82359,122701,95954,26747,2975,10620,361,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,311
+2018,2,SP,71072,3550308,São Paulo (SP),421,43875,52813,0,96688,143037,115314,27723,3547,15079,391,27.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,312
+2018,2,SP,71072,3550308,São Paulo (SP),422,34543,62421,0,96964,142178,113218,28960,3469,12785,395,35.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,313
+2018,2,PR,75353,4106902,Curitiba (PR),1,23488,79512,0,103000,132937,111357,21580,2821,5536,433,46.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,123
+2018,2,PR,75353,4106902,Curitiba (PR),2,24007,84062,0,108069,138306,116203,22103,2559,5575,389,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,124
+2018,2,PR,75353,4106902,Curitiba (PR),3,24702,77451,0,102153,133936,109894,24042,2509,5232,378,35.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,125
+2018,2,PR,75353,4106902,Curitiba (PR),4,23729,79313,0,103042,134218,111597,22621,2574,5981,397,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,126
+2018,2,PR,75353,4106902,Curitiba (PR),145,26365,75632,0,101997,134205,110368,23837,2542,5829,378,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,127
+2018,2,PR,75353,4106902,Curitiba (PR),174,21967,81980,0,103947,134732,111608,23124,2476,5185,414,40.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,128
+2018,2,PR,75353,4106902,Curitiba (PR),175,27721,66430,0,94151,126437,102593,23844,2578,5864,371,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,129
+2018,2,PR,75353,4106902,Curitiba (PR),176,20480,77326,0,97806,125956,105181,20775,2237,5138,382,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,130
+2018,2,PR,75353,4106902,Curitiba (PR),177,27201,79469,0,106670,141424,114612,26812,2682,5260,484,52.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,131
+2018,2,PR,75353,4106902,Curitiba (PR),178,21355,85202,0,106557,137398,114697,22701,2651,5489,392,48.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,132
+2018,2,SC,81051,4205407,Florianópolis (SC),12,29224,62837,0,92061,119611,100494,19117,2422,6011,382,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,133
+2018,2,SC,81051,4205407,Florianópolis (SC),13,35932,51846,0,87778,115702,96492,19210,2169,6545,322,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,134
+2018,2,SC,81051,4205407,Florianópolis (SC),100,26907,55269,0,82176,110199,90212,19987,2195,5841,296,41.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,135
+2018,2,RS,88013,4314902,Porto Alegre (RS),1,35568,41776,0,77344,109964,83788,26176,2362,4082,320,46.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,203
+2018,2,RS,88013,4314902,Porto Alegre (RS),2,35006,55420,0,90426,127427,98155,29272,2902,4827,350,42.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,204
+2018,2,RS,88013,4314902,Porto Alegre (RS),111,26970,50825,0,77795,109682,85071,24611,2684,4592,289,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,205
+2018,2,RS,88013,4314902,Porto Alegre (RS),112,30102,52881,0,82983,117031,91061,25970,2754,5324,309,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,206
+2018,2,RS,88013,4314902,Porto Alegre (RS),113,36474,40327,0,76801,111207,85190,26017,2882,5507,310,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,207
+2018,2,RS,88013,4314902,Porto Alegre (RS),114,35242,37665,0,72907,107872,81575,26297,2834,5834,307,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,208
+2018,2,RS,88013,4314902,Porto Alegre (RS),158,33321,43517,0,76838,110853,86300,24553,3061,6401,291,24.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,209
+2018,2,RS,88013,4314902,Porto Alegre (RS),159,36087,36263,0,72350,106187,81788,24399,3092,6346,297,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,210
+2018,2,RS,88013,4314902,Porto Alegre (RS),160,31520,42908,0,74428,104980,82313,22667,2696,5189,273,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,211
+2018,2,RS,88013,4314902,Porto Alegre (RS),161,31129,35061,0,66190,95679,75156,20523,2964,6002,265,44.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,212
+2018,2,MS,90514,5002704,Campo Grande (MS),8,26185,63943,0,90128,112341,97758,14583,2101,5529,392,48.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,109
+2018,2,MS,90514,5002704,Campo Grande (MS),35,24818,60601,0,85419,107406,93334,14072,2208,5707,377,45.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,110
+2018,2,MS,90514,5002704,Campo Grande (MS),36,17883,61846,0,79729,97948,85386,12562,1679,3978,359,45.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,111
+2018,2,MS,90514,5002704,Campo Grande (MS),44,20526,47296,0,67822,85335,74251,11084,1716,4713,307,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,112
+2018,2,MS,90514,5002704,Campo Grande (MS),53,32526,65715,0,98241,124814,107795,17019,2502,7052,417,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,113
+2018,2,MS,90514,5002704,Campo Grande (MS),54,14001,37769,0,51770,63689,56049,7640,1211,3068,236,36.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,114
+2018,2,MT,90670,5103403,Cuiabá (MT),1,20593,54966,0,75559,100810,79575,21235,1135,2881,291,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,119
+2018,2,MT,90670,5103403,Cuiabá (MT),39,27913,58482,0,86395,115402,91399,24003,1345,3659,333,47.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,120
+2018,2,MT,90670,5103403,Cuiabá (MT),51,30786,56964,0,87750,115699,93124,22575,1370,4004,317,38.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,121
+2018,2,MT,90670,5103403,Cuiabá (MT),55,30389,51665,0,82054,108616,87458,21158,1289,4115,297,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,122
+2018,2,GO,93734,5208707,Goiânia (GO),1,20478,57396,0,77874,107589,83506,24083,1534,4098,341,25.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,153
+2018,2,GO,93734,5208707,Goiânia (GO),2,19379,62042,0,81421,111413,87225,24188,1455,4349,342,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,154
+2018,2,GO,93734,5208707,Goiânia (GO),127,18742,62908,0,81650,110408,87465,22943,1519,4296,313,39.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,155
+2018,2,GO,93734,5208707,Goiânia (GO),133,18650,62965,0,81615,110468,87384,23084,1702,4067,321,45.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,156
+2018,2,GO,93734,5208707,Goiânia (GO),134,19800,60011,0,79811,110007,85734,24273,1409,4514,325,43.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,157
+2018,2,GO,93734,5208707,Goiânia (GO),135,23286,56673,0,79959,109828,87078,22750,1615,5504,305,41.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,158
+2018,2,GO,93734,5208707,Goiânia (GO),136,17797,54726,0,72523,99829,78259,21570,1432,4304,276,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,159
+2018,2,GO,93734,5208707,Goiânia (GO),146,24029,54936,0,78965,109055,85064,23991,1466,4633,303,41.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,160
+2018,2,GO,93734,5208707,Goiânia (GO),147,21570,56868,0,78438,109247,84600,24647,1476,4686,314,37.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,161
+2018,2,DF,97012,5300108,Brasília (DF),1,20239,38328,0,58567,77392,63451,13941,1822,3062,293,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,90
+2018,2,DF,97012,5300108,Brasília (DF),2,24729,50237,0,74966,105113,82439,22674,2239,5234,298,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,91
+2018,2,DF,97012,5300108,Brasília (DF),3,14268,38253,0,52521,69002,57510,11492,1443,3546,233,20.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,92
+2018,2,DF,97012,5300108,Brasília (DF),4,19394,49964,0,69358,94612,76496,18116,1977,5161,279,21.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,93
+2018,2,DF,97012,5300108,Brasília (DF),5,28355,65122,0,93477,126100,102027,24073,2501,6049,396,47.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,94
+2018,2,DF,97012,5300108,Brasília (DF),6,29761,63606,0,93367,130346,103179,27167,2629,7183,421,51.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,95
+2018,2,DF,97012,5300108,Brasília (DF),8,30155,67795,0,97950,135660,108106,27554,2940,7216,445,38.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,96
+2018,2,DF,97012,5300108,Brasília (DF),9,28357,64315,0,92672,123836,101010,22826,2561,5777,426,33.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,97
+2018,2,DF,97012,5300108,Brasília (DF),10,22499,60985,0,83484,111022,90613,20409,2188,4941,323,34.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,98
+2018,2,DF,97012,5300108,Brasília (DF),11,16635,37749,0,54384,70680,59165,11515,1807,2974,242,16.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,99
+2018,2,DF,97012,5300108,Brasília (DF),13,24258,71451,0,95709,128766,105585,23181,2832,7044,399,28.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,100
+2018,2,DF,97012,5300108,Brasília (DF),14,28778,45284,0,74062,98012,80532,17480,2390,4080,328,31.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,101
+2018,2,DF,97012,5300108,Brasília (DF),15,31559,79794,0,111353,145318,120541,24777,3207,5981,465,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,102
+2018,2,DF,97012,5300108,Brasília (DF),16,30361,73789,0,104150,145101,115840,29261,3181,8509,459,56.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,103
+2018,2,DF,97012,5300108,Brasília (DF),17,27585,63468,0,91053,124312,100033,24279,2478,6502,390,32.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,104
+2018,2,DF,97012,5300108,Brasília (DF),18,27571,56607,0,84178,115133,92288,22845,2493,5617,418,36.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,105
+2018,2,DF,97012,5300108,Brasília (DF),19,20615,55809,0,76424,99853,82472,17381,1991,4057,351,30.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,106
+2018,2,DF,97012,5300108,Brasília (DF),20,16398,39900,0,56298,75240,61920,13320,1619,4003,220,18.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,107
+2018,2,DF,97012,5300108,Brasília (DF),21,21823,57955,0,79778,110588,88189,22399,2359,6052,346,29.0,TSE votação por seção 2018/2 + detalhe munzona; pipeline/coletar_p2_zonas_2018.py,108

@@ -61,7 +61,7 @@ def validar():
     pd.DataFrame(agregados).to_csv(QA / "t24_quintos_conferidos.csv", index=False, lineterminator="\n")
     zonas = pd.read_csv(RAIZ / "dados/pbi/t20_zonas_turno.csv", dtype={"cd_ibge": str})
     origem_z = pd.read_csv(RAIZ / "dados/saida/2turno/t20_zonas_2turno_2022_2026.csv", dtype={"cd_ibge": str})
-    pd.testing.assert_frame_equal(zonas[origem_z.columns], origem_z, check_dtype=False)
+    pd.testing.assert_frame_equal(zonas[zonas.ano.isin([2022, 2026])][origem_z.columns], origem_z, check_dtype=False)
     m2 = pd.read_csv(RAIZ / "dados/saida/2turno/municipio_2turno_completo.csv", dtype={"cd_ibge": str}).set_index(["ano", "cd_ibge"])
     zc = defaultdict(lambda: Counter())
     for r in ler("dados/pbi/t20_zonas_turno.csv"):
@@ -96,6 +96,10 @@ def validar():
         assert ordem == g.sort_values("posicao").zona.tolist()
     z26.to_csv(QA / "t20_ordem_zonas_conferida.csv", index=False, lineterminator="\n")
     pesquisa = pd.read_csv(RAIZ / "dados/pbi/perfil_pesquisa_2turno.csv")
+    assert len(pesquisa) == 8
+    total = pesquisa[pesquisa.lente == "Todos"].set_index("candidato")
+    assert total.loc["Lula", "percentual"] == 47 and total.loc["Flávio", "percentual"] == 48
+    assert total.fatia.eq(1).all() and total.base_ponderada.eq(4050).all()
     assert pesquisa.groupby("categoria").fatia.nunique().eq(1).all()
     esperado = {"até 2 SM": (53, 41, 1911), "mais de 2 a 5 SM": (41, 55, 1438), "mais de 5 SM": (39, 57, 546)}
     for cat, (lu, fl, base) in esperado.items():
@@ -127,12 +131,17 @@ def validar():
         QA/"t25_idade_primeiro_turno_conferida.csv", lineterminator="\n")
     hashes = json.loads((QA / "hashes_preservados.json").read_text(encoding="utf-8"))
     alterados = [p for p, h in hashes.items() if hashlib.sha256((RAIZ/p).read_bytes()).hexdigest() != h]
-    assert not [p for p in alterados if p.startswith("dados")], alterados
+    # A main integrou outras telas entre as fases; proteger os insumos deste P2,
+    # não congelar arquivos de campanha pertencentes a outras frentes.
+    insumos_p2 = {"municipio_2turno.csv", "municipio_ano.csv", "municipio_social.csv", "municipio.csv",
+                  "t20_locais.csv", "t20_cidades.csv", "comparecimento_ano.csv", "abstencao_faixa_municipio.csv"}
+    assert not [p for p in alterados if Path(p).name in insumos_p2], alterados
     resumo = dict(status="APROVADO", comparacoes_quintos=len(agregados), zonas_por_ano=zonas.ano.value_counts().to_dict(),
                   nacional_2026_segundo={**{k:int(nac[k]) for k in campos}, "diferenca":dif,
                                         "taxa_pct":100*nac.abstencoes/nac.aptos, "vezes":nac.abstencoes/dif,
                                         "nao_escolheram":int(nac.abstencoes+nac.brancos+nac.nulos)},
-                  cache_2018_turnos=dict(turnos2018), arquivos_preexistentes_alterados=alterados)
+                  cache_2018_turnos=dict(turnos2018), insumos_p2_preexistentes_alterados=[],
+                  outros_arquivos_alterados_desde_fase1=alterados)
     (QA / "conferencia_independente.json").write_text(json.dumps(resumo, ensure_ascii=False, indent=2)+"\n", encoding="utf-8")
     print(json.dumps(resumo, ensure_ascii=False, indent=2))
 
