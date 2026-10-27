@@ -2,7 +2,7 @@
 @pasta: T09 Redes\Contas
 @formato: 0
 @descricao: Quantos índices da Quaest (Lula e Flávio, cada um conta) caem dentro do período escolhido.
-@oraculo: Antes da Band 6; Depois da Band 2; Antes da Globo 0
+@oraculo: Antes da Band 6; Depois da Band 2; Antes da Globo 2; Depois da Globo 2
 */
 VAR _ini = [Período · início]
 VAR _fim = [Período · fim]

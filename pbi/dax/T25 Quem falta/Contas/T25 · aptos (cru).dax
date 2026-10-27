@@ -3,8 +3,11 @@
 @formato: #,0
 @descricao: Eleitores aptos no contexto, sem fixar o ano: com faixa marcada, o perfil por idade; sem faixa, 'Município ano' nos recortes de municípios e o total oficial ('Comparecimento ano', com o exterior) no Brasil.
 */
-IF (
-    [T25 · com faixa] = 1,
-    [T25 · aptos por idade (cru)],
-    IF ( [T25 · sem exterior] = 1, SUM ( 'Município ano'[Aptos] ), SUM ( 'Comparecimento ano'[Aptos] ) )
+IF ( [Eleição · pós] = 1,
+    IF ( [T25 · sem exterior] = 1,
+        CALCULATE ( SUM ( 'Município segundo turno'[Aptos] ), 'Município segundo turno'[Ano] = MAX ( 'Ano'[Ano] ) ),
+        CALCULATE ( SUM ( 'Comparecimento turno'[Aptos] ), 'Comparecimento turno'[Turno] = 2,
+            'Comparecimento turno'[Abrangência] = "com_exterior", 'Comparecimento turno'[Ano] = MAX ( 'Ano'[Ano] ) ) ),
+    IF ( [T25 · com faixa] = 1, [T25 · aptos por idade (cru)],
+        IF ( [T25 · sem exterior] = 1, SUM ( 'Município ano'[Aptos] ), SUM ( 'Comparecimento ano'[Aptos] ) ) )
 )

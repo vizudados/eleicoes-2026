@@ -24,6 +24,7 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
 import estilo  # noqa: E402
+from momento_eleicao import segundo  # noqa: E402
 
 PBI = AQUI.parent
 DAX = PBI / "dax" / "T21 20 anos" / "Desenho"
@@ -86,6 +87,11 @@ def ufs() -> list:
 
 # ---------------------------------------------------------------------------------------------------- DAX
 def gravar(nome: str, descricao: str, expressao: str) -> None:
+    if nome == "T21 · Fundo · HTML":
+        expressao = expressao.replace("</span> municípios com o PT à frente, de 2006 a 2026",
+            '</span> municípios com o PT à frente" & IF ( [Eleição · pós] = 1, " no 2º turno", ", de 2006 a 2026" ) & "')
+    elif nome.endswith(" · ALT"):
+        expressao += '\n    & IF ( [Eleição · pós] = 1, " Segundo turno.", "" )'
     destino = DAX / f"{nome}.dax"
     destino.parent.mkdir(parents=True, exist_ok=True)
     texto = f"/*\n@pasta: {PASTA}\n@formato: texto\n@descricao: {descricao}\n*/\n" + expressao.strip("\n") + "\n"
@@ -95,7 +101,57 @@ def gravar(nome: str, descricao: str, expressao: str) -> None:
         destino.write_text(texto, encoding="utf-8")
 
 
+def contas_turno() -> None:
+    anteriores = {
+        "T21 · margem": """DIVIDE (
+    SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ),
+    SUM ( 'Município ano'[Validos] )
+)""",
+        "T21 · margem nacional": """VAR _pt =
+    CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Partido] = "PT" )
+VAR _adv =
+    MAXX (
+        FILTER (
+            VALUES ( 'Candidato ano'[Candidato] ),
+            CALCULATE ( MAX ( 'Candidato ano'[Partido] ) ) <> "PT"
+        ),
+        CALCULATE ( SUM ( 'Candidato ano'[Votos] ) )
+    )
+VAR _val =
+    CALCULATE ( MAX ( 'Candidato ano'[ValidosAno] ) )
+RETURN
+    DIVIDE ( _pt - _adv, _val )""",
+        "T21 · municípios com o PT à frente": """CALCULATE (
+    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T21 · margem] > 0 ) ),
+    REMOVEFILTERS ( 'Município' )
+)""",
+    }
+    posteriores = {
+        "T21 · margem": """DIVIDE (
+    SUM ( 'Município segundo turno'[VotosPT] ) - SUM ( 'Município segundo turno'[VotosAdversario] ),
+    SUM ( 'Município segundo turno'[Validos] ) )""",
+        "T21 · margem nacional": """CALCULATE (
+    DIVIDE ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ),
+        SUM ( 'PT histórico Brasil'[Validos] ) ),
+    'PT histórico Brasil'[Turno] = 2,
+    TREATAS ( VALUES ( 'Ano'[Ano] ), 'PT histórico Brasil'[Ano] ) )""",
+        "T21 · municípios com o PT à frente": """CALCULATE (
+    COUNTROWS ( FILTER ( VALUES ( 'Município'[CodIBGE] ), [T21 · margem] > 0 ) ),
+    REMOVEFILTERS ( 'Município' ), KEEPFILTERS ( VALUES ( 'UF'[UF] ) ) )""",
+    }
+    for nome, pos in posteriores.items():
+        estilo.gravar_medida(nome, r"T21 20 anos\Contas",
+            "Conta no turno escolhido: Pré = primeiro turno; Pós = segundo turno. Mantém as seis eleições.",
+            segundo(anteriores[nome], pos), "#,0" if "municípios" in nome else "0.0%",
+            subpasta="T21 20 anos/Contas")
+
+
 def medidas() -> None:
+    contas_turno()
+    gravar("T21 · Dossiê · HTML", "Dossiê municipal compartilhado com o Explorador, no turno escolhido.",
+           "[T19 · Dossiê · HTML]")
+    gravar("T21 · Dossiê · ALT", "Descrição acessível do dossiê municipal no turno escolhido.",
+           "[T19 · Dossiê · ALT]")
     for eixo in ['X','Y']:
         estilo.gravar_medida(f'T21 · mapa · {eixo.lower()} inteiro',r'T21 20 anos\Contas',
             'Coordenada de desenho em centésimos; recupera exatamente as duas casas do CSV; ausência preservada.',

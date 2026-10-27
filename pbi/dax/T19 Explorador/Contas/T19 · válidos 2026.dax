@@ -1,7 +1,6 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: #,0
-@descricao: Votos válidos no 1º turno de 2026 no contexto (ordena a lista e dá o tamanho do ponto na dispersão).
-@oraculo: mockup/data/eleicoes.json › Explorador › validos26
+@descricao: Conta no turno escolhido: Pré = primeiro turno; Pós = segundo turno. Preserva o grão e os filtros.
 */
-CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2026 )
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'Município segundo turno'[Validos] ), 'Município segundo turno'[Ano] = 2026 ), CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2026 ) )

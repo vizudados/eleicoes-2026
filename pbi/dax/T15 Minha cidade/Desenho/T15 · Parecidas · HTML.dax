@@ -27,13 +27,19 @@ VAR _grupo =
     "cidades de " & _porte & IF ( RIGHT ( _porte, 3 ) = "mil", " habitantes", " de habitantes" ) & " e renda "
         & SWITCH ( _quinto, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres", "no " & _quinto )
 VAR _txtPos =
-    IF ( _n = 1, "a única do grupo", FORMAT ( _pos, "0" ) & "ª maior queda de " & FORMAT ( _n, "#,0" ) )
+    SWITCH ( TRUE (),
+        _n = 1, "a única do grupo",
+        ISBLANK ( _var ), "Sem eleição anterior para comparar",
+        _var = 0, "Margem estável no período",
+        FORMAT ( _pos, "0" ) & IF ( _var > 0, "ª maior alta de ", "ª maior queda de " ) & FORMAT ( _n, "#,0" ) )
 VAR _txtComp =
     IF (
         _n = 1,
         _nome & " é a única entre as " & _grupo & ": não há com quem comparar.",
-        _grupo & "; o grupo " & IF ( _vg < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _vg ) * 100, "0.0" ) & " p.p., "
-            & _nome & IF ( _var < 0, " caiu ", " subiu " ) & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p."
+        _grupo & "; o grupo " & IF ( _vg = 0, "ficou estável", IF ( _vg < 0, "caiu ", "subiu " )
+            & FORMAT ( ABS ( _vg ) * 100, "0.0" ) & " p.p." ) & ", " & _nome
+            & IF ( _var = 0, " ficou estável", IF ( _var < 0, " caiu ", " subiu " )
+                & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p." )
     )
 -- 3 · Geometria (histograma de 20 faixas em 1000 px; altura até 104 px, base em y 280)
 VAR _faixas =

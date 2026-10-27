@@ -1,6 +1,17 @@
-{"titulo": "Seis eleições no mesmo mapa",
- "blocos": [
-  ["Como ler", "Cada ponto é um município, na cor de quem ficou à frente naquele ano: vermelho para o PT, azul para o adversário mais votado; quanto mais forte, maior a vantagem. Aperte o play ou clique num ano (a coluna ou o ponto da régua): o mapa e os números à esquerda andam juntos. Passe o mouse num município para ver as seis eleições dele."],
-  ["De onde vêm os números", "Votos do 1º turno de 2006 a 2026, por município, do TSE. O adversário é o mais votado fora do PT em cada ano: Alckmin, Serra, Aécio, Jair Bolsonaro duas vezes e Flávio Bolsonaro. A margem nacional inclui o exterior, como o TSE totaliza."],
-  ["Para lembrar", "Margem é a diferença entre o PT e o adversário, em pontos dos votos válidos. Municípios criados depois de 2006 aparecem sem cor nos anos em que não existiam."]
- ]}
+{
+  "titulo": "Seis eleições no mesmo mapa",
+  "blocos": [
+    [
+      "Como ler",
+      "Pré Eleições 2026 mostra os seis primeiros turnos; Pós Eleições 2026 mostra os seis segundos turnos, de 2006 a 2026. Cada ponto é uma cidade: vermelho indica PT à frente, azul o adversário, e a intensidade mostra a margem. Aperte o play ou clique num ano: mapa, barras e contadores andam juntos; o dossiê acompanha o turno escolhido."
+    ],
+    [
+      "De onde vêm os números",
+      "Resultados do TSE por município, de 2006 a 2026, no mesmo turno em todos os anos da tela. A margem do país inclui o exterior; os pontos e as contagens de municípios não incluem o exterior. O adversário muda por eleição: Alckmin, Serra, Aécio, Jair Bolsonaro duas vezes e Flávio Bolsonaro."
+    ],
+    [
+      "Para lembrar",
+      "Margem é a diferença entre o PT e o adversário, em pontos dos votos válidos. Município criado depois de 2006 fica sem cor nos anos em que ainda não existia. Empate não é contado como PT nem como adversário à frente."
+    ]
+  ]
+}

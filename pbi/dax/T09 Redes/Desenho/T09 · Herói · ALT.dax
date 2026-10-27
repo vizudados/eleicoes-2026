@@ -1,23 +1,9 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do número da tela das redes (≤ 250 caracteres); com período, o da janela de interações da Bites que cabe nele, ou 'sem dado no período'.
+@descricao: Descrição acessível do herói com a janela e a régua explícitas.
 */
-VAR _per = [Período · escolhido]
-VAR _pL = [T09 · período · interações · Lula]
-VAR _pF = [T09 · período · interações · Flávio]
-VAR _p24 = CONTAINSSTRING ( [T09 · período · interações · métrica], "24h" )
-RETURN
-    IF (
-        ISBLANK ( _per ),
-        "No 2º turno, Lula teve " & FORMAT ( [T09 · interações · razão no 2º turno], "0.0" ) & " vezes as interações de Flávio nos perfis oficiais ("
-            & FORMAT ( [T09 · interações · 2º turno · Lula] / 1000000, "0.0" ) & " mi contra " & FORMAT ( [T09 · interações · 2º turno · Flávio] / 1000000, "0.0" )
-            & " mi, Bites). Na campanha do 1º turno, Flávio ganhou mais seguidores.",
-        [Período · rótulo] & ": "
-            & IF (
-                ISBLANK ( _pL ) || ISBLANK ( _pF ),
-                IF ( _per = 4, "os números das redes não constam do levantamento.", "sem dado no período para as interações dos dois." ),
-                "Lula " & FORMAT ( _pL / 1000000, "0.0" ) & " mi e Flávio " & FORMAT ( _pF / 1000000, "0.0" )
-                    & " mi de interações nos perfis oficiais (Bites" & IF ( _p24, ", 24 h após o debate", "" ) & ")."
-            )
-    )
+[T09 · herói · manchete]
+    & IF ( NOT ISBLANK ( [T09 · herói · vezes] ), ". Razão entre os dois: " & FORMAT ( [T09 · herói · vezes], "0.0" )
+        & " vezes. Bites; " & IF ( ISBLANK ( [Período · escolhido] ), "19–24/10, último dia parcial.", "janela inteira no período." ),
+        ". Distância: " & FORMAT ( [T09 · herói · diferença IPD], "0.0" ) & " pontos em " & FORMAT ( [T09 · período · IPD · dia], "dd/MM" ) & "." )

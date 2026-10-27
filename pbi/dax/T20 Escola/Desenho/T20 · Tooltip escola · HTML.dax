@@ -46,8 +46,9 @@ RETURN
             & "<div class='sub'>" & _sub & "</div>"
             & "<div class='duelo'><span class='lula'>Lula " & FORMAT ( _lula, "0.0%" ) & "</span>"
             & "<span class='flavio'>Flávio " & FORMAT ( _flavio, "0.0%" ) & "</span></div>"
-            & "<div class='rot'>Margem do PT · 2018 → 2022 → 2026</div>"
-            & "<div class='serie tnum'>" & _t18 & " <i>→</i> " & _t22 & " <i>→</i> " & _t26 & " p.p.</div>"
+            & "<div class='rot'>Margem do PT · " & [T20 · turno] & " · 2018 → 2022 → 2026</div>"
+            & "<div class='serie tnum'>" & _t18 & " <i>→</i> " & _t22 & " <i>→</i> " & _t26 & " p.p."
+            & IF ( ISBLANK ( _m18 ), " <small style='font-size:13px'>2018: sem dado neste turno</small>" ) & "</div>"
             & _selo
             & "<div class='mao'>" & _nota & "</div>"
         & "</div>"

@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Existe perfil do primeiro turno para o ano da peça etária.
+*/
+INT ( [T25 · idade ano] >= 2014 )

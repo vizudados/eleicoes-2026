@@ -10,6 +10,6 @@ RETURN "<div class='tela tt18'><div class='fita'></div><div class='rot'>" & UPPE
     & FORMAT ( [Apuração · Lula votos], "#,0" ) & "</span><span class='rot'>LULA</span></div>"
     & "<div class='linha'><span class='flavio num'>" & FORMAT ( [Apuração · Flávio votos], "#,0" )
     & "</span><span class='rot'>FLÁVIO</span></div><div class='txt'>No 1º turno: Lula "
-    & FORMAT ( [T12 · Lula % 2026], "0.0%" ) & " × Flávio " & FORMAT ( [T12 · PL % 2026], "0.0%" )
+    & FORMAT ( CALCULATE ( [T12 · Lula % 2026], 'Momento eleição'[Momento] = "Pré Eleições 2026" ), "0.0%" ) & " × Flávio " & FORMAT ( CALCULATE ( [T12 · PL % 2026], 'Momento eleição'[Momento] = "Pré Eleições 2026" ), "0.0%" )
     & ".</div><div class='nota'>Abstenção no 2º turno: " & FORMAT ( [Apuração · abstenção %], "0.00%" )
     & ". Diferença: " & FORMAT ( [Apuração · diferença], "#,0" ) & " votos.</div></div>"

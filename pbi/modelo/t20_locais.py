@@ -141,3 +141,18 @@ TABELAS = [
              "primeiro) e as escolas em ordem alfabética dentro da cidade.", oculta=True, formato="0")],
         _m_filtro(), renomeada=True),
 ]
+
+# Desconectada, como as demais tabelas T20. As contas aplicam ano e a chave da zona.
+TABELAS.append(tabela_csv(
+    "T20 Zona turno", "Segundo turno observado nas 34 cidades: 319 zonas em 2018 e 2022 e 320 em 2026. "
+    "2018 foi extraído do ZIP presidencial BR; zona ausente num ano permanece vazia. Posição cartográfica é a referência "
+    "dos locais de 2026/1º turno, sem inferir endereço ou local de votação do 2º turno.",
+    "dados/pbi/t20_zonas_turno.csv",
+    [col("id", "IdLocal", tipo="int", oculta=True, formato="0"),
+     col("cd_ibge", "CodIBGE", oculta=True), col("zona", "Zona", tipo="int", oculta=True, formato="0"),
+     col("ano", "Ano", tipo="int", oculta=True, formato="0"),
+     col("turno", "Turno", tipo="int", oculta=True, formato="0"),
+     *[col(origem, nome, tipo="int", oculta=True) for origem, nome in
+       [("pt", "VotosPT"), ("adv", "VotosAdv"), ("validos", "Validos"), ("secoes", "Seções"),
+        ("locais", "Locais"), ("aptos", "Aptos"), ("comparecimento", "Comparecimento"),
+        ("abstencoes", "Abstencoes"), ("brancos", "Brancos"), ("nulos", "Nulos")]]], oculta=True))

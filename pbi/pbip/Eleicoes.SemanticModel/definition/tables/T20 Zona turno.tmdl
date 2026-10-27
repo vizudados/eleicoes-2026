@@ -1,0 +1,181 @@
+/// Segundo turno observado nas 34 cidades: 319 zonas em 2018 e 2022 e 320 em 2026. 2018 foi extraído do ZIP presidencial BR; zona ausente num ano permanece vazia. Posição cartográfica é a referência dos locais de 2026/1º turno, sem inferir endereço ou local de votação do 2º turno.
+table 'T20 Zona turno'
+	isHidden
+	lineageTag: a901f7ed-156e-557c-9bf4-d0b839d3be84
+
+	/// IdLocal
+	column IdLocal
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 626637a8-376e-5bb4-8e9f-54324b0cdfb2
+		summarizeBy: none
+		sourceColumn: IdLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	/// CodIBGE
+	column CodIBGE
+		dataType: string
+		isHidden
+		lineageTag: 0b069756-c68f-5136-87b0-3bdc3dd80102
+		summarizeBy: none
+		sourceColumn: CodIBGE
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Zona
+	column Zona
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 5c8373fe-c3df-547b-b7eb-a2d3d60c004a
+		summarizeBy: none
+		sourceColumn: Zona
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ano
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7859497d-92f5-5ced-8531-263754f77ac3
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Turno
+	column Turno
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: cf298ad6-d013-5117-8a4a-895439b89140
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// VotosPT
+	column VotosPT
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 3921d2ac-4b8f-5ea5-9f46-a85d742af8c4
+		summarizeBy: none
+		sourceColumn: VotosPT
+
+		annotation SummarizationSetBy = Automatic
+
+	/// VotosAdv
+	column VotosAdv
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 3eb1d624-2043-5a69-a68b-a636507b1ad1
+		summarizeBy: none
+		sourceColumn: VotosAdv
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Validos
+	column Validos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 3303df59-417d-5045-94be-6adc78a675bd
+		summarizeBy: none
+		sourceColumn: Validos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Seções
+	column 'Seções'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 1e178dbe-08f7-5bc2-af63-767b08dc30f3
+		summarizeBy: none
+		sourceColumn: Seções
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Locais
+	column Locais
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4fd5a6fe-2a59-50a0-a553-6f0af9d30e04
+		summarizeBy: none
+		sourceColumn: Locais
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Aptos
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 91b55e8f-ce52-5686-ad1d-12ae04d21766
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Comparecimento
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 9f13c12e-6b07-533e-b2e2-4313d06845ed
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Abstencoes
+	column Abstencoes
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 2d76eed6-3ec3-5074-b8da-80b696d4eb0f
+		summarizeBy: none
+		sourceColumn: Abstencoes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Brancos
+	column Brancos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: c2c40ed0-1675-5374-8fda-523c974b35fa
+		summarizeBy: none
+		sourceColumn: Brancos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nulos
+	column Nulos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: dbe8d088-f8cf-51f1-956e-8e3f3d9657df
+		summarizeBy: none
+		sourceColumn: Nulos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T20 Zona turno' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/t20_zonas_turno.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"id", "cd_ibge", "zona", "ano", "turno", "pt", "adv", "validos", "secoes", "locais", "aptos", "comparecimento", "abstencoes", "brancos", "nulos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"id", Int64.Type}, {"cd_ibge", type text}, {"zona", Int64.Type}, {"ano", Int64.Type}, {"turno", Int64.Type}, {"pt", Int64.Type}, {"adv", Int64.Type}, {"validos", Int64.Type}, {"secoes", Int64.Type}, {"locais", Int64.Type}, {"aptos", Int64.Type}, {"comparecimento", Int64.Type}, {"abstencoes", Int64.Type}, {"brancos", Int64.Type}, {"nulos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"id", "IdLocal"}, {"cd_ibge", "CodIBGE"}, {"zona", "Zona"}, {"ano", "Ano"}, {"turno", "Turno"}, {"pt", "VotosPT"}, {"adv", "VotosAdv"}, {"validos", "Validos"}, {"secoes", "Seções"}, {"locais", "Locais"}, {"aptos", "Aptos"}, {"comparecimento", "Comparecimento"}, {"abstencoes", "Abstencoes"}, {"brancos", "Brancos"}, {"nulos", "Nulos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

@@ -34,6 +34,10 @@ relationship c79d3ee8-dc64-5c0f-beeb-3c945bd73fba
 	fromColumn: 'Abstenção perfil'.Ano
 	toColumn: Ano.Ano
 
+relationship aa85aff1-5d85-5cce-94f9-d9a76c847284
+	fromColumn: 'Comparecimento turno'.Ano
+	toColumn: Ano.Ano
+
 relationship 9a44cd5c-10f9-5635-8593-a0f9537b4765
 	fromColumn: 'Trends UF'.UF
 	toColumn: UF.UF

@@ -81,11 +81,74 @@ def _media() -> str:
 
 
 # ---------------------------------------------------------------------------------------------------- contas
-def contas() -> None:
+
+def contas_extremo_serie() -> None:
+    """Extremo recente calculado no recorte; nunca decidido por texto arredondado."""
     c = G.conta
+    serie = """VAR _serie =
+        ADDCOLUMNS (
+            CALCULATETABLE ( VALUES ( 'Ano'[Ano] ), REMOVEFILTERS ( 'Ano' ) ),
+            "@p", VAR _a = 'Ano'[Ano]
+                RETURN CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = _a )
+        )
+    VAR _atual = CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = 2026 )
+    VAR _anteriores = FILTER ( _serie, 'Ano'[Ano] < 2026 && NOT ISBLANK ( [@p] ) )"""
+    for tipo, operador in (("menor", "<="), ("maior", ">=")):
+        c(f"T25 · série · marco da {tipo}",
+          "Último ano anterior com taxa menor/igual ou maior/igual à de 2026; vazio se extremo de toda a série.",
+          serie + f"""
+    RETURN MAXX ( FILTER ( _anteriores, [@p] {operador} _atual ), 'Ano'[Ano] )""", "0")
+    c("T25 · série · tipo de manchete", "Variação de pelo menos um ponto: tendência; abaixo disso, extremo recente com o maior intervalo.",
+      serie + """
+    VAR _delta = [T25 · variação da série em p.p.]
+    VAR _aMin = [T25 · série · marco da menor]
+    VAR _aMax = [T25 · série · marco da maior]
+    VAR _nMin = COUNTROWS ( FILTER ( _anteriores, ISBLANK ( _aMin ) || 'Ano'[Ano] > _aMin ) )
+    VAR _nMax = COUNTROWS ( FILTER ( _anteriores, ISBLANK ( _aMax ) || 'Ano'[Ano] > _aMax ) )
+    RETURN SWITCH ( TRUE (),
+        ISBLANK ( _delta ), "sem série",
+        ROUND ( ABS ( _delta ), 10 ) >= 1, "tendência",
+        _nMin > 0 && _nMin >= _nMax, "menor",
+        _nMax > 0, "maior",
+        "estável"
+    )""", "texto")
+    c("T25 · série · marco do extremo", "Ano usado na manchete do extremo recente; vazio significa toda a série.",
+      """SWITCH ( [T25 · série · tipo de manchete],
+          "menor", [T25 · série · marco da menor],
+          "maior", [T25 · série · marco da maior] )""", "0")
+
+def contas() -> None:
+    contas_extremo_serie()
+    c = G.conta
+    c("T25 · turno", "Turno escolhido na casca.",
+      'IF ( [Eleição · pós] = 1, "2º turno", "1º turno" )', "texto")
+    c("T25 · idade ano", "Pós: idade de 2026/1º turno; Pré: ano escolhido.",
+      "IF ( [Eleição · pós] = 1, 2026, [T25 · ano] )", "0")
+    c("T25 · idade disponível", "Existe perfil do primeiro turno para o ano da peça etária.",
+      "INT ( [T25 · idade ano] >= 2014 )", "0")
+    for nome in ("aptos", "abstenções"):
+        c(f"T25 · idade {nome}", "Perfil etário do primeiro turno, no lugar e faixa; nunca usa o segundo turno.", dax(f"""
+            VAR _a = [T25 · idade ano]
+            RETURN CALCULATE ( [T25 · {nome} por idade (cru)], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = _a )
+            """), "#,0")
+    c("T25 · idade abstenção %", "Taxa da faixa no primeiro turno, no ano da peça etária.",
+      "DIVIDE ( [T25 · idade abstenções], [T25 · idade aptos] )", "0.0%")
+    c("T25 · idade todas as idades", "Referência oficial de todas as idades no mesmo primeiro turno; mantém a abrangência original.", dax(f"""
+        VAR _a = [T25 · idade ano]
+        RETURN CALCULATE (
+            DIVIDE (
+                IF ( [T25 · sem exterior] = 1, SUM ( {MA}[Abstencoes] ), SUM ( {CA}[Abstencoes] ) ),
+                IF ( [T25 · sem exterior] = 1, SUM ( {MA}[Aptos] ), SUM ( {CA}[Aptos] ) )
+            ),
+            REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = _a
+        )
+        """), "0.0%")
+    for ano in ANOS:
+        c(f"T25 · idade abstenção % em {ano}", "Série por idade exclusivamente no primeiro turno.",
+          f"CALCULATE ( DIVIDE ( [T25 · abstenções por idade (cru)], [T25 · aptos por idade (cru)] ), 'Ano'[Ano] = {ano} )", "0.0%")
     # estado do que está marcado
     c("T25 · com faixa", "1 quando há faixa de idade marcada (clique no bloco de idade) ou na linha/dica de uma faixa.",
-      f"INT ( ISFILTERED ( {FA} ) )", "0")
+      f"INT ( [Eleição · pós] = 0 && ISFILTERED ( {FA} ) )", "0")
     c("T25 · com município", "1 quando há município marcado no mapa (ou na linha/dica de um município).",
       f"INT ( ISFILTERED ( {MU} ) )", "0")
     c("T25 · com ano", "1 quando há ano marcado no bloco de anos (ou na linha/dica de um ano).",
@@ -96,7 +159,7 @@ def contas() -> None:
     c("T25 · ano", "Ano do recorte: o marcado no bloco de anos (o mais recente, se forem vários) ou 2026; na linha de um "
       "ano, o próprio.", "MAX ( 'Ano'[Ano] )", "0")
     c("T25 · tem idade no ano", "1 quando o ano do recorte tem perfil por idade (o TSE publica desde 2014).",
-      "IF ( [T25 · ano] >= 2014, 1, 0 )", "0")
+      "INT ( [Eleição · pós] = 0 && [T25 · ano] >= 2014 )", "0")
     c("T25 · faixas marcadas", "Quantas faixas de idade estão marcadas (0 sem faixa).",
       f"IF ( [T25 · com faixa] = 1, COUNTROWS ( VALUES ( {FA}[Faixa] ) ), 0 )", "0")
     c("T25 · faixa", "A faixa marcada (ex.: 18 a 24 anos), ou \"N faixas de idade\"; vazio sem faixa.", dax(f"""
@@ -143,10 +206,13 @@ def contas() -> None:
         c(f"T25 · {nome} (cru)", f"{desc} no contexto, sem fixar o ano: com faixa marcada, o perfil por idade; sem "
           "faixa, 'Município ano' nos recortes de municípios e o total oficial ('Comparecimento ano', com o exterior) "
           "no Brasil.", dax(f"""
-            IF (
-                [T25 · com faixa] = 1,
-                [T25 · {nome} por idade (cru)],
-                IF ( [T25 · sem exterior] = 1, SUM ( {MA}[{col_}] ), SUM ( {CA}[{col_}] ) )
+            IF ( [Eleição · pós] = 1,
+                IF ( [T25 · sem exterior] = 1,
+                    CALCULATE ( SUM ( 'Município segundo turno'[{col_}] ), 'Município segundo turno'[Ano] = MAX ( 'Ano'[Ano] ) ),
+                    CALCULATE ( SUM ( 'Comparecimento turno'[{col_}] ), 'Comparecimento turno'[Turno] = 2,
+                        'Comparecimento turno'[Abrangência] = "com_exterior", 'Comparecimento turno'[Ano] = MAX ( 'Ano'[Ano] ) ) ),
+                IF ( [T25 · com faixa] = 1, [T25 · {nome} por idade (cru)],
+                    IF ( [T25 · sem exterior] = 1, SUM ( {MA}[{col_}] ), SUM ( {CA}[{col_}] ) ) )
             )
             """), "#,0")
         c(f"T25 · {nome}", f"{desc} no ano do recorte (o marcado ou 2026), no lugar e na faixa do contexto."
@@ -247,7 +313,7 @@ def contas() -> None:
             CALCULATETABLE ( VALUES ( {FA}[Ordem] ), REMOVEFILTERS ( {FA} ) ),
             VAR _k = {FA}[Ordem]
             RETURN
-                CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( {FA} ), {FA}[Ordem] = _k )
+                CALCULATE ( [T25 · idade abstenção %], REMOVEFILTERS ( {FA} ), {FA}[Ordem] = _k )
         )
         """), "0.0%")
     ranking = f"""VAR _faixas =
@@ -256,7 +322,7 @@ def contas() -> None:
                 "@p",
                     VAR _f = {FA}[Faixa]
                     RETURN
-                        CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( {FA} ), {FA}[Faixa] = _f )
+                        CALCULATE ( [T25 · idade abstenção %], REMOVEFILTERS ( {FA} ), {FA}[Faixa] = _f )
             )
         VAR _comDado = FILTER ( _faixas, NOT ISBLANK ( [@p] ) )""".replace(chr(10), chr(10) + "    ")
     for qual, ordem, fn, orac in (("mais", "DESC", "MAXX", "Brasil 2026 = 70 anos ou mais, 49,2%"),
@@ -328,7 +394,7 @@ def contas() -> None:
     for qual, base in (("que faltaram", "abstenções"), ("aptos", "aptos")):
         c(f"T25 · parte dos {qual} (faixa)", f"Parcela dos {'faltosos' if qual == 'que faltaram' else 'aptos'} do lugar, "
           "no ano do recorte, que está na faixa da linha (0–1).", dax(f"""
-            VAR _ano = [T25 · ano]
+            VAR _ano = [T25 · idade ano]
             RETURN
                 DIVIDE (
                     CALCULATE ( [T25 · {base} por idade (cru)], 'Ano'[Ano] = _ano ),
@@ -336,7 +402,7 @@ def contas() -> None:
                 )
             """), "0%")
     c("T25 · vezes a média (faixa)", "Abstenção da faixa da linha dividida pela de todas as idades, no lugar e no ano.",
-      "DIVIDE ( [T25 · abstenção %], [T25 · abstenção % todas as idades] )", "0.0")
+      "DIVIDE ( [T25 · idade abstenção %], [T25 · idade todas as idades] )", "0.0")
     # dica do ano: quem disputou (os dois mais votados no Brasil, o primeiro antes)
     c("T25 · disputa do ano", "Os dois mais votados no 1º turno do ano da linha (Brasil, resultado oficial), o primeiro "
       "antes, com o partido.", dax("""
@@ -344,8 +410,13 @@ def contas() -> None:
         VAR _1p = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Partido] ), 'Candidato ano'[Posição] = 1 )
         VAR _2 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 2 )
         VAR _2p = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Partido] ), 'Candidato ano'[Posição] = 2 )
-        RETURN
+        VAR _a = [T25 · ano]
+        VAR _pt = CALCULATE ( SELECTEDVALUE ( 'PT histórico Brasil'[Candidato PT] ), 'PT histórico Brasil'[Ano] = _a, 'PT histórico Brasil'[Turno] = 2 )
+        VAR _adv = CALCULATE ( SELECTEDVALUE ( 'PT histórico Brasil'[Adversário] ), 'PT histórico Brasil'[Ano] = _a, 'PT histórico Brasil'[Turno] = 2 )
+        VAR _saldo = CALCULATE ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ), 'PT histórico Brasil'[Ano] = _a, 'PT histórico Brasil'[Turno] = 2 )
+        RETURN IF ( [Eleição · pós] = 1, IF ( _saldo >= 0, _pt & " e " & _adv, _adv & " e " & _pt ),
             IF ( NOT ISBLANK ( _1 ), _1 & " (" & _1p & ") e " & _2 & " (" & _2p & ")" )
+        )
         """), "texto")
 
 
@@ -383,7 +454,7 @@ def desenho() -> None:
         -- 2 · Textos
         VAR _semDado = ISBLANK ( _pct )
         VAR _semIdade = _comFaixa = 1 && _temIdade = 0
-        VAR _txtPct = IF ( _semDado, "<span class='vz'>sem dado</span>", @PCT(_pct)@ )
+        VAR _txtPct = IF ( _semDado, "<span class='vz'>sem dado</span>", FORMAT ( _pct, "0.00%" ) )
         VAR _media = {_media()}
         VAR _quantos =
             IF ( _pct >= 0.35, FORMAT ( _dez, "0" ) & " em cada 10", "1 em cada " & FORMAT ( _um, "0" ) )
@@ -426,14 +497,14 @@ def desenho() -> None:
                 _semIdade,
                     "<div class='aviso'><span class='ast'>*</span>Escolha 2014, 2018, 2022 ou 2026 para ver por idade.</div>",
                 _chips = "",
-                    "<div class='dica'>Clique num ano, numa idade ou num ponto do mapa: as três peças se cruzam.</div>"
+                    "<div class='dica'>" & IF ( [Eleição · pós] = 1, "Cruze ano e mapa. Idade: 1º turno de 2026.", "Cruze ano, idade e mapa." ) & "</div>"
                         & {_seta_mao()},
                 "<div class='marc'>" & _chips & "<span class='dica'>clique de novo para desmarcar</span></div>"
             )
         -- 4 · Marcação
         RETURN
             "<div class='tela mq'>"
-                & "<div class='sob sobe'>Quem falta · " & @ESC(_lugar)@ & " · 1º turno de " & _ano & "</div>"
+                & "<div class='sob sobe'>Quem falta · " & @ESC(_lugar)@ & " · " & [T25 · turno] & " de " & _ano & "</div>"
                 & "<div class='topo'><div class='big sobe d1'>" & _txtPct & "</div>"
                 & "<div class='lado sobe d2'><div class='nfv'>não foram votar</div>" & {_sublinhado(236)}
                 & "<div class='txt fr'>" & @ESC(_frase)@ & "</div></div></div>"
@@ -442,11 +513,11 @@ def desenho() -> None:
         """))
     d("T25 · Manchete · ALT", "Texto para leitor de tela da manchete.", dax("""
         LEFT (
-            [T25 · lugar] & ", 1º turno de " & [T25 · ano]
+            [T25 · lugar] & ", " & [T25 · turno] & " de " & [T25 · ano]
                 & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
                 & IF ( ISBLANK ( [T25 · abstenção %] ), "sem dado neste cruzamento.",
                     @PCT([T25 · abstenção %])@ & " dos eleitores não foram votar." )
-                & " Clique num ano, numa idade ou num ponto do mapa para cruzar.",
+                & IF ( [Eleição · pós] = 1, " Ano e mapa no segundo turno; idade no primeiro turno de 2026.", " Clique num ano, numa idade ou num ponto do mapa para cruzar." ),
             250
         )
         """))
@@ -461,14 +532,23 @@ def desenho() -> None:
         VAR _dpp = [T25 · variação da série em p.p.]
         VAR _nomeRef = [T25 · referência da série (nome)]
         -- 2 · Textos
-        VAR _rot = "A ausência ano a ano · " & @ESC(_lugar)@ & IF ( _comFaixa = 1, " · " & @ESC(_faixa)@ )
+        VAR _rot = "A ausência ano a ano · " & [T25 · turno] & " · " & @ESC(_lugar)@ & IF ( _comFaixa = 1, " · " & @ESC(_faixa)@ )
+        VAR _tipo = [T25 · série · tipo de manchete]
+        VAR _marco = [T25 · série · marco do extremo]
+        VAR _p0 = [T25 · abstenção % no primeiro ano]
+        VAR _p26 = [T25 · abstenção % em 2026]
+        VAR _intervalo = IF ( ISBLANK ( _marco ), "da série", "desde " & FORMAT ( _marco, "0" ) )
         VAR _man =
-            SWITCH (
-                TRUE (),
-                ISBLANK ( _dpp ), "Sem série neste cruzamento",
-                ABS ( _dpp ) < 0.05, "Igual desde " & _a0,
-                IF ( _dpp > 0, "Subiu ", "Caiu " ) & FORMAT ( ABS ( _dpp ), "0.0" )
-                    & IF ( ABS ( _dpp ) < 2, " ponto", " pontos" ) & " desde " & _a0
+            SWITCH ( _tipo,
+                "menor", "Em 2026, a menor abstenção " & _intervalo,
+                "maior", "Em 2026, a maior abstenção " & _intervalo,
+                "estável", "Em 2026, a abstenção ficou em " & @PCT(_p26)@,
+                "sem série", "Sem série neste cruzamento",
+                IF ( [Eleição · pós] = 1,
+                    IF ( _dpp > 0, "Subiu de ", "Caiu de " ) & @PCT(_p0)@ & " para " & @PCT(_p26)@,
+                    IF ( _dpp > 0, "Subiu ", "Caiu " ) & FORMAT ( ABS ( _dpp ), "0.0" )
+                        & IF ( ABS ( _dpp ) < 2, " ponto", " pontos" ) & " desde " & _a0
+                )
             )
         VAR _lado =
             IF ( _nomeRef <> "", "<span class='lg'><i></i>" & _nomeRef & "</span>" )
@@ -479,12 +559,17 @@ def desenho() -> None:
                 & "<div class='lado entra d3'>" & _lado & "</div></div><div class='man sobe d1'>" & _man & "</div></div>"
         """))
     d("T25 · Anos topo · ALT", "Texto para leitor de tela do título do bloco de anos.", dax("""
-        LEFT (
-            "A ausência ano a ano, " & [T25 · lugar] & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
-                & IF ( ISBLANK ( [T25 · variação da série em p.p.] ), "sem série.",
-                    @PP([T25 · variação da série em p.p.])@ & " pontos desde " & [T25 · primeiro ano da série] & "." ),
-            250
-        )
+        VAR _tipo = [T25 · série · tipo de manchete]
+        VAR _marco = [T25 · série · marco do extremo]
+        VAR _extremo = _tipo = "menor" || _tipo = "maior"
+        RETURN LEFT (
+            "Abstenção no " & [T25 · turno] & ", " & [T25 · lugar] & ": "
+                & IF ( _extremo,
+                    "em 2026, a " & _tipo & " " & IF ( ISBLANK ( _marco ), "da série", "desde " & FORMAT ( _marco, "0" ) ) & ". ",
+                    "" )
+                & IF ( _tipo = "sem série", "sem série neste recorte.",
+                    FORMAT ( [T25 · abstenção % no primeiro ano], "0.0%" ) & " em " & FORMAT ( [T25 · primeiro ano da série], "0" )
+                        & " e " & FORMAT ( [T25 · abstenção % em 2026], "0.0%" ) & " em 2026." ), 250 )
         """))
     d("T25 · Anos · HTML", "Uma coluna por 1º turno (granularidade Ano[Ano]): a abstenção do ano no lugar e na faixa do "
       "contexto, a linha tracejada da referência e o ano; com faixa marcada, 2006 e 2010 ficam vazios (sem idade). O "
@@ -524,7 +609,7 @@ def desenho() -> None:
                                 f'@PCT([T25 · abstenção % em {a}])@ )' for a in ANOS)
     d("T25 · Anos · ALT", "Texto para leitor de tela do bloco de anos.", dax(f"""
         LEFT (
-            "Abstenção no 1º turno, " & [T25 · lugar] & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
+            "Abstenção no " & [T25 · turno] & ", " & [T25 · lugar] & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
                 & {serie} & ". Clique num ano para cruzar.",
             250
         )
@@ -534,22 +619,23 @@ def desenho() -> None:
       "mais que a que menos falta, a legenda de todas as idades e do voto facultativo. Ignora o clique no próprio "
       "bloco.", dax("""
         -- 1 · Leituras
-        VAR _ano = [T25 · ano]
+        VAR _ano = [T25 · idade ano]
         VAR _lugar = [T25 · lugar]
-        VAR _temIdade = [T25 · tem idade no ano]
+        VAR _temIdade = [T25 · idade disponível]
         VAR _mais = [T25 · faixa que mais falta]
         VAR _menos = [T25 · faixa que menos falta]
         VAR _vezes = [T25 · vezes entre as faixas]
-        VAR _todas = [T25 · abstenção % todas as idades]
+        VAR _todas = [T25 · idade todas as idades]
         -- 2 · Textos
-        VAR _rot = "Quem falta mais · por idade · " & _ano
+        VAR _rot = "Por idade · 1º turno · " & _ano
         VAR _man =
-            SWITCH (
+            IF ( [Eleição · pós] = 1, "O TSE ainda não publicou a idade do 2º turno", SWITCH (
                 TRUE (),
                 _temIdade = 0, "Por idade, o TSE só publica desde 2014",
                 ISBLANK ( _mais ), "Sem dado por idade neste recorte",
                 "Os de " & SUBSTITUTE ( _mais, "16 e 17", "16 ou 17" ) & " faltam " & FORMAT ( _vezes, "0.0" )
                     & " vezes mais que os de " & SUBSTITUTE ( _menos, "16 e 17", "16 ou 17" )
+            )
             )
         VAR _lado =
             IF ( NOT ISBLANK ( _todas ) && _temIdade = 1,
@@ -562,8 +648,8 @@ def desenho() -> None:
         """))
     d("T25 · Idade topo · ALT", "Texto para leitor de tela do título do bloco de idade.", dax("""
         LEFT (
-            "Quem falta mais, por idade, " & [T25 · lugar] & ", " & [T25 · ano] & ": "
-                & IF ( [T25 · tem idade no ano] = 0, "o TSE só publica a idade desde 2014.",
+            "Quem falta mais, por idade, 1º turno, " & [T25 · lugar] & ", " & [T25 · idade ano] & ": "
+                & IF ( [T25 · idade disponível] = 0, "o TSE só publica a idade desde 2014.",
                     [T25 · faixa que mais falta] & " " & @PCT([T25 · faixa que mais falta %])@ & "; "
                         & [T25 · faixa que menos falta] & " " & @PCT([T25 · faixa que menos falta %])@ & "." ),
             250
@@ -577,9 +663,9 @@ def desenho() -> None:
         VAR _k = [T25 · ordem da faixa]
         VAR _nome = [T25 · faixa da linha]
         VAR _voto = [T25 · voto da faixa]
-        VAR _pct = [T25 · abstenção %]
+        VAR _pct = [T25 · idade abstenção %]
         VAR _teto = [T25 · teto por idade]
-        VAR _ref = [T25 · abstenção % todas as idades]
+        VAR _ref = [T25 · idade todas as idades]
         -- 2 · Textos
         VAR _ast = IF ( _voto = "facultativo", "<sup>*</sup>" )
         -- 3 · Geometria (linhas a cada {LINHA_FX} px; barra de 0 ao teto em {larg} px a partir de x {x0})
@@ -606,12 +692,12 @@ def desenho() -> None:
         """))
     d("T25 · Idade · ALT", "Texto para leitor de tela do bloco de idade.", dax("""
         LEFT (
-            "Abstenção por faixa de idade, " & [T25 · lugar] & ", " & [T25 · ano] & ": "
-                & IF ( [T25 · tem idade no ano] = 0, "o TSE só publica a idade desde 2014.",
+            "Abstenção por faixa de idade, 1º turno, " & [T25 · lugar] & ", " & [T25 · idade ano] & ": "
+                & IF ( [T25 · idade disponível] = 0, "o TSE só publica a idade desde 2014.",
                     "a que mais falta é " & [T25 · faixa que mais falta] & " ("
                         & @PCT([T25 · faixa que mais falta %])@ & "), a que menos falta é "
                         & [T25 · faixa que menos falta] & " (" & @PCT([T25 · faixa que menos falta %])@ & ")." )
-                & " Clique numa faixa para cruzar.",
+                & IF ( [Eleição · pós] = 1, " Primeiro turno de 2026; a idade do segundo ainda não foi publicada.", " Clique numa faixa para cruzar." ),
             250
         )
         """))
@@ -754,7 +840,7 @@ def _dossie_municipio() -> None:
         VAR _idade =
             IF (
                 _comFaixa = 0 && NOT ISBLANK ( _mais ),
-                "Quem mais falta aqui: <b>" & _mais & "</b> (" & @PCT(_maisP)@ & "); quem menos: <b>" & _menos
+                IF ( [Eleição · pós] = 1, "Por idade · 1º turno de 2026: <b>", "Quem mais falta aqui: <b>" ) & _mais & "</b> (" & @PCT(_maisP)@ & "); quem menos: <b>" & _menos
                     & "</b> (" & @PCT(_menosP)@ & ")",
                 "A série" & _quem & " no município, ano a ano"
             )
@@ -770,7 +856,7 @@ def _dossie_municipio() -> None:
                 & "<div class='cab sobe'><div class='nm'>" & @ESC(_mun)@ & "</div>"
                 & "<div class='rot'>" & @ESC(_reg)@ & " · " & @INT(_aptos)@ & " eleitores" & @ESC(_quem)@ & "</div></div>"
                 & "<div class='big sobe d1' style='top:84px'>" & @PCT(_pct)@ & "</div>"
-                & "<div class='bs sobe d2' style='top:88px'>não foram votar em " & _ano & ": <b>" & @INT(_n)@ & "</b> "
+                & "<div class='bs sobe d2' style='top:88px'>não foram votar no " & [T25 · turno] & " de " & _ano & ": <b>" & @INT(_n)@ & "</b> "
                 & IF ( _n = 1, "pessoa", "pessoas" ) & ". " & _compara & ".</div>"
                 & "<div class='lin sobe d3' style='top:150px'>" & _idade & "</div>"
                 & "<div style='position:absolute;left:0;top:206px'>" & {spark} & "</div>"
@@ -868,15 +954,16 @@ def _dossie_ano() -> None:
                     & "<span></span><i style='background:var(--areia);height:4px;margin-left:14px'></i>entre os eleitores</div>"
                     & _linhas & "</div>"
                     & "<div class='mao entra d8'>" & @ESC(_nota)@ & "</div>",
-                "<div class='si sobe d3'>Em " & _ano & ", o TSE ainda não publicava a idade de quem faltou. O perfil por "
-                    & "idade começa em 2014.</div>"
+                "<div class='si sobe d3'>" & IF ( [Eleição · pós] = 1,
+                    "O perfil por idade do 2º turno não está disponível nesta tela. A peça por idade usa o 1º turno de 2026.", "Em " & _ano & ", o TSE ainda não publicava a idade de quem faltou. O perfil por "
+                    & "idade começa em 2014." ) & "</div>"
             )
         VAR _html =
             {_css_ficha()} & _css
                 & "<div class='tt ta'><div class='ficha'>"
                 & "<img class='fita' alt='' src='{URL_MIDIA}/arte/dossie/fita-tinta.png'/>"
                 & "<img class='ic' alt='' src='{URL_MIDIA}/arte/icones/urna-tinta.png'/>"
-                & "<div class='cab sobe'><div class='nm'>1º turno de " & _ano & "</div>"
+                & "<div class='cab sobe'><div class='nm'>" & [T25 · turno] & " de " & _ano & "</div>"
                 & "<div class='dp'>" & @ESC(_disputa)@ & "</div></div>"
                 & IF (
                     ISBLANK ( _pct ),
@@ -893,7 +980,7 @@ def _dossie_ano() -> None:
         """).replace("{{", "{").replace("}}", "}"))
     G.desenho("T25 · Tooltip ano · ALT", "Texto para leitor de tela do dossiê do ano.", dax("""
         LEFT (
-            "1º turno de " & [T25 · ano] & " (" & [T25 · disputa do ano] & "), " & [T25 · lugar] & ": "
+            [T25 · turno] & " de " & [T25 · ano] & " (" & [T25 · disputa do ano] & "), " & [T25 · lugar] & ": "
                 & @PCT([T25 · abstenção %])@ & " faltaram"
                 & IF ( [T25 · tem idade no ano] = 1, "; a idade que mais passa do seu peso entre os que faltaram é "
                     & [T25 · faixa mais acima do seu peso] & ".", "." ),
@@ -904,7 +991,7 @@ def _dossie_ano() -> None:
 
 def _dossie_idade() -> None:
     anos = [a for a in ANOS if a >= 2014]
-    leit = "\n".join(f"        VAR _p{str(a)[2:]} = [T25 · abstenção % em {a}]" for a in anos)
+    leit = "\n".join(f"        VAR _p{str(a)[2:]} = [T25 · idade abstenção % em {a}]" for a in anos)
     geo, spark = _sparkline(anos, 200, 60)
     G.desenho("T25 · Tooltip idade · HTML", "Dossiê da faixa de idade da barra: quantas pessoas faltaram (o % já está na barra), o peso "
               "da faixa entre os eleitores e entre os que faltaram, a minilinha de 2014 a 2026 e a nota à mão de quantas "
@@ -912,18 +999,18 @@ def _dossie_idade() -> None:
         -- 1 · Leituras
         VAR _nome = [T25 · faixa da linha]
         VAR _voto = [T25 · voto da faixa]
-        VAR _ano = [T25 · ano]
+        VAR _ano = [T25 · idade ano]
         VAR _lugar = [T25 · lugar]
-        VAR _pct = [T25 · abstenção %]
-        VAR _n = [T25 · abstenções]
-        VAR _aptos = [T25 · aptos]
+        VAR _pct = [T25 · idade abstenção %]
+        VAR _n = [T25 · idade abstenções]
+        VAR _aptos = [T25 · idade aptos]
         VAR _pa = [T25 · parte dos aptos (faixa)]
         VAR _pf = [T25 · parte dos que faltaram (faixa)]
         VAR _vezes = [T25 · vezes a média (faixa)]
 {leit}
         -- 2 · Textos
         VAR _cab = _nome
-        VAR _sub = _lugar & " · " & _ano & IF ( _voto = "facultativo", " · voto facultativo" )
+        VAR _sub = _lugar & " · 1º turno de " & _ano & IF ( _voto = "facultativo", " · voto facultativo" )
         VAR _nota =
             SWITCH (
                 TRUE (),
@@ -962,9 +1049,9 @@ def _dossie_idade() -> None:
         """))
     G.desenho("T25 · Tooltip idade · ALT", "Texto para leitor de tela do dossiê da faixa.", dax("""
         LEFT (
-            [T25 · faixa da linha] & ", " & [T25 · lugar] & ", " & [T25 · ano] & ": "
-                & IF ( ISBLANK ( [T25 · abstenção %] ), "o TSE só publica a idade desde 2014.",
-                    @PCT([T25 · abstenção %])@ & " faltaram; são " & @PCT0([T25 · parte dos aptos (faixa)])@
+            [T25 · faixa da linha] & ", 1º turno de " & [T25 · idade ano] & ", " & [T25 · lugar] & ": "
+                & IF ( ISBLANK ( [T25 · idade abstenção %] ), "o TSE só publica a idade desde 2014.",
+                    @PCT([T25 · idade abstenção %])@ & " faltaram; são " & @PCT0([T25 · parte dos aptos (faixa)])@
                         & " dos eleitores e " & @PCT0([T25 · parte dos que faltaram (faixa)])@ & " de quem faltou." ),
             250
         )
@@ -1147,7 +1234,7 @@ def _css_manchete() -> str:
         ".mq .chip{display:inline-flex;align-items:baseline;gap:8px;padding:6px 12px;background:var(--creme);"
         "border:1.5px solid var(--areia);font-size:15px;font-weight:600;color:var(--tinta)}"
         ".mq .chip b{font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--cinza)}"
-        ".mq .dica{font-size:15px;color:var(--cinza);line-height:1.4}"
+        ".mq .dica{max-width:570px;font-size:15px;color:var(--cinza);line-height:1.4}"
         ".mq .aviso{font-size:15px;line-height:1.4;color:var(--tinta)}"
         ".mq .cruza{position:absolute;left:592px;top:-10px;width:168px;pointer-events:none}"
         ".mq .aviso .ast{font-family:var(--mao);font-size:26px;color:var(--tinta);margin-right:6px;"

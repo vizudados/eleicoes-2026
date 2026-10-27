@@ -50,10 +50,10 @@ VAR _clsNota = IF ( _vezes >= 1, "mao nota1", "mao nota1 baixa" )
 -- 4 · Marcação
 VAR _html =
     "<div class='tela rp'>"
-        & "<div class='sob sobe'>Quem não foi votar · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='sob sobe'>Quem não foi votar · " & [T06 · turno] & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
         & "<div class='topo'><div class='big sobe d1'>" & _txtAbst & "</div>"
         & "<div class='lado sobe d2'><div class='nfv'>não foram votar</div>" & [T06 · sublinhado · SVG]
-        & "<div class='txt'>" & FORMAT ( _pct, "0.0%" ) & " dos " & _txtAptos & " de eleitores aptos em 2026</div></div></div>"
+        & "<div class='txt'>" & FORMAT ( _pct, "0.00%" ) & " dos " & _txtAptos & " de eleitores aptos em 2026</div></div></div>"
         & "<div class='man mc sobe d3'>" & _manchete & "</div>"
         & "<div class='regua'>"
         & "<div class='rot rt1 sobe d4'>Quem faltou · " & _txtAbst & "</div>"

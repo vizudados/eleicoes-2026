@@ -8,5 +8,5 @@
 VAR _cid = [T15 · cidade]
 -- 2 · Textos
 RETURN
-    "Barras da margem do PT em " & _cid & " em cada 1º turno de 2006 a 2026: para cima, PT à frente; para baixo, o "
+    "Barras da margem do PT em " & _cid & " em cada " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " turno de 2006 a 2026: para cima, PT à frente; para baixo, o "
         & "adversário. Passe o mouse num ano para ver a votação; clique para levar a ficha àquela eleição."

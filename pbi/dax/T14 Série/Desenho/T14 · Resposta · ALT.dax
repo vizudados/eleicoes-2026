@@ -12,7 +12,7 @@ VAR _ano = [T14 · ano escolhido]
 VAR _mY = [T14 · margem do PT]
 -- 2 · Textos
 RETURN
-    IF ( ISBLANK ( _uf ), "Brasil", _uf ) & ": o PT terminou o 1º turno atrás do adversário em " & FORMAT ( _k, "0" )
+    IF ( ISBLANK ( _uf ), "Brasil", _uf ) & ": o PT terminou o " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " turno atrás do adversário em " & FORMAT ( _k, "0" )
         & " das seis eleições de 2006 a 2026" & IF ( _a26 = 1, ", inclusive em 2026.", "; em 2026, à frente." )
         & IF ( ISBLANK ( _ano ), "", " Em " & _ano & ", a margem do PT foi de " & FORMAT ( _mY * 100, "+0.0;−0.0;0.0" )
             & " pontos." )

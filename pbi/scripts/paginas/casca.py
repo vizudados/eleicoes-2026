@@ -79,10 +79,13 @@ def corpo_casca(t: roteiro.Tela) -> str:
     k = _tom(t)
     ant, prox = roteiro.anterior(t), roteiro.proxima(t)
     e = html.escape
+    # com o filtro Pré/Pós em (952, 60), ao lado do filtro da tela, a pergunta termina antes dele (x 936); sozinho,
+    # ele fica no lugar do outro filtro (x 1282) e a pergunta tem o espaço de sempre
+    direita = 984 if t.codigo in momento_eleicao.TELAS and not momento_eleicao.sozinho(t) else 660
     css = (
         f".cs{{color:{k['texto']}}}"
         ".cs .urna{position:absolute;left:52px;top:50px;width:60px;opacity:.95}"
-        ".cs .cab{position:absolute;left:150px;top:46px;right:660px}"
+        f".cs .cab{{position:absolute;left:150px;top:46px;right:{direita}px}}"
         f".cs .cab .sob{{color:{k['sob']}}}"
         f".cs .cab .tit{{margin-top:8px;color:{k['texto']};font-size:31px}}"
         ".cs .seta{position:absolute;top:500px;width:80px;height:80px}"
@@ -99,15 +102,21 @@ def corpo_casca(t: roteiro.Tela) -> str:
         setas += f"<div class='seta e' title='{e(ant.titulo_pagina)}'>{_seta('esq', k['linha'])}</div>"
     if prox:
         setas += f"<div class='seta d' title='{e(prox.titulo_pagina)}'>{_seta('dir', k['linha'])}</div>"
+    fonte_html = f"<span class='fonte'>{e(momento_eleicao.fonte(t))}</span>"
+    pergunta_html = e(t.pergunta)
+    if t.codigo == "T16":                       # 19 · Os outros: pergunta e fonte mudam com o Pré/Pós (27/10/2026)
+        from paginas import t16_outros
+        fonte_html = t16_outros.fonte_casca(t)
+        pergunta_html = t16_outros.pergunta_casca(t)
     cab = ""
     if t.codigo not in ("T00", "T23"):          # capa e encerramento desenham o próprio título
         cab = (f"<div class='cab'><div class='sob sobe'>{e(t.numero)} · {e(t.nome)}</div>"
-               f"<div class='tit sobe d2'>{e(t.pergunta)}</div></div>")
+               f"<div class='tit sobe d2'>{pergunta_html}</div></div>")
     return (f"<style>{css}</style><div class='cs tela'>"
             f"<img class='urna entra' alt='' src='{estilo.imagem_b64(k['urna'], 120)}'/>{cab}{setas}"
             f"<div class='info'>i</div>"
             f"<div class='pe'><span class='logo'>{estilo.logo_vizu(k['logo'])}</span>"
-            f"<span class='fonte'>{e(momento_eleicao.fonte(t))}</span></div></div>{{{{content}}}}")
+            f"{fonte_html}</div></div>{{{{content}}}}")
 
 
 def _texto_leitura(t: roteiro.Tela) -> dict:
@@ -253,8 +262,11 @@ def declarar(ctx):
         p = t.codigo
         itens.append(Pagina(_pagina(t), ordem=i))
         itens.append(Visual(p, lib.visual_html(
-            f"{p}_Casca_Fundo", 0, 0, lib.LARGURA, lib.ALTURA, VAZIO, folha_de_estilo=CSS, modelo_corpo=corpo_casca(t),
-            alt=f"{t.numero} · {t.nome}: {t.pergunta}", z=Z["fundo"], tab=1, movimento=False)))
+            f"{p}_Casca_Fundo", 0, 0, lib.LARGURA, lib.ALTURA,
+            "T16 · Casca · HTML" if p == "T16" else VAZIO,
+            folha_de_estilo=CSS, modelo_corpo=corpo_casca(t),
+            alt=lib.medida("T16 · Casca · ALT") if p == "T16" else f"{t.numero} · {t.nome}: {t.pergunta}",
+            z=Z["fundo"], tab=1, movimento=False)))
         ant, prox = roteiro.anterior(t), roteiro.proxima(t)
         if ant:
             itens.append(_botao(t, "Anterior", SETA_ESQ, lib.acao_bookmark(f"{ant.codigo}_CHEGADA_01"),
@@ -265,9 +277,13 @@ def declarar(ctx):
         if p != "T00":
             itens.append(_botao(t, "Inicio", URNA, lib.acao_bookmark("TIX_CHEGADA_01"), "Sumário: todas as telas", 2))
         # leitura da tela (o "i")
+        leitura_altura, leitura_medida, leitura_corpo = _altura_leitura(t), VAZIO, corpo_leitura(t)
+        if p == "T16":
+            from paginas import t16_outros
+            leitura_altura, leitura_medida, leitura_corpo = t16_outros.leitura_casca(t)
         itens.append(Visual(p, lib.visual_html(
-            f"{p}_Casca_Leitura", *LEITURA, _altura_leitura(t), VAZIO, folha_de_estilo=CSS,
-            modelo_corpo=corpo_leitura(t), alt=f"Como ler a tela {t.numero} · {t.nome}", z=Z["leitura"], tab=950,
+            f"{p}_Casca_Leitura", *LEITURA, leitura_altura, leitura_medida, folha_de_estilo=CSS,
+            modelo_corpo=leitura_corpo, alt=f"Como ler a tela {t.numero} · {t.nome}", z=Z["leitura"], tab=950,
             oculto=True, movimento=False)))
         itens.append(_botao(t, "InfoAbre", INFO, lib.acao_bookmark(f"{p}_LEITURA_ABRE_01"),
                             "Como ler esta tela e de onde vêm os números", 6))

@@ -1,0 +1,104 @@
+/// Brasil por eleição, turno e abrangência, 2006–2026. Não somar as três abrangências: sem_exterior + exterior = com_exterior. Abstenções oficiais, sem derivar por subtração.
+table 'Comparecimento turno'
+	isHidden
+	lineageTag: 81fce172-f9f2-5d2b-80af-b1ea45b20ae9
+
+	/// Ano
+	column Ano
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: db28361a-c410-52fc-b7d9-5feb9e609641
+		summarizeBy: none
+		sourceColumn: Ano
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Turno
+	column Turno
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9b92a1e6-5b49-5949-8177-559422c47a0b
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Abrangência
+	column 'Abrangência'
+		dataType: string
+		isHidden
+		lineageTag: 42feb5c0-50a8-54fc-8022-64b2b217b09a
+		summarizeBy: none
+		sourceColumn: Abrangência
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Aptos
+	column Aptos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: f175a43f-1bde-5a2e-8801-07d6fb15c06d
+		summarizeBy: none
+		sourceColumn: Aptos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Comparecimento
+	column Comparecimento
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: f364ca34-2141-5338-b26c-0d04b31624c7
+		summarizeBy: none
+		sourceColumn: Comparecimento
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Abstencoes
+	column Abstencoes
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 83ee70eb-1184-5d32-a594-e5cef04175b1
+		summarizeBy: none
+		sourceColumn: Abstencoes
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Brancos
+	column Brancos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 89d60166-fdc5-5998-8394-424a4f86a98e
+		summarizeBy: none
+		sourceColumn: Brancos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nulos
+	column Nulos
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 5424db22-6f5d-5d8f-bc2d-7cd81085f272
+		summarizeBy: none
+		sourceColumn: Nulos
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Comparecimento turno' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/comparecimento_turno.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"ano", "turno", "abrangencia", "aptos", "comparecimento", "abstencoes", "brancos", "nulos"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"ano", Int64.Type}, {"turno", Int64.Type}, {"abrangencia", type text}, {"aptos", Int64.Type}, {"comparecimento", Int64.Type}, {"abstencoes", Int64.Type}, {"brancos", Int64.Type}, {"nulos", Int64.Type}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"ano", "Ano"}, {"turno", "Turno"}, {"abrangencia", "Abrangência"}, {"aptos", "Aptos"}, {"comparecimento", "Comparecimento"}, {"abstencoes", "Abstencoes"}, {"brancos", "Brancos"}, {"nulos", "Nulos"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

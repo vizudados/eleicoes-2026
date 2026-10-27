@@ -14,7 +14,7 @@ VAR _paraLula = [T20 · locais que viraram para Lula]
 VAR _cidade0 = [T20 · cidade]
 VAR _cidade1 = SUBSTITUTE ( SUBSTITUTE ( _cidade0, "&", "&amp;" ), "<", "&lt;" )
 VAR _cidade = SUBSTITUTE ( SUBSTITUTE ( _cidade1, ">", "&gt;" ), "'", "&#39;" )
-VAR _rotLocal = IF ( _lula = 1, "zona eleitoral com Lula à frente em 2026", "zonas eleitorais com Lula à frente em 2026" )
+VAR _rotLocal = IF ( _lula = 1, "zona eleitoral com Lula à frente", "zonas eleitorais com Lula à frente" ) & " · " & [T20 · turno]
 VAR _antes =
     SWITCH (
         TRUE (),

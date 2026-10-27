@@ -3,4 +3,11 @@
 @formato: #,0
 @descricao: Votos em branco no ano do contexto: Brasil oficial ('Comparecimento ano') sem filtro; soma dos municípios com o filtro de UF.
 */
-IF ( [T06 · com UF] = 1, SUM ( 'Município ano'[Brancos] ), SUM ( 'Comparecimento ano'[Brancos] ) )
+IF (
+    [Eleição · pós] = 1,
+    IF ( [T06 · com UF] = 1,
+        CALCULATE ( SUM ( 'Município segundo turno'[Brancos] ), 'Município segundo turno'[Ano] = MAX ( 'Ano'[Ano] ) ),
+        CALCULATE ( SUM ( 'Comparecimento turno'[Brancos] ), 'Comparecimento turno'[Turno] = 2,
+            'Comparecimento turno'[Abrangência] = "com_exterior", 'Comparecimento turno'[Ano] = MAX ( 'Ano'[Ano] ) ) ),
+    IF ( [T06 · com UF] = 1, SUM ( 'Município ano'[Brancos] ), SUM ( 'Comparecimento ano'[Brancos] ) )
+)

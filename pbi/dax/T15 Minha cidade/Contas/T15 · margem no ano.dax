@@ -5,4 +5,4 @@
 @oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › serie › margem (2006 +30,0 … 2026 −11,0)
 @gerado: pbi/scripts/desenho_t15.py
 */
-DIVIDE ( SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) )
+IF ( [Eleição · pós] = 1, DIVIDE ( SUM ( 'Município segundo turno'[VotosPT] ) - SUM ( 'Município segundo turno'[VotosAdversario] ), SUM ( 'Município segundo turno'[Validos] ) ), DIVIDE ( SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] ), SUM ( 'Município ano'[Validos] ) ) )

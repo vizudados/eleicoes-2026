@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Total do balão direito: 19–24/10 parcial sem filtro; só a janela Bites que cabe inteira no período com filtro.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+IF ( ISBLANK ( [Período · escolhido] ), [T09 · reta final · interações], [T09 · período · interações] )

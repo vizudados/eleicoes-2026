@@ -6,21 +6,21 @@
 -- 1 · Leituras
 VAR _nome = [T25 · faixa da linha]
 VAR _voto = [T25 · voto da faixa]
-VAR _ano = [T25 · ano]
+VAR _ano = [T25 · idade ano]
 VAR _lugar = [T25 · lugar]
-VAR _pct = [T25 · abstenção %]
-VAR _n = [T25 · abstenções]
-VAR _aptos = [T25 · aptos]
+VAR _pct = [T25 · idade abstenção %]
+VAR _n = [T25 · idade abstenções]
+VAR _aptos = [T25 · idade aptos]
 VAR _pa = [T25 · parte dos aptos (faixa)]
 VAR _pf = [T25 · parte dos que faltaram (faixa)]
 VAR _vezes = [T25 · vezes a média (faixa)]
-VAR _p14 = [T25 · abstenção % em 2014]
-VAR _p18 = [T25 · abstenção % em 2018]
-VAR _p22 = [T25 · abstenção % em 2022]
-VAR _p26 = [T25 · abstenção % em 2026]
+VAR _p14 = [T25 · idade abstenção % em 2014]
+VAR _p18 = [T25 · idade abstenção % em 2018]
+VAR _p22 = [T25 · idade abstenção % em 2022]
+VAR _p26 = [T25 · idade abstenção % em 2026]
 -- 2 · Textos
 VAR _cab = _nome
-VAR _sub = _lugar & " · " & _ano & IF ( _voto = "facultativo", " · voto facultativo" )
+VAR _sub = _lugar & " · 1º turno de " & _ano & IF ( _voto = "facultativo", " · voto facultativo" )
 VAR _nota =
     SWITCH (
         TRUE (),

@@ -4,7 +4,10 @@
 @descricao: Flávio sobre os válidos de 2026 no município do contexto (as pontas da régua do IDH no cartão).
 @gerado: pbi/scripts/desenho_t24.py
 */
-DIVIDE (
+IF ( [Eleição · pós] = 1, DIVIDE (
+    CALCULATE ( SUM ( 'Município segundo turno'[VotosAdversario] ), 'Município segundo turno'[Ano] = 2026 ),
+    CALCULATE ( SUM ( 'Município segundo turno'[Validos] ), 'Município segundo turno'[Ano] = 2026 )
+), DIVIDE (
     CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2026 ),
     CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2026 )
-)
+) )

@@ -20,7 +20,7 @@ VAR _nota = IF ( _bn26 < _bn06, "brancos e nulos encolheram", "brancos e nulos c
 -- 4 · Marcação
 RETURN
     "<div class='tela ct'>"
-        & "<div class='sob sobe'>Quem não escolheu ninguém · eleição a eleição · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
+        & "<div class='sob sobe'>Quem não escolheu ninguém · eleição a eleição · " & [T06 · turno] & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
         & "<div class='man sobe d1'>" & _man & "</div>"
         & "<div class='leg entra d3'><span><i class='f'></i>não foram votar</span>"
         & "<span><i class='n'></i>anularam</span><span><i class='b'></i>votaram em branco</span>"

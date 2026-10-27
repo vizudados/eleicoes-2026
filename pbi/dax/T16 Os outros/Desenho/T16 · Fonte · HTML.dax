@@ -1,0 +1,9 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: Alterna somente a fonte do rodapé da T16, preservando o texto do Pré; ligação pela main.
+@oraculo: dados/pbi/t16_urna.csv
+*/
+IF ( [Eleição · pós] = 1,
+    "<style>.cs .fonte-pre{display:none}.cs .fonte-pos{display:inline}</style>",
+    "<style>.cs .fonte-pre{display:inline}.cs .fonte-pos{display:none}</style>" )

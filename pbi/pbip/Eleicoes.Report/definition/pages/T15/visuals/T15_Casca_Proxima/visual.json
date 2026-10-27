@@ -681,7 +681,7 @@
             "altText": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 15 Explorador — Onde está a minha pergunta? Explore os 5.571 municípios'"
+                  "Value": "'Próxima: 15 Explorador — Onde está a minha pergunta?'"
                 }
               }
             }
@@ -708,7 +708,7 @@
             "tooltip": {
               "expr": {
                 "Literal": {
-                  "Value": "'Próxima: 15 Explorador — Onde está a minha pergunta? Explore os 5.571 municípios'"
+                  "Value": "'Próxima: 15 Explorador — Onde está a minha pergunta?'"
                 }
               }
             },

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """25 · Apuração — resultado final do 2º turno de 25/10/2026 (dono: main).
 
-Lula foi eleito. A curva nacional conserva os momentos da noite: Flávio passou à frente às 19h45 e Lula retomou
+Lula foi reeleito. A curva nacional conserva os momentos da noite: Flávio passou à frente às 19h45 e Lula retomou
 a liderança às 20h24min14s. O clique numa hora consulta o resultado parcial daquele momento; outro clique retorna ao
 resultado final. Mapa e resultado leem as UFs escolhidas pela casca; a curva permanece nacional.
 Os identificadores técnicos Placar foram preservados para manter a linhagem dos visuais e das medidas.

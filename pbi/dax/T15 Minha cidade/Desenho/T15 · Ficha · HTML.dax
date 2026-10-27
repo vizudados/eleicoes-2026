@@ -141,7 +141,7 @@ VAR _html =
         & "<div class='man m sobe d3'>" & _man & "</div>"
         & "<div class='nota fatos entra d5'>" & _fatos & "</div>"
         & "<div class='votos'>"
-            & "<div class='rot entra d6'>VOTOS NO 1º TURNO · " & _anos & "</div>"
+            & "<div class='rot entra d6'>VOTOS NO " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " TURNO · " & _anos & "</div>"
             & "<div class='lv sobe d7'><i class='q lula-q'></i><div class='nm'><b>" & _rotPt & "</b><span>"
                 & _txtVotosPt & "</span></div><div class='num dv lula'>" & _numPt & "</div></div>"
             & "<div class='lv sobe d8'><i class='q flavio-q'></i><div class='nm'><b>" & _rotAd & "</b><span>"

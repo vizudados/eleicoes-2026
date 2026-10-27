@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Gasto na Biblioteca: 18–24/10 sem filtro; somente janela integral com filtro.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+IF ( ISBLANK ( [Período · escolhido] ), [T09 · reta final · Meta], [T09 · período · Meta] )

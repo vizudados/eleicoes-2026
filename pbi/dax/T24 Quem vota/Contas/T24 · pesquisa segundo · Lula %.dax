@@ -1,0 +1,8 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0%
+@descricao: Intenção declarada na faixa, base de totais, Datafolha 23–24/10.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+DIVIDE ( CALCULATE ( MAX ( 'Perfil pesquisa segundo turno'[Percentual] ),
+              'Perfil pesquisa segundo turno'[Candidato] = "Lula" ), 100 )

@@ -26,8 +26,8 @@ VAR _xy =
     ADDCOLUMNS (
         _pts,
         "@x", 8 + ( [a] - 2006 ) / 4 * 42,
-        "@yPt", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@pt] ) ) - 0.1 ) / 0.6,
-        "@yAdv", 112 - 96 * ( MAX ( 0.1, MIN ( 0.7, [@adv] ) ) - 0.1 ) / 0.6
+        "@yPt", 112 - 96 * ( MAX ( 0.1, MIN ( IF ( [Eleição · pós] = 1, 0.9, 0.7 ), [@pt] ) ) - 0.1 ) / IF ( [Eleição · pós] = 1, 0.8, 0.6 ),
+        "@yAdv", 112 - 96 * ( MAX ( 0.1, MIN ( IF ( [Eleição · pós] = 1, 0.9, 0.7 ), [@adv] ) ) - 0.1 ) / IF ( [Eleição · pós] = 1, 0.8, 0.6 )
     )
 VAR _lPt =
     CONCATENATEX ( _xy, FORMAT ( [@x], "0.0", "en-US" ) & "," & FORMAT ( [@yPt], "0.0", "en-US" ), " ", [a], ASC )

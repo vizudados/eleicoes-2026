@@ -1,38 +1,22 @@
 # -*- coding: utf-8 -*-
-"""09 · Redes — quem dominou as redes? (dono: agente das telas da campanha)
+"""Tela 24 · Redes (T09) — última leitura publicada antes da votação.
 
-A história: na campanha do 1º turno, os dois quase empataram em interações e Flávio ganhou mais seguidores; no 2º
-turno, Lula disparou (3,5 vezes as interações de Flávio, Bites) e o índice de popularidade digital da Quaest virou.
-Os anúncios na Meta entram com a sua ressalva: a Biblioteca de Anúncios e os pagamentos declarados ao TSE medem coisas
-diferentes e não se somam.
+Um protagonista: interações Bites, em duas janelas SEM SOMA (05–17/10 e
+19–24/10, com 24/10 parcial; 18/10 fica fora). Área dos balões = total da
+janela, sem estimar média diária do último dia parcial. O 1º turno fica no
+dossiê; com período escolhido, aparece à esquerda como referência explícita.
 
-  T09_Heroi_Html      quantas vezes (contador), a manchete e o que é "interação"
-  T09_Popularidade_Html  o IPD da Quaest de 04/10 a 19/10: duas linhas que se desenham e se cruzam
-  T09_Conversa_Html   fundo do protagonista: títulos das duas janelas, o chão dos balões, as notas à mão
-  T09_Conversa_Baloes um par de balões de fala por candidato (granularidade Monitoramento[Candidato]): área = média
-                      de interações por dia, na campanha do 1º turno e no 2º turno → dossiê ttT09Conversa
-  T09_Lado_Html       fundo da coluna da direita: seguidores ganhos e anúncios na Meta (títulos, notas, ressalva)
-  T09_Lado_Linhas     a barra de seguidores e o ritmo de cada um (granularidade Seguidores[Candidato]) → dossiê
-                      ttT09Lado (seguidores por rede, o 2º turno e os pagamentos ao TSE)
-  T09_Popularidade_Alvos  uma faixa por data do índice da Quaest (granularidade Monitoramento[Início]) sobre o
-                      desenho do índice → dossiê ttT09Ipd: o humor da conversa naquele dia (saldo de sentimento da
-                      Datrix na semana, menções da FGV depois do debate ou os comentários no dia do 1º turno)
+Três apoios: IPD Quaest até 24/10; ganho Quaest só no Instagram em 24/10;
+veiculação Meta de 18–24/10. Cada apoio tem sua fonte, janela e unidade.
+Nenhuma medição publicada após a eleição foi localizada até 26/10.
 
-Filtro cruzado (23/10/2026, "clicar num lado filtra os balões"): o clique num candidato, nos balões ou na coluna da
-direita, apaga o outro candidato nas três peças (balões, coluna e índice) e a manchete do índice conta o caminho de quem
-foi clicado. Para o clique realçar sem sumir com linha nenhuma, cada lado usa uma coluna de candidato diferente e sem
-relação entre si: os balões, Monitoramento[Candidato]; a coluna da direita, Seguidores[Candidato] (a tabela de
-seguidores, que é o assunto dela). As contas da coluna recebem o candidato da linha por CALCULATE em
-Monitoramento[Candidato]; 'T09 · foco' lê o clique de qualquer um dos dois (ISINSCOPE separa o grão do clique).
-NoFilter para o herói, os fundos e os alvos do índice (não leem o candidato).
-
-Filtro de período (pílula da casca, tabela 'Período', compartilhado com Buscas e 2º turno; pedido do dono em
-23/10/2026): sem escolha, a tela é a de sempre. Com um período, cada bloco usa só a medição que cabe INTEIRA nele (o
-dia do debate conta como depois; entre as que cabem, a mais longa) e escreve a janela real dela: o herói e os balões,
-as interações da Bites (Antes da Band = 05 a 17/10; Depois da Band = as 24 h depois do debate); a coluna da direita,
-os seguidores ganhos (Bites, 05 a 17/10; Quaest, só Instagram, 18/10); o índice da Quaest, a faixa do período com o
-resto esmaecido; o dossiê do lado, os anúncios da Biblioteca que cabem (19/10). Sem medição que caiba: 'sem dado no
-período', nunca zero; Depois da Globo, 'não divulgado' (como na tela da Globo).
+O VizuFilter e a tabela Período da casca são preservados. Só entram janelas
+que caibam inteiras no período: 19–24/10 (Bites) e 18–24/10 (Meta) não são
+repartidas. Sem interações no recorte, o herói responde pelo último IPD
+publicado nele. Valores ausentes não viram zero. Os grãos e as interações
+existentes permanecem: Monitoramento[Candidato] nos balões, Seguidores[Candidato]
+na coluna, Monitoramento[Início] nos alvos do índice; clique realça o candidato
+nas outras peças, e cada ponto abre seu dossiê.
 """
 from __future__ import annotations
 
@@ -104,7 +88,8 @@ CSS_CONVERSA = (
     f".t09c .div{{stroke:{C['areia']};stroke-width:1.4;stroke-dasharray:4 6}}"
     ".t09c .mao{position:absolute;font-size:30px;transform:rotate(-4deg);white-space:nowrap}"
     ".t09c .seta{position:absolute;height:56px}"
-    ".t09c .nota{position:absolute;left:0;top:508px}"
+    ".t09c .nota{position:absolute;left:0;top:486px}"
+    ".t09c .pos.nota{top:508px}"
     # período sem medição que caiba: o lugar dos balões da direita tracejado
     f".t09c .vazio{{position:absolute;left:590px;top:190px;width:420px;height:200px;border:2px dashed {C['areia']};"
     "border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;"
@@ -142,10 +127,11 @@ CSS_LADO = (
     ".t09l .txt{margin-top:6px;font-size:15px}"
     ".t09l .bloco{position:absolute;left:0;right:0}"
     f".t09l hr{{position:absolute;left:0;right:0;top:306px;border:0;border-top:1px solid {C['areia']};margin:0}}"
-    ".t09l .ress{position:absolute;left:0;right:0;top:494px;font-size:13px;line-height:1.4;color:var(--cinza)}"
+    ".t09l .ress{position:absolute;left:0;right:0;top:490px;font-size:13px;line-height:1.4;color:var(--cinza)}"
     # período sem medição que caiba: o lugar das barras tracejado
     f".t09l .vazio{{position:absolute;left:0;right:0;top:150px;height:150px;border:2px dashed {C['areia']};"
     "border-radius:10px;display:flex;align-items:center;justify-content:center}"
+    ".t09l .sem-meta{position:absolute;left:0;top:394px;font-size:15px}"
     ".t09l .vazio .rot{font-size:20px}"
     ".t09l .vazio .mao{font-size:44px;color:var(--grafite);transform:rotate(-3deg)}"
 )
@@ -158,7 +144,7 @@ def corpo_linhas() -> str:
         ".t09r .alvo{position:absolute;pointer-events:auto;cursor:help;border-radius:4px}"
         ".t09r .alvo:hover{background:rgba(203,189,162,.22)}"
         ".t09r .nome{position:absolute;font-size:20px;font-weight:600}"
-        ".t09r .barra{position:absolute;height:28px;border-radius:2px}"
+        ".t09r .barra{position:absolute;height:28px;border-radius:5px}"
         f".t09r .barra.l{{background:{C['vermelho']}}}.t09r .barra.f{{background:{C['azul']}}}"
         ".t09r .num{position:absolute;font-size:30px;white-space:nowrap}"
         ".t09r .num.grande{font-size:46px}"

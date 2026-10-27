@@ -41,7 +41,7 @@ VAR _compara =
 VAR _idade =
     IF (
         _comFaixa = 0 && NOT ISBLANK ( _mais ),
-        "Quem mais falta aqui: <b>" & _mais & "</b> (" & FORMAT ( _maisP, "0.0%" ) & "); quem menos: <b>" & _menos
+        IF ( [Eleição · pós] = 1, "Por idade · 1º turno de 2026: <b>", "Quem mais falta aqui: <b>" ) & _mais & "</b> (" & FORMAT ( _maisP, "0.0%" ) & "); quem menos: <b>" & _menos
             & "</b> (" & FORMAT ( _menosP, "0.0%" ) & ")",
         "A série" & _quem & " no município, ano a ano"
     )
@@ -85,7 +85,7 @@ VAR _html =
         & "<div class='cab sobe'><div class='nm'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _mun, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>"
         & "<div class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _reg, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & FORMAT ( _aptos, "#,0" ) & " eleitores" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _quem, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
         & "<div class='big sobe d1' style='top:84px'>" & FORMAT ( _pct, "0.0%" ) & "</div>"
-        & "<div class='bs sobe d2' style='top:88px'>não foram votar em " & _ano & ": <b>" & FORMAT ( _n, "#,0" ) & "</b> "
+        & "<div class='bs sobe d2' style='top:88px'>não foram votar no " & [T25 · turno] & " de " & _ano & ": <b>" & FORMAT ( _n, "#,0" ) & "</b> "
         & IF ( _n = 1, "pessoa", "pessoas" ) & ". " & _compara & ".</div>"
         & "<div class='lin sobe d3' style='top:150px'>" & _idade & "</div>"
         & "<div style='position:absolute;left:0;top:206px'>" & "<div class='sp'><svg width='230' height='64' viewBox='0 0 230 64'><path class='traco' pathLength='1' d='M" & _linha & "'/>" & _bolas & "</svg>" & _rots & "</div>" & "</div>"

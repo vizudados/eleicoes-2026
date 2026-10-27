@@ -9,3 +9,5 @@ VAR _n26 = CALCULATE ( [T21 · municípios com o PT à frente], 'Ano'[Ano] = 202
 RETURN
     "De " & FORMAT ( _n06, "#,0" ) & " para " & FORMAT ( _n26, "#,0" ) & " municípios com o PT à frente, de 2006 a "
         & "2026. Mapa de pontos com a margem de cada ano; o play anda pelas seis eleições."
+
+    & IF ( [Eleição · pós] = 1, " Segundo turno.", "" )

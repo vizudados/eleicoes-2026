@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Série por idade exclusivamente no primeiro turno.
+*/
+CALCULATE ( DIVIDE ( [T25 · abstenções por idade (cru)], [T25 · aptos por idade (cru)] ), 'Ano'[Ano] = 2026 )

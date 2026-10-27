@@ -4,6 +4,10 @@
 @descricao: Maior número de votos válidos entre os locais da cidade da tela (escala do tamanho dos pontos; ignora a escolha de local).
 @oraculo: 7.884 em Contagem
 */
+IF ( [Eleição · pós] = 1,
+VAR _cod = [T20 · cidade (código)]
+RETURN MAXX ( FILTER ( ALL ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod ), CALCULATE ( [T20 · válidos 2026] ) ),
 VAR _cod = [T20 · cidade (código)]
 RETURN
     CALCULATE ( MAX ( 'T20 Local'[Validos2026] ), REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod )
+)

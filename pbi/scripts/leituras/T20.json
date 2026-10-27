@@ -1,6 +1,17 @@
-{"titulo": "Da zona eleitoral à cidade: 34 cidades, zona por zona",
- "blocos": [
-  ["Como ler", "Cada ponto é uma zona eleitoral, a divisão oficial da Justiça Eleitoral, que reúne vários locais de votação: vermelho onde Lula ficou à frente em 2026, azul onde foi Flávio; quanto mais forte a cor, maior a vantagem. O ponto fica no centro dos locais da zona. O filtro do topo troca a cidade (as 27 capitais, as 6 maiores que trocaram Lula por Flávio e Contagem; a tela abre no Rio de Janeiro) e acha a zona pelo número. A margem é a diferença entre Lula e o adversário, em pontos dos votos válidos."],
-  ["De onde vêm os números", "Votos de presidente no 1º turno, por seção, do TSE, somados por zona eleitoral dentro da cidade; a soma de cada cidade bate com o total oficial do município. Em 2018 e 2022 entram os votos da mesma zona naquele ano; zona nova fica sem a comparação. A posição dos locais vem do cadastro de locais do TSE de 2022 e o contorno, da malha do IBGE."],
-  ["Para lembrar", "Uma zona pode passar dos limites da cidade: aqui entram só os locais dela que ficam na cidade. Zona sem nenhum local com coordenada fica fora do mapa, mas entra nas contas e na lista; o cartão ao lado diz quantas são. Em cidades de território grande, como Manaus e Porto Velho, o mapa mostra a mancha urbana, e o mapinha no canto, a cidade inteira."]
- ]}
+{
+  "titulo": "Como ler as zonas eleitorais",
+  "blocos": [
+    [
+      "Como ler",
+      "Pré compara os primeiros turnos; Pós compara os segundos turnos de 2026 e 2022. A escolha de cidade e zona permanece, enquanto contagens, cores, lista, ficha e dossiê acompanham o turno. A lista vai da maior queda à maior alta da diferença percentual entre Lula e o adversário, sobre os votos válidos."
+    ],
+    [
+      "O histórico de cada zona",
+      "Cada ano conserva as zonas existentes; uma zona sem correspondência histórica não recebe zero nem é tratada como virada. No Pós são 319 zonas em 2018 e 2022 e 320 em 2026 nas 34 cidades; a zona 398 de São Paulo entra nos anos históricos, embora não esteja no desenho de 2026. Sem uma zona escolhida, o Pós destaca a zona com mais votos válidos entre as que mudaram de lado, nos dois sentidos; sem virada, mostra a menor variação da margem."
+    ],
+    [
+      "De onde vêm os números",
+      "TSE: seções presidenciais do segundo turno de 2018 e 2022, detalhe por zona e totalização final por zona em 2026. O ponto é referência cartográfica no centro dos locais cadastrados no primeiro turno de 2026, não o limite territorial da zona. A fonte não publica a quantidade de locais do segundo turno de 2026; seções e votos são do turno escolhido, e uma ausência histórica é indicada junto ao ano."
+    ]
+  ]
+}

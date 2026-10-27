@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Total de interações do candidato na janela exibida no herói.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+CALCULATE ( [T09 · conversa · direita], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )

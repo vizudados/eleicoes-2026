@@ -3,5 +3,5 @@
 @formato: texto
 @descricao: Texto para leitor de tela dos alvos da série.
 */
-"Passe o mouse num ano da linha para ver a disputa daquele 1º turno e quantas vezes a diferença entre os dois "
+"Passe o mouse num ano da linha para ver a disputa do " & [T06 · turno] & " e quantas vezes a diferença entre os dois "
     & "primeiros cabia em quem faltou."

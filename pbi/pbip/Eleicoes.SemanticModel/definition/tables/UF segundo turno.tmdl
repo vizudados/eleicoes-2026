@@ -24,7 +24,7 @@ table 'UF segundo turno'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Votos de Lula.
+	/// Votos do candidato do PT (Lula em 2006, 2022 e 2026; Dilma em 2010 e 2014; Haddad em 2018).
 	column VotosPT
 		dataType: int64
 		isHidden
@@ -35,7 +35,7 @@ table 'UF segundo turno'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Votos de Flávio em 2026 e Jair Bolsonaro em 2022.
+	/// Votos do adversário do PT no 2º turno: Flávio em 2026, Jair Bolsonaro em 2022 e 2018, Aécio em 2014, Serra em 2010, Alckmin em 2006.
 	column VotosAdversario
 		dataType: int64
 		isHidden

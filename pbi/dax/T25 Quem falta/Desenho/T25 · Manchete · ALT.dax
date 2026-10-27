@@ -4,10 +4,10 @@
 @descricao: Texto para leitor de tela da manchete.
 */
 LEFT (
-    [T25 · lugar] & ", 1º turno de " & [T25 · ano]
+    [T25 · lugar] & ", " & [T25 · turno] & " de " & [T25 · ano]
         & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
         & IF ( ISBLANK ( [T25 · abstenção %] ), "sem dado neste cruzamento.",
             FORMAT ( [T25 · abstenção %], "0.0%" ) & " dos eleitores não foram votar." )
-        & " Clique num ano, numa idade ou num ponto do mapa para cruzar.",
+        & IF ( [Eleição · pós] = 1, " Ano e mapa no segundo turno; idade no primeiro turno de 2026.", " Clique num ano, numa idade ou num ponto do mapa para cruzar." ),
     250
 )

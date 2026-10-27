@@ -11,14 +11,23 @@ VAR _a0 = [T25 · primeiro ano da série]
 VAR _dpp = [T25 · variação da série em p.p.]
 VAR _nomeRef = [T25 · referência da série (nome)]
 -- 2 · Textos
-VAR _rot = "A ausência ano a ano · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & IF ( _comFaixa = 1, " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _faixa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) )
+VAR _rot = "A ausência ano a ano · " & [T25 · turno] & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & IF ( _comFaixa = 1, " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _faixa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) )
+VAR _tipo = [T25 · série · tipo de manchete]
+VAR _marco = [T25 · série · marco do extremo]
+VAR _p0 = [T25 · abstenção % no primeiro ano]
+VAR _p26 = [T25 · abstenção % em 2026]
+VAR _intervalo = IF ( ISBLANK ( _marco ), "da série", "desde " & FORMAT ( _marco, "0" ) )
 VAR _man =
-    SWITCH (
-        TRUE (),
-        ISBLANK ( _dpp ), "Sem série neste cruzamento",
-        ABS ( _dpp ) < 0.05, "Igual desde " & _a0,
-        IF ( _dpp > 0, "Subiu ", "Caiu " ) & FORMAT ( ABS ( _dpp ), "0.0" )
-            & IF ( ABS ( _dpp ) < 2, " ponto", " pontos" ) & " desde " & _a0
+    SWITCH ( _tipo,
+        "menor", "Em 2026, a menor abstenção " & _intervalo,
+        "maior", "Em 2026, a maior abstenção " & _intervalo,
+        "estável", "Em 2026, a abstenção ficou em " & FORMAT ( _p26, "0.0%" ),
+        "sem série", "Sem série neste cruzamento",
+        IF ( [Eleição · pós] = 1,
+            IF ( _dpp > 0, "Subiu de ", "Caiu de " ) & FORMAT ( _p0, "0.0%" ) & " para " & FORMAT ( _p26, "0.0%" ),
+            IF ( _dpp > 0, "Subiu ", "Caiu " ) & FORMAT ( ABS ( _dpp ), "0.0" )
+                & IF ( ABS ( _dpp ) < 2, " ponto", " pontos" ) & " desde " & _a0
+        )
     )
 VAR _lado =
     IF ( _nomeRef <> "", "<span class='lg'><i></i>" & _nomeRef & "</span>" )

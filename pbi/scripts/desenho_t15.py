@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from momento_eleicao import segundo
 
 AQUI = Path(__file__).resolve().parent
 PBI = AQUI.parent
@@ -30,11 +31,26 @@ MEDIDAS: list[dict] = []
 
 
 def conta(nome: str, formato: str, descricao: str, expr: str, oraculo: str | None = None) -> None:
+    pos = expr.replace("'Município ano'", "'Município segundo turno'")
+    if nome.startswith("T15 · margem do Brasil no ano "):
+        qual = nome.rsplit(" ", 1)[-1]
+        pos = f"""VAR _a = [T15 · ano {qual}]
+RETURN
+    IF ( NOT ISBLANK ( _a ), CALCULATE (
+        DIVIDE ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ),
+            SUM ( 'PT histórico Brasil'[Validos] ) ),
+        'PT histórico Brasil'[Ano] = _a, 'PT histórico Brasil'[Turno] = 2
+    ) )"""
+    if pos != expr:
+        expr = segundo(expr, pos)
     MEDIDAS.append({"nome": nome, "sub": "Contas", "pasta": f"{TELA}\\Contas", "formato": formato,
                     "descricao": descricao, "expr": expr, "oraculo": oraculo})
 
 
 def desenho(nome: str, descricao: str, expr: str) -> None:
+    expr = expr.replace("1º", '" & IF ( [Eleição · pós] = 1, "2º", "1º" ) & "')
+    if nome == "T15 · Tooltip ano · HTML":
+        expr = expr.replace("/ 0.7", "/ IF ( [Eleição · pós] = 1, 1.0, 0.7 )")
     MEDIDAS.append({"nome": nome, "sub": "Desenho", "pasta": f"{TELA}\\Desenho", "formato": "texto",
                     "descricao": descricao, "expr": expr, "oraculo": None})
 
@@ -267,11 +283,13 @@ RETURN
             'Município'[Quinto de renda] = _q
         )
     )""", ORACULO + " › entre_parecidas › variacao_grupo_txt = −5,6 p.p.")
-conta("T15 · parecidas · posição", "0", "Posição da cidade entre as parecidas pela queda da margem (1 = a maior queda).",
+conta("T15 · parecidas · posição", "0", "Posição entre as parecidas no turno escolhido: maior alta em ordem decrescente, maior queda em ordem crescente; vazia quando a margem não mudou.",
       _PARECIDAS + """
 VAR _d = [T15 · variação]
 RETURN
-    IF ( NOT ISBLANK ( _d ) && NOT ISBLANK ( _p ), COUNTROWS ( FILTER ( _ok, [@d] < _d ) ) + 1 )""",
+    IF ( NOT ISBLANK ( _d ) && NOT ISBLANK ( _p ) && _d <> 0,
+        IF ( _d > 0, COUNTROWS ( FILTER ( _ok, [@d] > _d ) ),
+            COUNTROWS ( FILTER ( _ok, [@d] < _d ) ) ) + 1 )""",
       ORACULO + " › entre_parecidas › posicao = 45")
 conta("T15 · parecidas · menor variação", "0.0%", "A menor variação de margem (a maior queda) entre as parecidas.",
       _PARECIDAS + "\nRETURN\n    MINX ( _ok, [@d] )")
@@ -648,13 +666,19 @@ VAR _grupo =
     "cidades de " & _porte & IF ( RIGHT ( _porte, 3 ) = "mil", " habitantes", " de habitantes" ) & " e renda "
         & SWITCH ( _quinto, "mais ricas", "entre as mais ricas", "mais pobres", "entre as mais pobres", "no " & _quinto )
 VAR _txtPos =
-    IF ( _n = 1, "a única do grupo", FORMAT ( _pos, "0" ) & "ª maior queda de " & FORMAT ( _n, "#,0" ) )
+    SWITCH ( TRUE (),
+        _n = 1, "a única do grupo",
+        ISBLANK ( _var ), "Sem eleição anterior para comparar",
+        _var = 0, "Margem estável no período",
+        FORMAT ( _pos, "0" ) & IF ( _var > 0, "ª maior alta de ", "ª maior queda de " ) & FORMAT ( _n, "#,0" ) )
 VAR _txtComp =
     IF (
         _n = 1,
         _nome & " é a única entre as " & _grupo & ": não há com quem comparar.",
-        _grupo & "; o grupo " & IF ( _vg < 0, "caiu ", "subiu " ) & FORMAT ( ABS ( _vg ) * 100, "0.0" ) & " p.p., "
-            & _nome & IF ( _var < 0, " caiu ", " subiu " ) & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p."
+        _grupo & "; o grupo " & IF ( _vg = 0, "ficou estável", IF ( _vg < 0, "caiu ", "subiu " )
+            & FORMAT ( ABS ( _vg ) * 100, "0.0" ) & " p.p." ) & ", " & _nome
+            & IF ( _var = 0, " ficou estável", IF ( _var < 0, " caiu ", " subiu " )
+                & FORMAT ( ABS ( _var ) * 100, "0.0" ) & " p.p." )
     )
 -- 3 · Geometria (histograma de {FAIXAS} faixas em 1000 px; altura até 104 px, base em y 280)
 VAR _faixas =
@@ -732,6 +756,7 @@ VAR _cid = [T15 · cidade]
 VAR _n = [T15 · parecidas · quantidade]
 VAR _pos = [T15 · parecidas · posição]
 VAR _vg = [T15 · parecidas · variação do grupo]
+VAR _var = [T15 · variação]
 VAR _y = [T15 · ano escolhido]
 VAR _y0 = [T15 · ano anterior]
 -- 2 · Textos
@@ -741,7 +766,9 @@ RETURN
         ISBLANK ( _cid ), "Escolha uma cidade para compará-la com as cidades parecidas.",
         ISBLANK ( _y0 ),
         _cid & ": " & _y & " é o começo da série; não há eleição anterior para comparar com as cidades parecidas.",
-        _cid & ": " & FORMAT ( _pos, "0" ) & "ª maior queda de margem entre " & FORMAT ( _n, "#,0" )
+        ISBLANK ( _var ), _cid & ": sem eleição anterior para comparar a variação da margem.",
+        _var = 0, _cid & ": a margem ficou estável entre " & _y0 & " e " & _y & ".",
+        _cid & ": " & FORMAT ( _pos, "0" ) & IF ( _var > 0, "ª maior alta", "ª maior queda" ) & " de margem entre " & FORMAT ( _n, "#,0" )
             & " cidades parecidas, de " & _y0 & " para " & _y & "; o grupo variou " & {_pp("_vg")} & " pontos."
     )""")
 
@@ -784,8 +811,9 @@ RETURN
             & "style='width:" & _wpt & "px'></b></span><span class='pc'>" & {_pct("_pt")} & "</span></div>"
         & "<div class='cl entra d3'><span class='nm'>" & _cadv & "</span><span class='tr'><b class='barra-x adv' "
             & "style='width:" & _wadv & "px'></b></span><span class='pc'>" & {_pct("_adv")} & "</span></div>"
-        & "<div class='cl entra d4'><span class='nm'>os demais</span><span class='tr'><b class='barra-x' style='width:"
-            & _wout & "px'></b></span><span class='pc'>" & {_pct("_out")} & "</span></div>"
+        & IF ( [Eleição · pós] = 0,
+            "<div class='cl entra d4'><span class='nm'>os demais</span><span class='tr'><b class='barra-x' style='width:"
+                & _wout & "px'></b></span><span class='pc'>" & {_pct("_out")} & "</span></div>", "" )
         & "<div class='nota entra d5'>Faltaram " & {_pct("_abs")} & " dos eleitores da cidade.</div>"
         & "<div class='mao entra d6'>" & _mao & "</div>"
     & "</div>\"""")

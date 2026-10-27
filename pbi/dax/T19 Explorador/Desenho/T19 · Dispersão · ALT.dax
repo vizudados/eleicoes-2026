@@ -12,3 +12,5 @@ RETURN
     "Dispersão: um ponto por município, renda por pessoa no eixo horizontal e quanto a margem de Lula mudou de 2022 "
         & "para 2026 no vertical. Recorte " & _recorte & ": Lula perdeu margem em " & FORMAT ( _perdeu, "#,0" )
         & " de " & FORMAT ( _com, "#,0" ) & ". Arraste um retângulo para filtrar a lista."
+
+    & IF ( [Eleição · pós] = 1, " Segundo turno.", "" )

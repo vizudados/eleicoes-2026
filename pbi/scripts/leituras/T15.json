@@ -1,6 +1,17 @@
-{"titulo": "Como votou a minha cidade?",
- "blocos": [
-  ["Como ler", "Escolha a cidade no campo Município, no alto da tela; tudo muda com ela. As barras mostram a margem do PT em cada eleição: para cima, o PT à frente; para baixo, o adversário. Clique num ano e a ficha e as cidades parecidas passam a contar aquela eleição contra a anterior."],
-  ["De onde vêm os números", "Votos do 1º turno de 2006 a 2026 na cidade, do TSE. População e renda por pessoa do Censo 2022, do IBGE. As cidades parecidas têm o mesmo porte e estão no mesmo quinto de renda, em todo o Brasil."],
-  ["Para lembrar", "Margem é a diferença entre os votos do PT e os do adversário, em pontos dos votos válidos. A posição entre as parecidas conta da maior queda para a menor: 1ª é a que mais caiu. Passe o mouse num ano para ver a votação daquele ano."]
- ]}
+{
+  "titulo": "Como votou a minha cidade?",
+  "blocos": [
+    [
+      "Como ler",
+      "Escolha a cidade no campo Município: a ficha, a série e as parecidas acompanham essa escolha. Pré Eleições 2026 mostra os primeiros turnos; Pós Eleições 2026 mostra os segundos turnos, inclusive na comparação entre 2022 e 2026. Clique num ano e a ficha e as parecidas comparam aquela eleição com a anterior, no mesmo turno."
+    ],
+    [
+      "De onde vêm os números",
+      "Resultados municipais do TSE, de 2006 a 2026, no turno escolhido. Cidade e estado somam votos municipais; o Brasil inclui o exterior. População e renda por pessoa são do Censo 2022 do IBGE; as parecidas têm o mesmo porte e quinto de renda, em todo o país."
+    ],
+    [
+      "Para lembrar",
+      "Margem é a diferença entre o PT e o adversário, em pontos dos votos válidos. Nos dois modos, se a margem da cidade subiu, a posição vai da maior alta à menor; se caiu, da maior queda à menor; se não mudou, a leitura diz que ficou estável. Em 2006 não há eleição anterior, e municípios novos podem não ter a série completa."
+    ]
+  ]
+}

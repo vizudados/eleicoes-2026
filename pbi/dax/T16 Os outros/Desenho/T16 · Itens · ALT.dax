@@ -1,6 +1,7 @@
 /*
 @pasta: T16 Os outros\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela das linhas e etiquetas de apoio.
+@descricao: Pós: inferência agregada. Pré: expressão original integral, sem alteração.
+@oraculo: dados/pbi/t16_urna.csv
 */
-"Uma linha por candidato derrotado com a posição dele no 2º turno; passe o mouse para ver a frase e a data do anúncio."
+IF ( [Eleição · pós] = 1, BLANK (), [T16 · Pré · Itens · ALT] )

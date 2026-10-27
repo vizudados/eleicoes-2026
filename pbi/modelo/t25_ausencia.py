@@ -25,6 +25,8 @@ Sem relação com 'Município ano' nem com 'Abstenção perfil': sem faixa marca
 ele mesmo (o mapa não se filtra pelo próprio clique), e a dimensão 'T25 Faixa' só filtra o fato desta tela.
 """
 
+# P2: o Pós usa Município segundo turno e Comparecimento turno (modelo/base.py).
+# Perfil etário permanece no primeiro turno; não criar fato de idade vazio ou estimado.
 from gerar_modelo import col, tabela, tabela_csv
 
 # (faixa, ordem, rótulo curto, voto) — as faixas do TSE agrupadas como na tela 06 (desenho_t06.py) e no extrator

@@ -23,13 +23,10 @@ VAR _alto =
         "Escolaridade", "Onde mais eleitores terminaram o ensino médio",
         "Bolsa Família", "Onde mais casas recebem Bolsa Família",
         "Nas cidades de IDH mais alto" )
-VAR _lulaEmBaixo = _l1 >= _l5
-VAR _pontaLula = IF ( _lulaEmBaixo, _baixo, _alto )
-VAR _pontaFlavio = IF ( _lulaEmBaixo, _alto, _baixo )
-VAR _pctLula = IF ( _lulaEmBaixo, _l1, _l5 )
-VAR _pctFlavio = IF ( _lulaEmBaixo, _f5, _f1 )
+VAR _lider1 = IF ( _l1 = _f1, "Empate", IF ( _l1 > _f1, "Lula", "Flávio" ) )
+VAR _lider5 = IF ( _l5 = _f5, "Empate", IF ( _l5 > _f5, "Lula", "Flávio" ) )
 VAR _mede =
-    SWITCH ( _l,
+    [T24 · turno] & " · " & SWITCH ( _l,
         "Renda", "Renda: quanto entra por mês, por pessoa, na casa (média da cidade, Censo 2022).",
         "Escolaridade", "Escolaridade: quantos eleitores da cidade têm pelo menos o ensino médio completo (TSE, 2026).",
         "Bolsa Família", "Bolsa Família: famílias pagas em agosto de 2026 para cada 100 casas da cidade (Censo 2022).",
@@ -45,9 +42,9 @@ VAR _eixo2 =
 -- 3 · Grade (% de 30 a 60; 50% tracejado)
 VAR _grade =
     CONCATENATEX (
-        GENERATESERIES ( 3, 6, 1 ),
+        GENERATESERIES ( 3, 7, 1 ),
         VAR _p = [Value] / 10
-        VAR _y = 106 + ( 520 - ( MAX ( 0.2, MIN ( 0.7, _p ) ) - 0.2 ) * 960 )
+        VAR _y = 106 + ( 520 - ( MAX ( 0.2, MIN ( 0.8, _p ) ) - 0.2 ) * 800 )
         RETURN
             "<i class='g" & IF ( [Value] = 5, " meio", "" ) & "' style='top:" & FORMAT ( _y, "0.0", "en-US" ) & "px'></i>"
                 & "<span class='gy' style='top:" & FORMAT ( _y - 9, "0.0", "en-US" ) & "px'>" & [Value] * 10 & "%</span>",
@@ -56,9 +53,11 @@ VAR _grade =
 -- 4 · Marcação
 RETURN
     "<div class='tela t24f'>"
-        & "<div class='man sobe'>" & _pontaLula & ", <b class='lula'>Lula teve " & FORMAT ( _pctLula * 100, "0" )
-        & "%</b>. " & _pontaFlavio & ", <b class='flavio'>Flávio teve " & FORMAT ( _pctFlavio * 100, "0" )
-        & "%</b>.</div>"
+        & "<div class='man sobe'>" & _baixo & ", <b class='" & IF ( _lider1 = "Lula", "lula", "flavio" ) & "'>"
+        & IF ( _lider1 = "Empate", "houve empate", _lider1 & " liderou com " & FORMAT ( IF ( _lider1 = "Lula", _l1, _f1 ) * 100, "0" ) & "%" )
+        & "</b>. " & _alto & ", <b class='" & IF ( _lider5 = "Lula", "lula", "flavio" ) & "'>"
+        & IF ( _lider5 = "Empate", "houve empate", _lider5 & " liderou com " & FORMAT ( IF ( _lider5 = "Lula", _l5, _f5 ) * 100, "0" ) & "%" )
+        & "</b>.</div>"
         & "<div class='mede nota entra d3'>" & _mede & "</div>"
         & _grade
         & "<div class='eixo rot entra d10'><span>← " & _eixo & "</span><span>CADA DEGRAU: UM QUINTO DOS ELEITORES</span>"

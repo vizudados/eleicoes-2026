@@ -1,0 +1,25 @@
+/*
+@pasta: T06 Ausência\Contas
+@formato: texto
+@descricao: Variação de pelo menos um ponto: tendência; abaixo disso, extremo recente com o maior intervalo.
+*/
+VAR _serie =
+        ADDCOLUMNS (
+            CALCULATETABLE ( VALUES ( 'Ano'[Ano] ), REMOVEFILTERS ( 'Ano' ) ),
+            "@p", VAR _a = 'Ano'[Ano]
+                RETURN CALCULATE ( [T06 · abstenção % (ano)], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = _a )
+        )
+    VAR _atual = CALCULATE ( [T06 · abstenção % (ano)], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = 2026 )
+    VAR _anteriores = FILTER ( _serie, 'Ano'[Ano] < 2026 && NOT ISBLANK ( [@p] ) )
+    VAR _delta = [T06 · variação da abstenção em p.p.]
+    VAR _aMin = [T06 · série · marco da menor]
+    VAR _aMax = [T06 · série · marco da maior]
+    VAR _nMin = COUNTROWS ( FILTER ( _anteriores, ISBLANK ( _aMin ) || 'Ano'[Ano] > _aMin ) )
+    VAR _nMax = COUNTROWS ( FILTER ( _anteriores, ISBLANK ( _aMax ) || 'Ano'[Ano] > _aMax ) )
+    RETURN SWITCH ( TRUE (),
+        ISBLANK ( _delta ), "sem série",
+        ROUND ( ABS ( _delta ), 10 ) >= 1, "tendência",
+        _nMin > 0 && _nMin >= _nMax, "menor",
+        _nMax > 0, "maior",
+        "estável"
+    )

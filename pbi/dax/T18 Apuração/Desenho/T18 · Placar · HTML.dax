@@ -19,9 +19,9 @@ VAR _a = [T18 · noite · Flávio passou à frente]
 VAR _b = [T18 · noite · Lula retomou a frente]
 -- 2 · Textos
 VAR _frase = IF ( _escopo = "Brasil",
-    "Lula foi eleito por " & FORMAT ( _dif, "#,0" ) & " votos. Flávio liderou das "
+    "Lula foi reeleito por " & FORMAT ( _dif, "#,0" ) & " votos. Flávio liderou das "
         & SUBSTITUTE ( FORMAT ( _a, "HH:mm" ), ":", "h" ) & " às " & SUBSTITUTE ( FORMAT ( _b, "HH:mm" ), ":", "h" ) & ".",
-    "Lula foi eleito no Brasil; " & _em & ", " & _lider & " terminou à frente por "
+    "Lula foi reeleito no Brasil; " & _em & ", " & _lider & " terminou à frente por "
         & FORMAT ( _dif, "#,0" ) & IF ( _dif = 1, " voto.", " votos." ) )
 VAR _bl = "<div class='cand sobe d2'><div class='rot lula-esc'>LULA · PT · 13</div>"
     & "<div class='num pct lula'>" & FORMAT ( _lp, "0.00%" ) & "</div><div class='txt votos'>"
@@ -31,7 +31,7 @@ VAR _bf = "<div class='cand sobe d3'><div class='rot flavio-esc'>FLÁVIO BOLSONA
     & FORMAT ( _f, "#,0" ) & " votos</div></div>"
 VAR _html = "<div class='tela t18p'><div class='rot topo entra'>RESULTADO FINAL · 2º TURNO · "
     & UPPER ( _escopo ) & "</div><div class='par'>" & _bl & _bf
-    & "<div class='selo entra d6'>LULA ELEITO</div></div><div class='man frase sobe d4'>" & _frase
+    & "<div class='selo entra d6'>LULA REELEITO</div></div><div class='man frase sobe d4'>" & _frase
     & "</div><div class='secoes sobe d5'><div class='rot'>SEÇÕES TOTALIZADAS</div><div class='trilho'>"
     & "<div class='enche barra-x' style='width:100%'></div><span class='num'>"
     & FORMAT ( [Apuração · seções %], "0%" ) & "</span></div><div class='nota'>Abstenção "

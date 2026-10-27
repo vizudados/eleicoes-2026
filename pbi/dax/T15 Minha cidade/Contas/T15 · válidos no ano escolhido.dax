@@ -4,6 +4,8 @@
 @descricao: Válidos na eleição escolhida (2026 sem clique), no município.
 @gerado: pbi/scripts/desenho_t15.py
 */
-VAR _a = [T15 · ano escolhido]
+IF ( [Eleição · pós] = 1, VAR _a = [T15 · ano escolhido]
 RETURN
-    CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Ano'[Ano] = _a )
+    CALCULATE ( SUM ( 'Município segundo turno'[Validos] ), 'Ano'[Ano] = _a ), VAR _a = [T15 · ano escolhido]
+RETURN
+    CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Ano'[Ano] = _a ) )

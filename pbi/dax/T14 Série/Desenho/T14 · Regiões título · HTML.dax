@@ -1,0 +1,9 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Escala comum das regiões no turno escolhido.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+"<div class='tela'><div class='rot entra'>POR REGIÃO · MESMA ESCALA, 10% A "
+    & IF ( [Eleição · pós] = 1, "90%", "70%" )
+    & " · CLIQUE NUMA REGIÃO PARA VER A SÉRIE DELA</div></div>"

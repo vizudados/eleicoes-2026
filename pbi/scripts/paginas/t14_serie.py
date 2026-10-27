@@ -169,9 +169,7 @@ def _corpo(css: str) -> str:
     return f"<style>{css}</style>{{{{content}}}}"
 
 
-CORPO_REGIOES = (f"<style>{CSS_REGIOES}</style><div class='tela t14g0' style='pointer-events:none'><div class='rot entra'>"
-                 "POR REGIÃO · MESMA ESCALA, 10% A 70% · CLIQUE NUMA REGIÃO PARA VER A SÉRIE DELA</div></div>"
-                 "{{content}}")
+CORPO_REGIOES = f"<style>{CSS_REGIOES}</style>{{{{content}}}}"
 
 
 def declarar(ctx):
@@ -190,6 +188,8 @@ def declarar(ctx):
                                   modelo_corpo=CORPO_REGIOES, granularidade=("Município", "Região"), filtro_cruzado=True,
                                   transparencia_nao_selecionados=True, tooltip_pagina="ttT14Regiao",
                                   alt=lib.medida("T14 · Regiões · ALT"), z=Z + 3, tab=130)),
+        Visual(P, lib.visual_html("T14_Regioes_Titulo", 150, 816, 1620, 24, "T14 · Regiões título · HTML",
+                                  folha_de_estilo=CSS, alt=lib.medida("T14 · Regiões título · ALT"), z=Z + 4, tab=129)),
         *pagina_lib.tooltip("ttT14Ano", "Série · eleição", 440, 300, "T14 · Tooltip ano · HTML", ordem=ORDEM_TT,
                             folha_de_estilo=CSS, modelo_corpo=_corpo_tt(CSS_TOOLTIP)),
         *pagina_lib.tooltip("ttT14Regiao", "Série · região", 460, 400, "T14 · Tooltip região · HTML",

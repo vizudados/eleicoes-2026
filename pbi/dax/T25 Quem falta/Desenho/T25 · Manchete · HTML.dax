@@ -21,7 +21,7 @@ VAR _todas = [T25 · abstenção % todas as idades]
 -- 2 · Textos
 VAR _semDado = ISBLANK ( _pct )
 VAR _semIdade = _comFaixa = 1 && _temIdade = 0
-VAR _txtPct = IF ( _semDado, "<span class='vz'>sem dado</span>", FORMAT ( _pct, "0.0%" ) )
+VAR _txtPct = IF ( _semDado, "<span class='vz'>sem dado</span>", FORMAT ( _pct, "0.00%" ) )
 VAR _media = [T25 · média (nome)]
 VAR _quantos =
     IF ( _pct >= 0.35, FORMAT ( _dez, "0" ) & " em cada 10", "1 em cada " & FORMAT ( _um, "0" ) )
@@ -64,14 +64,14 @@ VAR _linha =
         _semIdade,
             "<div class='aviso'><span class='ast'>*</span>Escolha 2014, 2018, 2022 ou 2026 para ver por idade.</div>",
         _chips = "",
-            "<div class='dica'>Clique num ano, numa idade ou num ponto do mapa: as três peças se cruzam.</div>"
+            "<div class='dica'>" & IF ( [Eleição · pós] = 1, "Cruze ano e mapa. Idade: 1º turno de 2026.", "Cruze ano, idade e mapa." ) & "</div>"
                 & "<div class='cruza' aria-hidden='true'><div class='mao entra d10' style='font-size:26px;color:var(--tinta);transform:rotate(-3deg)'>clique para cruzar</div><svg width='150' height='40' viewBox='0 0 150 40' style='position:absolute;left:10px;top:30px'><path class='traco' pathLength='1' style='animation-delay:1.6s' d='M6,6 C50,30 96,34 140,22 M128,14 L141,22 L127,30' fill='none' stroke='#1C1915' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/></svg></div>",
         "<div class='marc'>" & _chips & "<span class='dica'>clique de novo para desmarcar</span></div>"
     )
 -- 4 · Marcação
 RETURN
     "<div class='tela mq'>"
-        & "<div class='sob sobe'>Quem falta · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · 1º turno de " & _ano & "</div>"
+        & "<div class='sob sobe'>Quem falta · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _lugar, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & [T25 · turno] & " de " & _ano & "</div>"
         & "<div class='topo'><div class='big sobe d1'>" & _txtPct & "</div>"
         & "<div class='lado sobe d2'><div class='nfv'>não foram votar</div>" & "<svg class='subl' viewBox='0 0 300 16' preserveAspectRatio='none' aria-hidden='true' style='width:236px'><path pathLength='1' class='traco' style='animation-delay:1.1s' d='M3,10 C60,4 140,13 205,7 C240,4 270,6 297,9' fill='none' stroke='#1C1915' stroke-width='3' stroke-linecap='round'/></svg>"
         & "<div class='txt fr'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _frase, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div></div>"

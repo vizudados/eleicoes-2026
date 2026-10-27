@@ -1,6 +1,17 @@
-{"titulo": "Como ler a ausência",
- "blocos": [
-  ["Como ler", "O número grande é quem não foi votar. A barra escura é esse total; a faixa listrada embaixo é a diferença entre os dois mais votados, e os cortes mostram quantas vezes ela cabe ali. À direita, cada coluna soma quem não escolheu ninguém numa eleição: quem faltou, quem anulou e quem votou em branco."],
-  ["De onde vêm os números", "TSE: comparecimento, brancos e nulos do 1º turno de 2006 a 2026. Sem filtro, o total oficial do Brasil, com o exterior; com o filtro de estado, a soma dos municípios dos estados escolhidos (um estado, uma região inteira ou vários)."],
-  ["Para lembrar", "Abstenção é quem estava apto a votar e não foi à urna; somando brancos e nulos, chega-se a quem não escolheu nenhum candidato. Passe o mouse num ano para ver a disputa e quantas vezes a diferença cabia em quem faltou. Onde e quem falta está na tela seguinte."]
- ]}
+{
+  "titulo": "Como ler a ausência",
+  "blocos": [
+    [
+      "Como ler",
+      "Pré mostra o 1º turno; Pós mostra o 2º turno, inclusive na série de 2006 a 2026 e nos dossiês dos anos. A régua divide quem faltou pela diferença de votos entre os dois candidatos no mesmo turno e recorte. Ela compara tamanhos, sem dizer em quem essas pessoas votariam."
+    ],
+    [
+      "De onde vêm os números",
+      "TSE: abstenções, brancos e nulos registrados em cada eleição. Brasil inclui exterior e trânsito; com estados ou regiões, vale a soma dos municípios. Em 2010, o municipal do Pré não inclui trânsito interno e o do Pós inclui; o total nacional inclui nos dois modos."
+    ],
+    [
+      "Para lembrar",
+      "A linha mostra abstenções sobre os aptos; as colunas somam quem faltou, anulou ou votou em branco. No Pós de 2026, a diferença é entre Lula e Flávio; nos anos anteriores, entre o candidato do PT e seu adversário naquele segundo turno. Essas situações não permitem concluir a preferência política de ninguém."
+    ]
+  ]
+}

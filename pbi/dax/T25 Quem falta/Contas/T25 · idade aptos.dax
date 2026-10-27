@@ -1,0 +1,7 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: #,0
+@descricao: Perfil etário do primeiro turno, no lugar e faixa; nunca usa o segundo turno.
+*/
+VAR _a = [T25 · idade ano]
+RETURN CALCULATE ( [T25 · aptos por idade (cru)], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = _a )

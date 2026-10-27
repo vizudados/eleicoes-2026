@@ -3,6 +3,20 @@
 @formato: texto
 @descricao: Texto alternativo da faixa do recorte.
 */
+IF ( [Eleição · pós] = 1,
+-- 1 · Leituras
+VAR _recorte = [T19 · recorte em uso]
+VAR _n = [T19 · municípios no recorte]
+VAR _lula = [T19 · municípios com Lula à frente]
+VAR _flavio = [T19 · municípios com Flávio à frente]
+VAR _viraram = [T19 · municípios que viraram]
+-- 2 · Textos
+RETURN
+    "Recorte: " & _recorte & ". " & FORMAT ( _n, "#,0" ) & IF ( _n = 1, " município", " municípios" )
+        & "; Lula à frente em " & FORMAT ( _lula, "#,0" ) & ", Flávio em " & FORMAT ( _flavio, "#,0" ) & "; "
+        & IF ( _viraram = 0, "nenhum virou", FORMAT ( _viraram, "#,0" ) & IF ( _viraram = 1, " virou", " viraram" ) )
+        & " de lado desde 2022."
+,
 -- 1 · Leituras
 VAR _recorte = [T19 · recorte em uso]
 VAR _n = [T19 · municípios no recorte]
@@ -15,3 +29,4 @@ RETURN
         & "; Lula à frente em " & FORMAT ( _lula, "#,0" ) & ", Flávio em " & FORMAT ( _flavio, "#,0" ) & "; "
         & IF ( _viraram = 0, "nenhum virou", FORMAT ( _viraram, "#,0" ) & IF ( _viraram = 1, " virou", " viraram" ) )
         & " de Lula para Flávio."
+ )

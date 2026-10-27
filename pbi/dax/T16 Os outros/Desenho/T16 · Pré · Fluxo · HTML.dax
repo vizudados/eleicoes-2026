@@ -1,0 +1,202 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: A manchete (montada com 'T16 · transferência · tendência' de cada grupo), a ressalva das amostras pequenas e o diagrama de fluxo: à esquerda os grupos (Cury, Renan, Caiado, quem não votou, com o tamanho de cada um no 1º turno), à direita Lula, Flávio e branco/nulo; cada faixa tem a espessura da parte do grupo (1,2 px por ponto percentual) e corre da esquerda para a direita. Com um grupo em destaque (clique num grupo ou num candidato da lista dos apoios), as faixas dos outros esmaecem e a manchete passa a ser a do grupo, com o apoio do candidato. Só lê contas 'T16 · …'.
+*/
+-- 1 · Leituras
+VAR _grupos =
+    DATATABLE (
+        "Ordem", INTEGER, "Seg", STRING, "Nome", STRING, "Cand", STRING,
+        {
+            { 1, "Cury", "Augusto Cury", "Augusto Cury" },
+            { 2, "Renan", "Renan Santos", "Renan Santos" },
+            { 3, "Caiado", "Ronaldo Caiado", "Ronaldo Caiado" },
+            { 4, "nao_votou", "Quem não votou", "" }
+        }
+    )
+VAR _lido =
+    ADDCOLUMNS (
+        _grupos,
+        "@l", VAR _s = [Seg] RETURN CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = _s ),
+        "@f", VAR _s = [Seg] RETURN CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = _s ),
+        "@b", VAR _s = [Seg] RETURN CALCULATE ( [T16 · transferência · branco ou nulo], 'Transferência'[Segmento] = _s ),
+        "@n", VAR _s = [Seg] RETURN CALCULATE ( [T16 · transferência · institutos], 'Transferência'[Segmento] = _s ),
+        "@t", VAR _s = [Seg] RETURN CALCULATE ( [T16 · transferência · tendência], 'Transferência'[Segmento] = _s ),
+        "@votos",
+            VAR _c = [Cand]
+            RETURN
+                IF ( _c = "", [T16 · 1º turno · abstenções], CALCULATE ( [T16 · 1º turno · votos do candidato], 'Candidato ano'[Candidato] = _c ) ),
+        "@pct",
+            VAR _c = [Cand]
+            RETURN
+                IF ( _c = "", [T16 · 1º turno · % de abstenção], CALCULATE ( [T16 · 1º turno · % do candidato], 'Candidato ano'[Candidato] = _c ) )
+    )
+VAR _mMin = [T16 · margem nos grupos · mínima]
+VAR _foco = [T16 · foco · grupo]
+VAR _focoApoio = [T16 · foco · apoio]
+VAR _focoData = [T16 · foco · apoio · data]
+VAR _focoCond = [T16 · foco · apoio · condicionado]
+VAR _mMax = [T16 · margem nos grupos · máxima]
+-- 2 · Textos
+VAR _cand = FILTER ( _lido, [Cand] <> "" ) /* lista */
+VAR _nF = COUNTROWS ( FILTER ( _cand, [@t] = "Flávio" ) ) + 0 /* lista */
+VAR _nL = COUNTROWS ( FILTER ( _cand, [@t] = "Lula" ) ) + 0 /* lista */
+VAR _nD = COUNTROWS ( FILTER ( _cand, [@t] = "divide" ) ) + 0 /* lista */
+VAR _listaF = CONCATENATEX ( FILTER ( _cand, [@t] = "Flávio" ), [Seg], " e o de ", [@f] - [@l], DESC ) /* lista */
+VAR _listaL = CONCATENATEX ( FILTER ( _cand, [@t] = "Lula" ), [Seg], " e o de ", [@l] - [@f], DESC ) /* lista */
+VAR _listaD = CONCATENATEX ( FILTER ( _cand, [@t] = "divide" ), [Seg], " e o de ", [Ordem], ASC ) /* lista */
+VAR _tNV = MAXX ( FILTER ( _lido, [Cand] = "" ), [@t] ) /* lista */
+VAR _c1 = IF ( _nF > 0, "o eleitor de " & _listaF & IF ( _nF > 1, " pendem", " pende" ) & " para Flávio" )
+VAR _c2 =
+    IF ( _nL > 0, IF ( _nF > 0, "o de ", "o eleitor de " ) & _listaL & IF ( _nL > 1, " pendem", " pende" ) & " para Lula" )
+VAR _c3 =
+    IF ( _nD > 0, IF ( _nF + _nL > 0, "o de ", "o eleitor de " ) & _listaD & IF ( _nD > 1, " se dividem", " se divide" ) )
+VAR _c4 = "quem não votou " & SWITCH ( _tNV, "Lula", "pende para Lula", "Flávio", "pende para Flávio", "se divide" )
+VAR _oracoes = { ( 1, _c1 ), ( 2, _c2 ), ( 3, _c3 ), ( 4, _c4 ) }
+VAR _frase =
+    CONCATENATEX (
+        FILTER ( _oracoes, NOT ISBLANK ( [Value2] ) && [Value2] <> "" ), /* lista */
+        [Value2], "; ", [Value1], ASC
+    )
+VAR _txtMan = UPPER ( LEFT ( _frase, 1 ) ) & MID ( _frase, 2, 400 ) & "."
+VAR _tFoco = MAXX ( FILTER ( _lido, [Seg] = _foco ), [@t] ) /* lista */
+VAR _txtTend = SWITCH ( _tFoco, "Lula", "pende para Lula", "Flávio", "pende para Flávio", "se divide" )
+VAR _txtApoio =
+    SWITCH (
+        _focoApoio,
+        "Lula", "; " & _foco & " declarou apoio a Lula",
+        "Flávio", "; " & _foco & " declarou apoio a Flávio",
+        "liberou", "; " & _foco & " liberou o eleitor",
+        "neutro", "; " & _foco & " ficou neutro",
+        ""
+    )
+        & IF ( _focoApoio IN { "Lula", "Flávio", "liberou", "neutro" } && NOT ISBLANK ( _focoData ), " em " & FORMAT ( _focoData, "dd/MM" ) )
+        & IF ( _focoCond = "Sim", ", com condições" )
+VAR _txtFoco =
+    IF ( _foco = "nao_votou", "Quem não votou no 1º turno " & _txtTend, "O eleitor de " & _foco & " " & _txtTend & _txtApoio ) & "."
+VAR _tit = IF ( ISBLANK ( _foco ), _txtMan, _txtFoco )
+VAR _nCandMin = MINX ( _cand, [@n] ) /* lista */
+VAR _nCandMax = MAXX ( _cand, [@n] ) /* lista */
+VAR _nNV = MAXX ( FILTER ( _lido, [Cand] = "" ), [@n] ) /* lista */
+VAR _txtN = IF ( _nCandMin = _nCandMax, FORMAT ( _nCandMax, "0" ), FORMAT ( _nCandMin, "0" ) & " a " & FORMAT ( _nCandMax, "0" ) )
+VAR _txtNota =
+    "Média da última pesquisa de cada instituto depois do 1º turno: " & _txtN & IF ( _nCandMax = 1, " instituto", " institutos" )
+        & " para os eleitores dos três candidatos, "
+        & _nNV & " para quem não votou. São grupos pequenos, com menos de 100 entrevistados por pesquisa e margem de erro de "
+        & _mMin & " a " & _mMax & " pontos: é sinal, não medida."
+-- 3 · Geometria (svg 1040 × 680 a partir de y 180; grupos centrados em 115 + 160 × (ordem − 1); 1,2 px por ponto)
+VAR _esc = 1.2
+VAR _v =
+    ADDCOLUMNS (
+        CROSSJOIN ( _lido, DATATABLE ( "D", INTEGER, { { 1 }, { 2 }, { 3 } } ) ),
+        "@v", SWITCH ( [D], 1, [@l], 2, [@f], [@b] ) + 0
+    )
+VAR _g =
+    ADDCOLUMNS (
+        _v,
+        "@esq", VAR _o = [Ordem] VAR _d = [D] RETURN SUMX ( FILTER ( _v, [Ordem] = _o && [D] < _d ), [@v] ) + 0, /* lista */
+        "@alt", VAR _o = [Ordem] RETURN SUMX ( FILTER ( _v, [Ordem] = _o ), [@v] ), /* lista */
+        "@dir", VAR _o = [Ordem] VAR _d = [D] RETURN SUMX ( FILTER ( _v, [D] = _d && [Ordem] < _o ), [@v] ) + 0, /* lista */
+        "@antes", VAR _d = [D] RETURN SUMX ( FILTER ( _v, [D] < _d ), [@v] ) + 0 /* lista */
+    )
+VAR _geo =
+    ADDCOLUMNS (
+        _g,
+        "@y0", 115 + ( [Ordem] - 1 ) * 160 - [@alt] * _esc / 2 + [@esq] * _esc, -- geometria
+        "@r0", 50 + [@antes] * _esc + ( [D] - 1 ) * 70 + [@dir] * _esc -- geometria
+    )
+VAR _fx = "0.0"
+VAR _faixas =
+    CONCATENATEX (
+        _geo,
+        VAR _y0 = FORMAT ( [@y0], _fx, "en-US" )
+        VAR _y1 = FORMAT ( [@y0] + [@v] * _esc, _fx, "en-US" )
+        VAR _r0 = FORMAT ( [@r0], _fx, "en-US" )
+        VAR _r1 = FORMAT ( [@r0] + [@v] * _esc, _fx, "en-US" )
+        RETURN
+            "<path class='fx " & SWITCH ( [D], 1, "l", 2, "f", "b" ) & IF ( NOT ISBLANK ( _foco ) && [Seg] <> _foco, " fora" )
+                & "' filter='url(#rbu)' style='animation-delay:"
+                & ( 500 + ( [Ordem] - 1 ) * 320 + [D] * 90 ) & "ms' d='M250 " & _y0 & " C520 " & _y0 & " 520 " & _r0
+                & " 790 " & _r0 & " L790 " & _r1 & " C520 " & _r1 & " 520 " & _y1 & " 250 " & _y1 & " Z'/>",
+        "",
+        [Ordem], ASC, [D], ASC
+    )
+VAR _valores =
+    CONCATENATEX (
+        _geo,
+        "<text x='262' y='" & FORMAT ( [@y0] + [@v] * _esc / 2 + 7, _fx, "en-US" ) & "' class='"
+            & SWITCH ( [D], 1, "vl", 2, "vf", "vb" ) & IF ( NOT ISBLANK ( _foco ) && [Seg] <> _foco, " fora" )
+            & " entra' style='animation-delay:" & ( 700 + ( [Ordem] - 1 ) * 320 ) & "ms'>"
+            & FORMAT ( [@v], "0" ) & "%</text>",
+        "",
+        [Ordem], ASC, [D], ASC
+    )
+VAR _nosEsq =
+    CONCATENATEX (
+        _lido,
+        VAR _alt = ( [@l] + [@f] + [@b] ) * _esc
+        RETURN
+            "<rect x='236' width='12' class='no entra" & IF ( NOT ISBLANK ( _foco ) && [Seg] <> _foco, " fora" )
+                & "' style='animation-delay:" & ( 300 + ( [Ordem] - 1 ) * 320 ) & "ms' y='"
+                & FORMAT ( 115 + ( [Ordem] - 1 ) * 160 - _alt / 2, _fx, "en-US" ) & "' height='" & FORMAT ( _alt, _fx, "en-US" ) & "'/>",
+        ""
+    )
+VAR _dest =
+    ADDCOLUMNS (
+        DATATABLE ( "D", INTEGER, "Rot", STRING, { { 1, "Lula" }, { 2, "Flávio" }, { 3, "Branco, nulo ou não vota" } } ),
+        "@tot", VAR _d = [D] RETURN SUMX ( FILTER ( _v, [D] = _d ), [@v] ), /* lista */
+        "@ant", VAR _d = [D] RETURN SUMX ( FILTER ( _v, [D] < _d ), [@v] ) + 0 /* lista */
+    )
+VAR _nosDir =
+    CONCATENATEX (
+        _dest,
+        "<rect x='790' width='12' class='no entra d12' y='" & FORMAT ( 50 + [@ant] * _esc + ( [D] - 1 ) * 70, _fx, "en-US" )
+            & "' height='" & FORMAT ( [@tot] * _esc, _fx, "en-US" ) & "'/>",
+        ""
+    )
+VAR _rotDir =
+    CONCATENATEX (
+        _dest,
+        VAR _cls = SWITCH ( [D], 1, "l", 2, "f", "b" )
+        RETURN
+            "<div class='ds " & _cls & " sobe d12' style='top:"
+                & FORMAT ( 180 + 50 + [@ant] * _esc + ( [D] - 1 ) * 70 + [@tot] * _esc / 2 - 38, _fx, "en-US" )
+                & "px'><div class='ft " & _cls & "'></div><b class='" & SWITCH ( [D], 1, "lula", 2, "flavio", "" ) & "'>" & [Rot]
+                & "</b></div>",
+        "",
+        [D], ASC
+    )
+VAR _rotEsq =
+    CONCATENATEX (
+        _lido,
+        "<div class='gr sobe" & IF ( NOT ISBLANK ( _foco ) && [Seg] <> _foco, " fora" ) & "' style='top:" & FORMAT ( 180 + 115 + ( [Ordem] - 1 ) * 160 - 34, _fx, "en-US" ) & "px;animation-delay:"
+            & ( 200 + ( [Ordem] - 1 ) * 320 ) & "ms'><b>" & [Nome] & "</b><span>"
+            & IF (
+                [Cand] = "",
+                FORMAT ( [@votos] / 1000000, "0.0" ) & " mi de eleitores<br>" & FORMAT ( [@pct], "0.0%" ) & " faltaram no 1º turno",
+                FORMAT ( [@votos] / 1000000, "0.00" ) & " mi de votos<br>" & FORMAT ( [@pct], "0.0%" ) & " dos válidos"
+            ) & "</span></div>",
+        "",
+        [Ordem], ASC
+    )
+-- nota à mão sob a faixa de branco e nulo do grupo com mais branco e nulo
+VAR _maisB = TOPN ( 1, _lido, [@b], DESC ) /* lista */
+VAR _ordB = MAXX ( _maisB, [Ordem] ) /* lista */
+VAR _segB = MAXX ( _maisB, [Seg] ) /* lista */
+VAR _yNota = 180 + 115 + ( _ordB - 1 ) * 160 + 40 -- geometria
+-- 4 · Marcação
+RETURN
+    "<div class='tela t16f'>"
+        & "<div class='cab'>"
+            & "<div class='sob sobe'>Depois do 1º turno · em quem dizem que votam no 2º turno</div>"
+            & "<div class='tit sobe d2'>" & _tit & "</div>"
+            & "<div class='txt sobe d3'>" & _txtNota & "</div>"
+        & "</div>"
+        & "<svg width='1040' height='680' viewBox='0 0 1040 680'>"
+            & "<text x='0' y='14' class='colrot'>O ELEITOR DE…</text>"
+            & "<text x='818' y='14' class='colrot'>…DIZ QUE VOTA EM</text>"
+            & _faixas & _nosEsq & _nosDir & _valores
+        & "</svg>"
+        & _rotEsq & _rotDir
+        & "<div class='mao entra d16" & IF ( NOT ISBLANK ( _foco ) && _segB <> _foco, " fora" ) & "' style='left:0px;top:" & FORMAT ( _yNota, _fx, "en-US" ) & "px'>muito branco e nulo</div>"
+    & "</div>"

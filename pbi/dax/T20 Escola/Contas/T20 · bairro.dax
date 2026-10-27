@@ -4,4 +4,7 @@
 @descricao: Bairro do local.
 @oraculo: mockup/data/eleicoes.json › Escola › bairro
 */
+IF ( [Eleição · pós] = 1,
+"2º turno",
 SELECTEDVALUE ( 'T20 Local'[Bairro] )
+)

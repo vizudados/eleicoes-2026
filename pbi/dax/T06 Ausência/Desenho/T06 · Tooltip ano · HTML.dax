@@ -46,7 +46,7 @@ VAR _html =
         & "<div class='tt6'><div class='ficha'>"
         & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/>"
         & "<img class='ic' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/urna-tinta.png'/>"
-        & "<div class='cab sobe'><div class='nm'>1º turno de " & _ano & "</div>"
+        & "<div class='cab sobe'><div class='nm'>" & [T06 · turno] & " de " & _ano & "</div>"
         & "<div class='rot'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _disputa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & " · " & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _recorte, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
         & "<div class='big sobe d1'>" & _txtVezes & "×</div>"
         & "<div class='bs sobe d2'>" & _cabe & "</div>"

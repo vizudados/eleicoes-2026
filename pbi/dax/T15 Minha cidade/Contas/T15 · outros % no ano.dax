@@ -4,4 +4,4 @@
 @descricao: Votos dos demais candidatos sobre os válidos no ano, no município.
 @gerado: pbi/scripts/desenho_t15.py
 */
-DIVIDE ( SUM ( 'Município ano'[VotosDemais] ), SUM ( 'Município ano'[Validos] ) )
+IF ( [Eleição · pós] = 1, DIVIDE ( SUM ( 'Município segundo turno'[VotosDemais] ), SUM ( 'Município segundo turno'[Validos] ) ), DIVIDE ( SUM ( 'Município ano'[VotosDemais] ), SUM ( 'Município ano'[Validos] ) ) )

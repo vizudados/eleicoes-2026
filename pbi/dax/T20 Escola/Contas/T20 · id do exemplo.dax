@@ -4,6 +4,16 @@
 @descricao: Id do local da ficha quando nada foi escolhido: em cada cidade, a escola que virou com mais votos válidos (ou, se nenhuma virou, a de maior queda da margem de Lula); vem de T20 Cidade[IdExemplo] (pipeline/exportar_t20.py).
 @oraculo: dados/pbi/t20_cidades.csv › id_exemplo (Rio de Janeiro: 815)
 */
+IF ( [Eleição · pós] = 1,
+VAR _cod = [T20 · cidade (código)]
+VAR _t = ADDCOLUMNS ( FILTER ( ALL ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod ),
+    "@v", CALCULATE ( [T20 · variação da margem] ), "@val", CALCULATE ( [T20 · válidos 2026] ),
+    "@a", CALCULATE ( [T20 · margem 2022] ), "@b", CALCULATE ( [T20 · margem 2026] ) )
+VAR _viradas = FILTER ( _t, NOT ISBLANK ( [@a] ) && ( [@a] > 0 && [@b] < 0 || [@a] < 0 && [@b] > 0 ) )
+RETURN IF ( COUNTROWS ( _viradas ) > 0,
+    MAXX ( TOPN ( 1, _viradas, [@val], DESC, 'T20 Local'[Id], ASC ), 'T20 Local'[Id] ),
+    MAXX ( TOPN ( 1, FILTER ( _t, NOT ISBLANK ( [@v] ) ), [@v], ASC, 'T20 Local'[Id], ASC ), 'T20 Local'[Id] ) ),
 VAR _cod = [T20 · cidade (código)]
 RETURN
     LOOKUPVALUE ( 'T20 Cidade'[IdExemplo], 'T20 Cidade'[CodIBGE], _cod )
+)

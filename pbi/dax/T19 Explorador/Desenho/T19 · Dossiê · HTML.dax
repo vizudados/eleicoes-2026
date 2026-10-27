@@ -3,6 +3,95 @@
 @formato: texto
 @descricao: Dossiê do município (página de tooltip ttT19Municipio, da lista, da dispersão e do mapa da tela 21): região, população e renda, a margem do PT nas seis eleições num gráfico de linha, em quantas o PT ficou à frente, a abstenção de 2026 e o selo de quem virou.
 */
+IF ( [Eleição · pós] = 1,
+-- 1 · Leituras
+VAR _regiao = [T19 · região do município]
+VAR _pop = [T19 · população]
+VAR _renda = [T19 · renda]
+VAR _abst = [T19 · abstenção 2026]
+VAR _frente = [T19 · eleições com o PT à frente]
+VAR _com = [T19 · eleições com voto]
+VAR _virou = [T19 · virou]
+VAR _m06 = [T19 · margem 2006]
+VAR _m10 = [T19 · margem 2010]
+VAR _m14 = [T19 · margem 2014]
+VAR _m18 = [T19 · margem 2018]
+VAR _m22 = [T19 · margem 2022]
+VAR _m26 = [T19 · margem 2026]
+-- 2 · Textos
+VAR _nome0 = [T19 · município]
+VAR _nome1 = SUBSTITUTE ( _nome0, "&", "&amp;" )
+VAR _nome2 = SUBSTITUTE ( SUBSTITUTE ( _nome1, "<", "&lt;" ), ">", "&gt;" )
+VAR _nome = SUBSTITUTE ( SUBSTITUTE ( _nome2, """", "&quot;" ), "'", "&#39;" )
+VAR _txtPop = FORMAT ( _pop, "#,0" ) & " habitantes"
+VAR _txtRenda = IF ( ISBLANK ( _renda ), "", " · renda de R$ " & FORMAT ( _renda, "#,0" ) & " por pessoa" )
+VAR _txtAbst = FORMAT ( _abst, "0.0%" )
+VAR _txtFrente =
+    SWITCH (
+        TRUE (),
+        _frente = _com, "PT à frente em todas as " & _com & " eleições",
+        _frente = 0, "PT atrás em todas as " & _com & " eleições",
+        "PT à frente em " & _frente & " de " & _com & IF ( _com = 1, " eleição", " eleições" )
+    )
+VAR _nota =
+    SWITCH (
+        TRUE (),
+        _virou = 1, "virou em 2026",
+        _m26 > 0 && _m22 > 0, "segue com Lula",
+        _m26 < 0 && _m22 < 0, "segue com o PL",
+        IF ( _m26 > 0 && _m22 < 0, "virou para Lula", "empate ou cidade nova" )
+    )
+VAR _selo = IF ( _virou = 1, "<div class='selo'>virou</div>", "" )
+-- 3 · Geometria
+VAR _base = { ( 0, 26, 2006, _m06 ), ( 1, 98, 2010, _m10 ), ( 2, 170, 2014, _m14 ), ( 3, 242, 2018, _m18 ), ( 4, 314, 2022, _m22 ), ( 5, 386, 2026, _m26 ) } /* lista */
+VAR _serie =
+    SELECTCOLUMNS ( _base, "i", [Value1], "x", [Value2], "ano", [Value3], "m", [Value4] )
+VAR _maior = MAXX ( _serie, ABS ( [m] ) ) /* geometria */
+VAR _escala = MAX ( 0.2, CEILING ( _maior * 10, 1 ) / 10 ) -- geometria
+VAR _pts =
+    ADDCOLUMNS ( _serie, "y", IF ( NOT ISBLANK ( [m] ), 70 - [m] / _escala * 52 ) ) -- geometria
+VAR _primeiro = MINX ( _pts, IF ( NOT ISBLANK ( [y] ), [i] ) ) -- geometria
+VAR _d =
+    TRIM ( CONCATENATEX (
+        _pts,
+        IF ( NOT ISBLANK ( [y] ), IF ( [i] = _primeiro, "M", "L" ) & [x] & "," & FORMAT ( [y], "0.0##", "en-US" ) ),
+        " ",
+        [i], ASC
+    ) ) /* lista */
+VAR _marcas =
+    CONCATENATEX (
+        _pts,
+        IF ( NOT ISBLANK ( [y] ), "<circle class='" & IF ( [m] > 0, "l", "f" ) & "' cx='" & [x] & "' cy='" & FORMAT ( [y], "0.0##", "en-US" )
+            & "' r='4.6'/>"
+            & "<text class='v " & IF ( [m] > 0, "l", "f" ) & "' x='" & [x] & "' y='"
+            & FORMAT ( IF ( [m] > 0, [y] - 10, [y] + 19 ), "0.0##", "en-US" ) & "'>"
+            & FORMAT ( [m] * 100, "+0.0;−0.0;0.0" ) & "</text>" ),
+        "",
+        [i], ASC
+    ) /* lista */
+VAR _anos =
+    CONCATENATEX ( _serie, IF ( NOT ISBLANK ( [m] ), "<text class='a' x='" & [x] & "' y='150'>" & [ano] & "</text>" ), "", [i], ASC ) /* lista */
+-- 4 · Marcação
+RETURN
+    IF (
+        NOT ISBLANK ( _nome0 ),
+        "<div class='tela tt19'>"
+            & "<div class='nm'>" & _nome & "</div>"
+            & "<div class='sub'>" & _regiao & " · " & _txtPop & _txtRenda & "</div>"
+            & "<div class='rot cap'>2º turno · margem do PT · 2006 → 2026</div>"
+            & "<svg class='serie' width='410' height='158' viewBox='0 0 410 158'>"
+                & "<line class='zero' x1='6' x2='404' y1='70' y2='70'/>"
+                & "<text class='ze' x='404' y='66'>empate</text>"
+                & "<path class='traco-rapido' pathLength='1' d='" & _d & "'/>"
+                & _marcas & _anos
+            & "</svg>"
+            & "<div class='pe'><span>" & _txtFrente & "</span><span class='ab'>" & _txtAbst
+            & " faltaram em 2026</span></div>"
+            & _selo
+            & "<div class='mao'>" & _nota & "</div>"
+        & "</div>"
+    )
+,
 -- 1 · Leituras
 VAR _regiao = [T19 · região do município]
 VAR _pop = [T19 · população]
@@ -90,3 +179,4 @@ RETURN
             & "<div class='mao'>" & _nota & "</div>"
         & "</div>"
     )
+ )

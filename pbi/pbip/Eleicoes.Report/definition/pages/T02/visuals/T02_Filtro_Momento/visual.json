@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.9.0/schema.json",
   "name": "T02_Filtro_Momento",
   "position": {
-    "x": 952,
+    "x": 1282,
     "y": 60,
     "z": 20,
     "height": 208,
-    "width": 314,
+    "width": 424,
     "tabOrder": 3
   },
   "visual": {
@@ -199,7 +199,7 @@
             "controlWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "314D"
+                  "Value": "424D"
                 }
               }
             },
@@ -213,7 +213,7 @@
             "dropdownWidth": {
               "expr": {
                 "Literal": {
-                  "Value": "314D"
+                  "Value": "424D"
                 }
               }
             },

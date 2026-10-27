@@ -1,0 +1,7 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0.0%
+@descricao: Base ponderada da faixa dividida por 4.050, sem renormalizar.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+MAX ( 'Perfil pesquisa segundo turno'[Fatia] )

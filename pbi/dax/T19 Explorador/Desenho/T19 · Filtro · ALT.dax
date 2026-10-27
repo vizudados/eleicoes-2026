@@ -10,3 +10,5 @@ VAR _uso = [T19 · filtro em uso]
 RETURN
     "Filtro do recorte: " & IF ( _n = 0, "todos os municípios", LEFT ( _uso, 150 ) )
         & ". Abre a árvore de região, estado e cidade, tamanho, renda e virada."
+
+    & IF ( [Eleição · pós] = 1, " Segundo turno.", "" )

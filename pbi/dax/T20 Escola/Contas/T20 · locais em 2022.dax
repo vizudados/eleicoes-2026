@@ -4,6 +4,11 @@
 @descricao: Locais de votação da cidade da tela em 2022, como o TSE os listou naquele ano (zona, número, nome e endereço; calculado no pipeline).
 @oraculo: 111 em Contagem (dados/saida/locais_contagem.csv)
 */
+IF ( [Eleição · pós] = 1,
+VAR _cod = [T20 · cidade (código)]
+RETURN CALCULATE ( COUNTROWS ( FILTER ( 'T20 Zona turno', TRUE () ) ),
+    'T20 Zona turno'[Ano] = 2022, 'T20 Zona turno'[Turno] = 2, 'T20 Zona turno'[CodIBGE] = _cod ) + 0,
 VAR _cod = [T20 · cidade (código)]
 RETURN
     COALESCE ( LOOKUPVALUE ( 'T20 Cidade'[Locais2022], 'T20 Cidade'[CodIBGE], _cod ), 0 )
+)

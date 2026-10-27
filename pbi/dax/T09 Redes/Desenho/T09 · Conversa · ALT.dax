@@ -1,21 +1,8 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do fundo do protagonista (as duas janelas; com período, a da direita é a do período).
+@descricao: Descrição acessível dos balões e das lacunas temporais.
 */
-VAR _per = [Período · escolhido]
-VAR _pD = [T09 · período · interações · dias]
-VAR _p24 = CONTAINSSTRING ( [T09 · período · interações · métrica], "24h" )
-RETURN
-    IF (
-        ISBLANK ( _per ),
-        "Interações nos perfis oficiais em duas janelas da Bites: a campanha do 1º turno (" & [T09 · 1º turno · dias] & " dias) e o 2º turno ("
-            & [T09 · 2º turno · dias] & " dias). O tamanho de cada balão é a média de interações por dia.",
-        "Interações nos perfis oficiais em duas janelas da Bites: a campanha do 1º turno (" & [T09 · 1º turno · dias]
-            & " dias) e " & [Período · rótulo]
-            & IF (
-                ISBLANK ( _pD ),
-                IF ( _per = 4, ", ainda sem números.", ", sem dado no período." ),
-                " (" & IF ( _p24, "24 h após o debate", _pD & " dias" ) & "). O tamanho de cada balão é a média por dia."
-            )
-    )
+IF ( ISBLANK ( [Período · escolhido] ),
+    "Bites: 05–17/10 e 19–24/10, último dia parcial; 18/10 fora. Área = total; durações diferentes, sem soma. Após a eleição, nenhuma medição publicada até 26/10.",
+    "Bites: referência do 1º turno à esquerda; janela inteira do período à direita. Sem divisão diária de 19–24/10. Após a eleição, nenhuma medição publicada até 26/10." )

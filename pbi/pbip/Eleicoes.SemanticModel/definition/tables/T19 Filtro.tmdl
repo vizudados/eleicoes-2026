@@ -148,8 +148,13 @@ table 'T19 Filtro'
 				    Caminho = Table.AddColumn(ComValor, "Caminho", each [Raiz] & " › " & [Niveis], type text),
 				    Ordem = Table.AddColumn(Caminho, "Ordem", each [RaizOrdem] * 10000000 + [ValorOrdem], Int64.Type),
 				    Final = Table.SelectColumns(Ordem, {"CodIBGE", "Raiz", "RaizOrdem", "Valor", "Curto", "Caminho", "Ordem",
-				        "Regiao", "UF"})
+				        "Regiao", "UF"}),
+				    // "Virou para Lula" só existe no 2º turno (31 cidades; no 1º turno, nenhuma): uma opção de catálogo, ancorada num
+				    // código qualquer; as contas da T19 ignoram a ligação estática da raiz 4 e classificam pelas margens do modo
+				    Opcoes = Table.InsertRows(Final, Table.RowCount(Final), {
+				        [CodIBGE = "1100015", Raiz = "Virou?", RaizOrdem = 4, Valor = "Virou para Lula", Curto = "Virou para Lula",
+				         Caminho = "Virou? › Virou para Lula", Ordem = 40000005, Regiao = null, UF = null]})
 				in
-				    Final
+				    Opcoes
 
 	annotation PBI_ResultType = Table

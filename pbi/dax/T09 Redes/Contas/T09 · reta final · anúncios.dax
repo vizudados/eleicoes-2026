@@ -1,0 +1,11 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Número de anúncios da página oficial no mesmo recorte Meta 18–24/10; unidade distinta de reais.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ), Monitoramento[Estudo] = "Meta - Relatório da Biblioteca de Anúncios",
+    Monitoramento[Métrica] = "número de anúncios na biblioteca no recorte da página oficial",
+    Monitoramento[Início] = DATE ( 2026, 10, 18 ), Monitoramento[Fim] = DATE ( 2026, 10, 24 )
+)

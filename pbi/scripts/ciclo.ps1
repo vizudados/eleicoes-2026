@@ -18,8 +18,12 @@ $args2 = @('-X', 'utf8', (Join-Path $S 'montar_pbip.py'), '--aplicar')
 foreach ($m in $SemModulo) { $args2 += @('--sem-modulo', $m) }
 python @args2 2>&1 | Select-Object -Last 4
 if ($LASTEXITCODE -ne 0) { throw 'montar_pbip.py falhou' }
-& pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $S 'desktop.ps1') -Acao abrir -Cdp 9347 -Espera 400 2>&1 | Select-Object -First 6
-if ($LASTEXITCODE -ne 0) { throw 'o Desktop nao abriu ou o refresh falhou' }
+# a saida inteira antes de cortar: com "| Select-Object -First 6" direto, o codigo de saida se perdia e um refresh que
+# falhou (27/10/2026, tabela nova sem CSV publicado: 404) passava como "ciclo ok"
+$abrir = & pwsh -NoProfile -ExecutionPolicy Bypass -File (Join-Path $S 'desktop.ps1') -Acao abrir -Cdp 9347 -Espera 400 2>&1
+$codigoAbrir = $LASTEXITCODE
+$abrir | Select-Object -First 6
+if ($codigoAbrir -ne 0) { $abrir | Select-Object -Last 8; throw 'o Desktop nao abriu ou o refresh falhou' }
 if (-not $Minimizar) {
   Add-Type -Namespace Ciclo -Name W -MemberDefinition '[DllImport("user32.dll")] public static extern bool ShowWindowAsync(IntPtr h, int c);'
   $p = Get-Process -Name PBIDesktop | Where-Object { $_.MainWindowTitle -like '*Eleicoes*' } | Select-Object -First 1

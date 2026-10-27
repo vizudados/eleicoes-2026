@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Total do balão esquerdo: 05–17/10 sem filtro; campanha do primeiro turno como referência explícita com filtro.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+IF ( ISBLANK ( [Período · escolhido] ), [T09 · interações · 2º turno], [T09 · interações · 1º turno] )

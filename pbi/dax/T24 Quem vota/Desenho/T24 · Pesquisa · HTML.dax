@@ -4,6 +4,58 @@
 @descricao: Cartão das pessoas: em cada faixa da lente, a vantagem na pesquisa (barra que sai do centro: à direita, Lula à frente; à esquerda, Flávio), os dois % e o tamanho do grupo; a marca tracejada é a vantagem entre todos os eleitores, e a nota marca a faixa em que a vantagem troca de lado. No IDH, por que não há pesquisa e as pontas da régua. A nota do voto secreto é fixa (corpo do visual).
 @gerado: pbi/scripts/desenho_t24.py
 */
+IF ( [Eleição · pós] = 1,
+-- 1 · Leituras
+VAR _lt = [T24 · pesquisa segundo · Lula % total]
+VAR _ft = [T24 · pesquisa segundo · Flávio % total]
+VAR _ref = [T24 · pesquisa segundo · vantagem total]
+VAR _xRef = 195 + MAX ( -40, MIN ( 40, _ref ) ) / 40 * 160
+VAR _cats = CALCULATETABLE ( SUMMARIZE ( 'Perfil pesquisa segundo turno',
+    'Perfil pesquisa segundo turno'[Categoria], 'Perfil pesquisa segundo turno'[CategoriaOrdem] ),
+    'Perfil pesquisa segundo turno'[Lente] = "Renda" )
+VAR _linhas = CONCATENATEX ( _cats,
+    VAR _l = [T24 · pesquisa segundo · Lula %]
+    VAR _f = [T24 · pesquisa segundo · Flávio %]
+    VAR _s = [T24 · pesquisa segundo · fatia]
+    VAR _v = [T24 · pesquisa segundo · vantagem]
+    VAR _w = MIN ( ABS ( _v ), 40 ) / 40 * 160
+    VAR _x = IF ( _v >= 0, 195, 195 - _w )
+    VAR _cat = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE (
+        'Perfil pesquisa segundo turno'[Categoria], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ), UNICHAR ( 34 ), "&quot;" )
+    RETURN
+        "<div class='lin sobe d3'><div class='cat'><b>" & _cat & "</b><i>" & FORMAT ( _s, "0.0%" )
+        & " dos entrevistados</i></div><div class='gr'><i class='ref' style='left:" & FORMAT ( _xRef, "0.0", "en-US" ) & "px'></i><i class='ct'></i><i class='vb "
+        & IF ( _v >= 0, "bl barra-x", "bf barra-x-dir" ) & "' style='left:" & FORMAT ( _x, "0.0", "en-US" )
+        & "px;width:" & FORMAT ( _w, "0.0", "en-US" ) & "px'></i><span class='vt "
+        & IF ( _v >= 0, "lula-esc", "flavio-esc" ) & "' style='"
+        & IF ( _v >= 0, "left:" & FORMAT ( 195 + _w + 8, "0.0", "en-US" ),
+            "right:" & FORMAT ( 390 - _x + 8, "0.0", "en-US" ) ) & "px'>"
+        & IF ( _v >= 0, "Lula +", "Flávio +" ) & FORMAT ( ABS ( _v ), "0" )
+        & "</span><span class='pp'><span class='lula-esc'>" & FORMAT ( _l, "0%" )
+        & "</span> × <span class='flavio-esc'>" & FORMAT ( _f, "0%" ) & "</span></span></div></div>",
+    "", 'Perfil pesquisa segundo turno'[CategoriaOrdem], ASC )
+VAR _total =
+    "<div class='lin tot sobe d9'><div class='cat'><b>todos os eleitores</b><i>a marca tracejada</i></div>"
+    & "<div class='gr'><i class='ct'></i><i class='vb " & IF ( _ref >= 0, "bl", "bf" ) & "' style='left:"
+    & FORMAT ( IF ( _ref >= 0, 195, _xRef ), "0.0", "en-US" ) & "px;width:"
+    & FORMAT ( ABS ( _ref ) / 40 * 160, "0.0", "en-US" ) & "px'></i>"
+    & "<span class='vt " & IF ( _ref >= 0, "lula-esc", "flavio-esc" ) & "' style='"
+    & IF ( _ref >= 0, "left:" & FORMAT ( _xRef + 8, "0.0", "en-US" ),
+        "right:" & FORMAT ( 390 - _xRef + 8, "0.0", "en-US" ) ) & "px'>"
+    & IF ( _ref >= 0, "Lula +", "Flávio +" ) & FORMAT ( ABS ( _ref ), "0" )
+    & "</span><span class='pp'><span class='lula-esc'>" & FORMAT ( _lt, "0%" )
+    & "</span> × <span class='flavio-esc'>" & FORMAT ( _ft, "0%" ) & "</span></span></div></div>"
+-- 2 · Marcação
+RETURN
+    "<div class='tela t24p'><div class='cartao'><div class='rot entra'>NAS PESQUISAS, AS PESSOAS</div>"
+    & "<div class='tit sobe d1'>O que os eleitores disseram ao Datafolha</div>"
+    & "<div class='nota sobe d2'>2º turno · renda familiar · 23–24/10/2026 · BR-09540/2026</div>"
+    & "<div class='eixo entra d3'><span class='flavio-esc'>← Flávio à frente</span><span class='lula-esc'>Lula à frente →</span></div>"
+    & "<div class='lista realce'>" & _linhas & _total & "</div>"
+    & "<div class='txt'>Intenção declarada antes da urna, sobre todos os entrevistados da faixa.</div>"
+    & "<div class='nota'>Este cartão permanece por renda familiar nas quatro lentes. Os pesos publicados não somam 100%; não foram redistribuídos.</div>"
+    & "</div></div>"
+,
 -- 1 · Leituras
 VAR _l = [T24 · lente]
 VAR _i = [T24 · instituto]
@@ -120,3 +172,4 @@ VAR _cartao =
     )
 RETURN
     "<div class='tela t24p'><div class='cartao'>" & _cartao & "</div></div>"
+ )

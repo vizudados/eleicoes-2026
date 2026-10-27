@@ -1,0 +1,67 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: T16 · Pós · Apoios · HTML
+@oraculo: dados/pbi/t16_urna.csv
+*/
+-- 1 · Leituras
+VAR _grupos = DATATABLE ( "O", INTEGER, "Origem", STRING, {
+    { 1, "Cury + Renan + Caiado" }, { 2, "Não votou" }
+} )
+VAR _linhas = ADDCOLUMNS (
+    CROSSJOIN ( _grupos, DATATABLE ( "D", INTEGER, "Destino", STRING, { { 1, "Lula" }, { 2, "Flávio" } } ) ),
+    "@pesquisa", VAR _o = [Origem] VAR _d = [Destino] RETURN CALCULATE ( [T16 · pesquisa · média], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+    "@pinf", VAR _o = [Origem] VAR _d = [Destino] RETURN CALCULATE ( [T16 · pesquisa · inferior], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+    "@psup", VAR _o = [Origem] VAR _d = [Destino] RETURN CALCULATE ( [T16 · pesquisa · superior], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+    "@urna", VAR _o = [Origem] VAR _d = [Destino] RETURN IF ( [O] = 1,
+        CALCULATE ( [T16 · urna · média], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+        CALCULATE ( [T16 · voltaram · média], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ) ),
+    "@uinf", VAR _o = [Origem] VAR _d = [Destino] RETURN IF ( [O] = 1,
+        CALCULATE ( [T16 · urna · inferior], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+        CALCULATE ( [T16 · voltaram · inferior], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ) ),
+    "@usup", VAR _o = [Origem] VAR _d = [Destino] RETURN IF ( [O] = 1,
+        CALCULATE ( [T16 · urna · superior], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+        CALCULATE ( [T16 · voltaram · superior], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ) )
+)
+-- 2 · Textos
+-- 3 · Geometria: grade comum aos dois finalistas.
+-- 4 · Marcação
+RETURN "<div class='tela t16pos t16comparacao'><div class='sob sobe'>Pesquisa × urna</div>"
+    & "<div class='tit sobe d2'>O sentido mudou no grupo dos três.</div>"
+    & CONCATENATEX ( _grupos,
+        VAR _o = [O]
+        RETURN "<div class='quadro entra'><h3>" & IF ( _o = 1, [Origem], "Quem faltou e foi votar" ) & "</h3>"
+            & "<div class='grade'><div></div><div class='rot lula'>Lula</div><div class='rot flavio'>Flávio</div>"
+            & "<div class='celula'>Pesquisa</div>"
+            & CONCATENATEX ( FILTER ( _linhas, [O] = _o ),
+                "<div class='celula'><strong class='" & IF ( [D] = 1, "lula", "flavio" ) & "'>"
+                    & (
+                    "<span class='t16conta nc'><span class='t16valor'>"
+                    & FORMAT ( [@pesquisa], "0", "pt-BR" ) & "%</span>"
+                    & "<span class='t16janela' aria-hidden='true'><span class='t16rol'>"
+                    & CONCATENATEX (
+                        GENERATESERIES ( 0, 24, 1 ),
+                        "<span>" & FORMAT ( [@pesquisa] * ( 1 - POWER ( 1 - [Value] / 24, 3 ) ), "0", "pt-BR" ) & "%</span>",
+                        "", [Value], ASC
+                    )
+                    & "</span></span></span>"
+                ) & "</strong><small>"
+                    & FORMAT ( [@pinf], "0", "pt-BR" ) & "–" & FORMAT ( [@psup], "0", "pt-BR" ) & "%</small></div>", "", [D], ASC )
+            & "<div class='celula'>Urna<br><small>estimativa</small></div>"
+            & CONCATENATEX ( FILTER ( _linhas, [O] = _o ),
+                "<div class='celula'><strong class='" & IF ( [D] = 1, "lula", "flavio" ) & "'>"
+                    & (
+                    "<span class='t16conta nc'><span class='t16valor'>"
+                    & FORMAT ( [@urna], "0", "pt-BR" ) & "%</span>"
+                    & "<span class='t16janela' aria-hidden='true'><span class='t16rol'>"
+                    & CONCATENATEX (
+                        GENERATESERIES ( 0, 24, 1 ),
+                        "<span>" & FORMAT ( [@urna] * ( 1 - POWER ( 1 - [Value] / 24, 3 ) ), "0", "pt-BR" ) & "%</span>",
+                        "", [Value], ASC
+                    )
+                    & "</span></span></span>"
+                ) & "</strong><small>"
+                    & FORMAT ( [@uinf], "0", "pt-BR" ) & "–" & FORMAT ( [@usup], "0", "pt-BR" ) & "%</small></div>", "", [D], ASC )
+            & "</div></div>", "", [O], ASC )
+    & "<div class='notas entra'>Pesquisa: variação entre institutos, sem IC conjunto. Urna: Bayes e faixa dos dois métodos. "
+    & "Quem faltou: urna só entre quem foi votar (inclui branco/nulo); intenção na pesquisa não confirma presença.</div></div>"

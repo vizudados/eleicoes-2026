@@ -4,4 +4,9 @@
 @descricao: Seções eleitorais no local em 2026.
 @oraculo: mockup/data/eleicoes.json › Escola › secoes
 */
+IF ( [Eleição · pós] = 1,
+CALCULATE ( SUM ( 'T20 Zona turno'[Seções] ),
+        'T20 Zona turno'[Ano] = 2026, 'T20 Zona turno'[Turno] = 2,
+        TREATAS ( VALUES ( 'T20 Local'[Id] ), 'T20 Zona turno'[IdLocal] ) ),
 SUM ( 'T20 Local'[Seções] )
+)

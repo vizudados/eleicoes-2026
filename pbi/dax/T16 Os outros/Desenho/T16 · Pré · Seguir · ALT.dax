@@ -1,0 +1,8 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: Texto para leitor de tela do quadro 'o eleitor segue o apoio?'.
+*/
+"Vox Brasil, 09/10: " & FORMAT ( [T16 · Vox · seguiriam o candidato], "0.0%" ) & " diziam que seguiriam o candidato do 1º turno; "
+    & FORMAT ( [T16 · Vox · manteriam a própria escolha], "0.0%" ) & " mantêm a própria escolha; "
+    & FORMAT ( [T16 · Vox · depende de quem recebe o apoio], "0.0%" ) & " dizem que depende."

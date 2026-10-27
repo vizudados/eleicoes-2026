@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: texto
+@descricao: Turno escolhido na casca.
+*/
+IF ( [Eleição · pós] = 1, "2º turno", "1º turno" )

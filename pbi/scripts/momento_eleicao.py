@@ -1,6 +1,7 @@
 """Contrato único do Antes/Depois: seleção, posição, sincronia e leitura de fontes.
 
-O filtro fica em (952,60), 314×208, sempre atrás do conteúdo; o filtro já existente fica em (1282,60).
+O filtro fica em (952,60), 314×208, ao lado do filtro da tela, que fica em (1282,60); numa tela sem outro filtro,
+ele ocupa o lugar dele (1282,60, 424×208). Sempre atrás do conteúdo.
 As medidas não trocam o grão, preservando UF, município, sort e tooltip.
 """
 from __future__ import annotations
@@ -12,8 +13,14 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 PRE = 'Pré Eleições 2026'
 POS = 'Pós Eleições 2026'
 CAIXA = (952, 60, 314, 208)
+# Sem outro filtro na tela, o Pré/Pós fica no lugar dele (a caixa de casca.FILTRO; pedido do dono, 27/10/2026).
+CAIXA_SOZINHO = (1282, 60, 424, 208)
+COM_FILTRO_PROPRIO = {'T19'}   # telas que desenham o próprio filtro (fora da casca)
 GRUPO = 'Eleicoes2026Momento'
-TELAS = {'T02', 'T04', 'T03', 'T05', 'T01', 'T11', 'T12', 'T13'}
+# 26/10/2026, noite: o dono pediu o mesmo filtro nas telas em que o 2º turno muda a leitura (Ausência, Quem falta,
+# Quem vota, Série, Minha cidade, Explorador, Zona eleitoral e 20 anos).
+TELAS = {'T02', 'T04', 'T03', 'T05', 'T01', 'T11', 'T12', 'T13', 'T06', 'T25', 'T24', 'T14', 'T15', 'T19', 'T20', 'T21',
+         'T16'}   # 27/10: a 19 · Os outros, Pré = as pesquisas, Pós = a estimativa das urnas
 
 
 def fonte(t):
@@ -21,7 +28,23 @@ def fonte(t):
         return 'Fontes: TSE e IBGE · 1º turno (04/10) e 2º turno (25/10/2026)'
     if t.codigo in {'T02', 'T04'}:
         return t.fonte.replace(' · fotos', ' · 2º turno de 25/10/2026 · fotos')
+    if t.codigo in {'T14', 'T15', 'T19', 'T21'}:
+        return 'Fontes: TSE e IBGE · 1º e 2º turnos de 2006 a 2026'
+    if t.codigo in RODAPES:
+        return RODAPES[t.codigo]
     return t.fonte
+
+
+# Rodapés das telas que ganharam o Pré/Pós em 26/10/2026 (o perfil por idade do 2º turno ainda não saiu no TSE).
+RODAPES = {
+    'T06': 'Fonte: TSE · comparecimento, brancos e nulos dos 1º e 2º turnos, 2006 a 2026',
+    'T25': 'Fonte: TSE · comparecimento por município nos dois turnos (2006 a 2026) e perfil por idade do 1º turno '
+           '(2014 a 2026)',
+    'T24': 'Fontes: TSE (1º e 2º turnos e perfil do eleitorado), IBGE (Censo 2022), Portal da Transparência (Bolsa '
+           'Família, ago/2026), Atlas do Desenvolvimento Humano (IDHM 2010) e Datafolha (1º e 2º turnos)',
+    'T20': 'Fontes: TSE (votação por seção e por zona eleitoral, 1º e 2º turnos) e IBGE (malha municipal) · 27 capitais, '
+           'as 6 maiores que viraram e Contagem (MG)',
+}
 
 
 def segundo(expressao_pre: str, expressao_pos: str) -> str:
@@ -48,6 +71,11 @@ def soma_uf(coluna: str, ano: int = 2026, *, remover_uf=False) -> str:
     return f"CALCULATE ( SUM ( 'UF segundo turno'[{coluna}] ), {extra}'UF segundo turno'[Ano] = {ano} )"
 
 
+def sozinho(t) -> bool:
+    """A tela não tem outro filtro: o Pré/Pós ocupa o canto direito."""
+    return not t.filtro and t.codigo not in COM_FILTRO_PROPRIO
+
+
 def filtro(t):
     import pbip_lib as lib
     from paginas import casca
@@ -56,9 +84,10 @@ def filtro(t):
                  showSelectedCount=False, showSelectedValue=True, selectedValueOnly=True, syncSelectionWithHost=True,
                  triggerMode='value', triggerLabel='Eleição 2026', placeholderText=POS,
                  defaultSelection='value', defaultValue=POS, pathMode=False)
+    caixa = CAIXA_SOZINHO if sozinho(t) else CAIXA
     return lib.Visual(t.codigo, lib.visual_vizufilter(
-        f'{t.codigo}_Filtro_Momento', *CAIXA, categoria=('Momento eleição', 'Momento', 'Eleição 2026'),
-        geral=geral, layout=casca.layout_filtro(CAIXA), estilo=casca._estilo_filtro(t),
+        f'{t.codigo}_Filtro_Momento', *caixa, categoria=('Momento eleição', 'Momento', 'Eleição 2026'),
+        geral=geral, layout=casca.layout_filtro(caixa), estilo=casca._estilo_filtro(t),
         sincronia=lib.grupo_sincronia(GRUPO), medidas={'itemSort': 'Eleição · ordem'},
         alt=lib.medida('Eleição · Filtro · ALT'), z=lib.CAMADAS['filtro'], tab=3))
 

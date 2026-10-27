@@ -7,9 +7,9 @@
 VAR _k = [T25 · ordem da faixa]
 VAR _nome = [T25 · faixa da linha]
 VAR _voto = [T25 · voto da faixa]
-VAR _pct = [T25 · abstenção %]
+VAR _pct = [T25 · idade abstenção %]
 VAR _teto = [T25 · teto por idade]
-VAR _ref = [T25 · abstenção % todas as idades]
+VAR _ref = [T25 · idade todas as idades]
 -- 2 · Textos
 VAR _ast = IF ( _voto = "facultativo", "<sup>*</sup>" )
 -- 3 · Geometria (linhas a cada 35 px; barra de 0 ao teto em 450 px a partir de x 196)

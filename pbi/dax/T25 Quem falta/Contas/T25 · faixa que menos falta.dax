@@ -10,7 +10,7 @@ VAR _faixas =
         "@p",
             VAR _f = 'T25 Faixa'[Faixa]
             RETURN
-                CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Faixa] = _f )
+                CALCULATE ( [T25 · idade abstenção %], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Faixa] = _f )
     )
 VAR _comDado = FILTER ( _faixas, NOT ISBLANK ( [@p] ) )
 RETURN

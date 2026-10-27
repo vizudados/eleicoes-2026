@@ -17,3 +17,5 @@ RETURN
         _nome & ": margem do PT" & _ini & " a " & FORMAT ( _m26 * 100, "+0.0;−0.0;0.0" ) & " p.p. em 2026; PT à "
             & "frente em " & _frente & " de " & _com & IF ( _com = 1, " eleição.", " eleições." )
     )
+
+    & IF ( [Eleição · pós] = 1, " Segundo turno.", "" )

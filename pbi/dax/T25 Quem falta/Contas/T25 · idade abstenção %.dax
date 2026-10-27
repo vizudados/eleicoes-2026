@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Taxa da faixa no primeiro turno, no ano da peça etária.
+*/
+DIVIDE ( [T25 · idade abstenções], [T25 · idade aptos] )

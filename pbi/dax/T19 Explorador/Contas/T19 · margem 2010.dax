@@ -1,14 +1,20 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: 0.0%
-@descricao: Margem do PT em 2010: (votos do PT − votos do adversário principal) ÷ votos válidos, no contexto (um município na linha da lista e no ponto da dispersão; o recorte inteiro no resumo). Vazio sem votos no ano.
-@oraculo: mockup/data/eleicoes.json › Explorador › margem_serie
+@descricao: Conta no turno escolhido: Pré = primeiro turno; Pós = segundo turno. Preserva o grão e os filtros.
 */
-VAR _pt =
+IF ( [Eleição · pós] = 1, VAR _pt =
+    CALCULATE ( SUM ( 'Município segundo turno'[VotosPT] ), 'Município segundo turno'[Ano] = 2010 )
+VAR _adv =
+    CALCULATE ( SUM ( 'Município segundo turno'[VotosAdversario] ), 'Município segundo turno'[Ano] = 2010 )
+VAR _val =
+    CALCULATE ( SUM ( 'Município segundo turno'[Validos] ), 'Município segundo turno'[Ano] = 2010 )
+RETURN
+    DIVIDE ( _pt - _adv, _val ), VAR _pt =
     CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = 2010 )
 VAR _adv =
     CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2010 )
 VAR _val =
     CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2010 )
 RETURN
-    DIVIDE ( _pt - _adv, _val )
+    DIVIDE ( _pt - _adv, _val ) )

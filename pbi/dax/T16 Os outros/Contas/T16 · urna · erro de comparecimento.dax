@@ -1,0 +1,9 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0.00
+@descricao: Diferença entre saldo observado e modelado; inclui pequeno ajuste de harmonização dos aptos.
+@oraculo: dados/pbi/t16_urna.csv
+*/
+VAR _observado = CALCULATE ( [T16 · diagnóstico · média], 'T16 Urna'[Destino] = "Saldo observado" )
+VAR _modelado = CALCULATE ( [T16 · diagnóstico · média], 'T16 Urna'[Destino] = "Saldo modelado" )
+RETURN _observado - _modelado

@@ -16,7 +16,10 @@ Medidas em pbi/dax/T21 20 anos (desenho gerado por pbi/scripts/desenho_t21.py); 
 from __future__ import annotations
 
 import desenho_t21 as D
+import desenho_t19 as D19
 import pbip_lib as lib
+import pagina_lib
+import roteiro
 from pbip_lib import Visual
 
 P = "T21"
@@ -31,7 +34,7 @@ def _mapa() -> dict:
     campos += [lib.campo_medida(f"m{a % 100:02d}", f"T21 · mapa · margem {a} inteira") for a in D.ANOS]
     campos.append(lib.campo_medida("anos", "T21 · Mapa · anos para o Deneb"))
     doc = lib.visual_deneb("T21_Mapa_Deneb", *CAIXA, "spec/t21_mapa.json", campos,
-                           alt=lib.medida("T21 · Mapa · ALT"), z=Z + 1, tab=110, tooltip_pagina="ttT19Municipio",
+                           alt=lib.medida("T21 · Mapa · ALT"), z=Z + 1, tab=110, tooltip_pagina="ttT21Municipio",
                            renderizacao="canvas")
     # L123: a vista não é recompilada quando o dado chega de novo (o relógio e o ano em tela não voltam ao começo)
     doc["visual"]["objects"]["dataLimit"] = [{"properties": {"enableIncrementalDataUpdates": lib.lit(True)}}]
@@ -43,4 +46,7 @@ def declarar(ctx):
         Visual(P, lib.visual_html("T21_Fundo_Html", *CAIXA, "T21 · Fundo · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=D.corpo_fundo(), alt=lib.medida("T21 · Fundo · ALT"), z=Z, tab=100)),
         Visual(P, _mapa()),
+        *pagina_lib.tooltip("ttT21Municipio", "20 anos · município", 460, 350, "T21 · Dossiê · HTML",
+                            ordem=100 + int(roteiro.numero(P)) * 10,
+                            folha_de_estilo=CSS, modelo_corpo=D19.corpo_dossie()),
     ]

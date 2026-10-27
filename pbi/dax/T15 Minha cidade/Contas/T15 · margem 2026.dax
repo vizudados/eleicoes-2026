@@ -5,4 +5,4 @@
 @oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › margem26_txt = −11,0
 @gerado: pbi/scripts/desenho_t15.py
 */
-DIVIDE ( CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Ano'[Ano] = 2026 ) - CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Ano'[Ano] = 2026 ), CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Ano'[Ano] = 2026 ) )
+IF ( [Eleição · pós] = 1, DIVIDE ( CALCULATE ( SUM ( 'Município segundo turno'[VotosPT] ), 'Ano'[Ano] = 2026 ) - CALCULATE ( SUM ( 'Município segundo turno'[VotosAdversario] ), 'Ano'[Ano] = 2026 ), CALCULATE ( SUM ( 'Município segundo turno'[Validos] ), 'Ano'[Ano] = 2026 ) ), DIVIDE ( CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Ano'[Ano] = 2026 ) - CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Ano'[Ano] = 2026 ), CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Ano'[Ano] = 2026 ) ) )

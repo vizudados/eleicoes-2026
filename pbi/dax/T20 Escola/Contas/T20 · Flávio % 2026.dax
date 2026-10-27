@@ -4,4 +4,7 @@
 @descricao: Votos de Flávio ÷ válidos no local, 2026.
 @oraculo: mockup/data/eleicoes.json › Escola › flavio_txt
 */
+IF ( [Eleição · pós] = 1,
+DIVIDE ( [T20 · VotosAdv 2026], [T20 · Validos 2026] ),
 DIVIDE ( SUM ( 'T20 Local'[VotosAdv2026] ), SUM ( 'T20 Local'[Validos2026] ) )
+)

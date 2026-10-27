@@ -1,0 +1,14 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Último ano anterior com taxa menor/igual ou maior/igual à de 2026; vazio se extremo de toda a série.
+*/
+VAR _serie =
+        ADDCOLUMNS (
+            CALCULATETABLE ( VALUES ( 'Ano'[Ano] ), REMOVEFILTERS ( 'Ano' ) ),
+            "@p", VAR _a = 'Ano'[Ano]
+                RETURN CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = _a )
+        )
+    VAR _atual = CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = 2026 )
+    VAR _anteriores = FILTER ( _serie, 'Ano'[Ano] < 2026 && NOT ISBLANK ( [@p] ) )
+    RETURN MAXX ( FILTER ( _anteriores, [@p] <= _atual ), 'Ano'[Ano] )

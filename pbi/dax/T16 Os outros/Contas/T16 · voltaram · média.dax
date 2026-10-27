@@ -1,0 +1,7 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0.00
+@descricao: Leitura única da série e método, respeitando origem e destino; percentual em 0–100.
+@oraculo: dados/pbi/t16_urna.csv
+*/
+CALCULATE ( MAX ( 'T16 Urna'[Média] ), 'T16 Urna'[Série] = "Entre quem foi votar", 'T16 Urna'[Método] = "Bayes" )

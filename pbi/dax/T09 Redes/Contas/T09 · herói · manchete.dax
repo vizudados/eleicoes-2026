@@ -1,0 +1,23 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: texto
+@descricao: Resposta neutra à pergunta da tela, escolhida a partir das contas da janela; IPD só quando as interações não cabem no período.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+VAR _per = [Período · escolhido]
+VAR _l = [T09 · herói · Lula]
+VAR _f = [T09 · herói · Flávio]
+VAR _ipL = [T09 · período · IPD · Lula]
+VAR _ipF = [T09 · período · IPD · Flávio]
+VAR _quem = IF ( _l > _f, "Lula", "Flávio" )
+VAR _quemIp = IF ( _ipL > _ipF, "Lula", "Flávio" )
+RETURN
+    SWITCH (
+        TRUE (),
+        NOT ISBLANK ( _l ) && NOT ISBLANK ( _f ) && _l = _f, "Os dois empataram em interações na janela medida",
+        NOT ISBLANK ( _l ) && NOT ISBLANK ( _f ) && ISBLANK ( _per ), _quem & " liderou as interações na reta final medida",
+        NOT ISBLANK ( _l ) && NOT ISBLANK ( _f ), [Período · nome] & ": " & _quem & " liderou as interações medidas",
+        NOT ISBLANK ( _ipL ) && NOT ISBLANK ( _ipF ) && _ipL = _ipF, "Os dois empataram no índice Quaest do período",
+        NOT ISBLANK ( _ipL ) && NOT ISBLANK ( _ipF ), [Período · nome] & ": " & _quemIp & " liderou o índice Quaest",
+        "Sem medição dos dois que caiba inteira no período"
+    )

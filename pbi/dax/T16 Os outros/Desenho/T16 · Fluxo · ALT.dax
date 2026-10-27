@@ -1,15 +1,7 @@
 /*
 @pasta: T16 Os outros\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do diagrama de fluxo (≤ 250 caracteres).
+@descricao: Pós: inferência agregada. Pré: expressão original integral, sem alteração.
+@oraculo: dados/pbi/t16_urna.csv
 */
-VAR _t = "Pelas pesquisas do 2º turno: eleitor de Cury, Lula " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Cury" ), "0" )
-    & "% e Flávio " & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "Cury" ), "0" )
-    & "%; de Renan, " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Renan" ), "0" ) & "% e "
-    & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "Renan" ), "0" )
-    & "%; de Caiado, " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "Caiado" ), "0" ) & "% e "
-    & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "Caiado" ), "0" )
-    & "%; quem não votou, " & FORMAT ( CALCULATE ( [T16 · transferência · Lula], 'Transferência'[Segmento] = "nao_votou" ), "0" ) & "% e "
-    & FORMAT ( CALCULATE ( [T16 · transferência · Flávio], 'Transferência'[Segmento] = "nao_votou" ), "0" ) & "%. Amostras pequenas."
-RETURN
-    LEFT ( _t, 250 )
+IF ( [Eleição · pós] = 1, [T16 · Pós · Fluxo · ALT], [T16 · Pré · Fluxo · ALT] )

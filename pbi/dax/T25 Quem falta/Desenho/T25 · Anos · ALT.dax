@@ -4,7 +4,7 @@
 @descricao: Texto para leitor de tela do bloco de anos.
 */
 LEFT (
-    "Abstenção no 1º turno, " & [T25 · lugar] & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
+    "Abstenção no " & [T25 · turno] & ", " & [T25 · lugar] & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
         & "2006 " & IF ( ISBLANK ( [T25 · abstenção % em 2006] ), "sem dado", FORMAT ( [T25 · abstenção % em 2006], "0.0%" ) ) & ", " & "2010 " & IF ( ISBLANK ( [T25 · abstenção % em 2010] ), "sem dado", FORMAT ( [T25 · abstenção % em 2010], "0.0%" ) ) & ", " & "2014 " & IF ( ISBLANK ( [T25 · abstenção % em 2014] ), "sem dado", FORMAT ( [T25 · abstenção % em 2014], "0.0%" ) ) & ", " & "2018 " & IF ( ISBLANK ( [T25 · abstenção % em 2018] ), "sem dado", FORMAT ( [T25 · abstenção % em 2018], "0.0%" ) ) & ", " & "2022 " & IF ( ISBLANK ( [T25 · abstenção % em 2022] ), "sem dado", FORMAT ( [T25 · abstenção % em 2022], "0.0%" ) ) & ", " & "2026 " & IF ( ISBLANK ( [T25 · abstenção % em 2026] ), "sem dado", FORMAT ( [T25 · abstenção % em 2026], "0.0%" ) ) & ". Clique num ano para cruzar.",
     250
 )

@@ -3,4 +3,4 @@
 @formato: 0.0
 @descricao: Abstenção da faixa da linha dividida pela de todas as idades, no lugar e no ano.
 */
-DIVIDE ( [T25 · abstenção %], [T25 · abstenção % todas as idades] )
+DIVIDE ( [T25 · idade abstenção %], [T25 · idade todas as idades] )

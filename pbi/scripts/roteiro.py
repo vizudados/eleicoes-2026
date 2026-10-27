@@ -73,7 +73,7 @@ TELAS = [
     Tela("T14", "Série", "Como o PT chegou até aqui, de 2006 a 2026?", "III · O mapa", filtro="UF"),
     Tela("T15", "Minha cidade", "Como votou a minha cidade?", "III · O mapa", filtro="Município"),
     # IV · Explore você mesmo
-    Tela("T19", "Explorador", "Onde está a minha pergunta? Explore os 5.571 municípios", "IV · Explore você mesmo"),
+    Tela("T19", "Explorador", "Onde está a minha pergunta?", "IV · Explore você mesmo"),
     # zona eleitoral, o nome oficial da Justiça Eleitoral, no lugar de escola (pedido do dono, 24/10/2026)
     Tela("T20", "Zona eleitoral", "Como votou cada zona eleitoral da cidade?", "IV · Explore você mesmo",
          filtro="Zona",

@@ -64,3 +64,19 @@ TABELAS = [
          col("fonte_url", "Fonte", descricao="Endereço da fonte.", oculta=True)],
         oculta=True),
 ]
+
+TABELAS.append(tabela_csv(
+    "Perfil pesquisa segundo turno", "Datafolha BR-09540/2026, campo 23–24/10, intenção declarada antes da urna "
+    "por renda familiar e no total da pesquisa. Base de totais; oito linhas, sem estimar outros cruzamentos. As bases ponderadas "
+    "das três faixas somam 3.895 de 4.050; não renormalizar os pesos.",
+    "dados/pbi/perfil_pesquisa_2turno.csv",
+    [col("instituto", "Instituto"), col("divulgacao", "Divulgação", tipo="date", oculta=True),
+     col("campo", "Campo", oculta=True), col("turno", "Turno", tipo="int", oculta=True),
+     col("candidato", "Candidato"), col("lente", "Lente"),
+     col("categoria", "Categoria", ordenar_por="CategoriaOrdem"),
+     col("categoria_ordem", "CategoriaOrdem", tipo="int", formato="0", oculta=True),
+     col("percentual", "Percentual", tipo="number", oculta=True),
+     col("fatia", "Fatia", tipo="number", oculta=True),
+     col("base_ponderada", "Base ponderada", tipo="int", oculta=True),
+     col("amostra_total", "Amostra total", tipo="int", oculta=True),
+     col("fonte_url", "Fonte", oculta=True)], oculta=True))

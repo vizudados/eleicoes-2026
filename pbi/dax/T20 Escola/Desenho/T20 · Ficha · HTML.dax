@@ -41,8 +41,8 @@ VAR _c26 = IF ( _m26 > 0, "lula", IF ( _m26 < 0, "flavio", "" ) )
 VAR _nota =
     SWITCH (
         TRUE (),
-        _ha = 0 && _exemplo = "virou", "a maior zona que virou",
-        _ha = 0, "a maior queda da cidade",
+        _ha = 0 && _exemplo = "virou", IF ( [Eleição · pós] = 1, "mais votos válidos entre as viradas", "a maior zona que virou" ),
+        _ha = 0, IF ( _m26 < _m22, "a maior queda da cidade", "o menor avanço da cidade" ),
         _virou = 1, "virou para Flávio",
         _virouLula = 1, "virou para Lula",
         _m26 > 0, "Lula à frente",
@@ -80,9 +80,10 @@ RETURN
             & "<div class='lado flavio'><span class='num'>" & FORMAT ( _flavio, "0.0%" ) & "</span><span class='r'>Flávio</span></div>"
             & _selo
         & "</div>"
-        & "<div class='rot cap sobe d4'>Margem do PT, em pontos</div>"
+        & "<div class='rot cap sobe d4'>Margem do PT, em pontos · " & [T20 · turno] & "</div>"
         & "<div class='serie sobe d5'>"
-            & "<div class='c c0'><span class='a'>2018</span><span class='num " & _c18 & "'>" & _t18 & "</span></div>"
+            & "<div class='c c0'><span class='a'>2018</span><span class='num " & _c18 & "'>" & _t18 & "</span>"
+            & IF ( ISBLANK ( _m18 ), "<small class='sem18'>sem dado neste turno</small>" ) & "</div>"
             & "<div class='c c1'><span class='a'>2022</span><span class='num " & _c22 & "'>" & _t22 & "</span></div>"
             & "<div class='c c2'><span class='a'>2026</span><span class='num " & _c26 & "'>" & _t26 & "</span></div>"
             & "<svg class='linha' width='460' height='70' viewBox='0 0 460 70'>"

@@ -29,13 +29,14 @@ VAR _selo = IF ( _virou = 1, "<span class='selo'>virou</span>", "" )
 VAR _atraso = "d" & MIN ( _pos, 16 )
 -- 3 · Geometria
 VAR _y = 36 + ( _pos - 1 ) * 44 -- geometria
+VAR _limite = IF ( [Eleição · pós] = 1, 1.0, 0.6 )
 VAR _base = { ( 0, 4.0, _m06 ), ( 1, 29.6, _m10 ), ( 2, 55.2, _m14 ), ( 3, 80.8, _m18 ), ( 4, 106.4, _m22 ), ( 5, 132.0, _m26 ) } /* lista */
 VAR _pts =
         SELECTCOLUMNS (
             _base,
             "i", [Value1],
             "x", [Value2],
-            "y", IF ( ISBLANK ( [Value3] ), BLANK (), 15.0 - MAX ( -0.6, MIN ( 0.6, [Value3] ) ) / 0.6 * 13.0 )
+            "y", IF ( ISBLANK ( [Value3] ), BLANK (), 15.0 - MAX ( -_limite, MIN ( _limite, [Value3] ) ) / _limite * 13.0 )
         ) -- geometria
 VAR _primeiro = MINX ( _pts, IF ( NOT ISBLANK ( [y] ), [i] ) ) -- geometria
 VAR _d =

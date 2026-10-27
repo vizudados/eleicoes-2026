@@ -4,6 +4,12 @@
 @descricao: Locais de 2026 da cidade da tela em que Lula ficou à frente em 2022 (mesmo zona + número) e Flávio em 2026.
 @oraculo: mockup/data/eleicoes.json › Escola › locais_que_viraram (14)
 */
+IF ( [Eleição · pós] = 1,
+VAR _cod = [T20 · cidade (código)]
+RETURN SUMX ( FILTER ( ALL ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod ),
+    VAR _a = CALCULATE ( [T20 · margem 2022] )
+    VAR _b = CALCULATE ( [T20 · margem 2026] )
+    RETURN INT ( NOT ISBLANK ( _a ) && NOT ISBLANK ( _b ) && _a > 0 && _b < 0 ) ),
 VAR _cod = [T20 · cidade (código)]
 RETURN
     COALESCE (
@@ -20,3 +26,4 @@ RETURN
         ),
         0
     )
+)

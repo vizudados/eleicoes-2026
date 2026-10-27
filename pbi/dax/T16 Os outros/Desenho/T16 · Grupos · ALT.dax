@@ -1,6 +1,7 @@
 /*
 @pasta: T16 Os outros\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela dos alvos dos grupos.
+@descricao: Pós: inferência agregada. Pré: expressão original integral, sem alteração.
+@oraculo: dados/pbi/t16_urna.csv
 */
-"Passe o mouse em cada grupo de eleitores (Cury, Renan, Caiado, quem não votou) para ver a última pesquisa de cada instituto."
+IF ( [Eleição · pós] = 1, BLANK (), [T16 · Pré · Grupos · ALT] )

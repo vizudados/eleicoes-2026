@@ -7,5 +7,5 @@ MAXX (
     CALCULATETABLE ( VALUES ( 'T25 Faixa'[Ordem] ), REMOVEFILTERS ( 'T25 Faixa' ) ),
     VAR _k = 'T25 Faixa'[Ordem]
     RETURN
-        CALCULATE ( [T25 · abstenção %], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Ordem] = _k )
+        CALCULATE ( [T25 · idade abstenção %], REMOVEFILTERS ( 'T25 Faixa' ), 'T25 Faixa'[Ordem] = _k )
 )

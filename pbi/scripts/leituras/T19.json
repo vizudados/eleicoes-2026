@@ -1,6 +1,17 @@
-{"titulo": "Como explorar os 5.571 municípios",
- "blocos": [
-  ["Como ler", "Cada ponto da dispersão é uma cidade: quanto mais à direita, mais renda por pessoa; quanto mais abaixo, mais a margem de Lula caiu de 2022 para 2026. No filtro do canto de cima, escolha região, estado, tamanho, renda, quem virou ou a cidade; arraste um retângulo sobre os pontos para recortar ainda mais. Passe o mouse numa linha ou num ponto para abrir o dossiê da cidade."],
-  ["De onde vêm os números", "Votos do 1º turno de 2006 a 2026, por município, do TSE. Renda por pessoa e população do Censo 2022 (IBGE). Margem = votos do PT menos votos do principal adversário, divididos pelos votos válidos, em pontos."],
-  ["Para lembrar", "No filtro, região, estado e cidade são uma árvore só: marcar uma região ou um estado marca as cidades de dentro. Itens do mesmo grupo somam (Nordeste ou Norte) e grupos diferentes se combinam (do Nordeste e com até 10 mil habitantes). Boa Esperança do Norte (MT) foi criada em 2025: não tem 2022 nem dado do Censo, por isso não aparece na dispersão. A seleção por retângulo vale até 2.500 cidades de uma vez; para grupos maiores, use o filtro."]
- ]}
+{
+  "titulo": "Como explorar os 5.571 municípios",
+  "blocos": [
+    [
+      "Como ler",
+      "Pré Eleições 2026 usa os primeiros turnos e Pós Eleições 2026 usa os segundos turnos em toda a tela, inclusive nas minilinhas e no dossiê. Cada ponto é uma cidade: à direita, maior renda por pessoa; acima, a margem de Lula cresceu de 2022 para 2026, e abaixo ela caiu. Use o filtro de municípios ou arraste um retângulo sobre os pontos; clique numa linha para destacar a cidade na dispersão."
+    ],
+    [
+      "De onde vêm os números",
+      "Votos municipais do TSE, de 2006 a 2026, sempre comparando o mesmo turno. Renda por pessoa e população vêm do Censo 2022 do IBGE. Margem é a diferença entre o PT e o adversário dividida pelos votos válidos, em pontos."
+    ],
+    [
+      "Para lembrar",
+      "Itens do mesmo grupo do filtro se somam; grupos diferentes se combinam, como Nordeste e até 10 mil habitantes. No Pré, virou conta a troca de Lula por Flávio; no Pós, conta as trocas nos dois sentidos, e o filtro Virou? usa o turno escolhido. Cidade nova ou empate ficam separados; a seleção por retângulo aceita até 2.500 cidades."
+    ]
+  ]
+}

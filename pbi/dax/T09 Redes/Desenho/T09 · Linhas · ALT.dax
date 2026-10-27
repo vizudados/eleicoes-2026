@@ -1,25 +1,13 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela das barras e do ritmo de cada candidato na coluna da direita (com período, a medição que cabe nele).
+@descricao: Valores acessíveis por candidato, com ausência explícita.
 */
-VAR _per = [Período · escolhido]
-VAR _psL = [T09 · período · seguidores ganhos · Lula]
-VAR _psF = [T09 · período · seguidores ganhos · Flávio]
-VAR _pD = [T09 · período · seguidores · dias]
+VAR _c = [T09 · lado · candidato]
+VAR _base = [T09 · lado · nome completo]
+VAR _g = CALCULATE ( [T09 · lado · ganho], Monitoramento[Candidato] = _base )
+VAR _m = CALCULATE ( [T09 · lado · Meta], Monitoramento[Candidato] = _base )
 RETURN
-    IF (
-        ISBLANK ( _per ),
-        "Seguidores ganhos de 16/08 a 03/10: Lula +" & FORMAT ( [T09 · seguidores ganhos · campanha · Lula] / 1000000, "0.00" )
-            & " mi, Flávio +" & FORMAT ( [T09 · seguidores ganhos · campanha · Flávio] / 1000000, "0.00" )
-            & " mi. Por dia, de 04 a 08/10: Lula " & FORMAT ( CALCULATE ( [T09 · seguidores por dia · após o 1º turno], Monitoramento[Candidato] = "Lula" ) / 1000, "0" )
-            & " mil, Flávio " & FORMAT ( CALCULATE ( [T09 · seguidores por dia · após o 1º turno], Monitoramento[Candidato] = "Flávio Bolsonaro" ) / 1000, "0" ) & " mil.",
-        IF (
-            ISBLANK ( _psL ) || ISBLANK ( _psF ),
-            [Período · rótulo] & ": sem barras de seguidores ganhos no período.",
-            "Seguidores ganhos, " & [Período · rótulo] & ": Lula +" & FORMAT ( _psL / 1000, "#,0" ) & " mil, Flávio +"
-                & FORMAT ( _psF / 1000, "#,0" ) & " mil"
-                & IF ( _pD > 1, "; por dia, Lula " & FORMAT ( _psL / _pD / 1000, "0" ) & " mil e Flávio "
-                    & FORMAT ( _psF / _pD / 1000, "0" ) & " mil.", "." )
-        )
-    )
+    IF ( NOT ISBLANK ( _c ), _c & ": "
+        & IF ( ISBLANK ( _g ), "sem ganho publicado no período", "+" & FORMAT ( _g, "#,0" ) & " seguidores na janela indicada" )
+        & "; " & IF ( ISBLANK ( _m ), "sem janela completa da Meta.", "R$ " & FORMAT ( _m, "#,0" ) & " na Biblioteca da Meta, na janela indicada." ) )

@@ -1,0 +1,9 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0.00
+@descricao: Direção da diferença entre médias do grupo dos três; não é teste de significância.
+@oraculo: dados/pbi/t16_urna.csv
+*/
+VAR _lula = CALCULATE ( [T16 · urna · média], 'T16 Urna'[Origem] = "Cury + Renan + Caiado", 'T16 Urna'[Destino] = "Lula" )
+VAR _flavio = CALCULATE ( [T16 · urna · média], 'T16 Urna'[Origem] = "Cury + Renan + Caiado", 'T16 Urna'[Destino] = "Flávio" )
+RETURN IF ( _lula > _flavio, 1, IF ( _flavio > _lula, -1, 0 ) )

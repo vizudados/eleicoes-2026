@@ -1,0 +1,9 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: T16 · Pergunta · ALT
+@oraculo: dados/pbi/t16_urna.csv
+*/
+IF ( [Eleição · pós] = 1,
+    "Para onde podem ter ido os votos dos outros? Estimativa agregada.",
+    "Em quem os eleitores dos outros candidatos diziam votar? Pesquisas." )

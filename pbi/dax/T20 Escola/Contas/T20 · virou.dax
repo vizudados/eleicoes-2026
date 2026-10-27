@@ -6,5 +6,4 @@
 */
 VAR _m22 = [T20 · margem 2022]
 VAR _m26 = [T20 · margem 2026]
-RETURN
-    IF ( _m22 > 0 && _m26 < 0, 1, 0 )
+RETURN INT ( NOT ISBLANK ( _m22 ) && NOT ISBLANK ( _m26 ) && _m22 > 0 && _m26 < 0 )

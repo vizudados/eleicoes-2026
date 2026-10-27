@@ -1,36 +1,7 @@
 /*
 @pasta: T16 Os outros\Desenho
 @formato: texto
-@descricao: Moldura do quadro 'quem apoia quem': título, o rótulo das etiquetas dos candidatos menores e os governadores eleitos no 1º turno (quadradinhos que brotam e contadores). As linhas e etiquetas de cada pessoa são o T16 · Itens · HTML.
+@descricao: Pós: inferência agregada. Pré: expressão original integral, sem alteração.
+@oraculo: dados/pbi/t16_urna.csv
 */
--- 1 · Leituras
-VAR _gF = [T16 · governadores · com Flávio]
-VAR _gL = [T16 · governadores · com Lula]
-VAR _gN = [T16 · governadores · neutros]
--- 2 · Textos
-VAR _tot = _gF + _gL + _gN
--- 3 · Geometria (um quadradinho por governador: Flávio, depois Lula, depois neutros)
-VAR _quad =
-    CONCATENATEX (
-        GENERATESERIES ( 1, _tot, 1 ),
-        "<i class='" & SWITCH ( TRUE (), [Value] <= _gF, "f", [Value] <= _gF + _gL, "l", "n" ) & "' style='animation-delay:"
-            & ( 900 + [Value] * 45 ) & "ms'></i>",
-        "",
-        [Value], ASC
-    )
--- 4 · Marcação
-RETURN
-    "<div class='tela t16a'>"
-        & "<div class='sob sobe'>Quem apoia quem no 2º turno</div>"
-        & "<div class='naneq rot entra d6'>Os candidatos menores · * apoio com condições</div>"
-        & "<div class='gov'>"
-            & "<div class='rot sobe d8'>Governadores eleitos no 1º turno</div>"
-            & "<div class='waf' style='grid-template-columns:repeat(" & _tot & ",20px)'>" & _quad & "</div>"
-            & "<div class='cont sobe d10'>"
-                & "<div><span class='num flavio'>" & _gF & "</span>com Flávio</div>"
-                & "<div><span class='num lula'>" & _gL & "</span>com Lula</div>"
-                & "<div><span class='num'>" & _gN & "</span>" & IF ( _gN = 1, "neutro", "neutros" ) & "</div>"
-            & "</div>"
-            & "<div class='nota entra d12'>Levantamento do jornal O Povo, 16/10</div>"
-        & "</div>"
-    & "</div>"
+IF ( [Eleição · pós] = 1, [T16 · Pós · Apoios · HTML], [T16 · Pré · Apoios · HTML] )

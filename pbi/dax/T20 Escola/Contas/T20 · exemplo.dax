@@ -3,6 +3,10 @@
 @formato: texto
 @descricao: Por que o exemplo da ficha: começo (Contagem), virou ou queda.
 */
+IF ( [Eleição · pós] = 1,
+VAR _id = [T20 · id do exemplo]
+RETURN IF ( CALCULATE ( [T20 · virou] + [T20 · virou para Lula], REMOVEFILTERS ( 'T20 Local' ), 'T20 Local'[Id] = _id ) = 1, "virou", "queda" ),
 VAR _cod = [T20 · cidade (código)]
 RETURN
     LOOKUPVALUE ( 'T20 Cidade'[Exemplo], 'T20 Cidade'[CodIBGE], _cod )
+)

@@ -1,8 +1,7 @@
 /*
 @pasta: T16 Os outros\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do quadro de apoios.
+@descricao: Pós: inferência agregada. Pré: expressão original integral, sem alteração.
+@oraculo: dados/pbi/t16_urna.csv
 */
-"Apoios no 2º turno: Cury (com condições), Caiado e Zema com Flávio; Renan liberou o eleitor; PSTU, PCB e UP com Lula; PCO pede voto nulo. Governadores eleitos no 1º turno: "
-    & [T16 · governadores · com Flávio] & " com Flávio, " & [T16 · governadores · com Lula] & " com Lula e "
-    & [T16 · governadores · neutros] & " neutros."
+IF ( [Eleição · pós] = 1, [T16 · Pós · Apoios · ALT], [T16 · Pré · Apoios · ALT] )

@@ -1,0 +1,145 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: T16 · Pós · Fluxo · HTML
+@oraculo: dados/pbi/t16_urna.csv
+*/
+-- 1 · Leituras
+VAR _tendencia = [T16 · urna · tendência]
+VAR _unidades = CALCULATE ( [T16 · diagnóstico · média], 'T16 Urna'[Destino] = "Unidades eleitorais" )
+VAR _lidos =
+    ADDCOLUMNS (
+        DATATABLE ( "O", INTEGER, "Origem", STRING, {
+            { 1, "Cury + Renan + Caiado" }, { 2, "Demais candidatos" }, { 3, "Branco ou nulo" }
+        } ),
+        "@base", VAR _o = [Origem] RETURN CALCULATE ( [T16 · urna · base], 'T16 Urna'[Origem] = _o )
+    )
+VAR _linhas =
+    ADDCOLUMNS (
+        CROSSJOIN ( _lidos, DATATABLE ( "D", INTEGER, "Destino", STRING, {
+            { 1, "Lula" }, { 2, "Flávio" }, { 3, "Branco, nulo ou não votou" }
+        } ) ),
+        "@media", VAR _o = [Origem] VAR _d = [Destino] RETURN CALCULATE ( [T16 · urna · média], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+        "@inf", VAR _o = [Origem] VAR _d = [Destino] RETURN CALCULATE ( [T16 · urna · inferior], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+        "@sup", VAR _o = [Origem] VAR _d = [Destino] RETURN CALCULATE ( [T16 · urna · superior], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d ),
+        "@votos", VAR _o = [Origem] VAR _d = [Destino] RETURN CALCULATE ( [T16 · urna · votos], 'T16 Urna'[Origem] = _o, 'T16 Urna'[Destino] = _d )
+    )
+VAR _nv =
+    ADDCOLUMNS (
+        DATATABLE ( "D", INTEGER, "Destino", STRING, { { 1, "Lula" }, { 2, "Flávio" }, { 3, "Branco ou nulo" } } ),
+        "@media", VAR _d = [Destino] RETURN CALCULATE ( [T16 · urna · média], 'T16 Urna'[Origem] = "Não votou", 'T16 Urna'[Destino] = _d ),
+        "@inf", VAR _d = [Destino] RETURN CALCULATE ( [T16 · urna · inferior], 'T16 Urna'[Origem] = "Não votou", 'T16 Urna'[Destino] = _d ),
+        "@sup", VAR _d = [Destino] RETURN CALCULATE ( [T16 · urna · superior], 'T16 Urna'[Origem] = "Não votou", 'T16 Urna'[Destino] = _d ),
+        "@votos", VAR _d = [Destino] RETURN CALCULATE ( [T16 · urna · votos], 'T16 Urna'[Origem] = "Não votou", 'T16 Urna'[Destino] = _d )
+    )
+VAR _nvBase = CALCULATE ( [T16 · urna · base], 'T16 Urna'[Origem] = "Não votou" )
+VAR _ficou = CALCULATE ( [T16 · urna · média], 'T16 Urna'[Origem] = "Não votou", 'T16 Urna'[Destino] = "Não votou" )
+VAR _ficouInf = CALCULATE ( [T16 · urna · inferior], 'T16 Urna'[Origem] = "Não votou", 'T16 Urna'[Destino] = "Não votou" )
+VAR _ficouSup = CALCULATE ( [T16 · urna · superior], 'T16 Urna'[Origem] = "Não votou", 'T16 Urna'[Destino] = "Não votou" )
+-- 2 · Textos
+VAR _titulo = SWITCH ( _tendencia, 1, "Na estimativa das urnas, o grupo de Cury, Renan e Caiado pendeu para Lula.", -1, "Na estimativa das urnas, o grupo de Cury, Renan e Caiado pendeu para Flávio.", "As médias dos dois finalistas se igualam na estimativa das urnas." )
+-- 3 · Geometria; a largura é proporcional aos votos, com escala única nas três origens de cima.
+VAR _escala = 16 / 1000000
+VAR _geometria =
+    ADDCOLUMNS (
+        _linhas,
+        "@y", VAR _o = [O] VAR _d = [D] RETURN
+            90 + ( _o - 1 ) * 150 - [@base] * _escala / 2
+                + SUMX ( FILTER ( _linhas, [O] = _o && [D] < _d ), [@votos] ) * _escala,
+        "@r", VAR _o = [O] VAR _d = [D] RETURN
+            SWITCH ( _d, 1, 20, 2, 220, 375 )
+                + SUMX ( FILTER ( _linhas, [D] = _d && [O] < _o ), [@votos] ) * _escala
+    )
+VAR _faixas =
+    CONCATENATEX ( _geometria,
+        VAR _y = FORMAT ( [@y], "0.000", "en-US" )
+        VAR _y1 = FORMAT ( [@y] + [@votos] * _escala, "0.000", "en-US" )
+        VAR _r = FORMAT ( [@r], "0.000", "en-US" )
+        VAR _r1 = FORMAT ( [@r] + [@votos] * _escala, "0.000", "en-US" )
+        RETURN "<path class='fx grupo g" & [O] & " " & SWITCH ( [D], 1, "l", 2, "f", "b" )
+            & "' filter='url(#rbu)' d='M250 " & _y & " C520 " & _y & " 520 " & _r & " 790 " & _r
+            & " L790 " & _r1 & " C520 " & _r1 & " 520 " & _y1 & " 250 " & _y1 & " Z'/>", "", [O], ASC, [D], ASC )
+VAR _origens =
+    CONCATENATEX ( _lidos,
+        VAR _o = [O]
+        RETURN "<div class='origem grupo g" & _o & " o" & _o & " sobe' style='top:"
+            & FORMAT ( 225 + ( _o - 1 ) * 150, "0", "en-US" ) & "px'><b>"
+            & IF ( _o = 3, "Branco ou nulo", [Origem] )
+            & "</b><span class='base'>" & FORMAT ( [@base] / 1000000, "0.00", "pt-BR" ) & " mi no 1º turno</span>"
+            & CONCATENATEX ( FILTER ( _linhas, [O] = _o ),
+                "<div class='taxa'><span class='sigla'>" & SWITCH ( [D], 1, "L", 2, "F", "B*" ) & "</span><strong class='"
+                & SWITCH ( [D], 1, "lula", 2, "flavio", "" ) & "'>" & (
+                    "<span class='t16conta nc'><span class='t16valor'>"
+                    & FORMAT ( [@media], "0", "pt-BR" ) & "%</span>"
+                    & "<span class='t16janela' aria-hidden='true'><span class='t16rol'>"
+                    & CONCATENATEX (
+                        GENERATESERIES ( 0, 24, 1 ),
+                        "<span>" & FORMAT ( [@media] * ( 1 - POWER ( 1 - [Value] / 24, 3 ) ), "0", "pt-BR" ) & "%</span>",
+                        "", [Value], ASC
+                    )
+                    & "</span></span></span>"
+                ) & "</strong><small>[" & FORMAT ( [@inf], "0", "pt-BR" ) & "–" & FORMAT ( [@sup], "0", "pt-BR" )
+                & "%]</small></div>", "", [D], ASC ) & "</div>", "", [O], ASC )
+VAR _nos = CONCATENATEX ( _lidos,
+    "<rect class='no grupo g" & [O] & "' x='236' width='12' y='"
+        & FORMAT ( 90 + ( [O] - 1 ) * 150 - [@base] * _escala / 2, "0.000", "en-US" )
+        & "' height='" & FORMAT ( [@base] * _escala, "0.000", "en-US" ) & "'/>", "" )
+VAR _destinos = DATATABLE ( "D", INTEGER, "Rot", STRING, { { 1, "Lula" }, { 2, "Flávio" }, { 3, "Branco, nulo<br>ou não votou" } } )
+VAR _nosDir = CONCATENATEX ( _destinos,
+    VAR _d = [D]
+    VAR _altura = SUMX ( FILTER ( _linhas, [D] = _d ), [@votos] ) * _escala
+    RETURN "<rect class='no' x='790' width='12' y='" & SWITCH ( _d, 1, "20", 2, "220", "375" )
+        & "' height='" & FORMAT ( _altura, "0.000", "en-US" ) & "'/>", "" )
+VAR _rotDir = CONCATENATEX ( _destinos,
+    "<div class='dest ds sobe " & IF ( [D] = 3, "neutro b", "" ) & "' style='top:"
+        & SWITCH ( [D], 1, "233", 2, "412", "569" ) & "px'><div class='ft " & SWITCH ( [D], 1, "l", 2, "f", "b" )
+        & "'></div><b class='" & SWITCH ( [D], 1, "lula", 2, "flavio", "" ) & "'>" & [Rot] & "</b></div>", "" )
+VAR _nvEscala = 28 / 1000000
+VAR _nvFaixas = CONCATENATEX ( _nv,
+    VAR _d = [D]
+    VAR _y = 0 + SUMX ( FILTER ( _nv, [D] < _d ), [@votos] ) * _nvEscala
+    VAR _r = SWITCH ( _d, 1, 0, 2, 84, 105 )
+    VAR _h = [@votos] * _nvEscala
+    RETURN "<path class='fx grupo g4 " & SWITCH ( _d, 1, "l", 2, "f", "b" ) & "' d='M250 "
+        & FORMAT ( _y, "0.000", "en-US" ) & " C520 " & FORMAT ( _y, "0.000", "en-US" ) & " 520 " & _r & " 790 " & _r
+        & " L790 " & FORMAT ( _r + _h, "0.000", "en-US" ) & " C520 " & FORMAT ( _r + _h, "0.000", "en-US" )
+        & " 520 " & FORMAT ( _y + _h, "0.000", "en-US" ) & " 250 " & FORMAT ( _y + _h, "0.000", "en-US" ) & " Z'/>"
+        & "<rect class='no grupo g4' x='790' width='12' y='" & _r & "' height='"
+        & FORMAT ( _h, "0.000", "en-US" ) & "'/>", "" )
+VAR _nvNo = "<rect class='no grupo g4' x='236' y='0' width='12' height='"
+    & FORMAT ( SUMX ( _nv, [@votos] ) * _nvEscala, "0.000", "en-US" ) & "'/>"
+-- 4 · Marcação
+RETURN
+    "<div class='tela t16f t16pos'>"
+        & "<div class='cab'><div class='sob sobe'>Depois do 2º turno · o que as urnas indicam</div>"
+        & "<div class='tit sobe d2'>" & _titulo & "</div>"
+        & "<div class='txt sobe d3'>Estimativa a partir dos votos de " & FORMAT ( _unidades, "#,0", "pt-BR" )
+        & " unidades eleitorais; não identifica pessoas. Nas pesquisas, o grupo pendia para o outro finalista.</div></div>"
+        & "<div class='chave entra'>L = Lula · F = Flávio · B* = branco, nulo ou não votou<br>"
+        & "Centro: Bayes. [Faixa]: união dos intervalos dos dois métodos; não é um novo intervalo de 95%.</div>"
+        & "<svg width='1040' height='450' viewBox='0 0 1040 450'>" & _faixas & _nos & _nosDir & "</svg>"
+        & _origens & _rotDir
+        & "<div class='nv-cab entra'><div class='rot'>Quem não votou · escala própria para mostrar quem foi votar</div>"
+        & "<div class='nota'>" & FORMAT ( _ficou, "0", "pt-BR" ) & "% [" & FORMAT ( _ficouInf, "0", "pt-BR" ) & "–"
+        & FORMAT ( _ficouSup, "0", "pt-BR" ) & "%] seguiram sem votar: essa faixa não está desenhada.</div></div>"
+        & "<div class='origem nv-origem grupo g4 o4 sobe'><b>Não votou</b><span class='base'>"
+        & FORMAT ( _nvBase / 1000000, "0.00", "pt-BR" ) & " mi no 1º turno</span>"
+        & CONCATENATEX ( _nv, "<div class='taxa'><span class='sigla'>" & SWITCH ( [D], 1, "L", 2, "F", "B" )
+            & "</span><strong class='" & SWITCH ( [D], 1, "lula", 2, "flavio", "" ) & "'>"
+            & (
+                    "<span class='t16conta nc'><span class='t16valor'>"
+                    & FORMAT ( [@media], "0.0", "pt-BR" ) & "%</span>"
+                    & "<span class='t16janela' aria-hidden='true'><span class='t16rol'>"
+                    & CONCATENATEX (
+                        GENERATESERIES ( 0, 24, 1 ),
+                        "<span>" & FORMAT ( [@media] * ( 1 - POWER ( 1 - [Value] / 24, 3 ) ), "0.0", "pt-BR" ) & "%</span>",
+                        "", [Value], ASC
+                    )
+                    & "</span></span></span>"
+                ) & "</strong><small>[" & FORMAT ( [@inf], "0.0", "pt-BR" ) & "–"
+            & FORMAT ( [@sup], "0.0", "pt-BR" ) & "%]</small></div>", "", [D], ASC ) & "</div>"
+        & "<svg class='nv-svg' width='1040' height='115' viewBox='0 0 1040 115'>" & _nvFaixas & _nvNo & "</svg>"
+        & "<div class='nv-dest lula' style='top:755px'>Lula</div>"
+        & "<div class='nv-dest flavio' style='top:809px'>Flávio</div>"
+        & "<div class='nv-dest' style='top:832px'>Branco ou nulo</div>"
+    & "</div>"

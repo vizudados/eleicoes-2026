@@ -5,6 +5,8 @@
 @oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › votos › lula26
 @gerado: pbi/scripts/desenho_t15.py
 */
-VAR _a = [T15 · ano escolhido]
+IF ( [Eleição · pós] = 1, VAR _a = [T15 · ano escolhido]
 RETURN
-    CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Ano'[Ano] = _a )
+    CALCULATE ( SUM ( 'Município segundo turno'[VotosPT] ), 'Ano'[Ano] = _a ), VAR _a = [T15 · ano escolhido]
+RETURN
+    CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Ano'[Ano] = _a ) )

@@ -4,11 +4,11 @@
 @descricao: Texto para leitor de tela do bloco de idade.
 */
 LEFT (
-    "Abstenção por faixa de idade, " & [T25 · lugar] & ", " & [T25 · ano] & ": "
-        & IF ( [T25 · tem idade no ano] = 0, "o TSE só publica a idade desde 2014.",
+    "Abstenção por faixa de idade, 1º turno, " & [T25 · lugar] & ", " & [T25 · idade ano] & ": "
+        & IF ( [T25 · idade disponível] = 0, "o TSE só publica a idade desde 2014.",
             "a que mais falta é " & [T25 · faixa que mais falta] & " ("
                 & FORMAT ( [T25 · faixa que mais falta %], "0.0%" ) & "), a que menos falta é "
                 & [T25 · faixa que menos falta] & " (" & FORMAT ( [T25 · faixa que menos falta %], "0.0%" ) & ")." )
-        & " Clique numa faixa para cruzar.",
+        & IF ( [Eleição · pós] = 1, " Primeiro turno de 2026; a idade do segundo ainda não foi publicada.", " Clique numa faixa para cruzar." ),
     250
 )

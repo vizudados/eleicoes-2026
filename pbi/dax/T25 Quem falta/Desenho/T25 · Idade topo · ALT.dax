@@ -4,8 +4,8 @@
 @descricao: Texto para leitor de tela do título do bloco de idade.
 */
 LEFT (
-    "Quem falta mais, por idade, " & [T25 · lugar] & ", " & [T25 · ano] & ": "
-        & IF ( [T25 · tem idade no ano] = 0, "o TSE só publica a idade desde 2014.",
+    "Quem falta mais, por idade, 1º turno, " & [T25 · lugar] & ", " & [T25 · idade ano] & ": "
+        & IF ( [T25 · idade disponível] = 0, "o TSE só publica a idade desde 2014.",
             [T25 · faixa que mais falta] & " " & FORMAT ( [T25 · faixa que mais falta %], "0.0%" ) & "; "
                 & [T25 · faixa que menos falta] & " " & FORMAT ( [T25 · faixa que menos falta %], "0.0%" ) & "." ),
     250

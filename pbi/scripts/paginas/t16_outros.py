@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """16 · Os outros — em quem os eleitores dos outros candidatos diziam votar? (dono: agente das telas da campanha)
 
+Pré: expressões originais preservadas em T16 · Pré · ... . Pós: inferência nacional
+desconectada em T16 Urna, com intervalos dos dois métodos e escala própria para
+quem não votou. Os auxiliares leitura_casca, fonte_casca e pergunta_casca são
+ligados pela main, conforme pbi/qa/p4/integracao_main.patch.
+
 A história: depois do 1º turno, as pesquisas perguntaram aos eleitores de Cury, Renan e Caiado (e a quem não votou) em
 quem votam no 2º turno. O eleitor de Caiado e o de Renan pendem para Flávio (o de Renan com muito branco e nulo), o de
 Cury se divide e quem não votou pende para Lula. Os grupos são pequenos (menos de 100 entrevistados por pesquisa): é
@@ -21,6 +26,11 @@ clique em Cury, Renan ou Caiado na lista → o diagrama destaca os eleitores del
 o 17,2% não mudam (contas sobre a tabela toda). Nada clicado: a tela como antes.
 """
 from __future__ import annotations
+
+import html
+import json
+import math
+from pathlib import Path
 
 import estilo
 import pagina_lib
@@ -158,17 +168,120 @@ CSS_TT_APOIO = (
 )
 
 
+def corpo_pos() -> str:
+    """Estilos exclusivos do Pós; o Pré mantém a geometria e os estilos originais."""
+    return """<style>
+.t16pos{font-family:var(--fonte);color:var(--tinta)}
+.t16pos .cab{position:absolute;inset:0 auto auto 0;width:1040px}
+.t16pos .cab .tit{font-size:29px;line-height:1.25;margin:10px 0}
+.t16pos .cab .txt{font-size:15px;line-height:1.45;max-width:1000px}
+.t16pos .chave{position:absolute;top:159px;font-size:13px;line-height:1.5;color:var(--grafite)}
+.t16pos svg{position:absolute;left:0;top:200px;overflow:visible}
+.t16pos .fx{stroke-width:1;stroke-opacity:.55;animation:t16onda 1.1s cubic-bezier(.45,.05,.3,1) both}
+.t16pos .l{fill:var(--rosa);fill-opacity:.62;stroke:var(--vermelho)}
+.t16pos .f{fill:var(--azul-claro);fill-opacity:.66;stroke:var(--azul)}
+.t16pos .b{fill:var(--areia);fill-opacity:.8;stroke:var(--grafite)}
+.t16pos .no{fill:var(--tinta)}
+.t16pos .origem{position:absolute;left:0;width:226px}
+.t16pos .origem>b{display:block;font-size:19px;line-height:24px;font-weight:600}
+.t16pos .base{display:block;font-size:15px;line-height:19px;color:var(--grafite);margin:3px 0 5px}
+.t16pos .taxa{display:flex;align-items:baseline;gap:7px;height:25px;line-height:25px;margin:0;font-size:15px}
+.t16pos .taxa strong{font-size:20px;line-height:25px;font-weight:700}
+.t16pos .taxa small{font-size:15px;line-height:25px;color:var(--grafite)}
+.t16pos .taxa .sigla{width:17px;font-size:13px;color:var(--grafite)}
+.t16pos .dest{position:absolute;left:818px;width:222px;display:flex;align-items:center;gap:12px}
+.t16pos .dest .ft{width:62px;height:76px;flex:none;background-position:center;background-size:contain;background-repeat:no-repeat}
+.t16pos .dest b{font-size:24px;line-height:1.15}
+.t16pos .dest.neutro b{font-size:17px;color:var(--grafite);font-weight:600}
+.t16pos .nv-cab{position:absolute;top:662px;left:0;width:1040px;border-top:1px solid var(--areia);padding-top:12px}
+.t16pos .nv-cab .rot{font-size:15px;letter-spacing:.02em}
+.t16pos .nv-cab .nota{font-size:15px;line-height:1.45;margin-top:5px}
+.t16pos .nv-svg{top:735px}
+.t16pos .nv-origem{top:729px}
+.t16pos .nv-dest{position:absolute;left:818px;width:222px;font-size:17px;font-weight:600}
+.t16pos .grupo{transition:opacity .2s}
+.t16pos:has(.origem:hover) .grupo{opacity:.25}
+.t16pos:has(.o1:hover) .g1,.t16pos:has(.o2:hover) .g2,.t16pos:has(.o3:hover) .g3,
+.t16pos:has(.o4:hover) .g4{opacity:1}
+.t16comparacao .sob{font-size:13px}
+.t16comparacao .tit{font-size:24px;line-height:1.25;margin:10px 0 12px}
+.t16comparacao .sub{font-size:15px;line-height:1.4;color:var(--grafite);margin:0 0 12px}
+.t16comparacao .quadro{margin:0 0 16px}
+.t16comparacao .quadro h3{font-size:19px;font-weight:600;margin:0 0 10px}
+.t16comparacao .grade{display:grid;grid-template-columns:95px 1fr 1fr;column-gap:8px;row-gap:4px;align-items:baseline}
+.t16comparacao .rot{font-size:13px;letter-spacing:.03em}
+.t16comparacao .celula{font-size:15px;line-height:1.25;padding:3px 0}
+.t16comparacao .celula strong{font-size:26px;font-weight:700;display:block}
+.t16comparacao .celula small{font-size:15px;display:block;color:var(--grafite)}
+.t16comparacao .notas{font-size:15px;line-height:1.45;color:var(--grafite)}
+.t16metodo .sob{font-size:13px}
+.t16metodo p{font-size:17px;line-height:1.5;margin:12px 0}
+.t16metodo .nota{font-size:15px;line-height:1.5}
+.t16conta{position:relative;display:inline-block;white-space:nowrap;line-height:1.25;font-variant-numeric:tabular-nums}
+.t16valor{opacity:1;animation:t16mostrar 1.2s steps(1,end)}
+.t16janela{position:absolute;left:0;top:0;width:100%;height:1.25em;overflow:hidden}
+.t16rol{position:absolute;left:0;top:0;opacity:0;transform:translateY(-30em);animation:t16rolar 1.2s steps(24,end),t16sumir 1.2s steps(1,end)}
+.t16rol>span{display:block;line-height:1.25em;height:1.25em}
+@keyframes t16mostrar{from{opacity:0}}
+@keyframes t16rolar{from{transform:translateY(0)}}
+@keyframes t16sumir{from{opacity:1}}
+body:has(.t16metodo) .ic16{display:none}
+@keyframes t16onda{from{clip-path:inset(0 100% 0 0)}}
+@media(prefers-reduced-motion:reduce){.t16pos *{animation:none!important;transition:none!important}}
+</style>"""
+
+
+def leitura_casca(t):
+    """Opções para a main ligar o i ao momento, sem alterar a leitura original do Pré.
+
+    Retorna (altura, medida, modelo_corpo). A casca mantém seus IDs e marcadores.
+    """
+    from paginas import casca
+    leitura = json.loads((Path(__file__).resolve().parents[1] / "leituras/T16.json").read_text(encoding="utf-8"))
+    pos = leitura["pos"]
+    e = html.escape
+    blocos = "".join(
+        f"<div class='bl sobe d{i + 2}'><div class='rot'>{e(rotulo)}</div><div class='txt'>{e(texto)}</div></div>"
+        for i, (rotulo, texto) in enumerate(pos["blocos"]))
+    original = casca.corpo_leitura(t).replace("{{content}}", "")
+    novo = ("<div class='tela'><div class='lt'><div class='fita'></div><div class='x'>×</div>"
+            f"<div class='tt sobe'><span class='ast'>*</span>{e(pos['titulo'])}</div>{blocos}</div></div>")
+    corpo = ("<style>.t16-leitura-pos{display:none}</style>"
+             f"<div class='t16-leitura-pre'>{original}</div><div class='t16-leitura-pos'>{novo}</div>{{{{content}}}}")
+    linhas = lambda texto, largura: max(1, math.ceil(len(texto) / largura))
+    altura_pos = (casca.TOPO_CARTAO + 40 + linhas(pos["titulo"], 32) * 31 + 22
+                  + sum(17 + 6 + linhas(texto, 58) * 23 + 20 for _, texto in pos["blocos"]) + 32 + 24)
+    return max(casca._altura_leitura(t), min(880, altura_pos)), "T16 · Leitura · HTML", corpo
+
+
+def fonte_casca(t):
+    """Rodapé alternável para a main usar no corpo da casca; preserva o texto do Pré."""
+    import momento_eleicao
+    pre = html.escape(momento_eleicao.fonte(t))
+    pos = "Fontes: TSE (1º e 2º turnos) · inferência agregada por dois métodos · pesquisas"
+    return ("<style>.cs .fonte-pos{display:none}</style>"
+            f"<span class='fonte fonte-pre'>{pre}</span><span class='fonte fonte-pos'>{pos}</span>")
+
+
+def pergunta_casca(t):
+    """A pergunta original no Pré e a pergunta estimativa no Pós, para a casca."""
+    return ("<style>.cs .pergunta-pos{display:none}</style>"
+            f"<span class='pergunta-pre'>{html.escape(t.pergunta)}</span>"
+            "<span class='pergunta-pos'>Para onde podem ter ido os votos dos outros?</span>")
+
+
 def declarar(ctx):
     return [
         Visual(P, lib.visual_html("T16_Fluxo_Html", *FLUXO, "T16 · Fluxo · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=corpo_fluxo(), alt=lib.medida("T16 · Fluxo · ALT"), z=Z, tab=100)),
+                                  modelo_corpo=corpo_fluxo().replace("{{content}}", corpo_pos() + "{{content}}"),
+                                  alt=lib.medida("T16 · Fluxo · ALT"), z=Z, tab=100)),
         Visual(P, lib.visual_html("T16_Fluxo_Grupos", *FLUXO, "T16 · Grupos · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_GRUPOS}</style>{{{{content}}}}",
                                   granularidade=("Transferência", "Segmento"), tooltip_pagina="ttT16Segmento",
                                   filtro_cruzado=True, transparencia_nao_selecionados=False,
                                   alt=lib.medida("T16 · Grupos · ALT"), z=Z + 1, tab=110)),
         Visual(P, lib.visual_html("T16_Apoios_Html", *APOIOS, "T16 · Apoios · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=f"<style>{CSS_APOIOS}</style>{{{{content}}}}",
+                                  modelo_corpo=f"<style>{CSS_APOIOS}</style>{corpo_pos()}{{{{content}}}}",
                                   alt=lib.medida("T16 · Apoios · ALT"), z=Z + 2, tab=120)),
         Visual(P, lib.visual_html("T16_Apoios_Itens", *APOIOS, "T16 · Itens · HTML", folha_de_estilo=CSS,
                                   modelo_corpo=f"<style>{CSS_ITENS}</style>{{{{content}}}}",
@@ -176,7 +289,7 @@ def declarar(ctx):
                                   filtro_cruzado=True, transparencia_nao_selecionados=True,
                                   alt=lib.medida("T16 · Itens · ALT"), z=Z + 3, tab=130)),
         Visual(P, lib.visual_html("T16_Seguir_Html", *SEGUIR, "T16 · Seguir · HTML", folha_de_estilo=CSS,
-                                  modelo_corpo=f"<style>{CSS_SEGUIR}</style><div class='ic16 entra'></div>{{{{content}}}}",
+                                  modelo_corpo=f"<style>{CSS_SEGUIR}</style>{corpo_pos()}<div class='ic16 entra'></div>{{{{content}}}}",
                                   alt=lib.medida("T16 · Seguir · ALT"), z=Z + 4, tab=140)),
         *pagina_lib.tooltip("ttT16Segmento", "Os outros · grupo de eleitores", 520, 380,
                             "T16 · Tooltip grupo · HTML", ordem=260, folha_de_estilo=CSS,

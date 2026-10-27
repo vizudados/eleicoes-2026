@@ -27,21 +27,22 @@ VAR _mao =
         "PT × adversário, só os dois"
     )
 -- 3 · Geometria (barras: 70% = 200 px)
-VAR _wpt = FORMAT ( 200 * MIN ( 1, _pt / 0.7 ), "0.0", "en-US" )
-VAR _wadv = FORMAT ( 200 * MIN ( 1, _adv / 0.7 ), "0.0", "en-US" )
-VAR _wout = FORMAT ( 200 * MIN ( 1, _out / 0.7 ), "0.0", "en-US" )
+VAR _wpt = FORMAT ( 200 * MIN ( 1, _pt / IF ( [Eleição · pós] = 1, 1.0, 0.7 ) ), "0.0", "en-US" )
+VAR _wadv = FORMAT ( 200 * MIN ( 1, _adv / IF ( [Eleição · pós] = 1, 1.0, 0.7 ) ), "0.0", "en-US" )
+VAR _wout = FORMAT ( 200 * MIN ( 1, _out / IF ( [Eleição · pós] = 1, 1.0, 0.7 ) ), "0.0", "en-US" )
 -- 4 · Marcação
 RETURN
     "<div class='tela tt15'><div class='fita'></div>"
         & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
         & "<div class='an sobe'>" & _ano & " em " & _nome & "</div>"
-        & "<div class='rot entra d1'>VOTOS VÁLIDOS NO 1º TURNO</div>"
+        & "<div class='rot entra d1'>VOTOS VÁLIDOS NO " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " TURNO</div>"
         & "<div class='cl entra d2'><span class='nm'>" & _cpt & " <i>PT</i></span><span class='tr'><b class='barra-x pt' "
             & "style='width:" & _wpt & "px'></b></span><span class='pc'>" & FORMAT ( _pt, "0.0%" ) & "</span></div>"
         & "<div class='cl entra d3'><span class='nm'>" & _cadv & "</span><span class='tr'><b class='barra-x adv' "
             & "style='width:" & _wadv & "px'></b></span><span class='pc'>" & FORMAT ( _adv, "0.0%" ) & "</span></div>"
-        & "<div class='cl entra d4'><span class='nm'>os demais</span><span class='tr'><b class='barra-x' style='width:"
-            & _wout & "px'></b></span><span class='pc'>" & FORMAT ( _out, "0.0%" ) & "</span></div>"
+        & IF ( [Eleição · pós] = 0,
+            "<div class='cl entra d4'><span class='nm'>os demais</span><span class='tr'><b class='barra-x' style='width:"
+                & _wout & "px'></b></span><span class='pc'>" & FORMAT ( _out, "0.0%" ) & "</span></div>", "" )
         & "<div class='nota entra d5'>Faltaram " & FORMAT ( _abs, "0.0%" ) & " dos eleitores da cidade.</div>"
         & "<div class='mao entra d6'>" & _mao & "</div>"
     & "</div>"

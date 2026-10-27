@@ -17,7 +17,7 @@ VAR _man =
 -- 4 · Marcação
 RETURN
     "<div class='tela t14t'>"
-        & "<div class='rot entra'>% DOS VOTOS VÁLIDOS NO 1º TURNO · PT × ADVERSÁRIO PRINCIPAL"
+        & "<div class='rot entra'>% DOS VOTOS VÁLIDOS NO " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " TURNO · PT × ADVERSÁRIO PRINCIPAL"
             & IF ( ISBLANK ( _uf ), " · BRASIL", " · " & UPPER ( _uf ) ) & "</div>"
         & "<div class='man sobe d1'>" & _man & "</div>"
         & "<div class='leg entra d2'><span><i class='pt'></i>PT</span><span><i class='adv'></i>adversário principal: o "

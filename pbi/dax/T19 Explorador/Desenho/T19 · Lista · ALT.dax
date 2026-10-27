@@ -12,3 +12,5 @@ RETURN
         & "2026 no recorte (" ) & _recorte & "): Lula e Flávio em 2026, a margem do PT de 2006 a 2026 e a mudança de "
         & "2022 para 2026. "
         & "Passe o mouse numa linha para o dossiê; clique para destacar o ponto na dispersão."
+
+    & IF ( [Eleição · pós] = 1, " Segundo turno.", "" )

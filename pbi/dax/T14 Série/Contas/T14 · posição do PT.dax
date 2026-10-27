@@ -5,4 +5,6 @@
 @oraculo: 2018 e 2026 = 2
 @gerado: pbi/scripts/desenho_t14.py
 */
-CALCULATE ( MAX ( 'Candidato ano'[Posição] ), 'Candidato ano'[Partido] = "PT" )
+IF ( [Eleição · pós] = 1, VAR _pt = [T14 · votos PT Brasil]
+VAR _adv = [T14 · votos adversário Brasil]
+RETURN IF ( NOT ISBLANK ( _pt ), IF ( _pt > _adv, 1, 2 ) ), CALCULATE ( MAX ( 'Candidato ano'[Posição] ), 'Candidato ano'[Partido] = "PT" ) )

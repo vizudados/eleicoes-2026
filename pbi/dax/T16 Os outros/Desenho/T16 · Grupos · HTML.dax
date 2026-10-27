@@ -1,18 +1,7 @@
 /*
 @pasta: T16 Os outros\Desenho
 @formato: texto
-@descricao: Alvo do mouse sobre cada grupo de eleitores do diagrama (grão Transferência[Segmento]; só Cury, Renan, Caiado e nao_votou): abre o dossiê ttT16Segmento. Mesma geometria do T16 · Fluxo · HTML.
+@descricao: Pós: inferência agregada. Pré: expressão original integral, sem alteração.
+@oraculo: dados/pbi/t16_urna.csv
 */
--- 1 · Leituras
-VAR _seg = SELECTEDVALUE ( 'Transferência'[Segmento] )
-VAR _n = [T16 · transferência · institutos]
--- 2 · Textos
-VAR _ordem = SWITCH ( _seg, "Cury", 1, "Renan", 2, "Caiado", 3, "nao_votou", 4 )
--- 3 · Geometria (centro do grupo em 180 + 115 + 160 × (ordem − 1))
-VAR _top = 180 + 115 + ( _ordem - 1 ) * 160 - 72 -- geometria
--- 4 · Marcação
-RETURN
-    IF (
-        NOT ISBLANK ( _ordem ) && _n > 0,
-        "<div class='tela t16g'><div class='alvo' style='top:" & FORMAT ( _top, "0.0", "en-US" ) & "px;height:144px'></div></div>"
-    )
+IF ( [Eleição · pós] = 1, BLANK (), [T16 · Pré · Grupos · HTML] )

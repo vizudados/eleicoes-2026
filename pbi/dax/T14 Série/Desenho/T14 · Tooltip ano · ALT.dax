@@ -9,4 +9,4 @@ VAR _ano = [T14 · ano]
 VAR _pos = [T14 · posição do PT]
 -- 2 · Textos
 RETURN
-    "Eleição de " & _ano & ": o PT ficou em " & FORMAT ( _pos, "0" ) & "º lugar no 1º turno."
+    "Eleição de " & _ano & ": o PT ficou em " & FORMAT ( _pos, "0" ) & "º lugar no " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " turno."

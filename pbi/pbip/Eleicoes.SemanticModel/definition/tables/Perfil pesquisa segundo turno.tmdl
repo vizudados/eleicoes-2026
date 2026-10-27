@@ -1,0 +1,151 @@
+/// Datafolha BR-09540/2026, campo 23–24/10, intenção declarada antes da urna por renda familiar e no total da pesquisa. Base de totais; oito linhas, sem estimar outros cruzamentos. As bases ponderadas das três faixas somam 3.895 de 4.050; não renormalizar os pesos.
+table 'Perfil pesquisa segundo turno'
+	isHidden
+	lineageTag: e7c3d800-aad4-53c3-abc2-8886fec32bf6
+
+	/// Instituto
+	column Instituto
+		dataType: string
+		lineageTag: f7d37d09-1371-50f6-89c9-7f4d8d40697a
+		summarizeBy: none
+		sourceColumn: Instituto
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Divulgação
+	column 'Divulgação'
+		dataType: dateTime
+		isHidden
+		formatString: dd/MM/yyyy
+		lineageTag: 6d091c13-3f6c-5095-a940-10eb2b902c07
+		summarizeBy: none
+		sourceColumn: Divulgação
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Campo
+	column Campo
+		dataType: string
+		isHidden
+		lineageTag: 83c0fbe5-ce66-5a3f-8e1d-5c712dbc5c42
+		summarizeBy: none
+		sourceColumn: Campo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Turno
+	column Turno
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 4acc5eef-cc30-5bb7-9291-547f6ebd3bda
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Candidato
+	column Candidato
+		dataType: string
+		lineageTag: dc309cd2-1163-5577-abb6-417f109b9b5c
+		summarizeBy: none
+		sourceColumn: Candidato
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Lente
+	column Lente
+		dataType: string
+		lineageTag: 002bac08-5aff-583f-a131-f981c4b53257
+		summarizeBy: none
+		sourceColumn: Lente
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Categoria
+	column Categoria
+		dataType: string
+		lineageTag: a3bfb201-9267-52ed-b9b6-2a8173d21087
+		summarizeBy: none
+		sourceColumn: Categoria
+		sortByColumn: CategoriaOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// CategoriaOrdem
+	column CategoriaOrdem
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9f659043-6c8f-521b-ab45-03669e15f954
+		summarizeBy: none
+		sourceColumn: CategoriaOrdem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Percentual
+	column Percentual
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: b7ec9800-968d-50bd-9893-a03011d4cbbb
+		summarizeBy: none
+		sourceColumn: Percentual
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fatia
+	column Fatia
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 2db87e69-e4c5-5988-9ff2-8c2869386a30
+		summarizeBy: none
+		sourceColumn: Fatia
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Base ponderada
+	column 'Base ponderada'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: 8998d6d5-9439-58ba-8b6e-44060902eff7
+		summarizeBy: none
+		sourceColumn: Base ponderada
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Amostra total
+	column 'Amostra total'
+		dataType: int64
+		isHidden
+		formatString: #,0
+		lineageTag: a04800b7-80e6-5848-bf40-8ec5f96e71d2
+		summarizeBy: none
+		sourceColumn: Amostra total
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fonte
+	column Fonte
+		dataType: string
+		isHidden
+		lineageTag: 75de9f43-1fcb-5dc8-817e-6eab6c062117
+		summarizeBy: none
+		sourceColumn: Fonte
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Perfil pesquisa segundo turno' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/perfil_pesquisa_2turno.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"instituto", "divulgacao", "campo", "turno", "candidato", "lente", "categoria", "categoria_ordem", "percentual", "fatia", "base_ponderada", "amostra_total", "fonte_url"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"instituto", type text}, {"divulgacao", type date}, {"campo", type text}, {"turno", Int64.Type}, {"candidato", type text}, {"lente", type text}, {"categoria", type text}, {"categoria_ordem", Int64.Type}, {"percentual", type number}, {"fatia", type number}, {"base_ponderada", Int64.Type}, {"amostra_total", Int64.Type}, {"fonte_url", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"instituto", "Instituto"}, {"divulgacao", "Divulgação"}, {"campo", "Campo"}, {"turno", "Turno"}, {"candidato", "Candidato"}, {"lente", "Lente"}, {"categoria", "Categoria"}, {"categoria_ordem", "CategoriaOrdem"}, {"percentual", "Percentual"}, {"fatia", "Fatia"}, {"base_ponderada", "Base ponderada"}, {"amostra_total", "Amostra total"}, {"fonte_url", "Fonte"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

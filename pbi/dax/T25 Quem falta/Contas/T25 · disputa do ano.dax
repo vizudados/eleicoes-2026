@@ -7,5 +7,10 @@ VAR _1 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato an
 VAR _1p = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Partido] ), 'Candidato ano'[Posição] = 1 )
 VAR _2 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 2 )
 VAR _2p = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Partido] ), 'Candidato ano'[Posição] = 2 )
-RETURN
+VAR _a = [T25 · ano]
+VAR _pt = CALCULATE ( SELECTEDVALUE ( 'PT histórico Brasil'[Candidato PT] ), 'PT histórico Brasil'[Ano] = _a, 'PT histórico Brasil'[Turno] = 2 )
+VAR _adv = CALCULATE ( SELECTEDVALUE ( 'PT histórico Brasil'[Adversário] ), 'PT histórico Brasil'[Ano] = _a, 'PT histórico Brasil'[Turno] = 2 )
+VAR _saldo = CALCULATE ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ), 'PT histórico Brasil'[Ano] = _a, 'PT histórico Brasil'[Turno] = 2 )
+RETURN IF ( [Eleição · pós] = 1, IF ( _saldo >= 0, _pt & " e " & _adv, _adv & " e " & _pt ),
     IF ( NOT ISBLANK ( _1 ), _1 & " (" & _1p & ") e " & _2 & " (" & _2p & ")" )
+)

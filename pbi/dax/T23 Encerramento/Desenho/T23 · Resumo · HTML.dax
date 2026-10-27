@@ -1,14 +1,14 @@
 /*
 @pasta: T23 Encerramento\Desenho
 @formato: texto
-@descricao: Fecho numérico central: diferença final e participação, com contador automático.
+@descricao: Diferença abaixo do hemiciclo e participação na linha seguinte; entrada CSS sem JavaScript.
 @oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
 @gerado: pbi/scripts/desenho_t23.py
 */
-"<div class='tela resumo-final'><div class='rot sobe d4'>DIFERENÇA FINAL</div>"
-    & "<div class='num diferenca sobe d5'>" & FORMAT ( [T23 · diferença final], "#,0" ) & "</div>"
-    & "<div class='de'>votos entre Lula e Flávio</div><div class='risco-fecho'></div>"
-    & "<div class='abst'>Abstenção · 1º → 2º turno: <b class='num'>" & FORMAT ( [T23 · abstenção 1º turno], "0.00%" )
+"<div class='tela resumo-final'><div class='linha-diferenca sobe fx-diferenca'><div class='rot'>DIFERENÇA FINAL</div>"
+    & "<div class='num diferenca'>" & FORMAT ( [T23 · diferença final], "#,0" ) & "</div>"
+    & "<div class='de'>votos entre Lula e Flávio</div></div>"
+    & "<div class='participacao sobe fx-participacao'><div class='abst'>Abstenção · 1º → 2º turno: <b class='num'>" & FORMAT ( [T23 · abstenção 1º turno], "0.00%" )
     & "</b> → <b class='num'>" & FORMAT ( [T23 · abstenção 2º turno], "0.00%" ) & "</b></div>"
     & "<div class='comparecimento'><b class='num'>" & FORMAT ( [T23 · comparecimento a mais], "#,0" )
-    & "</b> a mais votaram no 2º turno</div></div>"
+    & "</b> a mais votaram no 2º turno</div></div></div>"

@@ -1,65 +1,36 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: A linha de um candidato na coluna da direita (grão Seguidores[Candidato], para o clique aqui não apagar os balões e o clique nos balões não sumir com uma linha daqui; vazio para quem não é Lula nem Flávio): a barra larga dos seguidores ganhos na campanha do 1º turno (cresce) com o número grande, e o ritmo por dia antes e logo depois do 1º turno (mesma fonte, mesmas redes). As contas de Monitoramento recebem o candidato da linha. Com um candidato clicado nos balões ('T09 · foco'), a linha do outro esmaece. As duas linhas são alvo do dossiê ttT09Lado (seguidores rede a rede e anúncios na Meta). Com um período escolhido no filtro: a barra é o ganho na janela que cabe inteira no período (em mil abaixo de 1 milhão) e o ritmo é o ganho médio por dia na mesma janela (sem ritmo numa janela de um dia); sem janela no período, a linha fica vazia (o fundo diz 'sem dado no período').
+@descricao: Uma entrada por candidato: ganho e gasto com alvos de hover independentes; preserva filtro cruzado e ausência distinta de zero.
 */
 -- 1 · Leituras
 VAR _c = [T09 · lado · candidato]
-VAR _cBase = [T09 · lado · nome completo]
+VAR _base = [T09 · lado · nome completo]
 VAR _foco = [T09 · foco]
-VAR _per = [Período · escolhido]
-VAR _s =
-    IF (
-        ISBLANK ( _per ),
-        CALCULATE ( [T09 · seguidores ganhos · campanha], Monitoramento[Candidato] = _cBase ),
-        CALCULATE ( [T09 · período · seguidores ganhos], Monitoramento[Candidato] = _cBase )
-    )
-VAR _sMax = IF ( ISBLANK ( _per ), [T09 · seguidores ganhos · maior], [T09 · período · seguidores ganhos · maior] )
-VAR _pDia = CALCULATE ( [T09 · período · seguidores por dia], Monitoramento[Candidato] = _cBase )
-VAR _pD = [T09 · período · seguidores · dias]
-VAR _p1 = CALCULATE ( [T09 · seguidores por dia · campanha], Monitoramento[Candidato] = _cBase )
-VAR _p2 = CALCULATE ( [T09 · seguidores por dia · após o 1º turno], Monitoramento[Candidato] = _cBase )
+VAR _s = CALCULATE ( [T09 · lado · ganho], Monitoramento[Candidato] = _base )
+VAR _max = [T09 · lado · ganho maior]
+VAR _meta = CALCULATE ( [T09 · lado · Meta], Monitoramento[Candidato] = _base )
 -- 2 · Textos
 VAR _cls = IF ( _c = "Lula", "l", "f" )
-VAR _clsTxt = IF ( _c = "Lula", "lula-esc", "flavio-esc" )
-VAR _apaga = IF ( NOT ISBLANK ( _foco ) && _foco <> _cBase, " apaga", "" )
-VAR _txtS =
-    IF (
-        ISBLANK ( _per ) || _s >= 1000000,
-        "+" & FORMAT ( _s / 1000000, "0.00" ) & " mi",
-        "+" & FORMAT ( _s / 1000, "0" ) & " mil"
-    )
-VAR _txtPDia = FORMAT ( _pDia / 1000, "0" ) & " mil"
-VAR _txtP1 = FORMAT ( _p1 / 1000, "0" ) & " mil"
-VAR _txtP2 = FORMAT ( _p2 / 1000, "0" ) & " mil"
--- 3 · Geometria (barra até 290 px; Lula em cima, Flávio embaixo)
+VAR _txt = IF ( _c = "Lula", "lula-esc", "flavio-esc" )
+VAR _apaga = IF ( NOT ISBLANK ( _foco ) && _foco <> _base, " apaga", "" )
+VAR _ganho = IF ( _s >= 1000000, "+" & FORMAT ( _s / 1000000, "0.00" ) & " mi", "+" & FORMAT ( _s / 1000, "0" ) & " mil" )
+-- 3 · Geometria
 VAR _y = IF ( _c = "Lula", 130, 220 ) -- geometria
-VAR _yR = IF ( _c = "Lula", 404, 448 ) -- geometria
-VAR _larg = DIVIDE ( _s, _sMax ) * 290 -- geometria
-VAR _f = "0.0"
+VAR _ym = IF ( _c = "Lula", 382, 440 ) -- geometria
+VAR _w = DIVIDE ( _s, _max ) * 290 -- geometria
 -- 4 · Marcação
 RETURN
-    IF (
-        NOT ISBLANK ( _c ) && NOT ISBLANK ( _s ),
+    IF ( NOT ISBLANK ( _c ) && ( NOT ISBLANK ( _s ) || NOT ISBLANK ( _meta ) ),
         "<div class='tela t09r" & _apaga & "'>"
-            & "<div class='alvo' style='left:-8px;top:" & _y - 8 & "px;width:546px;height:88px'></div>"
-            & "<div class='nome " & _clsTxt & " sobe d4' style='left:0;top:" & _y & "px'>" & _c & "</div>"
-            & "<div class='barra " & _cls & " barra-x' style='left:0;top:" & _y + 36 & "px;width:" & FORMAT ( _larg, _f, "en-US" ) & "px'></div>"
-            & "<div class='num grande " & _clsTxt & " entra d8' style='left:" & FORMAT ( _larg + 16, _f, "en-US" ) & "px;top:" & _y + 22 & "px'>"
-            & _txtS & "</div>"
-            & IF (
-                ISBLANK ( _per ),
-                "<div class='alvo' style='left:-8px;top:" & _yR - 6 & "px;width:546px;height:42px'></div>"
-                    & "<div class='nome " & _clsTxt & " sobe d10' style='left:0;top:" & _yR + 4 & "px'>" & _c & "</div>"
-                    & "<div class='ritmo sobe d11' style='left:96px;top:" & _yR & "px'><span class='num'>" & _txtP1 & "</span>"
-                    & "<i class='seta-r'></i><span class='num " & _clsTxt & "'>" & _txtP2 & "</span><span class='sub'>por dia</span></div>",
-                IF (
-                    _pD > 1,
-                    "<div class='alvo' style='left:-8px;top:" & _yR - 6 & "px;width:546px;height:42px'></div>"
-                        & "<div class='nome " & _clsTxt & " sobe d10' style='left:0;top:" & _yR + 4 & "px'>" & _c & "</div>"
-                        & "<div class='ritmo sobe d11' style='left:96px;top:" & _yR & "px'><span class='num " & _clsTxt & "'>"
-                        & _txtPDia & "</span><span class='sub'>por dia</span></div>"
-                )
-            )
-        & "</div>"
-    )
+        & IF ( NOT ISBLANK ( _s ),
+            "<div class='alvo' style='left:0;top:" & _y - 8 & "px;width:522px;height:88px'></div>"
+            & "<div class='nome " & _txt & " sobe d4' style='left:0;top:" & _y & "px'>" & _c & "</div>"
+            & "<div class='barra " & _cls & " barra-x' style='left:0;top:" & _y + 36 & "px;width:" & FORMAT ( _w, "0.0", "en-US" ) & "px'></div>"
+            & "<div class='num grande " & _txt & " entra d8' style='left:" & FORMAT ( _w + 16, "0.0", "en-US" )
+            & "px;top:" & _y + 22 & "px'>" & _ganho & "</div>" )
+        & IF ( NOT ISBLANK ( _meta ),
+            "<div class='alvo' style='left:0;top:" & _ym - 6 & "px;width:522px;height:44px'></div>"
+            & "<div class='nome " & _txt & " sobe d10' style='left:0;top:" & _ym + 4 & "px'>" & _c & "</div>"
+            & "<div class='num " & _txt & " entra d11' style='left:150px;top:" & _ym & "px'>R$ " & FORMAT ( _meta / 1000000, "0.00" ) & " mi</div>" )
+        & "</div>" )

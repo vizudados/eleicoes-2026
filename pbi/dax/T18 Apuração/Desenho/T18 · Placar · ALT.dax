@@ -5,5 +5,5 @@
 */
 IF ( NOT ISBLANK ( [T18 · momento escolhido] ), [T18 · Placar momento · ALT],
     "Resultado final, " & [Apuração · escopo] & ": Lula " & FORMAT ( [Apuração · Lula %], "0.00%" )
-    & "; Flávio " & FORMAT ( [Apuração · Flávio %], "0.00%" ) & ". Lula eleito no Brasil. Abstenção "
+    & "; Flávio " & FORMAT ( [Apuração · Flávio %], "0.00%" ) & ". Lula reeleito no Brasil. Abstenção "
     & FORMAT ( [Apuração · abstenção %], "0.00%" ) & "." )

@@ -1,9 +1,6 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do dossiê das interações (grão Monitoramento[Candidato]).
+@descricao: Descrição acessível das referências históricas.
 */
-IF (
-    NOT ISBLANK ( [T09 · candidato] ),
-    "Interações de Lula e Flávio em outras janelas: janeiro e fevereiro, logo após o 1º turno, 06 a 15/10 sem o YouTube, 24 horas depois do debate e o Instagram por dia."
-)
+"Referências Bites: campanha do 1º turno, 04–08/10, 06–15/10 sem YouTube e 24 horas após a Band. Instagram diário: DSC Lab. Janelas e redes diferentes, sem soma."

@@ -1,0 +1,7 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: +0;−0;0
+@descricao: Diferença Lula menos Flávio no total publicado da pesquisa: 47 menos 48, sem converter para válidos.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+( [T24 · pesquisa segundo · Lula % total] - [T24 · pesquisa segundo · Flávio % total] ) * 100

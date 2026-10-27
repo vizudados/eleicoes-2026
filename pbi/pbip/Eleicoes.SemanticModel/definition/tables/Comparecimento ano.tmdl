@@ -1,4 +1,4 @@
-/// Brasil × eleição: aptos, comparecimento, abstenção, brancos e nulos (1º turno, sem o exterior).
+/// Brasil × eleição: aptos, comparecimento, abstenção, brancos e nulos (1º turno, com o exterior e voto em trânsito).
 table 'Comparecimento ano'
 	isHidden
 	lineageTag: 5b6f469f-7a00-5a9b-a011-b472af49b9b0

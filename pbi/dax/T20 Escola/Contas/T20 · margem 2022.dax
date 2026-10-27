@@ -4,7 +4,10 @@
 @descricao: Margem do PT no local em 2022: (votos do PT − votos do adversário) ÷ válidos; em 2022 e 2018, os votos do mesmo zona + número. Vazio quando o local não existia.
 @oraculo: mockup/data/eleicoes.json › Escola › maiores_quedas[].serie
 */
+IF ( [Eleição · pós] = 1,
+DIVIDE ( [T20 · VotosPT 2022] - [T20 · VotosAdv 2022], [T20 · Validos 2022] ),
 DIVIDE (
     SUM ( 'T20 Local'[VotosPT2022] ) - SUM ( 'T20 Local'[VotosAdv2022] ),
     SUM ( 'T20 Local'[Validos2022] )
+)
 )

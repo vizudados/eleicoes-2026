@@ -164,8 +164,8 @@ TABELAS = [
          col("votos", "Votos", tipo="int", descricao="Votos no 1º turno.", oculta=True)],
         oculta=True),
     tabela_csv(
-        "Comparecimento ano", "Brasil × eleição: aptos, comparecimento, abstenção, brancos e nulos (1º turno, sem o "
-                              "exterior).",
+        "Comparecimento ano", "Brasil × eleição: aptos, comparecimento, abstenção, brancos e nulos (1º turno, com o "
+                              "exterior e voto em trânsito).",
         "dados/pbi/comparecimento_ano.csv",
         [col("ano", "Ano", tipo="int", descricao="Ano da eleição.", oculta=True, formato="0"),
          col("aptos", "Aptos", tipo="int", descricao="Eleitores aptos.", oculta=True),
@@ -197,3 +197,16 @@ RELACOES = [
     ("Comparecimento ano", "Ano", "Ano", "Ano"),
     ("Abstenção perfil", "Ano", "Ano", "Ano"),
 ]
+
+# Brief P2: nacional com exterior; a medida escolhe explicitamente turno e abrangência.
+TABELAS.append(tabela_csv(
+    "Comparecimento turno", "Brasil por eleição, turno e abrangência, 2006–2026. Não somar as três abrangências: "
+    "sem_exterior + exterior = com_exterior. Abstenções oficiais, sem derivar por subtração.",
+    "dados/pbi/comparecimento_turno.csv",
+    [col("ano", "Ano", tipo="int", formato="0", oculta=True),
+     col("turno", "Turno", tipo="int", formato="0", oculta=True),
+     col("abrangencia", "Abrangência", oculta=True),
+     *[col(origem, nome, tipo="int", oculta=True) for origem, nome in
+       [("aptos", "Aptos"), ("comparecimento", "Comparecimento"), ("abstencoes", "Abstencoes"),
+        ("brancos", "Brancos"), ("nulos", "Nulos")]]], oculta=True))
+RELACOES.append(("Comparecimento turno", "Ano", "Ano", "Ano"))

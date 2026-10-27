@@ -1,0 +1,11 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Ganho diário de Instagram Quaest em 24/10; não é total de seguidores nem Bites.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ), Monitoramento[Estudo] = "Quaest (via Folha)",
+    Monitoramento[Métrica] = "seguidores ganhos no Instagram no dia",
+    Monitoramento[Início] = DATE ( 2026, 10, 24 ), Monitoramento[Fim] = DATE ( 2026, 10, 24 )
+)

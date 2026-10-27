@@ -3,9 +3,14 @@
 @formato: texto
 @descricao: Texto para leitor de tela do título do bloco de anos.
 */
-LEFT (
-    "A ausência ano a ano, " & [T25 · lugar] & IF ( [T25 · com faixa] = 1, ", " & [T25 · faixa] ) & ": "
-        & IF ( ISBLANK ( [T25 · variação da série em p.p.] ), "sem série.",
-            FORMAT ( [T25 · variação da série em p.p.], "+0.0;−0.0;0.0" ) & " pontos desde " & [T25 · primeiro ano da série] & "." ),
-    250
-)
+VAR _tipo = [T25 · série · tipo de manchete]
+VAR _marco = [T25 · série · marco do extremo]
+VAR _extremo = _tipo = "menor" || _tipo = "maior"
+RETURN LEFT (
+    "Abstenção no " & [T25 · turno] & ", " & [T25 · lugar] & ": "
+        & IF ( _extremo,
+            "em 2026, a " & _tipo & " " & IF ( ISBLANK ( _marco ), "da série", "desde " & FORMAT ( _marco, "0" ) ) & ". ",
+            "" )
+        & IF ( _tipo = "sem série", "sem série neste recorte.",
+            FORMAT ( [T25 · abstenção % no primeiro ano], "0.0%" ) & " em " & FORMAT ( [T25 · primeiro ano da série], "0" )
+                & " e " & FORMAT ( [T25 · abstenção % em 2026], "0.0%" ) & " em 2026." ), 250 )

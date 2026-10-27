@@ -1,0 +1,8 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Ano usado na manchete do extremo recente; vazio significa toda a série.
+*/
+SWITCH ( [T25 · série · tipo de manchete],
+          "menor", [T25 · série · marco da menor],
+          "maior", [T25 · série · marco da maior] )

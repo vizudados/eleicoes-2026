@@ -1,0 +1,12 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Escala comum dos totais dos quatro balões. Não normaliza o dia parcial nem soma janelas.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+VAR _l1 = CALCULATE ( [T09 · conversa · esquerda], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula" )
+VAR _f1 = CALCULATE ( [T09 · conversa · esquerda], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )
+VAR _l2 = CALCULATE ( [T09 · conversa · direita], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula" )
+VAR _f2 = CALCULATE ( [T09 · conversa · direita], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )
+RETURN
+    MAX ( MAX ( _l1, _f1 ), MAX ( _l2, _f2 ) )

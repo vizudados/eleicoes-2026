@@ -3,4 +3,13 @@
   ["Como ler", "À esquerda, quem votou em Cury, Renan, Caiado ou faltou no 1º turno. Cada faixa leva a parte desse grupo que dizia votar em Lula, em Flávio ou em branco e nulo: quanto mais grossa, maior a parte. Passe o mouse num grupo para ver cada instituto; clique nele (ou no candidato, na lista dos apoios) para destacar só os eleitores dele."],
   ["De onde vêm os números", "Pesquisas registradas no TSE que publicaram o cruzamento depois do 1º turno, em votos totais: a média da última de cada instituto. Apoios: imprensa e redes dos candidatos. Quem segue o apoio: Vox Brasil, 09/10."],
   ["Para lembrar", "Cada grupo tem poucos entrevistados (em geral menos de 100), e a margem de erro vai de 10 a 24 pontos. Os números mostram para onde o grupo pende, não quantos votos cada um recebeu."]
- ]}
+ ],
+ "pos": {
+  "titulo": "O que as urnas permitem estimar",
+  "blocos": [
+   ["Como ler", "As faixas usam a média bayesiana de votos; os rótulos mostram o centro e a união dos intervalos dos dois métodos, que não é um novo intervalo de 95%. As origens de cima têm a mesma escala; quem não votou tem escala própria e a permanência sem votar não é desenhada. A base cobre 5.570 municípios e Brasília, sem exterior: não identifica pessoas."],
+   ["Como foi feita a conta", "Regressão com restrições e 500 reamostragens por UF, comparada a uma mistura bayesiana regional convergida (R-hat 1,009). Cury, Renan e Caiado ficam juntos: a divisão individual não foi confirmada pelos dois métodos. Branco/nulo → Lula tem direção comum, mas centros diferentes: 52% [49–55%] no Bayes e 68% [60–75%] no restrito."],
+   ["Pesquisa e limites", "Pesquisa: última rodada de cada instituto; o grupo dos três é ponderado pelos votos de cada candidato e a faixa é a variação entre institutos, sem IC conjunto. Para quem faltou, só entram pesquisas do grupo puro; a urna é condicionada a ter ido votar (inclui branco/nulo), enquanto intenção não confirma presença. O saldo de comparecimento estimado é +2,23 mi [2,17–2,30], ante +2,92 mi observado: faltam cerca de 687 mil; convergência não elimina o erro ecológico."]
+  ]
+ }
+}

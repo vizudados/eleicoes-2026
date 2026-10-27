@@ -22,4 +22,5 @@ VAR _frase =
     )
 -- 4 · Marcação
 RETURN
-    "<div class='tela t19m'><div class='man sobe d2'>" & _frase & "</div></div>"
+    "<div class='tela t19m " & IF ( [Eleição · pós] = 1, "pos", "pre" )
+        & "'><div class='man sobe d2'>" & _frase & "</div></div>"

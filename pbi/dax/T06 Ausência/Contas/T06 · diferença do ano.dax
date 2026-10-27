@@ -4,9 +4,14 @@
 @descricao: Diferença de votos entre os dois primeiros no 1º turno do ano da linha: no Brasil, o resultado oficial (com o exterior); com UF, PT × principal adversário nos municípios da UF.
 @oraculo: 2026 = 2.224.965 (paginas[1].diferenca.votos)
 */
+VAR _ano = MAX ( 'Ano'[Ano] )
+VAR _pos = CALCULATE ( ABS ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ) ),
+    'PT histórico Brasil'[Ano] = _ano, 'PT histórico Brasil'[Turno] = 2 )
+RETURN IF ( [Eleição · pós] = 1 && [T06 · com UF] = 0, _pos,
 IF (
     [T06 · com UF] = 1,
     ABS ( [T06 · votos do PT (ano)] - [T06 · votos do adversário (ano)] ),
     CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Posição] = 1 )
         - CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Posição] = 2 )
+)
 )

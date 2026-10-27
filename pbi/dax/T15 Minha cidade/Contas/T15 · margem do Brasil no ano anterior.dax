@@ -5,10 +5,16 @@
 @oraculo: paginas[14] › anos (2022 +5,2; 2026 −1,9)
 @gerado: pbi/scripts/desenho_t15.py
 */
-VAR _a = [T15 · ano anterior]
+IF ( [Eleição · pós] = 1, VAR _a = [T15 · ano anterior]
+RETURN
+    IF ( NOT ISBLANK ( _a ), CALCULATE (
+        DIVIDE ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ),
+            SUM ( 'PT histórico Brasil'[Validos] ) ),
+        'PT histórico Brasil'[Ano] = _a, 'PT histórico Brasil'[Turno] = 2
+    ) ), VAR _a = [T15 · ano anterior]
 RETURN
     IF ( NOT ISBLANK ( _a ), DIVIDE (
         CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Ano'[Ano] = _a, 'Candidato ano'[Partido] = "PT" )
             - CALCULATE ( MAX ( 'Candidato ano'[Votos] ), 'Ano'[Ano] = _a, 'Candidato ano'[Partido] <> "PT" ),
         CALCULATE ( MAX ( 'Candidato ano'[ValidosAno] ), 'Ano'[Ano] = _a )
-    ) )
+    ) ) )

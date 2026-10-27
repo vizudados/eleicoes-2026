@@ -1,0 +1,6 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0
+@descricao: Pós: idade de 2026/1º turno; Pré: ano escolhido.
+*/
+IF ( [Eleição · pós] = 1, 2026, [T25 · ano] )

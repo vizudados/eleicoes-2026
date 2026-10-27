@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Distância absoluta entre os dois no último ponto IPD do período; não calcula diferença se faltar um candidato.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+VAR _l = [T09 · período · IPD · Lula]
+VAR _f = [T09 · período · IPD · Flávio]
+RETURN
+    IF ( NOT ISBLANK ( _l ) && NOT ISBLANK ( _f ), ABS ( _l - _f ) )

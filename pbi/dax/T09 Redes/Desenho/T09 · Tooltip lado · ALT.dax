@@ -1,15 +1,16 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela do dossiê da coluna da direita (grão Seguidores[Candidato]).
+@descricao: Descrição acessível dos anúncios, preservando o período selecionado e a separação das réguas.
 */
 VAR _c = [T09 · lado · candidato]
-VAR _cBase = [T09 · lado · nome completo]
+VAR _base = [T09 · lado · nome completo]
+VAR _per = [Período · escolhido]
+VAR _valor = CALCULATE ( [T09 · lado · Meta], Monitoramento[Candidato] = _base )
+VAR _n = CALCULATE ( [T09 · reta final · anúncios], Monitoramento[Candidato] = _base )
 RETURN
-    IF (
-        NOT ISBLANK ( _c ),
-        _c & ": seguidores rede a rede e anúncios na Meta, R$ "
-            & FORMAT ( CALCULATE ( [T09 · Meta · 90 dias], Monitoramento[Candidato] = _cBase ) / 1000000, "0.00" )
-            & " mi em 90 dias na Biblioteca de Anúncios; em outra base, pagamentos à Meta declarados ao TSE, R$ "
-            & FORMAT ( CALCULATE ( [T09 · TSE · pagamentos à Meta], Monitoramento[Candidato] = _cBase ) / 1000000, "0.00" ) & " mi."
-    )
+    IF ( NOT ISBLANK ( _c ), _c & ": "
+        & IF ( ISBLANK ( _valor ), "sem janela completa da Meta no período.",
+            "Biblioteca da Meta: R$ " & FORMAT ( _valor, "#,0" )
+            & IF ( ISBLANK ( _per ), "; " & FORMAT ( _n, "#,0" ) & " anúncios em 18–24/10.", " na janela indicada do período." ) )
+        & " Histórico de seguidores e pagamentos ao TSE, separados." )

@@ -17,7 +17,7 @@ VAR _ilus = [T02 · Trajetória · marcos ilustrados]
 VAR _txtVotos = SWITCH ( TRUE (), ABS ( _votos ) >= 1000000, FORMAT ( _votos / 1000000, "0.00" ) & " mi", ABS ( _votos ) >= 1000, FORMAT ( _votos / 1000, "0.0" ) & " mil", FORMAT ( _votos, "#,0" ) )
 VAR _txtPct = IF ( _posEleicao = 1, FORMAT ( _pct, "0.00%" ), FORMAT ( _pct, "0.0%" ) )
 VAR _turno = IF ( _posEleicao = 1, "2º", "1º" )
-VAR _resultado = IF ( _posEleicao = 1 && _pos = 1, "eleito", _pos & "º lugar" )
+VAR _resultado = IF ( _posEleicao = 1 && _pos = 1, "reeleito", _pos & "º lugar" )
 VAR _txtFotos =
     SWITCH (
         TRUE (),

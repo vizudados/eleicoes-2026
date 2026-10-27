@@ -1,0 +1,9 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: T16 · Pergunta · HTML
+@oraculo: dados/pbi/t16_urna.csv
+*/
+IF ( [Eleição · pós] = 1,
+    "<style>.cs .pergunta-pre{display:none}.cs .pergunta-pos{display:inline}</style>",
+    "<style>.cs .pergunta-pre{display:inline}.cs .pergunta-pos{display:none}</style>" )

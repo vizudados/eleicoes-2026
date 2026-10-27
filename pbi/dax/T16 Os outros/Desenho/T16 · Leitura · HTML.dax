@@ -1,0 +1,9 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: Apenas alterna os textos estáticos Pré/Pós do i; integração em casca.py pela main.
+@oraculo: dados/pbi/t16_urna.csv
+*/
+IF ( [Eleição · pós] = 1,
+    "<style>.t16-leitura-pre{display:none}.t16-leitura-pos{display:block}</style>",
+    "<style>.t16-leitura-pre{display:block}.t16-leitura-pos{display:none}</style>" )

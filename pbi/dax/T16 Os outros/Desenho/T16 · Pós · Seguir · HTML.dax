@@ -1,0 +1,24 @@
+/*
+@pasta: T16 Os outros\Desenho
+@formato: texto
+@descricao: T16 · Pós · Seguir · HTML
+@oraculo: dados/pbi/t16_urna.csv
+*/
+-- 1 · Leituras
+VAR _rhat = CALCULATE ( [T16 · diagnóstico · média], 'T16 Urna'[Destino] = "R-hat máximo" )
+VAR _saldo = CALCULATE ( [T16 · diagnóstico · média], 'T16 Urna'[Destino] = "Saldo modelado" )
+VAR _inf = CALCULATE ( [T16 · diagnóstico · inferior], 'T16 Urna'[Destino] = "Saldo modelado" )
+VAR _sup = CALCULATE ( [T16 · diagnóstico · superior], 'T16 Urna'[Destino] = "Saldo modelado" )
+VAR _observado = CALCULATE ( [T16 · diagnóstico · média], 'T16 Urna'[Destino] = "Saldo observado" )
+VAR _erro = [T16 · urna · erro de comparecimento]
+-- 2 · Textos
+-- 3 · Geometria
+-- 4 · Marcação
+RETURN "<div class='tela t16pos t16metodo'><div class='sob sobe'>Como foi feita a conta</div>"
+    & "<p class='entra'>Dois métodos leem os votos agregados por município. O Bayes convergiu (R-hat "
+    & FORMAT ( _rhat, "0.000", "pt-BR" ) & "); isso não comprova trajetórias individuais.</p>"
+    & "<p class='entra'>Comparecimento: o modelo estima +" & FORMAT ( _saldo / 1000000, "0.00", "pt-BR" ) & " mi ["
+    & FORMAT ( _inf / 1000000, "0.00", "pt-BR" ) & "–" & FORMAT ( _sup / 1000000, "0.00", "pt-BR" )
+    & "]; a urna registrou +" & FORMAT ( _observado / 1000000, "0.00", "pt-BR" ) & " mi. Diferença de cerca de "
+    & FORMAT ( _erro / 1000, "0", "pt-BR" ) & " mil.</p>"
+    & "<div class='nota entra'>Branco/nulo → Lula muda bastante entre métodos. Os três candidatos seguem juntos. Detalhes e limites no “i”.</div></div>"

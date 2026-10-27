@@ -1,0 +1,8 @@
+/*
+@pasta: T20 Escola\Contas
+@formato: #,0
+@descricao: Segundo turno no modo Pós; primeiro turno no modo Pré.
+*/
+CALCULATE ( SUM ( 'T20 Zona turno'[VotosAdv] ),
+        'T20 Zona turno'[Ano] = 2022, 'T20 Zona turno'[Turno] = 2,
+        TREATAS ( VALUES ( 'T20 Local'[Id] ), 'T20 Zona turno'[IdLocal] ) )

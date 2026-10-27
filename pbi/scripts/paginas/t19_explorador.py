@@ -117,7 +117,8 @@ def _dispersao() -> dict:
               lib.campo_coluna("renda", "Município", "Renda per capita"),
               lib.campo_medida("var", "T19 · variação da margem"),
               lib.campo_medida("m26", "T19 · margem 2026"),
-              lib.campo_medida("val", "T19 · válidos 2026")]
+              lib.campo_medida("val", "T19 · válidos 2026"),
+              lib.campo_medida("pos", "Eleição · pós")]
     doc = lib.visual_deneb("T19_Dispersao_Pontos", *DISPERSAO, "spec/t19_dispersao.json", campos,
                            alt=lib.medida("T19 · Dispersão · ALT"), z=Z + 21, tab=210, selecao=True,
                            modo_selecao="advanced", max_selecao=2500, tooltip_pagina=TT, renderizacao="canvas")

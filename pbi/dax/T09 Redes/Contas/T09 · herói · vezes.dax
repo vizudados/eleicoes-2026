@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Razão maior/menor na mesma janela, com tratamento simétrico para os dois.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+VAR _l = [T09 · herói · Lula]
+VAR _f = [T09 · herói · Flávio]
+RETURN
+    IF ( NOT ISBLANK ( _l ) && NOT ISBLANK ( _f ), DIVIDE ( MAX ( _l, _f ), MIN ( _l, _f ) ) )

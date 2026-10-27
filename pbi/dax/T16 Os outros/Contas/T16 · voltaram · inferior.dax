@@ -1,0 +1,7 @@
+/*
+@pasta: T16 Os outros\Contas
+@formato: 0.00
+@descricao: União dos limites de 95% dos dois métodos; não é IC95 conjunto.
+@oraculo: dados/pbi/t16_urna.csv
+*/
+CALCULATE ( MIN ( 'T16 Urna'[Inferior] ), 'T16 Urna'[Série] = "Entre quem foi votar", REMOVEFILTERS ( 'T16 Urna'[Método] ) )

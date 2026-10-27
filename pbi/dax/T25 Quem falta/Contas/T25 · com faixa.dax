@@ -3,4 +3,4 @@
 @formato: 0
 @descricao: 1 quando há faixa de idade marcada (clique no bloco de idade) ou na linha/dica de uma faixa.
 */
-INT ( ISFILTERED ( 'T25 Faixa' ) )
+INT ( [Eleição · pós] = 0 && ISFILTERED ( 'T25 Faixa' ) )

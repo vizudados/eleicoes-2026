@@ -1,6 +1,17 @@
-{"titulo": "Quem vota em Lula e quem vota em Flávio?",
- "blocos": [
-  ["Como ler", "Escolha a lente nas abas. O gráfico põe as cidades em fila pelo indicador, da que tem menos para a que tem mais, e corta a fila em cinco degraus com o mesmo número de eleitores. As linhas mostram quanto Lula e Flávio tiveram em cada degrau; passe o mouse num degrau para ver 2022 e as maiores cidades."],
-  ["De onde vêm os números", "Votos do 1º turno do TSE; renda por pessoa e domicílios do Censo 2022 (IBGE); escolaridade do eleitorado do TSE (2026); famílias no Bolsa Família em agosto de 2026 (Portal da Transparência), por 100 domicílios: uma casa pode ter mais de uma família, então é uma aproximação; IDHM de 2010 (Atlas do Desenvolvimento Humano). O cartão da direita é o Datafolha de 29/09 a 01/10, a última rodada do instituto com as três perguntas."],
-  ["Para lembrar", "O voto é secreto: o gráfico mostra onde vivem os eleitores, não quem eles são (numa cidade rica também há eleitor pobre). Por isso a pesquisa fica ao lado, perguntando às pessoas. Cada instituto mede de um jeito: a AtlasIntel, pela internet e com faixas em reais, achou Lula à frente entre quem fez faculdade; o Datafolha, em entrevistas presenciais, achou Flávio."]
- ]}
+{
+  "titulo": "Como ler quem vota",
+  "blocos": [
+    [
+      "Como ler",
+      "Pré usa os resultados municipais do 1º turno; Pós usa o 2º turno em 2026 e na comparação com 2022 dos dossiês. Em cada lente, os municípios formam cinco grupos com aproximadamente um quinto do eleitorado, dos menores aos maiores valores do indicador. O filtro muda os votos, preservando os grupos para permitir a comparação."
+    ],
+    [
+      "O que as pessoas disseram",
+      "No Pós, o cartão mostra renda familiar no Datafolha BR-09540/2026, campo de 23 a 24 de outubro, nas quatro lentes. É intenção declarada antes da urna, sobre todos os entrevistados da faixa; a linha de todos os eleitores traz os 47% de Lula e 48% de Flávio publicados na mesma pergunta, sem converter para votos válidos. Os pesos usam as bases ponderadas sobre a amostra de 4.050, sem redistribuir a parcela fora das três faixas."
+    ],
+    [
+      "Para lembrar",
+      "O voto é secreto: o resultado de um município não revela a renda, a escolaridade ou o benefício de quem votou em cada candidato. Bolsa Família usa famílias por domicílios e IDH é o IDHM de 2010. A renda familiar da pesquisa é diferente da renda por pessoa usada para agrupar municípios."
+    ]
+  ]
+}

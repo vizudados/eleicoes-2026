@@ -4,7 +4,11 @@
 @descricao: Diferença de votos entre Flávio e Lula no 1º turno de 2026, no recorte, sem sinal.
 @oraculo: paginas[1].diferenca.votos = 2.224.965
 */
+IF ( [Eleição · pós] = 1, CALCULATE ( ABS ( SUM ( 'UF segundo turno'[VotosPT] ) - SUM ( 'UF segundo turno'[VotosAdversario] ) ), 'UF segundo turno'[Ano] = 2026 ),
+
 ABS (
     CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 22 )
         - CALCULATE ( SUM ( 'Candidato UF'[Votos] ), 'Candidato UF'[Ano] = 2026, 'Candidato UF'[Número] = 13 )
+)
+
 )

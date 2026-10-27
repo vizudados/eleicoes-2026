@@ -1,8 +1,8 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: #,0
-@descricao: Municípios do recorte (filtro da tela e seleção na dispersão) que trocaram Lula (2022) por Flávio (2026).
-@oraculo: 711 (Virada › viraram)
+@descricao: Municípios do recorte que mudaram de lado entre 2022 e 2026 no turno escolhido. Pré: Lula para Flávio. Pós: os dois sentidos, com a mesma regra de sinais e sem empates ou cidade nova.
+@oraculo: Pré 711; Pós 309 (278 para Flávio e 31 para Lula), dados/pbi/municipio_2turno.csv.
 */
 COALESCE (
     COUNTROWS (

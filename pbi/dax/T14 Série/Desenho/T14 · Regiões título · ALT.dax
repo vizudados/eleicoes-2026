@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Desenho
+@formato: texto
+@descricao: Escala comum das regiões.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+"Regiões na mesma escala: 10% a " & IF ( [Eleição · pós] = 1, "90%.", "70%." )

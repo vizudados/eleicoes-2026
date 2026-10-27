@@ -1,0 +1,13 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Bites, 19–24/10, com 24/10 parcial e hora de corte desconhecida; total no contexto do candidato. Não é acumulado do turno nem média diária.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+CALCULATE (
+    SUM ( Monitoramento[Valor] ),
+    Monitoramento[Estudo] = "Bites (agência de dados)",
+    Monitoramento[Métrica] = "interações nos perfis oficiais (X, YouTube, TikTok, Instagram, Facebook), de segunda a sábado",
+    Monitoramento[Início] = DATE ( 2026, 10, 19 ),
+    Monitoramento[Fim] = DATE ( 2026, 10, 24 )
+)

@@ -20,6 +20,10 @@
   },
   "signals": [
     {
+      "name": "pos",
+      "update": "length(data('dataset')) > 0 && data('dataset')[0].pos == 1"
+    },
+    {
       "name": "estatico",
       "init": "!(windowSize()[0] > 0)"
     },
@@ -236,10 +240,9 @@
     {
       "name": "y",
       "type": "linear",
-      "domain": [
-        -0.48,
-        0.16
-      ],
+      "domain": {
+        "signal": "pos ? [-0.4, 0.2] : [-0.48, 0.16]"
+      },
       "range": [
         {
           "signal": "758*height/860"

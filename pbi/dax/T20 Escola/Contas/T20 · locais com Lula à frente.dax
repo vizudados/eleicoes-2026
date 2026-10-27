@@ -4,6 +4,10 @@
 @descricao: Locais de 2026 da cidade da tela em que Lula teve mais votos que Flávio.
 @oraculo: mockup/data/eleicoes.json › Escola › lula_frente_2026 (12)
 */
+IF ( [Eleição · pós] = 1,
+VAR _cod = [T20 · cidade (código)]
+RETURN CALCULATE ( COUNTROWS ( FILTER ( 'T20 Zona turno', 'T20 Zona turno'[VotosPT] > 'T20 Zona turno'[VotosAdv] ) ),
+    'T20 Zona turno'[Ano] = 2026, 'T20 Zona turno'[Turno] = 2, 'T20 Zona turno'[CodIBGE] = _cod ) + 0,
 VAR _cod = [T20 · cidade (código)]
 RETURN
     COALESCE (
@@ -14,3 +18,4 @@ RETURN
         ),
         0
     )
+)

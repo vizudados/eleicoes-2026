@@ -4,4 +4,7 @@
 @descricao: Eleitores que faltaram sobre os aptos no ano do contexto (Brasil, sem o exterior).
 @gerado: pbi/scripts/desenho_t14.py
 */
-DIVIDE ( SUM ( 'Comparecimento ano'[Abstencoes] ), SUM ( 'Comparecimento ano'[Aptos] ) )
+IF ( [Eleição · pós] = 1, CALCULATE (
+    DIVIDE ( SUM ( 'Município segundo turno'[Abstencoes] ), SUM ( 'Município segundo turno'[Aptos] ) ),
+    REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'UF' )
+), DIVIDE ( SUM ( 'Comparecimento ano'[Abstencoes] ), SUM ( 'Comparecimento ano'[Aptos] ) ) )

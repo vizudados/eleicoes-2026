@@ -32,7 +32,8 @@ def main():
     blocos=[]
     for cand,pos,cls in [('Flávio','esq','flavio'),('Lula','dir','lula')]:
         nome='FLÁVIO BOLSONARO · PL' if cand=='Flávio' else 'LULA · PT'
-        selo="<span class='selo-eleito' aria-label='Lula eleito'>eleito</span>" if cand=='Lula' else ''
+        # 27/10/2026: Lula já era presidente; a palavra certa é reeleito (pedido do dono, "tem que mudar isso em tudo")
+        selo="<span class='selo-eleito' aria-label='Lula reeleito'>reeleito</span>" if cand=='Lula' else ''
         blocos.append(f'''"<div class='bl {pos} sobe d6'><div class='rot'>{nome}</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
     & "<div class='num v {cls}-c'>" & FORMAT ( [T00 · 2º turno · {cand} votos] / 1e6, "0.00" )
     & " mi</div><div class='p'>" & FORMAT ( [T00 · 2º turno · {cand} %], "0.00%" ) & " dos válidos</div>"
@@ -51,7 +52,7 @@ VAR _html = '''+'\n    & '.join(blocos)+'''
 RETURN _html'''
     gravar('T00 · Capa · HTML',expr,'Capa com segundo turno em destaque, primeiro turno menor e viradas estritas entre turnos; mesmos blocos para os dois.')
     gravar('T00 · Capa · ALT','''"Eleições 2026. 2º: Lula " & FORMAT ( [T00 · 2º turno · Lula votos] / 1e6, "0.00" )
-    & " mi, " & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & " (eleito); Flávio "
+    & " mi, " & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & " (reeleito); Flávio "
     & FORMAT ( [T00 · 2º turno · Flávio votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" )
     & ". 1º: Lula " & FORMAT ( [T00 · Lula votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · Lula %], "0.00%" )
     & "; Flávio " & FORMAT ( [T00 · Flávio votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · Flávio %], "0.00%" ) & ". "

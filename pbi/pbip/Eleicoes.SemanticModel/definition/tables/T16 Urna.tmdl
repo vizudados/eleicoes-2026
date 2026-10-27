@@ -1,0 +1,140 @@
+/// Estimativas nacionais sem exterior. Grão: série × origem × destino × método. Fluxo em % da origem; Entre quem foi votar em % dos retornantes estimados, incluindo branco/nulo; Pesquisa em % do segmento entrevistado (faixa entre institutos, não IC); Diagnóstico na unidade do destino. Tabela intencionalmente desconectada. Fonte: pipeline/exportar_t16_urna.py.
+table 'T16 Urna'
+	isHidden
+	lineageTag: ca2f9a40-dfd7-5379-a97f-0f48f3191270
+
+	/// Série
+	column 'Série'
+		dataType: string
+		lineageTag: f6735a83-bb91-54f7-8504-7932b4f30e09
+		summarizeBy: none
+		sourceColumn: Série
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Origem
+	column Origem
+		dataType: string
+		lineageTag: 4e1e29e7-28ae-5925-8a15-94b0d9e8ecf4
+		summarizeBy: none
+		sourceColumn: Origem
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Destino
+	column Destino
+		dataType: string
+		lineageTag: 6ae9fae9-09f8-5050-8a8e-ecb0d66e0637
+		summarizeBy: none
+		sourceColumn: Destino
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Método
+	column 'Método'
+		dataType: string
+		lineageTag: 0be4ea67-d2d6-5262-b2e6-823c8e9b862f
+		summarizeBy: none
+		sourceColumn: Método
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Centro em pontos percentuais (0–100), ou valor do diagnóstico.
+	column 'Média'
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: f3a55ca1-5bdf-5d28-90c7-4f18e4c345e0
+		summarizeBy: none
+		sourceColumn: Média
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Limite inferior do intervalo próprio do método; pesquisa: mínimo entre institutos.
+	column Inferior
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: ead184d6-d070-5e71-9994-4732e485214e
+		summarizeBy: none
+		sourceColumn: Inferior
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Limite superior do intervalo próprio do método; pesquisa: máximo entre institutos.
+	column Superior
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: a4b9e40b-4ea8-52b1-9442-24f7fa97722e
+		summarizeBy: none
+		sourceColumn: Superior
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Média de votos estimados; ausente para pesquisa/diagnóstico.
+	column Votos
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 00f8755f-d5e8-51a3-a635-30dfdce38cb6
+		summarizeBy: none
+		sourceColumn: Votos
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quantil 2,5% dos votos estimados.
+	column 'Votos inferior'
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: ccf9ae62-b1d3-55ca-8ccd-29d862af4645
+		summarizeBy: none
+		sourceColumn: Votos inferior
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Quantil 97,5% dos votos estimados.
+	column 'Votos superior'
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 16e16bc4-3ab6-58a1-baad-53645b890de9
+		summarizeBy: none
+		sourceColumn: Votos superior
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Total observado da origem; retornantes: base estimada; pesquisa: institutos.
+	column Base
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: 3f4b6b3a-c8af-52ce-a9c7-b3b59478350c
+		summarizeBy: none
+		sourceColumn: Base
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Tipo de intervalo
+	column 'Tipo de intervalo'
+		dataType: string
+		isHidden
+		lineageTag: 674c01fb-c0b5-55b0-bdcf-2e8023dab646
+		summarizeBy: none
+		sourceColumn: Tipo de intervalo
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'T16 Urna' = m
+		mode: import
+		source =
+				let
+				    Fonte = fxCsv("dados/pbi/t16_urna.csv", ","),
+				    Colunas = Table.SelectColumns(Fonte, {"serie", "origem", "destino", "metodo", "media", "inferior", "superior", "votos", "inferior_votos", "superior_votos", "base", "tipo_intervalo"}, MissingField.UseNull),
+				    Tipos = Table.TransformColumnTypes(Colunas, {{"serie", type text}, {"origem", type text}, {"destino", type text}, {"metodo", type text}, {"media", type number}, {"inferior", type number}, {"superior", type number}, {"votos", type number}, {"inferior_votos", type number}, {"superior_votos", type number}, {"base", type number}, {"tipo_intervalo", type text}}, "en-US"),
+				    Nomes = Table.RenameColumns(Tipos, {{"serie", "Série"}, {"origem", "Origem"}, {"destino", "Destino"}, {"metodo", "Método"}, {"media", "Média"}, {"inferior", "Inferior"}, {"superior", "Superior"}, {"votos", "Votos"}, {"inferior_votos", "Votos inferior"}, {"superior_votos", "Votos superior"}, {"base", "Base"}, {"tipo_intervalo", "Tipo de intervalo"}})
+				in
+				    Nomes
+
+	annotation PBI_ResultType = Table

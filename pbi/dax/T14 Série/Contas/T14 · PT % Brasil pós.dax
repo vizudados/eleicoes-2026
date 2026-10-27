@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: Percentual nacional do PT no segundo turno.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+DIVIDE ( [T14 · votos PT Brasil], [T14 · válidos Brasil] )

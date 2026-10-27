@@ -1,0 +1,39 @@
+{
+  "fps": 30,
+  "segundos": 15,
+  "parado": 12,
+  "contorno": [0.15, 1.8],
+  "municipios": [0.65, 2.1],
+  "partidas": [2.6, 4.0],
+  "voo": 3.2,
+  "partidasDiferenca": [6.2, 6.9],
+  "vooDiferenca": 1.8,
+  "someMapa": [4.8, 7.2],
+  "diferenca": [9.5, 10.1],
+  "html": {
+    "titulo": 0,
+    "origens": 0.65,
+    "resultado": 8.9,
+    "escala": 8.9,
+    "diferenca": 9.5,
+    "participacao": 10.2,
+    "achados": 10.9,
+    "fecho": 11.3
+  },
+  "entrada": 0.6,
+  "hemiciclo": {"x": 960, "base": 480, "raioInterno": 50, "raioExterno": 280, "fileiras": 33, "corredor": 32, "raioPonto": 2.2},
+  "areaGrafica": {"x": 620, "y": 152, "largura": 680, "altura": 365},
+  "mapa": {"x": 960, "y": 332, "escala": 0.64},
+  "textos": {
+    "titulo": [150, 68, 1620, 74],
+    "resultadoEsquerda": [140, 272, 420, 260],
+    "resultadoDireita": [1360, 272, 420, 260],
+    "escala": [620, 528, 680, 18],
+    "diferenca": [600, 558, 720, 54],
+    "participacao": [150, 626, 1620, 28]
+  },
+  "origensForaMapa": [
+    {"id": "5101837", "x": 650, "y": 420, "rotulo": "Boa Esperança do Norte · MT"},
+    {"id": "ZZ", "x": 650, "y": 474, "rotulo": "Exterior"}
+  ]
+}

@@ -1,23 +1,16 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: Texto para leitor de tela dos balões (um par por candidato; com período, a janela da direita é a do período).
+@descricao: Valores dos quatro balões vindos das contas, com régua e janela.
 */
 VAR _per = [Período · escolhido]
-VAR _pL = [T09 · período · interações · Lula]
-VAR _pF = [T09 · período · interações · Flávio]
+VAR _a = CALCULATE ( [T09 · conversa · esquerda], Monitoramento[Candidato] = "Lula" )
+VAR _b = CALCULATE ( [T09 · conversa · esquerda], Monitoramento[Candidato] = "Flávio Bolsonaro" )
+VAR _c = [T09 · herói · Lula]
+VAR _d = [T09 · herói · Flávio]
 RETURN
-    IF (
-        ISBLANK ( _per ),
-        "Campanha do 1º turno: Lula " & FORMAT ( [T09 · interações · 1º turno · Lula] / 1000000, "0.0" ) & " mi e Flávio "
-            & FORMAT ( [T09 · interações · 1º turno · Flávio] / 1000000, "0.0" ) & " mi de interações. 2º turno: Lula "
-            & FORMAT ( [T09 · interações · 2º turno · Lula] / 1000000, "0.0" ) & " mi e Flávio "
-            & FORMAT ( [T09 · interações · 2º turno · Flávio] / 1000000, "0.0" ) & " mi.",
-        "Campanha do 1º turno: Lula " & FORMAT ( [T09 · interações · 1º turno · Lula] / 1000000, "0.0" ) & " mi e Flávio "
-            & FORMAT ( [T09 · interações · 1º turno · Flávio] / 1000000, "0.0" ) & " mi de interações. " & [Período · rótulo] & ": "
-            & IF (
-                ISBLANK ( _pL ) || ISBLANK ( _pF ),
-                IF ( _per = 4, "ainda sem números.", "sem dado no período." ),
-                "Lula " & FORMAT ( _pL / 1000000, "0.0" ) & " mi e Flávio " & FORMAT ( _pF / 1000000, "0.0" ) & " mi."
-            )
-    )
+    IF ( ISBLANK ( _per ), "05–17/10: ", "Referência 16/08–04/10: " )
+        & "Lula " & FORMAT ( _a / 1000000, "0.0" ) & " mi; Flávio " & FORMAT ( _b / 1000000, "0.0" ) & " mi. "
+        & IF ( ISBLANK ( _c ) || ISBLANK ( _d ), "Sem janela Bites inteira no período.",
+            IF ( ISBLANK ( _per ), "19–24/10 parcial: ", "Janela do período: " ) & "Lula " & FORMAT ( _c / 1000000, "0.0" )
+            & " mi; Flávio " & FORMAT ( _d / 1000000, "0.0" ) & " mi." )

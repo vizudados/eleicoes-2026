@@ -91,15 +91,16 @@ VAR _corpo =
             & "<span></span><i style='background:var(--areia);height:4px;margin-left:14px'></i>entre os eleitores</div>"
             & _linhas & "</div>"
             & "<div class='mao entra d8'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _nota, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div>",
-        "<div class='si sobe d3'>Em " & _ano & ", o TSE ainda não publicava a idade de quem faltou. O perfil por "
-            & "idade começa em 2014.</div>"
+        "<div class='si sobe d3'>" & IF ( [Eleição · pós] = 1,
+            "O perfil por idade do 2º turno não está disponível nesta tela. A peça por idade usa o 1º turno de 2026.", "Em " & _ano & ", o TSE ainda não publicava a idade de quem faltou. O perfil por "
+            & "idade começa em 2014." ) & "</div>"
     )
 VAR _html =
     "<style>.tt{position:fixed;inset:0;background:var(--papel)}.tt .ficha{position:absolute;left:14px;top:22px;right:14px;bottom:14px;background:var(--branco);border:1.5px solid var(--areia);box-shadow:3px 4px 0 rgba(28,25,21,.07)}.tt .fita{position:absolute;left:150px;top:-16px;width:96px;transform:rotate(3deg);opacity:.9}.tt .ic{position:absolute;right:16px;top:14px;width:34px}.tt .cab{position:absolute;left:18px;top:14px;right:60px}.tt .nm{font-size:22px;font-weight:700;line-height:1.15;letter-spacing:-.01em}.tt .big{position:absolute;left:18px;font-size:44px;font-weight:700;letter-spacing:-.03em;line-height:1}.tt .bs{position:absolute;left:176px;right:18px;font-size:15px;color:var(--grafite);line-height:1.35}.tt .bs b,.tt .lin b{color:var(--tinta);font-weight:700}.tt .lin{position:absolute;left:18px;right:18px;border-top:1px dashed var(--areia);padding-top:8px;font-size:15px;color:var(--grafite);line-height:1.35}.tt .mao{position:absolute;right:18px;bottom:8px;font-size:28px;color:var(--tinta)}.tt .sp{position:absolute;left:18px}.tt .sp svg{overflow:visible}.tt .sp path{fill:none;stroke:var(--tinta);stroke-width:2.4;stroke-linejoin:round;stroke-linecap:round}.tt .sp circle{fill:var(--tinta);stroke:var(--branco);stroke-width:2}.tt .sp .sr{position:absolute;width:80px;text-align:center;font-size:13px;font-weight:700}.tt .sp .sa{position:absolute;bottom:-20px;width:80px;text-align:center;font-size:13px;color:var(--cinza)}</style>" & _css
         & "<div class='tt ta'><div class='ficha'>"
         & "<img class='fita' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/dossie/fita-tinta.png'/>"
         & "<img class='ic' alt='' src='https://vizudados.github.io/eleicoes-2026/midia/arte/icones/urna-tinta.png'/>"
-        & "<div class='cab sobe'><div class='nm'>1º turno de " & _ano & "</div>"
+        & "<div class='cab sobe'><div class='nm'>" & [T25 · turno] & " de " & _ano & "</div>"
         & "<div class='dp'>" & SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( _disputa, "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), """", "&quot;" ), "'", "&#39;" ) & "</div></div>"
         & IF (
             ISBLANK ( _pct ),

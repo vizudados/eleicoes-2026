@@ -6,9 +6,10 @@
 */
 VAR _i = [T24 · instituto]
 RETURN
+    IF ( [Eleição · pós] = 1, "Datafolha, 23–24/10/2026, 2º turno: intenção declarada por renda familiar antes da urna; Lula e Flávio nas três faixas. Não é voto observado.",
     IF (
         ISBLANK ( _i ),
         "Nesta lente não há pesquisa: o IDH é uma nota do lugar. O voto é secreto; o gráfico mostra os lugares.",
         "Pesquisa " & _i & " na lente " & [T24 · lente] & ": intenção de voto de Lula e Flávio em cada faixa. O voto é "
             & "secreto; o gráfico mostra os lugares."
-    )
+    ) )

@@ -9,6 +9,7 @@ VAR _cid = [T15 · cidade]
 VAR _n = [T15 · parecidas · quantidade]
 VAR _pos = [T15 · parecidas · posição]
 VAR _vg = [T15 · parecidas · variação do grupo]
+VAR _var = [T15 · variação]
 VAR _y = [T15 · ano escolhido]
 VAR _y0 = [T15 · ano anterior]
 -- 2 · Textos
@@ -18,6 +19,8 @@ RETURN
         ISBLANK ( _cid ), "Escolha uma cidade para compará-la com as cidades parecidas.",
         ISBLANK ( _y0 ),
         _cid & ": " & _y & " é o começo da série; não há eleição anterior para comparar com as cidades parecidas.",
-        _cid & ": " & FORMAT ( _pos, "0" ) & "ª maior queda de margem entre " & FORMAT ( _n, "#,0" )
+        ISBLANK ( _var ), _cid & ": sem eleição anterior para comparar a variação da margem.",
+        _var = 0, _cid & ": a margem ficou estável entre " & _y0 & " e " & _y & ".",
+        _cid & ": " & FORMAT ( _pos, "0" ) & IF ( _var > 0, "ª maior alta", "ª maior queda" ) & " de margem entre " & FORMAT ( _n, "#,0" )
             & " cidades parecidas, de " & _y0 & " para " & _y & "; o grupo variou " & FORMAT ( _vg * 100, "+0.0;−0.0;0.0" ) & " pontos."
     )

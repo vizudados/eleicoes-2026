@@ -1,10 +1,11 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: 0
-@descricao: 1 quando o município trocou Lula por Flávio (PT à frente em 2022 e atrás em 2026); 0 nos outros. Conta de um município (linha da lista, ponto, dossiê).
-@oraculo: mockup/data/eleicoes.json › Explorador › virou
+@descricao: Conta no turno escolhido: Pré = primeiro turno; Pós = segundo turno. Preserva o grão e os filtros.
 */
-VAR _m22 = [T19 · margem 2022]
+IF ( [Eleição · pós] = 1, VAR _m22 = [T19 · margem 2022]
+VAR _m26 = [T19 · margem 2026]
+RETURN INT ( NOT ISBLANK ( _m22 ) && NOT ISBLANK ( _m26 ) && _m22 * _m26 < 0 ), VAR _m22 = [T19 · margem 2022]
 VAR _m26 = [T19 · margem 2026]
 RETURN
-    IF ( _m22 > 0 && _m26 < 0, 1, 0 )
+    IF ( _m22 > 0 && _m26 < 0, 1, 0 ) )

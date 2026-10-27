@@ -13,10 +13,15 @@ VAR _anos =
 VAR _verbo = IF ( _dpp >= 0, "subiu", "caiu" )
 VAR _txt06 = FORMAT ( _p06, "0.0%" )
 VAR _txt26 = FORMAT ( _p26, "0.0%" )
+VAR _tipo = [T06 · série · tipo de manchete]
+VAR _marco = [T06 · série · marco do extremo]
+VAR _intervalo = IF ( ISBLANK ( _marco ), "da série", "desde " & FORMAT ( _marco, "0" ) )
 VAR _manchete =
-    IF (
-        _txt06 = _txt26,
-        "Em 20 anos, a abstenção ficou em " & _txt26,
+    SWITCH ( _tipo,
+        "menor", "Em 2026, a abstenção foi a menor " & _intervalo,
+        "maior", "Em 2026, a abstenção foi a maior " & _intervalo,
+        "estável", "Em 2026, a abstenção ficou em " & _txt26,
+        "sem série", "Sem série neste recorte",
         "Em 20 anos, a abstenção " & _verbo & " de " & _txt06 & " para " & _txt26
     )
 -- 3 · Geometria (anos em x 60–700; % de cima para baixo em y 30–220, de 10% a 26% — ou o que couber)
@@ -52,7 +57,7 @@ VAR _pontos =
 -- 4 · Marcação
 VAR _html =
     "<div class='tela se'>"
-        & "<div class='sob sobe'>A ausência em duas décadas · 1º turno</div>"
+        & "<div class='sob sobe'>A ausência em duas décadas · " & [T06 · turno] & "</div>"
         & "<div class='man sobe d1'>" & _manchete & "</div>"
         & "<div class='gr'><svg width='760' height='270' viewBox='0 0 760 270'>"
         & "<path class='area esmaece' d='" & _area & "'/>"

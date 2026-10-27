@@ -1,0 +1,9 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: 0%
+@descricao: Total publicado na mesma pergunta estimulada, base total; PDF p. 27, campo 23–24/10/2026.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+CALCULATE ( [T24 · pesquisa segundo · Lula %],
+              REMOVEFILTERS ( 'Perfil pesquisa segundo turno'[Categoria], 'Perfil pesquisa segundo turno'[CategoriaOrdem] ),
+              'Perfil pesquisa segundo turno'[Lente] = "Todos" )

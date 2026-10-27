@@ -1,0 +1,7 @@
+/*
+@pasta: T21 20 anos\Desenho
+@formato: texto
+@descricao: Descrição acessível do dossiê municipal no turno escolhido.
+*/
+[T19 · Dossiê · ALT]
+    & IF ( [Eleição · pós] = 1, " Segundo turno.", "" )

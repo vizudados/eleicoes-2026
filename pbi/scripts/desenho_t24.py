@@ -14,17 +14,21 @@ Bolsa Família, degrau 5: Lula 66,0% × 29,5%; degrau 1: Flávio 60,7% × Lula 2
 from __future__ import annotations
 
 from pathlib import Path
+import sys
 
 AQUI = Path(__file__).resolve().parent
+sys.dont_write_bytecode = True
+sys.path.insert(0, str(AQUI))
+from momento_eleicao import segundo  # noqa: E402
 PBI = AQUI.parent
 DAX = PBI / "dax"
 TELA = "T24 Quem vota"
 GERADOR = "pbi/scripts/desenho_t24.py"
 ORACULO = "pandas sobre dados/pbi/municipio_social.csv × municipio_ano.csv (23/10/2026)"
 
-# geometria do gráfico (visual T24_Grafico_Html, 940 × 684): colunas e escala de % (de 20% a 70%)
+# geometria do gráfico (visual T24_Grafico_Html, 940 × 684): escala de 20% a 80% nos dois modos
 X0, PASSO, BANDA = 130, 180, 172
-Y_TOPO, Y_BASE, P_MIN, P_MAX = 40, 520, 0.20, 0.70
+Y_TOPO, Y_BASE, P_MIN, P_MAX = 40, 520, 0.20, 0.80
 
 MEDIDAS: list[dict] = []
 
@@ -69,7 +73,79 @@ def px(expr: str) -> str:
     return f'FORMAT ( {expr}, "0.0", "en-US" )'
 
 
+def pesquisa_pos() -> str:
+    """O mesmo cartão, com o cruzamento efetivamente entregue para o segundo turno."""
+    return """
+-- 1 · Leituras
+VAR _lt = [T24 · pesquisa segundo · Lula % total]
+VAR _ft = [T24 · pesquisa segundo · Flávio % total]
+VAR _ref = [T24 · pesquisa segundo · vantagem total]
+VAR _xRef = 195 + MAX ( -40, MIN ( 40, _ref ) ) / 40 * 160
+VAR _cats = CALCULATETABLE ( SUMMARIZE ( 'Perfil pesquisa segundo turno',
+    'Perfil pesquisa segundo turno'[Categoria], 'Perfil pesquisa segundo turno'[CategoriaOrdem] ),
+    'Perfil pesquisa segundo turno'[Lente] = "Renda" )
+VAR _linhas = CONCATENATEX ( _cats,
+    VAR _l = [T24 · pesquisa segundo · Lula %]
+    VAR _f = [T24 · pesquisa segundo · Flávio %]
+    VAR _s = [T24 · pesquisa segundo · fatia]
+    VAR _v = [T24 · pesquisa segundo · vantagem]
+    VAR _w = MIN ( ABS ( _v ), 40 ) / 40 * 160
+    VAR _x = IF ( _v >= 0, 195, 195 - _w )
+    VAR _cat = SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE ( SUBSTITUTE (
+        'Perfil pesquisa segundo turno'[Categoria], "&", "&amp;" ), "<", "&lt;" ), ">", "&gt;" ), "'", "&#39;" ), UNICHAR ( 34 ), "&quot;" )
+    RETURN
+        "<div class='lin sobe d3'><div class='cat'><b>" & _cat & "</b><i>" & FORMAT ( _s, "0.0%" )
+        & " dos entrevistados</i></div><div class='gr'><i class='ref' style='left:" & FORMAT ( _xRef, "0.0", "en-US" ) & "px'></i><i class='ct'></i><i class='vb "
+        & IF ( _v >= 0, "bl barra-x", "bf barra-x-dir" ) & "' style='left:" & FORMAT ( _x, "0.0", "en-US" )
+        & "px;width:" & FORMAT ( _w, "0.0", "en-US" ) & "px'></i><span class='vt "
+        & IF ( _v >= 0, "lula-esc", "flavio-esc" ) & "' style='"
+        & IF ( _v >= 0, "left:" & FORMAT ( 195 + _w + 8, "0.0", "en-US" ),
+            "right:" & FORMAT ( 390 - _x + 8, "0.0", "en-US" ) ) & "px'>"
+        & IF ( _v >= 0, "Lula +", "Flávio +" ) & FORMAT ( ABS ( _v ), "0" )
+        & "</span><span class='pp'><span class='lula-esc'>" & FORMAT ( _l, "0%" )
+        & "</span> × <span class='flavio-esc'>" & FORMAT ( _f, "0%" ) & "</span></span></div></div>",
+    "", 'Perfil pesquisa segundo turno'[CategoriaOrdem], ASC )
+VAR _total =
+    "<div class='lin tot sobe d9'><div class='cat'><b>todos os eleitores</b><i>a marca tracejada</i></div>"
+    & "<div class='gr'><i class='ct'></i><i class='vb " & IF ( _ref >= 0, "bl", "bf" ) & "' style='left:"
+    & FORMAT ( IF ( _ref >= 0, 195, _xRef ), "0.0", "en-US" ) & "px;width:"
+    & FORMAT ( ABS ( _ref ) / 40 * 160, "0.0", "en-US" ) & "px'></i>"
+    & "<span class='vt " & IF ( _ref >= 0, "lula-esc", "flavio-esc" ) & "' style='"
+    & IF ( _ref >= 0, "left:" & FORMAT ( _xRef + 8, "0.0", "en-US" ),
+        "right:" & FORMAT ( 390 - _xRef + 8, "0.0", "en-US" ) ) & "px'>"
+    & IF ( _ref >= 0, "Lula +", "Flávio +" ) & FORMAT ( ABS ( _ref ), "0" )
+    & "</span><span class='pp'><span class='lula-esc'>" & FORMAT ( _lt, "0%" )
+    & "</span> × <span class='flavio-esc'>" & FORMAT ( _ft, "0%" ) & "</span></span></div></div>"
+-- 2 · Marcação
+RETURN
+    "<div class='tela t24p'><div class='cartao'><div class='rot entra'>NAS PESQUISAS, AS PESSOAS</div>"
+    & "<div class='tit sobe d1'>O que os eleitores disseram ao Datafolha</div>"
+    & "<div class='nota sobe d2'>2º turno · renda familiar · 23–24/10/2026 · BR-09540/2026</div>"
+    & "<div class='eixo entra d3'><span class='flavio-esc'>← Flávio à frente</span><span class='lula-esc'>Lula à frente →</span></div>"
+    & "<div class='lista realce'>" & _linhas & _total & "</div>"
+    & "<div class='txt'>Intenção declarada antes da urna, sobre todos os entrevistados da faixa.</div>"
+    & "<div class='nota'>Este cartão permanece por renda familiar nas quatro lentes. Os pesos publicados não somam 100%; não foram redistribuídos.</div>"
+    & "</div></div>"
+"""
+
+
 # ==================================================================================================== contas
+conta("T24 · turno", "texto", "Turno escolhido no filtro da casca.",
+      'IF ( [Eleição · pós] = 1, "2º turno", "1º turno" )')
+for _c in ("Lula", "Flávio"):
+    conta(f"T24 · pesquisa segundo · {_c} %", "0%", "Intenção declarada na faixa, base de totais, Datafolha 23–24/10.",
+          f'''DIVIDE ( CALCULATE ( MAX ( 'Perfil pesquisa segundo turno'[Percentual] ),
+              'Perfil pesquisa segundo turno'[Candidato] = "{_c}" ), 100 )''')
+    conta(f"T24 · pesquisa segundo · {_c} % total", "0%", "Total publicado na mesma pergunta estimulada, base total; PDF p. 27, campo 23–24/10/2026.",
+          f'''CALCULATE ( [T24 · pesquisa segundo · {_c} %],
+              REMOVEFILTERS ( 'Perfil pesquisa segundo turno'[Categoria], 'Perfil pesquisa segundo turno'[CategoriaOrdem] ),
+              'Perfil pesquisa segundo turno'[Lente] = "Todos" )''')
+conta("T24 · pesquisa segundo · fatia", "0.0%", "Base ponderada da faixa dividida por 4.050, sem renormalizar.",
+      "MAX ( 'Perfil pesquisa segundo turno'[Fatia] )")
+conta("T24 · pesquisa segundo · vantagem", "+0;−0;0", "Diferença Lula menos Flávio em pontos percentuais na pesquisa.",
+      "( [T24 · pesquisa segundo · Lula %] - [T24 · pesquisa segundo · Flávio %] ) * 100")
+conta("T24 · pesquisa segundo · vantagem total", "+0;−0;0", "Diferença Lula menos Flávio no total publicado da pesquisa: 47 menos 48, sem converter para válidos.",
+      "( [T24 · pesquisa segundo · Lula % total] - [T24 · pesquisa segundo · Flávio % total] ) * 100")
 conta("T24 · lente", "texto", "Lente escolhida nos botões (Renda, Escolaridade, Bolsa Família ou IDH); sem marca, Renda.",
       """SELECTEDVALUE ( 'T24 Lente'[Lente], "Renda" )""")
 conta("T24 · degrau", "0", "Degrau no contexto (1 a 5): o grão do gráfico e do tooltip.",
@@ -86,13 +162,14 @@ VAR _m =
 
 
 def _soma(coluna: str, ano: int) -> str:
-    return f"""{_MUN}
+    pre = f"""{_MUN}
 RETURN
     CALCULATE (
         SUM ( 'Município ano'[{coluna}] ),
         'Município ano'[Ano] = {ano},
         TREATAS ( _m, 'Município'[CodIBGE] )
     )"""
+    return segundo(pre, pre.replace("'Município ano'", "'Município segundo turno'"))
 
 
 for _a, _adv in ((2022, "Jair"), (2026, "Flávio")):
@@ -179,10 +256,13 @@ RETURN
     )""")
 for _c, _col in (("Lula", "VotosPT"), ("Flávio", "VotosAdversario")):
     conta(f"T24 · {_c} % 2026 · município", "0.0%", f"{_c} sobre os válidos de 2026 no município do contexto (as pontas "
-          "da régua do IDH no cartão).", f"""DIVIDE (
+          "da régua do IDH no cartão).", segundo(f"""DIVIDE (
     CALCULATE ( SUM ( 'Município ano'[{_col}] ), 'Município ano'[Ano] = 2026 ),
     CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2026 )
-)""")
+)""", f"""DIVIDE (
+    CALCULATE ( SUM ( 'Município segundo turno'[{_col}] ), 'Município segundo turno'[Ano] = 2026 ),
+    CALCULATE ( SUM ( 'Município segundo turno'[Validos] ), 'Município segundo turno'[Ano] = 2026 )
+)"""))
 conta("T24 · pesquisa fatia", "0%", "Fatia do grupo (no contexto: a categoria) na amostra da pesquisa da lente; vazia "
       "quando o instituto não publicou.", """VAR _l = [T24 · lente]
 VAR _i = [T24 · instituto]
@@ -224,13 +304,10 @@ VAR _alto =
         "Escolaridade", "Onde mais eleitores terminaram o ensino médio",
         "Bolsa Família", "Onde mais casas recebem Bolsa Família",
         "Nas cidades de IDH mais alto" )
-VAR _lulaEmBaixo = _l1 >= _l5
-VAR _pontaLula = IF ( _lulaEmBaixo, _baixo, _alto )
-VAR _pontaFlavio = IF ( _lulaEmBaixo, _alto, _baixo )
-VAR _pctLula = IF ( _lulaEmBaixo, _l1, _l5 )
-VAR _pctFlavio = IF ( _lulaEmBaixo, _f5, _f1 )
+VAR _lider1 = IF ( _l1 = _f1, "Empate", IF ( _l1 > _f1, "Lula", "Flávio" ) )
+VAR _lider5 = IF ( _l5 = _f5, "Empate", IF ( _l5 > _f5, "Lula", "Flávio" ) )
 VAR _mede =
-    SWITCH ( _l,
+    [T24 · turno] & " · " & SWITCH ( _l,
         "Renda", "Renda: quanto entra por mês, por pessoa, na casa (média da cidade, Censo 2022).",
         "Escolaridade", "Escolaridade: quantos eleitores da cidade têm pelo menos o ensino médio completo (TSE, 2026).",
         "Bolsa Família", "Bolsa Família: famílias pagas em agosto de 2026 para cada 100 casas da cidade (Censo 2022).",
@@ -246,7 +323,7 @@ VAR _eixo2 =
 -- 3 · Grade (% de 30 a 60; 50% tracejado)
 VAR _grade =
     CONCATENATEX (
-        GENERATESERIES ( 3, 6, 1 ),
+        GENERATESERIES ( 3, 7, 1 ),
         VAR _p = [Value] / 10
         VAR _y = 106 + {y("_p")}
         RETURN
@@ -257,9 +334,11 @@ VAR _grade =
 -- 4 · Marcação
 RETURN
     "<div class='tela t24f'>"
-        & "<div class='man sobe'>" & _pontaLula & ", <b class='lula'>Lula teve " & FORMAT ( _pctLula * 100, "0" )
-        & "%</b>. " & _pontaFlavio & ", <b class='flavio'>Flávio teve " & FORMAT ( _pctFlavio * 100, "0" )
-        & "%</b>.</div>"
+        & "<div class='man sobe'>" & _baixo & ", <b class='" & IF ( _lider1 = "Lula", "lula", "flavio" ) & "'>"
+        & IF ( _lider1 = "Empate", "houve empate", _lider1 & " liderou com " & FORMAT ( IF ( _lider1 = "Lula", _l1, _f1 ) * 100, "0" ) & "%" )
+        & "</b>. " & _alto & ", <b class='" & IF ( _lider5 = "Lula", "lula", "flavio" ) & "'>"
+        & IF ( _lider5 = "Empate", "houve empate", _lider5 & " liderou com " & FORMAT ( IF ( _lider5 = "Lula", _l5, _f5 ) * 100, "0" ) & "%" )
+        & "</b>.</div>"
         & "<div class='mede nota entra d3'>" & _mede & "</div>"
         & _grade
         & "<div class='eixo rot entra d10'><span>← " & _eixo & "</span><span>CADA DEGRAU: UM QUINTO DOS ELEITORES</span>"
@@ -386,7 +465,7 @@ desenho("T24 · Lentes · ALT", "Texto alternativo das abas.", """
 desenho("T24 · Pesquisa · HTML", "Cartão das pessoas: em cada faixa da lente, a vantagem na pesquisa (barra que sai do "
         "centro: à direita, Lula à frente; à esquerda, Flávio), os dois % e o tamanho do grupo; a marca tracejada é a "
         "vantagem entre todos os eleitores, e a nota marca a faixa em que a vantagem troca de lado. No IDH, por que não "
-        "há pesquisa e as pontas da régua. A nota do voto secreto é fixa (corpo do visual).", """
+        "há pesquisa e as pontas da régua. A nota do voto secreto é fixa (corpo do visual).", segundo("""
 -- 1 · Leituras
 VAR _l = [T24 · lente]
 VAR _i = [T24 · instituto]
@@ -503,17 +582,18 @@ VAR _cartao =
     )
 RETURN
     "<div class='tela t24p'><div class='cartao'>" & _cartao & "</div></div>"
-""")
+""", pesquisa_pos()))
 
 desenho("T24 · Pesquisa · ALT", "Texto alternativo do cartão das pesquisas.", """
 VAR _i = [T24 · instituto]
 RETURN
+    IF ( [Eleição · pós] = 1, "Datafolha, 23–24/10/2026, 2º turno: intenção declarada por renda familiar antes da urna; Lula e Flávio nas três faixas. Não é voto observado.",
     IF (
         ISBLANK ( _i ),
         "Nesta lente não há pesquisa: o IDH é uma nota do lugar. O voto é secreto; o gráfico mostra os lugares.",
         "Pesquisa " & _i & " na lente " & [T24 · lente] & ": intenção de voto de Lula e Flávio em cada faixa. O voto é "
             & "secreto; o gráfico mostra os lugares."
-    )
+    ) )
 """)
 
 desenho("T24 · Tooltip degrau · HTML", "Dossiê do degrau (página de tooltip ttT24Degrau): municípios e eleitores, a "
@@ -559,9 +639,9 @@ RETURN
             & "<div class='rot'>" & _d & "º QUINTO DOS ELEITORES" & UPPER ( _ponta2 ) & "</div>"
             & "<div class='num-l'><b>" & FORMAT ( _mun, "#,0" ) & "</b> " & IF ( _mun = 1, "município", "municípios" )
             & " · <b>" & FORMAT ( _ele / 1e6, "0.0" ) & " mi</b> de eleitores</div>"
-            & "<div class='duas'><div><span class='rot'>2022</span><span class='lula-esc'>Lula " & FORMAT ( _l22 * 100, "0.0" )
+            & "<div class='duas'><div><span class='rot'>2022 · " & [T24 · turno] & "</span><span class='lula-esc'>Lula " & FORMAT ( _l22 * 100, "0.0" )
             & "%</span><span class='flavio-esc'>Jair " & FORMAT ( _j22 * 100, "0.0" ) & "%</span></div>"
-            & "<div><span class='rot'>2026</span><span class='lula-esc'>Lula " & FORMAT ( _l26 * 100, "0.0" )
+            & "<div><span class='rot'>2026 · " & [T24 · turno] & "</span><span class='lula-esc'>Lula " & FORMAT ( _l26 * 100, "0.0" )
             & "%</span><span class='flavio-esc'>Flávio " & FORMAT ( _f26 * 100, "0.0" ) & "%</span></div></div>"
             & "<div class='txt'>" & _frase & "</div>"
             & "<div class='cid'><span class='rot'>MAIORES CIDADES</span>" & _txtCid & "</div>"

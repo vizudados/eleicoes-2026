@@ -3,8 +3,14 @@
 @formato: texto
 @descricao: Texto para leitor de tela da série da abstenção.
 */
-LEFT (
-    "Abstenção no 1º turno, " & [T06 · recorte] & ": " & FORMAT ( [T06 · abstenção % 2006], "0.0%" ) & " em 2006 e "
-        & FORMAT ( [T06 · abstenção %], "0.0%" ) & " em 2026.",
-    250
-)
+VAR _tipo = [T06 · série · tipo de manchete]
+VAR _marco = [T06 · série · marco do extremo]
+VAR _extremo = _tipo = "menor" || _tipo = "maior"
+RETURN LEFT (
+    "Abstenção no " & [T06 · turno] & ", " & [T06 · recorte] & ": "
+        & IF ( _extremo,
+            "em 2026, a " & _tipo & " " & IF ( ISBLANK ( _marco ), "da série", "desde " & FORMAT ( _marco, "0" ) ) & ". ",
+            "" )
+        & IF ( _tipo = "sem série", "sem série neste recorte.",
+            FORMAT ( [T06 · abstenção % 2006], "0.0%" ) & " em " & FORMAT ( 2006, "0" )
+                & " e " & FORMAT ( [T06 · abstenção %], "0.0%" ) & " em 2026." ), 250 )

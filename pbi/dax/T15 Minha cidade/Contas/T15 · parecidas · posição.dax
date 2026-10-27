@@ -1,7 +1,7 @@
 /*
 @pasta: T15 Minha cidade\Contas
 @formato: 0
-@descricao: Posição da cidade entre as parecidas pela queda da margem (1 = a maior queda).
+@descricao: Posição entre as parecidas no turno escolhido: maior alta em ordem decrescente, maior queda em ordem crescente; vazia quando a margem não mudou.
 @oraculo: mockup/data/eleicoes.json › paginas[15] › cidade_guia (Contagem) › entre_parecidas › posicao = 45
 @gerado: pbi/scripts/desenho_t15.py
 */
@@ -19,4 +19,6 @@ VAR _ok =
     FILTER ( _t, NOT ISBLANK ( [@d] ) )
 VAR _d = [T15 · variação]
 RETURN
-    IF ( NOT ISBLANK ( _d ) && NOT ISBLANK ( _p ), COUNTROWS ( FILTER ( _ok, [@d] < _d ) ) + 1 )
+    IF ( NOT ISBLANK ( _d ) && NOT ISBLANK ( _p ) && _d <> 0,
+        IF ( _d > 0, COUNTROWS ( FILTER ( _ok, [@d] > _d ) ),
+            COUNTROWS ( FILTER ( _ok, [@d] < _d ) ) ) + 1 )

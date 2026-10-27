@@ -4,7 +4,31 @@
 @descricao: Dossiê da eleição no tooltip da série: os quatro mais votados no Brasil (com o exterior), a colocação do PT e a abstenção. Só lê contas.
 @gerado: pbi/scripts/desenho_t14.py
 */
--- 1 · Leituras
+IF ( [Eleição · pós] = 1, VAR _ano = [T14 · ano]
+VAR _pos = [T14 · posição do PT]
+VAR _pt = [T14 · PT % Brasil pós]
+VAR _adv = [T14 · adversário % Brasil pós]
+VAR _cpt = [T14 · candidato do PT]
+VAR _cadv = [T14 · adversário]
+VAR _abs = [T14 · abstenção]
+VAR _duelo = { ( _cpt, "PT", _pt ), ( _cadv, [T14 · partido do adversário], _adv ) }
+VAR _linhas = CONCATENATEX ( _duelo,
+    "<div class='cl'><span class='nm'>" & [Value1] & " <i>" & [Value2] & "</i></span>"
+        & "<span class='tr'><b class='barra-x " & IF ( [Value2] = "PT", "pt", "adv" )
+        & "' style='width:" & FORMAT ( MIN ( 140, 140 * [Value3] / 0.7 ), "0.0", "en-US" )
+        & "px'></b></span><span class='pc'>" & FORMAT ( [Value3], "0.0%" ) & "</span></div>",
+    "", [Value3], DESC )
+RETURN
+    "<div class='tela tt14'><div class='fita'></div><div class='selo "
+        & IF ( _pos = 1, "vm", "az" ) & "'>PT EM " & _pos & "º</div>"
+        & "<div class='an sobe'>" & _ano & " · 2º turno</div>"
+        & "<div class='rot entra d1'>A DISPUTA FINAL NO BRASIL</div>"
+        & "<div class='lista entra d2'>" & _linhas & "</div>"
+        & "<div class='nota entra d4'>Votos válidos com o exterior. Faltaram " & FORMAT ( _abs, "0.0%" )
+        & " dos eleitores no Brasil, sem o exterior.</div>"
+        & "<div class='mao entra d6'>" & IF ( _pos = 1, "o PT venceu a eleição", "o adversário venceu a eleição" )
+        & "</div></div>"
+, -- 1 · Leituras
 VAR _ano = [T14 · ano]
 VAR _pos = [T14 · posição do PT]
 VAR _abs = [T14 · abstenção]
@@ -23,7 +47,7 @@ VAR _cand =
 -- 2 · Textos
 VAR _selo = "PT EM " & FORMAT ( _pos, "0" ) & "º"
 VAR _clsSelo = IF ( _pos = 1, "selo vm", "selo az" )
-VAR _mao = IF ( _pos = 1, "o PT venceu o 1º turno", "o PT ficou em " & FORMAT ( _pos, "0" ) & "º" )
+VAR _mao = IF ( _pos = 1, "o PT venceu o " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " turno", "o PT ficou em " & FORMAT ( _pos, "0" ) & "º" )
 -- 3 · Geometria e 4 · Marcação (barras: 60% = 140 px)
 VAR _maxOutro = MAXX ( FILTER ( _cand, [@pa] <> "PT" ), [@v] ) /* lista */
 VAR _linhas =
@@ -41,9 +65,9 @@ VAR _linhas =
 RETURN
     "<div class='tela tt14'><div class='fita'></div>"
         & "<div class='" & _clsSelo & "'>" & _selo & "</div>"
-        & "<div class='an sobe'>" & _ano & " · 1º turno</div>"
+        & "<div class='an sobe'>" & _ano & " · " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " turno</div>"
         & "<div class='rot entra d1'>OS MAIS VOTADOS NO BRASIL</div>"
         & "<div class='lista entra d2'>" & _linhas & "</div>"
         & "<div class='nota entra d4'>Faltaram " & FORMAT ( _abs, "0.0%" ) & " dos eleitores. Votos válidos, com o exterior.</div>"
         & "<div class='mao entra d6'>" & _mao & "</div>"
-    & "</div>"
+    & "</div>" )

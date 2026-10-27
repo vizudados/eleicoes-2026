@@ -1,129 +1,39 @@
 /*
 @pasta: T09 Redes\Desenho
 @formato: texto
-@descricao: O número da tela (quantas vezes as interações de um foram as do outro no 2º turno, contador), a frase ao lado, a manchete (quem dominou as interações no 2º turno e quem ganhou mais seguidores na campanha do 1º) e o que é interação. Com um período escolhido no filtro (Período · escolhido): o número e a manchete passam a ser os da janela de interações da Bites que cabe inteira no período (Antes da Band, 05 a 17/10; Depois da Band, as 24 h depois do debate) e dos seguidores ganhos na janela que cabe nele, com a janela real escrita; sem janela que caiba, 'sem dado no período'; Depois da Globo, 'não divulgado'. Só lê contas 'T09 · …' e 'Período · …'.
+@descricao: Herói da última janela Bites; sem janela completa no período, responde pelo índice Quaest disponível. Números vindos de contas e contador automático.
 */
 -- 1 · Leituras
-VAR _l2 = [T09 · interações · 2º turno · Lula]
-VAR _f2 = [T09 · interações · 2º turno · Flávio]
-VAR _r2 = [T09 · interações · razão no 2º turno]
-VAR _ini2 = [T09 · 2º turno · início]
-VAR _fim2 = [T09 · 2º turno · fim]
-VAR _sL = [T09 · seguidores ganhos · campanha · Lula]
-VAR _sF = [T09 · seguidores ganhos · campanha · Flávio]
--- com período
 VAR _per = [Período · escolhido]
-VAR _pNome = [Período · nome]
-VAR _pIni = [Período · início]
-VAR _pFim = [Período · fim]
-VAR _pL = [T09 · período · interações · Lula]
-VAR _pF = [T09 · período · interações · Flávio]
-VAR _pR = [T09 · período · interações · razão]
-VAR _pI = [T09 · período · interações · início]
-VAR _pIf = [T09 · período · interações · fim]
+VAR _l = [T09 · herói · Lula]
+VAR _f = [T09 · herói · Flávio]
+VAR _vezes = [T09 · herói · vezes]
+VAR _dif = [T09 · herói · diferença IPD]
+VAR _man = [T09 · herói · manchete]
+VAR _i = IF ( ISBLANK ( _per ), [T09 · reta final · início], [T09 · período · interações · início] )
+VAR _fim = IF ( ISBLANK ( _per ), [T09 · reta final · fim], [T09 · período · interações · fim] )
+VAR _ipDia = [T09 · período · IPD · dia]
 VAR _p24 = CONTAINSSTRING ( [T09 · período · interações · métrica], "24h" )
-VAR _psL = [T09 · período · seguidores ganhos · Lula]
-VAR _psF = [T09 · período · seguidores ganhos · Flávio]
-VAR _psI = [T09 · período · seguidores · início]
-VAR _psIf = [T09 · período · seguidores · fim]
-VAR _psFonte = [T09 · período · seguidores · fonte]
-VAR _psIg = CONTAINSSTRING ( [T09 · período · seguidores · métrica], "Instagram" )
 -- 2 · Textos
-VAR _quemI = IF ( _l2 >= _f2, "Lula", "Flávio" )
-VAR _outroI = IF ( _quemI = "Lula", "Flávio", "Lula" )
-VAR _vezes = IF ( _l2 >= _f2, _r2, DIVIDE ( 1, _r2 ) )
-VAR _quemS = IF ( _sF >= _sL, "Flávio", "Lula" )
-VAR _txtMan =
-    "No 2º turno, as redes foram de " & _quemI & "; na campanha do 1º, quem ganhou mais seguidores foi " & _quemS
-VAR _txtSob =
-    "2º turno · " & FORMAT ( _ini2, "dd/MM" ) & " a " & FORMAT ( _fim2, "dd/MM" ) & " · interações nos perfis oficiais"
--- com período: a janela real de cada número ('05 a 17/10', '18 e 19/10', '18/10')
-VAR _janP =
-    SWITCH (
-        TRUE (),
-        _pI = _pIf, FORMAT ( _pI, "dd/MM" ),
-        IF ( MONTH ( _pI ) = MONTH ( _pIf ), FORMAT ( _pI, "dd" ), FORMAT ( _pI, "dd/MM" ) )
-            & IF ( DATEDIFF ( _pI, _pIf, DAY ) = 1, " e ", " a " ) & FORMAT ( _pIf, "dd/MM" )
-    )
-VAR _janI = IF ( _p24, "24 h após o debate (" & _janP & ")", _janP )
-VAR _janS =
-    SWITCH (
-        TRUE (),
-        _psI = _psIf, FORMAT ( _psI, "dd/MM" ),
-        IF ( MONTH ( _psI ) = MONTH ( _psIf ), FORMAT ( _psI, "dd" ), FORMAT ( _psI, "dd/MM" ) )
-            & IF ( DATEDIFF ( _psI, _psIf, DAY ) = 1, " e ", " a " ) & FORMAT ( _psIf, "dd/MM" )
-    )
-VAR _janPer =
-    IF ( MONTH ( _pIni ) = MONTH ( _pFim ), FORMAT ( _pIni, "dd" ), FORMAT ( _pIni, "dd/MM" ) )
-        & IF ( DATEDIFF ( _pIni, _pFim, DAY ) = 1, " e ", " a " ) & FORMAT ( _pFim, "dd/MM" )
-VAR _temI = NOT ISBLANK ( _pL ) && NOT ISBLANK ( _pF )
-VAR _espera = _per = 4 && NOT _temI
-VAR _pQuemI = IF ( _pL >= _pF, "Lula", "Flávio" )
-VAR _pOutroI = IF ( _pQuemI = "Lula", "Flávio", "Lula" )
-VAR _pVezes = IF ( _pL >= _pF, _pR, DIVIDE ( 1, _pR ) )
-VAR _pQuemS = IF ( _psF > _psL, "Flávio", "Lula" )
-VAR _pSob =
-    _pNome & " · " & IF ( _temI, _janI, _janPer ) & " · interações" & IF ( _p24, "", " nos perfis oficiais" )
-VAR _pMan =
-    SWITCH (
-        TRUE (),
-        _espera, _pNome & ", os números das redes não constam do levantamento",
-        NOT _temI, _pNome & ", nenhuma medição das interações dos dois cabe só nesses dias",
-        _pNome & ", as interações foram de " & _pQuemI
-            & SWITCH (
-                TRUE (),
-                ISBLANK ( _psL ) || ISBLANK ( _psF ), "; de seguidores ganhos, sem dado no período",
-                _psL = _psF, "; em seguidores ganhos, empate",
-                _pQuemS = _pQuemI, " e os seguidores ganhos também",
-                "; os seguidores ganhos, de " & _pQuemS
-            )
-    )
-VAR _pTxt =
-    SWITCH (
-        TRUE (),
-        _espera, "No levantamento encerrado em 25/10, a Bites não tinha publicado as interações dos dois depois do debate. "
-            & "Interação é toda reação a uma publicação: curtida, comentário, compartilhamento.",
-        NOT _temI, "As medições publicadas terminam antes ou atravessam o período, e aqui só entra a que cabe "
-            & "inteira nele. Interação é toda reação a uma publicação.",
-        "Janelas que cabem no período: interações, Bites, " & _janI
-            & IF (
-                NOT ISBLANK ( _psL ) && NOT ISBLANK ( _psF ),
-                "; seguidores, " & _psFonte & IF ( _psIg, ", só Instagram", "" ) & ", " & _janS
-            )
-            & ". Interação é toda reação a uma publicação."
-    )
-VAR _pNum =
-    SWITCH (
-        TRUE (),
-        _espera, "<div class='hero sobe d1'><span class='vazio mao'>não divulgado</span></div>",
-        NOT _temI, "<div class='hero sobe d1'><span class='vazio'>sem dado no período</span></div>",
-        "<div class='hero sobe d1'><span class='num'>" & FORMAT ( _pVezes, "0.0" ) & "</span><span class='u'>vezes</span></div>"
-    )
-VAR _pLado =
-    SWITCH (
-        TRUE (),
-        _espera, "os números depois do debate da Globo não constam do levantamento",
-        NOT _temI, "nenhuma medição das interações dos dois cabe em " & _janPer,
-        "mais interações para " & _pQuemI & " do que para " & _pOutroI & IF ( _p24, " nas 24 h depois do debate", "" )
-    )
+VAR _temI = NOT ISBLANK ( _l ) && NOT ISBLANK ( _f )
+VAR _quem = IF ( _l >= _f, "Lula", "Flávio" )
+VAR _outro = IF ( _l >= _f, "Flávio", "Lula" )
+VAR _sob = IF ( _temI, "Interações · Bites · " & FORMAT ( _i, "dd/MM" ) & " a " & FORMAT ( _fim, "dd/MM" )
+    & IF ( ISBLANK ( _per ), " · 24/10 parcial", IF ( _p24, " · janela de 24 h", "" ) ),
+    "Popularidade digital · Quaest · " & FORMAT ( _ipDia, "dd/MM" ) )
+VAR _lado = IF ( _temI, _quem & " em relação a " & _outro & ", na mesma janela",
+    IF ( NOT ISBLANK ( _dif ), "de distância no índice de 0 a 100", "sem janela completa publicada" ) )
+VAR _txt = IF ( _temI,
+    IF ( ISBLANK ( _per ), "Última janela publicada; não é o total do turno. ", "Só a janela inteira dentro do período. " )
+        & "Interação é uma reação à publicação: curtida, comentário ou compartilhamento.",
+    "A janela Bites de 19–24/10 atravessa os períodos e não foi repartida. O índice mede popularidade digital, não voto." )
 -- 4 · Marcação
 RETURN
-    IF (
-        ISBLANK ( _per ),
-        "<div class='tela t09a'>"
-            & "<div class='sob sobe'>" & _txtSob & "</div>"
-            & "<div class='linha'>"
-                & "<div class='hero sobe d1'><span class='num'>" & FORMAT ( _vezes, "0.0" ) & "</span><span class='u'>vezes</span></div>"
-                & "<div class='lado sobe d3'>mais interações para " & _quemI & " do que para " & _outroI & "</div>"
-            & "</div>"
-            & "<div class='man sobe d5'>" & _txtMan & "</div>"
-            & "<div class='txt sobe d6'>Interação é toda reação a uma publicação: curtida, comentário, compartilhamento. "
-                & "Mostra o alcance nas redes, não a intenção de voto.</div>"
-        & "</div>",
-        "<div class='tela t09a'>"
-            & "<div class='sob sobe'>" & _pSob & "</div>"
-            & "<div class='linha'>" & _pNum & "<div class='lado sobe d3'>" & _pLado & "</div></div>"
-            & "<div class='man sobe d5'>" & _pMan & "</div>"
-            & "<div class='txt sobe d6'>" & _pTxt & "</div>"
-        & "</div>"
-    )
+    "<div class='tela t09a'><div class='sob sobe'>" & _sob & "</div>"
+        & "<div class='linha'><div class='hero sobe d1'>"
+        & IF ( _temI, "<span class='num'>" & FORMAT ( _vezes, "0.0" ) & "</span><span class='u'>vezes</span>",
+            IF ( NOT ISBLANK ( _dif ), "<span class='num'>" & FORMAT ( _dif, "0.0" ) & "</span><span class='u'>pontos</span>",
+                "<span class='vazio'>sem dado</span>" ) )
+        & "</div><div class='lado sobe d3'>" & _lado & "</div></div>"
+        & "<div class='man sobe d4'>" & _man & "</div><div class='txt sobe d5'>" & _txt & "</div>"
+    & "</div>"

@@ -1,4 +1,4 @@
-/// Segundo turno por município, 2022 e 2026, sem exterior. Município ausente em 2022 permanece ausente; não equivale a zero. Fonte: TSE, exportação validada por pipeline/exportar_2turno.py.
+/// Segundo turno por município, 2006 a 2026, sem exterior. Município ausente num ano permanece ausente; não equivale a zero. Fonte: TSE, exportação validada por pipeline/exportar_2turno.py (2022 e 2026) e pipeline/brief_f_2turno.py (2006 a 2018). Toda medida filtra o ano.
 table 'Município segundo turno'
 	isHidden
 	lineageTag: b56aa50b-9304-51ce-adc7-bd877b1efe23
@@ -24,7 +24,7 @@ table 'Município segundo turno'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Votos de Lula.
+	/// Votos do candidato do PT (Lula em 2006, 2022 e 2026; Dilma em 2010 e 2014; Haddad em 2018).
 	column VotosPT
 		dataType: int64
 		isHidden
@@ -35,7 +35,7 @@ table 'Município segundo turno'
 
 		annotation SummarizationSetBy = Automatic
 
-	/// Votos de Flávio em 2026 e Jair Bolsonaro em 2022.
+	/// Votos do adversário do PT no 2º turno: Flávio em 2026, Jair Bolsonaro em 2022 e 2018, Aécio em 2014, Serra em 2010, Alckmin em 2006.
 	column VotosAdversario
 		dataType: int64
 		isHidden

@@ -1,0 +1,14 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Reais veiculados na página oficial na Biblioteca da Meta, 18–24/10. Não soma TSE, partidos ou terceiros.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+VAR _c = SELECTEDVALUE ( Monitoramento[Candidato] )
+VAR _pagina = SWITCH ( _c, "Lula", "Lula (página 'Lula', rótulo da campanha)", "Flávio Bolsonaro", "Flávio Bolsonaro (página 'Flavio Bolsonaro', rótulo da campanha)" )
+RETURN
+    IF ( NOT ISBLANK ( _pagina ), CALCULATE (
+        SUM ( 'Anúncios'[Valor] ), REMOVEFILTERS ( 'Anúncios' ),
+        'Anúncios'[Anunciante] = _pagina, 'Anúncios'[Plataforma] = "Meta (Facebook/Instagram)",
+        'Anúncios'[Período] = "2026-10-18 a 2026-10-24 (7 dias)"
+    ) )

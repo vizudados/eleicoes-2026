@@ -56,11 +56,11 @@ VAR _man =
     SWITCH (
         TRUE (),
         _clique, _manAno,
-        _k = _n, IF ( ISBLANK ( _uf ), "", _uf & ": " ) & "o PT terminou o 1º turno atrás do adversário nas seis eleições",
+        _k = _n, IF ( ISBLANK ( _uf ), "", _uf & ": " ) & "o PT terminou o " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " turno atrás do adversário nas seis eleições",
         _a26 = 1 && ISBLANK ( _uf ),
-            "Pela " & FORMAT ( _k, "0" ) & "ª vez em seis eleições, o PT termina o 1º turno em segundo lugar",
+            "Pela " & FORMAT ( _k, "0" ) & "ª vez em seis eleições, o PT termina o " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " turno em segundo lugar",
         _a26 = 1,
-            _uf & ": pela " & FORMAT ( _k, "0" ) & "ª vez em seis eleições, o PT termina o 1º turno atrás do adversário",
+            _uf & ": pela " & FORMAT ( _k, "0" ) & "ª vez em seis eleições, o PT termina o " & IF ( [Eleição · pós] = 1, "2º", "1º" ) & " turno atrás do adversário",
         _k = 0, "O PT ficou à frente nas seis eleições" & _onde & ", inclusive em 2026",
         "O PT ficou à frente em " & FORMAT ( _n - _k, "0" ) & " das seis eleições" & _onde & ", inclusive em 2026"
     )
@@ -98,7 +98,10 @@ VAR _urnas =
 RETURN
     "<div class='tela t14r'>"
         & "<div class='num g" & _clsGrande & " sobe'>" & _grande & "</div>"
-        & "<div class='man m sobe d2'>" & _man & "</div>"
+        & "<div class='man m sobe d2'>"
+            & IF ( [Eleição · pós] = 1 && NOT _clique,
+                "O PT venceu " & FORMAT ( [T14 · eleições com o PT à frente], "0" ) & " das 6 disputas de 2º turno" & _onde,
+                _man & IF ( [Eleição · pós] = 1, " · 2º turno", "" ) ) & "</div>"
         & "<div class='nota s entra d4'>" & _sub & "</div>"
         & "<div class='rot ur entra d3'>QUEM TERMINOU NA FRENTE, ELEIÇÃO A ELEIÇÃO</div>"
         & _urnas

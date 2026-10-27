@@ -43,8 +43,8 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
     blocos = ['[T23 · Resumo · HTML]']
     for cand, pos, cls in [('Flávio', 'esq', 'flavio'), ('Lula', 'dir', 'lula')]:
         nome = 'FLÁVIO BOLSONARO · PL' if cand == 'Flávio' else 'LULA · PT'
-        selo = "<span class='selo-eleito' aria-label='Lula eleito'>eleito</span>" if cand == 'Lula' else ''
-        blocos.append(f'''"<div class='bl {pos} sobe d3'><div class='rot'>{nome}</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
+        selo = "<span class='selo-eleito' aria-label='Lula reeleito'>reeleito</span>" if cand == 'Lula' else ''
+        blocos.append(f'''"<div class='bl {pos} sobe fx-resultado'><div class='rot'>{nome}</div><div class='rot etapa'>2º TURNO · RESULTADO FINAL</div>"
     & "<div class='num v {cls}-c'>" & FORMAT ( [T00 · 2º turno · {cand} votos] / 1e6, "0.00" )
     & " mi</div><div class='p'>" & FORMAT ( [T00 · 2º turno · {cand} %], "0.00%" ) & " dos válidos</div>"
     & "<div class='primeiro'>1º turno · <span class='num'>" & FORMAT ( [T00 · {cand} votos] / 1e6, "0.00" )
@@ -52,8 +52,10 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
     textos = {
         'T10': '''FORMAT ( [T10 · institutos · Lula à frente], "0" ) & " de " & FORMAT ( [T10 · institutos], "0" )
             & " institutos davam Lula à frente; a urna deu Flávio."''',
-        'T01': '''"Flávio terminou o 1º turno com " & FORMAT ( [T06 · diferença Flávio Lula] / 1e6, "0.00" ) & " mi de votos de vantagem."''',
-        'T06': '''"A ausência foi " & FORMAT ( [T06 · vezes a diferença em 2026], "0" ) & " vezes a diferença entre os dois no 1º turno."''',
+        # 27/10/2026: as contas da T06 seguem o filtro Pré/Pós e o Encerramento, sem filtro, veria o Pós (4,43 mi e "7
+        # vezes" num achado do 1º turno); os dois fixam o recorte do 1º turno (pbi/scripts/conferir_momento.py acha isso)
+        'T01': '''"Flávio terminou o 1º turno com " & FORMAT ( CALCULATE ( [T06 · diferença Flávio Lula], 'Momento eleição'[Momento] = "Pré Eleições 2026" ) / 1e6, "0.00" ) & " mi de votos de vantagem."''',
+        'T06': '''"A ausência foi " & FORMAT ( CALCULATE ( [T06 · vezes a diferença em 2026], 'Momento eleição'[Momento] = "Pré Eleições 2026" ), "0" ) & " vezes a diferença entre os dois no 1º turno."''',
         # O clique leva à tela 09, que abre em "Pós Eleições 2026" (o 2º turno): o achado conta o mesmo recorte, fixo,
         # para não depender do padrão do filtro (26/10/2026: dizia "1º turno" com o número do 2º, 278; no 1º foram 711).
         'T11': '''FORMAT ( CALCULATE ( [T11 · viraram], 'Momento eleição'[Momento] = "Pós Eleições 2026" ), "#,0" )
@@ -62,7 +64,7 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
         'T19': '''FORMAT ( [T00 · municípios no mapa], "#,0" ) & " municípios para explorar o voto."''',
         'T17': '''"Flávio liderava " & FORMAT ( [T17 · depois · Flávio à frente], "0" ) & " de "
             & FORMAT ( [T17 · depois · pesquisas], "0" ) & " pesquisas; a urna deu Lula."''',
-        'T18': '''"Lula foi eleito por " & FORMAT ( [Apuração · diferença], "#,0" )
+        'T18': '''"Lula foi reeleito por " & FORMAT ( [Apuração · diferença], "#,0" )
             & " votos; voltou à frente às " & SUBSTITUTE ( FORMAT ( [T18 · noite · Lula retomou a frente], "HH:mm" ), ":", "h" ) & "."''',
         'T27': '''"Entre os turnos, Lula ganhou " & FORMAT ( [T23 · Lula ganhou entre turnos] / 1e6, "0.00" )
             & " mi de votos; Flávio, " & FORMAT ( [T23 · Flávio ganhou entre turnos] / 1e6, "0.00" ) & " mi."''',
@@ -71,19 +73,19 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
             & FORMAT ( [T29 · acima do recorde anterior] / 1e6, "0.00" ) & " mi acima de 2022."''',
     }
     for titulo, x, y, w, h, itens in GRUPOS:
-        blocos.append(f'''"<div class='grupo' style='left:{x}px;top:{y}px;width:{w}px'>{titulo}</div>"''')
+        blocos.append(f'''"<div class='grupo sobe fx-achados' style='left:{x}px;top:{y}px;width:{w}px'>{titulo}</div>"''')
         for i, (cod, _) in enumerate(itens):
-            blocos.append(f'''"<div class='linha sobe' style='left:{x}px;top:{y+30+i*h}px;width:{w}px;height:{h}px'>"
+            blocos.append(f'''"<div class='linha sobe fx-achados' style='left:{x}px;top:{y+30+i*h}px;width:{w}px;height:{h}px'>"
     & "<b>{roteiro.numero(cod)}</b><span>" & ({textos[cod]}) & "</span></div>"''')
     gravar('Achados · HTML', 'VAR _html = ' + '\n    & '.join(blocos) + '\nRETURN _html',
            'Resultado espelhado dos dois turnos e onze achados/atalhos distribuídos nos cinco atos.')
-    gravar('Resumo · HTML', '''"<div class='tela resumo-final'><div class='rot sobe d4'>DIFERENÇA FINAL</div>"
-    & "<div class='num diferenca sobe d5'>" & FORMAT ( [T23 · diferença final], "#,0" ) & "</div>"
-    & "<div class='de'>votos entre Lula e Flávio</div><div class='risco-fecho'></div>"
-    & "<div class='abst'>Abstenção · 1º → 2º turno: <b class='num'>" & FORMAT ( [T23 · abstenção 1º turno], "0.00%" )
+    gravar('Resumo · HTML', '''"<div class='tela resumo-final'><div class='linha-diferenca sobe fx-diferenca'><div class='rot'>DIFERENÇA FINAL</div>"
+    & "<div class='num diferenca'>" & FORMAT ( [T23 · diferença final], "#,0" ) & "</div>"
+    & "<div class='de'>votos entre Lula e Flávio</div></div>"
+    & "<div class='participacao sobe fx-participacao'><div class='abst'>Abstenção · 1º → 2º turno: <b class='num'>" & FORMAT ( [T23 · abstenção 1º turno], "0.00%" )
     & "</b> → <b class='num'>" & FORMAT ( [T23 · abstenção 2º turno], "0.00%" ) & "</b></div>"
     & "<div class='comparecimento'><b class='num'>" & FORMAT ( [T23 · comparecimento a mais], "#,0" )
-    & "</b> a mais votaram no 2º turno</div></div>"''', 'Fecho numérico central: diferença final e participação, com contador automático.')
+    & "</b> a mais votaram no 2º turno</div></div></div>"''', 'Diferença abaixo do hemiciclo e participação na linha seguinte; entrada CSS sem JavaScript.')
     gravar('Resumo · ALT', '''"Diferença final: " & FORMAT ( [T23 · diferença final], "#,0" ) & " votos. Abstenção de "
     & FORMAT ( [T23 · abstenção 1º turno], "0.00%" ) & " para " & FORMAT ( [T23 · abstenção 2º turno], "0.00%" )
     & " entre os turnos; " & FORMAT ( [T23 · comparecimento a mais], "#,0" ) & " pessoas a mais compareceram, incluindo exterior."''', 'Resumo acessível da diferença e da participação.')

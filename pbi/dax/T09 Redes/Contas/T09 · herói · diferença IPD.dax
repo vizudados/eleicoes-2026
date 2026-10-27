@@ -1,0 +1,7 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: 0.0
+@descricao: Diferença absoluta entre os índices no último ponto do período; usada quando não há janela de interações que caiba inteira.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+[T09 · período · IPD · diferença]

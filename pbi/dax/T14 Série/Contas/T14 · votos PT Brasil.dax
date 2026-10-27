@@ -1,0 +1,10 @@
+/*
+@pasta: T14 Série\Contas
+@formato: #,0
+@descricao: Resultado nacional do segundo turno, com exterior, no ano do contexto.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+CALCULATE (
+    SUM ( 'PT histórico Brasil'[VotosPT] ), 'PT histórico Brasil'[Turno] = 2,
+    TREATAS ( VALUES ( 'Ano'[Ano] ), 'PT histórico Brasil'[Ano] )
+)

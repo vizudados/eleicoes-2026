@@ -212,7 +212,7 @@ def _contas_pos(P, L, G):
     texto = (f'Foi reeleito em 25/10/2026 com {numero(pt)} votos ({pct(pt)} dos válidos), '
              'o maior total de uma candidatura presidencial em um turno no Brasil. Fonte: TSE.' if P == 'T02' else
              f'Terminou o 2º turno de 25/10/2026 em 2º lugar, com {numero(adv)} votos '
-             f'({pct(adv)} dos válidos). Lula foi eleito. Fonte: TSE.')
+             f'({pct(adv)} dos válidos). Lula foi reeleito. Fonte: TSE.')
     assert len(texto) <= 220 and len(titulo.split()) <= 6
     # Sem foto nova licenciada, mantém foto vazia no desfecho; nunca reaproveita foto de outra data como 25/10.
     pos = imagens_pos().get(P, {})
@@ -274,7 +274,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         VAR _txtVotos = @MI(_votos)@
         VAR _txtPct = IF ( _posEleicao = 1, FORMAT ( _pct, "0.00%" ), @PCT(_pct)@ )
         VAR _turno = IF ( _posEleicao = 1, "2º", "1º" )
-        VAR _resultado = IF ( _posEleicao = 1 && _pos = 1, "eleito", _pos & "º lugar" )
+        VAR _resultado = IF ( _posEleicao = 1 && _pos = 1, "{"reeleito" if P == "T02" else "eleito"}", _pos & "º lugar" )
         VAR _txtFotos =
             SWITCH (
                 TRUE (),
@@ -304,7 +304,7 @@ def desenho(P: str, L: dict, G: Gravador) -> None:
         LEFT (
             "{L['completo']}, na vida pública desde " & [{P} · Trajetória · primeiro ano] & ". No " & [Eleição · turno] & "º turno de 2026, "
                 & @MI([{P} · votos 2026])@ & " de votos (" & IF ( [Eleição · pós] = 1, FORMAT ( [{P} · % 2026], "0.00%" ), @PCT([{P} · % 2026])@ ) & "), "
-                & IF ( [Eleição · pós] = 1 && [{P} · posição 2026] = 1, "eleito", [{P} · posição 2026] & "º lugar" ) & ".",
+                & IF ( [Eleição · pós] = 1 && [{P} · posição 2026] = 1, "{"reeleito" if P == "T02" else "eleito"}", [{P} · posição 2026] & "º lugar" ) & ".",
             250
         )
         """))

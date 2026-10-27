@@ -1,6 +1,17 @@
-{"titulo": "Como ler quem falta",
- "blocos": [
-  ["Como ler", "Três peças que se cruzam: o mapa, com um ponto por município, os anos e as idades. Clique num ano, numa idade ou num ponto: as outras duas peças e a manchete passam a mostrar só aquilo, e as etiquetas no alto dizem o que está marcado. Clique de novo para desmarcar."],
-  ["De onde vêm os números", "TSE: comparecimento por município de 2006 a 2026 e o perfil do eleitor por idade, somado município a município, de 2014 a 2026 (antes disso o TSE não publica a idade de quem faltou). No Brasil inteiro vale o total oficial, com o exterior; com estado, região ou município, a soma dos municípios."],
-  ["Para lembrar", "A cor do mapa compara cada município com a média do recorte: claro é abaixo dela, escuro é bem acima (metade a mais ou mais). O voto é facultativo aos 16 e 17 anos e a partir dos 70 (o * nas idades). Passe o mouse em qualquer peça para abrir o dossiê."]
- ]}
+{
+  "titulo": "Como ler quem falta",
+  "blocos": [
+    [
+      "Como ler",
+      "Pré cruza mapa, ano e idade no 1º turno, com perfil etário de 2014 a 2026. Pós muda o número grande, o mapa, a série e seus dossiês para o 2º turno; ano e município continuam se cruzando. No Pós, clicar numa idade não recorta o mapa nem a série do segundo turno."
+    ],
+    [
+      "A idade tem outro recorte",
+      "No Pós, a peça por idade e seu dossiê permanecem no 1º turno de 2026, inclusive ao selecionar outro ano na série. O município escolhido pode mudar o lugar mostrado nessa peça, sempre identificada como primeiro turno. O TSE ainda não publicou o perfil por idade do 2º turno de 2026; não há estimativa nem repetição do primeiro como se fosse segundo."
+    ],
+    [
+      "De onde vêm os números",
+      "TSE: total nacional com exterior e trânsito; nos recortes por estado ou município, soma municipal sem exterior. A cor compara cada município com a média do recorte e o tamanho acompanha quantas pessoas faltaram. Em 2010, o municipal do Pré não inclui trânsito e o do Pós inclui; o asterisco nas idades indica voto facultativo."
+    ]
+  ]
+}

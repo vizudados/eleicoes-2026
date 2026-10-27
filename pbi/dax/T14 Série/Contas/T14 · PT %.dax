@@ -5,7 +5,19 @@
 @oraculo: mockup/data/eleicoes.json › paginas[14] › anos › pt › pct (2006 48,6% … 2026 45,2%)
 @gerado: pbi/scripts/desenho_t14.py
 */
-VAR _mun = ISCROSSFILTERED ( 'Município' )
+IF ( [Eleição · pós] = 1, VAR _mun = ISCROSSFILTERED ( 'Município' )
+VAR _reg = ISFILTERED ( 'Município'[Região] )
+RETURN
+    SWITCH (
+        TRUE (),
+        _reg, CALCULATE ( DIVIDE ( SUM ( 'Município segundo turno'[VotosPT] ), SUM ( 'Município segundo turno'[Validos] ) ), REMOVEFILTERS ( 'UF' ) ),
+        _mun, DIVIDE ( SUM ( 'Município segundo turno'[VotosPT] ), SUM ( 'Município segundo turno'[Validos] ) ),
+        CALCULATE (
+            DIVIDE ( SUM ( 'PT histórico Brasil'[VotosPT] ), SUM ( 'PT histórico Brasil'[Validos] ) ),
+            'PT histórico Brasil'[Turno] = 2,
+            TREATAS ( VALUES ( 'Ano'[Ano] ), 'PT histórico Brasil'[Ano] )
+        )
+    ), VAR _mun = ISCROSSFILTERED ( 'Município' )
 VAR _reg = ISFILTERED ( 'Município'[Região] )
 RETURN
     SWITCH (
@@ -20,4 +32,4 @@ RETURN
             CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Partido] = "PT" ),
             MAX ( 'Candidato ano'[ValidosAno] )
         )
-    )
+    ) )

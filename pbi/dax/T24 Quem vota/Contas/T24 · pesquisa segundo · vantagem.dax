@@ -1,0 +1,7 @@
+/*
+@pasta: T24 Quem vota\Contas
+@formato: +0;−0;0
+@descricao: Diferença Lula menos Flávio em pontos percentuais na pesquisa.
+@gerado: pbi/scripts/desenho_t24.py
+*/
+( [T24 · pesquisa segundo · Lula %] - [T24 · pesquisa segundo · Flávio %] ) * 100

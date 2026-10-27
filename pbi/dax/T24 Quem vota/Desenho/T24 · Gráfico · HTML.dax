@@ -29,12 +29,12 @@ VAR _faixa =
         _pre & _a & IF ( _l = "Escolaridade", "%", "" ) & " a " & _b & _pos )
 -- 3 · Geometria
 VAR _x = 130 + ( _d - 1 ) * 180
-VAR _yl = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _lu ) ) - 0.2 ) * 960 )
-VAR _yf = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _fl ) ) - 0.2 ) * 960 )
+VAR _yl = ( 520 - ( MAX ( 0.2, MIN ( 0.8, _lu ) ) - 0.2 ) * 800 )
+VAR _yf = ( 520 - ( MAX ( 0.2, MIN ( 0.8, _fl ) ) - 0.2 ) * 800 )
 VAR _temSeg = NOT ISBLANK ( _lu2 )
 VAR _x2 = _x + 180
-VAR _yl2 = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _lu2 ) ) - 0.2 ) * 960 )
-VAR _yf2 = ( 520 - ( MAX ( 0.2, MIN ( 0.7, _fl2 ) ) - 0.2 ) * 960 )
+VAR _yl2 = ( 520 - ( MAX ( 0.2, MIN ( 0.8, _lu2 ) ) - 0.2 ) * 800 )
+VAR _yf2 = ( 520 - ( MAX ( 0.2, MIN ( 0.8, _fl2 ) ) - 0.2 ) * 800 )
 VAR _luCima = _lu >= _fl
 VAR _a1 = _lu - _fl
 VAR _a2 = _lu2 - _fl2

@@ -4,4 +4,4 @@
 @descricao: Comparação acessível da UF.
 */
 "Resultado final de " & SELECTEDVALUE ( 'UF'[Nome] ) & "; no 1º turno, Lula "
-    & FORMAT ( [T12 · Lula % 2026], "0.0%" ) & " e Flávio " & FORMAT ( [T12 · PL % 2026], "0.0%" ) & "."
+    & FORMAT ( CALCULATE ( [T12 · Lula % 2026], 'Momento eleição'[Momento] = "Pré Eleições 2026" ), "0.0%" ) & " e Flávio " & FORMAT ( CALCULATE ( [T12 · PL % 2026], 'Momento eleição'[Momento] = "Pré Eleições 2026" ), "0.0%" ) & "."

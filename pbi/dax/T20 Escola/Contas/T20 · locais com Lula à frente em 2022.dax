@@ -4,6 +4,11 @@
 @descricao: Locais de 2022 da cidade da tela (os do próprio ano) em que Lula teve mais votos que Jair Bolsonaro (calculado no pipeline).
 @oraculo: mockup/data/eleicoes.json › Escola › lula_frente_2022 (27)
 */
+IF ( [Eleição · pós] = 1,
+VAR _cod = [T20 · cidade (código)]
+RETURN CALCULATE ( COUNTROWS ( FILTER ( 'T20 Zona turno', 'T20 Zona turno'[VotosPT] > 'T20 Zona turno'[VotosAdv] ) ),
+    'T20 Zona turno'[Ano] = 2022, 'T20 Zona turno'[Turno] = 2, 'T20 Zona turno'[CodIBGE] = _cod ) + 0,
 VAR _cod = [T20 · cidade (código)]
 RETURN
     COALESCE ( LOOKUPVALUE ( 'T20 Cidade'[Lula2022], 'T20 Cidade'[CodIBGE], _cod ), 0 )
+)

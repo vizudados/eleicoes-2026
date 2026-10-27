@@ -4,9 +4,9 @@
 @descricao: Texto para leitor de tela do dossiê da faixa.
 */
 LEFT (
-    [T25 · faixa da linha] & ", " & [T25 · lugar] & ", " & [T25 · ano] & ": "
-        & IF ( ISBLANK ( [T25 · abstenção %] ), "o TSE só publica a idade desde 2014.",
-            FORMAT ( [T25 · abstenção %], "0.0%" ) & " faltaram; são " & FORMAT ( [T25 · parte dos aptos (faixa)], "0%" )
+    [T25 · faixa da linha] & ", 1º turno de " & [T25 · idade ano] & ", " & [T25 · lugar] & ": "
+        & IF ( ISBLANK ( [T25 · idade abstenção %] ), "o TSE só publica a idade desde 2014.",
+            FORMAT ( [T25 · idade abstenção %], "0.0%" ) & " faltaram; são " & FORMAT ( [T25 · parte dos aptos (faixa)], "0%" )
                 & " dos eleitores e " & FORMAT ( [T25 · parte dos que faltaram (faixa)], "0%" ) & " de quem faltou." ),
     250
 )

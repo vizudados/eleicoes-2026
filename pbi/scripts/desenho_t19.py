@@ -21,6 +21,7 @@ from pathlib import Path
 AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
 import estilo  # noqa: E402
+from momento_eleicao import segundo  # noqa: E402
 
 PBI = AQUI.parent
 DAX = PBI / "dax" / "T19 Explorador" / "Desenho"
@@ -34,15 +35,17 @@ LISTA_LINHAS = 16
 LISTA_CAB = 36            # altura do cabeçalho da lista
 LISTA_H = 44              # altura de cada linha
 # colunas da lista (x da esquerda de cada coluna, em px dentro do visual de 700)
-COL = {"nome": 14, "lula": 262, "flavio": 334, "serie": 430, "var": 584, "virou": 648}
+COL = {"nome": 14, "lula": 262, "flavio": 334, "serie": 430, "var": 576, "virou": 640}
 SERIE_W, SERIE_H = 136, 30
 
 DISP_W, DISP_H = 880, 860
 PL, PR, PT, PB = 84, 856, 112, 758           # caixa do gráfico dentro do visual
 RENDA = (250.0, 5000.0)                       # eixo x, escala log (R$/mês)
 VAR = (-0.48, 0.16)                           # eixo y, variação da margem (fração)
+VAR_POS = (-0.4, 0.2)                        # Pós: cobre −31,66 a +15,25 p.p., com folga para os pontos
 TICKS_X = [(300, "R$ 300"), (500, "R$ 500"), (1000, "R$ 1 mil"), (2000, "R$ 2 mil"), (4000, "R$ 4 mil")]
 TICKS_Y = [-0.4, -0.3, -0.2, -0.1, 0.0, 0.1]
+TICKS_Y_POS = [-0.4, -0.3, -0.2, -0.1, 0.0, 0.1, 0.2]
 # margem 2026 → cor (as mesmas paradas do mapa de margem do pipeline: azul ← areia → vermelho)
 COR_DOMINIO = [-0.6, -0.3, -0.12, 0.0, 0.12, 0.3, 0.6]
 COR_FAIXA = ["azul_escuro", "azul", "azul_claro", "areia", "rosa", "vermelho", "vermelho_escuro"]
@@ -53,16 +56,34 @@ def px_x(renda: float) -> float:
     return PL + (math.log(renda) - a) / (b - a) * (PR - PL)
 
 
-def px_y(v: float) -> float:
-    return PB - (v - VAR[0]) / (VAR[1] - VAR[0]) * (PB - PT)
+def px_y(v: float, *, pos: bool = False) -> float:
+    dominio = VAR_POS if pos else VAR
+    return PB - (v - dominio[0]) / (dominio[1] - dominio[0]) * (PB - PT)
 
 
 # ---------------------------------------------------------------------------------------------------- DAX
 def gravar(nome: str, descricao: str, expressao: str, formato: str = "texto") -> None:
+    if nome == "T19 · Lista · HTML":
+        expressao = expressao.replace("VAR _base =", "VAR _limite = IF ( [Eleição · pós] = 1, 1.0, 0.6 )\nVAR _base =")
+        expressao = expressao.replace("MAX ( -0.6, MIN ( 0.6, [Value3] ) ) / 0.6",
+                                      "MAX ( -_limite, MIN ( _limite, [Value3] ) ) / _limite")
+    if nome in {"T19 · Resumo · HTML", "T19 · Resumo · ALT"}:
+        pos = expressao.replace("virou de Lula para Flávio", "mudou de lado")
+        pos = pos.replace("viraram de Lula para Flávio", "mudaram de lado")
+        pos = pos.replace('" de Lula para Flávio."', '" de lado desde 2022."')
+        pos = pos.replace('"<div class=\'sob sobe\'>Recorte · "',
+                          '"<div class=\'sob sobe\'>2º turno · "')
+        expressao = segundo(expressao, pos)
+    elif nome == "T19 · Dossiê · HTML":
+        pos = expressao.replace("Margem do PT, em pontos · 2006 → 2026", "2º turno · margem do PT · 2006 → 2026")
+        pos = pos.replace('"lado incerto"', 'IF ( _m26 > 0 && _m22 < 0, "virou para Lula", "empate ou cidade nova" )')
+        expressao = segundo(expressao, pos)
+    elif nome.endswith(" · ALT"):
+        expressao += '\n    & IF ( [Eleição · pós] = 1, " Segundo turno.", "" )'
     destino = DAX / f"{nome}.dax"
     destino.parent.mkdir(parents=True, exist_ok=True)
-    texto = (f"/*\n@pasta: {PASTA}\n@formato: {formato}\n@descricao: {descricao}\n*/\n"
-             + expressao.strip("\n") + "\n")
+    corpo = "\n".join(l.rstrip() for l in expressao.strip("\n").splitlines())
+    texto = f"/*\n@pasta: {PASTA}\n@formato: {formato}\n@descricao: {descricao}\n*/\n" + corpo + "\n"
     if "\t" in texto:
         raise SystemExit(f"tab em {nome}")
     if not destino.exists() or destino.read_text(encoding="utf-8") != texto:
@@ -89,7 +110,88 @@ def _quebrado(texto: str, largura: int = 96) -> str:
     return '"\n        & "'.join(pedacos)
 
 
+def contas_turno() -> None:
+    """Contas de entrada da tela; as demais continuam compondo estas mesmas medidas."""
+    def emitir(nome, expr, formato="0.0%"):
+        estilo.gravar_medida(nome, r"T19 Explorador\Contas",
+            "Conta no turno escolhido: Pré = primeiro turno; Pós = segundo turno. Preserva o grão e os filtros.",
+            expr, formato, subpasta="T19 Explorador/Contas")
+
+    for ano in (2006, 2010, 2014, 2018, 2022, 2026):
+        pre = f"""VAR _pt =
+    CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = {ano} )
+VAR _adv =
+    CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = {ano} )
+VAR _val =
+    CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = {ano} )
+RETURN
+    DIVIDE ( _pt - _adv, _val )"""
+        emitir(f"T19 · margem {ano}", segundo(pre, pre.replace("'Município ano'", "'Município segundo turno'")))
+    bases = {
+        "Lula % 2026": ("0.0%", """DIVIDE (
+    CALCULATE ( SUM ( 'Município ano'[VotosPT] ), 'Município ano'[Ano] = 2026 ),
+    [T19 · válidos 2026]
+)"""),
+        "Flávio % 2026": ("0.0%", """DIVIDE (
+    CALCULATE ( SUM ( 'Município ano'[VotosAdversario] ), 'Município ano'[Ano] = 2026 ),
+    [T19 · válidos 2026]
+)"""),
+        "válidos 2026": ("#,0", "CALCULATE ( SUM ( 'Município ano'[Validos] ), 'Município ano'[Ano] = 2026 )"),
+        "abstenção 2026": ("0.0%", """DIVIDE (
+    CALCULATE ( SUM ( 'Município ano'[Abstencoes] ), 'Município ano'[Ano] = 2026 ),
+    CALCULATE ( SUM ( 'Município ano'[Aptos] ), 'Município ano'[Ano] = 2026 )
+)"""),
+        "eleições com o PT à frente": ("0", """COALESCE (
+    COUNTROWS (
+        FILTER (
+            VALUES ( 'Ano'[Ano] ),
+            CALCULATE (
+                SUM ( 'Município ano'[VotosPT] ) - SUM ( 'Município ano'[VotosAdversario] )
+            ) > 0
+        )
+    ),
+    0
+)"""),
+        "eleições com voto": ("0", """COALESCE (
+    COUNTROWS (
+        FILTER ( VALUES ( 'Ano'[Ano] ), CALCULATE ( SUM ( 'Município ano'[Validos] ) ) > 0 )
+    ),
+    0
+)"""),
+    }
+    for nome, (fmt, pre) in bases.items():
+        emitir(f"T19 · {nome}", segundo(pre, pre.replace("'Município ano'", "'Município segundo turno'")), fmt)
+    pre_virou = """VAR _m22 = [T19 · margem 2022]
+VAR _m26 = [T19 · margem 2026]
+RETURN
+    IF ( _m22 > 0 && _m26 < 0, 1, 0 )"""
+    pos_virou = """VAR _m22 = [T19 · margem 2022]
+VAR _m26 = [T19 · margem 2026]
+RETURN INT ( NOT ISBLANK ( _m22 ) && NOT ISBLANK ( _m26 ) && _m22 * _m26 < 0 )"""
+    emitir("T19 · virou", segundo(pre_virou, pos_virou), "0")
+    # Situação é calculada pelas margens no modo atual. No Pré reproduz t19_lado.csv;
+    # a relação inativa segue aplicando lugar, porte e renda com a mesma regra E/OU.
+    emitir("T19 · no recorte", """VAR _filtra = ISFILTERED ( 'T19 Filtro'[Caminho] )
+VAR _grupos = CALCULATE ( DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ), 'T19 Filtro'[RaizOrdem] <> 4 ) + 0
+VAR _lados = CALCULATETABLE ( VALUES ( 'T19 Filtro'[Valor] ), 'T19 Filtro'[RaizOrdem] = 4 )
+VAR _nLados = COUNTROWS ( _lados )
+VAR _m22 = [T19 · margem 2022]
+VAR _m26 = [T19 · margem 2026]
+VAR _lado = SWITCH ( TRUE (),
+    ISBLANK ( _m22 ) || ISBLANK ( _m26 ) || _m22 = 0 || _m26 = 0, "Empate ou cidade nova",
+    _m22 > 0 && _m26 < 0, "Virou para Flávio",
+    _m22 < 0 && _m26 > 0, "Virou para Lula",
+    _m22 > 0, "Lula nas duas", "PL nas duas" )
+VAR _cobertas = CALCULATE (
+    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ), 'T19 Filtro'[RaizOrdem] <> 4,
+    USERELATIONSHIP ( 'T19 Filtro'[CodIBGE], 'Município'[CodIBGE] ) ) + 0
+RETURN IF ( HASONEVALUE ( 'Município'[CodIBGE] ),
+    INT ( ( NOT _filtra || _grupos = 0 || _cobertas = _grupos )
+        && ( NOT _filtra || _nLados = 0 || _lado IN _lados ) ) )""", "0")
+
+
 def medidas() -> None:
+    contas_turno()
     cor_css = {"lula": "var(--vermelho)", "flavio": "var(--azul)"}
     gravar("T19 · Filtro · ALT", "Texto alternativo do filtro do recorte (o VizuFilter em árvore, com o gatilho dele; "
            "sem pílula desde 24/10/2026): o recorte em uso e o que o filtro oferece.", r"""
@@ -251,7 +353,8 @@ VAR _frase =
     )
 -- 4 · Marcação
 RETURN
-    "<div class='tela t19m'><div class='man sobe d2'>" & _frase & "</div></div>"
+    "<div class='tela t19m " & IF ( [Eleição · pós] = 1, "pos", "pre" )
+        & "'><div class='man sobe d2'>" & _frase & "</div></div>"
 """)
     gravar("T19 · Dispersão · ALT", "Texto alternativo da dispersão (renda × mudança da margem).", r"""
 -- 1 · Leituras
@@ -388,6 +491,7 @@ def spec() -> dict:
         "width": {"signal": "pbiContainerWidth"}, "height": {"signal": "pbiContainerHeight"}, "padding": 0,
         "autosize": {"type": "none", "contains": "padding"}, "background": None, "config": {"view": {"stroke": None}},
         "signals": [
+            {"name": "pos", "update": "length(data('dataset')) > 0 && data('dataset')[0].pos == 1"},
             {"name": "estatico", "init": "!(windowSize()[0] > 0)"},
             {"name": "fim", "value": 1900},
             {"name": "t0", "init": "now()"},
@@ -446,7 +550,8 @@ def spec() -> dict:
         ],
         "scales": [
             {"name": "x", "type": "log", "domain": list(RENDA), "range": [fx(PL), fx(PR)], "clamp": True},
-            {"name": "y", "type": "linear", "domain": list(VAR), "range": [fy(PB), fy(PT)], "clamp": True,
+            {"name": "y", "type": "linear", "domain": {"signal": f"pos ? {list(VAR_POS)} : {list(VAR)}"},
+             "range": [fy(PB), fy(PT)], "clamp": True,
              "zero": False, "nice": False},
             {"name": "tamanho", "type": "sqrt", "domain": [0, 6600000], "range": [0, 520], "clamp": True},
             {"name": "cor", "type": "linear", "domain": COR_DOMINIO, "range": [c[k] for k in COR_FAIXA],
@@ -546,18 +651,18 @@ def corpo_lista() -> str:
            f"<span style='left:{c['lula']}px'>Lula 26</span><span style='left:{c['flavio']}px'>Flávio 26</span>"
            # centrado na coluna da série (o svg da linha tem 136 px a partir de c['serie'])
            f"<span style='left:{c['serie']}px;width:136px;text-align:center'>2006 → 2026</span>"
-           f"<span style='left:{c['var'] - 4}px'>Mudou</span>"
-           f"<span style='left:{c['virou']}px'>Virou</span></div>")
+           f"<span style='left:{c['var'] - 8}px;width:60px;text-align:right'>Mudou</span>"
+           f"<span style='left:{c['virou']}px;width:56px;text-align:center'>Virou</span></div>")
     return f"<style>{css_lista()}</style>{cab}{{{{content}}}}"
 
 
-def corpo_dispersao() -> str:
-    """Fundo da dispersão (atrás do Deneb, mesma caixa): grade, zero, rótulos dos eixos, legenda, nota à mão e dica."""
-    c = estilo.COR
+def _eixos_dispersao(*, pos: bool) -> str:
+    """A grade usa os mesmos limites do spec; no Pós, as notas ficam fora da nuvem."""
     linhas = []
-    for v in TICKS_Y:
-        y = px_y(v)
-        rot = ("0" if v == 0 else f"{v * 100:+.0f}".replace("-", "−")) + (" p.p." if v == TICKS_Y[-1] else "")
+    ticks = TICKS_Y_POS if pos else TICKS_Y
+    for v in ticks:
+        y = px_y(v, pos=pos)
+        rot = ("0" if v == 0 else f"{v * 100:+.0f}".replace("-", "−")) + (" p.p." if v == ticks[-1] else "")
         cls = "zero" if v == 0 else "grade"
         linhas.append(f"<line class='{cls}' x1='{PL}' x2='{PR}' y1='{y:.1f}' y2='{y:.1f}'/>"
                       f"<text class='ty' x='{PL - 10}' y='{y + 4:.1f}'>{rot}</text>")
@@ -565,17 +670,22 @@ def corpo_dispersao() -> str:
         x = px_x(v)
         linhas.append(f"<line class='grade' x1='{x:.1f}' x2='{x:.1f}' y1='{PT}' y2='{PB}'/>"
                       f"<text class='tx' x='{x:.1f}' y='{PB + 22}'>{rot}</text>")
-    y0 = px_y(0)
-    svg = (f"<svg class='eixos' width='{DISP_W}' height='{DISP_H}' viewBox='0 0 {DISP_W} {DISP_H}'>"
-           f"{estilo.defs_rabisco('rb19', 1.4)}{''.join(linhas)}"
+    svg = (f"<svg class='eixos eixos-{'pos' if pos else 'pre'}' width='{DISP_W}' height='{DISP_H}' viewBox='0 0 {DISP_W} {DISP_H}'>"
+           f"{estilo.defs_rabisco('rb19p' if pos else 'rb19', 1.4)}{''.join(linhas)}"
            # os sentidos nos cantos vazios do alto e de baixo, à esquerda: junto da linha do zero, o rótulo ficava
            # embaixo da nuvem de pontos (o Deneb desenha por cima do fundo)
-           f"<text class='lado' x='{PL + 10}' y='{px_y(0.13):.1f}'>↑ Lula ganhou margem</text>"
-           f"<text class='lado' x='{PL + 10}' y='{px_y(-0.36):.1f}'>↓ Lula perdeu margem</text>"
+           f"<text class='lado' x='{PL + 10}' y='{px_y(0.19 if pos else 0.13, pos=pos):.1f}'>↑ Lula ganhou margem</text>"
+           f"<text class='lado' x='{PL + 10}' y='{px_y(-0.38 if pos else -0.36, pos=pos):.1f}'>↓ Lula perdeu margem</text>"
            f"<text class='tit-x' x='{(PL + PR) / 2:.0f}' y='{PB + 48}'>renda por pessoa da cidade (R$ por mês, "
            f"Censo 2022 · escala que dobra a cada passo)</text>"
 
            f"</svg>")
+    return svg
+
+
+def corpo_dispersao() -> str:
+    """Fundo da dispersão, com a grade que corresponde ao modo do Deneb."""
+    c = estilo.COR
     leg = ("<div class='leg entra d3'><span><i class='c-l'></i>Lula à frente em 2026</span>"
            "<span><i class='c-f'></i>Flávio à frente em 2026</span>"
            "<span><i class='c-t'></i>tamanho = votos válidos</span></div>")
@@ -583,6 +693,9 @@ def corpo_dispersao() -> str:
         ".t19d .rot{position:absolute;left:0;top:0}"
         ".t19d .sub{position:absolute;left:0;top:60px;font-size:15px;color:var(--grafite)}"
         ".t19d svg.eixos{position:absolute;left:0;top:0}"
+        ".t19d .eixos-pos{display:none}"
+        "body:has(.t19m.pos) .t19d .eixos-pre{display:none}"
+        "body:has(.t19m.pos) .t19d .eixos-pos{display:block}"
         ".t19d .grade{stroke:var(--creme);stroke-width:1}"
         ".t19d .zero{stroke:var(--grafite);stroke-width:1.2;stroke-dasharray:4 4}"
         ".t19d text{font-family:var(--fonte);fill:var(--cinza);font-size:13px}"
@@ -592,6 +705,7 @@ def corpo_dispersao() -> str:
         ".t19d .seta{fill:none;stroke:var(--tinta);stroke-width:1.8;stroke-linecap:round;animation-delay:1.6s}"
         f".t19d .mao{{position:absolute;left:110px;top:{PB - 48}px;font-size:26px;color:var(--tinta);"
         "transform:rotate(-3deg)}"
+        "body:has(.t19m.pos) .t19d .mao{left:540px}"
         ".t19d .leg{position:absolute;left:0;top:62px;display:flex;gap:22px;font-size:15px;color:var(--grafite)}"
         ".t19d .leg i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:-1px}"
         f".t19d .c-l{{background:{c['vermelho']}}}.t19d .c-f{{background:{c['azul']}}}"
@@ -603,7 +717,7 @@ def corpo_dispersao() -> str:
     )
     return (f"<style>{css}</style><div class='tela t19d'>"
             f"<div class='rot sobe'>Renda × quanto a margem de Lula mudou, 2022 → 2026</div>"
-            f"{svg}<div class='mao entra d16'>cada ponto é uma cidade</div>{leg}"
+            f"{_eixos_dispersao(pos=False)}{_eixos_dispersao(pos=True)}<div class='mao entra d16'>cada ponto é uma cidade</div>{leg}"
             f"<div class='dica entra d8'>Arraste um retângulo sobre os pontos para filtrar a lista · clique num ponto para ver só ele · no vazio, limpa</div>"
             f"</div>{{{{content}}}}")
 

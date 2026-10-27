@@ -1,21 +1,22 @@
 /*
 @pasta: T19 Explorador\Contas
 @formato: 0
-@descricao: 1 quando o município está no recorte do filtro da tela, 0 quando não está; vazio fora de um município. Regra: E entre os grupos, OU dentro do mesmo grupo (Nordeste + até 10 mil = cidades do Nordeste com até 10 mil; Nordeste + Norte = cidades de uma ou da outra). A relação T19 Filtro → Município é inativa e só vale aqui (USERELATIONSHIP): o município da linha filtra as linhas dele na T19 Filtro, e as escolhidas precisam cobrir todos os grupos com escolha. A lista e a dispersão filtram por = 1.
+@descricao: Conta no turno escolhido: Pré = primeiro turno; Pós = segundo turno. Preserva o grão e os filtros.
 */
-VAR _raizes = [T19 · raízes escolhidas]
-RETURN
-    IF (
-        HASONEVALUE ( 'Município'[CodIBGE] ),
-        IF (
-            _raizes = 0,
-            1,
-            VAR _cobertas =
-                CALCULATE (
-                    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ),
-                    USERELATIONSHIP ( 'T19 Filtro'[CodIBGE], 'Município'[CodIBGE] )
-                )
-            RETURN
-                IF ( _cobertas = _raizes, 1, 0 )
-        )
-    )
+VAR _filtra = ISFILTERED ( 'T19 Filtro'[Caminho] )
+VAR _grupos = CALCULATE ( DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ), 'T19 Filtro'[RaizOrdem] <> 4 ) + 0
+VAR _lados = CALCULATETABLE ( VALUES ( 'T19 Filtro'[Valor] ), 'T19 Filtro'[RaizOrdem] = 4 )
+VAR _nLados = COUNTROWS ( _lados )
+VAR _m22 = [T19 · margem 2022]
+VAR _m26 = [T19 · margem 2026]
+VAR _lado = SWITCH ( TRUE (),
+    ISBLANK ( _m22 ) || ISBLANK ( _m26 ) || _m22 = 0 || _m26 = 0, "Empate ou cidade nova",
+    _m22 > 0 && _m26 < 0, "Virou para Flávio",
+    _m22 < 0 && _m26 > 0, "Virou para Lula",
+    _m22 > 0, "Lula nas duas", "PL nas duas" )
+VAR _cobertas = CALCULATE (
+    DISTINCTCOUNT ( 'T19 Filtro'[RaizOrdem] ), 'T19 Filtro'[RaizOrdem] <> 4,
+    USERELATIONSHIP ( 'T19 Filtro'[CodIBGE], 'Município'[CodIBGE] ) ) + 0
+RETURN IF ( HASONEVALUE ( 'Município'[CodIBGE] ),
+    INT ( ( NOT _filtra || _grupos = 0 || _cobertas = _grupos )
+        && ( NOT _filtra || _nLados = 0 || _lado IN _lados ) ) )

@@ -2,7 +2,7 @@
 @pasta: T09 Redes\Contas
 @formato: 0.0
 @descricao: IPD da Quaest de Flávio no último dia da série.
-@oraculo: 76,6
+@oraculo: 76,2
 */
 VAR _d = [T09 · IPD · último dia]
 RETURN

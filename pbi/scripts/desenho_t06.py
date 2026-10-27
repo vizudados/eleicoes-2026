@@ -25,6 +25,8 @@ AQUI = Path(__file__).resolve().parent
 sys.path.insert(0, str(AQUI))
 from desenho_t01_t06_comum import URL_MIDIA, Gravador, dax  # noqa: E402
 
+from momento_eleicao import segundo
+
 P = "T06"
 G = Gravador("T06 Ausência")
 CA = "'Comparecimento ano'"
@@ -44,8 +46,47 @@ TT = "ttT06Ano"
 TT_W, TT_H = 440, 320
 
 
-def contas() -> None:
+
+def contas_extremo_serie() -> None:
+    """Extremo recente calculado no recorte; nunca decidido por texto arredondado."""
     c = G.conta
+    serie = """VAR _serie =
+        ADDCOLUMNS (
+            CALCULATETABLE ( VALUES ( 'Ano'[Ano] ), REMOVEFILTERS ( 'Ano' ) ),
+            "@p", VAR _a = 'Ano'[Ano]
+                RETURN CALCULATE ( [T06 · abstenção % (ano)], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = _a )
+        )
+    VAR _atual = CALCULATE ( [T06 · abstenção % (ano)], REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = 2026 )
+    VAR _anteriores = FILTER ( _serie, 'Ano'[Ano] < 2026 && NOT ISBLANK ( [@p] ) )"""
+    for tipo, operador in (("menor", "<="), ("maior", ">=")):
+        c(f"T06 · série · marco da {tipo}",
+          "Último ano anterior com taxa menor/igual ou maior/igual à de 2026; vazio se extremo de toda a série.",
+          serie + f"""
+    RETURN MAXX ( FILTER ( _anteriores, [@p] {operador} _atual ), 'Ano'[Ano] )""", "0")
+    c("T06 · série · tipo de manchete", "Variação de pelo menos um ponto: tendência; abaixo disso, extremo recente com o maior intervalo.",
+      serie + """
+    VAR _delta = [T06 · variação da abstenção em p.p.]
+    VAR _aMin = [T06 · série · marco da menor]
+    VAR _aMax = [T06 · série · marco da maior]
+    VAR _nMin = COUNTROWS ( FILTER ( _anteriores, ISBLANK ( _aMin ) || 'Ano'[Ano] > _aMin ) )
+    VAR _nMax = COUNTROWS ( FILTER ( _anteriores, ISBLANK ( _aMax ) || 'Ano'[Ano] > _aMax ) )
+    RETURN SWITCH ( TRUE (),
+        ISBLANK ( _delta ), "sem série",
+        ROUND ( ABS ( _delta ), 10 ) >= 1, "tendência",
+        _nMin > 0 && _nMin >= _nMax, "menor",
+        _nMax > 0, "maior",
+        "estável"
+    )""", "texto")
+    c("T06 · série · marco do extremo", "Ano usado na manchete do extremo recente; vazio significa toda a série.",
+      """SWITCH ( [T06 · série · tipo de manchete],
+          "menor", [T06 · série · marco da menor],
+          "maior", [T06 · série · marco da maior] )""", "0")
+
+def contas() -> None:
+    contas_extremo_serie()
+    c = G.conta
+    c("T06 · turno", "Turno escolhido na casca, em texto.",
+      'IF ( [Eleição · pós] = 1, "2º turno", "1º turno" )', "texto")
     c("T06 · com UF", "1 com estado ou região escolhido no filtro de estado da casca (as contas somam os municípios "
       "das UFs escolhidas), 0 no Brasil (o total oficial, com o exterior).", "INT ( ISCROSSFILTERED ( 'UF' ) )", "0")
     c("T06 · recorte", "Nome do recorte, da medida comum [Recorte · nome]: 'Brasil', o estado ('Bahia'), a região "
@@ -55,7 +96,14 @@ def contas() -> None:
                             ("brancos", "Brancos", "Votos em branco"), ("nulos", "Nulos", "Votos nulos")):
         c(f"T06 · {nome} (ano)", f"{desc} no ano do contexto: Brasil oficial ('Comparecimento ano') sem filtro; soma "
           "dos municípios com o filtro de UF.", dax(f"""
-            IF ( [T06 · com UF] = 1, SUM ( {MA}[{col}] ), SUM ( {CA}[{col}] ) )
+            IF (
+                [Eleição · pós] = 1,
+                IF ( [T06 · com UF] = 1,
+                    CALCULATE ( SUM ( 'Município segundo turno'[{col}] ), 'Município segundo turno'[Ano] = MAX ( 'Ano'[Ano] ) ),
+                    CALCULATE ( SUM ( 'Comparecimento turno'[{col}] ), 'Comparecimento turno'[Turno] = 2,
+                        'Comparecimento turno'[Abrangência] = "com_exterior", 'Comparecimento turno'[Ano] = MAX ( 'Ano'[Ano] ) ) ),
+                IF ( [T06 · com UF] = 1, SUM ( {MA}[{col}] ), SUM ( {CA}[{col}] ) )
+            )
             """), "#,0")
         c(f"T06 · {nome}", f"{desc} no 1º turno de 2026, no recorte.",
           f"CALCULATE ( [T06 · {nome} (ano)], 'Ano'[Ano] = 2026 )", "#,0",
@@ -75,17 +123,25 @@ def contas() -> None:
       "DIVIDE ( [T06 · não escolheram], [T06 · aptos] )", "0.0%", "paginas[6].nao_escolheram_2026_pct_txt = 24,8%")
     c("T06 · diferença Flávio Lula", "Diferença de votos entre Flávio e Lula no 1º turno de 2026, no recorte, sem sinal.",
       dax(f"""
+        IF ( [Eleição · pós] = 1, CALCULATE ( ABS ( SUM ( 'UF segundo turno'[VotosPT] ) - SUM ( 'UF segundo turno'[VotosAdversario] ) ), 'UF segundo turno'[Ano] = 2026 ),
+
         ABS (
             CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026, {CU}[Número] = 22 )
                 - CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026, {CU}[Número] = 13 )
         )
+
+        )
         """), "#,0", "paginas[1].diferenca.votos = 2.224.965")
     c("T06 · vencedor", "Quem teve mais votos no recorte em 2026: Flávio ou Lula.", dax(f"""
+        IF ( [Eleição · pós] = 1, CALCULATE ( IF ( SUM ( 'UF segundo turno'[VotosPT] ) = SUM ( 'UF segundo turno'[VotosAdversario] ), "Empate", IF ( SUM ( 'UF segundo turno'[VotosPT] ) > SUM ( 'UF segundo turno'[VotosAdversario] ), "Lula", "Flávio" ) ), 'UF segundo turno'[Ano] = 2026 ),
+
         IF (
             CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026, {CU}[Número] = 13 )
                 > CALCULATE ( SUM ( {CU}[Votos] ), {CU}[Ano] = 2026, {CU}[Número] = 22 ),
             "Lula",
             "Flávio"
+        )
+
         )
         """), "texto")
     c("T06 · vezes a diferença", "Quantas vezes a diferença entre Flávio e Lula cabe nas abstenções de 2026, no recorte.",
@@ -119,9 +175,9 @@ def contas() -> None:
     # dossiê do ano (coluna da composição ou ponto da linha)
     c("T06 · ano", "Ano da linha (coluna da composição ou ponto da série).", "SELECTEDVALUE ( 'Ano'[Ano] )", "0")
     c("T06 · votos do PT (ano)", "Votos do candidato do PT no ano da linha, somados nos municípios do recorte.",
-      f"SUM ( {MA}[VotosPT] )", "#,0")
+      segundo(f"SUM ( {MA}[VotosPT] )", "CALCULATE ( SUM ( 'Município segundo turno'[VotosPT] ), 'Município segundo turno'[Ano] = MAX ( 'Ano'[Ano] ) )"), "#,0")
     c("T06 · votos do adversário (ano)", "Votos do principal adversário no ano da linha, somados nos municípios do "
-      "recorte.", f"SUM ( {MA}[VotosAdversario] )", "#,0")
+      "recorte.", segundo(f"SUM ( {MA}[VotosAdversario] )", "CALCULATE ( SUM ( 'Município segundo turno'[VotosAdversario] ), 'Município segundo turno'[Ano] = MAX ( 'Ano'[Ano] ) )"), "#,0")
     c("T06 · disputa do ano", "Os dois primeiros do 1º turno do ano da linha, o mais votado antes: no Brasil, o "
       "resultado oficial ('Candidato ano'); com UF, o candidato do PT e o principal adversário na ordem dos votos na UF.",
       dax("""
@@ -129,20 +185,30 @@ def contas() -> None:
         VAR _2 = CALCULATE ( SELECTEDVALUE ( 'Candidato ano'[Candidato] ), 'Candidato ano'[Posição] = 2 )
         VAR _pt = SELECTEDVALUE ( 'Ano'[Candidato do PT] )
         VAR _adv = SELECTEDVALUE ( 'Ano'[Adversário] )
-        RETURN
+        VAR _ano = MAX ( 'Ano'[Ano] )
+        VAR _saldo = IF ( [T06 · com UF] = 1, [T06 · votos do PT (ano)] - [T06 · votos do adversário (ano)],
+            CALCULATE ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ),
+                'PT histórico Brasil'[Ano] = _ano, 'PT histórico Brasil'[Turno] = 2 ) )
+        RETURN IF ( [Eleição · pós] = 1, IF ( _saldo >= 0, _pt & " e " & _adv, _adv & " e " & _pt ),
             IF (
                 [T06 · com UF] = 1,
                 IF ( [T06 · votos do PT (ano)] >= [T06 · votos do adversário (ano)], _pt & " e " & _adv, _adv & " e " & _pt ),
                 IF ( NOT ISBLANK ( _1 ), _1 & " e " & _2 )
             )
+        )
         """), "texto", "2026 = Flávio Bolsonaro e Lula")
     c("T06 · diferença do ano", "Diferença de votos entre os dois primeiros no 1º turno do ano da linha: no Brasil, o "
       "resultado oficial (com o exterior); com UF, PT × principal adversário nos municípios da UF.", dax("""
+        VAR _ano = MAX ( 'Ano'[Ano] )
+        VAR _pos = CALCULATE ( ABS ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ) ),
+            'PT histórico Brasil'[Ano] = _ano, 'PT histórico Brasil'[Turno] = 2 )
+        RETURN IF ( [Eleição · pós] = 1 && [T06 · com UF] = 0, _pos,
         IF (
             [T06 · com UF] = 1,
             ABS ( [T06 · votos do PT (ano)] - [T06 · votos do adversário (ano)] ),
             CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Posição] = 1 )
                 - CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Posição] = 2 )
+        )
         )
         """), "#,0", "2026 = 2.224.965 (paginas[1].diferenca.votos)")
     c("T06 · vezes a diferença (ano)", "Quantas vezes a diferença entre os dois primeiros cabe em quem faltou, no ano da "
@@ -202,10 +268,10 @@ def desenho() -> None:
         -- 4 · Marcação
         VAR _html =
             "<div class='tela rp'>"
-                & "<div class='sob sobe'>Quem não foi votar · " & @ESC(_recorte)@ & "</div>"
+                & "<div class='sob sobe'>Quem não foi votar · " & [T06 · turno] & " · " & @ESC(_recorte)@ & "</div>"
                 & "<div class='topo'><div class='big sobe d1'>" & _txtAbst & "</div>"
                 & "<div class='lado sobe d2'><div class='nfv'>não foram votar</div>" & [T06 · sublinhado · SVG]
-                & "<div class='txt'>" & @PCT(_pct)@ & " dos " & _txtAptos & " de eleitores aptos em 2026</div></div></div>"
+                & "<div class='txt'>" & FORMAT ( _pct, "0.00%" ) & " dos " & _txtAptos & " de eleitores aptos em 2026</div></div></div>"
                 & "<div class='man mc sobe d3'>" & _manchete & "</div>"
                 & "<div class='regua'>"
                 & "<div class='rot rt1 sobe d4'>Quem faltou · " & _txtAbst & "</div>"
@@ -246,10 +312,15 @@ def desenho() -> None:
         VAR _verbo = IF ( _dpp >= 0, "subiu", "caiu" )
         VAR _txt06 = @PCT(_p06)@
         VAR _txt26 = @PCT(_p26)@
+        VAR _tipo = [T06 · série · tipo de manchete]
+        VAR _marco = [T06 · série · marco do extremo]
+        VAR _intervalo = IF ( ISBLANK ( _marco ), "da série", "desde " & FORMAT ( _marco, "0" ) )
         VAR _manchete =
-            IF (
-                _txt06 = _txt26,
-                "Em 20 anos, a abstenção ficou em " & _txt26,
+            SWITCH ( _tipo,
+                "menor", "Em 2026, a abstenção foi a menor " & _intervalo,
+                "maior", "Em 2026, a abstenção foi a maior " & _intervalo,
+                "estável", "Em 2026, a abstenção ficou em " & _txt26,
+                "sem série", "Sem série neste recorte",
                 "Em 20 anos, a abstenção " & _verbo & " de " & _txt06 & " para " & _txt26
             )
         -- 3 · Geometria (anos em x 60–700; % de cima para baixo em y 30–220, de 10% a 26% — ou o que couber)
@@ -285,7 +356,7 @@ def desenho() -> None:
         -- 4 · Marcação
         VAR _html =
             "<div class='tela se'>"
-                & "<div class='sob sobe'>A ausência em duas décadas · 1º turno</div>"
+                & "<div class='sob sobe'>A ausência em duas décadas · " & [T06 · turno] & "</div>"
                 & "<div class='man sobe d1'>" & _manchete & "</div>"
                 & "<div class='gr'><svg width='760' height='270' viewBox='0 0 760 270'>"
                 & "<path class='area esmaece' d='" & _area & "'/>"
@@ -297,11 +368,17 @@ def desenho() -> None:
             _html
         """))
     G.desenho("T06 · Série · ALT", "Texto para leitor de tela da série da abstenção.", dax("""
-        LEFT (
-            "Abstenção no 1º turno, " & [T06 · recorte] & ": " & @PCT([T06 · abstenção % 2006])@ & " em 2006 e "
-                & @PCT([T06 · abstenção %])@ & " em 2026.",
-            250
-        )
+        VAR _tipo = [T06 · série · tipo de manchete]
+        VAR _marco = [T06 · série · marco do extremo]
+        VAR _extremo = _tipo = "menor" || _tipo = "maior"
+        RETURN LEFT (
+            "Abstenção no " & [T06 · turno] & ", " & [T06 · recorte] & ": "
+                & IF ( _extremo,
+                    "em 2026, a " & _tipo & " " & IF ( ISBLANK ( _marco ), "da série", "desde " & FORMAT ( _marco, "0" ) ) & ". ",
+                    "" )
+                & IF ( _tipo = "sem série", "sem série neste recorte.",
+                    FORMAT ( [T06 · abstenção % 2006], "0.0%" ) & " em " & FORMAT ( 2006, "0" )
+                        & " e " & FORMAT ( [T06 · abstenção %], "0.0%" ) & " em 2026." ), 250 )
         """))
     # composição de quem não escolheu ninguém, ano a ano (a coluna da direita)
     G.desenho("T06 · Composição topo · HTML", "Título da composição: em cada 10 que não escolheram ninguém, quantos nem "
@@ -324,7 +401,7 @@ def desenho() -> None:
         -- 4 · Marcação
         RETURN
             "<div class='tela ct'>"
-                & "<div class='sob sobe'>Quem não escolheu ninguém · eleição a eleição · " & @ESC(_recorte)@ & "</div>"
+                & "<div class='sob sobe'>Quem não escolheu ninguém · eleição a eleição · " & [T06 · turno] & " · " & @ESC(_recorte)@ & "</div>"
                 & "<div class='man sobe d1'>" & _man & "</div>"
                 & "<div class='leg entra d3'><span><i class='f'></i>não foram votar</span>"
                 & "<span><i class='n'></i>anularam</span><span><i class='b'></i>votaram em branco</span>"
@@ -399,7 +476,7 @@ def desenho() -> None:
             )
         """))
     G.desenho("T06 · Série alvos · ALT", "Texto para leitor de tela dos alvos da série.", dax("""
-        "Passe o mouse num ano da linha para ver a disputa daquele 1º turno e quantas vezes a diferença entre os dois "
+        "Passe o mouse num ano da linha para ver a disputa do " & [T06 · turno] & " e quantas vezes a diferença entre os dois "
             & "primeiros cabia em quem faltou."
         """))
     # dossiê do ano (ficha presa com fita), aberto pela coluna da composição e pelo ponto da série
@@ -449,7 +526,7 @@ def desenho() -> None:
                 & "<div class='tt6'><div class='ficha'>"
                 & "<img class='fita' alt='' src='{URL_MIDIA}/arte/dossie/fita-tinta.png'/>"
                 & "<img class='ic' alt='' src='{URL_MIDIA}/arte/icones/urna-tinta.png'/>"
-                & "<div class='cab sobe'><div class='nm'>1º turno de " & _ano & "</div>"
+                & "<div class='cab sobe'><div class='nm'>" & [T06 · turno] & " de " & _ano & "</div>"
                 & "<div class='rot'>" & @ESC(_disputa)@ & " · " & @ESC(_recorte)@ & "</div></div>"
                 & "<div class='big sobe d1'>" & _txtVezes & "×</div>"
                 & "<div class='bs sobe d2'>" & _cabe & "</div>"
@@ -464,7 +541,7 @@ def desenho() -> None:
         """).replace("{{", "{").replace("}}", "}"))
     G.desenho("T06 · Tooltip ano · ALT", "Texto para leitor de tela do dossiê do ano.", dax("""
         LEFT (
-            "1º turno de " & [T06 · ano] & " (" & [T06 · disputa do ano] & "), " & [T06 · recorte] & ": faltaram "
+            [T06 · turno] & " de " & [T06 · ano] & " (" & [T06 · disputa do ano] & "), " & [T06 · recorte] & ": faltaram "
                 & @MI1([T06 · abstenções (ano)])@ & ", " & FORMAT ( [T06 · vezes a diferença (ano)], "0.0" )
                 & " vezes a diferença entre os dois primeiros; anularam " & @MI1([T06 · nulos (ano)])@
                 & " e votaram em branco " & @MI1([T06 · brancos (ano)])@ & ".",

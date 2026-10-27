@@ -6,7 +6,7 @@
 @gerado: pbi/scripts/desenho_t00.py
 */
 "Eleições 2026. 2º: Lula " & FORMAT ( [T00 · 2º turno · Lula votos] / 1e6, "0.00" )
-    & " mi, " & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & " (eleito); Flávio "
+    & " mi, " & FORMAT ( [T00 · 2º turno · Lula %], "0.00%" ) & " (reeleito); Flávio "
     & FORMAT ( [T00 · 2º turno · Flávio votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · 2º turno · Flávio %], "0.00%" )
     & ". 1º: Lula " & FORMAT ( [T00 · Lula votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · Lula %], "0.00%" )
     & "; Flávio " & FORMAT ( [T00 · Flávio votos] / 1e6, "0.00" ) & " mi, " & FORMAT ( [T00 · Flávio %], "0.00%" ) & ". "

@@ -25,7 +25,7 @@ VAR _txt26 = FORMAT ( _n26, "#,0" )
 RETURN
     "<div class='tela t21b'>"
         & "<div class='man sobe d2'>De <span class='num'>" & _txt06 & "</span> para <span class='num'>" & _txt26
-            & "</span> municípios com o PT à frente, de 2006 a 2026</div>"
+            & "</span> municípios com o PT à frente" & IF ( [Eleição · pós] = 1, " no 2º turno", ", de 2006 a 2026" ) & "</div>"
         & "<div class='regua entra d6'>"
         & "<div class='ano' style='left:106px'><b>2006</b><span>" & SWITCH ( _pt06, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _pt06 ) & " × " & SWITCH ( _adv06, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _adv06 ) & "</span></div>"
         & "<div class='ano' style='left:200px'><b>2010</b><span>" & SWITCH ( _pt10, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _pt10 ) & " × " & SWITCH ( _adv10, "Dilma Rousseff", "Dilma", "Fernando Haddad", "Haddad", "Geraldo Alckmin", "Alckmin", "José Serra", "Serra", "Aécio Neves", "Aécio", "Jair Bolsonaro", "Jair", "Flávio Bolsonaro", "Flávio", _adv10 ) & "</span></div>"

@@ -1,0 +1,7 @@
+/*
+@pasta: T14 Série\Contas
+@formato: 0.0%
+@descricao: Percentual nacional do adversário no segundo turno.
+@gerado: pbi/scripts/desenho_t14.py
+*/
+DIVIDE ( [T14 · votos adversário Brasil], [T14 · válidos Brasil] )

@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import sys
 from pathlib import Path
+from momento_eleicao import segundo
 
 AQUI = Path(__file__).resolve().parent
 PBI = AQUI.parent
@@ -29,12 +30,76 @@ ORACULO = "mockup/data/eleicoes.json › paginas[14]"
 MEDIDAS: list[dict] = []
 
 
+def _conta_por_momento(nome: str, expr: str) -> str:
+    """O ramo Pré permanece literal; o Pós usa o mesmo grão nos seis segundos turnos."""
+    pos = expr.replace("'Município ano'", "'Município segundo turno'")
+    if nome in {"T14 · PT %", "T14 · adversário %"}:
+        coluna = "VotosPT" if nome == "T14 · PT %" else "VotosAdversario"
+        municipal = f"DIVIDE ( SUM ( 'Município segundo turno'[{coluna}] ), SUM ( 'Município segundo turno'[Validos] ) )"
+        pos = f"""VAR _mun = ISCROSSFILTERED ( 'Município' )
+VAR _reg = ISFILTERED ( 'Município'[Região] )
+RETURN
+    SWITCH (
+        TRUE (),
+        _reg, CALCULATE ( {municipal}, REMOVEFILTERS ( 'UF' ) ),
+        _mun, {municipal},
+        CALCULATE (
+            DIVIDE ( SUM ( 'PT histórico Brasil'[{coluna}] ), SUM ( 'PT histórico Brasil'[Validos] ) ),
+            'PT histórico Brasil'[Turno] = 2,
+            TREATAS ( VALUES ( 'Ano'[Ano] ), 'PT histórico Brasil'[Ano] )
+        )
+    )"""
+    elif nome == "T14 · posição do PT":
+        pos = """VAR _pt = [T14 · votos PT Brasil]
+VAR _adv = [T14 · votos adversário Brasil]
+RETURN IF ( NOT ISBLANK ( _pt ), IF ( _pt > _adv, 1, 2 ) )"""
+    elif nome == "T14 · abstenção":
+        pos = """CALCULATE (
+    DIVIDE ( SUM ( 'Município segundo turno'[Abstencoes] ), SUM ( 'Município segundo turno'[Aptos] ) ),
+    REMOVEFILTERS ( 'Município' ), REMOVEFILTERS ( 'UF' )
+)"""
+    return segundo(expr, pos) if pos != expr else expr
+
+
 def conta(nome: str, formato: str, descricao: str, expr: str, oraculo: str | None = None) -> None:
+    expr = _conta_por_momento(nome, expr)
     MEDIDAS.append({"nome": nome, "sub": "Contas", "pasta": f"{TELA}\\Contas", "formato": formato,
                     "descricao": descricao, "expr": expr, "oraculo": oraculo})
 
 
 def desenho(nome: str, descricao: str, expr: str) -> None:
+    # Abre o literal, lê a escolha e volta ao literal: Pré conserva o texto anterior.
+    expr = expr.replace("1º", '" & IF ( [Eleição · pós] = 1, "2º", "1º" ) & "')
+    if nome == "T14 · Regiões · HTML":
+        expr = expr.replace("MIN ( 0.7,", "MIN ( IF ( [Eleição · pós] = 1, 0.9, 0.7 ),")
+        expr = expr.replace("/ 0.6", "/ IF ( [Eleição · pós] = 1, 0.8, 0.6 )")
+    if nome == "T14 · Tooltip ano · HTML":
+        pos = """VAR _ano = [T14 · ano]
+VAR _pos = [T14 · posição do PT]
+VAR _pt = [T14 · PT % Brasil pós]
+VAR _adv = [T14 · adversário % Brasil pós]
+VAR _cpt = [T14 · candidato do PT]
+VAR _cadv = [T14 · adversário]
+VAR _abs = [T14 · abstenção]
+VAR _duelo = { ( _cpt, "PT", _pt ), ( _cadv, [T14 · partido do adversário], _adv ) }
+VAR _linhas = CONCATENATEX ( _duelo,
+    "<div class='cl'><span class='nm'>" & [Value1] & " <i>" & [Value2] & "</i></span>"
+        & "<span class='tr'><b class='barra-x " & IF ( [Value2] = "PT", "pt", "adv" )
+        & "' style='width:" & FORMAT ( MIN ( 140, 140 * [Value3] / 0.7 ), "0.0", "en-US" )
+        & "px'></b></span><span class='pc'>" & FORMAT ( [Value3], "0.0%" ) & "</span></div>",
+    "", [Value3], DESC )
+RETURN
+    "<div class='tela tt14'><div class='fita'></div><div class='selo "
+        & IF ( _pos = 1, "vm", "az" ) & "'>PT EM " & _pos & "º</div>"
+        & "<div class='an sobe'>" & _ano & " · 2º turno</div>"
+        & "<div class='rot entra d1'>A DISPUTA FINAL NO BRASIL</div>"
+        & "<div class='lista entra d2'>" & _linhas & "</div>"
+        & "<div class='nota entra d4'>Votos válidos com o exterior. Faltaram " & FORMAT ( _abs, "0.0%" )
+        & " dos eleitores no Brasil, sem o exterior.</div>"
+        & "<div class='mao entra d6'>" & IF ( _pos = 1, "o PT venceu a eleição", "o adversário venceu a eleição" )
+        & "</div></div>"
+"""
+        expr = segundo(expr, pos)
     MEDIDAS.append({"nome": nome, "sub": "Desenho", "pasta": f"{TELA}\\Desenho", "formato": "texto",
                     "descricao": descricao, "expr": expr, "oraculo": None})
 
@@ -282,8 +347,27 @@ conta("T14 · posição do PT", "0", "Colocação nacional do candidato do PT no
 conta("T14 · abstenção", "0.0%", "Eleitores que faltaram sobre os aptos no ano do contexto (Brasil, sem o exterior).",
       """DIVIDE ( SUM ( 'Comparecimento ano'[Abstencoes] ), SUM ( 'Comparecimento ano'[Aptos] ) )""")
 
+for _nome, _col in (("votos PT Brasil", "VotosPT"), ("votos adversário Brasil", "VotosAdversario"),
+                    ("válidos Brasil", "Validos")):
+    conta(f"T14 · {_nome}", "#,0", "Resultado nacional do segundo turno, com exterior, no ano do contexto.",
+          f"""CALCULATE (
+    SUM ( 'PT histórico Brasil'[{_col}] ), 'PT histórico Brasil'[Turno] = 2,
+    TREATAS ( VALUES ( 'Ano'[Ano] ), 'PT histórico Brasil'[Ano] )
+)""")
+conta("T14 · PT % Brasil pós", "0.0%", "Percentual nacional do PT no segundo turno.",
+      "DIVIDE ( [T14 · votos PT Brasil], [T14 · válidos Brasil] )")
+conta("T14 · adversário % Brasil pós", "0.0%", "Percentual nacional do adversário no segundo turno.",
+      "DIVIDE ( [T14 · votos adversário Brasil], [T14 · válidos Brasil] )")
+
 
 # ==================================================================================================== desenho
+desenho("T14 · Regiões título · HTML", "Escala comum das regiões no turno escolhido.",
+        '''"<div class='tela'><div class='rot entra'>POR REGIÃO · MESMA ESCALA, 10% A "
+    & IF ( [Eleição · pós] = 1, "90%", "70%" )
+    & " · CLIQUE NUMA REGIÃO PARA VER A SÉRIE DELA</div></div>"''')
+desenho("T14 · Regiões título · ALT", "Escala comum das regiões.",
+        '"Regiões na mesma escala: 10% a " & IF ( [Eleição · pós] = 1, "90%.", "70%." )')
+
 def _pct(v: str) -> str:
     return f'FORMAT ( {v}, "0.0%" )'
 
@@ -392,7 +476,10 @@ VAR _urnas =
 RETURN
     "<div class='tela t14r'>"
         & "<div class='num g" & _clsGrande & " sobe'>" & _grande & "</div>"
-        & "<div class='man m sobe d2'>" & _man & "</div>"
+        & "<div class='man m sobe d2'>"
+            & IF ( [Eleição · pós] = 1 && NOT _clique,
+                "O PT venceu " & FORMAT ( [T14 · eleições com o PT à frente], "0" ) & " das 6 disputas de 2º turno" & _onde,
+                _man & IF ( [Eleição · pós] = 1, " · 2º turno", "" ) ) & "</div>"
         & "<div class='nota s entra d4'>" & _sub & "</div>"
         & "<div class='rot ur entra d3'>QUEM TERMINOU NA FRENTE, ELEIÇÃO A ELEIÇÃO</div>"
         & _urnas

@@ -76,7 +76,7 @@ VAR _viraram = [T20 · locais que viraram]
 VAR _paraLula = [T20 · locais que viraram para Lula]
 -- 2 · Textos
 {_escapa("_cidade", "[T20 · cidade]")}
-VAR _rotLocal = IF ( _lula = 1, "zona eleitoral com Lula à frente em 2026", "zonas eleitorais com Lula à frente em 2026" )
+VAR _rotLocal = IF ( _lula = 1, "zona eleitoral com Lula à frente", "zonas eleitorais com Lula à frente" ) & " · " & [T20 · turno]
 VAR _antes =
     SWITCH (
         TRUE (),
@@ -289,7 +289,7 @@ VAR _m26 = {_no_local("[T20 · margem 2026]")}
 VAR _t18 = IF ( ISBLANK ( _m18 ), "sem dado", FORMAT ( _m18 * 100, {PP} ) )
 VAR _t22 = IF ( ISBLANK ( _m22 ), "sem dado", FORMAT ( _m22 * 100, {PP} ) )
 RETURN
-    "Ficha: " & [T20 · local escolhido] & " (" & [T20 · cidade] & "). Margem do PT em pontos (Haddad em 2018, Lula em 2022 e 2026): 2018 " & _t18
+    "Ficha: " & [T20 · local escolhido] & " (" & [T20 · cidade] & "), " & [T20 · turno] & ". Margem do PT em pontos (Haddad em 2018, Lula em 2022 e 2026): 2018 " & _t18
         & "; 2022 " & _t22 & "; 2026 " & FORMAT ( _m26 * 100, {PP} ) & "."
 """)
     # --- lista dos locais pela queda
@@ -370,12 +370,14 @@ RETURN
     gravar("T20 · Tooltip escola · ALT", "Texto alternativo do post-it do local.", rf"""
 -- 1 · Leituras
 VAR _nome = [T20 · nome do local]
+VAR _m18 = [T20 · margem 2018]
 VAR _m22 = [T20 · margem 2022]
 VAR _m26 = [T20 · margem 2026]
 -- 2 · Textos
 VAR _t22 = IF ( ISBLANK ( _m22 ), "sem dado em 2022", FORMAT ( _m22 * 100, {PP} ) & " em 2022" )
 RETURN
-    IF ( NOT ISBLANK ( _nome ), _nome & ": margem de Lula " & _t22 & " e " & FORMAT ( _m26 * 100, {PP} ) & " em 2026." )
+    IF ( NOT ISBLANK ( _nome ), _nome & ", " & [T20 · turno] & ": margem de Lula " & _t22 & " e " & FORMAT ( _m26 * 100, {PP} ) & " em 2026."
+        & IF ( ISBLANK ( _m18 ), " 2018: sem dado neste turno." ) )
 """)
     gravar("T20 · Filtro · ALT", "Texto alternativo do filtro da tela (o VizuFilter em árvore, com o gatilho dele; sem pílula desde 24/10/2026): a cidade e a escola em uso.", rf"""
 -- 1 · Leituras
@@ -428,8 +430,8 @@ VAR _c26 = IF ( _m26 > 0, "lula", IF ( _m26 < 0, "flavio", "" ) )
 VAR _nota =
     SWITCH (
         TRUE (),
-        _ha = 0 && _exemplo = "virou", "a maior zona que virou",
-        _ha = 0, "a maior queda da cidade",
+        _ha = 0 && _exemplo = "virou", IF ( [Eleição · pós] = 1, "mais votos válidos entre as viradas", "a maior zona que virou" ),
+        _ha = 0, IF ( _m26 < _m22, "a maior queda da cidade", "o menor avanço da cidade" ),
         _virou = 1, "virou para Flávio",
         _virouLula = 1, "virou para Lula",
         _m26 > 0, "Lula à frente",
@@ -467,9 +469,10 @@ RETURN
             & "<div class='lado flavio'><span class='num'>" & FORMAT ( _flavio, "0.0%" ) & "</span><span class='r'>Flávio</span></div>"
             & _selo
         & "</div>"
-        & "<div class='rot cap sobe d4'>Margem do PT, em pontos</div>"
+        & "<div class='rot cap sobe d4'>Margem do PT, em pontos · " & [T20 · turno] & "</div>"
         & "<div class='serie sobe d5'>"
-            & "<div class='c c0'><span class='a'>2018</span><span class='num " & _c18 & "'>" & _t18 & "</span></div>"
+            & "<div class='c c0'><span class='a'>2018</span><span class='num " & _c18 & "'>" & _t18 & "</span>"
+            & IF ( ISBLANK ( _m18 ), "<small class='sem18'>sem dado neste turno</small>" ) & "</div>"
             & "<div class='c c1'><span class='a'>2022</span><span class='num " & _c22 & "'>" & _t22 & "</span></div>"
             & "<div class='c c2'><span class='a'>2026</span><span class='num " & _c26 & "'>" & _t26 & "</span></div>"
             & "<svg class='linha' width='460' height='70' viewBox='0 0 460 70'>"
@@ -524,8 +527,9 @@ RETURN
             & "<div class='sub'>" & _sub & "</div>"
             & "<div class='duelo'><span class='lula'>Lula " & FORMAT ( _lula, "0.0%" ) & "</span>"
             & "<span class='flavio'>Flávio " & FORMAT ( _flavio, "0.0%" ) & "</span></div>"
-            & "<div class='rot'>Margem do PT · 2018 → 2022 → 2026</div>"
-            & "<div class='serie tnum'>" & _t18 & " <i>→</i> " & _t22 & " <i>→</i> " & _t26 & " p.p.</div>"
+            & "<div class='rot'>Margem do PT · " & [T20 · turno] & " · 2018 → 2022 → 2026</div>"
+            & "<div class='serie tnum'>" & _t18 & " <i>→</i> " & _t22 & " <i>→</i> " & _t26 & " p.p."
+            & IF ( ISBLANK ( _m18 ), " <small style='font-size:13px'>2018: sem dado neste turno</small>" ) & "</div>"
             & _selo
             & "<div class='mao'>" & _nota & "</div>"
         & "</div>"
@@ -632,6 +636,7 @@ def corpo_ficha() -> str:
         ".t20f .serie .c0{left:-5px}.t20f .serie .c1{left:155px}.t20f .serie .c2{left:315px}"
         ".t20f .serie .a{font-size:13px;font-weight:600;letter-spacing:.12em;color:var(--cinza)}"
         ".t20f .serie .num{font-size:38px;margin-top:4px}"
+        ".t20f .serie .sem18{font-size:13px;color:var(--cinza);margin-top:2px;line-height:1.2;text-align:center}"
         ".t20f .serie .linha{position:absolute;left:0;top:84px}"
         ".t20f .serie .zero{stroke:var(--areia);stroke-width:1;stroke-dasharray:3 4}"
         ".t20f .serie path{fill:none;stroke:var(--grafite);stroke-width:2.2;stroke-linejoin:round}"

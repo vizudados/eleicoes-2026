@@ -45,9 +45,9 @@ RETURN
             & "<div class='rot'>" & _d & "º QUINTO DOS ELEITORES" & UPPER ( _ponta2 ) & "</div>"
             & "<div class='num-l'><b>" & FORMAT ( _mun, "#,0" ) & "</b> " & IF ( _mun = 1, "município", "municípios" )
             & " · <b>" & FORMAT ( _ele / 1e6, "0.0" ) & " mi</b> de eleitores</div>"
-            & "<div class='duas'><div><span class='rot'>2022</span><span class='lula-esc'>Lula " & FORMAT ( _l22 * 100, "0.0" )
+            & "<div class='duas'><div><span class='rot'>2022 · " & [T24 · turno] & "</span><span class='lula-esc'>Lula " & FORMAT ( _l22 * 100, "0.0" )
             & "%</span><span class='flavio-esc'>Jair " & FORMAT ( _j22 * 100, "0.0" ) & "%</span></div>"
-            & "<div><span class='rot'>2026</span><span class='lula-esc'>Lula " & FORMAT ( _l26 * 100, "0.0" )
+            & "<div><span class='rot'>2026 · " & [T24 · turno] & "</span><span class='lula-esc'>Lula " & FORMAT ( _l26 * 100, "0.0" )
             & "%</span><span class='flavio-esc'>Flávio " & FORMAT ( _f26 * 100, "0.0" ) & "%</span></div></div>"
             & "<div class='txt'>" & _frase & "</div>"
             & "<div class='cid'><span class='rot'>MAIORES CIDADES</span>" & _txtCid & "</div>"

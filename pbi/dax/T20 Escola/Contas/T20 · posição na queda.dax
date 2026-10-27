@@ -4,4 +4,15 @@
 @descricao: Posição do local na lista da cidade, da maior queda da margem de Lula 2022 → 2026 à maior alta, com os locais novos (sem 2022) no fim, por nome; calculada no pipeline por cidade (pipeline/exportar_t20.py), o que poupa um RANKX por linha nas 2.060 de São Paulo.
 @oraculo: mockup/data/eleicoes.json › Escola › maiores_quedas (ordem)
 */
+IF ( [Eleição · pós] = 1,
+VAR _cod = [T20 · cidade (código)]
+VAR _id = SELECTEDVALUE ( 'T20 Local'[Id] )
+VAR _atual = [T20 · variação da margem]
+VAR _t = ADDCOLUMNS ( FILTER ( ALL ( 'T20 Local' ), 'T20 Local'[CodIBGE] = _cod ),
+    "@v", CALCULATE ( [T20 · variação da margem] ) )
+RETURN IF ( NOT ISBLANK ( _id ), 1 + COUNTROWS ( FILTER ( _t,
+    ( NOT ISBLANK ( [@v] ) && ISBLANK ( _atual ) )
+    || ( NOT ISBLANK ( [@v] ) && NOT ISBLANK ( _atual ) && [@v] < _atual )
+    || ( ( ISBLANK ( [@v] ) && ISBLANK ( _atual ) || [@v] == _atual ) && 'T20 Local'[Id] < _id ) ) ) ),
 SELECTEDVALUE ( 'T20 Local'[PosQueda] )
+)

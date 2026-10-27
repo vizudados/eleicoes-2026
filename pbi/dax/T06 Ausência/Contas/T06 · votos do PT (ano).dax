@@ -3,4 +3,4 @@
 @formato: #,0
 @descricao: Votos do candidato do PT no ano da linha, somados nos municípios do recorte.
 */
-SUM ( 'Município ano'[VotosPT] )
+IF ( [Eleição · pós] = 1, CALCULATE ( SUM ( 'Município segundo turno'[VotosPT] ), 'Município segundo turno'[Ano] = MAX ( 'Ano'[Ano] ) ), SUM ( 'Município ano'[VotosPT] ) )

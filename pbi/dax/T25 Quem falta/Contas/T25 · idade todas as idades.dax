@@ -1,0 +1,13 @@
+/*
+@pasta: T25 Quem falta\Contas
+@formato: 0.0%
+@descricao: Referência oficial de todas as idades no mesmo primeiro turno; mantém a abrangência original.
+*/
+VAR _a = [T25 · idade ano]
+RETURN CALCULATE (
+    DIVIDE (
+        IF ( [T25 · sem exterior] = 1, SUM ( 'Município ano'[Abstencoes] ), SUM ( 'Comparecimento ano'[Abstencoes] ) ),
+        IF ( [T25 · sem exterior] = 1, SUM ( 'Município ano'[Aptos] ), SUM ( 'Comparecimento ano'[Aptos] ) )
+    ),
+    REMOVEFILTERS ( 'Ano' ), 'Ano'[Ano] = _a
+)

@@ -1,10 +1,13 @@
 /*
 @pasta: T21 20 anos\Contas
 @formato: 0.0%
-@descricao: Margem nacional do PT no ano do contexto, como o TSE totaliza (com o exterior): votos do PT − votos do mais votado fora do PT, ÷ válidos.
-@oraculo: mockup/data/eleicoes.json › 20 anos › anos[].margem_nacional_txt (+7,0 · +14,3 · +8,0 · −16,8 · +5,2 · −1,9)
+@descricao: Conta no turno escolhido: Pré = primeiro turno; Pós = segundo turno. Mantém as seis eleições.
 */
-VAR _pt =
+IF ( [Eleição · pós] = 1, CALCULATE (
+    DIVIDE ( SUM ( 'PT histórico Brasil'[VotosPT] ) - SUM ( 'PT histórico Brasil'[VotosAdversario] ),
+        SUM ( 'PT histórico Brasil'[Validos] ) ),
+    'PT histórico Brasil'[Turno] = 2,
+    TREATAS ( VALUES ( 'Ano'[Ano] ), 'PT histórico Brasil'[Ano] ) ), VAR _pt =
     CALCULATE ( SUM ( 'Candidato ano'[Votos] ), 'Candidato ano'[Partido] = "PT" )
 VAR _adv =
     MAXX (
@@ -17,4 +20,4 @@ VAR _adv =
 VAR _val =
     CALCULATE ( MAX ( 'Candidato ano'[ValidosAno] ) )
 RETURN
-    DIVIDE ( _pt - _adv, _val )
+    DIVIDE ( _pt - _adv, _val ) )

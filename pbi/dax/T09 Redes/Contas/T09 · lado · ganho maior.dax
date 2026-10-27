@@ -1,0 +1,10 @@
+/*
+@pasta: T09 Redes\Contas
+@formato: #,0
+@descricao: Escala comum das barras de seguidores ganhos.
+@oraculo: pbi/qa/p3/t09/prova_pandas.json; levantamento dados/bruto/digital/pos_2turno.csv, janelas e unidades separadas.
+*/
+VAR _l = CALCULATE ( [T09 · lado · ganho], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Lula" )
+VAR _f = CALCULATE ( [T09 · lado · ganho], REMOVEFILTERS ( Monitoramento ), Monitoramento[Candidato] = "Flávio Bolsonaro" )
+RETURN
+    MAX ( _l, _f )
