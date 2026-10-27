@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import html
 import math
+import os
 
 import estilo
 import leituras
@@ -54,6 +55,16 @@ LEITURA = (1180, 124, 600)          # x, y, largura; a altura sai do texto de ca
 TOPO_CARTAO = 14                     # o cartão começa 14 px abaixo do topo do visual (a fita fica por cima)
 FECHAR = (1724, 124 + TOPO_CARTAO + 14, 40, 40)   # o × desenhado no canto do cartão: 16 px da direita, 14 do topo
 FORA = (0, 0, 1920, 1080)            # véu da leitura aberta: clicar fora do cartão também fecha
+# A Lia explica a tela (27/10/2026, pedido do dono): o ▶ ao lado do "i" abre o vídeo da tela numa janela por cima, com o
+# player nativo (o HTML Content não roda script: o leitor aperta o play). Vídeos no GitHub Pages, midia/lia/<código>.mp4.
+VIDEO = (1778, 62, 44, 44)
+VIDEO_CAPA = (140, 100, 280, 214)    # o card "A Lia apresenta o painel" desenhado na capa (paginas/t00_capa.py)
+PLAYER = (300, 120, 1320, 820)       # moldura; o vídeo 1280×720 fica em (320, 200)
+PLAYER_FECHAR = (1564, 136, 44, 44)  # o × no canto da moldura
+MIDIA_LIA = "https://vizudados.github.io/eleicoes-2026/midia/lia"
+# Liga o ▶, o card da capa e os players. Fica desligado até os 31 vídeos estarem no GitHub Pages (um painel publicado não
+# pode ter botão para vídeo que não existe); LIA_VIDEOS=1 liga para testar no Desktop.
+VIDEOS_LIA = os.environ.get("LIA_VIDEOS", "0") == "1"
 GRUPO_UF = "Eleicoes_UF"
 GRUPO_PERIODO = "Eleicoes_Periodo"
 Z = {"fundo": 10, "filtro": lib.CAMADAS["filtro"], "leitura": lib.CAMADAS["leitura"], "nav": lib.CAMADAS["navegacao"]}
@@ -92,6 +103,12 @@ def corpo_casca(t: roteiro.Tela) -> str:
         ".cs .seta.e{left:36px}.cs .seta.d{left:1804px}"
         f".cs .info{{position:absolute;left:1730px;top:68px;width:32px;height:32px;border:1.6px solid {k['linha']};"
         f"border-radius:50%;font-size:16px;font-weight:600;text-align:center;line-height:29px;color:{k['texto']}}}"
+        + ((f".cs .video{{position:absolute;left:1784px;top:68px;width:32px;height:32px;border:1.6px solid {k['linha']};"
+            "border-radius:50%;box-sizing:border-box}"
+            f".cs .video:after{{content:'';position:absolute;left:11px;top:8px;border-style:solid;"
+            f"border-width:7px 0 7px 11px;border-color:transparent transparent transparent {k['texto']}}}")
+           if VIDEOS_LIA else "")
+        +
         ".cs .pe{position:absolute;left:150px;right:150px;top:1014px;height:28px;display:flex;align-items:center;"
         "justify-content:space-between}"
         f".cs .pe .fonte{{font-size:13px;color:{k['sob']};letter-spacing:.01em}}"
@@ -112,11 +129,44 @@ def corpo_casca(t: roteiro.Tela) -> str:
     if t.codigo not in ("T00", "T23"):          # capa e encerramento desenham o próprio título
         cab = (f"<div class='cab'><div class='sob sobe'>{e(t.numero)} · {e(t.nome)}</div>"
                f"<div class='tit sobe d2'>{pergunta_html}</div></div>")
+    video = "<div class='video'></div>" if VIDEOS_LIA and t.codigo != "T00" else ""   # na capa, o card (t00_capa)
     return (f"<style>{css}</style><div class='cs tela'>"
             f"<img class='urna entra' alt='' src='{estilo.imagem_b64(k['urna'], 120)}'/>{cab}{setas}"
-            f"<div class='info'>i</div>"
+            f"<div class='info'>i</div>{video}"
             f"<div class='pe'><span class='logo'>{estilo.logo_vizu(k['logo'])}</span>"
             f"{fonte_html}</div></div>{{{{content}}}}")
+
+
+def corpo_player(t: roteiro.Tela) -> str:
+    """A janela do vídeo da Lia: moldura escura, o título, o player nativo (sem autoplay; o leitor aperta o play) e o ×
+    desenhado sobre o botão que fecha (PLAYER_FECHAR)."""
+    c = estilo.COR
+    e = html.escape
+    x0, y0, w, h = PLAYER
+    fx = PLAYER_FECHAR[0] - x0 + 4
+    fy = PLAYER_FECHAR[1] - y0 + 4
+    css = (
+        f".pl{{position:fixed;inset:0;background:{c['tinta']};border-radius:18px;border:1px solid rgba(241,235,223,.18);"
+        "box-shadow:0 30px 80px -30px rgba(0,0,0,.8)}"
+        f".pl .rot{{position:absolute;left:20px;top:26px;color:{c['areia']};font-size:13px;font-weight:600;"
+        "letter-spacing:.16em;text-transform:uppercase}"
+        f".pl .tit{{position:absolute;left:20px;top:46px;color:{c['creme']};font-size:20px;font-weight:600}}"
+        ".pl video{position:absolute;left:20px;top:80px;width:1280px;height:720px;border-radius:10px;"
+        "background:#000;object-fit:contain}"
+        f".pl .x{{position:absolute;left:{fx}px;top:{fy}px;width:36px;height:36px;border-radius:50%;"
+        f"border:1.6px solid {c['areia']};color:{c['creme']};font-size:20px;line-height:33px;text-align:center}}"
+    )
+    rotulo = ("A Lia apresenta o painel" if t.codigo == "T00" else "A Lia explica · Sumário" if t.codigo == "TIX"
+              else f"A Lia explica · {t.numero} · {t.nome}")
+    # LIA_VIDEO_TESTE: só para testar o player no Desktop antes de os vídeos existirem (aponta todas as telas para um mp4)
+    teste = os.environ.get("LIA_VIDEO_TESTE")
+    fonte = teste or f"{MIDIA_LIA}/{t.codigo}.mp4"
+    poster = teste.replace(".mp4", "-final.jpg") if teste else f"{MIDIA_LIA}/{t.codigo}.jpg"
+    return (f"<style>{css}</style><div class='pl'><div class='rot'>{e(rotulo)}</div>"
+            f"<div class='tit'>{e(t.pergunta)}</div>"
+            f"<video controls playsinline preload='none' poster='{poster}'>"
+            f"<source src='{fonte}' type='video/mp4'/></video>"
+            f"<div class='x'>×</div></div>{{{{content}}}}")
 
 
 def _texto_leitura(t: roteiro.Tela) -> dict:
@@ -293,10 +343,34 @@ def declarar(ctx):
         itens.append(_botao(t, "InfoFora", FORA, lib.acao_bookmark(f"{p}_LEITURA_FECHA_01"), "Fechar a leitura",
                             949, oculto=True, raio=0, z=Z["leitura"] - 10, realce=None,
                             fundo=(estilo.COR["tinta"], 86)))
+        # a Lia explica a tela: o ▶ abre a janela do vídeo; o × e o clique fora fecham
+        if VIDEOS_LIA:
+            itens.append(Visual(p, lib.visual_html(
+                f"{p}_Casca_Video", *PLAYER, VAZIO, folha_de_estilo=CSS, modelo_corpo=corpo_player(t),
+                alt=f"Vídeo: a Lia explica a tela {t.numero} · {t.nome}", z=Z["leitura"], tab=960, oculto=True,
+                movimento=False)))
+            itens.append(_botao(t, "VideoAbre", VIDEO_CAPA if p == "T00" else VIDEO, lib.acao_bookmark(f"{p}_VIDEO_ABRE_01"),
+                                "A Lia apresenta o painel (vídeo)" if p == "T00" else "A Lia explica esta tela (vídeo)", 7,
+                                **({"raio": 12} if p == "T00" else {})))
+            itens.append(_botao(t, "VideoFecha", PLAYER_FECHAR, lib.acao_bookmark(f"{p}_VIDEO_FECHA_01"),
+                                "Fechar o vídeo", 961, oculto=True, raio=22, realce=estilo.COR["creme"]))
+            itens.append(_botao(t, "VideoFora", FORA, lib.acao_bookmark(f"{p}_VIDEO_FECHA_01"), "Fechar o vídeo",
+                                959, oculto=True, raio=0, z=Z["leitura"] - 10, realce=None,
+                                fundo=(estilo.COR["tinta"], 60)))
+        video_fechado = ({f"{p}_Casca_Video": False, f"{p}_Casca_VideoFecha": False, f"{p}_Casca_VideoFora": False,
+                          f"{p}_Casca_VideoAbre": True} if VIDEOS_LIA else {})
         aberta = {f"{p}_Casca_Leitura": True, f"{p}_Casca_InfoFecha": True, f"{p}_Casca_InfoFora": True,
-                  f"{p}_Casca_InfoAbre": False}
+                  f"{p}_Casca_InfoAbre": False, **video_fechado}
         fechada = {f"{p}_Casca_Leitura": False, f"{p}_Casca_InfoFecha": False, f"{p}_Casca_InfoFora": False,
-                   f"{p}_Casca_InfoAbre": True}
+                   f"{p}_Casca_InfoAbre": True, **video_fechado}
+        video_aberto = {f"{p}_Casca_Leitura": False, f"{p}_Casca_InfoFecha": False, f"{p}_Casca_InfoFora": False,
+                        f"{p}_Casca_InfoAbre": True, f"{p}_Casca_Video": True, f"{p}_Casca_VideoFecha": True,
+                        f"{p}_Casca_VideoFora": True, f"{p}_Casca_VideoAbre": False}
+        if VIDEOS_LIA:
+            itens.append(Bookmark(lib.bookmark_exibicao(f"{p}_VIDEO_ABRE_01", p, video_aberto,
+                                                        titulo=f"{p} · vídeo aberto"), grupo=("Vídeos", "Vídeos")))
+            itens.append(Bookmark(lib.bookmark_exibicao(f"{p}_VIDEO_FECHA_01", p, fechada, titulo=f"{p} · vídeo fechado"),
+                                  grupo=("Vídeos", "Vídeos")))
         itens.append(Bookmark(lib.bookmark_exibicao(f"{p}_LEITURA_ABRE_01", p, aberta, titulo=f"{p} · leitura aberta"),
                               grupo=("Leituras", "Leituras")))
         itens.append(Bookmark(lib.bookmark_exibicao(f"{p}_LEITURA_FECHA_01", p, fechada,

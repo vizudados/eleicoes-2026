@@ -97,6 +97,12 @@ def corpo() -> str:
         f".sm .pe{{position:absolute;left:150px;right:150px;top:1014px;height:28px;display:flex;align-items:center;"
         f"justify-content:space-between;color:{C['marrom']}}}"
         ".sm .pe .fonte{font-size:13px;color:var(--grafite)}"
+        # o ▶ da Lia (27/10/2026), no mesmo lugar e desenho das outras telas (paginas/casca.py)
+        + ((f".sm .video{{position:absolute;left:1784px;top:68px;width:32px;height:32px;border:1.6px solid {C['grafite']};"
+            "border-radius:50%;box-sizing:border-box}"
+            f".sm .video:after{{content:'';position:absolute;left:11px;top:8px;border-style:solid;"
+            f"border-width:7px 0 7px 11px;border-color:transparent transparent transparent {C['tinta']}}}")
+           if _videos() else "")
     )
     partes = []
     k = 0
@@ -116,9 +122,15 @@ def corpo() -> str:
         f"<div class='cab'><div class='sob sobe'>SUMÁRIO</div><div class='tit sobe d1'>{len(roteiro.TELAS)} telas, "
         "cinco atos: escolha por onde começar</div></div>"
         + "".join(partes)
+        + ("<div class='video'></div>" if _videos() else "")
         + f"<div class='pe'><span>{estilo.logo_vizu(C['marrom'])}</span><span class='fonte'>Vizu Dados · dados e código "
         "em github.com/vizudados/eleicoes-2026</span></div></div>{{content}}"
     )
+
+
+def _videos() -> bool:
+    from paginas import casca
+    return casca.VIDEOS_LIA
 
 
 def declarar(ctx):
@@ -140,6 +152,34 @@ def declarar(ctx):
     itens.append(Visual(P, lib.visual_botao("TIX_Sumario_Voltar", 40, 40, 92, 92, lib.acao_bookmark("T00_CHEGADA_01"),
                                             dica="Voltar à capa", z=lib.CAMADAS["navegacao"], tab=2,
                                             realce=C["tinta"], raio=40, realce_transp=(90, 82))))
-    itens.append(Bookmark(lib.bookmark_chegada("TIX_CHEGADA_01", P, {"TIX_Sumario_Html": True},
+    # a Lia explica o Sumário: o mesmo player das outras telas (paginas/casca.py)
+    from types import SimpleNamespace
+    from paginas import casca
+    tela = SimpleNamespace(codigo=P, numero="", nome="Sumário", pergunta=f"{len(roteiro.TELAS)} telas, cinco atos: "
+                           "escolha por onde começar", escura=False)
+    fechado = {"TIX_Sumario_Html": True}
+    if casca.VIDEOS_LIA:
+        itens.append(Visual(P, lib.visual_html("TIX_Casca_Video", *casca.PLAYER, "Casca · vazio", folha_de_estilo=CSS,
+                                               modelo_corpo=casca.corpo_player(tela), alt="Vídeo: a Lia explica o Sumário",
+                                               z=lib.CAMADAS["leitura"], tab=960, oculto=True, movimento=False)))
+        itens.append(Visual(P, lib.visual_botao("TIX_Casca_VideoAbre", *casca.VIDEO, lib.acao_bookmark("TIX_VIDEO_ABRE_01"),
+                                                dica="A Lia explica o Sumário (vídeo)", z=lib.CAMADAS["navegacao"], tab=7,
+                                                realce=C["tinta"], raio=40, realce_transp=(90, 82))))
+        itens.append(Visual(P, lib.visual_botao("TIX_Casca_VideoFecha", *casca.PLAYER_FECHAR,
+                                                lib.acao_bookmark("TIX_VIDEO_FECHA_01"), dica="Fechar o vídeo",
+                                                z=lib.CAMADAS["navegacao"], tab=961, oculto=True, realce=C["creme"], raio=22,
+                                                realce_transp=(90, 82))))
+        itens.append(Visual(P, lib.visual_botao("TIX_Casca_VideoFora", *casca.FORA, lib.acao_bookmark("TIX_VIDEO_FECHA_01"),
+                                                dica="Fechar o vídeo", z=lib.CAMADAS["leitura"] - 10, tab=959, oculto=True,
+                                                fundo=(C["tinta"], 60))))
+        fechado = {"TIX_Sumario_Html": True, "TIX_Casca_Video": False, "TIX_Casca_VideoFecha": False,
+                   "TIX_Casca_VideoFora": False, "TIX_Casca_VideoAbre": True}
+        aberto = {"TIX_Casca_Video": True, "TIX_Casca_VideoFecha": True, "TIX_Casca_VideoFora": True,
+                  "TIX_Casca_VideoAbre": False}
+        itens.append(Bookmark(lib.bookmark_exibicao("TIX_VIDEO_ABRE_01", P, aberto, titulo="TIX · vídeo aberto"),
+                              grupo=("Vídeos", "Vídeos")))
+        itens.append(Bookmark(lib.bookmark_exibicao("TIX_VIDEO_FECHA_01", P, fechado, titulo="TIX · vídeo fechado"),
+                              grupo=("Vídeos", "Vídeos")))
+    itens.append(Bookmark(lib.bookmark_chegada("TIX_CHEGADA_01", P, fechado,
                                                titulo="Chegada · Sumário"), grupo=("Chegadas", "Chegadas")))
     return itens

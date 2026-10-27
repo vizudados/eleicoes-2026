@@ -16,6 +16,7 @@ from __future__ import annotations
 import estilo
 import pbip_lib as lib
 import roteiro
+from paginas import casca
 from paginas.casca import corpo_casca
 from pbip_lib import Visual
 
@@ -68,6 +69,19 @@ def corpo() -> str:
         f".cp .sumario{{position:absolute;left:150px;top:60px;font-size:14px;font-weight:600;letter-spacing:.16em;"
         f"text-transform:uppercase;color:{C['areia']}}}"
         ".cp .sumario span{font-size:18px;margin-right:6px}"
+        # o card da Lia (27/10/2026): miniatura + botão, como um vídeo; o botão nativo T00_Casca_VideoAbre fica por cima
+        + (".cp .lia-card{position:absolute;left:140px;top:100px;width:280px}"
+        ".cp .lia-card .th{position:relative;width:280px;height:158px;border-radius:12px;overflow:hidden;"
+        "border:1px solid rgba(241,235,223,.28);box-shadow:0 18px 40px -22px rgba(0,0,0,.9)}"
+        ".cp .lia-card .th img{width:100%;height:100%;object-fit:cover;display:block}"
+        ".cp .lia-card .th .pl{position:absolute;left:28px;top:55px;width:48px;height:48px;border-radius:50%;"
+        "background:rgba(28,25,21,.6);border:1.5px solid var(--creme)}"
+        ".cp .lia-card .th .pl:after{content:'';position:absolute;left:18px;top:13px;border-style:solid;"
+        "border-width:10px 0 10px 15px;border-color:transparent transparent transparent var(--creme)}"
+        f".cp .lia-card .bt{{margin-top:10px;height:46px;border-radius:10px;background:var(--creme);color:{C['tinta']};"
+        "font-size:13px;font-weight:700;letter-spacing:.16em;display:flex;align-items:center;justify-content:center}"
+           if casca.VIDEOS_LIA else "")
+        +
         ".cp .comecar{position:absolute;left:1800px;top:590px;font-family:var(--mao);font-size:26px;"
         f"color:{C['areia']};transform:rotate(-6deg)}}"
     )
@@ -92,6 +106,10 @@ def corpo() -> str:
         "<div class='q sobe d4'>A eleição de 2026, do primeiro ao segundo turno, município por município.</div></div>"
         "<div class='comecar entra d14'>começar</div>"
         "<div class='sumario entra d14'><span>☰</span> sumário</div>"
+        + (f"<div class='lia-card entra d12'><div class='th'><img alt='' src='{MIDIA}/lia/T00-card.jpg'/>"
+           "<div class='pl'></div></div><div class='bt'>A LIA APRESENTA O PAINEL</div></div>"
+           if casca.VIDEOS_LIA else "")
+        + 
         "<div class='mapa-rotulo' aria-hidden='true'><span class='t1'>1º turno · 4 de outubro</span>"
         "<span class='t2'>2º turno · 25 de outubro</span></div>"
         "{{content}}"
