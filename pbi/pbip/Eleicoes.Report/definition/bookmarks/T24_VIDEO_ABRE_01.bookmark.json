@@ -1,0 +1,70 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T24_VIDEO_ABRE_01",
+  "displayName": "T24 · vídeo aberto",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T24_Casca_InfoAbre",
+      "T24_Casca_InfoFecha",
+      "T24_Casca_InfoFora",
+      "T24_Casca_Leitura",
+      "T24_Casca_Video",
+      "T24_Casca_VideoAbre",
+      "T24_Casca_VideoFecha",
+      "T24_Casca_VideoFora"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T24",
+    "sections": {
+      "T24": {
+        "visualContainers": {
+          "T24_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T24_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T24_Casca_InfoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T24_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T24_Casca_Video": {
+            "singleVisual": {}
+          },
+          "T24_Casca_VideoAbre": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T24_Casca_VideoFecha": {
+            "singleVisual": {}
+          },
+          "T24_Casca_VideoFora": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

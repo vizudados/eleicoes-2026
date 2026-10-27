@@ -58,13 +58,13 @@ FORA = (0, 0, 1920, 1080)            # véu da leitura aberta: clicar fora do ca
 # A Lia explica a tela (27/10/2026, pedido do dono): o ▶ ao lado do "i" abre o vídeo da tela numa janela por cima, com o
 # player nativo (o HTML Content não roda script: o leitor aperta o play). Vídeos no GitHub Pages, midia/lia/<código>.mp4.
 VIDEO = (1778, 62, 44, 44)
-VIDEO_CAPA = (140, 100, 280, 214)    # o card "A Lia apresenta o painel" desenhado na capa (paginas/t00_capa.py)
+VIDEO_CAPA = (140, 104, 330, 220)    # o card "A Lia apresenta o painel" desenhado na capa (paginas/t00_capa.py)
 PLAYER = (300, 120, 1320, 820)       # moldura; o vídeo 1280×720 fica em (320, 200)
 PLAYER_FECHAR = (1564, 136, 44, 44)  # o × no canto da moldura
 MIDIA_LIA = "https://vizudados.github.io/eleicoes-2026/midia/lia"
-# Liga o ▶, o card da capa e os players. Fica desligado até os 31 vídeos estarem no GitHub Pages (um painel publicado não
-# pode ter botão para vídeo que não existe); LIA_VIDEOS=1 liga para testar no Desktop.
-VIDEOS_LIA = os.environ.get("LIA_VIDEOS", "0") == "1"
+# Liga o ▶, o card da capa e os players (ligado desde 27/10/2026, com os 31 vídeos no GitHub Pages: midia/lia/<código>.mp4
+# e o pôster .jpg, de video/lia/out/guia). LIA_VIDEOS=0 desliga, se um dia os vídeos saírem do ar.
+VIDEOS_LIA = os.environ.get("LIA_VIDEOS", "1") == "1"
 GRUPO_UF = "Eleicoes_UF"
 GRUPO_PERIODO = "Eleicoes_Periodo"
 Z = {"fundo": 10, "filtro": lib.CAMADAS["filtro"], "leitura": lib.CAMADAS["leitura"], "nav": lib.CAMADAS["navegacao"]}

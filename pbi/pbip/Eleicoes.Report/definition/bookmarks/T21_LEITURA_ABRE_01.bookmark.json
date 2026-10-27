@@ -8,7 +8,11 @@
       "T21_Casca_InfoAbre",
       "T21_Casca_InfoFecha",
       "T21_Casca_InfoFora",
-      "T21_Casca_Leitura"
+      "T21_Casca_Leitura",
+      "T21_Casca_Video",
+      "T21_Casca_VideoAbre",
+      "T21_Casca_VideoFecha",
+      "T21_Casca_VideoFora"
     ],
     "suppressActiveSection": true,
     "suppressData": true
@@ -34,6 +38,30 @@
           },
           "T21_Casca_Leitura": {
             "singleVisual": {}
+          },
+          "T21_Casca_Video": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T21_Casca_VideoAbre": {
+            "singleVisual": {}
+          },
+          "T21_Casca_VideoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T21_Casca_VideoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
           }
         }
       }

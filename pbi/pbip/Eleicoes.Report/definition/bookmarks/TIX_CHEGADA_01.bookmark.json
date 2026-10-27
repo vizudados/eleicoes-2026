@@ -5,6 +5,10 @@
   "options": {
     "applyOnlyToTargetVisuals": true,
     "targetVisualNames": [
+      "TIX_Casca_Video",
+      "TIX_Casca_VideoAbre",
+      "TIX_Casca_VideoFecha",
+      "TIX_Casca_VideoFora",
       "TIX_Sumario_Html"
     ],
     "suppressData": true
@@ -15,6 +19,30 @@
     "sections": {
       "TIX": {
         "visualContainers": {
+          "TIX_Casca_Video": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "TIX_Casca_VideoAbre": {
+            "singleVisual": {}
+          },
+          "TIX_Casca_VideoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "TIX_Casca_VideoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
           "TIX_Sumario_Html": {
             "singleVisual": {}
           }

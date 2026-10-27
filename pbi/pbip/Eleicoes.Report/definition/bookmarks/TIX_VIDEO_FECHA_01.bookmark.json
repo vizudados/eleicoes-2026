@@ -1,0 +1,54 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "TIX_VIDEO_FECHA_01",
+  "displayName": "TIX · vídeo fechado",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "TIX_Casca_Video",
+      "TIX_Casca_VideoAbre",
+      "TIX_Casca_VideoFecha",
+      "TIX_Casca_VideoFora",
+      "TIX_Sumario_Html"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "TIX",
+    "sections": {
+      "TIX": {
+        "visualContainers": {
+          "TIX_Casca_Video": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "TIX_Casca_VideoAbre": {
+            "singleVisual": {}
+          },
+          "TIX_Casca_VideoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "TIX_Casca_VideoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "TIX_Sumario_Html": {
+            "singleVisual": {}
+          }
+        }
+      }
+    }
+  }
+}

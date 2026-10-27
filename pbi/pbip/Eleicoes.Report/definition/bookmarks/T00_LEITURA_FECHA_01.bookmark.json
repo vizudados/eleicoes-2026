@@ -8,7 +8,11 @@
       "T00_Casca_InfoAbre",
       "T00_Casca_InfoFecha",
       "T00_Casca_InfoFora",
-      "T00_Casca_Leitura"
+      "T00_Casca_Leitura",
+      "T00_Casca_Video",
+      "T00_Casca_VideoAbre",
+      "T00_Casca_VideoFecha",
+      "T00_Casca_VideoFora"
     ],
     "suppressActiveSection": true,
     "suppressData": true
@@ -37,6 +41,30 @@
             }
           },
           "T00_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T00_Casca_Video": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T00_Casca_VideoAbre": {
+            "singleVisual": {}
+          },
+          "T00_Casca_VideoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T00_Casca_VideoFora": {
             "singleVisual": {
               "display": {
                 "mode": "hidden"

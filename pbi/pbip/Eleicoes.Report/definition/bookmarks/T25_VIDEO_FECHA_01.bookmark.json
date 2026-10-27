@@ -1,0 +1,78 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/bookmark/2.1.0/schema.json",
+  "name": "T25_VIDEO_FECHA_01",
+  "displayName": "T25 · vídeo fechado",
+  "options": {
+    "applyOnlyToTargetVisuals": true,
+    "targetVisualNames": [
+      "T25_Casca_InfoAbre",
+      "T25_Casca_InfoFecha",
+      "T25_Casca_InfoFora",
+      "T25_Casca_Leitura",
+      "T25_Casca_Video",
+      "T25_Casca_VideoAbre",
+      "T25_Casca_VideoFecha",
+      "T25_Casca_VideoFora"
+    ],
+    "suppressActiveSection": true,
+    "suppressData": true
+  },
+  "explorationState": {
+    "version": "1.0",
+    "activeSection": "T25",
+    "sections": {
+      "T25": {
+        "visualContainers": {
+          "T25_Casca_InfoAbre": {
+            "singleVisual": {}
+          },
+          "T25_Casca_InfoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_InfoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_Leitura": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_Video": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_VideoAbre": {
+            "singleVisual": {}
+          },
+          "T25_Casca_VideoFecha": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          },
+          "T25_Casca_VideoFora": {
+            "singleVisual": {
+              "display": {
+                "mode": "hidden"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
