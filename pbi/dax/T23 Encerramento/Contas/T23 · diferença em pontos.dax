@@ -1,0 +1,8 @@
+/*
+@pasta: T23 Encerramento\Contas
+@formato: #,0
+@descricao: Quantidade de pontos na cunha da diferença: lotes de 50 mil votos, incluindo um ponto parcial.
+@oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
+@gerado: pbi/scripts/desenho_t23.py
+*/
+ROUNDUP ( DIVIDE ( [T23 · diferença final], 50000 ), 0 )

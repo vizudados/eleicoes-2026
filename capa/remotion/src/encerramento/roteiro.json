@@ -2,17 +2,34 @@
   "fps": 30,
   "segundos": 15,
   "parado": 12,
-  "contorno": [0.15, 1.8],
-  "municipios": [0.65, 2.1],
-  "partidas": [2.6, 4.0],
+  "contorno": [
+    0.15,
+    1.8
+  ],
+  "municipios": [
+    0.65,
+    2.1
+  ],
+  "partidas": [
+    2.6,
+    4
+  ],
   "voo": 3.2,
-  "partidasDiferenca": [6.2, 6.9],
+  "partidasDiferenca": [
+    6.2,
+    6.9
+  ],
   "vooDiferenca": 1.8,
-  "someMapa": [4.8, 7.2],
-  "diferenca": [9.5, 10.1],
+  "someMapa": [
+    4.8,
+    7.2
+  ],
+  "diferenca": [
+    9.5,
+    10.1
+  ],
   "html": {
     "titulo": 0,
-    "origens": 0.65,
     "resultado": 8.9,
     "escala": 8.9,
     "diferenca": 9.5,
@@ -21,19 +38,200 @@
     "fecho": 11.3
   },
   "entrada": 0.6,
-  "hemiciclo": {"x": 960, "base": 480, "raioInterno": 50, "raioExterno": 280, "fileiras": 33, "corredor": 32, "raioPonto": 2.2},
-  "areaGrafica": {"x": 620, "y": 152, "largura": 680, "altura": 365},
-  "mapa": {"x": 960, "y": 332, "escala": 0.64},
-  "textos": {
-    "titulo": [150, 68, 1620, 74],
-    "resultadoEsquerda": [140, 272, 420, 260],
-    "resultadoDireita": [1360, 272, 420, 260],
-    "escala": [620, 528, 680, 18],
-    "diferenca": [600, 558, 720, 54],
-    "participacao": [150, 626, 1620, 28]
+  "alturaCabecalhoGrupo": 26,
+  "hemiciclo": {
+    "x": 960,
+    "base": 470,
+    "raioInterno": 0,
+    "raioExterno": 280,
+    "fileiras": 36,
+    "raioPonto": 2.2
   },
-  "origensForaMapa": [
-    {"id": "5101837", "x": 650, "y": 420, "rotulo": "Boa Esperança do Norte · MT"},
-    {"id": "ZZ", "x": 650, "y": 474, "rotulo": "Exterior"}
+  "areaGrafica": {
+    "x": 620,
+    "y": 160,
+    "largura": 680,
+    "altura": 330
+  },
+  "recorteInicial": {
+    "x": 0,
+    "y": 160,
+    "largura": 1920,
+    "altura": 740
+  },
+  "fecharRecorte": 8.8,
+  "mapa": {
+    "x": 960,
+    "y": 560,
+    "altura": 620,
+    "escala": 1.1071428571428572
+  },
+  "boaEsperanca": {
+    "codigo": "5101837",
+    "metodo": "media-dos-centroides-IBGE",
+    "municipiosOrigem": [
+      "5106224",
+      "5107925"
+    ]
+  },
+  "exterior": {
+    "x": 1920,
+    "y": 650,
+    "inicio": 2.6
+  },
+  "textos": {
+    "titulo": [
+      150,
+      68,
+      1620,
+      74
+    ],
+    "resultadoEsquerda": [
+      140,
+      272,
+      420,
+      260
+    ],
+    "resultadoDireita": [
+      1360,
+      272,
+      420,
+      260
+    ],
+    "escala": [
+      620,
+      510,
+      680,
+      22
+    ],
+    "diferenca": [
+      600,
+      558,
+      720,
+      54
+    ],
+    "participacao": [
+      150,
+      626,
+      1620,
+      28
+    ],
+    "fecho": [
+      150,
+      946,
+      940,
+      28
+    ],
+    "fontes": [
+      150,
+      984,
+      940,
+      14
+    ]
+  },
+  "casca": {
+    "informacao": [
+      1730,
+      68,
+      32,
+      32
+    ],
+    "rodape": [
+      150,
+      1014,
+      1620,
+      28
+    ]
+  },
+  "grupos": [
+    [
+      "I · ANTES DA URNA",
+      150,
+      680,
+      440,
+      54,
+      [
+        [
+          "T10",
+          "Pesquisas diante da urna do primeiro turno"
+        ]
+      ]
+    ],
+    [
+      "II · O 1º TURNO",
+      150,
+      784,
+      440,
+      54,
+      [
+        [
+          "T01",
+          "A vantagem de Flávio no primeiro turno"
+        ],
+        [
+          "T06",
+          "Quem não compareceu"
+        ]
+      ]
+    ],
+    [
+      "III · O MAPA",
+      650,
+      680,
+      440,
+      54,
+      [
+        [
+          "T11",
+          "Municípios que mudaram de lado"
+        ],
+        [
+          "T13",
+          "O crescimento em cada tipo de cidade"
+        ]
+      ]
+    ],
+    [
+      "IV · EXPLORE VOCÊ MESMO",
+      650,
+      836,
+      440,
+      54,
+      [
+        [
+          "T19",
+          "Explore o voto na sua cidade"
+        ]
+      ]
+    ],
+    [
+      "V · O 2º TURNO · CLIQUE NO ACHADO",
+      1180,
+      680,
+      590,
+      54,
+      [
+        [
+          "T17",
+          "Pesquisas e resultado final"
+        ],
+        [
+          "T18",
+          "A noite da apuração"
+        ],
+        [
+          "T27",
+          "Os ganhos observados entre os turnos"
+        ],
+        [
+          "T28",
+          "As viradas de municípios e estados"
+        ],
+        [
+          "T29",
+          "História do PT e recorde de votos"
+        ]
+      ]
+    ]
   ]
 }

@@ -15,7 +15,8 @@ Ctrl) · {"clicar_html": ".mq .q", "texto": "MG"} (primeiro elemento com o selet
 com "janela": true, a janela inteira, para o tooltip que passa da borda) ·
 {"conferir": ".t18p", "contem": "MINAS GERAIS"} (falha se o texto não contiver) · {"clicar_texto": "Minas Gerais",
 "em": ".sff-option"} (clique de mouse no item com esse texto, dentro do seletor) · {"medir": "Escolher um estado",
-"altura": 48} (caixa do visual na página; falha se a altura for outra).
+"altura": 48} (caixa do visual na página; falha se a altura for outra). · {"mouse_fora": true} (tira o mouse da página antes da foto: sem o
+cabeçalho do visual).
 """
 from __future__ import annotations
 
@@ -248,6 +249,11 @@ def executar(pg, passos, pasta: Path) -> int:
         elif "tecla" in p:
             pg.keyboard.press(p["tecla"])
             time.sleep(p.get("espera", 2))
+        elif "mouse_fora" in p:
+            # o cabeçalho do visual (filtro, foco, "…") aparece onde o mouse está; para a foto fiel da tela, o mouse sai
+            # da página (27/10/2026, telas dos vídeos da Lia)
+            pg.mouse.move(2, 2)
+            time.sleep(p.get("espera", 1.5))
     return falhas
 
 

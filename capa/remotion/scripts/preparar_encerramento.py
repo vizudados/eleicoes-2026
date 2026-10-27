@@ -38,30 +38,27 @@ def repartir(total, pesos):
     return partes
 
 
-def assentos(quantidade, extras, h):
-    """Pares espelhados e 89 posições à esquerda do eixo, no corredor central.
+def assentos(quantidade, h):
+    """Arcos completos e equidistantes, ordenados pelo ângulo entre todas as filas.
 
-    O eixo compara duas parcelas iguais; não é um corte de 50% dos válidos.
+    Há um único assento no eixo; os demais formam pares geométricos exatos.
+    A ordem dos empates angulares também é espelhada.
     """
     raios = [h['raioInterno'] + i * (h['raioExterno'] - h['raioInterno']) / (h['fileiras'] - 1)
              for i in range(h['fileiras'])]
-    angulos = [math.acos(h['corredor'] / r) for r in raios]
-    quantidades = repartir(quantidade, [r * a for r, a in zip(raios, angulos)])
-    comuns = []
-    for fila, (raio, angulo, n) in enumerate(zip(raios, angulos, quantidades)):
-        for j in range(n):
-            theta = (j + 0.5) * angulo / n
-            comuns.append((raio * math.cos(theta), h['base'] - raio * math.sin(theta), fila))
-    # Duas ou três colunas, com intervalo maior que o diâmetro dos pontos.
-    por_fila = [extras // len(raios)] * len(raios)
-    for fila in range(len(raios) - (extras % len(raios)), len(raios)):
-        por_fila[fila] += 1
-    excedentes = []
-    for fila, (raio, n) in enumerate(zip(raios, por_fila)):
-        for j in range(n):
-            dx = 6 + j * 8.5
-            excedentes.append((-dx, h['base'] - math.sqrt(raio * raio - dx * dx), fila))
-    return comuns, excedentes
+    pares = repartir(quantidade // 2, raios)
+    fila_central = 0  # Arco degenerado no centro da base: fecha o semicírculo sem entalhe.
+    direita = []
+    for fila, (raio, n_pares) in enumerate(zip(raios, pares)):
+        n = 2 * n_pares + int(fila == fila_central)
+        for j in range(n_pares):
+            theta = math.pi * j / (n - 1)
+            direita.append({'x': h['x'] + raio * math.cos(theta),
+                            'y': h['base'] - raio * math.sin(theta), 'fila': fila, 'angulo': theta})
+    direita.sort(key=lambda a: (a['angulo'], a['fila']))
+    centro = {'x': h['x'], 'y': h['base'] - raios[fila_central], 'fila': fila_central, 'angulo': math.pi / 2}
+    esquerda = [dict(a, x=2 * h['x'] - a['x'], angulo=math.pi - a['angulo']) for a in reversed(direita)]
+    return direita + [centro] + esquerda
 
 
 def preparar():
@@ -85,7 +82,10 @@ def preparar():
     sem_coordenada = set(r['cd_ibge'] for r in mun) - centros.keys()
     if sem_coordenada != {'5101837'}:
         raise ValueError(f'Cobertura geográfica inesperada: {sem_coordenada}')
-    origens_fora = {r['id']: r for r in roteiro['origensForaMapa']}
+    boa = roteiro['boaEsperanca']
+    # Aproximação expressamente autorizada: média dos centroides dos municípios
+    # de origem. Nenhuma coordenada fictícia fora do mapa é criada.
+    centros[boa['codigo']] = tuple(sum(centros[c][i] for c in boa['municipiosOrigem']) / 2 for i in (0, 1))
     mapa = roteiro['mapa']
     origens = []
     for r in sorted(mun, key=lambda r: r['cd_ibge']) + [dict(exterior, cd_ibge='ZZ')]:
@@ -96,43 +96,45 @@ def preparar():
             x = mapa['x'] + (x - 960) * mapa['escala']
             y = mapa['y'] + (y - 583) * mapa['escala']
         else:
-            x, y = origens_fora[cod]['x'], origens_fora[cod]['y']
+            x, y = roteiro['exterior']['x'], roteiro['exterior']['y']
         origens.append({'id': cod, 'x': round(x, 3), 'y': round(y, 3), 'mapa': geografia,
                         'lula': r['pt'], 'flavio': r['adv']})
 
-    # O trecho comum permanece espelhado. Os 89 excedentes de Lula atravessam o
-    # eixo para a esquerda e chegam depois de todos os pares comuns.
+    # Fronteiras angulares globais: Flávio entra da esquerda e Lula da direita.
+    # A fatia entre uma fronteira e seu espelho contém 44 pares + centro.
     comum = min(totais.values())
     lotes, fragmentos = [], []
     h = roteiro['hemiciclo']
     n_comuns = math.ceil(comum / UNIDADE)
     n_extras = math.ceil(abs(totais['lula'] - totais['flavio']) / UNIDADE)
-    assentos_comuns, assentos_extras = assentos(n_comuns, n_extras, h)
+    n_total = 2 * n_comuns + n_extras
+    lugares = assentos(n_total, h)
     for candidato in ('flavio', 'lula'):
         pesos = [UNIDADE] * (comum // UNIDADE)
         if comum % UNIDADE:
             pesos.append(comum % UNIDADE)
         extra = totais[candidato] - comum
         if extra:
-            pesos.extend([UNIDADE] * (extra // UNIDADE))
-            if extra % UNIDADE:
-                pesos.append(extra % UNIDADE)
+            pesos.extend([UNIDADE] * n_extras)
+            # A fração da cunha fica no único assento central, preservando a
+            # simetria tanto das posições quanto das áreas dos 44 pares.
+            pesos[n_comuns + n_extras // 2] = extra - UNIDADE * (n_extras - 1)
         primeiros = len(lotes)
         for i, votos in enumerate(pesos):
             diferenca = i >= n_comuns
             if diferenca:
-                dx, y, fila = assentos_extras[i - n_comuns]
-                x = h['x'] + dx
+                ordem = i
             else:
-                dx, y, fila = assentos_comuns[i]
-                x = h['x'] + (-dx if candidato == 'flavio' else dx)
+                ordem = n_total - 1 - i if candidato == 'flavio' else i
+            lugar = lugares[ordem]
             # Mesma semente/tempo no par; sem prioridade para uma candidatura.
             acaso = ((i * 73 + 19) % 997) / 996
             janela = roteiro['partidasDiferenca'] if diferenca else roteiro['partidas']
             inicio = janela[0] + acaso * (janela[1] - janela[0])
             duracao = roteiro['vooDiferenca'] if diferenca else roteiro['voo']
-            lotes.append({'candidato': candidato, 'votos': votos, 'x': round(x, 6), 'y': round(y, 6),
-                          'r': round(h['raioPonto'] * math.sqrt(votos / UNIDADE), 6), 'fila': fila,
+            lotes.append({'candidato': candidato, 'votos': votos, 'x': round(lugar['x'], 6), 'y': round(lugar['y'], 6),
+                          'r': round(h['raioPonto'] * math.sqrt(votos / UNIDADE), 6), 'fila': lugar['fila'],
+                          'angulo': lugar['angulo'], 'ordemAngular': ordem,
                           'partida': inicio, 'duracao': duracao, 'diferenca': diferenca})
         # Interseção dos intervalos cumulativos origem × lote: conserva cada voto
         # municipal, incluindo os pequenos municípios e as frações de lote.
@@ -155,7 +157,9 @@ def preparar():
             'municipais': {c: sum(r[c] for r in origens if r['id'] != 'ZZ') for c in totais},
             'exterior': {c: exterior[col] for c, col in [('lula', 'pt'), ('flavio', 'adv')]},
             'fontesSha256': {n: hashlib.sha256((RAIZ / n).read_bytes()).hexdigest() for n in arquivos},
-            'contorno': capa['contorno']['d1'], 'divisas': [d['d'] for d in capa['divisas']],
+            'boaEsperanca': dict(boa, centroNaProjecaoDaCapa=list(centros[boa['codigo']])),
+            'contorno': capa['contorno']['d1'], 'ilhas': [d['d'] for d in capa['ilhas']],
+            'divisas': [d['d'] for d in capa['divisas']],
             'origens': origens, 'lotes': lotes, 'fragmentos': fragmentos}
 
 

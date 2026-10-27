@@ -5,7 +5,8 @@
 @oraculo: TSE nacional 2026 com exterior; dados/pbi/pt_historico_brasil.csv
 @gerado: pbi/scripts/desenho_t23.py
 */
-"<div class='tela resumo-final'><div class='linha-diferenca sobe fx-diferenca'><div class='rot'>DIFERENÇA FINAL</div>"
+"<div class='tela resumo-final'><div class='linha-diferenca sobe fx-diferenca'><div class='rot'>DIFERENÇA FINAL"
+    & "<span class='aceno'>a cunha do meio: " & FORMAT ( [T23 · diferença em pontos], "0" ) & " pontos</span></div>"
     & "<div class='num diferenca'>" & FORMAT ( [T23 · diferença final], "#,0" ) & "</div>"
     & "<div class='de'>votos entre Lula e Flávio</div></div>"
     & "<div class='participacao sobe fx-participacao'><div class='abst'>Abstenção · 1º → 2º turno: <b class='num'>" & FORMAT ( [T23 · abstenção 1º turno], "0.00%" )

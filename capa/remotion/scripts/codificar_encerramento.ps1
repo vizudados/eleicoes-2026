@@ -4,7 +4,7 @@ param([ValidateRange(0, 51)][int]$Crf = 10, [ValidatePattern('^[1-9][0-9]*[kKmM]
 $ErrorActionPreference = 'Stop'
 $raiz = Split-Path $PSScriptRoot -Parent
 $destino = (Resolve-Path (Join-Path $raiz '..\..\docs\midia\encerramento')).Path
-$pastaSeq = Join-Path $raiz 'out\seq-encerramento-r2'
+$pastaSeq = Join-Path $raiz 'out\seq-encerramento-r3'
 $quadros = 450 # 15 s a 30 fps, conforme src/encerramento/roteiro.json
 $arquivos = @(Get-ChildItem -LiteralPath $pastaSeq -Filter 'element-*.png' -File)
 if ($arquivos.Count -ne $quadros) { throw "Sequência incompleta: esperado $quadros PNGs, encontrado $($arquivos.Count)." }
@@ -24,7 +24,7 @@ for ($i = 361; $i -lt $quadros; $i++) {
 }
 $seq = Join-Path $pastaSeq 'element-%03d.png'
 $vf = 'scale=out_color_matrix=bt709:out_range=tv,format=yuv420p'
-$tmp = Join-Path $raiz 'out\vp9-encerramento-r2'
+$tmp = Join-Path $raiz 'out\vp9-encerramento-r3'
 
 ffmpeg -v error -y -framerate 30 -start_number 0 -i $seq -frames:v $quadros -vf $vf -c:v libx264 -preset slow -tune animation -crf $Crf -profile:v high `
   -x264-params 'colorprim=bt709:transfer=bt709:colormatrix=bt709' -color_range tv -movflags +faststart -an `

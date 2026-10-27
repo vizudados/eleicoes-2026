@@ -40,6 +40,8 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
         'Variação líquida do comparecimento nacional entre turnos, com exterior; não identifica os mesmos eleitores.', '#,0', True)
     gravar('diferença final', 'ABS ( [T00 · 2º turno · Lula votos] - [T00 · 2º turno · Flávio votos] )',
         'Diferença final entre as duas candidaturas, votos nacionais com exterior.', '#,0', True)
+    gravar('diferença em pontos', 'ROUNDUP ( DIVIDE ( [T23 · diferença final], 50000 ), 0 )',
+        'Quantidade de pontos na cunha da diferença: lotes de 50 mil votos, incluindo um ponto parcial.', '#,0', True)
     blocos = ['[T23 · Resumo · HTML]']
     for cand, pos, cls in [('Flávio', 'esq', 'flavio'), ('Lula', 'dir', 'lula')]:
         nome = 'FLÁVIO BOLSONARO · PL' if cand == 'Flávio' else 'LULA · PT'
@@ -79,7 +81,8 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
     & "<b>{roteiro.numero(cod)}</b><span>" & ({textos[cod]}) & "</span></div>"''')
     gravar('Achados · HTML', 'VAR _html = ' + '\n    & '.join(blocos) + '\nRETURN _html',
            'Resultado espelhado dos dois turnos e onze achados/atalhos distribuídos nos cinco atos.')
-    gravar('Resumo · HTML', '''"<div class='tela resumo-final'><div class='linha-diferenca sobe fx-diferenca'><div class='rot'>DIFERENÇA FINAL</div>"
+    gravar('Resumo · HTML', '''"<div class='tela resumo-final'><div class='linha-diferenca sobe fx-diferenca'><div class='rot'>DIFERENÇA FINAL"
+    & "<span class='aceno'>a cunha do meio: " & FORMAT ( [T23 · diferença em pontos], "0" ) & " pontos</span></div>"
     & "<div class='num diferenca'>" & FORMAT ( [T23 · diferença final], "#,0" ) & "</div>"
     & "<div class='de'>votos entre Lula e Flávio</div></div>"
     & "<div class='participacao sobe fx-participacao'><div class='abst'>Abstenção · 1º → 2º turno: <b class='num'>" & FORMAT ( [T23 · abstenção 1º turno], "0.00%" )

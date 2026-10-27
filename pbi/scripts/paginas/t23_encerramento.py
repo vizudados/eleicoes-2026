@@ -1,7 +1,7 @@
 """29 · Encerramento: hemiciclo, resultado e achados; entrada exclusivamente em CSS.
 
-O vídeo e o HTML não dependem de JavaScript. Os pontos permanecem em uma área
-central separada de todos os textos, inclusive se a carga do vídeo atrasar.
+O mapa ocupa o centro antes dos resultados. O recorte CSS diminui antes da
+entrada dos números, protegendo o texto também se o vídeo carregar atrasado.
 """
 import json
 from pathlib import Path
@@ -15,23 +15,12 @@ P = 'T23'
 CSS = 'Estilo · CSS'
 C = estilo.COR
 MIDIA = 'https://vizudados.github.io/eleicoes-2026/midia'
-VERSAO_MIDIA = 'hemiciclo-r2'
+VERSAO_MIDIA = 'hemiciclo-r3'
 REMOTION = Path(__file__).resolve().parents[3] / 'capa/remotion'
 ROTEIRO = json.loads((REMOTION / 'src/encerramento/roteiro.json').read_text(encoding='utf-8'))
 TEMPOS = ROTEIRO['html']
 # Título, geometria e atalhos. O HTML e os botões nativos usam a mesma lista.
-GRUPOS = [
-    ('I · ANTES DA URNA', 150, 680, 440, 54, [('T10', 'Pesquisas diante da urna do primeiro turno')]),
-    ('II · O 1º TURNO', 150, 784, 440, 54, [('T01', 'A vantagem de Flávio no primeiro turno'),
-                                          ('T06', 'Quem não compareceu')]),
-    ('III · O MAPA', 650, 680, 440, 54, [('T11', 'Municípios que mudaram de lado'),
-                                     ('T13', 'O crescimento em cada tipo de cidade')]),
-    ('IV · EXPLORE VOCÊ MESMO', 650, 836, 440, 54, [('T19', 'Explore o voto na sua cidade')]),
-    ('V · O 2º TURNO · CLIQUE NO ACHADO', 1180, 680, 590, 54, [
-        ('T17', 'Pesquisas e resultado final'), ('T18', 'A noite da apuração'),
-        ('T27', 'Os ganhos observados entre os turnos'), ('T28', 'As viradas de municípios e estados'),
-        ('T29', 'História do PT e recorde de votos')]),
-]
+GRUPOS = ROTEIRO['grupos']
 
 
 def _linhas():
@@ -44,22 +33,24 @@ def _caixa(nome):
     return f'position:absolute;left:{x}px;top:{y}px;width:{w}px;height:{h}px;'
 
 
+def _recorte(rect):
+    return (f"inset({rect['y']}px {1920-rect['x']-rect['largura']}px "
+            f"{1080-rect['y']-rect['altura']}px {rect['x']}px)")
+
+
 def corpo():
-    atrasos = ''.join(f'.fx .fx-{nome}{{animation-delay:{tempo}s}}' for nome, tempo in TEMPOS.items()
-                      if nome != 'origens')
+    atrasos = ''.join(f'.fx .fx-{nome}{{animation-delay:{tempo}s}}' for nome, tempo in TEMPOS.items())
     css = (
         '.fx{color:var(--creme)}'
         '.fx video,.fx .poster{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover;pointer-events:none}'
         '.fx .poster{display:block}'
         f'.fx .sobe{{animation-duration:{ROTEIRO["entrada"]}s}}'
-        f'.fx video{{visibility:hidden;animation:fxVideo {ROTEIRO["parado"]}s step-end both}}'
+        f'.fx video{{visibility:hidden;clip-path:{_recorte(ROTEIRO["areaGrafica"])};'
+        f'animation:fxRecorte {ROTEIRO["fecharRecorte"]}s step-end both,fxVideo {ROTEIRO["parado"]}s step-end both}}'
+        f'@keyframes fxRecorte{{from{{clip-path:{_recorte(ROTEIRO["recorteInicial"])}}}}}'
         '@keyframes fxVideo{from{visibility:visible}}'
         + atrasos
-        + '.fx .origens{position:absolute;left:140px;top:282px;width:420px;color:var(--areia);font-size:14px;line-height:22px;'
-        f'opacity:0;animation:fxOrigens 4.75s ease {TEMPOS["origens"]}s both}}'
-        '.fx .origem-fora{position:absolute;left:0;width:420px;font-size:13px}'
-        '@keyframes fxOrigens{0%{opacity:0}14%,80%{opacity:1}100%{opacity:0}}'
-        f'.fx .tg{{{_caixa("titulo")}text-align:center;font-size:66px;font-weight:700;letter-spacing:-.035em;line-height:1.1}}'
+        + f'.fx .tg{{{_caixa("titulo")}text-align:center;font-size:66px;font-weight:700;letter-spacing:-.035em;line-height:1.1}}'
         f'.fx .bl.esq{{{_caixa("resultadoEsquerda")}}}'
         f'.fx .bl.dir{{{_caixa("resultadoDireita")}text-align:right}}'
         '.fx .bl .rot{color:var(--areia);font-size:15px;line-height:19px}'
@@ -71,21 +62,19 @@ def corpo():
         '.fx .primeiro .num{font-size:20px;line-height:1.2}'
         '.fx .selo-eleito{display:inline-block;font-family:var(--mao);font-size:26px;line-height:1;'
         'border:1.5px solid var(--areia);padding:3px 12px 5px;margin-top:8px;transform:rotate(-4deg)}'
-        f'.fx .escala{{{_caixa("escala")}text-align:center;font-size:12px;line-height:18px;color:var(--areia)}}'
+        f'.fx .escala{{{_caixa("escala")}text-align:center;font-size:16px;line-height:22px;color:var(--areia)}}'
         '.fx .grupo{position:absolute;font-size:13px;line-height:18px;letter-spacing:.10em;color:var(--areia);'
+        f'height:{ROTEIRO["alturaCabecalhoGrupo"]}px;'
         'font-weight:650;border-bottom:1px solid var(--grafite);padding-bottom:7px}'
         '.fx .linha{position:absolute;display:flex;gap:14px;padding:6px 0;font-size:15px;line-height:20px}'
         '.fx .linha b{font-size:15px;color:var(--areia);min-width:28px}'
-        '.fx .fecho{position:absolute;left:150px;top:946px;width:940px;font-size:21px;line-height:28px;font-weight:500}'
-        '.fx .fontes{position:absolute;left:150px;top:984px;width:940px;font-size:11px;line-height:14px;color:var(--areia)}'
-        '@media(prefers-reduced-motion:reduce){.fx video{display:none}.fx .sobe{animation:none!important}.fx .origens{display:none}}'
-        '@media print{.fx video{display:none}.fx .sobe{animation:none!important}.fx .origens{display:none}}'
+        f'.fx .fecho{{{_caixa("fecho")}font-size:21px;line-height:28px;font-weight:500}}'
+        f'.fx .fontes{{{_caixa("fontes")}font-size:11px;line-height:14px;color:var(--areia)}}'
+        '@media(prefers-reduced-motion:reduce){.fx video{display:none}.fx .sobe{animation:none!important}}'
+        '@media print{.fx video{display:none}.fx .sobe{animation:none!important}}'
     )
     midia = f'{MIDIA}/encerramento/encerramento'
     poster = f'{midia}-final.jpg?v={VERSAO_MIDIA}'
-    origens = ("<div class='origens'>2º turno · 25 de outubro · votos nos municípios"
-               + ''.join(f"<div class='origem-fora' style='top:{r['y']-282-8}px'>{r['rotulo']}</div>"
-                         for r in ROTEIRO['origensForaMapa']) + '</div>')
     return (
         f"<style>{css}</style><div class='tela fx'>"
         f"<img class='poster' alt='' src='{poster}'/>"
@@ -93,8 +82,7 @@ def corpo():
         f"<source src='{midia}.mp4?v={VERSAO_MIDIA}' type='video/mp4'/>"
         f"<source src='{midia}.webm?v={VERSAO_MIDIA}' type='video/webm'/></video>"
         "<div class='tg sobe fx-titulo'>Da zona eleitoral ao resultado.</div>"
-        + origens
-        + "<div class='escala sobe fx-escala'>Cada ponto cheio representa 50 mil votos.</div>"
+        "<div class='escala sobe fx-escala'>Cada ponto cheio representa 50 mil votos.</div>"
         "<div class='fecho sobe fx-fecho'>O voto de perto, do Brasil à sua cidade.</div>"
         "<div class='fontes sobe fx-fecho'>Fontes e limites em cada tela · dados e código abertos · desenhos em traço, créditos no i.</div>"
         + corpo_resumo(embutido=True) + '{{content}}</div>'
@@ -108,6 +96,8 @@ def corpo_resumo(embutido=False):
         '.resumo-final{color:var(--creme);text-align:center;pointer-events:none}'
         f'.fx .linha-diferenca{{{_caixa("diferenca")}display:flex;align-items:center;justify-content:center;gap:16px}}'
         '.resumo-final .rot{font-size:12px;line-height:18px;color:var(--areia);white-space:nowrap}'
+        '.resumo-final .aceno{display:block;font-size:15px;line-height:20px;font-weight:400;'
+        'letter-spacing:0;text-transform:none;margin-top:3px}'
         '.resumo-final .diferenca{font-size:48px;line-height:54px;font-weight:700;white-space:nowrap}'
         '.resumo-final .de{font-size:14px;line-height:20px;white-space:nowrap}'
         f'.fx .participacao{{{_caixa("participacao")}display:flex;align-items:center;justify-content:center;gap:32px;white-space:nowrap}}'

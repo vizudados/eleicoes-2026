@@ -1,160 +1,185 @@
-// SVG real e geometria pura. A entrada do HTML é verificada em CSS, sem DOM com JavaScript.
+// Testes da geometria real do Remotion e do contrato com a T23, sem Chromium.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const {test} = require('node:test');
-const ts = require('typescript');
-const React = require('react');
-const {renderToStaticMarkup} = require('react-dom/server');
-const raiz = path.resolve(__dirname, '..');
-const dados = require('../public/dados/encerramento.json');
-const roteiro = require('../src/encerramento/roteiro.json');
-const config = ts.readConfigFile(path.join(raiz, 'tsconfig.json'), ts.sys.readFile);
-if (config.error) throw new Error(ts.flattenDiagnosticMessageText(config.error.messageText, '\n'));
-const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, raiz, {noEmit: false,
-  module: ts.ModuleKind.CommonJS, moduleResolution: ts.ModuleResolutionKind.Node10,
-  outDir: path.join(raiz, 'out/testes-encerramento')});
-const programa = ts.createProgram(parsed.fileNames, parsed.options);
-const emitido = programa.emit();
-const erros = [...parsed.errors, ...ts.getPreEmitDiagnostics(programa), ...emitido.diagnostics];
-if (erros.length) throw new Error(ts.formatDiagnosticsWithColorAndContext(erros, {
-  getCanonicalFileName: (p) => p, getCurrentDirectory: () => raiz, getNewLine: () => '\n'}));
-const {DesenhoEncerramento, FPS_ENCERRAMENTO, QUADROS_ENCERRAMENTO} = require('../out/testes-encerramento/src/encerramento/Encerramento.js');
-const {posicaoFragmento} = require('../out/testes-encerramento/src/encerramento/geometria.js');
-const svg = (t) => renderToStaticMarkup(React.createElement(DesenhoEncerramento, {t}));
+const carregar = require('./carregar_encerramento.cjs');
+const {provar} = require('./provar_encerramento.cjs');
+const runtime = carregar();
+const {dados, roteiro, geometria, svg, raiz, FPS_ENCERRAMENTO, QUADROS_ENCERRAMENTO} = runtime;
 const h = roteiro.hemiciclo;
-const area = roteiro.areaGrafica;
-const comuns = dados.lotes.filter(l => !l.diferenca);
-const extras = dados.lotes.filter(l => l.diferenca);
+const ordenados = [...dados.lotes].sort((a, b) => a.ordemAngular - b.ordemAngular);
+const cunha = ordenados.filter(l => l.diferenca);
+const perto = (a, b, eps = 0.000003) => Math.abs(a - b) < eps;
 
-test('cada voto é conservado por origem, candidatura e lote, incluindo frações', () => {
-  const porOrigem = dados.origens.map(() => ({lula: 0, flavio: 0}));
-  const porLote = dados.lotes.map(() => 0);
-  for (const [origem, destino, votos] of dados.fragmentos) {
+test('cada voto é conservado por origem, lote e candidatura, incluindo exterior e frações', () => {
+  const origens = dados.origens.map(() => ({lula: 0, flavio: 0}));
+  const lotes = dados.lotes.map(() => 0);
+  dados.fragmentos.forEach(([o, d, votos]) => {
     assert.ok(Number.isSafeInteger(votos) && votos > 0 && votos <= dados.unidade);
-    porOrigem[origem][dados.lotes[destino].candidato] += votos;
-    porLote[destino] += votos;
-  }
-  dados.origens.forEach((o, i) => {
-    assert.equal(porOrigem[i].lula, o.lula, o.id);
-    assert.equal(porOrigem[i].flavio, o.flavio, o.id);
+    origens[o][dados.lotes[d].candidato] += votos;
+    lotes[d] += votos;
   });
-  dados.lotes.forEach((l, i) => assert.equal(porLote[i], l.votos));
+  dados.origens.forEach((o, i) => {
+    assert.equal(origens[i].lula, o.lula, o.id);
+    assert.equal(origens[i].flavio, o.flavio, o.id);
+  });
+  dados.lotes.forEach((l, i) => {
+    assert.equal(lotes[i], l.votos);
+    assert.ok(perto((l.r / h.raioPonto) ** 2, l.votos / dados.unidade));
+  });
   assert.deepEqual(dados.totais, {lula: 64256232, flavio: 59826041});
+  assert.equal(dados.diferenca, 4430191);
   for (const candidato of ['lula', 'flavio']) {
     assert.equal(dados.lotes.filter(l => l.candidato === candidato).reduce((s, l) => s + l.votos, 0), dados.totais[candidato]);
   }
-  assert.equal(dados.diferenca, 4430191);
+  assert.equal(dados.lotes.filter(l => l.votos === 50000).length, 2480);
+  assert.deepEqual(dados.lotes.filter(l => l.votos < 50000).map(l => l.votos).sort((a, b) => a - b), [26041, 26041, 30191]);
 });
 
-test('todas as origens permanecem: malha, município sem coordenada e exterior', () => {
-  assert.equal(dados.origens.length, 5572);
-  assert.equal(dados.origens.filter(o => o.mapa).length, 5570);
-  assert.deepEqual(dados.origens.filter(o => !o.mapa).map(o => o.id), ['5101837', 'ZZ']);
-  assert.deepEqual(dados.exterior, {lula: 200154, flavio: 171497});
-  assert.ok(roteiro.mapa.escala / 0.51 > 1.25);
-  dados.origens.forEach(o => {
-    assert.ok(o.x >= area.x && o.x <= area.x + area.largura);
-    assert.ok(o.y >= area.y && o.y <= area.y + area.altura);
-  });
+test('2.483 assentos: arcos completos, equidistantes e sem corredor ou coluna central', () => {
+  assert.equal(dados.lotes.length, 2483);
+  assert.ok(!('corredor' in h));
+  assert.equal(new Set(dados.lotes.map(l => l.fila)).size, 36);
+  for (let fila = 0; fila < h.fileiras; fila++) {
+    const pontos = ordenados.filter(l => l.fila === fila);
+    if (fila === 0) {
+      assert.equal(pontos.length, 1);
+      assert.equal(pontos[0].x, h.x);
+      assert.equal(pontos[0].y, h.base);
+      continue;
+    }
+    assert.ok(pontos.length > 1);
+    assert.ok(perto(pontos[0].angulo, 0));
+    assert.ok(perto(pontos.at(-1).angulo, Math.PI));
+    const passo = Math.PI / (pontos.length - 1);
+    pontos.forEach((p, j) => {
+      assert.ok(perto(p.angulo, passo * j, 1e-12), 'Vão angular na fileira ' + fila);
+      assert.ok(perto(Math.hypot(p.x - h.x, p.y - h.base), h.raioInterno + fila * (h.raioExterno - h.raioInterno) / (h.fileiras - 1)));
+    });
+    const juntoDoEixo = pontos.reduce((a, b) => Math.abs(a.angulo - Math.PI / 2) < Math.abs(b.angulo - Math.PI / 2) ? a : b);
+    assert.ok(Math.abs(juntoDoEixo.angulo - Math.PI / 2) <= passo / 2 + 1e-12);
+  }
 });
 
-test('hemiciclo grande: 33 fileiras, raio de 280 px e pares exatamente espelhados', () => {
-  const a = comuns.filter(l => l.candidato === 'flavio');
-  const b = comuns.filter(l => l.candidato === 'lula');
-  assert.equal(a.length, 1197);
-  assert.equal(b.length, 1197);
-  assert.equal(h.raioExterno, 280);
-  assert.equal(new Set(a.map(l => l.fila)).size, 33);
-  a.forEach((l, i) => {
-    assert.ok(Math.abs(l.x + b[i].x - 1920) < 0.000002);
-    for (const k of ['votos', 'y', 'r', 'partida', 'duracao', 'fila']) assert.equal(l[k], b[i][k]);
-    assert.ok(l.x < h.x && b[i].x > h.x);
-  });
-  dados.lotes.forEach(l => {
-    const raio = Math.hypot(l.x - h.x, l.y - h.base);
-    assert.ok(raio >= h.raioInterno - 0.000002 && raio <= h.raioExterno + 0.000002);
-    assert.ok(Math.abs((l.r / h.raioPonto) ** 2 - l.votos / dados.unidade) < 0.000002);
-  });
+test('as candidaturas ocupam por ângulo global, sem blocos artificiais por fileira', () => {
+  assert.deepEqual(ordenados.map(l => l.ordemAngular), Array.from({length: 2483}, (_, i) => i));
+  for (let i = 1; i < ordenados.length; i++) assert.ok(ordenados[i].angulo >= ordenados[i - 1].angulo - 1e-12);
+  ordenados.forEach((l, i) => assert.equal(l.candidato, i < 1286 ? 'lula' : 'flavio'));
+  assert.equal(ordenados.filter(l => l.candidato === 'flavio').length, 1197);
+  assert.equal(ordenados.filter(l => l.candidato === 'lula').length, 1286);
 });
 
-test('os 89 excedentes atravessam o eixo para a esquerda e chegam por último', () => {
-  assert.equal(extras.length, 89);
-  assert.equal(extras.reduce((s, l) => s + l.votos, 0), 4430191);
-  extras.forEach(l => assert.ok(l.candidato === 'lula' && l.x + l.r < h.x));
-  const fimComuns = Math.max(...comuns.map(l => l.partida + l.duracao));
-  const inicioEntregasExtras = Math.min(...extras.map(l => l.partida + l.duracao - 0.35));
-  const fimExtras = Math.max(...extras.map(l => l.partida + l.duracao));
-  assert.ok(inicioEntregasExtras > fimComuns);
-  assert.ok(roteiro.html.resultado >= fimExtras + 0.19);
+test('a cunha é exatamente a fatia simétrica de 89 assentos, com área e votos simétricos', () => {
+  assert.equal(cunha.length, 89);
+  assert.deepEqual(cunha.map(l => l.ordemAngular), Array.from({length: 89}, (_, i) => 1197 + i));
+  assert.equal(cunha.reduce((s, l) => s + l.votos, 0), 4430191);
+  assert.equal(cunha.filter(l => l.x < h.x).length, 44);
+  assert.equal(cunha.filter(l => l.x > h.x).length, 44);
+  assert.equal(cunha.filter(l => l.x === h.x).length, 1);
+  cunha.forEach(l => {
+    const espelho = ordenados[2482 - l.ordemAngular];
+    assert.ok(espelho.diferenca);
+    assert.ok(perto(l.x + espelho.x, 2 * h.x));
+    assert.equal(l.y, espelho.y);
+    assert.equal(l.votos, espelho.votos);
+    assert.equal(l.r, espelho.r);
+  });
+  assert.equal(ordenados[1241].votos, 30191);
+  const metade = dados.lotes.filter(l => l.x < h.x).reduce((s, l) => s + l.votos, 0) + ordenados[1241].votos / 2;
+  assert.equal(metade, (dados.totais.lula + dados.totais.flavio) / 2);
+  for (let i = 0; i < 1197; i++) {
+    assert.ok(perto(ordenados[i].x + ordenados[2482 - i].x, 1920));
+    assert.equal(ordenados[i].y, ordenados[2482 - i].y);
+    assert.equal(ordenados[i].votos, ordenados[2482 - i].votos);
+  }
+});
+
+test('o mapa inicial tem 620 px, centrado; não há ponto externo ou rótulo solto', () => {
+  assert.equal(roteiro.mapa.altura, 620);
+  assert.equal(roteiro.mapa.x, 960);
+  assert.equal(roteiro.mapa.y, 560);
+  assert.ok(perto(roteiro.mapa.escala * 560, 620));
+  const mapa = dados.origens.filter(o => o.mapa);
+  assert.equal(mapa.length, 5571);
+  assert.equal(dados.origens.filter(o => !o.mapa).length, 1);
+  const capa = require('../public/dados/capa.json').municipios;
+  const indices = new Map(capa.cd_ibge.map((id, i) => [id, i]));
+  for (const o of mapa) {
+    let x, y;
+    if (o.id === '5101837') {
+      x = roteiro.boaEsperanca.municipiosOrigem.reduce((s, id) => s + capa.x[indices.get(id)], 0) / 2;
+      y = roteiro.boaEsperanca.municipiosOrigem.reduce((s, id) => s + capa.y[indices.get(id)], 0) / 2;
+    } else { x = capa.x[indices.get(o.id)]; y = capa.y[indices.get(o.id)]; }
+    assert.ok(perto(o.x, 960 + (x - 960) * roteiro.mapa.escala, 0.00051), o.id);
+    assert.ok(perto(o.y, 560 + (y - 583) * roteiro.mapa.escala, 0.00051), o.id);
+  }
+  const abertura = Array.from(geometria.circulosNoTempo(2));
+  assert.equal(abertura.filter(p => p.classe === 'municipio').length, 5571);
+  for (const p of abertura.filter(p => p.classe === 'fragmento')) {
+    const origem = dados.origens[dados.fragmentos[p.id][0]];
+    assert.ok(origem.mapa);
+    assert.equal(p.x, origem.x);
+    assert.equal(p.y, origem.y);
+  }
+  assert.ok(!svg(2).includes('data-origem="ZZ"'));
+  assert.ok(!/<text|<image|<script/.test(svg(2)));
+  assert.ok(!svg(2).includes('Boa Esperança do Norte'));
+  assert.equal(geometria.opacidadeFio(2), 0);
+  assert.ok(geometria.opacidadeFio(4) > 0);
+});
+
+test('a cunha chega por último; números e realce entram depois da entrega', () => {
+  const comuns = dados.lotes.filter(l => !l.diferenca);
+  assert.ok(Math.min(...cunha.map(l => l.partida + l.duracao - 0.35)) > Math.max(...comuns.map(l => l.partida + l.duracao)));
+  assert.ok(roteiro.html.resultado >= Math.max(...cunha.map(l => l.partida + l.duracao)) + 0.19);
   assert.equal(roteiro.html.diferenca, roteiro.diferenca[0]);
-  assert.ok(roteiro.html.achados > roteiro.html.participacao + roteiro.entrada);
+  assert.ok(roteiro.fecharRecorte < roteiro.html.resultado);
 });
 
-test('pontos finais não encostam, incluindo os contornos dos excedentes', () => {
+test('os pontos finais não encostam, mesmo com o contorno fino da cunha', () => {
   const grade = new Map();
-  for (const lote of dados.lotes) {
-    const raio = lote.r + (lote.diferenca ? 1 : 0);
-    const gx = Math.floor(lote.x / 8), gy = Math.floor(lote.y / 8);
+  for (const l of dados.lotes) {
+    const r = l.r + (l.diferenca ? 0.35 + 0.55 / 2 : 0);
+    const gx = Math.floor(l.x / 8), gy = Math.floor(l.y / 8);
     for (let x = gx - 1; x <= gx + 1; x++) for (let y = gy - 1; y <= gy + 1; y++) {
-      for (const outro of grade.get(x + ',' + y) || []) {
-        const minimo = raio + outro.raio + 0.65;
-        assert.ok(Math.hypot(lote.x - outro.x, lote.y - outro.y) > minimo, 'Assentos encostados');
-      }
+      for (const outro of grade.get(x + ',' + y) || []) assert.ok(Math.hypot(l.x - outro.x, l.y - outro.y) > r + outro.r + 0.3);
     }
     const chave = gx + ',' + gy;
     if (!grade.has(chave)) grade.set(chave, []);
-    grade.get(chave).push({...lote, raio});
+    grade.get(chave).push({...l, r});
   }
 });
 
-test('todos os voos ficam na área livre, varrendo cada quadro e cada fragmento', () => {
-  // Independe da carga: nenhuma caixa de texto cruza o retângulo gráfico.
-  for (const [nome, [x, y, w, a]] of Object.entries(roteiro.textos)) {
-    assert.ok(x + w <= area.x || x >= area.x + area.largura || y + a <= area.y || y >= area.y + area.altura, nome);
-  }
-  let conferidos = 0;
-  for (let f = 0; f < 270; f++) {
-    const t = f / 30;
-    for (const [o, d, votos] of dados.fragmentos) {
-      const lote = dados.lotes[d];
-      if (t < 1.7 || t > lote.partida + lote.duracao) continue;
-      const p = posicaoFragmento(dados.origens[o], lote, t);
-      const r = h.raioPonto * Math.sqrt(votos / dados.unidade);
-      assert.ok(p.x - r >= area.x && p.x + r <= area.x + area.largura, 'Voo fora da largura: ' + f);
-      assert.ok(p.y - r >= area.y && p.y + r <= area.y + area.altura, 'Voo fora da altura: ' + f);
-      conferidos++;
-    }
-  }
-  assert.ok(conferidos > 1000000);
+test('o SVG real termina com 2.483 pontos e 89 contornos, sem texto no vídeo', () => {
+  const final = svg(12);
+  assert.equal([...final.matchAll(/data-lote=/g)].length, 2483);
+  assert.equal([...final.matchAll(/data-diferenca=/g)].length, 89);
+  assert.ok(final.includes('data-eixo="50-por-cento"'));
+  assert.ok(!/<text|<image|<script|NaN/.test(final));
+  assert.equal([...final.matchAll(/opacity="0.64"/g)].length, 2394);
 });
 
-test('SVG contém hemiciclo completo e realce, sem imagens, texto ou faixa antiga', () => {
-  const fim = svg(roteiro.html.resultado);
-  assert.equal([...fim.matchAll(/data-lote=/g)].length, 2483);
-  assert.ok(fim.includes('data-camada="fragmentos"></g>'));
-  assert.ok(fim.includes('clip-path="url(#t23-area-livre)"'));
-  assert.ok(fim.includes('data-eixo="comparacao"'));
-  assert.ok(!/<image|<text|<script|NaN/.test(fim));
-  const realce = svg(roteiro.diferenca[1]);
-  assert.equal([...realce.matchAll(/data-diferenca=/g)].length, 89);
-  assert.equal([...realce.matchAll(/opacity="0.74"/g)].length, 2394);
-  assert.equal([...realce.matchAll(/fill="#D9877B" opacity="1"/g)].length, 89);
-});
-
-test('90 quadros finais são idênticos; codificador usa sequência exclusiva da rodada 2', () => {
+test('o quadro final é calmo: 90 SVGs idênticos e sequência exclusiva da rodada 3', () => {
   assert.equal(FPS_ENCERRAMENTO, 30);
   assert.equal(QUADROS_ENCERRAMENTO, 450);
   const final = svg(12);
-  for (let f = 360; f < 450; f++) assert.equal(svg(f / 30), final, 'quadro ' + f);
+  for (let f = 360; f < 450; f++) assert.equal(svg(f / 30), final);
   assert.notEqual(svg(3), svg(4));
   const ps = fs.readFileSync(path.join(raiz, 'scripts/codificar_encerramento.ps1'), 'utf8');
-  assert.ok(ps.includes('$quadros = 450'));
+  assert.ok(ps.includes('out\\seq-encerramento-r3'));
   assert.ok(ps.includes('element-360.png'));
-  assert.ok(ps.includes('out\\seq-encerramento-r2'));
 });
 
-const saida = path.join(raiz, '../../pbi/qa/encerramento/rodada2');
+test('a prova usa o SVG real e as mesmas caixas da T23: zero sobreposição em 450 quadros', () => {
+  const resultado = provar(runtime);
+  assert.ok(resultado.pontosConferidos > 3000000);
+  assert.deepEqual(resultado.contatos, []);
+  assert.deepEqual(resultado.contatosFinal, []);
+  assert.deepEqual(resultado.contatosComRecorteCss, []);
+});
+
+const saida = path.join(raiz, '../../pbi/qa/encerramento/rodada3');
 fs.mkdirSync(saida, {recursive: true});
 for (const f of [0, 60, 90, 150, 216, 240, 261, 267, 285, 303, 327, 360, 449]) {
   fs.writeFileSync(path.join(saida, 'quadro-' + String(f).padStart(3, '0') + '.svg'), svg(f / 30));

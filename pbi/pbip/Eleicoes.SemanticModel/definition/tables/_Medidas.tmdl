@@ -27854,6 +27854,13 @@ table _Medidas
 		displayFolder: T23 Encerramento\Contas
 		lineageTag: 548bf78d-9ef4-59bc-baca-32ae3656893c
 
+	/// Quantidade de pontos na cunha da diferença: lotes de 50 mil votos, incluindo um ponto parcial.
+	measure 'T23 · diferença em pontos' =
+			ROUNDUP ( DIVIDE ( [T23 · diferença final], 50000 ), 0 )
+		formatString: #,0
+		displayFolder: T23 Encerramento\Contas
+		lineageTag: 74284cf7-1ddd-5c94-bdb1-8145698ff519
+
 	/// Diferença final entre as duas candidaturas, votos nacionais com exterior.
 	measure 'T23 · diferença final' =
 			ABS ( [T00 · 2º turno · Lula votos] - [T00 · 2º turno · Flávio votos] )
@@ -27977,7 +27984,8 @@ table _Medidas
 
 	/// Diferença abaixo do hemiciclo e participação na linha seguinte; entrada CSS sem JavaScript.
 	measure 'T23 · Resumo · HTML' =
-			"<div class='tela resumo-final'><div class='linha-diferenca sobe fx-diferenca'><div class='rot'>DIFERENÇA FINAL</div>"
+			"<div class='tela resumo-final'><div class='linha-diferenca sobe fx-diferenca'><div class='rot'>DIFERENÇA FINAL"
+			    & "<span class='aceno'>a cunha do meio: " & FORMAT ( [T23 · diferença em pontos], "0" ) & " pontos</span></div>"
 			    & "<div class='num diferenca'>" & FORMAT ( [T23 · diferença final], "#,0" ) & "</div>"
 			    & "<div class='de'>votos entre Lula e Flávio</div></div>"
 			    & "<div class='participacao sobe fx-participacao'><div class='abst'>Abstenção · 1º → 2º turno: <b class='num'>" & FORMAT ( [T23 · abstenção 1º turno], "0.00%" )
