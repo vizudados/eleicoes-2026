@@ -1,0 +1,50 @@
+medida,arquivo,filtra_ano_explicitamente,valores_ano,filtros_ano,sha256
+T01 · ponto · % no grupo em 2022,pbi/dax/T01 Placar/Contas/T01 · ponto · % no grupo em 2022.dax,True,2022,1,831cf92604175df298a2049b29dcd519e7bcc08eb43e2ac4dc788c5949f4baf3
+T01 · ponto · % no grupo em 2026,pbi/dax/T01 Placar/Contas/T01 · ponto · % no grupo em 2026.dax,True,2026,1,95c1c4dc61900dc200206cd0ca04ddb5af3726f51d1aa0056ea9743c8c676ef7
+T01 · ponto · votos no grupo em 2022,pbi/dax/T01 Placar/Contas/T01 · ponto · votos no grupo em 2022.dax,True,2022,2,88005b8156857e532f549d1c3177b771e55e8a933cc07e41b4de3ae8b4e1b5e4
+T01 · ponto · votos no grupo em 2026,pbi/dax/T01 Placar/Contas/T01 · ponto · votos no grupo em 2026.dax,True,2026,2,292cb1fcd457e5cc40a298098e68e1875097b5cf12f29c0a4d58872f97c9b247
+T01 · ponto · votos no grupo,pbi/dax/T01 Placar/Contas/T01 · ponto · votos no grupo.dax,True,_a,2,c31988c7e0efff2d5cc6c0856e02f68192380583fe1f240a489a44dc303400bc
+T03 · aptos (municípios),pbi/dax/T03 Lula/Contas/T03 · aptos (municípios).dax,True,2026,1,0b07edda5a3892adfc0b6bdf37b323f8681b3720d7e7cfd2295a502279f32397
+T03 · votos (municípios),pbi/dax/T03 Lula/Contas/T03 · votos (municípios).dax,True,2026,1,1a5fb4541b1fe09d68b0f69a26d54fc005ca6393bb03faf12e5c6670a341fb8d
+T03 · votos 2022 (municípios),pbi/dax/T03 Lula/Contas/T03 · votos 2022 (municípios).dax,True,2022,1,35dc7ecdcc89e31ead44ff3b75ddd0fc6f1ae05113188a7ae008e845f8f1aec9
+T03 · votos do adversário (municípios),pbi/dax/T03 Lula/Contas/T03 · votos do adversário (municípios).dax,True,2026,1,b83f6ca533eb23ec3b0312d0b627c04fd5491c36bc21cdb59c030184d1c0fc45
+T03 · votos do adversário 2022 (municípios),pbi/dax/T03 Lula/Contas/T03 · votos do adversário 2022 (municípios).dax,True,2022,1,39137b15b4368529e928bd213598a460b8632850d3063876fc424ef39039889c
+T03 · válidos (municípios),pbi/dax/T03 Lula/Contas/T03 · válidos (municípios).dax,True,2026,1,f6bc8902014b0ab6716ecfeae9142f5874f32633a23feaca48feef564a5fe214
+T03 · válidos 2022 (municípios),pbi/dax/T03 Lula/Contas/T03 · válidos 2022 (municípios).dax,True,2022,1,bca325aa529762a88cf78322fb2c4eea1c867f413466739a6c19b1d325615c56
+T05 · aptos (municípios),pbi/dax/T05 Flávio/Contas/T05 · aptos (municípios).dax,True,2026,1,a1fd5e30baa428e7e92486593f1478ca68c7f2d9702745885a6bdc0570019e07
+T05 · votos (municípios),pbi/dax/T05 Flávio/Contas/T05 · votos (municípios).dax,True,2026,1,082e0506ef5f8007871120e3cd472237fb2bc678c7039e831109794f70bacf12
+T05 · votos 2022 (municípios),pbi/dax/T05 Flávio/Contas/T05 · votos 2022 (municípios).dax,True,2022,1,f21469fae40f896f7e7000b5d625594306593d20437082ec4e9bb191aedd471c
+T05 · votos do adversário (municípios),pbi/dax/T05 Flávio/Contas/T05 · votos do adversário (municípios).dax,True,2026,1,80184fab07d37577aa4fe32789d710d8f6148d250553dcf6dd33f7bd21a77a09
+T05 · votos do adversário 2022 (municípios),pbi/dax/T05 Flávio/Contas/T05 · votos do adversário 2022 (municípios).dax,True,2022,1,d935643163b7747b912f12e3747c37da3db7ec6f5a0a435fdbf2e4c58cefbc2b
+T05 · válidos (municípios),pbi/dax/T05 Flávio/Contas/T05 · válidos (municípios).dax,True,2026,1,d6c4914273d59804abf119774322551a22656529c114554edfcaae58f3e86395
+T05 · válidos 2022 (municípios),pbi/dax/T05 Flávio/Contas/T05 · válidos 2022 (municípios).dax,True,2022,1,0c28ba61aa7f1b0f81dbd90e43a4cb882ce37fa9b2ba8b6989111f442de61624
+T11 · saldo 2022,pbi/dax/T11 Virada/Contas/T11 · saldo 2022.dax,True,2022,1,52bff8b6b92ac1b1de50df48dcbe2b202dafdc0f0282ceead97c96865c0c1618
+T11 · saldo 2026,pbi/dax/T11 Virada/Contas/T11 · saldo 2026.dax,True,2026,1,eafc931843a8cd95d2bbad9b6671952159103de1443ce1bba49d20ddb4a1122e
+T11 · votos de Lula 2022,pbi/dax/T11 Virada/Contas/T11 · votos de Lula 2022.dax,True,2022,1,39fc9427e0f6959f63ac9137c23babc6a6827f70755153f1646c9a3f8fc3c811
+T11 · votos de Lula 2026,pbi/dax/T11 Virada/Contas/T11 · votos de Lula 2026.dax,True,2026,1,fb118c4a52f81d23914a2a7e6b3dcf785927c5dd1e247c917f4924a6f035da38
+T11 · votos do PL 2022,pbi/dax/T11 Virada/Contas/T11 · votos do PL 2022.dax,True,2022,1,b9f2359e96d1470e983aa37b6f10f87483659922725c54aa82ac89c4390c41c2
+T11 · votos do PL 2026,pbi/dax/T11 Virada/Contas/T11 · votos do PL 2026.dax,True,2026,1,2fd63dee85db1bd0700cb30320e14468b747e57514a3920249cb70705b30050e
+T11 · válidos 2022,pbi/dax/T11 Virada/Contas/T11 · válidos 2022.dax,True,2022,1,d24a85e79d3651e1219633a3e89a1326dd6dc870192f7e9d7859bbeff04ef49e
+T11 · válidos 2026,pbi/dax/T11 Virada/Contas/T11 · válidos 2026.dax,True,2026,1,8bf3692de39e97e49c8f8c116c02f9dd7297086862e0294c4b0828c6b7bc8984
+T12 · saldo municipal 2022,pbi/dax/T12 Estados/Contas/T12 · saldo municipal 2022.dax,True,2022,1,f09116f8914cabcc9183b797f568686ffa744f427d2aeb8b69b2bbb53d659281
+T12 · saldo municipal 2026,pbi/dax/T12 Estados/Contas/T12 · saldo municipal 2026.dax,True,2026,1,47bcca9b9bb01216b7938b5ab398c0bea0391fd773d88cf69de71481c1262f7c
+T13 · saldo 2022,pbi/dax/T13 Perfil/Contas/T13 · saldo 2022.dax,True,2022,1,a08f28d2c69d25885d674c31a7614a1f542124203b31879c4c27f10055bfb5c9
+T13 · saldo 2026,pbi/dax/T13 Perfil/Contas/T13 · saldo 2026.dax,True,2026,1,2dfe2778a01ea03eb085a77a8c102c93bc07fd6818cfa5de4a0ab2c269d9530e
+T13 · válidos 2022,pbi/dax/T13 Perfil/Contas/T13 · válidos 2022.dax,True,2022,1,7d1ba5f5c792fdb3eb7188be34b126ce498ba02be1da671b110c4c03f1630d5a
+T13 · válidos 2026,pbi/dax/T13 Perfil/Contas/T13 · válidos 2026.dax,True,2026,1,1ef6674b5ef95739974550f0ccfe1fbd1e202360780eef503426d8966a2048af
+T27 · abstenções 2º,pbi/dax/T27 De onde vieram/Contas/T27 · abstenções 2º.dax,True,2026,1,4e4ff43da5501485b0d834c1163140e2d14979380810c20f4bc5e3632742f7a6
+T27 · brancos 2º,pbi/dax/T27 De onde vieram/Contas/T27 · brancos 2º.dax,True,2026,1,e753ce8325d8ad7cde0bbeb88cf1194c1a96f0a82ad7fe570e1798c22595d46d
+T27 · comparecimento 2º,pbi/dax/T27 De onde vieram/Contas/T27 · comparecimento 2º.dax,True,2026,1,ed8b0341854a5df16a77a73b9d3f8d419f6ae9f67bf1037c78a360c6f83a97a6
+T27 · Flávio 2º,pbi/dax/T27 De onde vieram/Contas/T27 · Flávio 2º.dax,True,2026,1,7149e64e7c9b968979d52bbb4c70dce40be1aca746a7b6f859bea4fc25f89753
+T27 · Jair 2022,pbi/dax/T27 De onde vieram/Contas/T27 · Jair 2022.dax,True,2022,2,fc69f0b1393cd82bf6f5c5b63d2e8ce431b7c4f994a2a8c46d0c9af5a0f355f9
+T27 · Lula 2022,pbi/dax/T27 De onde vieram/Contas/T27 · Lula 2022.dax,True,2022,2,abd18fada99dec09e170486f536e0a7cdc0b3d4e9e0e3b43d55ac82a4744fad1
+T27 · Lula 2º,pbi/dax/T27 De onde vieram/Contas/T27 · Lula 2º.dax,True,2026,1,e8d0c43779e251600c3a2a6abd63701d1d07e945d04dfd500ca9a62f392ba7fe
+T27 · nulos 2º,pbi/dax/T27 De onde vieram/Contas/T27 · nulos 2º.dax,True,2026,1,2ef1423d48b252e793b4c45dee8716385b9da4f26fcd1a98af4fd6a02700230d
+T28 · abstenções 2º,pbi/dax/T28 Onde Flávio perdeu/Contas/T28 · abstenções 2º.dax,True,2026,1,70c7417394c164e91474e01c5e9e9afff5c75f4bf625567d1c32a494b5760fcf
+T28 · brancos 2º,pbi/dax/T28 Onde Flávio perdeu/Contas/T28 · brancos 2º.dax,True,2026,1,d0c096405d1d0254b924f3562b15022a77c17e638de1b19cf09f3f96a99fc0a1
+T28 · comparecimento 2º,pbi/dax/T28 Onde Flávio perdeu/Contas/T28 · comparecimento 2º.dax,True,2026,1,d85aec2df48555336d8550932a63e773373591a6086ed8f872fd37072fcc83fa
+T28 · Flávio 2º,pbi/dax/T28 Onde Flávio perdeu/Contas/T28 · Flávio 2º.dax,True,2026,1,8367bc75235fffd8c1668dab70aa36d02d0fb01e1a0c749b4e76458edf8ad60b
+T28 · Jair 2022,pbi/dax/T28 Onde Flávio perdeu/Contas/T28 · Jair 2022.dax,True,2022,2,fbc45e549c3ef63edcf1e09ed7173b80b7dd1b43ae87c36b8b7ff11cc7da4df8
+T28 · Lula 2022,pbi/dax/T28 Onde Flávio perdeu/Contas/T28 · Lula 2022.dax,True,2022,2,9781501d5d3d154ae2a3cb8b79db25c26ad63eecb2c047df6d2230ece5cb2667
+T28 · Lula 2º,pbi/dax/T28 Onde Flávio perdeu/Contas/T28 · Lula 2º.dax,True,2026,1,5db904972beb68f3ae0b8fd6a89a6c2c0e1e9db6913d6f15a7561e0af58e351a
+T28 · nulos 2º,pbi/dax/T28 Onde Flávio perdeu/Contas/T28 · nulos 2º.dax,True,2026,1,fad291286ba601fb38b3f6233f274981afa3641b49b05f80f656e5df5794fc27

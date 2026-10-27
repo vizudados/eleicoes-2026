@@ -1,0 +1,17 @@
+{
+  "metodo": "csv.DictReader, Counter e inteiros Python; reextração independente sem pandas",
+  "contagens": {
+    "celulas_municipais_turno_1": 300717,
+    "celulas_municipais_turno_2": 300717,
+    "celulas_comparecimento": 180,
+    "linhas_secao_2022": 420904,
+    "celulas_zona_2022": 1595,
+    "celulas_zona_2022_detalhe": 957,
+    "hashes_zonas_2026": 320,
+    "celulas_zona_2026": 3200,
+    "celulas_zonas_combinadas": 5751,
+    "hashes_entrada_conferidos": 5853
+  },
+  "diferencas": 0,
+  "bytes_2022_2026_preservados": true
+}

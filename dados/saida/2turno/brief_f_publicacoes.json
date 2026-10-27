@@ -1,0 +1,1198 @@
+{
+  "executado_utc": "2026-10-27T01:53:36.901344+00:00",
+  "modo": "releitura do cache",
+  "cache": "dados/bruto/tse/brief_f",
+  "arquivos": [
+    {
+      "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_comparecimento_abstencao/perfil_comparecimento_abstencao_2026.zip",
+      "arquivo": "dados/bruto/tse/brief_f/perfil_comparecimento_abstencao_2026.zip",
+      "sha256": "abd1af8ff28a80b4e861edafd9f544a8f3f667e1c2e146911d083bf7cc34f023",
+      "bytes": 229213668,
+      "membros": [
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_SC.csv",
+          "bytes": 130443442,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            14,
+            0
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_TO.csv",
+          "bytes": 46745278,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            13,
+            22
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_PR.csv",
+          "bytes": 178260634,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            14,
+            28
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_AL.csv",
+          "bytes": 51845654,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            13,
+            26
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_SP.csv",
+          "bytes": 454776470,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            16,
+            32
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_RJ.csv",
+          "bytes": 174170527,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            14,
+            30
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_AC.csv",
+          "bytes": 12104843,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            13,
+            8
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_RO.csv",
+          "bytes": 31157505,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            13,
+            26
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_AP.csv",
+          "bytes": 10705350,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            13,
+            30
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_DF.csv",
+          "bytes": 19743422,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            13,
+            42
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_AM.csv",
+          "bytes": 44298883,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            14,
+            0
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_SE.csv",
+          "bytes": 35130979,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            14,
+            0
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_RR.csv",
+          "bytes": 9643612,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            13,
+            50
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_MG.csv",
+          "bytes": 409289413,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            17,
+            36
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_ZZ.csv",
+          "bytes": 32151786,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            14,
+            16
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_MA.csv",
+          "bytes": 106602057,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            15,
+            10
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_GO.csv",
+          "bytes": 122035611,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            15,
+            28
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_MT.csv",
+          "bytes": 72894728,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            15,
+            10
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_CE.csv",
+          "bytes": 114924012,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            15,
+            50
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_ES.csv",
+          "bytes": 54615286,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            15,
+            38
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_RN.csv",
+          "bytes": 68444225,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            15,
+            58
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_BA.csv",
+          "bytes": 220810816,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            17,
+            38
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_PA.csv",
+          "bytes": 101544664,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            16,
+            38
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_MS.csv",
+          "bytes": 49114221,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            16,
+            28
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_BRASIL.csv",
+          "bytes": 3034230075,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            38,
+            36
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_PB.csv",
+          "bytes": 87466907,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            17,
+            22
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_RS.csv",
+          "bytes": 187812233,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            18,
+            12
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_PI.csv",
+          "bytes": 80856802,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            17,
+            32
+          ]
+        },
+        {
+          "nome": "perfil_comparecimento_abstencao_2026_PE.csv",
+          "bytes": 126664475,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            16,
+            18,
+            22
+          ]
+        },
+        {
+          "nome": "leiame.pdf",
+          "bytes": 135289,
+          "data_zip": [
+            2026,
+            10,
+            21,
+            15,
+            47,
+            38
+          ]
+        }
+      ],
+      "linhas_por_turno": {
+        "1": 11060908
+      },
+      "datas_geracao": {
+        "13/10/2026": 11060908
+      },
+      "perfil_2turno_disponivel": false
+    },
+    {
+      "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_BR.zip",
+      "arquivo": "dados/bruto/tse/brief_f/votacao_secao_2026_BR.zip",
+      "sha256": "2d42006d0f6c6e00bad83f5c23cd3d78cd3e3182dbc1ad6718222b6b132c23e1",
+      "bytes": 161616519,
+      "membros": [
+        {
+          "nome": "votacao_secao_2026_BR.csv",
+          "bytes": 1052510851,
+          "data_zip": [
+            2026,
+            10,
+            6,
+            19,
+            18,
+            16
+          ]
+        },
+        {
+          "nome": "leiame.pdf",
+          "bytes": 192420,
+          "data_zip": [
+            2026,
+            10,
+            6,
+            17,
+            2,
+            56
+          ]
+        }
+      ],
+      "linhas_por_turno": {
+        "1": 3800511
+      },
+      "linhas_2turno_34_cidades": 0
+    },
+    {
+      "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2022_BR.zip",
+      "arquivo": "dados/bruto/tse/brief_f/votacao_secao_2022_BR.zip",
+      "sha256": "9353993de5cf03778aef44e01d4925e7ee105f5262491d344a2f0dbc956b0139",
+      "bytes": 271292455,
+      "membros": [
+        {
+          "nome": "votacao_secao_2022_BR.csv",
+          "bytes": 1591148802,
+          "data_zip": [
+            2022,
+            11,
+            2,
+            17,
+            31,
+            48
+          ]
+        },
+        {
+          "nome": "leiame.pdf",
+          "bytes": 192420,
+          "data_zip": [
+            2022,
+            11,
+            24,
+            8,
+            45,
+            48
+          ]
+        }
+      ],
+      "linhas_por_turno": {
+        "1": 3529844,
+        "2": 1850892
+      },
+      "linhas_2turno_34_cidades": 420904
+    }
+  ],
+  "catalogos": [
+    {
+      "url": "https://dadosabertos.tse.jus.br/api/3/action/package_show?id=comparecimento-e-abstencao-2026",
+      "arquivo": "dados\\bruto\\tse\\brief_f\\comparecimento-e-abstencao-2026.json",
+      "metadata_modified": "2026-10-21T13:22:56.470155",
+      "recursos": [
+        {
+          "name": "Comparecimento e Abstenção",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_comparecimento_abstencao/perfil_comparecimento_abstencao_2026.zip",
+          "last_modified": null,
+          "created": "2026-10-21T13:21:18.490243"
+        },
+        {
+          "name": "Pessoas com deficiência",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_comparecimento_abstencao_eleitor_deficiente/perfil_comparecimento_abstencao_eleitor_deficiente_2026.zip",
+          "last_modified": null,
+          "created": "2026-10-21T13:22:09.298549"
+        },
+        {
+          "name": "Transferência temporária de eleitor",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/perfil_comparecimento_abstencao_eleitor_tte/perfil_comparecimento_abstencao_eleitor_tte_2026.zip",
+          "last_modified": null,
+          "created": "2026-10-21T13:22:56.285179"
+        }
+      ]
+    },
+    {
+      "url": "https://dadosabertos.tse.jus.br/api/3/action/package_show?id=resultados-2026",
+      "arquivo": "dados\\bruto\\tse\\brief_f\\resultados-2026.json",
+      "metadata_modified": "2026-10-08T13:50:26.624557",
+      "recursos": [
+        {
+          "name": "Votação nominal por município e zona",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_candidato_munzona/votacao_candidato_munzona_2026.zip",
+          "last_modified": null,
+          "created": "2026-10-07T14:34:55.786681"
+        },
+        {
+          "name": "Votação em partido por município e zona ",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_partido_munzona/votacao_partido_munzona_2026.zip",
+          "last_modified": null,
+          "created": "2026-10-07T14:35:28.475704"
+        },
+        {
+          "name": "Detalhe da apuração por município e zona",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_munzona/detalhe_votacao_munzona_2026.zip",
+          "last_modified": null,
+          "created": "2026-10-07T14:35:56.681721"
+        },
+        {
+          "name": "Detalhe da apuração por seção eleitoral",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/detalhe_votacao_secao/detalhe_votacao_secao_2026.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:24:27.684990"
+        },
+        {
+          "name": "Presidente - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_BR.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:26:18.804359"
+        },
+        {
+          "name": "AC - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_AC.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:27:44.897998"
+        },
+        {
+          "name": "AL - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_AL.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:28:38.273415"
+        },
+        {
+          "name": "AM - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_AM.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:29:18.049485"
+        },
+        {
+          "name": "AP - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_AP.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:29:52.488301"
+        },
+        {
+          "name": "BA - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_BA.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:30:25.146979"
+        },
+        {
+          "name": "CE - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_CE.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:30:57.766088"
+        },
+        {
+          "name": "DF - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_DF.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:31:41.538690"
+        },
+        {
+          "name": "ES - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_ES.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:32:13.470789"
+        },
+        {
+          "name": "GO - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_GO.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:32:42.619608"
+        },
+        {
+          "name": "MA - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_MA.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:33:27.376042"
+        },
+        {
+          "name": "MG - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_MG.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:34:08.768550"
+        },
+        {
+          "name": "MS - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_MS.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:34:38.361916"
+        },
+        {
+          "name": "MT - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_MT.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:35:07.463736"
+        },
+        {
+          "name": "PA - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_PA.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:35:45.096303"
+        },
+        {
+          "name": "PB - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_PB.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:36:20.805903"
+        },
+        {
+          "name": "PE - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_PE.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:36:56.834059"
+        },
+        {
+          "name": "PI - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_PI.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:37:26.583107"
+        },
+        {
+          "name": "PR - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_PR.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:37:57.417763"
+        },
+        {
+          "name": "RJ - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_RJ.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:38:36.841828"
+        },
+        {
+          "name": "RN - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_RN.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:39:20.163916"
+        },
+        {
+          "name": "RO - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_RO.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:39:50.426656"
+        },
+        {
+          "name": "RR - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_RR.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:40:19.879707"
+        },
+        {
+          "name": "RS - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_RS.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:42:59.151672"
+        },
+        {
+          "name": "SC - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_SC.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:43:38.604244"
+        },
+        {
+          "name": "SE - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_SE.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:44:18.826088"
+        },
+        {
+          "name": "SP - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_SP.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:44:48.314125"
+        },
+        {
+          "name": "TO - Votação por seção eleitoral - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/votacao_secao/votacao_secao_2026_TO.zip",
+          "last_modified": null,
+          "created": "2026-10-08T12:45:18.880541"
+        },
+        {
+          "name": "AC - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_AC.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:41:52.893873"
+        },
+        {
+          "name": "AL - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_AL.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:42:13.985301"
+        },
+        {
+          "name": "AM - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_AM.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:42:47.293112"
+        },
+        {
+          "name": "AP - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_AP.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:44:01.310795"
+        },
+        {
+          "name": "BA - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_BA.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:44:41.063495"
+        },
+        {
+          "name": "BR - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_BR.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:01:10.609642"
+        },
+        {
+          "name": "CE - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_CE.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:45:10.311118"
+        },
+        {
+          "name": "DF - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_DF.zip",
+          "last_modified": null,
+          "created": "2026-10-07T18:30:12.196340"
+        },
+        {
+          "name": "ES - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_ES.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:45:39.470903"
+        },
+        {
+          "name": "GO - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_GO.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:46:29.517597"
+        },
+        {
+          "name": "MA - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_MA.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:47:02.405946"
+        },
+        {
+          "name": "MG - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_MG.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:47:32.718218"
+        },
+        {
+          "name": "MS - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_MS.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:48:01.405735"
+        },
+        {
+          "name": "MT - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_MT.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:48:59.381370"
+        },
+        {
+          "name": "PA - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_PA.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:49:30.269028"
+        },
+        {
+          "name": "PB - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_PB.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:49:59.074439"
+        },
+        {
+          "name": "PE - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_PE.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:50:51.867635"
+        },
+        {
+          "name": "PI - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_PI.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:52:01.068555"
+        },
+        {
+          "name": "PR - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_PR.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:52:32.524415"
+        },
+        {
+          "name": "RJ - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_RJ.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:53:30.569750"
+        },
+        {
+          "name": "RN - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_RN.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:54:41.813073"
+        },
+        {
+          "name": "RO - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_RO.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:56:11.062757"
+        },
+        {
+          "name": "RR - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_RR.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:56:51.826079"
+        },
+        {
+          "name": "RS - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_RS.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:57:21.383644"
+        },
+        {
+          "name": "SC - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_SC.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:57:54.621598"
+        },
+        {
+          "name": "SE - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_SE.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:58:32.365184"
+        },
+        {
+          "name": "SP - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_SP.zip",
+          "last_modified": null,
+          "created": "2026-10-06T17:59:52.532066"
+        },
+        {
+          "name": "TO - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_TO.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:00:29.151287"
+        },
+        {
+          "name": "ZZ - Relatório de Totalização - 2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/odsele/relatorio_resultado_totalizacao/Relatorio_Resultado_Totalizacao_2026_ZZ.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:10:40.765079"
+        }
+      ]
+    },
+    {
+      "url": "https://dadosabertos.tse.jus.br/api/3/action/package_show?id=resultados-2026-boletim-de-urna",
+      "arquivo": "dados\\bruto\\tse\\brief_f\\resultados-2026-boletim-de-urna.json",
+      "metadata_modified": "2026-10-06T20:14:17.626608",
+      "recursos": [
+        {
+          "name": "AC - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_AC_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:29:58.352508"
+        },
+        {
+          "name": "AC - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_AC_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:30:08.890381"
+        },
+        {
+          "name": "AL - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_AL_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:30:22.726200"
+        },
+        {
+          "name": "AL - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_AL_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:30:35.962976"
+        },
+        {
+          "name": "AM - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_AM_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:30:50.963458"
+        },
+        {
+          "name": "AM - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_AM_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:31:00.157015"
+        },
+        {
+          "name": "AP - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_AP_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:31:13.456475"
+        },
+        {
+          "name": "AP - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_AP_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:31:22.693725"
+        },
+        {
+          "name": "BA - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_BA_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:31:36.642062"
+        },
+        {
+          "name": "BA - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_BA_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:31:45.445087"
+        },
+        {
+          "name": "CE - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_CE_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:32:00.358958"
+        },
+        {
+          "name": "CE - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_CE_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:32:09.540403"
+        },
+        {
+          "name": "DF - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_DF_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:32:23.472319"
+        },
+        {
+          "name": "DF - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_DF_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:32:33.266365"
+        },
+        {
+          "name": "ES - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_ES_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:32:46.665446"
+        },
+        {
+          "name": "ES - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_ES_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:32:56.073811"
+        },
+        {
+          "name": "GO - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_GO_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:33:09.993630"
+        },
+        {
+          "name": "GO - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_GO_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:33:22.274885"
+        },
+        {
+          "name": "MA - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_MA_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:33:35.814229"
+        },
+        {
+          "name": "MA - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_MA_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:33:46.261861"
+        },
+        {
+          "name": "MG - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_MG_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:34:01.865657"
+        },
+        {
+          "name": "MG - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_MG_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:34:10.896918"
+        },
+        {
+          "name": "MS - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_MS_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:35:12.861566"
+        },
+        {
+          "name": "MS - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_MS_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:35:30.830777"
+        },
+        {
+          "name": "MT - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_MT_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:35:45.864978"
+        },
+        {
+          "name": "MT - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_MT_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:35:55.870021"
+        },
+        {
+          "name": "PA - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PA_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:36:10.979136"
+        },
+        {
+          "name": "PA - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PA_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:36:22.210300"
+        },
+        {
+          "name": "PB - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PB_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:36:37.939809"
+        },
+        {
+          "name": "PB - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PB_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:36:53.090596"
+        },
+        {
+          "name": "PE - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PE_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:37:07.595007"
+        },
+        {
+          "name": "PE - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PE_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:37:18.370053"
+        },
+        {
+          "name": "PI - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PI_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:38:01.500898"
+        },
+        {
+          "name": "PI - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PI_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:38:12.069625"
+        },
+        {
+          "name": "PR - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PR_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:38:24.727353"
+        },
+        {
+          "name": "PR - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_PR_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:38:36.345024"
+        },
+        {
+          "name": "RJ - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RJ_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:38:49.495734"
+        },
+        {
+          "name": "RJ - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RJ_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:39:00.633222"
+        },
+        {
+          "name": "RN - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RN_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:39:13.606653"
+        },
+        {
+          "name": "RN - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RN_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:39:22.627673"
+        },
+        {
+          "name": "RO - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RO_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:39:36.979033"
+        },
+        {
+          "name": "RO - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RO_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:39:45.669223"
+        },
+        {
+          "name": "RR - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RR_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:39:59.809627"
+        },
+        {
+          "name": "RR - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RR_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:40:13.085818"
+        },
+        {
+          "name": "RS - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RS_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:40:25.727897"
+        },
+        {
+          "name": "RS - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_RS_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:40:34.540722"
+        },
+        {
+          "name": "SC - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_SC_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:40:48.522208"
+        },
+        {
+          "name": "SC - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_SC_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:40:57.967964"
+        },
+        {
+          "name": "SE - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_SE_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:41:15.213419"
+        },
+        {
+          "name": "SE - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_SE_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:41:24.766120"
+        },
+        {
+          "name": "SP - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_SP_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:41:37.939985"
+        },
+        {
+          "name": "SP - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_SP_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:41:46.975317"
+        },
+        {
+          "name": "TO - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_TO_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:42:01.777733"
+        },
+        {
+          "name": "TO - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_TO_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:42:11.372360"
+        },
+        {
+          "name": "ZZ - Boletim de Urna - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_ZZ_051020261403.zip",
+          "last_modified": null,
+          "created": "2026-10-06T18:42:25.495274"
+        },
+        {
+          "name": "ZZ - Hash SHA2 - Primeiro turno - 05.10.2026",
+          "url": "https://cdn.tse.jus.br/estatistica/sead/eleicoes/eleicoes2026/buweb/bweb_1t_ZZ_051020261403.zip.sha512",
+          "last_modified": null,
+          "created": "2026-10-06T18:42:37.281737"
+        }
+      ]
+    }
+  ]
+}

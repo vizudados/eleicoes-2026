@@ -1,4 +1,4 @@
-"""Segundo turno municipal (2022/2026) e totalizações por UF, somente volumes observados.
+"""Segundo turno municipal (2006 a 2026) e totalizações por UF (2022/2026), somente volumes observados.
 
 Publicar os dois CSV antes de gerar o modelo. Município segundo turno liga a Município e Ano;
 UF é alcançada por Município → UF, sem um segundo caminho ativo. UF segundo turno liga a UF e Ano.
@@ -9,8 +9,8 @@ from gerar_modelo import col, tabela_csv
 def campos_voto():
     return [col('ano', 'Ano', tipo='int', oculta=True, formato='0', descricao='Ano, somente segundo turno.'),
             *[col(origem, nome, tipo='int', oculta=True, descricao=desc) for origem, nome, desc in [
-                ('pt', 'VotosPT', 'Votos de Lula.'),
-                ('adv', 'VotosAdversario', 'Votos de Flávio em 2026 e Jair Bolsonaro em 2022.'),
+                ('pt', 'VotosPT', 'Votos do candidato do PT (Lula em 2006, 2022 e 2026; Dilma em 2010 e 2014; Haddad em 2018).'),
+                ('adv', 'VotosAdversario', 'Votos do adversário do PT no 2º turno: Flávio em 2026, Jair Bolsonaro em 2022 e 2018, Aécio em 2014, Serra em 2010, Alckmin em 2006.'),
                 ('demais', 'VotosDemais', 'Demais candidatos; zero no segundo turno.'),
                 ('validos', 'Validos', 'Votos válidos.'), ('aptos', 'Aptos', 'Eleitores aptos.'),
                 ('comparecimento', 'Comparecimento', 'Comparecimento registrado pelo TSE.'),
@@ -20,8 +20,9 @@ def campos_voto():
 
 TABELAS = [
     tabela_csv('Município segundo turno',
-               'Segundo turno por município, 2022 e 2026, sem exterior. Município ausente em 2022 permanece ausente; '
-               'não equivale a zero. Fonte: TSE, exportação validada por pipeline/exportar_2turno.py.',
+               'Segundo turno por município, 2006 a 2026, sem exterior. Município ausente num ano permanece ausente; '
+               'não equivale a zero. Fonte: TSE, exportação validada por pipeline/exportar_2turno.py (2022 e 2026) e '
+               'pipeline/brief_f_2turno.py (2006 a 2018). Toda medida filtra o ano.',
                'dados/pbi/municipio_2turno.csv',
                [col('cd_ibge', 'CodIBGE', oculta=True, descricao='Código IBGE, chave da dimensão Município.'),
                 *campos_voto()], oculta=True),

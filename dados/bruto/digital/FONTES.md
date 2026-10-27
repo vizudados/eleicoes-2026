@@ -398,3 +398,100 @@ continua até 22/10.
 Nenhuma página consultada trazia instruções dirigidas ao agente. Nada pediu login obrigatório para os dados usados:
 o Social Blade e o Relatório da Biblioteca de Anúncios da Meta foram lidos sem login. Não aceitei banners de cookies,
 não resolvi CAPTCHA, não baixei arquivos e não gerei imagens.
+
+
+## Brief H — 26/10/2026, noite: redes até o 2º turno, pós-eleição e renda no Datafolha
+
+Pesquisa registrada em 2026-10-26T22:56:53-03:00, horário de Brasília. Esse é o horário do registro dos achados; as horas exatas de cada leitura de página não foram registradas. Somente dois CSV novos e esta seção foram escritos.
+Arquivos de `pbi/`, `dados/pbi/`, `video/` e `web/` não foram alterados por esta pesquisa. Sem commit ou push.
+
+### Formato e critério de integração
+
+- `pos_2turno.csv`: mesmas nove colunas, ordem, separador `;` e UTF-8 sem BOM do `monitoramento.csv` bruto. Há 14 valores confirmados e 46 lacunas explícitas. Campo `valor` vazio significa **não encontrado**, nunca zero.
+- `../pesquisas/datafolha_2turno_renda.csv`: seis linhas (três faixas x dois candidatos), com as oito colunas iniciais de `perfil_lula_flavio.csv` e metadados adicionais de campo, registro, base e peso amostral.
+- Nas lacunas, as datas identificam a janela solicitada, não uma medição observada. A ausência de publicação nesta pesquisa não prova que a empresa não tenha dados privados.
+- Não juntar Bites, Projeto Brief, Datrix, HypeAuditor, Ativaweb ou Quaest numa mesma série. Não completar dias ausentes, repetir o último IPD ou somar janelas sobrepostas. O ponto IPD de 19/10 é uma reconfirmação: deduplicar com o existente na integração.
+- Todos os horários de notícias abaixo são os exibidos nas páginas, tratados como Brasília. A Meta não informa hora de atualização nem explicita o fuso dos dias na tabela; o horário de registro da pesquisa consta nos CSVs e não deve ser chamado de hora de publicação ou de atualização da fonte.
+
+### 1. Interações nos perfis oficiais — Bites
+
+**Achado novo confirmado:** de **19 a 24/10/2026, com 24/10 parcial**, Lula **92.000.000** e Flávio **24.600.000** interações. X, YouTube, TikTok, Instagram e Facebook, nos perfis oficiais. A fonte não informa a hora de corte desses totais. O horário de meio-dia citado para visualizações de um vídeo não foi transferido para a série de interações.
+
+- [Jamildo, 24/10/2026 às 20h48](https://jamildo.com/politica/debate-da-globo-bites-aponta-ana-clara-e-fala-de-lula-como-destaques-nas-redes.html), análise da Bites intitulada “A véspera do segundo turno”.
+- [JC, 24/10/2026 às 17h39](https://jc.uol.com.br/politica/2026/10/24/debate-entre-lula-e-flavio-bolsonaro-gera-15-milhao-de-citacoes-nas-redes-video-sobre-policia-alcanca-67-milhoes-de-visualizacoes.html), mesmo par de valores e mesma janela.
+
+**Não encontrado:** a janela exata 18–25/10, o total de 05–25/10 e as 24 horas depois da eleição. A janela 19–24/10 é o recorte substituto publicado, permitido pelo brief; não equivale ao fechamento solicitado. Não somar 05–17/10, as 24 horas pós-Band e 19–24/10: as horas não fecham nem garantem ausência de sobreposição.
+
+Buscas realizadas, com variações de acentos e datas: `Bites Lula Flávio interações redes sociais outubro 2026 25 26 segundo turno`; `"Bites" "Lula" "Flávio" "26/10/2026"`; `"Bites" "25 de outubro de 2026" "interações"`; `"Bites" "18 a 25" Lula`; `"Bites" "5 a 25" Lula`; `"Bites" "05 a 25"`; `"Bites" Lula Flávio "pós-eleição" "2026"`; `"Bites" "Lula" "Flávio" "24 horas" eleição -debate`.
+
+Consultados resultados e matérias de Jamildo, JC, CNN Brasil, Poder360 e Folha. Resultados de agregadores foram usados apenas como pistas. AP/Projeto Brief (outro fornecedor), HypeAuditor/Exame e Ativaweb não entraram na Bites.
+
+### 2. Índice de Popularidade Digital — Quaest/Folha
+
+| Dia medido | Lula | Flávio | Publicação |
+|---|---:|---:|---|
+| 19/10/2026 | 83,3 | 76,6 | [Folha, 20/10 às 23h00](https://www1.folha.uol.com.br/poder/2026/10/lula-mantem-lideranca-sobre-flavio-bolsonaro-em-indice-de-popularidade-digital-apos-debate.shtml) |
+| 22/10/2026 | 81,1 | 77,0 | [Folha, 23/10 às 19h09; atualização 24/10 às 10h53](https://www1.folha.uol.com.br/poder/2026/10/lula-segue-lider-em-popularidade-digital-mas-distancia-para-flavio-bolsonaro-diminui.shtml) |
+| 24/10/2026 | 82,7 | 76,2 | [Folha, 25/10 às 10h22](https://www1.folha.uol.com.br/poder/2026/10/lula-aumenta-vantagem-sobre-flavio-bolsonaro-em-popularidade-digital-na-vespera-do-segundo-turno.shtml) |
+
+Pontos da escala 0–100; horários de corte não publicados. **Não encontrados** pontos numéricos de 20, 21, 23 e 25/10 nem de 26/10/pós-eleição. Publicar em 25/10 não transforma o ponto medido em 24/10 em dado do dia da eleição.
+
+Buscas: `Quaest popularidade digital Lula Flávio outubro 2026 26`; `"Lula" "Flávio" "popularidade digital" "outubro" "2026"`; `site:folha.uol.com.br/poder/2026/10/ "popularidade digital" "24"`; `site:quaest.com.br "IPD" "outubro" "2026"`; `"Quaest" "IPD" "Lula" after:2026-10-19 before:2026-10-27`; `"Lula" "Flávio" "popularidade digital" after:2026-10-25 before:2026-10-27`; `site:folha.uol.com.br/poder/2026/10/ "Quaest" "popularidade" "26.out"`.
+
+### 3. Ganhos de seguidores
+
+**Não encontrados** os ganhos Bites de 09–25/10 nas quatro redes da CNN (Facebook, Instagram, TikTok, YouTube), seu total e o recorte da noite de 25/10. Na leitura local desta sessão, a documentação de T09 já cita ganhos Bites de 05–17/10 e o levantamento inclui também X; por isso foram registradas lacunas adicionais para X e para o total das cinco redes, sem substituir este último pelo total das quatro redes da CNN. Também não há recorte noturno confirmado no Social Blade consultado. Nenhuma soma entre fornecedores foi feita.
+
+Recorte adicional confirmado, em régua separada: **Quaest, somente Instagram, 24/10:** Lula **+221.000**, Flávio **+161.000**. [Folha, publicada em 25/10/2026 às 10h22](https://www1.folha.uol.com.br/poder/2026/10/lula-aumenta-vantagem-sobre-flavio-bolsonaro-em-popularidade-digital-na-vespera-do-segundo-turno.shtml). Hora de corte não informada. Não é ganho de 09–25/10 nem da noite da votação.
+
+O Social Blade foi consultado diretamente no Chrome, sem login:
+
+- Instagram: [Lula](https://socialblade.com/instagram/user/lulaoficial) e [Flávio](https://socialblade.com/instagram/user/flaviobolsonaro). Totais atuais visíveis, histórico exige login; não localizados os dois extremos da janela pedida nem histórico horário.
+- TikTok: [Lula](https://socialblade.com/tiktok/user/lulaoficial) e [Flávio](https://socialblade.com/tiktok/user/flaviobolsonaro). Histórico público de 14–27/10 conforme datas rotuladas pelo site, sem o saldo/base de 08/10. O seletor para 30 dias aparece desabilitado. Totais arredondados e ausência de recorte horário impedem tratar os dados como ganho exato da noite. A data 27/10 do site não foi convertida em 26/10 de Brasília: o fuso não foi confirmado.
+- YouTube: [Lula](https://socialblade.com/youtube/channel/UCvO2BExvkAbGMsTGnEnI_Ng) e [Flávio](https://socialblade.com/youtube/channel/UCl2HptoHv6PjZMQAwTdA--Q). Série pública começa em 13 ou 14/10, conforme perfil; não foi localizada a base de 08/10. Contagens exibidas de inscritos são arredondadas; dia rotulado não identifica a noite da eleição.
+- Facebook: [Lula](https://socialblade.com/facebook/page/Lula) e [Flávio](https://socialblade.com/facebook/page/flaviobolsonaro). Série pública começa em 13/10 e mede **Likes**, não um total confirmado de seguidores. Não substitui o ganho de seguidores Bites.
+
+O Social Blade não informa hora de publicação/atualização dessas linhas. A consulta desta seção foi feita na noite de 26/10; sem extrair uma janela noturna a partir de totais diários.
+
+Buscas: `"Lula" "Flávio" "seguidores" "26/10/2026"`; `Lula Flávio seguidores noite eleição 25 outubro 2026`; `"Bites" "Lula" "Flávio" "26/10"`; matérias Bites/CNN e Bites/Jamildo já identificadas na base e as páginas públicas acima. Notícias com canais de WhatsApp e estudos de outros fornecedores não foram usados para preencher a série de quatro redes.
+
+### 4. Anúncios — mesma Biblioteca da Meta usada pela tela
+
+Fonte primária: [Relatório da Biblioteca de Anúncios, Brasil](https://www.facebook.com/ads/library/report/?source=nav-header&country=BR), aba **Últimos 7 dias**, tabela **Gasto por anunciante**, intervalo exibido **18–24/10/2026**. Leitura na noite de 26/10/2026, sem hora exata registrada; publicação/hora de atualização não informadas. Registro da pesquisa: 2026-10-26T22:56:53-03:00.
+
+| Página / rótulo da campanha presidencial | Gasto no recorte | Anúncios |
+|---|---:|---:|
+| Lula — `page_id=267949976607343` | R$ 3.071.478 | 7.065 |
+| Flavio Bolsonaro — `page_id=156951837773645` | R$ 9.415.354 | 838 |
+
+São os valores das páginas oficiais sob seus rótulos de campanha. Outras páginas, partidos e terceiros não foram somados. Valores da veiculação na Biblioteca não são pagamentos à Meta declarados ao TSE.
+
+**Não encontrado:** total do 2º turno inteiro, 05–25/10. A data máxima disponível na consulta é **24/10**: aparece tanto no último dia como no controle de término do relatório. A tabela semanal acima não cobre o dia 25. O relatório foi lido na interface; nenhum download foi feito. Não completar a lacuna com a prestação de contas.
+
+### 5. Última pesquisa Datafolha do 2º turno — renda familiar mensal
+
+Rodada divulgada em **24/10**, registro **BR-09540/2026**, campo **23–24/10/2026**, **4.050** entrevistas presenciais em **124 municípios**. Fonte primária: [página oficial do Datafolha, publicada em 26/10/2026 às 16h07](https://datafolha.folha.uol.com.br/eleicoes/2026/10/flavio-bolsonaro-51-e-lula-49-chegam-empatados-tecnicamente-ao-dia-da-eleicao.shtml), que vincula o [relatório completo](https://media.folha.uol.com.br/datafolha/2026/10/26/ufvbq-yncrbmtg7zhclmra.pdf). Ficha técnica: PDF p.22 de 36. Renda: **PDF p.27 de 36 / página impressa 8 de 17, pergunta 2 estimulada, bloco 2**. Perfil amostral: p.24.
+
+| Faixa de renda familiar mensal | Lula, totais | Flávio, totais | Base ponderada da faixa | Peso sobre 4.050 |
+|---|---:|---:|---:|---:|
+| Até 2 SM | 53% | 41% | 1.911 | 47,185185% |
+| Mais de 2 a 5 SM | 41% | 55% | 1.438 | 35,506173% |
+| Mais de 5 SM | 39% | 57% | 546 | 13,481481% |
+
+**Como o peso foi obtido:** base ponderada publicada na própria tabela dividida por 4.050, vezes 100. É cálculo verificável, não estimativa nem novo ajuste da pesquisa. As bases somam **3.895**; a diferença de **155** para o total (**3,827160%**) fica fora dessas três faixas. Não renormalizar os três pesos para 100%, nem somar percentuais arredondados das subfaixas do perfil da p.24 para substituir a base da tabela.
+
+A reportagem da Folha de 24/10 menciona “46% mais pobres”, mas a tabela final publicada pelo instituto traz base de 1.911/4.050. Para o arquivo novo, prevalece a tabela primária da própria rodada. Os percentuais de voto são inteiros publicados e podem somar 99% ou 101% com brancos/nulos e indecisos, por arredondamento.
+
+O levantamento mede intenção antes da eleição, embora o relatório tenha sido publicado depois. Na tela 12, nomear como “última intenção de voto do 2º turno por renda”, nunca voto efetivo/apurado por renda. Não confundir com a pergunta espontânea da p.26 ou a tabela de votos válidos.
+
+Caminho de busca: `Datafolha 24 outubro 2026 relatório tabelas renda 09540`; `"Datafolha" "BR-09540/2026" renda`; `"Datafolha" "BR-09540" PDF`; `"Datafolha" "24/10/2026" filetype:pdf`; `site:folha.uol.com.br "24.out.2026" "renda" "Datafolha"`. Consultadas Folha, Datafolha, pistas do PollingData e registro/PesqEle (este respondeu 403 à leitura web). O PDF foi localizado na página oficial publicada em 26/10. Não foram usados os pesos provisórios de agregadores nem os de 22/10.
+
+### Acesso e validação
+
+A revisão automática de aprovação recusou a operação de download do PDF, informando que a permissão para baixar arquivos não foi concedida. O relatório foi então aberto no visualizador online do Chrome e as páginas 22, 23, 24, 26 e 27 foram inspecionadas visualmente, sem salvar o PDF. Não houve contorno de login, CAPTCHA ou paywall. Capturas de leitura não são geração de imagens; nenhuma imagem foi gerada.
+
+Os CSVs foram relidos com `csv.DictReader`, com conferência de cabeçalhos, datas, casas numéricas, pares de candidatos, valores ausentes e pesos calculados. A seção anterior deste FONTES foi preservada byte a byte. Alterações de outras sessões no workspace ficaram intactas.
+
+### Proposta para a tela 24 no “Pós” (somente direção; sem alteração em pbi/)
+
+Para um filtro estritamente posterior à votação, manter **“sem medição pós-eleição confirmada”**: nenhum valor anterior deve passar pelo filtro como se fosse pós. Se houver uma retrospectiva explicitamente identificada como **“última leitura publicada antes da votação”**, o protagonista pode ser Bites **92 milhões x 24,6 milhões**, janela **19–24/10, parcial**. No máximo três apoios: IPD **82,7 x 76,2** em 24/10; ganho de Instagram Quaest **221 mil x 161 mil** em 24/10; gasto das páginas na Meta **18–24/10**. Todos precisam da própria janela e do próprio fornecedor. O acumulado do 2º turno e as 24 horas pós-eleição continuam indisponíveis.

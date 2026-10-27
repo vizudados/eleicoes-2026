@@ -1,0 +1,12 @@
+{
+  "municipios_antigos": 22272,
+  "municipios_completo": 33413,
+  "linhas_comparecimento": 36,
+  "provas": 5171,
+  "diferencas": 0,
+  "medidas": 49,
+  "medidas_sem_ano": 0,
+  "linhas_2022_2026_identicas_byte_a_byte": true,
+  "sha256_municipio_2turno_original": "6dcbedde294ce2bb16fa32f2d64cc493493532905a8ed3dc696e6f4e2c5383e1",
+  "abrangencia_comparecimento_ano": "com exterior e com VT/2010"
+}
