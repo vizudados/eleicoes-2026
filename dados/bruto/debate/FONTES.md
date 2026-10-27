@@ -474,3 +474,25 @@ Nenhuma página consultada nesta revisão trouxe instruções dirigidas ao agent
     `ao_vivo_globo.csv`, e não entra no cartão de redes.
 - **"19,5 milhões de pessoas" (Canal do Vannucci, 24/10 21h50):** é a conta da prévia do PNT (28 pontos × 699 mil por
   ponto), não um número novo, e foi anotada como tal em `ao_vivo_globo.csv`.
+
+## Noite de 26/10/2026 (22h32): o fechamento do debate da Globo
+
+A eleição acabou em 25/10. Nesta atualização, o que saiu entrou, e o que não saiu passou a `nao_divulgado` em
+`dados/pbi/debate_globo.csv`. Também mudou a linha da Globo em `debates.csv` e em `dados/pbi/debate.csv`.
+
+- **Consolidado da Kantar (Grande SP): 28,7 pontos de média, pico de 31, das 21h39 às 23h50.**
+  - Fontes: [TV Pop, 11h34](https://www.tvpop.com.br/399896/sbt-vive-dia-para-esquecer-e-nao-atinge-3-pontos-de-ibope-com-nenhum-programa/)
+    (28,73), [O Planeta TV, 11h51](https://oplanetatv.clickgratis.com.br/noticias/audiencia-da-tv/audiencias-23-10-debate-na-globo-atinge-pico-de-31-pontos-em-sao-paulo.html)
+    e [NaTelinha, 12h15](https://natelinha.uol.com.br/audiencias/2026/10/26/flavio-x-lula-globo-supera-audiencia-de-2022-em-debate-veja-os-dados-249496.php).
+  - Participação: 49,8%, do Notícias da TV, citado por [O Tempo, 14h33](https://www.otempo.com.br/opiniao/diego-laureano/2026/10/26/debate-entre-lula-e-flavio-supera-final-da-copa-do-mundo-e-dispara-audiencia-da-globo).
+    A matéria original não abriu (403).
+  - O balanço da Globo ([Tela Viva, 15h40](https://telaviva.com.br/26/10/2026/fantastico-da-globo-mostrou-toda-a-marcha-da-apuracao-e-registrou-a-maior-audiencia-da-faixa-em-sete-anos/))
+    arredonda para 29 pontos e 51% e dá 37 no Rio.
+  - Compara com o consolidado da Band (15). O consolidado do Painel Nacional não apareceu na imprensa.
+  - Não confundir: na mesma noite, o Jornal Nacional teve 24,9. No domingo, a Marcha da Apuração teve 25 em SP.
+- **Pico na internet (g1, Globoplay, GloboNews): não divulgado.** O balanço de 26/10 traz só TV. Houve relatos de
+  instabilidade no Globoplay (24/10), sem número.
+  - O "1,8 milhão de usuários simultâneos" que circulou é da Band no YouTube, na apuração de domingo.
+- **Bites, 24 horas depois do debate: não divulgado.** Depois do debate, só a janela de 19 a 24/10 (já anotada acima).
+- **Pesquisas depois do debate:** continua "nenhuma". A eleição veio antes de qualquer pesquisa com o campo inteiro
+  depois do debate.
