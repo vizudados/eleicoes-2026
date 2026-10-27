@@ -54,7 +54,10 @@ RETURN IF ( _aptos > 0, 1 - DIVIDE ( [T23 · comparecimento 1º turno], _aptos )
             & " institutos davam Lula à frente; a urna deu Flávio."''',
         'T01': '''"Flávio terminou o 1º turno com " & FORMAT ( [T06 · diferença Flávio Lula] / 1e6, "0.00" ) & " mi de votos de vantagem."''',
         'T06': '''"A ausência foi " & FORMAT ( [T06 · vezes a diferença em 2026], "0" ) & " vezes a diferença entre os dois no 1º turno."''',
-        'T11': '''FORMAT ( [T11 · viraram], "#,0" ) & " municípios trocaram Lula por Flávio de 2022 para o 1º turno de 2026."''',
+        # O clique leva à tela 09, que abre em "Pós Eleições 2026" (o 2º turno): o achado conta o mesmo recorte, fixo,
+        # para não depender do padrão do filtro (26/10/2026: dizia "1º turno" com o número do 2º, 278; no 1º foram 711).
+        'T11': '''FORMAT ( CALCULATE ( [T11 · viraram], 'Momento eleição'[Momento] = "Pós Eleições 2026" ), "#,0" )
+            & " municípios trocaram Lula por Flávio do 2º turno de 2022 para o de 2026."''',
         'T13': '''"Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno no 1º turno."''',
         'T19': '''FORMAT ( [T00 · municípios no mapa], "#,0" ) & " municípios para explorar o voto."''',
         'T17': '''"Flávio liderava " & FORMAT ( [T17 · depois · Flávio à frente], "0" ) & " de "

@@ -27,7 +27,8 @@ VAR _html = [T23 · Resumo · HTML]
     & "<b>07</b><span>" & ("A ausência foi " & FORMAT ( [T06 · vezes a diferença em 2026], "0" ) & " vezes a diferença entre os dois no 1º turno.") & "</span></div>"
     & "<div class='grupo' style='left:650px;top:590px;width:440px'>III · O MAPA</div>"
     & "<div class='linha sobe' style='left:650px;top:620px;width:440px;height:64px'>"
-    & "<b>09</b><span>" & (FORMAT ( [T11 · viraram], "#,0" ) & " municípios trocaram Lula por Flávio de 2022 para o 1º turno de 2026.") & "</span></div>"
+    & "<b>09</b><span>" & (FORMAT ( CALCULATE ( [T11 · viraram], 'Momento eleição'[Momento] = "Pós Eleições 2026" ), "#,0" )
+            & " municípios trocaram Lula por Flávio do 2º turno de 2022 para o de 2026.") & "</span></div>"
     & "<div class='linha sobe' style='left:650px;top:684px;width:440px;height:64px'>"
     & "<b>11</b><span>" & ("Nas cidades pequenas e de renda mais alta, Lula perdeu mais terreno no 1º turno.") & "</span></div>"
     & "<div class='grupo' style='left:650px;top:780px;width:440px'>IV · EXPLORE VOCÊ MESMO</div>"
